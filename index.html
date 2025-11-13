@@ -51,7 +51,19 @@
         }
         /* ================================================= */
 
-        @media screen and (max-width: 768px) { table { border: 0; } thead { display: none; } tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; } td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } td.notes { text-align: left; padding-left: 10px; } td.notes:before { content: "หมายเหตุ:"; display: block; font-weight: bold; margin-bottom: 5px; } }
+        @media screen and (max-width: 768px) { table { border: 0; } thead { display: none; } tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; } td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } td.notes {
+    text-align: left;
+    padding-left: 10px; /* มี padding ด้านซ้ายเล็กน้อย */
+    padding-top: 35px; /* *** เพิ่ม padding ด้านบนเพื่อสร้างพื้นที่ให้หัวข้อ *** */
+    position: relative; /* *** เพิ่ม position เพื่อให้ :before อ้างอิงได้ *** */
+}
+td.notes:before {
+    content: "หมายเหตุ:";
+    font-weight: bold;
+    position: absolute; /* *** ทำให้หัวข้อลอยอยู่ตำแหน่งที่กำหนด *** */
+    top: 10px;          /* *** กำหนดให้อยู่ห่างจากขอบบน 10px *** */
+    left: 10px;         /* *** กำหนดให้อยู่ห่างจากขอบซ้าย 10px *** */
+} }
     </style>
 </head>
 <body>
