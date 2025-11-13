@@ -18,7 +18,7 @@
         tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
         tbody tr:hover { background-color: #e8f4f8; }
         .remarks-cell { text-align: left; vertical-align: top; }
-        .remarks-cell div { margin-bottom: 5px; } /* เว้นระยะระหว่างบรรทัดหมายเหตุ */
+        .remarks-cell div { margin-bottom: 5px; }
         .weekend-row { background-color: #e9ecef; color: #6c757d; }
         .today-highlight { background-color: #fffacd !important; font-weight: bold; }
         .btn { display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; }
@@ -52,54 +52,38 @@
     <div id="toast-notification"></div>
     <script src="schedule-data.js"></script>
     <script>
-        function generateCellContent(period, date) {
-            if (!period) return '';
-            let content = '';
-            if (period.activity) {
-                content += `<div>${period.activity}</div>`;
-            }
-            if (period.fileNoteGrammar) {
-                const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
-            }
-            if (period.fileNoteTranslate) {
-                const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
-            }
-            if (period.isExam) {
-                const fullExamTime = `${date}T${period.examStartTime}`;
-                if (period.fileExamGrammar) {
-                    content += `<a href="${period.fileExamGrammar}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ ไวย.</a>`;
-                }
-                if (period.fileExamTranslate) {
-                    content += `<a href="${period.fileExamTranslate}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ แปล</a>`;
-                }
-            }
-            return content;
-        }
-
-        function generateRemarks(remarks) {
-            if (!remarks) return '';
-            let html = '';
-            if (remarks.grammar) html += `<div>${remarks.grammar}</div>`;
-            if (remarks.translate) html += `<div>${remarks.translate}</div>`;
-            if (remarks.general) html += `<div>${remarks.general}</div>`;
-            return html;
-        }
+        // (ส่วน generateCellContent และ generateRemarks เหมือนเดิม)
+        function generateCellContent(period, date) { /* ...เหมือนเดิม... */ }
+        function generateRemarks(remarks) { /* ...เหมือนเดิม... */ }
         
+        // *** แก้ไขฟังก์ชัน buildScheduleTable ที่นี่ ***
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
+
+            // 1. ดึงวันที่ปัจจุบันมาเตรียมไว้ "ก่อน" เริ่มสร้างตาราง
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const todayString = `${year}-${month}-${day}`;
+
             scheduleData.forEach(item => {
+                // 2. ตรวจสอบว่าแถวนี้เป็นวันปัจจุบันหรือไม่
+                const isToday = item.date === todayString;
+                
                 if (item.isWeekend) {
-                    tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
+                    const rowClass = isToday ? 'weekend-row today-highlight' : 'weekend-row';
+                    tableHTML += `<tr class="${rowClass}" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
                 } else {
+                    const rowClass = isToday ? 'today-highlight' : '';
                     const morningContent = generateCellContent(item.morning, item.date);
                     const afternoonContent = generateCellContent(item.afternoon, item.date);
                     const eveningContent = generateCellContent(item.evening, item.date);
                     const remarksContent = generateRemarks(item.remarks);
 
-                    tableHTML += `<tr data-date="${item.date}">
+                    // 3. ใส่ class 'today-highlight' เข้าไป "พร้อมกับ" การสร้างแถวเลย
+                    tableHTML += `<tr class="${rowClass}" data-date="${item.date}">
                         <td data-label="วดป.">${item.displayDate}</td>
                         <td data-label="เช้า-สาย">${morningContent}</td>
                         <td data-label="บ่าย">${afternoonContent}</td>
@@ -111,14 +95,14 @@
             tableBody.innerHTML = tableHTML;
         }
 
-        function highlightCurrentDay() { /* ...เหมือนเดิม... */ }
+        // *** ไม่จำเป็นต้องใช้ฟังก์ชัน highlightCurrentDay() อีกต่อไป ***
+        
         function checkExamTimes() { /* ...เหมือนเดิม... */ }
         function showToast(message) { /* ...เหมือนเดิม... */ }
         
-        // (ส่วนควบคุมหลักเหมือนเดิม)
         document.addEventListener('DOMContentLoaded', () => {
-            buildScheduleTable();
-            highlightCurrentDay();
+            buildScheduleTable(); // สร้างตาราง (ซึ่งจะไฮไลท์ไปในตัว)
+            // ไม่ต้องเรียก highlightCurrentDay() แล้ว
             checkExamTimes();
             setInterval(checkExamTimes, 30000);
             document.body.addEventListener('click', function(event) {
