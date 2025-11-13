@@ -11,7 +11,7 @@ const scheduleData = [
     date: "2025-11-13", displayDate: "พฤ. ๑๓-พ.ย.-๒๕",
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓", translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น" },
     morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-52-53.pdf", fileNoteTranslate: "#" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "translate-exam-01" },
+    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-01" },
     evening: { activity: "เรียน/ทบทวน" }
   },
   {
