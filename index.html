@@ -18,7 +18,7 @@
         tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
         tbody tr:hover { background-color: #e8f4f8; }
         .remarks-cell { text-align: left; vertical-align: top; }
-        .remarks-cell div { margin-bottom: 5px; }
+        .remarks-cell div { margin-bottom: 5px; } /* เว้นระยะระหว่างบรรทัดหมายเหตุ */
         .weekend-row { background-color: #e9ecef; color: #6c757d; }
         .today-highlight { background-color: #fffacd !important; font-weight: bold; }
         .btn { display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; }
@@ -52,38 +52,54 @@
     <div id="toast-notification"></div>
     <script src="schedule-data.js"></script>
     <script>
-        // (ส่วน generateCellContent และ generateRemarks เหมือนเดิม)
-        function generateCellContent(period, date) { /* ...เหมือนเดิม... */ }
-        function generateRemarks(remarks) { /* ...เหมือนเดิม... */ }
+        function generateCellContent(period, date) {
+            if (!period) return '';
+            let content = '';
+            if (period.activity) {
+                content += `<div>${period.activity}</div>`;
+            }
+            if (period.fileNoteGrammar) {
+                const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
+                content += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
+            }
+            if (period.fileNoteTranslate) {
+                const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
+                content += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
+            }
+            if (period.isExam) {
+                const fullExamTime = `${date}T${period.examStartTime}`;
+                if (period.fileExamGrammar) {
+                    content += `<a href="${period.fileExamGrammar}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ ไวย.</a>`;
+                }
+                if (period.fileExamTranslate) {
+                    content += `<a href="${period.fileExamTranslate}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ แปล</a>`;
+                }
+            }
+            return content;
+        }
+
+        function generateRemarks(remarks) {
+            if (!remarks) return '';
+            let html = '';
+            if (remarks.grammar) html += `<div>${remarks.grammar}</div>`;
+            if (remarks.translate) html += `<div>${remarks.translate}</div>`;
+            if (remarks.general) html += `<div>${remarks.general}</div>`;
+            return html;
+        }
         
-        // *** แก้ไขฟังก์ชัน buildScheduleTable ที่นี่ ***
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-
-            // 1. ดึงวันที่ปัจจุบันมาเตรียมไว้ "ก่อน" เริ่มสร้างตาราง
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const todayString = `${year}-${month}-${day}`;
-
             scheduleData.forEach(item => {
-                // 2. ตรวจสอบว่าแถวนี้เป็นวันปัจจุบันหรือไม่
-                const isToday = item.date === todayString;
-                
                 if (item.isWeekend) {
-                    const rowClass = isToday ? 'weekend-row today-highlight' : 'weekend-row';
-                    tableHTML += `<tr class="${rowClass}" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
+                    tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
                 } else {
-                    const rowClass = isToday ? 'today-highlight' : '';
                     const morningContent = generateCellContent(item.morning, item.date);
                     const afternoonContent = generateCellContent(item.afternoon, item.date);
                     const eveningContent = generateCellContent(item.evening, item.date);
                     const remarksContent = generateRemarks(item.remarks);
 
-                    // 3. ใส่ class 'today-highlight' เข้าไป "พร้อมกับ" การสร้างแถวเลย
-                    tableHTML += `<tr class="${rowClass}" data-date="${item.date}">
+                    tableHTML += `<tr data-date="${item.date}">
                         <td data-label="วดป.">${item.displayDate}</td>
                         <td data-label="เช้า-สาย">${morningContent}</td>
                         <td data-label="บ่าย">${afternoonContent}</td>
@@ -95,23 +111,56 @@
             tableBody.innerHTML = tableHTML;
         }
 
-        // *** ไม่จำเป็นต้องใช้ฟังก์ชัน highlightCurrentDay() อีกต่อไป ***
-        
-        function checkExamTimes() { /* ...เหมือนเดิม... */ }
-        function showToast(message) { /* ...เหมือนเดิม... */ }
-        
+        function highlightCurrentDay() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const todayString = `${year}-${month}-${day}`;
+            document.querySelectorAll('tbody tr').forEach(row => {
+                if (row.dataset.date === todayString) { row.classList.add('today-highlight'); }
+            });
+        }
+        function checkExamTimes() {
+            const now = new Date();
+            document.querySelectorAll('.exam-link').forEach(link => {
+                const startTime = new Date(link.dataset.startTime);
+                if (now >= startTime) {
+                    link.classList.remove('disabled-link');
+                    link.textContent = 'ดาวน์โหลดข้อสอบ';
+                } else {
+                    link.classList.add('disabled-link');
+                    link.textContent = 'รอเวลาสอบ';
+                }
+            });
+        }
+
+        // ========== ฟังก์ชันใหม่สำหรับแสดง Pop-up ==========
+        function showToast(message) {
+            const toast = document.getElementById("toast-notification");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); // แสดง 3 วินาทีแล้วหายไป
+        }
+
+        // --- จุดเริ่มต้นการทำงาน ---
         document.addEventListener('DOMContentLoaded', () => {
-            buildScheduleTable(); // สร้างตาราง (ซึ่งจะไฮไลท์ไปในตัว)
-            // ไม่ต้องเรียก highlightCurrentDay() แล้ว
+            buildScheduleTable();
+            highlightCurrentDay();
             checkExamTimes();
             setInterval(checkExamTimes, 30000);
+
+            // ========== โค้ดใหม่สำหรับดักจับการคลิก ==========
+            // เพิ่ม Event Listener เพื่อดักจับการคลิกที่ปุ่มที่ยังไม่มีไฟล์
             document.body.addEventListener('click', function(event) {
+                // ตรวจสอบว่าสิ่งที่ถูกคลิกเป็นลิงก์ และมี href เป็น "#"
                 if (event.target.tagName === 'A' && event.target.getAttribute('href') === '#') {
-                    event.preventDefault();
+                    event.preventDefault(); // ป้องกันไม่ให้หน้าเว็บเลื่อนขึ้นบน
                     showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
                 }
             });
         });
     </script>
+
 </body>
 </html>
