@@ -20,9 +20,9 @@ const scheduleData = [
     date: "2025-11-12",
     displayDate: "พ. ๑๒-พ.ย.-๒๕",
     notes: "อ่านหนังสือ",
-    fileNote: "materials/grammar-notes-50-51", // ใส่ "materials/ชื่อไฟล์.pdf" เมื่อมีไฟล์
+    fileNote: "materials/grammar-notes-50-51.pdf", // ใส่ "materials/ชื่อไฟล์.pdf" เมื่อมีไฟล์
     examTime: "18:30:00",
-    fileExam: "exams/grammar-exam-50-51", // ใส่ "exams/ชื่อไฟล์.pdf" เมื่อมีไฟล์
+    fileExam: "exams/grammar-exam-50-51.pdf", // ใส่ "exams/ชื่อไฟล์.pdf" เมื่อมีไฟล์
     remarks: "ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
   },
   {
