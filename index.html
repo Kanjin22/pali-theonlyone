@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางเรียนบาลี | ป.ธ. ๑-๒</title>
+    <title>Pali Study & Exam Schedule</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -27,6 +27,7 @@
             margin: 20px 0;
             font-size: 0.95em;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
         }
         th, td {
             border: 1px solid #cccccc;
@@ -67,6 +68,50 @@
             pointer-events: none;
             cursor: not-allowed;
         }
+
+        /* ========== โค้ดสำหรับมือถือ (Responsive) ========== */
+        @media screen and (max-width: 768px) {
+            table {
+                border: 0; /* เอาเส้นขอบของตารางใหญ่ออก */
+            }
+            thead {
+                display: none; /* ซ่อนหัวตารางในมือถือ */
+            }
+            tr {
+                display: block;
+                border: 1px solid #ccc;
+                margin-bottom: 15px;
+                background-color: #fff !important;
+            }
+            td {
+                display: block;
+                text-align: right; /* จัดข้อความชิดขวา */
+                border: none;
+                border-bottom: 1px dotted #eee;
+                position: relative;
+                padding-left: 50%; /* ดันเนื้อหาไปทางขวา */
+            }
+            td:before {
+                content: attr(data-label); /* ดึงข้อความจาก data-label มาแสดง */
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                text-align: left;
+                white-space: nowrap;
+            }
+            td.notes {
+                text-align: left; /* ทำให้ช่องหมายเหตุชิดซ้ายเหมือนเดิม */
+                padding-left: 10px;
+            }
+            td.notes:before {
+                content: "หมายเหตุ:"; /* เพิ่มหัวข้อให้ช่องหมายเหตุ */
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        }
+        /* ================================================= */
+
     </style>
 </head>
 <body>
@@ -643,6 +688,7 @@
         </tbody>
     </table>
 
+        <!-- (ส่วน JavaScript ไม่มีการเปลี่ยนแปลง) -->
     <script>
         function highlightCurrentDay() {
             const today = new Date();
