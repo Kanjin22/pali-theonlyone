@@ -6,7 +6,7 @@
     <title>Pali Study & Exam Schedule</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ส่วนของ CSS ทั้งหมดเหมือนเดิม ไม่ต้องเปลี่ยนแปลง */
+        /* ส่วนของ CSS ทั้งหมดเหมือนเดิม */
         body { font-family: 'Sarabun', sans-serif; margin: 15px; background-color: #f7f7f7; line-height: 1.6; }
         .page-header { text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; }
         .main-title { font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; }
@@ -25,7 +25,32 @@
         .btn-material:hover { background-color: #2980b9; }
         .btn-exam { background-color: #2ecc71; }
         .btn-exam:hover { background-color: #27ae60; }
-        .disabled-link { background-color: #bdc3c7; color: #7f8c8d; pointer-events: none; cursor: not-allowed; }
+        .disabled-link { background-color: #bdc3c7; color: #7f8c8d; pointer-events: none; /* เปลี่ยนเป็น none เพื่อให้คลิกได้ แต่ไม่ไปไหน */ cursor: not-allowed; }
+        
+        /* ========== ส่วน CSS สำหรับข้อความ Pop-up ========== */
+        #toast-notification {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 10;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            font-size: 17px;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+        #toast-notification.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* ================================================= */
+
         @media screen and (max-width: 768px) { table { border: 0; } thead { display: none; } tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; } td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } td.notes { text-align: left; padding-left: 10px; } td.notes:before { content: "หมายเหตุ:"; display: block; font-weight: bold; margin-bottom: 5px; } }
     </style>
 </head>
@@ -48,48 +73,37 @@
                 <th style="width:30%">หมายเหตุ</th>
             </tr>
         </thead>
-        <!-- สังเกตว่า tbody ตอนนี้ว่างเปล่า! เราจะให้ JavaScript มาสร้างเนื้อหาตรงนี้ -->
         <tbody id="schedule-body">
-            <!-- Loading... -->
+            <!-- JavaScript จะสร้างเนื้อหาตารางที่นี่ -->
         </tbody>
     </table>
+
+    <!-- ========== HTML สำหรับข้อความ Pop-up (วางไว้ล่างสุด) ========== -->
+    <div id="toast-notification"></div>
 
     <!-- 1. เรียกไฟล์ข้อมูลของเราเข้ามาก่อน -->
     <script src="schedule-data.js"></script>
     
     <!-- 2. สคริปต์หลักสำหรับสร้างตารางและควบคุมเวลา -->
     <script>
-        // ฟังก์ชันสำหรับสร้างตารางจากข้อมูล
+        // (ฟังก์ชัน buildScheduleTable และฟังก์ชันอื่นๆ เหมือนเดิม)
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-
             scheduleData.forEach(item => {
                 if (item.isWeekend) {
-                    tableHTML += `<tr class="weekend-row" data-date="${item.date}">
-                                    <td data-label="วดป.">${item.displayDate}</td>
-                                    <td></td><td></td><td></td>
-                                    <td class="notes"></td>
-                                  </tr>`;
+                    tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="notes">${item.remarks || ''}</td></tr>`;
                 } else {
+                    // ถ้ายังไม่มีไฟล์ (href="#") ให้ปุ่มเป็นสีเทา แต่ยังคง href="#" ไว้
                     const noteButtonClass = item.fileNote === '#' ? 'btn-material disabled-link' : 'btn-material';
                     const examButtonClass = 'btn-exam exam-link';
                     const fullExamTime = `${item.date}T${item.examTime}`;
-
-                    tableHTML += `<tr data-date="${item.date}">
-                                    <td data-label="วดป.">${item.displayDate}</td>
-                                    <td data-label="เช้า-สาย"><a href="${item.fileNote}" target="_blank" class="btn ${noteButtonClass}">${item.notes}</a></td>
-                                    <td data-label="บ่าย"><a href="#" target="_blank" class="btn btn-material disabled-link">เรียนแปล</a></td>
-                                    <td data-label="ค่ำ"><a href="${item.fileExam}" target="_blank" class="btn ${examButtonClass}" data-start-time="${fullExamTime}">สอบ ไวย.</a></td>
-                                    <td class="notes">${item.remarks}</td>
-                                  </tr>`;
+                    tableHTML += `<tr data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td data-label="เช้า-สาย"><a href="${item.fileNote}" target="_blank" class="btn ${noteButtonClass}">${item.notes}</a></td><td data-label="บ่าย"><a href="#" target="_blank" class="btn btn-material disabled-link">เรียนแปล</a></td><td data-label="ค่ำ"><a href="${item.fileExam}" target="_blank" class="btn ${examButtonClass}" data-start-time="${fullExamTime}">สอบ ไวย.</a></td><td class="notes">${item.remarks}</td></tr>`;
                 }
             });
-
             tableBody.innerHTML = tableHTML;
         }
 
-        // (ฟังก์ชัน highlightCurrentDay และ checkExamTimes เหมือนเดิมทุกประการ)
         function highlightCurrentDay() {
             const today = new Date();
             const year = today.getFullYear();
@@ -97,9 +111,7 @@
             const day = String(today.getDate()).padStart(2, '0');
             const todayString = `${year}-${month}-${day}`;
             document.querySelectorAll('tbody tr').forEach(row => {
-                if (row.dataset.date === todayString) {
-                    row.classList.add('today-highlight');
-                }
+                if (row.dataset.date === todayString) { row.classList.add('today-highlight'); }
             });
         }
         function checkExamTimes() {
@@ -116,12 +128,30 @@
             });
         }
 
+        // ========== ฟังก์ชันใหม่สำหรับแสดง Pop-up ==========
+        function showToast(message) {
+            const toast = document.getElementById("toast-notification");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); // แสดง 3 วินาทีแล้วหายไป
+        }
+
         // --- จุดเริ่มต้นการทำงาน ---
         document.addEventListener('DOMContentLoaded', () => {
-            buildScheduleTable(); // 1. สร้างตารางก่อน
-            highlightCurrentDay();  // 2. ไฮไลท์วันปัจจุบัน
-            checkExamTimes();       // 3. ตรวจสอบเวลาสอบ
-            setInterval(checkExamTimes, 30000); // 4. ตรวจสอบเวลาซ้ำๆ
+            buildScheduleTable();
+            highlightCurrentDay();
+            checkExamTimes();
+            setInterval(checkExamTimes, 30000);
+
+            // ========== โค้ดใหม่สำหรับดักจับการคลิก ==========
+            // เพิ่ม Event Listener เพื่อดักจับการคลิกที่ปุ่มที่ยังไม่มีไฟล์
+            document.body.addEventListener('click', function(event) {
+                // ตรวจสอบว่าสิ่งที่ถูกคลิกเป็นลิงก์ และมี href เป็น "#"
+                if (event.target.tagName === 'A' && event.target.getAttribute('href') === '#') {
+                    event.preventDefault(); // ป้องกันไม่ให้หน้าเว็บเลื่อนขึ้นบน
+                    showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
+                }
+            });
         });
     </script>
 
