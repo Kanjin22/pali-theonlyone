@@ -11,13 +11,13 @@ const scheduleData = [
     date: "2025-11-13", displayDate: "พฤ. ๑๓-พ.ย.-๒๕",
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓", translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น" },
     morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-52-53.pdf", fileNoteTranslate: "#" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-01" },
+    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-01.pdf" },
     evening: { activity: "เรียน/ทบทวน" }
   },
   {
     date: "2025-11-14", displayDate: "ศ. ๑๔-พ.ย.-๒๕",
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕" },
-    morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "#" },
+    morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-02.pdf" },
     afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "#" },
     evening: { activity: "เรียน/ทบทวน" }
   },
@@ -26,9 +26,9 @@ const scheduleData = [
   {
     date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗" },
-    morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-56-57.pdf", fileNoteTranslate: "materials/translate-notes-56-57.pdf" },
+    morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-56-57.pdf", fileNoteTranslate: "#" },
     evening: { activity: "เรียน/ทบทวน" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-56-57.pdf", fileExamTranslate: "exams/translate-exam-56-57.pdf" }
+    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-56-57.pdf", fileExamTranslate: "#" }
   },
   {
     date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๒๕",
