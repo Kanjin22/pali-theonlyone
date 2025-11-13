@@ -2,7 +2,7 @@ const scheduleData = [
   // ########## พฤศจิกายน 2568 ##########
   {
     date: "2025-11-12", displayDate: "พ. ๑๒-พ.ย.-๒๕",
-    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑" },
+    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑", translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น" },
     morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-50-51.pdf", fileNoteTranslate: "materials/translate-notes-50-51.pdf" },
     afternoon: { activity: "เรียน/ทบทวน" },
     evening: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf", fileExamTranslate: "exams/translate-exam-50-51.pdf" }
@@ -97,7 +97,7 @@ const scheduleData = [
   },
   { date: "2025-11-29", displayDate: "ส. ๒๙-พ.ย.-๒๕", isWeekend: true },
   { date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๒๕", isWeekend: true },
-  
+
   // ########## ธันวาคม 2568 ##########
   {
     date: "2025-12-01", displayDate: "จ. ๑-ธ.ค.-๒๕",
@@ -268,7 +268,7 @@ const scheduleData = [
     afternoon: { activity: "เรียน/ทบทวน" },
     evening: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", fileExamGrammar: "exams/grammar-exam-66-67.pdf", fileExamTranslate: "exams/translate-exam-66-67.pdf" }
   },
-  
+
   // ########## มกราคม 2569 ##########
   { date: "2026-01-01", displayDate: "พฤ. ๑-ม.ค.-๒๖", isWeekend: true },
   {
