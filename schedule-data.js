@@ -56,6 +56,7 @@ const scheduleData = [
       examStartTime: "18:30:00",
       examEndTime: "19:30:00",
       fileExamGrammar: "exams/grammar-exam-52-53.pdf",
+      fileAnswerGrammar: "answers/grammar-answer-52-53.pdf",
       fileExamTranslate: "exams/translate-exam-01.pdf"
     },
     evening: {
@@ -65,17 +66,48 @@ const scheduleData = [
 
   {
     date: "2025-11-14", displayDate: "ศ. ๑๔-พ.ย.-๒๕",
-    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕", translate: "แปล. หลักการแปล ๙ ประการ (๑. อาลปนะ)" },
-    morning: { activity: "อ่านไวย./เรียนแปล.", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-02.pdf" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "exams/translate-exam-02.pdf" },
-    evening: { activity: "เฉลยไวย./เรียนไวย." }
+    remarks: {
+      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
+      translate: "แปล. หลักการแปล ๙ ประการ (๑. อาลปนะ)"
+    },
+    morning: {
+      activity: "อ่านไวย./เรียนแปล.",
+      fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
+      fileNoteTranslate: "materials/translate-notes-02.pdf"
+    },
+    afternoon: {
+      activity: "สอบประจำวัน",
+      isExam: true,
+      examStartTime: "18:30:00",
+      examEndTime: "19:30:00",
+      fileExamGrammar: "exams/grammar-exam-54-55.pdf",
+      fileAnswerGrammar: "answers/grammar-answer-54-55.pdf",
+      fileExamTranslate: "exams/translate-exam-02.pdf"
+    },
+    evening: {
+      activity: "เฉลยไวย./เรียนไวย."
+    }
   },
   {
     date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
-    remarks: { translate: "แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)" },
-    morning: { activity: "เรียนแปล.", fileNoteTranslate: "materials/translate-notes-03.pdf" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamTranslate: "exams/translate-exam-03.pdf" },
-    evening: { activity: "เฉลยแปล./เรียนแปล.", fileNoteTranslate: "materials/translate-notes-04.pdf" }
+    remarks: { 
+      translate: "แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)" 
+    },
+    morning: { 
+      activity: "เรียนแปล.", 
+      fileNoteTranslate: "materials/translate-notes-03.pdf" 
+    },
+    afternoon: { 
+      activity: "สอบประจำวัน", 
+      isExam: true, 
+      examStartTime: "18:30:00", 
+      examEndTime: "19:30:00", 
+      fileExamTranslate: "exams/translate-exam-03.pdf" 
+    },
+    evening: { 
+      activity: "เฉลยแปล./เรียนแปล.", 
+      fileNoteTranslate: "materials/translate-notes-04.pdf" 
+    }
   },
   { date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕", isWeekend: true },
   {
