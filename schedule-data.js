@@ -16,14 +16,14 @@ const scheduleData = [
   },
   {
     date: "2025-11-14", displayDate: "ศ. ๑๔-พ.ย.-๒๕",
-    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕", translate: "แปล. หลักการแปล ๙ ประการ" },
+    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕", translate: "แปล. หลักการแปล ๙ ประการ (๑. อาลปนะ)" },
     morning: { activity: "อ่านไวย./เรียนแปล.", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-02.pdf" },
     afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "exams/translate-exam-02.pdf" },
     evening: { activity: "เฉลยไวย./เรียนไวย." }
   },
   {
     date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
-    remarks: { translate: "แปล. หลักการแปล ๙ ประการ" },
+    remarks: { translate: "แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)" },
     morning: { activity: "เรียนแปล.", fileNoteTranslate: "materials/translate-notes-03.pdf" },
     afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamTranslate: "exams/translate-exam-03.pdf" },
     evening: { activity: "เฉลยแปล./เรียนแปล.", fileNoteTranslate: "materials/translate-notes-04.pdf" }
