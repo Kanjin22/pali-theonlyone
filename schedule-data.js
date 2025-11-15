@@ -57,11 +57,12 @@ const scheduleData = [
       examEndTime: "19:30:00",
       fileExamGrammar: "exams/grammar-exam-52-53.pdf",
       fileAnswerGrammar: "answers/grammar-answer-52-53.pdf",
-      fileExamTranslate: "exams/translate-exam-01.pdf"
+      fileExamTranslate: "exams/translate-exam-01.pdf",
+      fileAnswerTranslate: "answers/translate-answer-01.pdf"
     },
     evening: {
       activity: "เฉลยไวย./เรียนไวย."
-    }
+    },
   },
 
   {
@@ -91,28 +92,29 @@ const scheduleData = [
 
   {
     date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
-    remarks: { 
-      translate: "แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)" 
+    remarks: {
+      translate: "แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)"
     },
-    morning: { 
-      activity: "เรียนแปล.", 
-      fileNoteTranslate: "materials/translate-notes-03.pdf" 
+    morning: {
+      activity: "เรียนแปล.",
+      fileNoteTranslate: "materials/translate-notes-03.pdf"
     },
-    afternoon: { 
-      activity: "สอบประจำวัน", 
-      isExam: true, 
-      examStartTime: "14:00:00", 
-      examEndTime: "15:00:00", 
-      fileExamTranslate: "exams/translate-exam-03.pdf" 
+    afternoon: {
+      activity: "สอบประจำวัน",
+      isExam: true,
+      examStartTime: "14:00:00",
+      examEndTime: "15:00:00",
+      fileExamTranslate: "exams/translate-exam-03.pdf"
     },
-    evening: { 
-      activity: "เฉลยแปล./เรียนแปล.", 
-      fileNoteTranslate: "materials/translate-notes-04.pdf" 
+    evening: {
+      activity: "เฉลยแปล./เรียนแปล.",
+      fileNoteTranslate: "materials/translate-notes-04.pdf"
     }
   },
-  
-  { date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕", 
-    isWeekend: true 
+
+  {
+    date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕",
+    isWeekend: true
   },
 
   {
