@@ -88,6 +88,7 @@ const scheduleData = [
       activity: "เฉลยไวย./เรียนไวย."
     }
   },
+
   {
     date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
     remarks: { 
@@ -100,8 +101,8 @@ const scheduleData = [
     afternoon: { 
       activity: "สอบประจำวัน", 
       isExam: true, 
-      examStartTime: "18:30:00", 
-      examEndTime: "19:30:00", 
+      examStartTime: "14:00:00", 
+      examEndTime: "15:00:00", 
       fileExamTranslate: "exams/translate-exam-03.pdf" 
     },
     evening: { 
@@ -109,7 +110,11 @@ const scheduleData = [
       fileNoteTranslate: "materials/translate-notes-04.pdf" 
     }
   },
-  { date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕", isWeekend: true },
+  
+  { date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕", 
+    isWeekend: true 
+  },
+
   {
     date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗", translate: "แปล. หลักการแปล ๙ ประการ" },
