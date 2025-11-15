@@ -116,7 +116,17 @@ const scheduleData = [
 
   {
     date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕",
-    isWeekend: true
+    remarks: {
+      translate: "แปล. หลักการแปล ๙ ประการ (แปล. หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ, ๓. กาลสัตตมี, ๔. ประธาน)"
+    },
+    afternoon: {
+      activity: "สอบประจำวัน",
+      isExam: true,
+      examStartTime: "14:00:00",
+      examEndTime: "15:00:00"
+      fileExamTranslate: "exams/translate-exam-04.pdf",
+      fileAnswerTranslate: "answers/translate-answer-04.pdf"
+    },
   },
 
   {
