@@ -101,14 +101,14 @@
         <tbody id="schedule-body"></tbody>
     </table>
     <div id="toast-notification"></div>
-    <script src="schedule-data.js"></script>
+<script src="schedule-data.js"></script>
     <script>
+        // === ฟังก์ชันสร้างปุ่มและเนื้อหา ===
         function generateCellContent(period, date) {
             if (!period) return '';
             let content = '';
-            if (period.activity) {
-                content += `<div>${period.activity}</div>`;
-            }
+            if (period.activity) { content += `<div>${period.activity}</div>`; }
+            
             if (period.fileNoteGrammar) {
                 const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
                 content += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
@@ -117,18 +117,25 @@
                 const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
                 content += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
             }
+            
             if (period.isExam) {
+                const examTypeGrammar = "ข้อสอบ ไวย.";
+                const answerTypeGrammar = "เฉลย ไวย.";
                 if (period.fileExamGrammar) {
-                    content += `<a href="${period.fileExamGrammar}" target="_blank" class="btn btn-exam exam-button" 
-                                data-date="${date}" data-type="grammar" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}">
+                    content += `<a href="#" target="_blank" class="btn exam-button" 
+                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
+                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">
                                 โหลด...
                                </a>`;
                 }
+                const examTypeTranslate = "ข้อสอบ แปล";
+                const answerTypeTranslate = "เฉลย แปล";
                 if (period.fileExamTranslate) {
-                    content += `<a href="${period.fileExamTranslate}" target="_blank" class="btn btn-exam exam-button"
-                                data-date="${date}" data-type="translate" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}">
+                    content += `<a href="#" target="_blank" class="btn exam-button"
+                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
+                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">
                                 โหลด...
                                </a>`;
                 }
@@ -136,6 +143,7 @@
             return content;
         }
 
+        // === ฟังก์ชันสร้างเนื้อหาหมายเหตุ ===
         function generateRemarks(remarks) {
             if (!remarks) return '';
             let html = '';
@@ -145,6 +153,7 @@
             return html;
         }
         
+        // === ฟังก์ชันสร้างตารางทั้งหมด ===
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
@@ -156,19 +165,13 @@
                     const afternoonContent = generateCellContent(item.afternoon, item.date);
                     const eveningContent = generateCellContent(item.evening, item.date);
                     const remarksContent = generateRemarks(item.remarks);
-
-                    tableHTML += `<tr data-date="${item.date}">
-                        <td data-label="วดป.">${item.displayDate}</td>
-                        <td data-label="เช้า-สาย">${morningContent}</td>
-                        <td data-label="บ่าย">${afternoonContent}</td>
-                        <td data-label="ค่ำ">${eveningContent}</td>
-                        <td class="remarks-cell">${remarksContent}</td>
-                    </tr>`;
+                    tableHTML += `<tr data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td data-label="เช้า-สาย">${morningContent}</td><td data-label="บ่าย">${afternoonContent}</td><td data-label="ค่ำ">${eveningContent}</td><td class="remarks-cell">${remarksContent}</td></tr>`;
                 }
             });
             tableBody.innerHTML = tableHTML;
         }
 
+        // === ฟังก์ชันไฮไลท์วันปัจจุบัน ===
         function highlightCurrentDay() {
             const today = new Date();
             const year = today.getFullYear();
@@ -176,9 +179,13 @@
             const day = String(today.getDate()).padStart(2, '0');
             const todayString = `${year}-${month}-${day}`;
             document.querySelectorAll('tbody tr').forEach(row => {
-                if (row.dataset.date === todayString) { row.classList.add('today-highlight'); }
+                if (row.dataset.date === todayString) {
+                    row.classList.add('today-highlight');
+                }
             });
         }
+
+        // === ฟังก์ชันตรวจสอบเวลาสอบและเฉลย (ยกเครื่องใหม่) ===
         function updateExamButtons() {
             const now = new Date();
             document.querySelectorAll('.exam-button').forEach(button => {
@@ -188,59 +195,50 @@
                 
                 const examFile = button.dataset.examFile;
                 const answerFile = button.dataset.answerFile;
-                const type = button.dataset.type === 'grammar' ? 'ไวย.' : 'แปล';
+                const examLabel = button.dataset.labelExam;
+                const answerLabel = button.dataset.labelAnswer;
 
                 if (now < startTime) {
-                    // --- ก่อนเวลาสอบ ---
-                    button.textContent = `รอเวลาสอบ ${type}`;
+                    button.textContent = `รอเวลาสอบ`;
                     button.href = '#';
-                    button.classList.add('disabled-link');
-                    button.classList.remove('btn-exam', 'btn-answer');
+                    button.className = 'btn disabled-link exam-button';
                 } else if (now >= startTime && now <= endTime) {
-                    // --- ระหว่างเวลาสอบ ---
-                    button.textContent = `ข้อสอบ ${type}`;
+                    button.textContent = examLabel;
                     button.href = examFile;
-                    button.classList.remove('disabled-link', 'btn-answer');
-                    button.classList.add('btn-exam');
-                } else {
-                    // --- หลังหมดเวลาสอบ ---
+                    button.className = 'btn btn-exam exam-button';
+                } else { // now > endTime
                     if (answerFile && answerFile !== '#') {
-                        button.textContent = `ดูเฉลย ${type}`;
+                        button.textContent = answerLabel;
                         button.href = answerFile;
-                        button.classList.remove('disabled-link', 'btn-exam');
-                        button.classList.add('btn-answer');
+                        button.className = 'btn btn-answer exam-button';
                     } else {
-                        // ถ้าไม่มีไฟล์เฉลย
-                        button.textContent = `หมดเวลาสอบ ${type}`;
+                        button.textContent = 'หมดเวลา';
                         button.href = '#';
-                        button.classList.add('disabled-link');
-                        button.classList.remove('btn-exam', 'btn-answer');
+                        button.className = 'btn disabled-link exam-button';
                     }
                 }
             });
         }
 
-        // ========== ฟังก์ชันใหม่สำหรับแสดง Pop-up ==========
+        // === ฟังก์ชันแสดง Pop-up ===
         function showToast(message) {
             const toast = document.getElementById("toast-notification");
             toast.textContent = message;
             toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); // แสดง 3 วินาทีแล้วหายไป
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
-
-        // --- จุดเริ่มต้นการทำงาน ---
+        
+        // === ส่วนควบคุมหลัก (ที่แก้ไขแล้ว) ===
         document.addEventListener('DOMContentLoaded', () => {
             buildScheduleTable();
             highlightCurrentDay();
-            checkExamTimes();
-            setInterval(checkExamTimes, 30000);
-
-            // ========== โค้ดใหม่สำหรับดักจับการคลิก ==========
-            // เพิ่ม Event Listener เพื่อดักจับการคลิกที่ปุ่มที่ยังไม่มีไฟล์
+            updateExamButtons(); // เรียกใช้ฟังก์ชันที่ถูกต้อง
+            setInterval(updateExamButtons, 30000); // เรียกใช้ฟังก์ชันที่ถูกต้อง
+            
             document.body.addEventListener('click', function(event) {
-                // ตรวจสอบว่าสิ่งที่ถูกคลิกเป็นลิงก์ และมี href เป็น "#"
-                if (event.target.tagName === 'A' && event.target.getAttribute('href') === '#') {
-                    event.preventDefault(); // ป้องกันไม่ให้หน้าเว็บเลื่อนขึ้นบน
+                const target = event.target.closest('a');
+                if (target && target.getAttribute('href') === '#') {
+                    event.preventDefault();
                     showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
                 }
             });
