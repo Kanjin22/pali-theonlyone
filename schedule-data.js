@@ -20,13 +20,11 @@ const scheduleData = [
   {
     date: "2025-11-12", displayDate: "พ. ๑๒-พ.ย.-๒๕",
     remarks: {
-      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑",
-      translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น"
+      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
     },
     morning: {
       activity: "อ่านไวย./เรียนแปล.",
-      fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
-      fileNoteTranslate: "materials/translate-notes-01.pdf"
+      fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
     },
     afternoon: {
       activity: "สอบประจำวัน",
