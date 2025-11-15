@@ -6,28 +6,79 @@
     <title>Pali Study & Exam Schedule</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS ทั้งหมดเหมือนเดิม ไม่มีการเปลี่ยนแปลง */
-        body { font-family: 'Sarabun', sans-serif; margin: 15px; background-color: #f7f7f7; line-height: 1.6; }
-        .page-header { text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; }
-        .main-title { font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; }
-        .sub-title { font-size: 1.3em; color: #34495e; margin: 5px 0; }
-        .description { font-size: 1em; color: #7f8c8d; margin: 5px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); border: 1px solid #cccccc; }
-        th, td { border: 1px solid #cccccc; text-align: center; padding: 10px 8px; vertical-align: middle; }
-        thead th { background-color: #34495e; color: #ffffff; position: sticky; top: 0; z-index: 2; }
-        tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
-        tbody tr:hover { background-color: #e8f4f8; }
-        .remarks-cell { text-align: left; vertical-align: top; }
-        .remarks-cell div { margin-bottom: 5px; } /* เว้นระยะระหว่างบรรทัดหมายเหตุ */
-        .weekend-row { background-color: #e9ecef; color: #6c757d; }
-        .today-highlight { background-color: #fffacd !important; font-weight: bold; }
-        .btn { display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; }
-        .btn-material { background-color: #3498db; } .btn-material:hover { background-color: #2980b9; }
-        .btn-exam { background-color: #2ecc71; } .btn-exam:hover { background-color: #27ae60; }
-        .disabled-link { background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; }
-        #toast-notification { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: 30px; font-size: 17px; opacity: 0; transition: visibility 0s, opacity 0.5s linear; }
-        #toast-notification.show { visibility: visible; opacity: 1; }
-        @media screen and (max-width: 768px) { table { border: 0; } thead { display: none; } tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; min-height: 40px; } td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } .remarks-cell { text-align: left; padding-left: 10px; padding-top: 10px; } .remarks-cell:before { display:none; } }
+        body { 
+            font-family: 'Sarabun', sans-serif; margin: 15px; background-color: #f7f7f7; line-height: 1.6; 
+        }
+        .page-header { 
+            text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; 
+        }
+        .main-title { 
+            font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; 
+        }
+        .sub-title { 
+            font-size: 1.3em; color: #34495e; margin: 5px 0; 
+        }
+        .description { 
+            font-size: 1em; color: #7f8c8d; margin: 5px 0; 
+        }
+        table { 
+            width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); border: 1px solid #cccccc; 
+        }
+        th, td { 
+            border: 1px solid #cccccc; text-align: center; padding: 10px 8px; vertical-align: middle; 
+        }
+        thead th { 
+            background-color: #34495e; color: #ffffff; position: sticky; top: 0; z-index: 2; 
+        }
+        tbody tr:nth-of-type(even) { 
+            background-color: #f3f3f3; 
+        }
+        tbody tr:hover { 
+            background-color: #e8f4f8; 
+        }
+        .remarks-cell { 
+            text-align: left; vertical-align: top; 
+        }
+        .remarks-cell div { 
+            margin-bottom: 5px; 
+        }
+        .weekend-row { 
+            background-color: #e9ecef; color: #6c757d; 
+        }
+        .today-highlight { 
+            background-color: #fffacd !important; font-weight: bold; 
+        }
+        .btn { 
+            display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; 
+        }
+        .btn-material { 
+            background-color: #3498db; } .btn-material:hover { background-color: #2980b9; 
+        }
+        .btn-exam { 
+            background-color: #2ecc71; } .btn-exam:hover { background-color: #27ae60; 
+        }
+        .btn-answer {
+            background-color: #f39c12;
+        }
+        .btn-answer:hover {background-color: #e67e22;
+        }
+        .disabled-link { 
+            background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; 
+        }
+        #toast-notification { 
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: 30px; font-size: 17px; opacity: 0; transition: visibility 0s, opacity 0.5s linear; 
+        }
+        #toast-notification.show { 
+            visibility: visible; opacity: 1; }
+            @media screen and (max-width: 768px) { 
+                table { border: 0; } 
+                thead { display: none; } 
+                tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } 
+                td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; min-height: 40px; } 
+                td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } 
+                .remarks-cell { text-align: left; padding-left: 10px; padding-top: 10px; } 
+                .remarks-cell:before { display:none; } 
+            }
     </style>
 </head>
 <body>
@@ -67,12 +118,19 @@
                 content += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
             }
             if (period.isExam) {
-                const fullExamTime = `${date}T${period.examStartTime}`;
                 if (period.fileExamGrammar) {
-                    content += `<a href="${period.fileExamGrammar}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ ไวย.</a>`;
+                    content += `<a href="${period.fileExamGrammar}" target="_blank" class="btn btn-exam exam-button" 
+                                data-date="${date}" data-type="grammar" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}">
+                                โหลด...
+                               </a>`;
                 }
                 if (period.fileExamTranslate) {
-                    content += `<a href="${period.fileExamTranslate}" target="_blank" class="btn btn-exam exam-link" data-start-time="${fullExamTime}">ข้อสอบ แปล</a>`;
+                    content += `<a href="${period.fileExamTranslate}" target="_blank" class="btn btn-exam exam-button"
+                                data-date="${date}" data-type="translate" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}">
+                                โหลด...
+                               </a>`;
                 }
             }
             return content;
@@ -121,16 +179,43 @@
                 if (row.dataset.date === todayString) { row.classList.add('today-highlight'); }
             });
         }
-        function checkExamTimes() {
+        function updateExamButtons() {
             const now = new Date();
-            document.querySelectorAll('.exam-link').forEach(link => {
-                const startTime = new Date(link.dataset.startTime);
-                if (now >= startTime) {
-                    link.classList.remove('disabled-link');
-                    link.textContent = 'ดาวน์โหลดข้อสอบ';
+            document.querySelectorAll('.exam-button').forEach(button => {
+                const date = button.dataset.date;
+                const startTime = new Date(`${date}T${button.dataset.startTime}`);
+                const endTime = new Date(`${date}T${button.dataset.endTime}`);
+                
+                const examFile = button.dataset.examFile;
+                const answerFile = button.dataset.answerFile;
+                const type = button.dataset.type === 'grammar' ? 'ไวย.' : 'แปล';
+
+                if (now < startTime) {
+                    // --- ก่อนเวลาสอบ ---
+                    button.textContent = `รอเวลาสอบ ${type}`;
+                    button.href = '#';
+                    button.classList.add('disabled-link');
+                    button.classList.remove('btn-exam', 'btn-answer');
+                } else if (now >= startTime && now <= endTime) {
+                    // --- ระหว่างเวลาสอบ ---
+                    button.textContent = `ข้อสอบ ${type}`;
+                    button.href = examFile;
+                    button.classList.remove('disabled-link', 'btn-answer');
+                    button.classList.add('btn-exam');
                 } else {
-                    link.classList.add('disabled-link');
-                    link.textContent = 'รอเวลาสอบ';
+                    // --- หลังหมดเวลาสอบ ---
+                    if (answerFile && answerFile !== '#') {
+                        button.textContent = `ดูเฉลย ${type}`;
+                        button.href = answerFile;
+                        button.classList.remove('disabled-link', 'btn-exam');
+                        button.classList.add('btn-answer');
+                    } else {
+                        // ถ้าไม่มีไฟล์เฉลย
+                        button.textContent = `หมดเวลาสอบ ${type}`;
+                        button.href = '#';
+                        button.classList.add('disabled-link');
+                        button.classList.remove('btn-exam', 'btn-answer');
+                    }
                 }
             });
         }
