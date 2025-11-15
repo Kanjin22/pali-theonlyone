@@ -23,7 +23,7 @@ const scheduleData = [
       grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
     },
     morning: {
-      activity: "อ่านไวย./เรียนแปล.",
+      activity: "อ่านไวย.",
       fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
     },
     afternoon: {
