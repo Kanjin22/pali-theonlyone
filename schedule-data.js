@@ -123,7 +123,7 @@ const scheduleData = [
       activity: "สอบประจำวัน",
       isExam: true,
       examStartTime: "14:00:00",
-      examEndTime: "15:00:00"
+      examEndTime: "15:00:00",
       fileExamTranslate: "exams/translate-exam-04.pdf",
       fileAnswerTranslate: "answers/translate-answer-04.pdf"
     },
