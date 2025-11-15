@@ -5,7 +5,7 @@ const scheduleData = [
     remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑", translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น" },
     morning: { activity: "อ่านไวย./เรียนแปล.", fileNoteGrammar: "materials/grammar-notes-50-51.pdf", fileNoteTranslate: "materials/translate-notes-01.pdf" },
     afternoon: { activity: "เฉลยไวย./เรียนไวย." },
-    evening: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf", fileExamTranslate: "#" }
+    evening: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf" }
   },
   {
     date: "2025-11-13", displayDate: "พฤ. ๑๓-พ.ย.-๒๕",
@@ -23,7 +23,7 @@ const scheduleData = [
   },
   {
     date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
-    remarks: { translate: "แปล, หลักการแปล ๙ ประการ" },
+    remarks: { translate: "แปล. หลักการแปล ๙ ประการ" },
     morning: { activity: "เรียนแปล.", fileNoteTranslate: "materials/translate-notes-03.pdf" },
     afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "14:00:00", fileExamTranslate: "exams/translate-exam-03.pdf" },
     evening: { activity: "เฉลยแปล./เรียนแปล.", fileNoteTranslate: "materials/translate-notes-04.pdf" }
