@@ -143,7 +143,7 @@ const scheduleData = [
       activity: "อ่านไวย./สอบแปล.",
       fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
       isExam: true,
-      examStartTime: "9:00:00",
+      examStartTime: "09:00:00",
       examEndTime: "10:00:00",
       fileExamTranslate: "exams/translate-exam-05.pdf",
       fileAnswerTranslate: "answers/translate-answer-05.pdf"
