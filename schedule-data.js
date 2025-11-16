@@ -150,7 +150,7 @@ const scheduleData = [
     },
     afternoon: {
       activity: "สอบไวย./เรียนแปล.",
-      fileNoteTranslate: "materials/translate-note-06.pdf",
+      fileNoteTranslate: "materials/translate-notes-06.pdf",
       isExam: true,
       examStartTime: "14:00:00",
       examEndTime: "15:00:00",
