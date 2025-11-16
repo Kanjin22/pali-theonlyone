@@ -169,10 +169,26 @@ const scheduleData = [
 
   {
     date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๒๕",
-    remarks: { grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙", translate: "แปล. หลักการแปล ๙ ประการ" },
-    morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-58-59.pdf", fileNoteTranslate: "#" },
-    evening: { activity: "เฉลย/เรียน" },
-    afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-58-59.pdf", fileExamTranslate: "exams/translate-exam-04.pdf" }
+    remarks: { 
+      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙", 
+      translate: "แปล. หลักการแปล ๙ ประการ" 
+    },
+    morning: { 
+      activity: "อ่านหนังสือ", 
+      fileNoteGrammar: "materials/grammar-notes-58-59.pdf", 
+      fileNoteTranslate: "#" 
+    },
+    afternoon: { 
+      activity: "สอบประจำวัน", 
+      isExam: true, 
+      examStartTime: "18:30:00", 
+      examEndTime: "19:30:00", 
+      fileExamGrammar: "exams/grammar-exam-58-59.pdf", 
+      fileExamTranslate: "exams/translate-exam-04.pdf" 
+    },
+    evening: { 
+      activity: "เฉลย/เรียน" 
+    }
   },
   {
     date: "2025-11-19", displayDate: "พ. ๑๙-พ.ย.-๒๕",
