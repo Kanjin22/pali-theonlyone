@@ -155,39 +155,42 @@ const scheduleData = [
       examStartTime: "14:00:00",
       examEndTime: "15:00:00",
       fileExamGrammar: "exams/grammar-exam-56-57.pdf",
-      fileAnswerGrammar: "answers/translate-answer-56-57"
+      fileAnswerGrammar: "answers/translate-answer-56-57",
+      fileExamTranslate: "exams/translate-exam-06.pdf",
+      fileAnswerTranslate: "answers/translate-answer-06.pdf"
     },
     evening: {
       activity: "เฉลยไวย./เรียนไวย./สอบแปล.",
+      fileNoteTranslate: "materials/translate-notes-07.pdf",
       isExam: true,
       examStartTime: "18:30:00",
       examEndTime: "19:30:00",
-      fileExamTranslate: "exams/translate-exam-06.pdf",
-      fileAnswerTranslate: "answers/translate-answer-06.pdf"
+      fileExamTranslate: "exams/translate-exam-07.pdf",
+      fileAnswerTranslate: "answers/translate-answer-07.pdf"
     }
   },
 
   {
     date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๒๕",
-    remarks: { 
-      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙", 
-      translate: "แปล. หลักการแปล ๙ ประการ" 
+    remarks: {
+      grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙",
+      translate: "แปล. หลักการแปล ๙ ประการ"
     },
-    morning: { 
-      activity: "อ่านหนังสือ", 
-      fileNoteGrammar: "materials/grammar-notes-58-59.pdf", 
-      fileNoteTranslate: "#" 
+    morning: {
+      activity: "อ่านหนังสือ",
+      fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
+      fileNoteTranslate: "#"
     },
-    afternoon: { 
-      activity: "สอบประจำวัน", 
-      isExam: true, 
-      examStartTime: "18:30:00", 
-      examEndTime: "19:30:00", 
-      fileExamGrammar: "exams/grammar-exam-58-59.pdf", 
-      fileExamTranslate: "exams/translate-exam-04.pdf" 
+    afternoon: {
+      activity: "สอบประจำวัน",
+      isExam: true,
+      examStartTime: "18:30:00",
+      examEndTime: "19:30:00",
+      fileExamGrammar: "exams/grammar-exam-58-59.pdf",
+      fileExamTranslate: "exams/translate-exam-04.pdf"
     },
-    evening: { 
-      activity: "เฉลย/เรียน" 
+    evening: {
+      activity: "เฉลย/เรียน"
     }
   },
   {
