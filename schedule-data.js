@@ -133,23 +133,25 @@ const scheduleData = [
     date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
     remarks: {
       grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
-      translate: "แปล. หลักการแปล ๙ ประการ"
+      translate: "แปล. หลักการแปล ๙ ประการ (๕. ขยายประธาน)"
     },
     morning: {
       activity: "อ่านหนังสือ",
       fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
-      fileNoteTranslate: "#"
+      fileNoteTranslate: "materials/translate-notes-05.pdf"
     },
     evening: {
-      activity: "เฉลย/เรียน"
+      activity: "เฉลยไวย./เรียนไวย."
     },
     afternoon: {
       activity: "สอบประจำวัน",
       isExam: true,
-      examStartTime: "18:30:00",
-      examEndTime: "19:30:00",
+      examStartTime: "14:00:00",
+      examEndTime: "15:00:00",
       fileExamGrammar: "exams/grammar-exam-56-57.pdf",
-      fileExamTranslate: "#"
+      fileAnswerGrammar: "answers/translate-answer-56-57",
+      fileExamTranslate: "exams/translate-exam-05.pdf",
+      fileAnswerTranslate: "answers/translate-answer-05.pdf"
     }
   },
 
