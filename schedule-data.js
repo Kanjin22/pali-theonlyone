@@ -137,7 +137,7 @@ const scheduleData = [
     date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
     remarks: {
       grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
-      translate: "แปล. หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก)"
+      translate: "แปล. หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก, ๗. บทขยายกิริยาในระหว่าง, ๘. กิริยาคุมพากย์, ๙. บทขยายกิริยาคุมพวกย์)"
     },
     morning: {
       activity: "อ่านไวย./สอบแปล.",
@@ -149,7 +149,7 @@ const scheduleData = [
       fileAnswerTranslate: "answers/translate-answer-05.pdf"
     },
     afternoon: {
-      activity: "สอบไวย./เรียนแปล.",
+      activity: "สอบไวย./เรียนแปล./สอบแปล.",
       fileNoteTranslate: "materials/translate-notes-06.pdf",
       isExam: true,
       examStartTime: "14:00:00",
@@ -160,11 +160,11 @@ const scheduleData = [
       fileAnswerTranslate: "answers/translate-answer-06.pdf"
     },
     evening: {
-      activity: "เฉลยไวย./เรียนไวย./สอบแปล.",
+      activity: "เฉลยไวย./เรียนไวย./เรียนแปล./สอบแปล.",
       fileNoteTranslate: "materials/translate-notes-07.pdf",
       isExam: true,
-      examStartTime: "18:30:00",
-      examEndTime: "19:30:00",
+      examStartTime: "20:30:00",
+      examEndTime: "21:30:00",
       fileExamTranslate: "exams/translate-exam-07.pdf",
       fileAnswerTranslate: "answers/translate-answer-07.pdf"
     }
