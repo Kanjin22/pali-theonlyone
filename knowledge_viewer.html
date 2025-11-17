@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดหลักการแปล</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; line-height: 1.8; margin: 0; background-color: #f9f9f9; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px 40px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #34495e; padding-bottom: 10px; }
+        .content-body { margin-top: 30px; }
+        .example { display: block; padding: 15px; margin: 20px 0; border-left: 4px solid #3498db; background-color: #f4f7f6; }
+        .back-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="topic-title">กำลังโหลด...</h1>
+        <div id="content-body">
+            <!-- JavaScript จะแทรกเนื้อหาที่นี่ -->
+        </div>
+        <a href="translation_principles.html" class="back-link">&larr; กลับสู่สารบัญ</a>
+    </div>
+
+    <script src="knowledge-data.js"></script>
+    <script>
+        // อ่าน URL เพื่อหาว่าผู้ใช้ต้องการดูหัวข้ออะไร
+        const params = new URLSearchParams(window.location.search);
+        const topicId = params.get('topic');
+
+        let foundTopic = null;
+        // ค้นหาหัวข้อที่ตรงกับ id ในฐานข้อมูลของเรา
+        for (const chapterKey in translationPrinciples) {
+            const chapter = translationPrinciples[chapterKey];
+            const topic = chapter.topics.find(t => t.id === topicId);
+            if (topic) {
+                foundTopic = topic;
+                break;
+            }
+        }
+
+        const titleElement = document.getElementById('topic-title');
+        const contentElement = document.getElementById('content-body');
+
+        if (foundTopic) {
+            titleElement.textContent = foundTopic.title;
+            contentElement.innerHTML = foundTopic.content; // แสดงเนื้อหา HTML
+        } else {
+            titleElement.textContent = "ไม่พบหัวข้อ";
+            contentElement.innerHTML = "<p>ไม่พบเนื้อหาสำหรับหัวข้อที่ท่านเลือก กรุณากลับไปที่หน้าสารบัญ</p>";
+        }
+    </script>
+</body>
+</html>
