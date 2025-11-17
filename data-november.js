@@ -137,7 +137,7 @@ const scheduleData = [
         date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
         remarks: {
             grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
-            translate: "แปล. หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก, ๗. บทขยายกิริยาในระหว่าง, ๘. กิริยาคุมพากย์, ๙. บทขยายกิริยาคุมพวกย์)"
+            translate: "แปล. หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก, ๗. บทขยายกิริยาในระหว่าง)"
         },
         morning: {
             activity: "อ่านไวย./สอบแปล.",
@@ -155,18 +155,16 @@ const scheduleData = [
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-56-57.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-56-57.pdf",
-            fileExamTranslate: "exams/translate-exam-06.pdf",
-            fileAnswerTranslate: "answers/translate-answer-06.pdf"
+            fileAnswerGrammar: "answers/grammar-answer-56-57.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย./เรียนแปล./สอบแปล.",
-            fileNoteTranslate: "materials/translate-notes-07.pdf",
+            activity: "เฉลยไวย./เรียนไวย./เรียนแปล.",
             isExam: true,
-            examStartTime: "20:30:00",
-            examEndTime: "21:30:00",
-            fileExamTranslate: "exams/translate-exam-07.pdf",
-            fileAnswerTranslate: "answers/translate-answer-07.pdf"
+            examStartTime: "18:30:00",
+            examEndTime: "19:30:00",
+            fileExamTranslate: "exams/translate-exam-06.pdf",
+            fileAnswerTranslate: "answers/translate-answer-06.pdf",
+            fileNoteTranslate: "materials/translate-notes-07.pdf"
         }
     },
 
@@ -174,23 +172,25 @@ const scheduleData = [
         date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๒๕",
         remarks: {
             grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙",
-            translate: "แปล. หลักการแปล ๙ ประการ"
+            translate: "แปล. หลักการแปล ๙ ประการ (๘. กิริยาคุมพากย์, ๙. บทขยายกิริยาคุมพวกย์)"
         },
         morning: {
-            activity: "อ่านหนังสือ",
+            activity: "อ่านไวย./อ่านแปล.",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
-            fileNoteTranslate: "#"
+            fileNoteTranslate: "materials/translate-notes-07.pdf"
         },
         afternoon: {
-            activity: "สอบประจำวัน",
+            activity: "สอบไวย./สอบแปล.",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
             fileExamGrammar: "exams/grammar-exam-58-59.pdf",
-            fileExamTranslate: "exams/translate-exam-04.pdf"
+            fileAnswerGrammar: "answers/grammar-answer-58-59.pdf",
+            fileExamTranslate: "exams/translate-exam-07.pdf",
+            fileAnswerTranslate: "answers/translate-answer-07.pdf"
         },
         evening: {
-            activity: "เฉลย/เรียน"
+            activity: "เฉลยไวย./เรียนไวย./เรียนแปล."
         }
     },
 
