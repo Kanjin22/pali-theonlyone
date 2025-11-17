@@ -56,7 +56,24 @@ const translationPrinciples = {
       {
         id: "ch2_topic4",
         title: "๔. ประธาน",
-        content: "<h3>๔. ประธาน</h3><p>รอเนื้อหา...</p>"
+        content: "<h3>๔. ประธาน</h3><p>รอเนื้อหา...</p>",
+        subtopics: [
+          {
+            id: "ch2_topic4_sub1",
+            title: "ลักษณะของประธาน",
+            content: "<h3>ลักษณะของประธาน</h3><p>รอเนื้อหา...</p>"
+          },
+          {
+            id: "ch2_topic4_sub2",
+            title: "หลักตรวจสอบบทประธาน",
+            content: "<h3>หลักตรวจสอบบทประธาน</h3><p>รอเนื้อหา...</p>"
+          },
+          {
+            id: "ch2_topic4_sub3",
+            title: "ประธานในประโยค",
+            content: "<h3>ประธานในประโยค</h3><p>รอเนื้อหา...</p>"
+          }
+        ]
       },
       {
         id: "ch2_topic5",
@@ -76,7 +93,14 @@ const translationPrinciples = {
       {
         id: "ch2_topic8",
         title: "๘. กิริยาคุมพากย์",
-        content: "<h3>๘. กิริยาคุมพากย์</h3><p>รอเนื้อหา...</p>"
+        content: "<h3>๘. กิริยาคุมพากย์</h3><p>รอเนื้อหา...</p>",
+        subtopics: [
+          {
+            id: "ch2_topic8_sub1",
+            title: "อตฺถิ มีอยู่, ย่อมมี",
+            content: "<h3>อตฺถิ มีอยู่, ย่อมมี</h3><p>รอเนื้อหา...</p>"
+          }
+        ]
       },
       {
         id: "ch2_topic9",
