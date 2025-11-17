@@ -155,7 +155,7 @@ const scheduleData = [
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-56-57.pdf",
-            fileAnswerGrammar: "answers/translate-answer-56-57",
+            fileAnswerGrammar: "answers/grammar-answer-54-55.pdf",
             fileExamTranslate: "exams/translate-exam-06.pdf",
             fileAnswerTranslate: "answers/translate-answer-06.pdf"
         },
