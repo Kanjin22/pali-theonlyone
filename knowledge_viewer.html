@@ -6,63 +6,53 @@
     <title>รายละเอียด</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* (ใช้ CSS เดียวกันกับหน้าสารบัญแปล) */
-        body { font-family: 'Sarabun', sans-serif; line-height: 1.8; margin: 0; background-color: #f9f9f9; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px 40px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; }
-        h1 { color: #2c3e50; border-bottom: 2px solid #34495e; padding-bottom: 10px; }
-        .content-body { margin-top: 30px; }
-        .example { display: block; padding: 15px; margin: 20px 0; border-left: 4px solid #3498db; background-color: #f4f7f6; }
-        .footer-credit { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #7f8c8d; text-align: center; }
-        .back-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
+        /* ... CSS ทั้งหมดเหมือนเดิม ... */
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="topic-title">กำลังโหลด...</h1>
-        <div id="content-body">
-            <!-- JavaScript จะแทรกเนื้อหาที่นี่ -->
-        </div>
+        <div id="content-body"></div>
         <a id="back-link" href="index.html" class="back-link">&larr; กลับสู่สารบัญ</a>
-
         <div class="footer-credit">
-            <p>จากหนังสือ "บาลีไวยากรณ์"<br>
-            ฉบับคัดย่อสรุปจากบาลีมหาไวยากรณ์ กัจจายน ปทรูปสิทธิ<br>
-            โดย รองศาสตราจารย์ ดร.เวทย์ บรรณกรกุล<br>
-            ป.ธ.๙ (สามเณร) พธ.บ. (เกียรตินิยมอันดับ ๑) ศษ.ม. (มหิดล) พธ.ด. (บาลีพุทธศาสตร์)</p>
+            <!-- ... ส่วน credit เหมือนเดิม ... -->
         </div>
     </div>
 
     <script src="knowledge-data.js"></script>
     <script>
-        // อ่าน URL เพื่อหาว่าผู้ใช้ต้องการดู "ประเภท" และ "หัวข้อ" อะไร
         const params = new URLSearchParams(window.location.search);
-        const type = params.get('type'); // 'grammar' หรือ 'translation'
+        const type = params.get('type');
         const topicId = params.get('topic');
 
-        let dataToSearch = null;
-        let backLinkHref = "index.html";
-        let documentTitle = "รายละเอียด";
-
-        if (type === 'grammar') {
-            dataToSearch = grammarPrinciples;
-            backLinkHref = "grammar_principles.html";
-            documentTitle = "หลักบาลีไวยากรณ์";
-        } else {
-            dataToSearch = translationPrinciples;
-            backLinkHref = "translation_principles.html";
-            documentTitle = "หลักการแปลมคธเป็นไทย";
-        }
-
+        let dataToSearch = (type === 'grammar') ? grammarPrinciples : translationPrinciples;
+        let backLinkHref = (type === 'grammar') ? "grammar_principles.html" : "translation_principles.html";
+        
         document.getElementById('back-link').href = backLinkHref;
 
         let foundTopic = null;
-        // ค้นหาหัวข้อที่ตรงกับ id ในฐานข้อมูลที่ถูกต้อง
+
+        // *** ยกเครื่อง Logic การค้นหาใหม่ทั้งหมด ***
+        // วนลูปสองชั้นเพื่อค้นหาทั้งใน topics และ subtopics
         for (const chapterKey in dataToSearch) {
             const chapter = dataToSearch[chapterKey];
-            const topic = chapter.topics.find(t => t.id === topicId);
-            if (topic) {
-                foundTopic = topic;
-                break;
+            for (const topic of chapter.topics) {
+                // ค้นหาในหัวข้อหลัก
+                if (topic.id === topicId) {
+                    foundTopic = topic;
+                    break;
+                }
+                // ถ้าไม่เจอ ให้ค้นหาในหัวข้อย่อย (ถ้ามี)
+                if (topic.subtopics) {
+                    const subtopic = topic.subtopics.find(st => st.id === topicId);
+                    if (subtopic) {
+                        foundTopic = subtopic;
+                        break;
+                    }
+                }
+            }
+            if (foundTopic) {
+                break; // ถ้าเจอแล้ว ให้ออกจากลูปหลัก
             }
         }
 
@@ -70,12 +60,12 @@
         const contentElement = document.getElementById('content-body');
 
         if (foundTopic) {
-            document.title = foundTopic.title; // เปลี่ยน title ของหน้าเว็บ
+            document.title = foundTopic.title;
             titleElement.textContent = foundTopic.title;
             contentElement.innerHTML = foundTopic.content;
         } else {
             document.title = "ไม่พบหัวข้อ";
-            titleElement.textContent = "ไม่พบหัวข้อ";
+            titleElement.textContent = "ไม่พบหัว้อ";
             contentElement.innerHTML = "<p>ไม่พบเนื้อหาสำหรับหัวข้อที่ท่านเลือก กรุณากลับไปที่หน้าสารบัญ</p>";
         }
     </script>

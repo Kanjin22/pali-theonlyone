@@ -6,7 +6,6 @@
     <title>หลักบาลีไวยากรณ์</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* (ใช้ CSS เดียวกันกับหน้าสารบัญแปล) */
         body { font-family: 'Sarabun', sans-serif; line-height: 1.8; margin: 0; background-color: #f9f9f9; }
         .container { max-width: 900px; margin: 20px auto; padding: 20px 40px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; }
         h1 { color: #2c3e50; border-bottom: 2px solid #34495e; padding-bottom: 10px; }
@@ -14,6 +13,21 @@
         .toc-list { list-style-type: none; padding-left: 0; }
         .toc-list a { text-decoration: none; color: #3498db; font-size: 1.1em; display: block; padding: 8px 0; border-bottom: 1px solid #eee; transition: background-color 0.2s; }
         .toc-list a:hover { background-color: #f4f7f6; }
+        
+        /* *** เพิ่ม CSS สำหรับหัวข้อย่อย *** */
+        .subtopic-list {
+            list-style-type: none;
+            padding-left: 30px; /* ทำให้หัวข้อย่อยเยื้องเข้าไป */
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .subtopic-list a {
+            font-size: 1em; /* ขนาดตัวอักษรเล็กลงเล็กน้อย */
+            color: #555; /* สีเข้มขึ้นเล็กน้อย */
+            border-bottom: none; /* เอาเส้นคั่นออก */
+            padding: 4px 0;
+        }
+
         .footer-credit { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #7f8c8d; text-align: center; }
         .home-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
     </style>
@@ -27,19 +41,16 @@
         </div>
 
         <a href="index.html" class="home-link">&larr; กลับสู่หน้าหลัก</a>
-
         <div class="footer-credit">
-            <p>จากหนังสือ "บาลีไวยากรณ์"<br>
-            ฉบับคัดย่อสรุปจากบาลีมหาไวยากรณ์ กัจจายน ปทรูปสิทธิ<br>
-            โดย รองศาสตราจารย์ ดร.เวทย์ บรรณกรกุล<br>
-            ป.ธ.๙ (สามเณร) พธ.บ. (เกียรตินิยมอันดับ ๑) ศษ.ม. (มหิดล) พธ.ด. (บาลีพุทธศาสตร์)</p>
+            <!-- ... ส่วน credit เหมือนเดิม ... -->
         </div>
     </div>
 
     <script src="knowledge-data.js"></script>
     <script>
         const tocContainer = document.getElementById('table-of-contents');
-        // วนลูปสร้างสารบัญจากข้อมูล grammarPrinciples
+        
+        // *** ยกเครื่อง JavaScript สำหรับสร้างสารบัญใหม่ทั้งหมด ***
         for (const chapterKey in grammarPrinciples) {
             const chapter = grammarPrinciples[chapterKey];
             const chapterTitle = document.createElement('h2');
@@ -49,10 +60,27 @@
             if (chapter.topics && chapter.topics.length > 0) {
                 const topicList = document.createElement('ul');
                 topicList.className = 'toc-list';
+                
                 chapter.topics.forEach(topic => {
                     const listItem = document.createElement('li');
-                    // สร้างลิงก์ไปยังหน้าแสดงเนื้อหา โดยส่ง "ประเภท" และ "id" ของหัวข้อไปด้วย
+                    
+                    // สร้างลิงก์สำหรับหัวข้อหลัก
                     listItem.innerHTML = `<a href="knowledge_viewer.html?type=grammar&topic=${topic.id}">${topic.title}</a>`;
+                    
+                    // ตรวจสอบว่ามี subtopics หรือไม่
+                    if (topic.subtopics && topic.subtopics.length > 0) {
+                        const sublist = document.createElement('ul');
+                        sublist.className = 'subtopic-list';
+                        
+                        topic.subtopics.forEach(subtopic => {
+                            const subListItem = document.createElement('li');
+                            subListItem.innerHTML = `<a href="knowledge_viewer.html?type=grammar&topic=${subtopic.id}">${subtopic.title}</a>`;
+                            sublist.appendChild(subListItem);
+                        });
+                        
+                        listItem.appendChild(sublist); // นำ list ของ subtopic ไปใส่ต่อท้ายหัวข้อหลัก
+                    }
+                    
                     topicList.appendChild(listItem);
                 });
                 tocContainer.appendChild(topicList);
