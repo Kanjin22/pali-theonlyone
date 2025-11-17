@@ -149,7 +149,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-05.pdf"
         },
         afternoon: {
-            activity: "สอบไวย./เรียนแปล./สอบแปล.",
+            activity: "สอบไวย./เรียนแปล.",
             fileNoteTranslate: "materials/translate-notes-06.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -159,12 +159,12 @@ const scheduleData = [
         },
         evening: {
             activity: "เฉลยไวย./เรียนไวย./เรียนแปล.",
+            fileNoteTranslate: "materials/translate-notes-07.pdf",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
             fileExamTranslate: "exams/translate-exam-06.pdf",
-            fileAnswerTranslate: "answers/translate-answer-06.pdf",
-            fileNoteTranslate: "materials/translate-notes-07.pdf"
+            fileAnswerTranslate: "answers/translate-answer-06.pdf"
         }
     },
 
