@@ -26,19 +26,21 @@
             padding-bottom: 20px;
             border-bottom: 2px solid #34495e;
         }
-        h1 {
-            font-size: 2.5em;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2em;
-            color: #7f8c8d;
+        h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; }
+        h2 { font-size: 1.8em; color: #34495e; margin: 0; padding: 0;}
+        p { font-size: 1.2em; color: #7f8c8d; }
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 50px auto;
+            width: 80%;
         }
         .menu-container {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
+            margin-top: 20px;
         }
         .menu-button {
             display: block;
@@ -72,11 +74,21 @@
             <p>ชั้นประโยค ๑-๒ (นวกะ ๒ ห้อง ๔)</p>
         </div>
         
+        <h2>ตารางเรียนรายเดือน</h2>
         <div class="menu-container">
             <a href="november.html" class="menu-button">พฤศจิกายน ๒๕๖๘</a>
             <a href="december.html" class="menu-button">ธันวาคม ๒๕๖๘</a>
             <a href="january.html" class="menu-button">มกราคม ๒๕๖๙</a>
             <a href="february.html" class="menu-button">กุมภาพันธ์ ๒๕๖๙</a>
+        </div>
+
+        <hr>
+
+        <h2>คลังความรู้</h2>
+        <div class="menu-container">
+            <a href="grammar_principles.html" class="menu-button">หลักบาลีไวยากรณ์</a>
+            <a href="translation_principles.html" class="menu-button">หลักการแปลมคธเป็นไทย</a>
+            <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-button">
         </div>
     </div>
 </body>
