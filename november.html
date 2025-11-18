@@ -102,12 +102,23 @@
         @media print {
             body { margin: 0; padding: 1cm; background-color: #fff; }
             .page-header, .print-button, #toast-notification, .home-link { display: none !important; }
+            
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            .btn { background: none !important; color: #000 !important; padding: 0 !important; margin: 0 !important; border: none !important; box-shadow: none !important; font-weight: normal !important; text-decoration: none !important; display: block; }
-            .btn.disabled-link { display: none !important; }
-            td div { display: block !important; margin-bottom: 3px; }
+            
+            /* --- ซ่อนปุ่มทั้งหมดตอนพิมพ์ --- */
+            .btn {
+                display: none !important;
+            }
+            
+            /* --- แสดงข้อความสำรองเฉพาะตอนพิมพ์ --- */
+            .print-only {
+                display: inline !important; /* หรือ block ตามความเหมาะสม */
+                font-size: 0.9em;
+                color: #000;
+            }
+            
             .remarks-cell { font-size: 8.5pt; }
         }
     </style>
