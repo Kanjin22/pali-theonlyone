@@ -232,10 +232,9 @@ const scheduleData = [
         afternoon: {
             activity: "สอบไวย. ๗",
             isExam: true,
-            examStartTime: "18:30:00",
-            examEndTime: "19:30:00",
-            fileExamGrammar: "exams/grammar-exam-62-63.pdf",
-            fileExamTranslate: "exams/translate-exam-06.pdf"
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
+            fileExamGrammar: "exams/grammar-exam-62-63.pdf"
         },
         evening: {
             activity: "เฉลยไวย. ๗/เรียน"
@@ -255,10 +254,9 @@ const scheduleData = [
         afternoon: {
             activity: "สอบไวย. ๘",
             isExam: true,
-            examStartTime: "18:30:00",
-            examEndTime: "19:30:00",
-            fileExamGrammar: "exams/grammar-exam-64-65.pdf",
-            fileExamTranslate: "exams/translate-exam-07.pdf"
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
+            fileExamGrammar: "exams/grammar-exam-64-65.pdf"
         },
         evening: {
             activity: "เฉลยไวย. ๘/เรียน"
@@ -287,10 +285,9 @@ const scheduleData = [
         afternoon: {
             activity: "สอบไวย. ๙",
             isExam: true,
-            examStartTime: "18:30:00",
-            examEndTime: "19:30:00",
-            fileExamGrammar: "exams/grammar-exam-66-67.pdf",
-            fileExamTranslate: "exams/translate-exam-66-67.pdf"
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
+            fileExamGrammar: "exams/grammar-exam-66-67.pdf"
         },
         evening: {
             activity: "เฉลยไวย. ๙/เรียน"
@@ -299,32 +296,87 @@ const scheduleData = [
 
     {
         date: "2025-11-25", displayDate: "อ. ๒๕-พ.ย.-๒๕",
-        remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑" },
-        morning: { activity: "อ่านไวย. ๑๐", fileNoteGrammar: "materials/grammar-notes-50-51.pdf", fileNoteTranslate: "materials/translate-notes-50-51.pdf" },
-        afternoon: { activity: "สอบไวย. ๑๐", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf", fileExamTranslate: "exams/translate-exam-50-51.pdf" },
-        evening: { activity: "เฉลยไวย. ๑๐/เรียน" }
+        remarks: { 
+            grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑" 
+        },
+        morning: { 
+            activity: "อ่านไวย. ๑๐", 
+            fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
+        },
+        afternoon: { 
+            activity: "สอบไวย. ๑๐", 
+            isExam: true, 
+            examStartTime: "14:00:00", 
+            examEndTime: "15:00:00", 
+            fileExamGrammar: "exams/grammar-exam-50-51.pdf"
+        },
+        evening: { 
+            activity: "เฉลยไวย. ๑๐/เรียน" 
+        }
     },
+
     {
         date: "2025-11-26", displayDate: "พ. ๒๖-พ.ย.-๒๕",
-        remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓" },
-        morning: { activity: "อ่านไวย. ๑๑", fileNoteGrammar: "materials/grammar-notes-52-53.pdf", fileNoteTranslate: "materials/translate-notes-52-53.pdf" },
-        afternoon: { activity: "สอบไวย. ๑๑", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-52-53.pdf" },
-        evening: { activity: "เฉลยไวย. ๑๑/เรียน" }
+        remarks: { 
+            grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓" 
+        },
+        morning: { 
+            activity: "อ่านไวย. ๑๑", 
+            fileNoteGrammar: "materials/grammar-notes-52-53.pdf" 
+        },
+        afternoon: { 
+            activity: "สอบไวย. ๑๑", 
+            isExam: true, 
+            examStartTime: "14:00:00", 
+            examEndTime: "15:00:00", 
+            fileExamGrammar: "exams/grammar-exam-52-53.pdf" 
+        },
+        evening: { 
+            activity: "เฉลยไวย. ๑๑/เรียน" 
+        }
     },
     {
         date: "2025-11-27", displayDate: "พฤ. ๒๗-พ.ย.-๒๕",
-        remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕" },
-        morning: { activity: "อ่านไวย. ๑๒", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-54-55.pdf" },
-        afternoon: { activity: "สอบไวย. ๑๒", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "exams/translate-exam-54-55.pdf" },
-        evening: { activity: "เฉลยไวย. ๑๒/เรียน" }
+        remarks: { 
+            grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕" 
+        },
+        morning: { 
+            activity: "อ่านไวย. ๑๒", 
+            fileNoteGrammar: "materials/grammar-notes-54-55.pdf"
+        },
+        afternoon: { 
+            activity: "สอบไวย. ๑๒", 
+            isExam: true, 
+            examStartTime: "14:00:00", 
+            examEndTime: "15:00:00", 
+            fileExamGrammar: "exams/grammar-exam-54-55.pdf"
+        },
+        evening: { 
+            activity: "เฉลยไวย. ๑๒/เรียน" 
+
+        }
     },
     {
         date: "2025-11-28", displayDate: "ศ. ๒๘-พ.ย.-๒๕",
-        remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗" },
-        morning: { activity: "อ่านไวย. ๑๒", fileNoteGrammar: "materials/grammar-notes-56-57.pdf", fileNoteTranslate: "materials/translate-notes-56-57.pdf" },
-        afternoon: { activity: "สอบไวย. ๑๒", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-56-57.pdf", fileExamTranslate: "exams/translate-exam-56-57.pdf" },
-        evening: { activity: "เฉลยไวย. ๑๒/เรียน" }
+        remarks: { 
+            grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗" },
+        morning: { 
+            activity: "อ่านไวย. ๑๒", 
+            fileNoteGrammar: "materials/grammar-notes-56-57.pdf" 
+        },
+        afternoon: { 
+            activity: "สอบไวย. ๑๒", 
+            isExam: true, 
+            examStartTime: "14:00:00", 
+            examEndTime: "15:00:00", 
+            fileExamGrammar: "exams/grammar-exam-56-57.pdf" 
+        },
+        evening: { 
+            activity: "เฉลยไวย. ๑๒/เรียน" 
+        }
     },
+
     { date: "2025-11-29", displayDate: "ส. ๒๙-พ.ย.-๒๕", isWeekend: true },
+
     { date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๒๕", isWeekend: true },
 ];
