@@ -190,7 +190,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-07.pdf"
         },
         evening: {
-            activity: "เฉลยไวย. ๕/เรียนไวย./เรียนแปล."
+            activity: "เฉลยไวย. ๕/เรียนไวย."
         }
     },
 
@@ -198,7 +198,8 @@ const scheduleData = [
         date: "2025-11-19", displayDate: "พ. ๑๙-พ.ย.-๒๕",
         remarks: {
             grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
-            translate: "แปล. หลักการแปล ๙ ประการ"
+            translate: "ภ.๑ น. ๗-๙ ตสฺส วิรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
+            translate: "ภ.๑ น. ๑๓-๑๕ โส อนุปุพฺเพน ตํ - อิมา คาถา อภาสิ ฯ"
         },
         morning: {
             activity: "อ่านไวย. ๖",
@@ -207,13 +208,12 @@ const scheduleData = [
         afternoon: {
             activity: "สอบไวย. ๖",
             isExam: true,
-            examStartTime: "18:30:00",
-            examEndTime: "19:30:00",
-            fileExamGrammar: "exams/grammar-exam-60-61.pdf",
-            fileExamTranslate: "exams/translate-exam-05.pdf"
+            examStartTime: "14:00:00",
+            examEndTime: "14:00:00",
+            fileExamGrammar: "exams/grammar-exam-60-61.pdf"
         },
         evening: {
-            activity: "เฉลยไวย. ๖/เรียน"
+            activity: "เฉลยไวย. ๖ / อ่านแปล. ค. ๑-๒"
         }
     },
 
