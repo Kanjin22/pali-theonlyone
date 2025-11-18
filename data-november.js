@@ -23,11 +23,11 @@ const scheduleData = [
             grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
         },
         morning: {
-            activity: "อ่านไวย.",
+            activity: "อ่านไวย. ๑",
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
         },
         afternoon: {
-            activity: "สอบไวย.",
+            activity: "สอบไวย. ๑",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -35,7 +35,7 @@ const scheduleData = [
             fileAnswerGrammar: "answers/grammar-answer-50-51.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย."
+            activity: "เฉลยไวย. ๑/เรียนไวย."
         }
     },
 
@@ -46,12 +46,12 @@ const scheduleData = [
             translate: "แปล. ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น"
         },
         morning: {
-            activity: "อ่านไวย./เรียนแปล.",
+            activity: "อ่านไวย. ๒/เรียนแปล.",
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-01.pdf"
         },
         afternoon: {
-            activity: "สอบไวย./สอบแปล.",
+            activity: "สอบไวย. ๒/สอบแปล.",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -61,7 +61,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-01.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย."
+            activity: "เฉลยไวย. ๒/เรียนไวย."
         },
     },
 
@@ -72,12 +72,12 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ (๑. อาลปนะ)"
         },
         morning: {
-            activity: "อ่านไวย./เรียนแปล.",
+            activity: "อ่านไวย. ๓/เรียนแปล.",
             fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
             fileNoteTranslate: "materials/translate-notes-02.pdf"
         },
         afternoon: {
-            activity: "สอบไวย./สอบแปล.",
+            activity: "สอบไวย. ๓/สอบแปล.",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -87,7 +87,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-02.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย."
+            activity: "เฉลยไวย. ๓/เรียนไวย."
         }
     },
 
@@ -140,7 +140,7 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก, ๗. บทขยายกิริยาในระหว่าง)"
         },
         morning: {
-            activity: "อ่านไวย./สอบแปล.",
+            activity: "อ่านไวย. ๔/สอบแปล.",
             fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
             isExam: true,
             examStartTime: "09:00:00",
@@ -149,7 +149,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-05.pdf"
         },
         afternoon: {
-            activity: "สอบไวย./เรียนแปล.",
+            activity: "สอบไวย. ๔/เรียนแปล.",
             fileNoteTranslate: "materials/translate-notes-06.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -158,7 +158,7 @@ const scheduleData = [
             fileAnswerGrammar: "answers/grammar-answer-56-57.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย./เรียนแปล.",
+            activity: "เฉลยไวย. ๔/เรียนไวย./เรียนแปล.",
             fileNoteTranslate: "materials/translate-notes-07.pdf",
             isExam: true,
             examStartTime: "18:30:00",
@@ -175,12 +175,12 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ (๘. กิริยาคุมพากย์, ๙. บทขยายกิริยาคุมพวกย์)"
         },
         morning: {
-            activity: "อ่านไวย./อ่านแปล.",
+            activity: "อ่านไวย. ๕/อ่านแปล.",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-07.pdf"
         },
         afternoon: {
-            activity: "สอบไวย./สอบแปล.",
+            activity: "สอบไวย. ๕/สอบแปล.",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -190,7 +190,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-07.pdf"
         },
         evening: {
-            activity: "เฉลยไวย./เรียนไวย./เรียนแปล."
+            activity: "เฉลยไวย. ๕/เรียนไวย./เรียนแปล."
         }
     },
 
@@ -201,11 +201,11 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ"
         },
         morning: {
-            activity: "อ่านหนังสือ",
+            activity: "อ่านไวย. ๖",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf"
         },
         afternoon: {
-            activity: "สอบประจำวัน",
+            activity: "สอบไวย. ๖",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
@@ -213,7 +213,7 @@ const scheduleData = [
             fileExamTranslate: "exams/translate-exam-05.pdf"
         },
         evening: {
-            activity: "เฉลย/เรียน"
+            activity: "เฉลยไวย. ๖/เรียน"
         }
     },
 
@@ -224,11 +224,11 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ"
         },
         morning: {
-            activity: "อ่านหนังสือ",
+            activity: "อ่านไวย. ๗",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf"
         },
         afternoon: {
-            activity: "สอบประจำวัน",
+            activity: "สอบไวย. ๗",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
@@ -236,7 +236,7 @@ const scheduleData = [
             fileExamTranslate: "exams/translate-exam-06.pdf"
         },
         evening: {
-            activity: "เฉลย/เรียน"
+            activity: "เฉลยไวย. ๗/เรียน"
         }
     },
 
@@ -247,11 +247,11 @@ const scheduleData = [
             translate: "แปล. หลักการแปล ๙ ประการ"
         },
         morning: {
-            activity: "อ่านหนังสือ",
+            activity: "อ่านไวย. ๘",
             fileNoteGrammar: "materials/grammar-notes-64-65.pdf"
         },
         afternoon: {
-            activity: "สอบประจำวัน",
+            activity: "สอบไวย. ๘",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
@@ -259,7 +259,7 @@ const scheduleData = [
             fileExamTranslate: "exams/translate-exam-07.pdf"
         },
         evening: {
-            activity: "เฉลย/เรียน"
+            activity: "เฉลยไวย. ๘/เรียน"
         }
     },
 
@@ -279,49 +279,49 @@ const scheduleData = [
             grammar: "ไวย. ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗"
         },
         morning: {
-            activity: "อ่านหนังสือ",
+            activity: "อ่านไวย. ๙",
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf"
         },
-        evening: {
-            activity: "เฉลย/เรียน"
-        },
         afternoon: {
-            activity: "สอบประจำวัน",
+            activity: "สอบไวย. ๙",
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
             fileExamGrammar: "exams/grammar-exam-66-67.pdf",
             fileExamTranslate: "exams/translate-exam-66-67.pdf"
+        },
+        evening: {
+            activity: "เฉลยไวย. ๙/เรียน"
         }
     },
 
     {
         date: "2025-11-25", displayDate: "อ. ๒๕-พ.ย.-๒๕",
         remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-50-51.pdf", fileNoteTranslate: "materials/translate-notes-50-51.pdf" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf", fileExamTranslate: "exams/translate-exam-50-51.pdf" },
-        evening: { activity: "เฉลย/เรียน" }
+        morning: { activity: "อ่านไวย. ๑๐", fileNoteGrammar: "materials/grammar-notes-50-51.pdf", fileNoteTranslate: "materials/translate-notes-50-51.pdf" },
+        afternoon: { activity: "สอบไวย. ๑๐", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-50-51.pdf", fileExamTranslate: "exams/translate-exam-50-51.pdf" },
+        evening: { activity: "เฉลยไวย. ๑๐/เรียน" }
     },
     {
         date: "2025-11-26", displayDate: "พ. ๒๖-พ.ย.-๒๕",
         remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-52-53.pdf", fileNoteTranslate: "materials/translate-notes-52-53.pdf" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-52-53.pdf" },
-        evening: { activity: "เฉลย/เรียน" }
+        morning: { activity: "อ่านไวย. ๑๑", fileNoteGrammar: "materials/grammar-notes-52-53.pdf", fileNoteTranslate: "materials/translate-notes-52-53.pdf" },
+        afternoon: { activity: "สอบไวย. ๑๑", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-52-53.pdf", fileExamTranslate: "exams/translate-exam-52-53.pdf" },
+        evening: { activity: "เฉลยไวย. ๑๑/เรียน" }
     },
     {
         date: "2025-11-27", displayDate: "พฤ. ๒๗-พ.ย.-๒๕",
         remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-54-55.pdf" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "exams/translate-exam-54-55.pdf" },
-        evening: { activity: "เฉลย/เรียน" }
+        morning: { activity: "อ่านไวย. ๑๒", fileNoteGrammar: "materials/grammar-notes-54-55.pdf", fileNoteTranslate: "materials/translate-notes-54-55.pdf" },
+        afternoon: { activity: "สอบไวย. ๑๒", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-54-55.pdf", fileExamTranslate: "exams/translate-exam-54-55.pdf" },
+        evening: { activity: "เฉลยไวย. ๑๒/เรียน" }
     },
     {
         date: "2025-11-28", displayDate: "ศ. ๒๘-พ.ย.-๒๕",
         remarks: { grammar: "ไวย. ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-56-57.pdf", fileNoteTranslate: "materials/translate-notes-56-57.pdf" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-56-57.pdf", fileExamTranslate: "exams/translate-exam-56-57.pdf" },
-        evening: { activity: "เฉลย/เรียน" }
+        morning: { activity: "อ่านไวย. ๑๒", fileNoteGrammar: "materials/grammar-notes-56-57.pdf", fileNoteTranslate: "materials/translate-notes-56-57.pdf" },
+        afternoon: { activity: "สอบไวย. ๑๒", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-56-57.pdf", fileExamTranslate: "exams/translate-exam-56-57.pdf" },
+        evening: { activity: "เฉลยไวย. ๑๒/เรียน" }
     },
     { date: "2025-11-29", displayDate: "ส. ๒๙-พ.ย.-๒๕", isWeekend: true },
     { date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๒๕", isWeekend: true },
