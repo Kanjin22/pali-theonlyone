@@ -182,8 +182,8 @@ const scheduleData = [
         afternoon: {
             activity: "สอบไวย./สอบแปล.",
             isExam: true,
-            examStartTime: "18:30:00",
-            examEndTime: "19:30:00",
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-58-59.pdf",
             fileAnswerGrammar: "answers/grammar-answer-58-59.pdf",
             fileExamTranslate: "exams/translate-exam-07.pdf",
