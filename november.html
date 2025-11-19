@@ -28,15 +28,6 @@
         .disabled-link { background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; }
         #toast-notification { /* ... */ }
 
-        /* --- CSS สำหรับกลุ่มปุ่มพิมพ์ --- */
-        .print-controls { text-align: center; margin: 20px auto; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .print-controls strong { display: block; margin-bottom: 10px; font-size: 1.1em; }
-        .print-controls button { margin: 5px; padding: 10px 20px; font-size: 1em; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
-        .print-btn-all { background-color: #555; color: #fff; }
-        .print-btn-grammar { background-color: #2980b9; color: #fff; }
-        .print-btn-translate { background-color: #27ae60; color: #fff; }
-        .print-controls button:hover { opacity: 0.85; }
-        
         @media screen and (max-width: 768px) { 
             table { border: 0; } 
             thead { display: none; } 
@@ -47,26 +38,38 @@
             .remarks-cell:before { display:none; } 
         }
 
+        /* --- CSS สำหรับกลุ่มปุ่มพิมพ์ --- */
+        .print-controls {
+            text-align: center; margin: 20px auto; padding: 15px;
+            background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .print-controls strong { display: block; margin-bottom: 10px; font-size: 1.1em; }
+        .print-controls button {
+            font-family: 'Sarabun', sans-serif; font-size: 1em; padding: 8px 15px; margin: 5px;
+            border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: all 0.2s;
+            background-color: #f0f0f0; color: #333;
+        }
+        .print-controls button.active {
+            background-color: #34495e; color: white; border-color: #34495e; font-weight: bold;
+        }
+        .print-controls .print-action-btn {
+            background-color: #27ae60; color: white; border-color: #27ae60; font-weight: bold;
+        }
+
+        /* --- CSS สำหรับการซ่อน/แสดง (สำคัญ!) --- */
+        .hide-grammar .content-grammar,
+        .hide-translate .content-translate {
+            display: none;
+        }
+
         /* --- CSS @media print --- */
         @media print {
             body { margin: 0; padding: 1cm; background-color: #fff; }
-            .page-header, .print-controls, #toast-notification, .home-link { display: none !important; }
+            .page-header, .print-controls, .home-link, #toast-notification, .btn { display: none !important; }
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            
-            /* ซ่อนปุ่มทั้งหมด */
-            .btn { display: none !important; }
-            
-            /* แสดงข้อความกิจกรรมและหมายเหตุ (สำคัญ!) */
-            td div, .remarks-cell div { 
-                display: block !important; 
-            }
-
-            /* คลาสสำหรับซ่อนส่วนที่ไม่ต้องการ (ทำงานร่วมกับ JavaScript) */
-            .hide-for-print {
-                display: none !important;
-            }
+            td div, .remarks-cell div { display: block !important; }
         }
     </style>
 </head>
@@ -78,12 +81,13 @@
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
     <div class="print-controls">
-        <strong>🖨️ พิมพ์ / ส่งออกเป็น PDF:</strong>
-        <button onclick="printSchedule('all')" class="print-btn-all">พิมพ์ทั้งหมด</button>
-        <button onclick="printSchedule('grammar')" class="print-btn-grammar">เฉพาะไวยากรณ์</button>
-        <button onclick="printSchedule('translate')" class="print-btn-translate">เฉพาะวิชาแปล</button>
+        <strong>ตัวเลือกการแสดงผล/พิมพ์:</strong>
+        <button id="filter-all" class="control-btn active">แสดงทั้งหมด</button>
+        <button id="filter-grammar" class="control-btn">เฉพาะไวยากรณ์</button>
+        <button id="filter-translate" class="control-btn">เฉพาะวิชาแปล</button>
+        <button class="print-action-btn" onclick="window.print()">🖨️ พิมพ์ตาราง</button>
     </div>
-    <table>
+    <table id="schedule-table">
         <thead>
             <tr>
                 <th style="width:12%">วดป.</th>
@@ -249,6 +253,33 @@
         window.onafterprint = function() {
             document.querySelectorAll('.hide-for-print').forEach(el => el.classList.remove('hide-for-print'));
         };
+
+        // *** เพิ่ม JavaScript ใหม่สำหรับควบคุม UI การพิมพ์ ***
+        const table = document.getElementById('schedule-table');
+        const filterAllBtn = document.getElementById('filter-all');
+        const filterGrammarBtn = document.getElementById('filter-grammar');
+        const filterTranslateBtn = document.getElementById('filter-translate');
+        const controlButtons = [filterAllBtn, filterGrammarBtn, filterTranslateBtn];
+
+        // ฟังก์ชันสำหรับอัปเดตการแสดงผล
+        function applyFilter(type) {
+            table.classList.remove('hide-grammar', 'hide-translate');
+            
+            if (type === 'grammar') {
+                table.classList.add('hide-translate');
+            } else if (type === 'translate') {
+                table.classList.add('hide-grammar');
+            }
+            
+            // อัปเดตสถานะ 'active' ของปุ่ม
+            controlButtons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${type}`).classList.add('active');
+        }
+
+        // เพิ่ม Event Listener ให้กับปุ่ม
+        filterAllBtn.addEventListener('click', () => applyFilter('all'));
+        filterGrammarBtn.addEventListener('click', () => applyFilter('grammar'));
+        filterTranslateBtn.addEventListener('click', () => applyFilter('translate'));
 
         // === ส่วนควบคุมหลัก ===
         document.addEventListener('DOMContentLoaded', () => {
