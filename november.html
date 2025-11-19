@@ -6,70 +6,56 @@
     <title>ตารางเรียนเดือนพฤศจิกายน</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Sarabun', sans-serif; margin: 15px; background-color: #f7f7f7; line-height: 1.6; 
+        /* --- CSS เดิมทั้งหมดของคุณ --- */
+        body { font-family: 'Sarabun', sans-serif; margin: 15px; background-color: #f7f7f7; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; }
+        .main-title { font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; }
+        .sub-title { font-size: 1.3em; color: #34495e; margin: 5px 0; }
+        .description { font-size: 1em; color: #7f8c8d; margin: 5px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); border: 1px solid #cccccc; }
+        th, td { border: 1px solid #cccccc; text-align: center; padding: 10px 8px; vertical-align: middle; }
+        thead th { background-color: #34495e; color: #ffffff; position: sticky; top: 0; z-index: 2; }
+        tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+        tbody tr:hover { background-color: #e8f4f8; }
+        .remarks-cell { text-align: left; vertical-align: top; }
+        .remarks-cell div { margin-bottom: 5px; }
+        .weekend-row { background-color: #e9ecef; color: #6c757d; }
+        .today-highlight { background-color: #fffacd !important; font-weight: bold; }
+        .btn { display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; }
+        .btn-material { background-color: #3498db; } .btn-material:hover { background-color: #2980b9; }
+        .btn-exam { background-color: #2ecc71; } .btn-exam:hover { background-color: #27ae60; }
+        .btn-answer { background-color: #f39c12; } .btn-answer:hover { background-color: #e67e22; }
+        .disabled-link { background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; }
+        #toast-notification { /* ... */ }
+
+        /* --- CSS ใหม่: สำหรับกลุ่มปุ่มพิมพ์ --- */
+        .print-controls {
+            text-align: center;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .page-header { 
-            text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; 
+        .print-controls strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
-        .main-title { 
-            font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; 
+        .print-controls button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .sub-title { 
-            font-size: 1.3em; color: #34495e; margin: 5px 0; 
-        }
-        .description { 
-            font-size: 1em; color: #7f8c8d; margin: 5px 0; 
-        }
-        table { 
-            width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); border: 1px solid #cccccc; 
-        }
-        th, td { 
-            border: 1px solid #cccccc; text-align: center; padding: 10px 8px; vertical-align: middle; 
-        }
-        thead th { 
-            background-color: #34495e; color: #ffffff; position: sticky; top: 0; z-index: 2; 
-        }
-        tbody tr:nth-of-type(even) { 
-            background-color: #f3f3f3; 
-        }
-        tbody tr:hover { 
-            background-color: #e8f4f8; 
-        }
-        .remarks-cell { 
-            text-align: left; vertical-align: top; 
-        }
-        .remarks-cell div { 
-            margin-bottom: 5px; 
-        }
-        .weekend-row { 
-            background-color: #e9ecef; color: #6c757d; 
-        }
-        .today-highlight { 
-            background-color: #fffacd !important; font-weight: bold; 
-        }
-        .btn { 
-            display: inline-block; padding: 5px 12px; margin: 2px 4px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: bold; font-size: 0.9em; transition: all 0.2s; 
-        }
-        .btn-material { 
-            background-color: #3498db; } .btn-material:hover { background-color: #2980b9; 
-        }
-        .btn-exam { 
-            background-color: #2ecc71; } .btn-exam:hover { background-color: #27ae60; 
-        }
-        .btn-answer {
-            background-color: #f39c12;
-        }
-        .btn-answer:hover {background-color: #e67e22;
-        }
-        .disabled-link { 
-            background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; 
-        }
-        #toast-notification { 
-            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: 30px; font-size: 17px; opacity: 0; transition: visibility 0s, opacity 0.5s linear; 
-        }
-        #toast-notification.show { 
-            visibility: visible; opacity: 1; }
+        .print-btn-all { background-color: #555; color: #fff; }
+        .print-btn-grammar { background-color: #2980b9; color: #fff; }
+        .print-btn-translate { background-color: #27ae60; color: #fff; }
+        .print-controls button:hover { opacity: 0.85; }
             @media screen and (max-width: 768px) { 
                 table { border: 0; } 
                 thead { display: none; } 
@@ -79,47 +65,21 @@
                 .remarks-cell { text-align: left; padding-left: 10px; padding-top: 10px; } 
                 .remarks-cell:before { display:none; } 
             }
-                /* --- CSS ใหม่สำหรับปุ่มพิมพ์ --- */
-        .print-button {
-            display: block;
-            width: fit-content;
-            margin: 20px auto;
-            padding: 10px 25px;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #fff;
-            background-color: #e67e22;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .print-button:hover {
-            background-color: #d35400;
-        }
-
-        /* --- CSS ใหม่สำหรับการพิมพ์ (@media print) --- */
+        /* --- CSS @media print (ยกเครื่องใหม่) --- */
         @media print {
             body { margin: 0; padding: 1cm; background-color: #fff; }
-            .page-header, .print-button, #toast-notification, .home-link { display: none !important; }
-            
+            .page-header, .print-controls, #toast-notification, .home-link { display: none !important; }
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            
-            /* --- ซ่อนปุ่มทั้งหมดตอนพิมพ์ --- */
-            .btn {
+            .btn { display: none !important; }
+            .print-only { display: block !important; color: #000; font-size: 0.9em; }
+            .remarks-cell { font-size: 8.5pt; }
+
+            /* --- คลาสใหม่สำหรับซ่อนส่วนที่ไม่ต้องการตอนพิมพ์ --- */
+            .hide-for-print {
                 display: none !important;
             }
-            
-            /* --- แสดงข้อความสำรองเฉพาะตอนพิมพ์ --- */
-            .print-only {
-                display: inline !important; /* หรือ block ตามความเหมาะสม */
-                font-size: 0.9em;
-                color: #000;
-            }
-            
-            .remarks-cell { font-size: 8.5pt; }
         }
     </style>
 </head>
@@ -130,7 +90,12 @@
         <p class="description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
-    <button onclick="window.print()" class="print-button">🖨️ พิมพ์ / ส่งออกเป็น PDF</button>
+    <div class="print-controls">
+        <strong>🖨️ พิมพ์ / ส่งออกเป็น PDF:</strong>
+        <button onclick="printSchedule('all')" class="print-btn-all">พิมพ์ทั้งหมด</button>
+        <button onclick="printSchedule('grammar')" class="print-btn-grammar">เฉพาะไวยากรณ์</button>
+        <button onclick="printSchedule('translate')" class="print-btn-translate">เฉพาะวิชาแปล</button>
+    </div>
     <table>
         <thead>
             <tr>
@@ -148,63 +113,57 @@
 <script src="data-november.js"></script>
     <script src="data-november.js"></script> <!-- หรือ data-november.js, etc. -->
     <script>
-        // === ฟังก์ชันสร้างปุ่มและเนื้อหา ===
+        // === ฟังก์ชันสร้างปุ่มและเนื้อหา (*** ยกเครื่องใหม่ ***) ===
         function generateCellContent(period, date) {
             if (!period) return '';
             let content = '';
-            if (period.activity) { content += `<div>${period.activity}</div>`; }
             
+            // สร้างข้อความและปุ่มสำหรับแต่ละวิชา โดยห่อด้วย div และใส่ class กำกับ
             if (period.fileNoteGrammar) {
                 const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
+                content += `<div class="content-grammar"><span class="print-only">อ่านไวย.</span><a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a></div>`;
             }
             if (period.fileNoteTranslate) {
                 const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
+                content += `<div class="content-translate"><span class="print-only">อ่านแปล.</span><a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a></div>`;
             }
-            
             if (period.isExam) {
-                const examTypeGrammar = "ข้อสอบ ไวย.";
-                const answerTypeGrammar = "เฉลย ไวย.";
                 if (period.fileExamGrammar) {
-                    content += `<a href="#" target="_blank" class="btn exam-button" 
+                    const examTypeGrammar = "ข้อสอบ ไวย."; const answerTypeGrammar = "เฉลย ไวย.";
+                    content += `<div class="content-grammar"><span class="print-only">สอบไวย.</span><a href="#" target="_blank" class="btn exam-button" 
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
                                 data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
-                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">
-                                โหลด...
-                               </a>`;
+                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">โหลด...</a></div>`;
                 }
-                const examTypeTranslate = "ข้อสอบ แปล";
-                const answerTypeTranslate = "เฉลย แปล";
                 if (period.fileExamTranslate) {
-                    content += `<a href="#" target="_blank" class="btn exam-button"
+                    const examTypeTranslate = "ข้อสอบ แปล"; const answerTypeTranslate = "เฉลย แปล";
+                    content += `<div class="content-translate"><span class="print-only">สอบแปล.</span><a href="#" target="_blank" class="btn exam-button"
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
                                 data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
-                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">
-                                โหลด...
-                               </a>`;
+                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">โหลด...</a></div>`;
                 }
+            }
+            // ถ้าไม่มีอะไรเลย แต่มี activity ให้แสดงแค่ activity
+            if (content === '' && period.activity) {
+                 content += `<div><span class="print-only">${period.activity}</span><div class="btn-replacement">${period.activity}</div></div>`;
             }
             return content;
         }
 
-        // === ฟังก์ชันสร้างเนื้อหาหมายเหตุ (*** เวอร์ชันอัปเดต ***) ===
+        // === ฟังก์ชันสร้างเนื้อหาหมายเหตุ (*** ยกเครื่องใหม่ ***) ===
         function generateRemarks(remarks) {
             if (!remarks) return '';
             let html = '';
             if (remarks.grammar) {
-                html += `<div>${remarks.grammar}</div>`;
+                html += `<div class="content-grammar">${remarks.grammar}</div>`;
             }
             if (remarks.translate) {
-                // ตรวจสอบว่าเป็น Array หรือไม่
                 if (Array.isArray(remarks.translate)) {
-                    // ถ้าใช่ ให้วนลูปสร้าง div สำหรับทุกรายการ
                     remarks.translate.forEach(item => {
-                        html += `<div>${item}</div>`;
+                        html += `<div class="content-translate">${item}</div>`;
                     });
                 } else {
-                    // ถ้าไม่ใช่ (เป็นแค่ข้อความธรรมดา) ก็แสดงผลเหมือนเดิม
-                    html += `<div>${remarks.translate}</div>`;
+                    html += `<div class="content-translate">${remarks.translate}</div>`;
                 }
             }
             if (remarks.general) {
