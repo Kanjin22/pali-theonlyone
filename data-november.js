@@ -52,7 +52,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-01.pdf"
         },
         evening: {
-            activity: "เฉลยไวย. (๒)/เรียนไวย."
+            activityGrammar: "เฉลยไวย. (๒)/เรียนไวย."
         },
     },
 
