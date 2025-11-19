@@ -226,8 +226,9 @@ const scheduleData = [
             activityTranslate: "อ่านแปล. ภ. ๑",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "14:00:00",
-            fileExamGrammar: "exams/grammar-exam-60-61.pdf"
+            examEndTime: "15:00:00",
+            fileExamGrammar: "exams/grammar-exam-60-61.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-60-61.pdf"
         },
         evening: {
             activityGrammar: "เฉลยไวย. (๖)",
