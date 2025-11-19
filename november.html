@@ -55,14 +55,18 @@
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
             
-            /* --- ซ่อนปุ่มทั้งหมดตอนพิมพ์ --- */
+            /* ซ่อนปุ่มทั้งหมด */
             .btn { display: none !important; }
-
-            /* --- แสดงข้อความกิจกรรมและหมายเหตุ --- */
-            td div, .remarks-cell div { display: block !important; }
             
-            /* --- คลาสสำหรับซ่อนส่วนที่ไม่ต้องการ --- */
-            .hide-for-print { display: none !important; }
+            /* แสดงข้อความกิจกรรมและหมายเหตุ (สำคัญ!) */
+            td div, .remarks-cell div { 
+                display: block !important; 
+            }
+
+            /* คลาสสำหรับซ่อนส่วนที่ไม่ต้องการ (ทำงานร่วมกับ JavaScript) */
+            .hide-for-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
