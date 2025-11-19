@@ -69,7 +69,6 @@
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            td div, .remarks-cell div { display: block !important; }
         }
     </style>
 </head>
@@ -103,200 +102,176 @@
     <div id="toast-notification"></div>
     <script src="data-november.js"></script>
     <script>
-        // === ฟังก์ชันสร้างปุ่มและเนื้อหา (*** Final & Corrected Version v2 ***) ===
-        function generateCellContent(period, date) {
-            if (!period) return '';
-            let finalContent = '';
+    // === ฟังก์ชันสร้างปุ่มและเนื้อหา (คงเดิม) ===
+    function generateCellContent(period, date) {
+        if (!period) return '';
+        let finalContent = '';
 
-            // --- ส่วนของไวยากรณ์ ---
-            let grammarItems = [];
-            if (period.activityGrammar) {
-                grammarItems.push(`<span>${period.activityGrammar}</span>`);
-            }
-            if (period.fileNoteGrammar) {
-                const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                grammarItems.push(`<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`);
-            }
-            if (period.isExam && period.fileExamGrammar) {
-                const examType = "ข้อสอบ ไวย.", answerType = "เฉลย ไวย.";
-                grammarItems.push(`<a href="#" target="_blank" class="btn exam-button" 
-                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
-                                data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`);
-            }
-            if (grammarItems.length > 0) {
-                finalContent += `<div class="content-grammar">${grammarItems.join(' ')}</div>`;
-            }
+        // --- ส่วนของไวยากรณ์ ---
+        let grammarItems = [];
+        if (period.activityGrammar) {
+            grammarItems.push(`<span>${period.activityGrammar}</span>`);
+        }
+        if (period.fileNoteGrammar) {
+            const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
+            grammarItems.push(`<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`);
+        }
+        if (period.isExam && period.fileExamGrammar) {
+            const examType = "ข้อสอบ ไวย.", answerType = "เฉลย ไวย.";
+            grammarItems.push(`<a href="#" target="_blank" class="btn exam-button" 
+                            data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                            data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
+                            data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`);
+        }
+        if (grammarItems.length > 0) {
+            finalContent += `<div class="content-grammar">${grammarItems.join(' ')}</div>`;
+        }
 
-            // --- ส่วนของวิชาแปล ---
-            let translateItems = [];
-            if (period.activityTranslate) {
-                translateItems.push(`<span>${period.activityTranslate}</span>`);
-            }
-            if (period.fileNoteTranslate) {
-                const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                translateItems.push(`<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`);
-            }
-            if (period.isExam && period.fileExamTranslate) {
-                const examType = "ข้อสอบ แปล", answerType = "เฉลย แปล";
-                translateItems.push(`<a href="#" target="_blank" class="btn exam-button"
-                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
-                                data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`);
-            }
-            if (translateItems.length > 0) {
-                finalContent += `<div class="content-translate">${translateItems.join(' ')}</div>`;
-            }
-            
-            // ถ้าไม่มีอะไรเลย แต่มี activity ทั่วไป
-            if (finalContent === '' && period.activity) {
-                finalContent += `<div><span>${period.activity}</span></div>`;
-            }
-            return finalContent;
+        // --- ส่วนของวิชาแปล ---
+        let translateItems = [];
+        if (period.activityTranslate) {
+            translateItems.push(`<span>${period.activityTranslate}</span>`);
+        }
+        if (period.fileNoteTranslate) {
+            const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
+            translateItems.push(`<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`);
+        }
+        if (period.isExam && period.fileExamTranslate) {
+            const examType = "ข้อสอบ แปล", answerType = "เฉลย แปล";
+            translateItems.push(`<a href="#" target="_blank" class="btn exam-button"
+                            data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                            data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
+                            data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`);
+        }
+        if (translateItems.length > 0) {
+            finalContent += `<div class="content-translate">${translateItems.join(' ')}</div>`;
         }
         
-        // (ฟังก์ชันอื่นๆ ทั้งหมดเหมือนเดิมทุกประการ)
-        function generateRemarks(remarks) {
-            if (!remarks) return '';
-            let html = '';
-            if (remarks.grammar) { html += `<div class="content-grammar">${remarks.grammar}</div>`; }
-            if (remarks.translate) {
-                if (Array.isArray(remarks.translate)) {
-                    remarks.translate.forEach(item => { html += `<div class="content-translate">${item}</div>`; });
-                } else { html += `<div class="content-translate">${remarks.translate}</div>`; }
+        if (finalContent === '' && period.activity) {
+            finalContent += `<div><span>${period.activity}</span></div>`;
+        }
+        return finalContent;
+    }
+    
+    // (ฟังก์ชันอื่นๆ ที่เหลือคงเดิมทั้งหมด)
+    function generateRemarks(remarks) {
+        if (!remarks) return '';
+        let html = '';
+        if (remarks.grammar) { html += `<div class="content-grammar">${remarks.grammar}</div>`; }
+        if (remarks.translate) {
+            if (Array.isArray(remarks.translate)) {
+                remarks.translate.forEach(item => { html += `<div class="content-translate">${item}</div>`; });
+            } else { html += `<div class="content-translate">${remarks.translate}</div>`; }
+        }
+        if (remarks.general) { html += `<div>${remarks.general}</div>`; }
+        return html;
+    }
+    function buildScheduleTable() {
+        const tableBody = document.getElementById('schedule-body');
+        let tableHTML = '';
+        const data = typeof scheduleData !== 'undefined' ? scheduleData : [];
+        data.forEach(item => {
+            if (item.isWeekend) {
+                tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
+            } else {
+                const morningContent = generateCellContent(item.morning, item.date);
+                const afternoonContent = generateCellContent(item.afternoon, item.date);
+                const eveningContent = generateCellContent(item.evening, item.date);
+                const remarksContent = generateRemarks(item.remarks);
+                tableHTML += `<tr data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td data-label="เช้า-สาย">${morningContent}</td><td data-label="บ่าย">${afternoonContent}</td><td data-label="ค่ำ">${eveningContent}</td><td class="remarks-cell">${remarksContent}</td></tr>`;
             }
-            if (remarks.general) { html += `<div>${remarks.general}</div>`; }
-            return html;
-        }
-        function buildScheduleTable() {
-            const tableBody = document.getElementById('schedule-body');
-            let tableHTML = '';
-            const data = typeof scheduleData !== 'undefined' ? scheduleData : [];
-            data.forEach(item => {
-                if (item.isWeekend) {
-                    tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
+        });
+        tableBody.innerHTML = tableHTML;
+    }
+    function highlightCurrentDay() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayString = `${year}-${month}-${day}`;
+        document.querySelectorAll('tbody tr').forEach(row => {
+            if (row.dataset.date === todayString) {
+                row.classList.add('today-highlight');
+            }
+        });
+    }
+    function updateExamButtons() {
+        const now = new Date();
+        document.querySelectorAll('.exam-button').forEach(button => {
+            const date = button.dataset.date;
+            const startTime = new Date(`${date}T${button.dataset.startTime}`);
+            const endTime = new Date(`${date}T${button.dataset.endTime}`);
+            
+            const examFile = button.dataset.examFile;
+            const answerFile = button.dataset.answerFile;
+            const examLabel = button.dataset.labelExam;
+            const answerLabel = button.dataset.labelAnswer;
+
+            if (now < startTime) {
+                button.textContent = `รอเวลาสอบ`;
+                button.href = '#';
+                button.className = 'btn disabled-link exam-button';
+            } else if (now >= startTime && now <= endTime) {
+                button.textContent = examLabel;
+                button.href = examFile;
+                button.className = 'btn btn-exam exam-button';
+            } else { // now > endTime
+                if (answerFile && answerFile !== '#') {
+                    button.textContent = answerLabel;
+                    button.href = answerFile;
+                    button.className = 'btn btn-answer exam-button';
                 } else {
-                    const morningContent = generateCellContent(item.morning, item.date);
-                    const afternoonContent = generateCellContent(item.afternoon, item.date);
-                    const eveningContent = generateCellContent(item.evening, item.date);
-                    const remarksContent = generateRemarks(item.remarks);
-                    tableHTML += `<tr data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td data-label="เช้า-สาย">${morningContent}</td><td data-label="บ่าย">${afternoonContent}</td><td data-label="ค่ำ">${eveningContent}</td><td class="remarks-cell">${remarksContent}</td></tr>`;
-                }
-            });
-            tableBody.innerHTML = tableHTML;
-        }
-        function highlightCurrentDay() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const todayString = `${year}-${month}-${day}`;
-            document.querySelectorAll('tbody tr').forEach(row => {
-                if (row.dataset.date === todayString) {
-                    row.classList.add('today-highlight');
-                }
-            });
-        }
-
-        // === ฟังก์ชันตรวจสอบเวลาสอบและเฉลย ===
-        function updateExamButtons() {
-            const now = new Date();
-            document.querySelectorAll('.exam-button').forEach(button => {
-                const date = button.dataset.date;
-                const startTime = new Date(`${date}T${button.dataset.startTime}`);
-                const endTime = new Date(`${date}T${button.dataset.endTime}`);
-                
-                const examFile = button.dataset.examFile;
-                const answerFile = button.dataset.answerFile;
-                const examLabel = button.dataset.labelExam;
-                const answerLabel = button.dataset.labelAnswer;
-
-                if (now < startTime) {
-                    button.textContent = `รอเวลาสอบ`;
+                    button.textContent = 'หมดเวลา';
                     button.href = '#';
                     button.className = 'btn disabled-link exam-button';
-                } else if (now >= startTime && now <= endTime) {
-                    button.textContent = examLabel;
-                    button.href = examFile;
-                    button.className = 'btn btn-exam exam-button';
-                } else { // now > endTime
-                    if (answerFile && answerFile !== '#') {
-                        button.textContent = answerLabel;
-                        button.href = answerFile;
-                        button.className = 'btn btn-answer exam-button';
-                    } else {
-                        button.textContent = 'หมดเวลา';
-                        button.href = '#';
-                        button.className = 'btn disabled-link exam-button';
-                    }
                 }
-            });
-        }
-
-        // === ฟังก์ชันแสดง Pop-up ===
-        function showToast(message) {
-            const toast = document.getElementById("toast-notification");
-            toast.textContent = message;
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        function printSchedule(type) {
-    // 1. ใช้ Logic การซ่อน/แสดงจากฟังก์ชัน applyFilter เดิม
-    table.classList.remove('hide-grammar', 'hide-translate');
-    if (type === 'grammar') {
-        table.classList.add('hide-translate');
-    } else if (type === 'translate') {
-        table.classList.add('hide-grammar');
+            }
+        });
+    }
+    function showToast(message) {
+        const toast = document.getElementById("toast-notification");
+        toast.textContent = message;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
     }
 
-    // 2. เรียกคำสั่งพิมพ์ทันที
-    setTimeout(() => { window.print(); }, 100);
-    
-    // (window.onafterprint จะทำงานเพื่อลบคลาสออกให้เอง)
-}
+    // === ส่วนควบคุมหลัก (คงเดิม) ===
+    document.addEventListener('DOMContentLoaded', () => {
+        const table = document.getElementById('schedule-table');
+        const filterAllBtn = document.getElementById('filter-all');
+        const filterGrammarBtn = document.getElementById('filter-grammar');
+        const filterTranslateBtn = document.getElementById('filter-translate');
+        const controlButtons = [filterAllBtn, filterGrammarBtn, filterTranslateBtn];
 
-        // === ส่วนควบคุมหลัก (*** ยกเครื่องใหม่ทั้งหมด ***) ===
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- 1. ประกาศตัวแปรที่จำเป็นก่อน ---
-            const table = document.getElementById('schedule-table');
-            const filterAllBtn = document.getElementById('filter-all');
-            const filterGrammarBtn = document.getElementById('filter-grammar');
-            const filterTranslateBtn = document.getElementById('filter-translate');
-            const controlButtons = [filterAllBtn, filterGrammarBtn, filterTranslateBtn];
-
-            // --- 2. สร้างฟังก์ชันที่จำเป็น ---
-            function applyFilter(type) {
-                table.classList.remove('hide-grammar', 'hide-translate');
-                if (type === 'grammar') {
-                    table.classList.add('hide-translate');
-                } else if (type === 'translate') {
-                    table.classList.add('hide-grammar');
-                }
-                controlButtons.forEach(btn => btn.classList.remove('active'));
-                document.getElementById(`filter-${type}`).classList.add('active');
+        function applyFilter(type) {
+            table.classList.remove('hide-grammar', 'hide-translate');
+            if (type === 'grammar') {
+                table.classList.add('hide-translate');
+            } else if (type === 'translate') {
+                table.classList.add('hide-grammar');
             }
+            controlButtons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${type}`).classList.add('active');
+        }
 
-            // --- 3. เรียกใช้ฟังก์ชันเริ่มต้น ---
-            buildScheduleTable();
-            highlightCurrentDay();
-            updateExamButtons();
-            setInterval(updateExamButtons, 30000);
-            
-            // --- 4. เพิ่ม Event Listeners ---
-            filterAllBtn.addEventListener('click', () => applyFilter('all'));
-            filterGrammarBtn.addEventListener('click', () => applyFilter('grammar'));
-            filterTranslateBtn.addEventListener('click', () => applyFilter('translate'));
-            
-            document.body.addEventListener('click', function(event) {
-                const target = event.target.closest('a');
-                if (target && target.getAttribute('href') === '#') {
-                    event.preventDefault();
-                    showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
-                }
-            });
+        buildScheduleTable();
+        highlightCurrentDay();
+        updateExamButtons();
+        setInterval(updateExamButtons, 30000);
+        
+        filterAllBtn.addEventListener('click', () => applyFilter('all'));
+        filterGrammarBtn.addEventListener('click', () => applyFilter('grammar'));
+        filterTranslateBtn.addEventListener('click', () => applyFilter('translate'));
+        
+        document.body.addEventListener('click', function(event) {
+            const target = event.target.closest('a');
+            if (target && target.getAttribute('href') === '#') {
+                event.preventDefault();
+                showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
+            }
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
