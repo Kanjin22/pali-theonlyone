@@ -81,11 +81,12 @@
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
     <div class="print-controls">
-    <strong>ตัวเลือกการพิมพ์:</strong>
-    <button onclick="printSchedule('all')">🖨️ พิมพ์ทั้งหมด</button>
-    <button onclick="printSchedule('grammar')">🖨️ พิมพ์เฉพาะไวยากรณ์</button>
-    <button onclick="printSchedule('translate')">🖨️ พิมพ์เฉพาะวิชาแปล</button>
-</div>
+        <strong>ตัวเลือกการแสดงผล/พิมพ์:</strong>
+        <button id="filter-all" class="control-btn active">แสดงทั้งหมด</button>
+        <button id="filter-grammar" class="control-btn">เฉพาะไวยากรณ์</button>
+        <button id="filter-translate" class="control-btn">เฉพาะวิชาแปล</button>
+        <button class="print-action-btn" onclick="window.print()">🖨️ พิมพ์ตาราง</button>
+    </div>
     <table id="schedule-table">
         <thead>
             <tr>
