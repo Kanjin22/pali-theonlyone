@@ -256,39 +256,37 @@
     // (window.onafterprint จะทำงานเพื่อลบคลาสออกให้เอง)
 }
 
-        // *** เพิ่ม JavaScript ใหม่สำหรับควบคุม UI การพิมพ์ ***
-        const table = document.getElementById('schedule-table');
-        const filterAllBtn = document.getElementById('filter-all');
-        const filterGrammarBtn = document.getElementById('filter-grammar');
-        const filterTranslateBtn = document.getElementById('filter-translate');
-        const controlButtons = [filterAllBtn, filterGrammarBtn, filterTranslateBtn];
-
-        // ฟังก์ชันสำหรับอัปเดตการแสดงผล
-        function applyFilter(type) {
-            table.classList.remove('hide-grammar', 'hide-translate');
-            
-            if (type === 'grammar') {
-                table.classList.add('hide-translate');
-            } else if (type === 'translate') {
-                table.classList.add('hide-grammar');
-            }
-            
-            // อัปเดตสถานะ 'active' ของปุ่ม
-            controlButtons.forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`filter-${type}`).classList.add('active');
-        }
-
-        // เพิ่ม Event Listener ให้กับปุ่ม
-        filterAllBtn.addEventListener('click', () => applyFilter('all'));
-        filterGrammarBtn.addEventListener('click', () => applyFilter('grammar'));
-        filterTranslateBtn.addEventListener('click', () => applyFilter('translate'));
-
-        // === ส่วนควบคุมหลัก ===
+        // === ส่วนควบคุมหลัก (*** ยกเครื่องใหม่ทั้งหมด ***) ===
         document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. ประกาศตัวแปรที่จำเป็นก่อน ---
+            const table = document.getElementById('schedule-table');
+            const filterAllBtn = document.getElementById('filter-all');
+            const filterGrammarBtn = document.getElementById('filter-grammar');
+            const filterTranslateBtn = document.getElementById('filter-translate');
+            const controlButtons = [filterAllBtn, filterGrammarBtn, filterTranslateBtn];
+
+            // --- 2. สร้างฟังก์ชันที่จำเป็น ---
+            function applyFilter(type) {
+                table.classList.remove('hide-grammar', 'hide-translate');
+                if (type === 'grammar') {
+                    table.classList.add('hide-translate');
+                } else if (type === 'translate') {
+                    table.classList.add('hide-grammar');
+                }
+                controlButtons.forEach(btn => btn.classList.remove('active'));
+                document.getElementById(`filter-${type}`).classList.add('active');
+            }
+
+            // --- 3. เรียกใช้ฟังก์ชันเริ่มต้น ---
             buildScheduleTable();
             highlightCurrentDay();
             updateExamButtons();
             setInterval(updateExamButtons, 30000);
+            
+            // --- 4. เพิ่ม Event Listeners ---
+            filterAllBtn.addEventListener('click', () => applyFilter('all'));
+            filterGrammarBtn.addEventListener('click', () => applyFilter('grammar'));
+            filterTranslateBtn.addEventListener('click', () => applyFilter('translate'));
             
             document.body.addEventListener('click', function(event) {
                 const target = event.target.closest('a');
