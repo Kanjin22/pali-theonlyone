@@ -28,6 +28,13 @@
         .disabled-link { background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; }
         #toast-notification { /* ... */ }
 
+        /* --- CSS ใหม่: สำหรับกำหนดความกว้างคอลัมน์ --- */
+        .col-date    { width: 12%; }
+        .col-morning { width: 17%; }
+        .col-afternoon { width: 17%; }
+        .col-evening { width: 17%; }
+        .col-remarks { width: 37%; } /* ให้พื้นที่มากที่สุด */
+
         @media screen and (max-width: 768px) { 
             table { border: 0; } 
             thead { display: none; } 
@@ -89,11 +96,11 @@
     <table id="schedule-table">
         <thead>
             <tr>
-                <th style="width:12%">วดป.</th>
-                <th>เช้า-สาย (พพล.)</th>
-                <th>บ่าย (๑๔.๐๐-๑๖.๐๐)</th>
-                <th>ค่ำ (๑๘.๓๐-๒๐.๓๐)</th>
-                <th style="width:30%">หมายเหตุ</th>
+                <th class="col-date">วดป.</th>
+                <th class="col-morning">เช้า-สาย (พพล.)</th>
+                <th class="col-afternoon">บ่าย (๑๔.๐๐-๑๖.๐๐)</th>
+                <th class="col-evening">ค่ำ (๑๘.๓๐-๒๐.๓๐)</th>
+                <th class="col-remarks">หมายเหตุ</th>
             </tr>
         </thead>
         <tbody id="schedule-body"></tbody>
