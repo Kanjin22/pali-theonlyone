@@ -54,9 +54,14 @@
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            .btn, td > div:not(.remarks-cell div) { display: none !important; }
-            .print-only { display: block !important; color: #000; font-size: 0.9em; }
-            .remarks-cell div, .remarks-cell { display: block !important; }
+            
+            /* --- ซ่อนปุ่มทั้งหมดตอนพิมพ์ --- */
+            .btn { display: none !important; }
+
+            /* --- แสดงข้อความกิจกรรมและหมายเหตุ --- */
+            td div, .remarks-cell div { display: block !important; }
+            
+            /* --- คลาสสำหรับซ่อนส่วนที่ไม่ต้องการ --- */
             .hide-for-print { display: none !important; }
         }
     </style>
@@ -90,45 +95,57 @@
     <div id="toast-notification"></div>
     <script src="data-november.js"></script>
     <script>
-        // === ฟังก์ชันสร้างปุ่มและเนื้อหา (เวอร์ชันล่าสุด) ===
-        function generateCellContent(period, date) {
-            if (!period) return '';
-            let content = '';
-            let grammarContent = '';
-            let translateContent = '';
-            
-            if (period.fileNoteGrammar) {
-                const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                grammarContent += `<span class="print-only">อ่านไวย.</span><a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
-            }
-            if (period.fileNoteTranslate) {
-                const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                translateContent += `<span class="print-only">อ่านแปล.</span><a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
-            }
-            if (period.isExam) {
-                if (period.fileExamGrammar) {
-                    const examTypeGrammar = "ข้อสอบ ไวย."; const answerTypeGrammar = "เฉลย ไวย.";
-                    grammarContent += `<span class="print-only">สอบไวย.</span><a href="#" target="_blank" class="btn exam-button" 
-                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
-                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">โหลด...</a>`;
-                }
-                if (period.fileExamTranslate) {
-                    const examTypeTranslate = "ข้อสอบ แปล"; const answerTypeTranslate = "เฉลย แปล";
-                    translateContent += `<span class="print-only">สอบแปล.</span><a href="#" target="_blank" class="btn exam-button"
-                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
-                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">โหลด...</a>`;
-                }
-            }
-            if(grammarContent) content += `<div class="content-grammar">${grammarContent}</div>`;
-            if(translateContent) content += `<div class="content-translate">${translateContent}</div>`;
-            
-            if (content === '' && period.activity) {
-                 content += `<div><span class="print-only">${period.activity}</span><div>${period.activity}</div></div>`;
-            }
-            return content;
-        }
+    // === ฟังก์ชันสร้างปุ่มและเนื้อหา (เวอร์ชันล่าสุด) ===
+    function generateCellContent(period, date) {
+    if (!period) return '';
+    let finalContent = '';
+
+    // --- ส่วนของไวยากรณ์ ---
+    let grammarHtml = '';
+    if (period.activityGrammar) { // อ่านจาก activityGrammar
+        grammarHtml += `<div>${period.activityGrammar}</div>`;
+    }
+    if (period.fileNoteGrammar) {
+        const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
+        grammarHtml += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
+    }
+    if (period.isExam && period.fileExamGrammar) {
+        const examTypeGrammar = "ข้อสอบ ไวย."; const answerTypeGrammar = "เฉลย ไวย.";
+        grammarHtml += `<a href="#" target="_blank" class="btn exam-button" 
+                        data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                        data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
+                        data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">โหลด...</a>`;
+    }
+    if (grammarHtml.trim() !== '') {
+        finalContent += `<div class="content-grammar">${grammarHtml}</div>`;
+    }
+
+    // --- ส่วนของวิชาแปล ---
+    let translateHtml = '';
+    if (period.activityTranslate) { // อ่านจาก activityTranslate
+        translateHtml += `<div>${period.activityTranslate}</div>`;
+    }
+    if (period.fileNoteTranslate) {
+        const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
+        translateHtml += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
+    }
+    if (period.isExam && period.fileExamTranslate) {
+        const examTypeTranslate = "ข้อสอบ แปล"; const answerTypeTranslate = "เฉลย แปล";
+        translateHtml += `<a href="#" target="_blank" class="btn exam-button"
+                        data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                        data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
+                        data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">โหลด...</a>`;
+    }
+    if (translateHtml.trim() !== '') {
+        finalContent += `<div class="content-translate">${translateHtml}</div>`;
+    }
+    
+    // ถ้าไม่มีอะไรเลย แต่มี activity ทั่วไป
+    if (finalContent === '' && period.activity) {
+        finalContent += `<div>${period.activity}</div>`;
+    }
+    return finalContent;
+}
         
         // (ฟังก์ชันอื่นๆ ที่จำเป็น)
         function generateRemarks(remarks) {
