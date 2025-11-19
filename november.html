@@ -28,58 +28,28 @@
         .disabled-link { background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none; }
         #toast-notification { /* ... */ }
 
-        /* --- CSS ใหม่: สำหรับกลุ่มปุ่มพิมพ์ --- */
-        .print-controls {
-            text-align: center;
-            margin: 20px auto;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .print-controls strong {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-        .print-controls button {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        /* --- CSS สำหรับกลุ่มปุ่มพิมพ์ --- */
+        .print-controls { text-align: center; margin: 20px auto; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .print-controls strong { display: block; margin-bottom: 10px; font-size: 1.1em; }
+        .print-controls button { margin: 5px; padding: 10px 20px; font-size: 1em; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
         .print-btn-all { background-color: #555; color: #fff; }
         .print-btn-grammar { background-color: #2980b9; color: #fff; }
         .print-btn-translate { background-color: #27ae60; color: #fff; }
         .print-controls button:hover { opacity: 0.85; }
-            @media screen and (max-width: 768px) { 
-                table { border: 0; } 
-                thead { display: none; } 
-                tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } 
-                td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; min-height: 40px; } 
-                td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } 
-                .remarks-cell { text-align: left; padding-left: 10px; padding-top: 10px; } 
-                .remarks-cell:before { display:none; } 
-            }
-        /* --- CSS @media print (ยกเครื่องใหม่) --- */
+        
+        @media screen and (max-width: 768px) { /* ... CSS มือถือ ... */ }
+
+        /* --- CSS @media print --- */
         @media print {
             body { margin: 0; padding: 1cm; background-color: #fff; }
             .page-header, .print-controls, #toast-notification, .home-link { display: none !important; }
             table { width: 100%; box-shadow: none; font-size: 9pt; border: 1px solid #000; }
             thead th { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
             tr, td, th { border: 1px solid #aaa !important; page-break-inside: avoid; }
-            .btn { display: none !important; }
+            .btn, td > div:not(.remarks-cell div) { display: none !important; }
             .print-only { display: block !important; color: #000; font-size: 0.9em; }
-            .remarks-cell { font-size: 8.5pt; }
-
-            /* --- คลาสใหม่สำหรับซ่อนส่วนที่ไม่ต้องการตอนพิมพ์ --- */
-            .hide-for-print {
-                display: none !important;
-            }
+            .remarks-cell div, .remarks-cell { display: block !important; }
+            .hide-for-print { display: none !important; }
         }
     </style>
 </head>
@@ -110,76 +80,65 @@
     </table>
     <a href="index.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     <div id="toast-notification"></div>
-<script src="data-november.js"></script>
+    <script src="data-november.js"></script>
     <script>
-        // === ฟังก์ชันสร้างปุ่มและเนื้อหา (*** ยกเครื่องใหม่ ***) ===
+        // === ฟังก์ชันสร้างปุ่มและเนื้อหา (เวอร์ชันล่าสุด) ===
         function generateCellContent(period, date) {
             if (!period) return '';
             let content = '';
+            let grammarContent = '';
+            let translateContent = '';
             
-            // สร้างข้อความและปุ่มสำหรับแต่ละวิชา โดยห่อด้วย div และใส่ class กำกับ
             if (period.fileNoteGrammar) {
                 const btnClass = period.fileNoteGrammar !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<div class="content-grammar"><span class="print-only">อ่านไวย.</span><a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a></div>`;
+                grammarContent += `<span class="print-only">อ่านไวย.</span><a href="${period.fileNoteGrammar}" target="_blank" class="btn ${btnClass}">เนื้อหา ไวย.</a>`;
             }
             if (period.fileNoteTranslate) {
                 const btnClass = period.fileNoteTranslate !== '#' ? 'btn-material' : 'btn-material disabled-link';
-                content += `<div class="content-translate"><span class="print-only">อ่านแปล.</span><a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a></div>`;
+                translateContent += `<span class="print-only">อ่านแปล.</span><a href="${period.fileNoteTranslate}" target="_blank" class="btn ${btnClass}">เนื้อหา แปล</a>`;
             }
             if (period.isExam) {
                 if (period.fileExamGrammar) {
                     const examTypeGrammar = "ข้อสอบ ไวย."; const answerTypeGrammar = "เฉลย ไวย.";
-                    content += `<div class="content-grammar"><span class="print-only">สอบไวย.</span><a href="#" target="_blank" class="btn exam-button" 
+                    grammarContent += `<span class="print-only">สอบไวย.</span><a href="#" target="_blank" class="btn exam-button" 
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
                                 data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
-                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">โหลด...</a></div>`;
+                                data-label-exam="${examTypeGrammar}" data-label-answer="${answerTypeGrammar}">โหลด...</a>`;
                 }
                 if (period.fileExamTranslate) {
                     const examTypeTranslate = "ข้อสอบ แปล"; const answerTypeTranslate = "เฉลย แปล";
-                    content += `<div class="content-translate"><span class="print-only">สอบแปล.</span><a href="#" target="_blank" class="btn exam-button"
+                    translateContent += `<span class="print-only">สอบแปล.</span><a href="#" target="_blank" class="btn exam-button"
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
                                 data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
-                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">โหลด...</a></div>`;
+                                data-label-exam="${examTypeTranslate}" data-label-answer="${answerTypeTranslate}">โหลด...</a>`;
                 }
             }
-            // ถ้าไม่มีอะไรเลย แต่มี activity ให้แสดงแค่ activity
+            if(grammarContent) content += `<div class="content-grammar">${grammarContent}</div>`;
+            if(translateContent) content += `<div class="content-translate">${translateContent}</div>`;
+            
             if (content === '' && period.activity) {
-                 content += `<div><span class="print-only">${period.activity}</span><div class="btn-replacement">${period.activity}</div></div>`;
+                 content += `<div><span class="print-only">${period.activity}</span><div>${period.activity}</div></div>`;
             }
             return content;
         }
-
-        // === ฟังก์ชันสร้างเนื้อหาหมายเหตุ (*** ยกเครื่องใหม่ ***) ===
+        
+        // (ฟังก์ชันอื่นๆ ที่จำเป็น)
         function generateRemarks(remarks) {
             if (!remarks) return '';
             let html = '';
-            if (remarks.grammar) {
-                html += `<div class="content-grammar">${remarks.grammar}</div>`;
-            }
+            if (remarks.grammar) { html += `<div class="content-grammar">${remarks.grammar}</div>`; }
             if (remarks.translate) {
                 if (Array.isArray(remarks.translate)) {
-                    remarks.translate.forEach(item => {
-                        html += `<div class="content-translate">${item}</div>`;
-                    });
-                } else {
-                    html += `<div class="content-translate">${remarks.translate}</div>`;
-                }
+                    remarks.translate.forEach(item => { html += `<div class="content-translate">${item}</div>`; });
+                } else { html += `<div class="content-translate">${remarks.translate}</div>`; }
             }
-            if (remarks.general) {
-                html += `<div>${remarks.general}</div>`;
-            }
+            if (remarks.general) { html += `<div>${remarks.general}</div>`; }
             return html;
         }
-        
-        // === ฟังก์ชันสร้างตารางทั้งหมด ===
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            
-            // *** หมายเหตุ: ต้องเปลี่ยน scheduleData เป็นชื่อตัวแปรที่ถูกต้องตามไฟล์ที่เรียกใช้ ***
-            // ในที่นี้สมมติว่าทุกไฟล์ data.js ของคุณใช้ชื่อตัวแปรว่า scheduleData
             const data = typeof scheduleData !== 'undefined' ? scheduleData : [];
-
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -193,8 +152,6 @@
             });
             tableBody.innerHTML = tableHTML;
         }
-
-        // === ฟังก์ชันไฮไลท์วันปัจจุบัน ===
         function highlightCurrentDay() {
             const today = new Date();
             const year = today.getFullYear();
@@ -250,7 +207,20 @@
             toast.className = "show";
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
         }
-        
+
+        function printSchedule(type) {
+            document.querySelectorAll('.hide-for-print').forEach(el => el.classList.remove('hide-for-print'));
+            if (type === 'grammar') {
+                document.querySelectorAll('.content-translate').forEach(el => el.classList.add('hide-for-print'));
+            } else if (type === 'translate') {
+                document.querySelectorAll('.content-grammar').forEach(el => el.classList.add('hide-for-print'));
+            }
+            setTimeout(() => { window.print(); }, 100);
+        }
+        window.onafterprint = function() {
+            document.querySelectorAll('.hide-for-print').forEach(el => el.classList.remove('hide-for-print'));
+        };
+
         // === ส่วนควบคุมหลัก ===
         document.addEventListener('DOMContentLoaded', () => {
             buildScheduleTable();
