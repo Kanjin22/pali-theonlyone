@@ -4,17 +4,6 @@
 // ===================================================================
 
 const scheduleData = [
-    // --- ตัวอย่างโครงสร้างข้อมูลที่สมบูรณ์ ---
-    // evening: {
-    //   activity: "สอบประจำวัน",
-    //   isExam: true,
-    //   examStartTime: "18:30:00",
-    //   examEndTime: "19:30:00", // <-- เพิ่มเข้ามา
-    //   fileExamGrammar: "exams/...",
-    //   fileAnswerGrammar: "answers/...", // <-- เพิ่มเข้ามา
-    //   fileExamTranslate: "exams/...",
-    //   fileAnswerTranslate: "answers/..." // <-- เพิ่มเข้ามา
-    // },
 
     // ########## พฤศจิกายน 2568 ##########
     {
@@ -490,7 +479,7 @@ const scheduleData = [
             activityTranslate: "อ่านแปล. ภ. ๒"
         }
     },
-    
+
     {
         date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๒๕",
         remarks: {
