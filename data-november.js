@@ -303,7 +303,7 @@ const scheduleData = [
             ]
         },
         morning: {
-            activityTranslate: "อ่าน/เรียนแปล",
+            activityTranslate: "อ่านแปล. ภ. ๑",
         },
         afternoon: {
             activityTranslate: "อ่านแปล. ภ. ๑"
