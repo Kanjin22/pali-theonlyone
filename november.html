@@ -37,7 +37,15 @@
         .print-btn-translate { background-color: #27ae60; color: #fff; }
         .print-controls button:hover { opacity: 0.85; }
         
-        @media screen and (max-width: 768px) { /* ... CSS มือถือ ... */ }
+        @media screen and (max-width: 768px) { 
+            table { border: 0; } 
+            thead { display: none; } 
+            tr { display: block; border: 1px solid #ccc; margin-bottom: 15px; background-color: #fff !important; } 
+            td { display: block; text-align: right; border: none; border-bottom: 1px dotted #eee; position: relative; padding-left: 50%; min-height: 40px; } 
+            td:before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; text-align: left; white-space: nowrap; } 
+            .remarks-cell { text-align: left; padding-left: 10px; padding-top: 10px; } 
+            .remarks-cell:before { display:none; } 
+        }
 
         /* --- CSS @media print --- */
         @media print {
