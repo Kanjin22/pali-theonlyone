@@ -24,7 +24,7 @@ const scheduleData = [
             fileAnswerGrammar: "answers/grammar-answer-50-51.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๑)/เรียนไวย."
+            activityGrammar: "เฉลยไวย. (๑)/เรียน"
         }
     },
 
@@ -52,7 +52,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-01.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๒)/เรียนไวย."
+            activityGrammar: "เฉลยไวย. (๒)/เรียน"
         },
     },
 
@@ -83,7 +83,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-02.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๓)/เรียนไวย."
+            activityGrammar: "เฉลยไวย. (๓)/เรียน"
         }
     },
 
@@ -165,7 +165,7 @@ const scheduleData = [
             fileAnswerGrammar: "answers/grammar-answer-56-57.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๔)/เรียนไวย.",
+            activityGrammar: "เฉลยไวย. (๔)/เรียน",
             activityTranslate: "เรียนแปล.",
             fileNoteTranslate: "materials/translate-notes-07.pdf",
             isExam: true,
@@ -203,7 +203,7 @@ const scheduleData = [
             fileAnswerTranslate: "answers/translate-answer-07.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๕)/เรียนไวย."
+            activityGrammar: "เฉลยไวย. (๕)/เรียน"
         }
     },
 
@@ -231,7 +231,7 @@ const scheduleData = [
             fileAnswerGrammar: "answers/grammar-answer-60-61.pdf"
         },
         evening: {
-            activityGrammar: "เฉลยไวย. (๖)",
+            activityGrammar: "เฉลยไวย. (๖)/เรียน",
             activityTranslate: "อ่านแปล. ภ. ๑"
         }
     },
