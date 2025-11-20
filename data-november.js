@@ -250,7 +250,8 @@ const scheduleData = [
         morning: {
             activityGrammar: "อ่านไวย. (๗)",
             activityTranslate: "อ่านแปล. ภ. ๑",
-            fileNoteGrammar: "materials/grammar-notes-62-63.pdf"
+            fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
+            fileNoteTranslate: "materials/translate-notes-103.pdf"
         },
         afternoon: {
             activityGrammar: "สอบไวย. (๗)",
