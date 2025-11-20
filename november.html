@@ -280,8 +280,12 @@
                 contentHtml += '<hr><h4>สื่อการสอน/ข้อสอบ:</h4>';
                 contentHtml += `<div class="modal-links">${linksHtml}</div>`;
             }
+
             modalBody.innerHTML = contentHtml;
             modal.style.display = 'flex';
+
+            // *** สำคัญมาก: เรียกใช้ฟังก์ชันอัปเดตปุ่ม "ทันที" ที่ Modal เปิด ***
+            updateAllExamButtons();
         }
 
         // === ฟังก์ชันใหม่: สร้างลิงก์ต่างๆ ภายใน Modal ===
@@ -301,12 +305,26 @@
             }
             if (period.isExam) {
                 if (period.fileExamGrammar) {
-                    const examType = "ข้อสอบ ไวย.", answerType = "เฉลย ไวย.";
-                    links += `<a href="#" target="_blank" class="btn exam-button" data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}" data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}" data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`;
+                    links += `<a href="#" target="_blank" class="btn exam-button" 
+                                data-date="${date}" 
+                                data-start-time="${period.examStartTime}" 
+                                data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamGrammar}" 
+                                data-answer-file="${period.fileAnswerGrammar || '#'}"
+                                data-type="grammar">
+                                กำลังโหลดสถานะ...
+                            </a>`;
                 }
                 if (period.fileExamTranslate) {
-                    const examType = "ข้อสอบ แปล", answerType = "เฉลย แปล";
-                    links += `<a href="#" target="_blank" class="btn exam-button" data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}" data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}" data-label-exam="${examType}" data-label-answer="${answerType}">โหลด...</a>`;
+                    links += `<a href="#" target="_blank" class="btn exam-button"
+                                data-date="${date}" 
+                                data-start-time="${period.examStartTime}" 
+                                data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamTranslate}" 
+                                data-answer-file="${period.fileAnswerTranslate || '#'}"
+                                data-type="translate">
+                                กำลังโหลดสถานะ...
+                            </a>`;
                 }
             }
             return links;
@@ -323,39 +341,46 @@
             }
         });
     }
-    function updateExamButtons() {
-        const now = new Date();
-        document.querySelectorAll('.exam-button').forEach(button => {
-            const date = button.dataset.date;
-            const startTime = new Date(`${date}T${button.dataset.startTime}`);
-            const endTime = new Date(`${date}T${button.dataset.endTime}`);
-            
-            const examFile = button.dataset.examFile;
-            const answerFile = button.dataset.answerFile;
-            const examLabel = button.dataset.labelExam;
-            const answerLabel = button.dataset.labelAnswer;
+    // === ฟังก์ชันตรวจสอบและอัปเดตสถานะปุ่มสอบ (*** ยกเครื่องใหม่ทั้งหมด ***) ===
+        function updateAllExamButtons() {
+            const now = new Date(); // ดึงเวลาปัจจุบันแค่ครั้งเดียว
 
-            if (now < startTime) {
-                button.textContent = `รอเวลาสอบ`;
-                button.href = '#';
-                button.className = 'btn disabled-link exam-button';
-            } else if (now >= startTime && now <= endTime) {
-                button.textContent = examLabel;
-                button.href = examFile;
-                button.className = 'btn btn-exam exam-button';
-            } else { // now > endTime
-                if (answerFile && answerFile !== '#') {
-                    button.textContent = answerLabel;
-                    button.href = answerFile;
-                    button.className = 'btn btn-answer exam-button';
-                } else {
-                    button.textContent = 'หมดเวลา';
+            // หาปุ่มสอบทั้งหมด ทั้งที่อยู่ใน Modal และ (ถ้ามี) ที่อื่น
+            document.querySelectorAll('.exam-button').forEach(button => {
+                const date = button.dataset.date;
+                const startTime = new Date(`${date}T${button.dataset.startTime}`);
+                const endTime = new Date(`${date}T${button.dataset.endTime}`);
+                
+                const examFile = button.dataset.examFile;
+                const answerFile = button.dataset.answerFile;
+                const type = button.dataset.type === 'grammar' ? 'ไวย.' : 'แปล';
+
+                // --- ตรรกะการแสดงผล 3 ระดับ ---
+                if (now < startTime) {
+                    // 1. ก่อนเวลาสอบ
+                    button.textContent = `รอเวลาสอบ (${type})`;
                     button.href = '#';
                     button.className = 'btn disabled-link exam-button';
+                } else if (now >= startTime && now <= endTime) {
+                    // 2. ระหว่างเวลาสอบ
+                    button.textContent = `ข้อสอบ ${type}`;
+                    button.href = examFile;
+                    button.className = 'btn btn-exam exam-button';
+                } else { // now > endTime
+                    // 3. หลังหมดเวลาสอบ
+                    if (answerFile && answerFile !== '#') {
+                        button.textContent = `ดูเฉลย ${type}`;
+                        button.href = answerFile;
+                        button.className = 'btn btn-answer exam-button';
+                    } else {
+                        // ถ้าไม่มีไฟล์เฉลย
+                        button.textContent = `หมดเวลาสอบ (${type})`;
+                        button.href = '#';
+                        button.className = 'btn disabled-link exam-button';
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
     function showToast(message) {
         const toast = document.getElementById("toast-notification");
         toast.textContent = message;
@@ -363,12 +388,14 @@
         setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
     }
 
-    // === ส่วนควบคุมหลัก (ที่ถูกต้อง) ===
+    // === ส่วนควบคุมหลัก (ที่ถูกต้องและสมบูรณ์) ===
         document.addEventListener('DOMContentLoaded', () => {
             buildScheduleTable();
             highlightCurrentDay();
-            updateExamButtons();
-            setInterval(updateExamButtons, 30000);
+            
+            // *** เรียกใช้ฟังก์ชันอัปเดตปุ่มครั้งแรก และตั้งเวลาทำงานซ้ำ ***
+            updateAllExamButtons();
+            setInterval(updateAllExamButtons, 30000); // ทำงานทุก 30 วินาที
             
             const modal = document.getElementById('details-modal');
             const closeModalBtn = document.getElementById('modal-close-btn');
