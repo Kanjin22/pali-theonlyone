@@ -336,7 +336,7 @@ const scheduleData = [
             activityGrammar: "อ่านข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๒-๖๓",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
             activityTranslate: "อ่านก็งที่ ๓ น.๑๘-๑๙ อเถกทิวสํ ทิสาวาสิโน - จกฺขุปาโล อโหสิ ฯ",
-            ileNoteTranslate: "materials/translate-notes-103.pdf"
+//            ileNoteTranslate: "materials/translate-notes-103.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๗",
