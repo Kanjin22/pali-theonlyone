@@ -409,7 +409,7 @@ const scheduleData = [
             activityTranslate: "อ่านเก็งที่ ๙ น.๖๕-๖๗ ตสฺส ทิฏฺฐกาลโต ปฏฺฐาย - อิมา คาถาโย อภาสิ ฯ"
         },
         afternoon: {
-            activityTranslate: "เก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ"
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๑"
@@ -425,12 +425,12 @@ const scheduleData = [
         },
         morning: {
             activityGrammar: "อ่านข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗",
-            activityTranslate: "เก็งที่ ๑๑ น.๘๑-๘๓ เตน โข ปน - มยฺหํ ภาโรติ วตฺวา (อาห)",
+            activityTranslate: "อ่านเก็งที่ ๑๑ น.๘๑-๘๓ เตน โข ปน - มยฺหํ ภาโรติ วตฺวา (อาห)",
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๙",
-            activityTranslate: "เก็งที่ ๑๒ น.๘๔-๘๖ ปริพฺพาชโก ปฐมปททฺวยเมว - สทฺธึ เวฬุวนํ อคมํสุ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๒ น.๘๔-๘๖ ปริพฺพาชโก ปฐมปททฺวยเมว - สทฺธึ เวฬุวนํ อคมํสุ ฯ",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -441,7 +441,7 @@ const scheduleData = [
             activityGrammar: [
                 "เฉลยบาลีไวยากรณ์ ครั้งที่ ๙"
             ],
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๑"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๑"
         }
     },
 
@@ -453,12 +453,12 @@ const scheduleData = [
         },
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑",
-            activityTranslate: "เก็งที่ ๑๓ น.๙๓-๙๕ ตทา ปน เตสํ - อิมมฺปิ ธมฺมเทสนํ อาหริ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๓ น.๙๓-๙๕ ตทา ปน เตสํ - อิมมฺปิ ธมฺมเทสนํ อาหริ ฯ",
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๐",
-            activityTranslate: "เก็งที่ ๑๔ น.๙๕-๙๗ อคฺคสาวกา ปน - คเหตฺวา เอกมนฺตํ นิสีทิ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๔ น.๙๕-๙๗ อคฺคสาวกา ปน - คเหตฺวา เอกมนฺตํ นิสีทิ ฯ",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -469,7 +469,7 @@ const scheduleData = [
             activityGrammar: [
                 "เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๐"
             ],
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๑"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๑"
         }
     },
 
@@ -481,12 +481,12 @@ const scheduleData = [
         },
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓",
-            activityTranslate: "เก็งที่ ๑๕ น.๙๙-๑๐๑ เอวํ นิสินฺเน สตฺถริ - สารีปุตฺโต นาม ภวิสฺสสีติ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๕ น.๙๙-๑๐๑ เอวํ นิสินฺเน สตฺถริ - สารีปุตฺโต นาม ภวิสฺสสีติ ฯ",
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๑",
-            activityTranslate: "เก็งที่ ๑๖ น.๑๐๖-๑๐๙ กุมาโร นิวตฺติตุกาโม - คนฺตฺวา วาสํ กปฺเปสิ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๖ น.๑๐๖-๑๐๙ กุมาโร นิวตฺติตุกาโม - คนฺตฺวา วาสํ กปฺเปสิ ฯ",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -497,7 +497,7 @@ const scheduleData = [
             activityGrammar: [
                 "เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๑"
             ],
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๑"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๑"
         }
     },
 
@@ -509,12 +509,12 @@ const scheduleData = [
         },
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕",
-            activityTranslate: "เก็งที่ ๑๗ น.๑๒๐-๑๒๓ สาวตฺถิยํ กิร - อิมํ คาถมาห ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๗ น.๑๒๐-๑๒๓ สาวตฺถิยํ กิร - อิมํ คาถมาห ฯ",
             fileNoteGrammar: "materials/grammar-notes-54-55.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๒",
-            activityTranslate: "เก็งที่ ๑๘ น.๑๒๔-๑๒๖ เทวทตฺตสฺส วตฺถุํ - อุฏฺฐหตีติ อาห ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๘ น.๑๒๔-๑๒๖ เทวทตฺตสฺส วตฺถุํ - อุฏฺฐหตีติ อาห ฯ",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -524,7 +524,7 @@ const scheduleData = [
             activityGrammar: [
                 "เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๒"
             ],
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๑"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๑"
         }
     },
 
@@ -536,12 +536,12 @@ const scheduleData = [
         },
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗",
-            activityTranslate: "เก็งที่ ๑๙ น.๑๒๙-๑๓๑ อปรภาเค สตฺถริ - ...กกฺกฏกชาตกานิ กเถสิ ฯ",
+            activityTranslate: "อ่านเก็งที่ ๑๙ น.๑๒๙-๑๓๑ อปรภาเค สตฺถริ - ...กกฺกฏกชาตกานิ กเถสิ ฯ",
             fileNoteGrammar: "materials/grammar-notes-56-57.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๓",
-            activityTranslate: "เก็งที่ ๒๐ น.๒๔๑-๑๔๓ สาวตฺถิยํ หิ เทวสิกํ - อิมํ คาถมาห ฯ",
+            activityTranslate: "อ่านเก็งที่ ๒๐ น.๒๔๑-๑๔๓ สาวตฺถิยํ หิ เทวสิกํ - อิมํ คาถมาห ฯ",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -552,7 +552,7 @@ const scheduleData = [
             activityGrammar: [
                 "เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๓"
             ],
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๑๐ ภาค ๑"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑๐ ภาค ๑"
         }
     },
 
@@ -569,7 +569,7 @@ const scheduleData = [
             activityTranslate: "อ่านเก็งที่ ๒ น.๘-๙ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ"
         },
         evening: {
-            activityTranslate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๒"
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๒"
         }
     },
 
