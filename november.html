@@ -36,78 +36,78 @@
         .col-remarks { width: 37%; } /* ให้พื้นที่มากที่สุด */
 
         /* --- CSS ใหม่: สำหรับปุ่ม "รายละเอียด" ในตาราง --- */
-.details-btn {
-    background-color: #34495e;
-    cursor: pointer;
-    border: none;
-    width: 80%;
-    max-width: 150px;
-    padding: 8px;
-    font-size: 0.9em;
-}
-.details-btn:hover {
-    background-color: #2c3e50;
-}
-
-/* --- CSS ใหม่: สำหรับ Modal Pop-up --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-.modal-content {
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    position: relative;
-    animation: fadeIn 0.3s;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-.modal-close {
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
-    line-height: 1;
-}
-.modal-close:hover { color: #333; }
-.modal-title {
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 15px;
-}
-.modal-links {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.modal-links h4 {
-    margin-bottom: 5px;
-    margin-top: 15px;
-    color: #34495e;
-    border-left: 4px solid #3498db;
-    padding-left: 10px;
-}
-.modal-links p { margin: 0 0 10px 15px; }
+        .details-btn {
+            background-color: #34495e;
+            cursor: pointer;
+            border: none;
+            width: 80%;
+            max-width: 150px;
+            padding: 8px;
+            font-size: 0.9em;
+        }
+        .details-btn:hover {
+            background-color: #2c3e50;
+        }
+        
+        /* --- CSS ใหม่: สำหรับ Modal Pop-up --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #333; }
+        .modal-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        .modal-links {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modal-links h4 {
+            margin-bottom: 5px;
+            margin-top: 15px;
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .modal-links p { margin: 0 0 10px 15px; }
 
         @media screen and (max-width: 768px) { 
             table { border: 0; } 
@@ -160,13 +160,7 @@
         <p class="description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
-    <div class="print-controls">
-        <strong>ตัวเลือกการแสดงผล/พิมพ์:</strong>
-        <button id="filter-all" class="control-btn active">แสดงทั้งหมด</button>
-        <button id="filter-grammar" class="control-btn">เฉพาะไวยากรณ์</button>
-        <button id="filter-translate" class="control-btn">เฉพาะวิชาแปล</button>
-        <button class="print-action-btn" onclick="window.print()">🖨️ พิมพ์ตาราง</button>
-    </div>
+
     <table id="schedule-table">
         <thead>
             <tr>
@@ -181,6 +175,17 @@
     </table>
     <a href="index.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     <div id="toast-notification"></div>
+    
+    <!-- *** HTML ใหม่: โครงสร้างของ Modal Pop-up *** -->
+    <div id="details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modal-close-btn" class="modal-close">&times;</span>
+            <h2 id="modal-title">รายละเอียด</h2>
+            <div id="modal-body">
+                <!-- JavaScript จะสร้างเนื้อหาและปุ่มที่นี่ -->
+            </div>
+        </div>
+    </div>
     <script src="data-november.js"></script>
     <script>
         // === ฟังก์ชันสร้าง "ปุ่มรายละเอียด" ในแต่ละช่อง ===
@@ -262,7 +267,7 @@
             if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn" style="background-color:#c4302b;">▶️ ดูวิดีโอย้อนหลัง (YouTube)</a>`; }
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; }
             if (period.fileNoteTranslate) {
-                 if (Array.isArray(period.fileNoteTranslate)) {
+                if (Array.isArray(period.fileNoteTranslate)) {
                     period.fileNoteTranslate.forEach((file, index) => {
                         if (file !== '#') links += `<a href="${file}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล (${index + 1})</a>`;
                     });
