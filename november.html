@@ -205,15 +205,23 @@
     <script src="data-november.js"></script>
     <script>
         // === ฟังก์ชันสร้าง "ปุ่มรายละเอียด" ในแต่ละช่อง ===
+        // === ฟังก์ชันสร้าง "ปุ่มรายละเอียด" (เวอร์ชันอัปเกรดสี) ===
         function generateCellContent(period, date, periodName) {
             if (!period || (!period.activityGrammar && !period.activityTranslate && !period.activity)) {
                 return '';
             }
-            return `<button class="btn details-btn" 
-                            data-date="${date}" 
-                            data-period="${periodName}">
-                        ดูรายละเอียด
-                    </button>`;
+            // --- เพิ่ม Logic ในการเลือกคลาสสี ---
+            let colorClass = '';
+            if (periodName === 'morning') colorClass = 'btn-morning';
+            else if (periodName === 'afternoon') colorClass = 'btn-afternoon';
+            else if (periodName === 'evening') colorClass = 'btn-evening';
+            
+            // --- นำคลาสสีไปใส่ในปุ่ม ---
+            return `<button class="btn details-btn ${colorClass}" 
+                    data-date="${date}" 
+                    data-period="${periodName}">
+                ดูรายละเอียด
+            </button>`;
         }
 
         // *** ฟังก์ชันที่หายไป ถูกนำกลับมาใส่ตรงนี้แล้ว ***
