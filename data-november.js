@@ -7,7 +7,7 @@ const scheduleData = [
 
     // ########## พฤศจิกายน 2568 ##########
     {
-        date: "2025-11-12", displayDate: "พ. ๑๒-พ.ย.-๒๕",
+        date: "2025-11-12", displayDate: "พ. ๑๒-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๑) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
         },
@@ -29,7 +29,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-13", displayDate: "พฤ. ๑๓-พ.ย.-๒๕",
+        date: "2025-11-13", displayDate: "พฤ. ๑๓-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๒) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓",
             translate: "ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น"
@@ -57,7 +57,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-14", displayDate: "ศ. ๑๔-พ.ย.-๒๕",
+        date: "2025-11-14", displayDate: "ศ. ๑๔-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๓) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
             translate: [
@@ -88,7 +88,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๒๕",
+        date: "2025-11-15", displayDate: "ส. ๑๕-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "หลักการแปล ๙ ประการ",
@@ -114,7 +114,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๒๕",
+        date: "2025-11-16", displayDate: "อา. ๑๖-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "หลักการแปล ๙ ประการ",
@@ -136,7 +136,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๒๕",
+        date: "2025-11-17", displayDate: "จ. ๑๗-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๔) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
             translate: [
@@ -177,7 +177,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๒๕",
+        date: "2025-11-18", displayDate: "อ. ๑๘-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๕) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙",
             translate: [
@@ -208,7 +208,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-19", displayDate: "พ. ๑๙-พ.ย.-๒๕",
+        date: "2025-11-19", displayDate: "พ. ๑๙-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๖) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
             translate: [
@@ -239,7 +239,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-20", displayDate: "พฤ. ๒๐-พ.ย.-๒๕",
+        date: "2025-11-20", displayDate: "พฤ. ๒๐-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๗) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๒-๖๓",
             translate: [
@@ -250,8 +250,7 @@ const scheduleData = [
         morning: {
             activityGrammar: "อ่านไวย. (๗)",
             activityTranslate: "อ่านแปล. ภ. ๑",
-            fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
-            fileNoteTranslate: "materials/translate-notes-103.pdf"
+            fileNoteGrammar: "materials/grammar-notes-62-63.pdf"
         },
         afternoon: {
             activityGrammar: "สอบไวย. (๗)",
@@ -260,7 +259,8 @@ const scheduleData = [
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-62-63.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-62-63.pdf"
+            fileAnswerGrammar: "answers/grammar-answer-62-63.pdf",
+            fileNoteTranslate: "materials/translate-notes-103.pdf"
         },
         evening: {
             activityGrammar: "เฉลยไวย. (๗)/เรียน",
@@ -269,7 +269,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-21", displayDate: "ศ. ๒๑-พ.ย.-๒๕",
+        date: "2025-11-21", displayDate: "ศ. ๒๑-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๘) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๔-๖๕",
             translate: [
@@ -299,7 +299,7 @@ const scheduleData = [
 
     // --- วันหยุดสุดสัปดาห์ เรียนเฉพาะวิชาแปล ---
     {
-        date: "2025-11-22", displayDate: "ส. ๒๒-พ.ย.-๒๕",
+        date: "2025-11-22", displayDate: "ส. ๒๒-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "ภาค ๑ เก็งที่ ๗ น.๕๒-๕๔ โส ตาย อากิณฺณ... - อุณฺโหทกํ ปฏิยาเทติ",
@@ -317,7 +317,7 @@ const scheduleData = [
         }
     },
     {
-        date: "2025-11-23", displayDate: "อา. ๒๓-พ.ย.-๒๕",
+        date: "2025-11-23", displayDate: "อา. ๒๓-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "ภาค ๑ เก็งที่ ๙ น.๖๕-๖๗ ตสฺส ทิฏฺฐกาลโต ปฏฺฐาย - อิมา คาถาโย อภาสิ ฯ",
@@ -337,7 +337,7 @@ const scheduleData = [
 
     // --- กลับมาเรียนผสมผสานในวันทำการ ---
     {
-        date: "2025-11-24", displayDate: "จ. ๒๔-พ.ย.-๒๕",
+        date: "2025-11-24", displayDate: "จ. ๒๔-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๙) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗",
             translate: [
@@ -366,7 +366,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-25", displayDate: "อ. ๒๕-พ.ย.-๒๕",
+        date: "2025-11-25", displayDate: "อ. ๒๕-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๑๐) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑",
             translate: [
@@ -395,7 +395,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-26", displayDate: "พ. ๒๖-พ.ย.-๒๕",
+        date: "2025-11-26", displayDate: "พ. ๒๖-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๑๑) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓",
             translate: [
@@ -424,7 +424,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-27", displayDate: "พฤ. ๒๗-พ.ย.-๒๕",
+        date: "2025-11-27", displayDate: "พฤ. ๒๗-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๑๒) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕",
             translate: [
@@ -452,7 +452,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-28", displayDate: "ศ. ๒๘-พ.ย.-๒๕",
+        date: "2025-11-28", displayDate: "ศ. ๒๘-พ.ย.-๖๘",
         remarks: {
             grammar: "ไวย. (๑๓) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗",
             translate: [
@@ -482,7 +482,7 @@ const scheduleData = [
 
     // --- วันหยุดสุดสัปดาห์ เรียนเฉพาะวิชาแปล (เริ่มต้นภาค ๒) ---
     {
-        date: "2025-11-29", displayDate: "ส. ๒๙-พ.ย.-๒๕",
+        date: "2025-11-29", displayDate: "ส. ๒๙-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "ภาค ๒ เก็งที่ ๑ น.๔-๖ ตทา จ หิมวนฺตปฺปเทเส - เทฺวปิ สมคฺคสํวาสํ วสึสุ ฯ",
@@ -501,7 +501,7 @@ const scheduleData = [
     },
 
     {
-        date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๒๕",
+        date: "2025-11-30", displayDate: "อา. ๓๐-พ.ย.-๖๘",
         remarks: {
             translate: [
                 "ภาค ๒ เก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ",
