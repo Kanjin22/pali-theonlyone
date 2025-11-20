@@ -212,19 +212,19 @@ const scheduleData = [
         remarks: {
             grammar: "ไวย. (๖) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
             translate: [
-                "ภาค ๑ เก็ง ๑ น.๗-๙ ตสฺส วรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
-                "ภาค ๑ เก็ง ๒ น.๑๓-๑๕ โส อนุปุพฺเพน ตํ - อิมา คาถา อภาสิ ฯ"
+                "เก็งที่ ๑ น.๗-๙ ตสฺส วรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
+                "เก็งที่ ๒ น.๑๓-๑๕ โส อนุปุพฺเพน ตํ - อิมา คาถา อภาสิ ฯ"
             ]
         },
         morning: {
             activityGrammar: "อ่านไวย. (๖)",
-            activityTranslate: "อ่านแปล. ภ. ๑",
+            activityTranslate: "อ่านแปล. ภ. ๑ เก็งที่ ๑",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-101.pdf"
         },
         afternoon: {
             activityGrammar: "สอบไวย. (๖)",
-            activityTranslate: "อ่านแปล. ภ. ๑",
+            activityTranslate: "อ่านแปล. ภ. ๑ เก็งที่ ๒",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -242,19 +242,19 @@ const scheduleData = [
         remarks: {
             grammar: "ไวย. (๗) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๒-๖๓",
             translate: [
-                "ภาค ๑ เก็ง ๓ น.๑๘-๑๙ อเถกทิวสํ ทิสาวาสิโน - จกฺขุปาโล อโหสิ ฯ",
-                "ภาค ๑ เก็ง ๔ น.๓๕-๓๗ โส กิรายสฺมา - วตฺวา อตีตํ อาหริ ฯ"
+                "เก็งที่ ๓ น.๑๘-๑๙ อเถกทิวสํ ทิสาวาสิโน - จกฺขุปาโล อโหสิ ฯ",
+                "เก็งที่ ๔ น.๓๕-๓๗ โส กิรายสฺมา - วตฺวา อตีตํ อาหริ ฯ"
             ]
         },
         morning: {
             activityGrammar: "อ่านไวย. (๗)",
-            activityTranslate: "อ่านแปล. ภ. ๑",
+            activityTranslate: "อ่านแปล. ภ. ๑ เก็งที่ ๓",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
             fileNoteTranslate: "materials/translate-notes-103.pdf"
         },
         afternoon: {
             activityGrammar: "สอบไวย. (๗)",
-            activityTranslate: "อ่านแปล. ภ. ๑",
+            activityTranslate: "อ่านแปล. ภ. ๑ เก็งที่ ๔",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
