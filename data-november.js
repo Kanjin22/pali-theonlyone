@@ -229,8 +229,7 @@ const scheduleData = [
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-60-61.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-60-61.pdf",
-            fileNoteTranslate: "materials/translate-notes-102.pdf"
+            fileAnswerGrammar: "answers/grammar-answer-60-61.pdf"
         },
         evening: {
             activityGrammar: "เฉลยไวย. (๖)/เรียน",
@@ -251,7 +250,7 @@ const scheduleData = [
             activityGrammar: "อ่านไวย. (๗)",
             activityTranslate: "อ่านแปล. ภ. ๑",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
-            fileNoteTranslate: "materials/translate-notes-104.pdf"
+            fileNoteTranslate: "materials/translate-notes-103.pdf"
         },
         afternoon: {
             activityGrammar: "สอบไวย. (๗)",
