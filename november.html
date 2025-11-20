@@ -36,33 +36,48 @@
         .col-remarks { width: 37%; } /* ให้พื้นที่มากที่สุด */
 
         /* --- CSS ใหม่: สำหรับปุ่ม "รายละเอียด" แยกสีตามช่วงเวลา --- */
-        .details-btn {
-            cursor: pointer;
+        .btn { 
+            display: inline-block; 
+            padding: 8px 15px; /* เพิ่ม padding เล็กน้อย */
+            margin: 2px 4px; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            color: #ffffff; 
+            font-weight: 600; /* ปรับความหนาเล็กน้อย */
+            font-size: 0.9em; 
+            transition: all 0.2s ease;
             border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn:hover {
+            opacity: 0.85; /* ใช้ opacity แทนการเปลี่ยนสีพื้นหลัง */
+            transform: translateY(-1px);
+        }
+
+        /* ปุ่ม "รายละเอียด" ในตาราง */
+        .details-btn {
             width: 80%;
             max-width: 150px;
-            padding: 8px 12px;
-            font-size: 0.9em;
-            font-weight: bold;
-            color: white;
-            border-radius: 5px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
-        .details-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
+        .btn-morning {   background-color: #3498db; } /* สีฟ้า (เช้า) - สดใสแต่ไม่จ้า */
+        .btn-afternoon { background-color: #f39c12; } /* สีส้ม (บ่าย) - โทนอบอุ่น */
+        .btn-evening {   background-color: #8e44ad; } /* สีม่วง (ค่ำ) - เข้มขึ้นเล็กน้อย */
+
+        /* ปุ่มใน Modal */
+        .btn-zoom {      background-color: #2980b9; } /* สีน้ำเงินเข้ม */
+        .btn-youtube {   background-color: #c0392b; } /* สีแดงเข้ม */
+        .btn-material {  background-color: #16a085; } /* สีเขียวอมฟ้า */
+        .btn-exam {      background-color: #27ae60; } /* สีเขียวสดใส */
+        .btn-answer {    background-color: #d35400; } /* สีส้มแครอท */
         
-        /* --- กำหนดสีที่แตกต่างกัน --- */
-        .btn-morning {
-            background-color: #3498db; /* สีฟ้า (เช้า) */
-        }
-        .btn-afternoon {
-            background-color: #f39c12; /* สีส้ม (บ่าย) */
-        }
-        .btn-evening {
-            background-color: #8e44ad; /* สีม่วง (ค่ำ) */
+        /* ปุ่มปิดใช้งาน (ปรับให้เข้มขึ้นเล็กน้อยเพื่อการอ่าน) */
+        .disabled-link { 
+            background-color: #95a5a6; /* สีเทาเข้มขึ้น */
+            color: #ecf0f1; /* สีขาวนวล */
+            cursor: not-allowed; 
+            pointer-events: none;
+            opacity: 0.7;
         }
         
         /* --- CSS ใหม่: สำหรับ Modal Pop-up --- */
@@ -288,11 +303,14 @@
             updateAllExamButtons();
         }
 
-        // === ฟังก์ชันใหม่: สร้างลิงก์ต่างๆ ภายใน Modal ===
+        // === ฟังก์ชันใหม่: สร้างลิงก์ต่างๆ ภายใน Modal (เวอร์ชันอัปเกรดสี) ===
         function generateModalLinks(period, date) {
             let links = '';
-            if (period.linkZoom) { links += `<a href="${period.linkZoom}" target="_blank" class="btn" style="background-color:#2d8cff;">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; }
-            if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn" style="background-color:#c4302b;">▶️ ดูวิดีโอย้อนหลัง (YouTube)</a>`; }
+            // ลิงก์เรียนสด/วิดีโอ (เปลี่ยน style เป็น class)
+            if (period.linkZoom) { links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; }
+            if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอย้อนหลัง (YouTube)</a>`; }
+            
+            // ลิงก์เนื้อหา (เปลี่ยน style เป็น class)
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; }
             if (period.fileNoteTranslate) {
                 if (Array.isArray(period.fileNoteTranslate)) {
