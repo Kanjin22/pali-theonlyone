@@ -35,18 +35,34 @@
         .col-evening { width: 17%; }
         .col-remarks { width: 37%; } /* ให้พื้นที่มากที่สุด */
 
-        /* --- CSS ใหม่: สำหรับปุ่ม "รายละเอียด" ในตาราง --- */
+        /* --- CSS ใหม่: สำหรับปุ่ม "รายละเอียด" แยกสีตามช่วงเวลา --- */
         .details-btn {
-            background-color: #34495e;
             cursor: pointer;
             border: none;
             width: 80%;
             max-width: 150px;
-            padding: 8px;
+            padding: 8px 12px;
             font-size: 0.9em;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
         .details-btn:hover {
-            background-color: #2c3e50;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* --- กำหนดสีที่แตกต่างกัน --- */
+        .btn-morning {
+            background-color: #3498db; /* สีฟ้า (เช้า) */
+        }
+        .btn-afternoon {
+            background-color: #f39c12; /* สีส้ม (บ่าย) */
+        }
+        .btn-evening {
+            background-color: #8e44ad; /* สีม่วง (ค่ำ) */
         }
         
         /* --- CSS ใหม่: สำหรับ Modal Pop-up --- */
