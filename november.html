@@ -274,7 +274,7 @@
 
         // === ฟังก์ชันใหม่: เปิดและสร้างเนื้อหาใน Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = scheduleData.find(item => item.date === date);
+            const dayData = dataNovember.find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
