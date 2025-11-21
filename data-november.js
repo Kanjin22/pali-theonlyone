@@ -375,7 +375,7 @@ const dataNovember = [
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam-64-65.pdf",
-            fileAnswerGrammar: "#"
+            fileAnswerGrammar: "answers/grammar-answer-64-65.pdf"
         },
         evening: {
             activityGrammar: [
