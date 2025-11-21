@@ -365,7 +365,8 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๔-๖๕",
             fileNoteGrammar: "materials/grammar-notes-64-65.pdf",
-            activityTranslate: "อ่านเก็งที่ ๕ น.๓๗-๓๘ อตีเต พาราณสิยํ - มา เอวํ อกริตฺถ อาจริยาติ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๕ น.๓๗-๓๘ อตีเต พาราณสิยํ - มา เอวํ อกริตฺถ อาจริยาติ ฯ",
+            fileNoteTranslate: "materials/translate-notes-105.pdf"
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๘",
