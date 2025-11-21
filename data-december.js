@@ -91,6 +91,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๔", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๒" }
     },
+
     {
         date: "2025-12-02", displayDate: "อ. ๒-ธ.ค.-๖๘",
         remarks: { 
@@ -113,6 +114,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๕", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๒" }
     },
+
     {
         date: "2025-12-03", displayDate: "พ. ๓-ธ.ค.-๖๘",
         remarks: { 
@@ -135,6 +137,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๖", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๒" }
     },
+
     {
         date: "2025-12-04", displayDate: "พฤ. ๔-ธ.ค.-๖๘",
         remarks: { 
@@ -157,6 +160,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๗", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๒" }
     },
+
     {
         date: "2025-12-05", displayDate: "ศ. ๕-ธ.ค.-๖๘",
         remarks: { 
@@ -179,6 +183,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๘", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๒" }
     },
+
     {
         date: "2025-12-06", displayDate: "ส. ๖-ธ.ค.-๖๘",
         remarks: { 
@@ -190,6 +195,7 @@ const dataDecember = [
         evening: { 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๒" }
     },
+
     {
         date: "2025-12-07", displayDate: "อา. ๗-ธ.ค.-๖๘",
         remarks: { 
@@ -201,6 +207,7 @@ const dataDecember = [
         evening: { 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒" }
     },
+
     {
         date: "2025-12-08", displayDate: "จ. ๘-ธ.ค.-๖๘",
         remarks: { 
@@ -223,6 +230,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๑๙", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๒" }
     },
+
     {
         date: "2025-12-09", displayDate: "อ. ๙-ธ.ค.-๖๘",
         remarks: { 
@@ -245,6 +253,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๐", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑๐ ภาค ๒" }
     },
+
     {
         date: "2025-12-10", displayDate: "พ. ๑๐-ธ.ค.-๖๘",
         remarks: { 
@@ -267,6 +276,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๑", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๓" }
     },
+
     {
         date: "2025-12-11", displayDate: "พฤ. ๑๑-ธ.ค.-๖๘",
         remarks: { 
@@ -289,6 +299,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๒", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๓" }
     },
+
     {
         date: "2025-12-12", displayDate: "ศ. ๑๒-ธ.ค.-๖๘",
         remarks: { 
@@ -311,6 +322,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๓", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๓" }
     },
+
     {
         date: "2025-12-13", displayDate: "ส. ๑๓-ธ.ค.-๖๘",
         remarks: { 
@@ -322,6 +334,7 @@ const dataDecember = [
         evening: { 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓" }
     },
+
     {
         date: "2025-12-14", displayDate: "อา. ๑๔-ธ.ค.-๖๘",
         remarks: { 
@@ -333,6 +346,7 @@ const dataDecember = [
         evening: { 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓" }
     },
+
     {
         date: "2025-12-15", displayDate: "จ. ๑๕-ธ.ค.-๖๘",
         remarks: { 
@@ -355,6 +369,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๔", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๓" }
     },
+
     {
         date: "2025-12-16", displayDate: "อ. ๑๖-ธ.ค.-๖๘",
         remarks: { 
@@ -377,6 +392,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๕", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๓" }
     },
+
     {
         date: "2025-12-17", displayDate: "พ. ๑๗-ธ.ค.-๖๘",
         remarks: { 
@@ -399,6 +415,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๖", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๓" }
     },
+
     {
         date: "2025-12-18", displayDate: "พฤ. ๑๘-ธ.ค.-๖๘",
         remarks: { 
@@ -420,6 +437,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๗", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๓" }
     },
+
     {
         date: "2025-12-19", displayDate: "ศ. ๑๙-ธ.ค.-๖๘",
         remarks: { 
@@ -441,6 +459,7 @@ const dataDecember = [
             activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๘", "เรียนบาลีไวยากรณ์"], 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๔" }
     },
+
     {
         date: "2025-12-20", displayDate: "ส. ๒๐-ธ.ค.-๖๘",
         remarks: { 
@@ -452,6 +471,7 @@ const dataDecember = [
         evening: { 
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔" }
     },
+
     {
         date: "2025-12-21", displayDate: "อา. ๒๑-ธ.ค.-๖๘",
         remarks: { translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔" },
@@ -459,6 +479,7 @@ const dataDecember = [
         afternoon: { activityTranslate: "อ่านเก็งที่ ๖ น...... ฯ" },
         evening: { activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔" }
     },
+
     {
         date: "2025-12-22", displayDate: "จ. ๒๒-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๙", translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๔" },
@@ -466,6 +487,7 @@ const dataDecember = [
         afternoon: { activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๙", activityTranslate: "อ่านเก็งที่ ๘ น...... ฯ", isExam: true, examStartTime: "14:00:00", examEndTime: "15:00:00", fileExamGrammar: "#", fileAnswerGrammar: "#" },
         evening: { activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๒๙", "เรียนบาลีไวยากรณ์"], activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๔" }
     },
+
     {
         date: "2025-12-23", displayDate: "อ. ๒๓-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๐", translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๔" },
@@ -473,6 +495,7 @@ const dataDecember = [
         afternoon: { activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๐", activityTranslate: "อ่านเก็งที่ ๑๐ น...... ฯ", isExam: true, examStartTime: "14:00:00", examEndTime: "15:00:00", fileExamGrammar: "#", fileAnswerGrammar: "#" },
         evening: { activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๐", "เรียนบาลีไวยากรณ์"], activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๔" }
     },
+
     {
         date: "2025-12-24", displayDate: "พ. ๒๔-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๑", translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๔" },
@@ -480,6 +503,7 @@ const dataDecember = [
         afternoon: { activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๑", activityTranslate: "อ่านเก็งที่ ๑๒ น...... ฯ", isExam: true, examStartTime: "14:00:00", examEndTime: "15:00:00", fileExamGrammar: "#", fileAnswerGrammar: "#" },
         evening: { activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๑", "เรียนบาลีไวยากรณ์"], activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๔" }
     },
+
     {
         date: "2025-12-25", displayDate: "พฤ. ๒๕-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๒", translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๔" },
@@ -487,6 +511,7 @@ const dataDecember = [
         afternoon: { activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๒", activityTranslate: "อ่านเก็งที่ ๑๔ น...... ฯ", isExam: true, examStartTime: "14:00:00", examEndTime: "15:00:00", fileExamGrammar: "#", fileAnswerGrammar: "#" },
         evening: { activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๒", "เรียนบาลีไวยากรณ์"], activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๔" }
     },
+
     {
         date: "2025-12-26", displayDate: "ศ. ๒๖-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๓", translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔" },
@@ -494,6 +519,7 @@ const dataDecember = [
         afternoon: { activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๓", activityTranslate: "อ่านเก็งที่ ๑๖ น...... ฯ", isExam: true, examStartTime: "14:00:00", examEndTime: "15:00:00", fileExamGrammar: "#", fileAnswerGrammar: "#" },
         evening: { activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๓", "เรียนบาลีไวยากรณ์"], activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔" }
     },
+
     {
         date: "2025-12-27", displayDate: "ศ. ๒๗-ธ.ค.-๖๘",
         remarks: { grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๔", translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔ (สิ้นสุด)" },
@@ -504,7 +530,10 @@ const dataDecember = [
 
     // --- วันหยุดส่งท้ายปี ---
     { date: "2025-12-28", displayDate: "อา. ๒๘-ธ.ค.-๖๘", isWeekend: true, remarks: { general: "พักผ่อนส่งท้ายปี" } },
+
     { date: "2025-12-29", displayDate: "จ. ๒๙-ธ.ค.-๖๘", isWeekend: true, remarks: { general: "พักผ่อนส่งท้ายปี" } },
+
     { date: "2025-12-30", displayDate: "อ. ๓๐-ธ.ค.-๖๘", isWeekend: true, remarks: { general: "พักผ่อนส่งท้ายปี" } },
+
     { date: "2025-12-31", displayDate: "พ. ๓๑-ธ.ค.-๖๘", isWeekend: true, remarks: { general: "พักผ่อนส่งท้ายปี" } },
 ];
