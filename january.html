@@ -176,7 +176,7 @@
     function buildScheduleTable() {
         const tableBody = document.getElementById('schedule-body');
         let tableHTML = '';
-        const data = typeof scheduleData !== 'undefined' ? scheduleData : [];
+        const data = typeof dataJanuary !== 'undefined' ? dataJanuary : [];
         data.forEach(item => {
             if (item.isWeekend) {
                 tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
