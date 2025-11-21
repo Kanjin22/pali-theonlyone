@@ -394,9 +394,11 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "อ่านเก็งที่ ๗ น.๕๒-๕๔ โส ตาย อากิณฺณวิหารตาย - อุณฺโหทกํ ปฏิยาเทติ",
+            fileNoteTranslate: "materials/translate-notes-107.pdf",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๘ น.๕๔-๕๖ สตฺถา อุทกํ เต - เสยฺโยติ วตฺวา (อาห) ฯ"
+            activityTranslate: "อ่านเก็งที่ ๘ น.๕๔-๕๖ สตฺถา อุทกํ เต - เสยฺโยติ วตฺวา (อาห) ฯ",
+            fileNoteTranslate: "materials/translate-notes-108.pdf",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๑"
@@ -408,10 +410,12 @@ const dataNovember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๑"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๙ น.๖๕-๖๗ ตสฺส ทิฏฺฐกาลโต ปฏฺฐาย - อิมา คาถาโย อภาสิ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๙ น.๖๕-๖๗ ตสฺส ทิฏฺฐกาลโต ปฏฺฐาย - อิมา คาถาโย อภาสิ ฯ",
+            fileNoteTranslate: "materials/translate-notes-109.pdf",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ",
+            fileNoteTranslate: "materials/translate-notes-110.pdf",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๑"
@@ -428,11 +432,13 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗",
             activityTranslate: "อ่านเก็งที่ ๑๑ น.๘๑-๘๓ เตน โข ปน - มยฺหํ ภาโรติ วตฺวา (อาห)",
-            fileNoteGrammar: "materials/grammar-notes-66-67.pdf"
+            fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
+            fileNoteTranslate: "materials/translate-notes-111.pdf",
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๙",
             activityTranslate: "อ่านเก็งที่ ๑๒ น.๘๔-๘๖ ปริพฺพาชโก ปฐมปททฺวยเมว - สทฺธึ เวฬุวนํ อคมํสุ ฯ",
+            fileNoteTranslate: "materials/translate-notes-112.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -456,11 +462,13 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑",
             activityTranslate: "อ่านเก็งที่ ๑๓ น.๙๓-๙๕ ตทา ปน เตสํ - อิมมฺปิ ธมฺมเทสนํ อาหริ ฯ",
-            fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
+            fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
+            fileNoteTranslate: "materials/translate-notes-113.pdf",
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๐",
             activityTranslate: "อ่านเก็งที่ ๑๔ น.๙๕-๙๗ อคฺคสาวกา ปน - คเหตฺวา เอกมนฺตํ นิสีทิ ฯ",
+            fileNoteTranslate: "materials/translate-notes-114.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -484,11 +492,13 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓",
             activityTranslate: "อ่านเก็งที่ ๑๕ น.๙๙-๑๐๑ เอวํ นิสินฺเน สตฺถริ - สารีปุตฺโต นาม ภวิสฺสสีติ ฯ",
-            fileNoteGrammar: "materials/grammar-notes-52-53.pdf"
+            fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
+            fileNoteTranslate: "materials/translate-notes-115.pdf",
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๑",
             activityTranslate: "อ่านเก็งที่ ๑๖ น.๑๐๖-๑๐๙ กุมาโร นิวตฺติตุกาโม - คนฺตฺวา วาสํ กปฺเปสิ ฯ",
+            fileNoteTranslate: "materials/translate-notes-116.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -512,11 +522,13 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕",
             activityTranslate: "อ่านเก็งที่ ๑๗ น.๑๒๐-๑๒๓ สาวตฺถิยํ กิร - อิมํ คาถมาห ฯ",
-            fileNoteGrammar: "materials/grammar-notes-54-55.pdf"
+            fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
+            fileNoteTranslate: "materials/translate-notes-117.pdf",
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๒",
             activityTranslate: "อ่านเก็งที่ ๑๘ น.๑๒๔-๑๒๖ เทวทตฺตสฺส วตฺถุํ - อุฏฺฐหตีติ อาห ฯ",
+            fileNoteTranslate: "materials/translate-notes-118.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -539,11 +551,13 @@ const dataNovember = [
         morning: {
             activityGrammar: "อ่านข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗",
             activityTranslate: "อ่านเก็งที่ ๑๙ น.๑๒๙-๑๓๑ อปรภาเค สตฺถริ - ...กกฺกฏกชาตกานิ กเถสิ ฯ",
-            fileNoteGrammar: "materials/grammar-notes-56-57.pdf"
+            fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
+            fileNoteTranslate: "materials/translate-notes-119.pdf",
         },
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๓",
             activityTranslate: "อ่านเก็งที่ ๒๐ น.๒๔๑-๑๔๓ สาวตฺถิยํ หิ เทวสิกํ - อิมํ คาถมาห ฯ",
+            fileNoteTranslate: "materials/translate-notes-120.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -565,10 +579,12 @@ const dataNovember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๒"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๑ น.๔-๖ ตทา จ หิมวนฺตปฺปเทเส - เทฺวปิ สมคฺคสํวาสํ วสึสุ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑ น.๔-๖ ตทา จ หิมวนฺตปฺปเทเส - เทฺวปิ สมคฺคสํวาสํ วสึสุ ฯ",
+            fileNoteTranslate: "materials/translate-notes-201.pdf",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๒ น.๘-๙ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๒ น.๘-๙ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ",
+            fileNoteTranslate: "materials/translate-notes-202.pdf",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๒"
@@ -581,10 +597,12 @@ const dataNovember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๒"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ"
+            activityTranslate: "อ่านเก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ",
+            fileNoteTranslate: "materials/translate-notes-203.pdf",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๔ น.๑๖-๑๘ สา ตํ เนตฺวา - อปฺปทุฏฺฐสฺส ปทุฏฺฐมโน ฯ"
+            activityTranslate: "อ่านเก็งที่ ๔ น.๑๖-๑๘ สา ตํ เนตฺวา - อปฺปทุฏฺฐสฺส ปทุฏฺฐมโน ฯ",
+            fileNoteTranslate: "materials/translate-notes-204.pdf",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๒"
