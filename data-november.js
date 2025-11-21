@@ -371,6 +371,7 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๘",
             activityTranslate: "อ่านเก็งที่ ๖ น.๔๔-๔๖ อถสฺสา อิตรา อุทรํ - วตฺวา อิมํ คาถมาห ฯ",
+            fileNoteTranslate: "materials/translate-notes-106.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
