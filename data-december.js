@@ -84,6 +84,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๔",
             activityTranslate: "อ่านเก็งที่ ๖ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -111,6 +112,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๕",
             activityTranslate: "อ่านเก็งที่ ๘ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -138,6 +140,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๖",
             activityTranslate: "อ่านเก็งที่ ๑๐ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -165,6 +168,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๗",
             activityTranslate: "อ่านเก็งที่ ๑๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -192,6 +196,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๘",
             activityTranslate: "อ่านเก็งที่ ๑๔ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -210,10 +215,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๒"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๑๕ น......."
+            activityTranslate: "อ่านเก็งที่ ๑๕ น.......",
+            fileNoteTranslate: "#",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๑๖ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑๖ น...... ฯ",
+            fileNoteTranslate: "#",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๒"
@@ -226,10 +233,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๑๗ น......."
+            activityTranslate: "อ่านเก็งที่ ๑๗ น.......",
+            fileNoteTranslate: "#",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๑๘ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑๘ น...... ฯ",
+            fileNoteTranslate: "#",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒"
@@ -251,6 +260,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๑๙",
             activityTranslate: "อ่านเก็งที่ ๒๐ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -278,6 +288,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๐",
             activityTranslate: "อ่านเก็งที่ ๒๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -305,6 +316,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๑",
             activityTranslate: "อ่านเก็งที่ ๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -332,6 +344,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๒",
             activityTranslate: "อ่านเก็งที่ ๔ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -359,6 +372,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๓",
             activityTranslate: "อ่านเก็งที่ ๖ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -377,10 +391,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๗ น......."
+            activityTranslate: "อ่านเก็งที่ ๗ น.......",
+            fileNoteTranslate: "#",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๘ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๘ น...... ฯ",
+            fileNoteTranslate: "#",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓"
@@ -393,10 +409,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๙ น......."
+            activityTranslate: "อ่านเก็งที่ ๙ น.......",
+            fileNoteTranslate: "#",
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๑๐ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๑๐ น...... ฯ",
+            fileNoteTranslate: "#",
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓"
@@ -418,6 +436,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๔",
             activityTranslate: "อ่านเก็งที่ ๑๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -445,6 +464,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๕",
             activityTranslate: "อ่านเก็งที่ ๑๔ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -472,6 +492,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๖",
             activityTranslate: "อ่านเก็งที่ ๑๖ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -499,6 +520,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๗",
             activityTranslate: "อ่านเก็งที่ ๑๘ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true, examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "#",
@@ -525,6 +547,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๘",
             activityTranslate: "อ่านเก็งที่ ๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true, examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "#",
@@ -542,10 +565,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๓ น......."
+            activityTranslate: "อ่านเก็งที่ ๓ น.......",
+            fileNoteTranslate: "#"
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๔ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๔ น...... ฯ",
+            fileNoteTranslate: "#"
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔"
@@ -558,10 +583,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔"
         },
         morning: {
-            activityTranslate: "อ่านเก็งที่ ๕ น......."
+            activityTranslate: "อ่านเก็งที่ ๕ น.......",
+            fileNoteTranslate: "#"
         },
         afternoon: {
-            activityTranslate: "อ่านเก็งที่ ๖ น...... ฯ"
+            activityTranslate: "อ่านเก็งที่ ๖ น...... ฯ",
+            fileNoteTranslate: "#"
         },
         evening: {
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔"
@@ -583,6 +610,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๒๙",
             activityTranslate: "อ่านเก็งที่ ๘ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -610,6 +638,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๐",
             activityTranslate: "อ่านเก็งที่ ๑๐ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -637,6 +666,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๑",
             activityTranslate: "อ่านเก็งที่ ๑๒ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -664,6 +694,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๒",
             activityTranslate: "อ่านเก็งที่ ๑๔ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -691,6 +722,7 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๓",
             activityTranslate: "อ่านเก็งที่ ๑๖ น...... ฯ",
+            fileNoteTranslate: "#",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
