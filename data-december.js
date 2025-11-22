@@ -702,22 +702,42 @@ const dataDecember = [
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔"
         }
     },
-
+    
     {
-        date: "2025-12-27", displayDate: "ศ. ๒๗-ธ.ค.-๖๘",
+        date: "2025-12-27", displayDate: "ส. ๒๗-ธ.ค.-๖๘",
         remarks: {
-            grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๔",
             translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔ (สิ้นสุด)"
         },
         morning: {
-            activityGrammar: "อ่านข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๒-๖๓",
             activityTranslate: "อ่านเก็งที่ ๑๗ น.......",
-            fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
             fileNoteTranslate: "#"
         },
         afternoon: {
-            activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๔",
             activityTranslate: "อ่านเก็งที่ ๑๘ น...... ฯ",
+            fileNoteTranslate: "#"
+        },
+        evening: {
+            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔"
+        }
+    },
+
+    // --- วันอาทิตย์ที่ 28 หยุด ---
+    {
+        date: "2025-12-28", displayDate: "อา. ๒๘-ธ.ค.-๖๘",
+        isWeekend: true
+    },
+
+    {
+        date: "2025-12-29", displayDate: "จ. ๒๙-ธ.ค.-๖๘",
+        remarks: {
+            grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๔"
+        },
+        morning: {
+            activityGrammar: "อ่านข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๒-๖๓",
+            fileNoteGrammar: "materials/grammar-notes-62-63.pdf"
+        },
+        afternoon: {
+            activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๔",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
@@ -725,42 +745,51 @@ const dataDecember = [
             fileAnswerGrammar: "#"
         },
         evening: {
-            activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๔"],
-            activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔"
-        }
-    },
-
-    // --- วันหยุดส่งท้ายปี ---
-    {
-        date: "2025-12-28", displayDate: "อา. ๒๘-ธ.ค.-๖๘",
-        isWeekend: true,
-        remarks: {
-            general: "พักผ่อนส่งท้ายปี"
-        }
-    },
-
-    {
-        date: "2025-12-29", displayDate: "จ. ๒๙-ธ.ค.-๖๘",
-        isWeekend: true,
-        remarks: {
-            general: "พักผ่อนส่งท้ายปี"
-
+            activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๔"]
         }
     },
 
     {
         date: "2025-12-30", displayDate: "อ. ๓๐-ธ.ค.-๖๘",
-        isWeekend: true,
         remarks: {
-            general: "พักผ่อนส่งท้ายปี"
+            grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๕"
+        },
+        morning: {
+            activityGrammar: "อ่านข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๔-๖๕",
+            fileNoteGrammar: "materials/grammar-notes-64-65.pdf"
+        },
+        afternoon: {
+            activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๕",
+            isExam: true,
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
+            fileExamGrammar: "#",
+            fileAnswerGrammar: "#"
+        },
+        evening: {
+            activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๕"]
         }
     },
 
     {
         date: "2025-12-31", displayDate: "พ. ๓๑-ธ.ค.-๖๘",
-        isWeekend: true,
         remarks: {
-            general: "พักผ่อนส่งท้ายปี"
+            grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๖ (จบ)"
+        },
+        morning: {
+            activityGrammar: "อ่านข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๖-๖๗",
+            fileNoteGrammar: "materials/grammar-notes-66-67.pdf"
+        },
+        afternoon: {
+            activityGrammar: "สอบบาลีไวยากรณ์ ครั้งที่ ๓๖",
+            isExam: true,
+            examStartTime: "14:00:00",
+            examEndTime: "15:00:00",
+            fileExamGrammar: "#",
+            fileAnswerGrammar: "#"
+        },
+        evening: {
+            activityGrammar: ["เฉลยบาลีไวยากรณ์ ครั้งที่ ๓๖"]
         }
-    },
+    }
 ];
