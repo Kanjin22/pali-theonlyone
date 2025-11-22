@@ -9,11 +9,11 @@ const dataFebruary = [
     // ==   คัดลอกบล็อก {...}, นี้ไปใช้ แล้วแก้ไขข้อมูลตามต้องการ      ==
     // ===============================================================
     //{
-        // --- ข้อมูลหลักของวัน (จำเป็นต้องมี) ---
+    // --- ข้อมูลหลักของวัน (จำเป็นต้องมี) ---
     //    date: "YYYY-MM-DD",          // รูปแบบปี-เดือน-วัน (ค.ศ.) สำหรับการคำนวณ
     //    displayDate: "ว. ดด-เดือน-ปป", // ข้อความวันที่ ที่จะแสดงในตาราง
 
-        // --- หมายเหตุ (แสดงที่คอลัมน์สุดท้าย) ---
+    // --- หมายเหตุ (แสดงที่คอลัมน์สุดท้าย) ---
     //    remarks: {
     //        grammar: "หมายเหตุสำหรับวิชาไวยากรณ์ (ถ้ามี)",
     //        translate: [
@@ -23,7 +23,7 @@ const dataFebruary = [
     //        general: "หมายเหตุทั่วไป ไม่เกี่ยวกับวิชาใดเป็นพิเศษ (ถ้ามี)"
     //    },
 
-        // --- กิจกรรมช่วงเช้า ---
+    // --- กิจกรรมช่วงเช้า ---
     //    morning: {
     //        activityGrammar: "ข้อความกิจกรรมของวิชาไวยากรณ์ (ถ้ามี)",
     //        activityTranslate: "ข้อความกิจกรรมของวิชาแปล (ถ้ามี)",
@@ -36,7 +36,7 @@ const dataFebruary = [
     //        ]
     //    },
 
-        // --- กิจกรรมช่วงบ่าย (ตัวอย่างการสอบ) ---
+    // --- กิจกรรมช่วงบ่าย (ตัวอย่างการสอบ) ---
     //    afternoon: {
     //        activityGrammar: "กิจกรรมไวยากรณ์ช่วงบ่าย (ถ้ามี)",
     //        activityTranslate: "กิจกรรมแปลช่วงบ่าย (ถ้ามี)",
@@ -49,7 +49,7 @@ const dataFebruary = [
     //        fileAnswerTranslate: "answers/... (ไฟล์เฉลยแปล ถ้ามี)"
     //    },
 
-        // --- กิจกรรมช่วงค่ำ (ตัวอย่างกิจกรรมทั่วไป) ---
+    // --- กิจกรรมช่วงค่ำ (ตัวอย่างกิจกรรมทั่วไป) ---
     //    evening: {
     //        activity: "กิจกรรมทั่วไปที่ไม่แยกวิชา (ถ้ามี)"
     //    }
@@ -70,73 +70,172 @@ const dataFebruary = [
 
     // ########## กุมภาพันธ์ 2569 ##########
     {
-        date: "2026-02-01", displayDate: "อา. ๑-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๕๙" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2559.pdf", fileNoteTranslate: "materials/translate-notes-total-2559.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2559.pdf", fileExamTranslate: "exams/translate-exam-total-2559.pdf" }
+        date: "2026-02-01", displayDate: "อา. ๑-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๐ - ๒๕๕๑" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๐-๕๑",
+            fileNoteGrammar: "materials/grammar-notes-total-2550-2551.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๐-๕๑",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2550-2551.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2550-2551.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๐-๕๑"] }
     },
+
+    // --- วันที่ 2 : ปี 52-53 ---
     {
-        date: "2026-02-02", displayDate: "จ. ๒-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๐" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2560.pdf", fileNoteTranslate: "materials/translate-notes-total-2560.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2560.pdf", fileExamTranslate: "exams/translate-exam-total-2560.pdf" }
+        date: "2026-02-02", displayDate: "จ. ๒-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๒ - ๒๕๕๓" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๒-๕๓",
+            fileNoteGrammar: "materials/grammar-notes-total-2552-2553.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๒-๕๓",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2552-2553.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2552-2553.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๒-๕๓"] }
     },
+
+    // --- วันที่ 3 : ปี 54-55 ---
     {
-        date: "2026-02-03", displayDate: "อ. ๓-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๑" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2561.pdf", fileNoteTranslate: "materials/translate-notes-total-2561.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2561.pdf", fileExamTranslate: "exams/translate-exam-total-2561.pdf" }
+        date: "2026-02-03", displayDate: "อ. ๓-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๔ - ๒๕๕๕" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๔-๕๕",
+            fileNoteGrammar: "materials/grammar-notes-total-2554-2555.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๔-๕๕",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2554-2555.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2554-2555.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๔-๕๕"] }
     },
+
+    // --- วันที่ 4 : ปี 56-57 ---
     {
-        date: "2026-02-04", displayDate: "พ. ๔-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๒" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2562.pdf", fileNoteTranslate: "materials/translate-notes-total-2562.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2562.pdf", fileExamTranslate: "exams/translate-exam-total-2562.pdf" }
+        date: "2026-02-04", displayDate: "พ. ๔-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๖ - ๒๕๕๗" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๖-๕๗",
+            fileNoteGrammar: "materials/grammar-notes-total-2556-2557.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๖-๕๗",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2556-2557.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2556-2557.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๖-๕๗"] }
     },
+
+    // --- วันที่ 5 : ปี 58-59 ---
     {
-        date: "2026-02-05", displayDate: "พฤ. ๕-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๓" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2563.pdf", fileNoteTranslate: "materials/translate-notes-total-2563.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2563.pdf", fileExamTranslate: "exams/translate-exam-total-2563.pdf" }
+        date: "2026-02-05", displayDate: "พฤ. ๕-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๘ - ๒๕๕๙" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๘-๕๙",
+            fileNoteGrammar: "materials/grammar-notes-total-2558-2559.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๘-๕๙",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2558-2559.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2558-2559.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๘-๕๙"] }
     },
+
+    // --- วันที่ 6 : ปี 60-61 ---
     {
-        date: "2026-02-06", displayDate: "ศ. ๖-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๔" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2564.pdf", fileNoteTranslate: "materials/translate-notes-total-2564.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2564.pdf", fileExamTranslate: "exams/translate-exam-total-2564.pdf" }
+        date: "2026-02-06", displayDate: "ศ. ๖-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๐ - ๒๕๖๑" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๐-๖๑",
+            fileNoteGrammar: "materials/grammar-notes-total-2560-2561.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๐-๖๑",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2560-2561.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2560-2561.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๐-๖๑"] }
     },
+
+    // --- วันที่ 7 : ปี 62-63 ---
     {
-        date: "2026-02-07", displayDate: "ส. ๗-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๕" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2565.pdf", fileNoteTranslate: "materials/translate-notes-total-2565.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2565.pdf", fileExamTranslate: "exams/translate-exam-total-2565.pdf" }
+        date: "2026-02-07", displayDate: "ส. ๗-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๒ - ๒๕๖๓" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๒-๖๓",
+            fileNoteGrammar: "materials/grammar-notes-total-2562-2563.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๒-๖๓",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2562-2563.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2562-2563.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๒-๖๓"] }
     },
+
+    // --- วันที่ 8 : ปี 64-65 ---
     {
-        date: "2026-02-08", displayDate: "อา. ๘-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๖" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2566.pdf", fileNoteTranslate: "materials/translate-notes-total-2566.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2566.pdf", fileExamTranslate: "exams/translate-exam-total-2566.pdf" }
+        date: "2026-02-08", displayDate: "อา. ๘-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๔ - ๒๕๖๕" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๔-๖๕",
+            fileNoteGrammar: "materials/grammar-notes-total-2564-2565.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๔-๖๕",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2564-2565.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2564-2565.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๔-๖๕"] }
     },
+
+    // --- วันที่ 9 : ปี 66-67 (จบ) ---
     {
-        date: "2026-02-09", displayDate: "จ. ๙-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๗" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2567.pdf", fileNoteTranslate: "materials/translate-notes-total-2567.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2567.pdf", fileExamTranslate: "exams/translate-exam-total-2567.pdf" }
+        date: "2026-02-09", displayDate: "จ. ๙-ก.พ.-๖๙",
+        remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๖ - ๒๕๖๗ (จบ)" },
+        morning: {
+            activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๖-๖๗",
+            fileNoteGrammar: "materials/grammar-notes-total-2566-2567.pdf"
+        },
+        afternoon: {
+            activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๖-๖๗",
+            isExam: true,
+            examStartTime: "14:00:00", examEndTime: "16:00:00",
+            fileExamGrammar: "exams/grammar-exam-total-2566-2567.pdf",
+            fileAnswerGrammar: "answers/grammar-answer-total-2566-2567.pdf"
+        },
+        evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๖-๖๗"] }
     },
+
+    // --- วันที่ 10 : ปิดโครงการ ---
     {
-        date: "2026-02-10", displayDate: "อ. ๑๐-ก.พ.-๒๖",
-        remarks: { grammar: "ไวย. รวม ๔ เล่ม ปี' ๒๕๖๘" },
-        morning: { activity: "อ่านหนังสือ", fileNoteGrammar: "materials/grammar-notes-total-2568.pdf", fileNoteTranslate: "materials/translate-notes-total-2568.pdf" },
-        evening: { activity: "เฉลย/เรียน" },
-        afternoon: { activity: "สอบประจำวัน", isExam: true, examStartTime: "18:30:00", examEndTime: "19:30:00", fileExamGrammar: "exams/grammar-exam-total-2568.pdf", fileExamTranslate: "exams/translate-exam-total-2568.pdf" }
-    },
+        date: "2026-02-10", displayDate: "อ. ๑๐-ก.พ.-๖๙",
+        remarks: { general: "วันสุดท้ายของการอบรม / เตรียมตัวเดินทาง" },
+        morning: { activity: "ปัจฉิมนิเทศ / ปิดโครงการ" },
+        afternoon: { activity: "เดินทาง / พักผ่อน" },
+        evening: { activity: "พักผ่อน" }
+    }
 ];
