@@ -192,6 +192,25 @@
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
 
+    <div class="stats-dashboard">
+        <div class="stat-card grammar">
+            <div class="stat-icon">📘</div>
+            <div class="stat-details">
+                <h3>สถิติ ไวยากรณ์ (พ.ย.)</h3>
+                <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-gram-read">0</span></div>
+                <div class="stat-row"><span>สอบ/วัดผล:</span> <span class="stat-val exam" id="count-gram-exam">0</span></div>
+            </div>
+        </div>
+        <div class="stat-card translate">
+            <div class="stat-icon">📙</div>
+            <div class="stat-details">
+                <h3>สถิติ แปล (พ.ย.)</h3>
+                <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-trans-read">0</span></div>
+                <div class="stat-row"><span>สอบ/วัดผล:</span> <span class="stat-val exam" id="count-trans-exam">0</span></div>
+            </div>
+        </div>
+    </div>
+
     <table id="schedule-table">
         <thead>
             <tr>
@@ -405,6 +424,34 @@
         toast.className = "show";
         setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
     }
+
+    function calculateMonthlyStats() {
+            // ใช้เฉพาะ dataNovember
+            const data = typeof dataNovember !== 'undefined' ? dataNovember : [];
+            let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
+
+            data.forEach(day => {
+                ['morning', 'afternoon', 'evening'].forEach(pName => {
+                    const p = day[pName];
+                    if (!p) return;
+                    // นับไวยากรณ์
+                    if (p.fileNoteGrammar && p.fileNoteGrammar !== '#') stats.gramRead++;
+                    if (p.fileExamGrammar && p.fileExamGrammar !== '#') stats.gramExam++;
+                    // นับแปล
+                    if (p.fileNoteTranslate) {
+                        if (Array.isArray(p.fileNoteTranslate)) {
+                            p.fileNoteTranslate.forEach(f => { if (f !== '#') stats.transRead++; });
+                        } else if (p.fileNoteTranslate !== '#') stats.transRead++;
+                    }
+                    if (p.fileExamTranslate && p.fileExamTranslate !== '#') stats.transExam++;
+                });
+            });
+
+            document.getElementById('count-gram-read').innerText = stats.gramRead + " ครั้ง";
+            document.getElementById('count-gram-exam').innerText = stats.gramExam + " ครั้ง";
+            document.getElementById('count-trans-read').innerText = stats.transRead + " เรื่อง";
+            document.getElementById('count-trans-exam').innerText = stats.transExam + " ครั้ง";
+        }
 
     // === ส่วนควบคุมหลัก (ที่ถูกต้องและสมบูรณ์) ===
         document.addEventListener('DOMContentLoaded', () => {
