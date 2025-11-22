@@ -702,7 +702,7 @@ const dataDecember = [
             activityTranslate: "เรียนแปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔"
         }
     },
-    
+
     {
         date: "2025-12-27", displayDate: "ส. ๒๗-ธ.ค.-๖๘",
         remarks: {
@@ -721,7 +721,6 @@ const dataDecember = [
         }
     },
 
-    // --- วันอาทิตย์ที่ 28 หยุด ---
     {
         date: "2025-12-28", displayDate: "อา. ๒๘-ธ.ค.-๖๘",
         isWeekend: true
