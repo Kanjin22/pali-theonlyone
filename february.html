@@ -257,7 +257,7 @@
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            const data = typeof datafebruary !== 'undefined' ? datafebruary : [];
+            const data = typeof dataFebruary !== 'undefined' ? dataFebruary : [];
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -274,7 +274,7 @@
 
         // === ฟังก์ชันใหม่: เปิดและสร้างเนื้อหาใน Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = datafebruary.find(item => item.date === date);
+            const dayData = dataFebruary.find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
