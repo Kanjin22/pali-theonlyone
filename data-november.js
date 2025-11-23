@@ -307,7 +307,10 @@ const dataNovember = [
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             activityTranslate: "(อ่าน) เก็งที่ ๑ น.๗-๙ ตสฺส วรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
             fileNoteTranslate: "materials/translate-notes-101.pdf",
-            linkYoutube: "https://youtu.be/R8QsLUmUs90?si=zGUWc2AKWzNk0sbV&t=565"
+            linkYoutube: [
+                "https://youtu.be/R8QsLUmUs90?si=zGUWc2AKWzNk0sbV&t=565",
+                "https://youtu.be/eOw1vJ0AJ-g?si=pFlLdsJrx3R9QYcD"
+            ]
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๖",
