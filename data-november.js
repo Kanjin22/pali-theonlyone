@@ -470,6 +470,10 @@ const dataNovember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๑ น.๘๑-๘๓ เตน โข ปน - มยฺหํ ภาโรติ วตฺวา (อาห)",
+            linkYoutube: [
+                "https://youtu.be/-PGkPIpdq9A?si=3poa-rDYgYPrQVfS&t=1292",
+                "https://youtu.be/gAiC-673Gek?si=ezHluQfeqaSTbcRI"
+            ],
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-111.pdf",
         },
