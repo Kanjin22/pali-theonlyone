@@ -446,12 +446,14 @@ const dataNovember = [
             fileNoteTranslate: "materials/translate-notes-109.pdf",
             linkYoutube: [
                 "https://youtu.be/pEztrJFGb5Y?si=HAwQQEzxR3FR78vX&t=238",
-                "https://youtu.be/_VeuCTS9aqc?si=v8g-DWnBWzoKSqQu&t=79",
             ],
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ",
             fileNoteTranslate: "materials/translate-notes-110.pdf",
+            linkYoutube: [
+                "https://youtu.be/_VeuCTS9aqc?si=v8g-DWnBWzoKSqQu&t=79",
+            ],
         },
         evening: {
             activityTranslate: "(เรียน) แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๑"
