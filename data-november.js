@@ -310,7 +310,7 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/R8QsLUmUs90?si=zGUWc2AKWzNk0sbV&t=565",
                 "https://youtu.be/eOw1vJ0AJ-g?si=pFlLdsJrx3R9QYcD"
-            ]
+            ],
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๖",
