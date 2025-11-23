@@ -306,7 +306,7 @@ const dataNovember = [
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             activityTranslate: "(อ่าน) เก็งที่ ๑ น.๗-๙ ตสฺส วรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
-            fileNoteTranslate: "materials/translate-notes-101.pdf"
+            fileNoteTranslate: "materials/translate-notes-101.pdf",
             linkYoutube: "https://youtu.be/R8QsLUmUs90?si=zGUWc2AKWzNk0sbV&t=565"
         },
         afternoon: {
