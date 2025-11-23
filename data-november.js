@@ -472,7 +472,7 @@ const dataNovember = [
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๑ น.๘๑-๘๓ เตน โข ปน - มยฺหํ ภาโรติ วตฺวา (อาห)",
             linkYoutube: [
                 "https://youtu.be/-PGkPIpdq9A?si=3poa-rDYgYPrQVfS&t=1292",
-                "https://youtu.be/gAiC-673Gek?si=ezHluQfeqaSTbcRI"
+                "https://youtu.be/gAiC-673Gek?si=ezHluQfeqaSTbcRI",
             ],
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-111.pdf",
@@ -481,6 +481,10 @@ const dataNovember = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๙",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๒ น.๘๔-๘๖ ปริพฺพาชโก ปฐมปททฺวยเมว - สทฺธึ เวฬุวนํ อคมํสุ ฯ",
             fileNoteTranslate: "materials/translate-notes-112.pdf",
+            linkYoutube: [
+                "https://youtu.be/gAiC-673Gek?si=5Vc5LM375MqIIqZ-",
+                "https://youtu.be/DbPRlF_UhpQ?si=Nl-V182b6rFQfIV1",
+            ],
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
