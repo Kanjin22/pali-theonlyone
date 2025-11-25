@@ -518,6 +518,10 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๐",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๔ น.๙๕-๙๗ อคฺคสาวกา ปน - คเหตฺวา เอกมนฺตํ นิสีทิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/LfaaIifBfbI?si=WlCBPQYYf-vqtRXa&t=395",
+                "https://youtu.be/pG2QSG6Mvq0?si=1HeDpMgfmXijURmz",
+            ],
             fileNoteTranslate: "materials/translate-notes-114.pdf",
             isExam: true,
             examStartTime: "14:00:00",
