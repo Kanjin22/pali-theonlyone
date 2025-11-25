@@ -555,6 +555,10 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๑",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๖ น.๑๐๖-๑๐๙ กุมาโร นิวตฺติตุกาโม - คนฺตฺวา วาสํ กปฺเปสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/mGL7wVrmP9k?si=KjEdUj3z9eKSOTy2&t=495",
+                "https://youtu.be/6Qyl-RWfioI?si=cHUT1fYpb8DsO-VF",
+            ],
             fileNoteTranslate: "materials/translate-notes-116.pdf",
             isExam: true,
             examStartTime: "14:00:00",
