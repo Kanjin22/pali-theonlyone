@@ -546,6 +546,9 @@ const dataNovember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๕ น.๙๙-๑๐๑ เอวํ นิสินฺเน สตฺถริ - สารีปุตฺโต นาม ภวิสฺสสีติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/pG2QSG6Mvq0?si=0S6CPMBr6iRL-e3G&t=850",
+            ],
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-115.pdf",
         },
