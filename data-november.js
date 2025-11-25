@@ -508,6 +508,10 @@ const dataNovember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๓ น.๙๓-๙๕ ตทา ปน เตสํ - อิมมฺปิ ธมฺมเทสนํ อาหริ ฯ",
+            linkYoutube: [
+                "https://youtu.be/wKjwJesIDKM?si=UtsnkL2xot8yBs8u&t=920",
+                "https://youtu.be/LfaaIifBfbI?si=okd5o1jo7N7HPynT",
+            ],
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
             fileNoteTranslate: "materials/translate-notes-113.pdf",
         },
