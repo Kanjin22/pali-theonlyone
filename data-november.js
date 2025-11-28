@@ -629,6 +629,9 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๓",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๒๐ น.๒๔๑-๑๔๓ สาวตฺถิยํ หิ เทวสิกํ - อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/Xyu5oWv-XL0?si=5-I8K_DyrGkIsc7g",
+            ],
             fileNoteTranslate: "materials/translate-notes-120.pdf",
             isExam: true,
             examStartTime: "14:00:00",
