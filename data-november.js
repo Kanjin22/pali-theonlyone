@@ -619,6 +619,10 @@ const dataNovember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗",
             activityTranslate: "(อ่าน) ภาค ๑ เก็งที่ ๑๙ น.๑๒๙-๑๓๑ อปรภาเค สตฺถริ - ...กกฺกฏกชาตกานิ กเถสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/sb34IpqIEjw?si=jEaJQgtBzjTCxNf2&t=742",
+                "https://youtu.be/gzI7v5vT4YU?si=_7pXG-u-mFL-skZD",
+            ],
             fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
             fileNoteTranslate: "materials/translate-notes-119.pdf",
         },
