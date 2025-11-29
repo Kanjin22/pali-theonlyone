@@ -680,10 +680,17 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/yjcrDc5apJA?si=bs6SCkbjMOZjEyOX&t=38",
+                "https://youtu.be/wfNS5MNXaBI?si=21ADDRJgCc8DIk31",
+            ],
             fileNoteTranslate: "materials/translate-notes-203.pdf",
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๔ น.๑๖-๑๘ สา ตํ เนตฺวา - อปฺปทุฏฺฐสฺส ปทุฏฺฐมโน ฯ",
+            linkYoutube: [
+                "https://youtu.be/wfNS5MNXaBI?si=pGyjMySmKSWVhJGJ&t=416",
+            ],
             fileNoteTranslate: "materials/translate-notes-204.pdf",
         },
         evening: {
