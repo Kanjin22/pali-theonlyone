@@ -673,6 +673,9 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/njG8dBKLuk4?si=P1Rf_Yi0u9Sd05kK&t=271",
+            ],
             fileNoteTranslate: "materials/translate-notes-203.pdf",
         },
         afternoon: {
