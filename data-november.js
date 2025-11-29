@@ -662,6 +662,10 @@ const dataNovember = [
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๒ น.๘-๑๐ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/JVBWiXwa-qs?si=H9Bw7tIXPcjaMqR-",
+                "https://youtu.be/9-VFvaw97eI?si=ybXnBnRpwdpCONIy",
+            ],
             fileNoteTranslate: "materials/translate-notes-202.pdf",
         },
         evening: {
