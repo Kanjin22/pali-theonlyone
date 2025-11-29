@@ -655,10 +655,13 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๑ น.๔-๖ ตทา จ หิมวนฺตปฺปเทเส - เทฺวปิ สมคฺคสํวาสํ วสึสุ ฯ",
+            linkYoutube: [
+                "https://youtu.be/njG8dBKLuk4?si=P1Rf_Yi0u9Sd05kK&t=271",
+            ],
             fileNoteTranslate: "materials/translate-notes-201.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๒ น.๘-๙ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ",
+            activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๒ น.๘-๑๐ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ",
             fileNoteTranslate: "materials/translate-notes-202.pdf",
         },
         evening: {
@@ -673,9 +676,6 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาค ๒ เก็งที่ ๓ น.๑๒-๑๕ ติรจฺฉานา นาเมเต - อนฺตเร กตฺวา อฏฺฐาสิ ฯ",
-            linkYoutube: [
-                "https://youtu.be/njG8dBKLuk4?si=P1Rf_Yi0u9Sd05kK&t=271",
-            ],
             fileNoteTranslate: "materials/translate-notes-203.pdf",
         },
         afternoon: {
