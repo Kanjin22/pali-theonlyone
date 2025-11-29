@@ -77,13 +77,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๘-๕๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๕ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๒๔-๒๗ เสฏฺฐี มโตติ - ทานพฺยาวโฏ อโหสิ ฯ",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-205.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๔",
-            activityTranslate: "(อ่าน) เก็งที่ ๖ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๖ น. ๒๙-๓๑ สาทานคฺเค อุจฺจาสทฺทํ - ตสฺสาเยว ปริวาริตฺถิโย อเหสุํ ฯ",
             fileNoteTranslate: "materials/translate-notes-206.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -105,13 +105,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๐-๖๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๓๓-๓๕ จณฺพปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-207.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๘ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๘ น.๔๒-๔๔ ตสฺมึ โข ปน สมเย - มยา ลทฺธาติ อาห ฯ",
             fileNoteTranslate: "materials/translate-notes-208.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -133,13 +133,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๒-๖๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๙ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๙ น.๔๖-๔๘ เตสํ ปน ติณฺณํ - วนฺทึสุ เจว ปูเชสุํ ฯ",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
             fileNoteTranslate: "materials/translate-notes-209.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๖",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๐ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๐ น.๕๕-๕๘ ตา เอกทิวสํ เถรสฺส - อิมํ อุทานํ อุทาเนสิ ฯ",
             fileNoteTranslate: "materials/translate-notes-210.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -161,13 +161,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๔-๖๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.๗๐-๗๒ สา กติปาหจฺจเยน - น ทิฏฺฐปุพฺโพติ อาห ฯ",
             fileNoteGrammar: "materials/grammar-notes-64-65.pdf",
             fileNoteTranslate: "materials/translate-notes-211.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๒ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๒ น.๘๒-๘๔ อถ สายณฺหสมเย ภิกฺขู - มาตา มหาสกฺการสมฺมานมกาสิ ฯ",
             fileNoteTranslate: "materials/translate-notes-212.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -189,13 +189,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๖-๖๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๘๔-๘๗ ตทา พาราณสีราชา - ทิสาปาโมกฺขาจริโยติ ฯ",
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-213.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๘",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๔ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๙๗-๙๙ อตีเต มคธรฏฺเฐ - กุชฺฌิตฺวา เอวมาหาติ ฯ",
             fileNoteTranslate: "materials/translate-notes-214.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -215,11 +215,11 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๐๕-๑๐๗ สุชาตา ปน กาลํ - ธีตา หุตฺวา นิพฺพตฺติ ฯ",
             fileNoteTranslate: "materials/translate-notes-215.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๒๐-๑๒๒ เตสุ เอวํ กติกํ กตฺวา - ตสฺสา คุณกถํ กถยึสุ ฯ",
             fileNoteTranslate: "materials/translate-notes-216.pdf",
         },
         evening: {
@@ -233,11 +233,11 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๒"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๒-๑๒๔ อญฺญตโร ภิกฺขุ ตสฺสา - วตฺวา อิมํ คาถมาห ฯ",
             fileNoteTranslate: "materials/translate-notes-217.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํํ คาถมาห ฯ",
             fileNoteTranslate: "materials/translate-notes-218.pdf",
         },
         evening: {
@@ -253,13 +253,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๐-๕๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๙ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๙ น.๑๒๙-๑๓๒ สาวตฺถิยํ กิเรโก - วตฺวา อิมํ คาถมาห ฯ",
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
             fileNoteTranslate: "materials/translate-notes-219.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๐ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๒๐ น.๑๓๓-๑๓๕ เอโก กิร สาวตฺถีวาสี - อรหตฺตํ ปาปุณิ ฯ",
             fileNoteTranslate: "materials/translate-notes-220.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -281,13 +281,13 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๒-๕๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๑ น.......",
+            activityTranslate: "(อ่าน) เก็งที่ ๒๑ น.๑๔๐-๑๔๒ สาวตฺถิยํั กิร ปญฺจสตา - ปวิเสยฺยาถาติ อุยฺโยเชสิ ฯ",
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-221.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๐",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๒ น...... ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๒๒ น.๑๕๒-๑๕๖ สมฺมาสมฺพุทฺเธ สาวตฺถิยํ - ปุริสลิงฺคํ ปาตุภาวิ ฯ",
             fileNoteTranslate: "materials/translate-notes-222.pdf",
             isExam: true,
             examStartTime: "14:00:00",
