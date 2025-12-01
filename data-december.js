@@ -113,12 +113,20 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๐-๖๑",
             activityTranslate: "(อ่าน) เก็งที่ ๗ น.๓๓-๓๕ จณฺฑปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
+            linkYoutube: [
+                "https://youtu.be/1UUn6E6TdGY?si=lWewLM7WqyGIc_7p&t=479",
+                "https://youtu.be/brBfFITuq5E?si=uOnAQGX2O5gCcECb",
+            ],
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-207.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๕",
             activityTranslate: "(อ่าน) เก็งที่ ๘ น.๔๒-๔๔ ตสฺมึ โข ปน สมเย - มยา ลทฺธาติ อาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/iniianWQ0Zw?si=4WzsTv0VpPJkvz8q&t=421",
+                "https://youtu.be/DIoXAa37r6A?si=kxSJtqwObPDQv5lj",
+            ],
             fileNoteTranslate: "materials/translate-notes-208.pdf",
             isExam: true,
             examStartTime: "14:00:00",
