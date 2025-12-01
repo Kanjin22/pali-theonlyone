@@ -112,7 +112,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๐-๖๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๓๓-๓๕ จณฺพปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๓๓-๓๕ จณฺฑปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-207.pdf"
         },
