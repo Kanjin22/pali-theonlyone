@@ -83,7 +83,10 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๔",
-            activityTranslate: "(อ่าน) เก็งที่ ๖ น. ๒๙-๓๑ สาทานคฺเค อุจฺจาสทฺทํ - ตสฺสาเยว ปริวาริตฺถิโย อเหสุํ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๖ น. ๒๙-๓๑ สา ทานคฺเค อุจฺจาสทฺทํ - ตสฺสาเยว ปริวาริตฺถิโย อเหสุํ ฯ",
+            linkYoutube: [
+                "https://youtu.be/FdhxWVZTC00?si=TSX7tmticVRhHHe4&t=86",
+            ],
             fileNoteTranslate: "materials/translate-notes-206.pdf",
             isExam: true,
             examStartTime: "14:00:00",
