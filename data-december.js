@@ -78,6 +78,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๘-๕๙",
             activityTranslate: "(อ่าน) เก็งที่ ๕ น.๒๔-๒๗ เสฏฺฐี มโตติ - ทานพฺยาวโฏ อโหสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/Fxi6Fzm2lGA?si=pgtiXdt3Z6VIVpXY&t=2940",
+                "https://youtu.be/tcbWtQK70X4?si=EYY2dc0JYFTB5Gse",
+            ],
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-205.pdf"
         },
