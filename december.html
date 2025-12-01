@@ -191,7 +191,7 @@
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            const data = typeof datadecember !== 'undefined' ? datadecember : [];
+            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -208,7 +208,7 @@
 
         // === 4. ฟังก์ชันเปิด Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = datadecember.find(item => item.date === date);
+            const dayData = dataDecember.find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
@@ -351,7 +351,7 @@
 
         // === 7. ฟังก์ชันคำนวณสถิติ (สำคัญ! ต้องมี) ===
         function calculateMonthlyStats() {
-            const data = typeof datadecember !== 'undefined' ? datadecember : [];
+            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
             let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
 
             data.forEach(day => {
