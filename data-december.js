@@ -227,6 +227,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๘",
             activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๙๗-๙๙ อตีเต มคธรฏฺเฐ - กุชฺฌิตฺวา เอวมาหาติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/BR_aEZQy8es?si=JK4oCfVfzCyBOkGP&t=483",
+                "https://youtu.be/QxjOjO-14QM?si=WL7lz85Cbi41pLch",
+            ],
             fileNoteTranslate: "materials/translate-notes-214.pdf",
             isExam: true,
             examStartTime: "14:00:00",
