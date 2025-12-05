@@ -218,6 +218,9 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๖-๖๗",
             activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๘๔-๘๗ ตทา พาราณสีราชา - ทิสาปาโมกฺขาจริโยติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/ISq7VTxJdIY?si=gjfm1yRZdQ9fvi2_",
+            ],
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-213.pdf"
         },
