@@ -258,6 +258,10 @@ const dataDecember = [
         },
         afternoon: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๒๐-๑๒๒ เตสุ เอวํ กติกํ กตฺวา - ตสฺสา คุณกถํ กถยึสุ ฯ",
+            linkYoutube: [
+                "https://youtu.be/EzE3vYLukbY?si=wiF8CEaSsiDigRnr&t=995",
+                "https://youtu.be/xp-n1g51qm0?si=AD8DxD7YhcyTfto1",
+            ],
             fileNoteTranslate: "materials/translate-notes-216.pdf",
         },
         evening: {
