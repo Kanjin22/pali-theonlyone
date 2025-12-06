@@ -251,6 +251,9 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๐๕-๑๐๗ สุชาตา ปน กาลํ - ธีตา หุตฺวา นิพฺพตฺติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/CFIfKWK-hL8?si=CaXCgAIp6axmGucV",
+            ],
             fileNoteTranslate: "materials/translate-notes-215.pdf",
         },
         afternoon: {
