@@ -279,7 +279,7 @@ const dataDecember = [
             fileNoteTranslate: "materials/translate-notes-217.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํ คาถมาห ฯ",
             fileNoteTranslate: "materials/translate-notes-218.pdf",
         },
         evening: {
