@@ -303,12 +303,20 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๐-๕๑",
             activityTranslate: "(อ่าน) เก็งที่ ๑๙ น.๑๒๙-๑๓๒ สาวตฺถิยํ กิเรโก - วตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/SKUDuGGyl1Q?si=3IN16juV8VTCP7Ts&t=261",
+                "https://youtu.be/qKiQPCLPo2A?si=WbpdzuVSDjRYcJO-",
+            ],
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
             fileNoteTranslate: "materials/translate-notes-219.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๙",
             activityTranslate: "(อ่าน) เก็งที่ ๒๐ น.๑๓๓-๑๓๕ เอโก กิร สาวตฺถีวาสี - อรหตฺตํ ปาปุณิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/qKiQPCLPo2A?si=junc2Fa0jH8tTNW1&t=676",
+                "https://youtu.be/hx4zxu90xuA?si=Z1zTgjL0mBi1nuLO",
+            ],
             fileNoteTranslate: "materials/translate-notes-220.pdf",
             isExam: true,
             examStartTime: "14:00:00",
