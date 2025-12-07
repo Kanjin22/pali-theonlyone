@@ -284,6 +284,9 @@ const dataDecember = [
         },
         afternoon: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/ki46xNs2Qsw?si=iqu4LGoYGuZ1vuoG&t=431",
+            ],
             fileNoteTranslate: "materials/translate-notes-218.pdf",
         },
         evening: {
