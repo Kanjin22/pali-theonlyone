@@ -276,6 +276,10 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๒-๑๒๔ อญฺญตโร ภิกฺขุ ตสฺสา - วตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/xp-n1g51qm0?si=ihUniziGjaLa47Eq&t=937",
+                "https://youtu.be/kU-Wx3poJM0?si=QXlPeMuvEKYV-p8_",
+            ],
             fileNoteTranslate: "materials/translate-notes-217.pdf",
         },
         afternoon: {
