@@ -338,13 +338,21 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๒-๕๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๑ น.๑๔๐-๑๔๒ สาวตฺถิยํั กิร ปญฺจสตา - ปวิเสยฺยาถาติ อุยฺโยเชสิ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๒๑ น.๑๔๐-๑๔๒ สาวตฺถิยํ กิร ปญฺจสตา - ปวิเสยฺยาถาติ อุยฺโยเชสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/I9jYkFWC1a8?si=3-u8eVsJagBK6gBf&t=44",
+            ],
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-221.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๐",
             activityTranslate: "(อ่าน) เก็งที่ ๒๒ น.๑๕๒-๑๕๖ สมฺมาสมฺพุทฺเธ สาวตฺถิยํ - ปุริสลิงฺคํ ปาตุภาวิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/o4x0BtfXuYE?si=kCbeQt1et347FX9g&t=936",
+                "https://youtu.be/n1Sk7r06nRQ?si=iogtpZ-xByZMWZS3",
+                "https://youtu.be/A0lknpBv538?si=zfruQJIns-kLQu1b",
+            ],
             fileNoteTranslate: "materials/translate-notes-222.pdf",
             isExam: true,
             examStartTime: "14:00:00",
