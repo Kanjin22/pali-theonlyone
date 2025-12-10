@@ -385,6 +385,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๑",
             activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๒๐ พนฺธุโล เตนหิ อิมา - ลภติ รชฺชสุขํ นานุโภติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/22hxOtjBmnI?si=QnR9JQkVj2xmNcUL&t=304",
+                "https://youtu.be/R3YYWFUjUig?si=u9oe_N4X984fE8vw",
+            ],
             fileNoteTranslate: "materials/translate-notes-302.pdf",
             isExam: true,
             examStartTime: "14:00:00",
