@@ -380,7 +380,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๒๐ พนฺธุโล เตนหิ อิมา - ลภติ รชฺชํ นานุโภติ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๒๐ พนฺธุโล เตนหิ อิมา - ลภติ รชฺชสุขํ นานุโภติ ฯ",
             fileNoteTranslate: "materials/translate-notes-302.pdf",
             isExam: true,
             examStartTime: "14:00:00",
