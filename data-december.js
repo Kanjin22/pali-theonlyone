@@ -375,6 +375,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๔-๕๕",
             activityTranslate: "(อ่าน) เก็งที่ ๑ น.๙-๑๑ อิติ โข มหาราช - สุวณฺณวณฺโณ อโหสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/JEVbneGdqQA?si=Qloo8zO_DmHPR6bY&t=784",
+                "https://youtu.be/eHxUIL6Kei0?si=I2YApUFvHGiRw0Zf",
+            ],
             fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
             fileNoteTranslate: "materials/translate-notes-301.pdf"
         },
