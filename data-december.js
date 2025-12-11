@@ -446,7 +446,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๘-๕๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๓๒-๓๔ อถ สตฺถา ปาโต ว - เชตวนทฺวารโกฏฺฐเ โหตูติ อธิฏฺฐาสิ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๓๒-๓๔ อถ สตฺถา ปาโต ว - เชตวนทฺวารโกฏฺเฐ โหตูติ อธิฏฺฐาสิ ฯ",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-305.pdf"
         },
