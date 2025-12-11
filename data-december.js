@@ -421,6 +421,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๒",
             activityTranslate: "(อ่าน) เก็งที่ ๔ น.๓๐-๓๒ วตฺถุ ราชคเห สมุฏฺฐิตํ - ปูเว ปจิตุํ อารภิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/UnecSVndhdE?si=vqSB7eBH_gxKNkxN&t=478",
+                "https://youtu.be/C_Yj2nM7LYg?si=FV82-BS-Q3ULhvyU",
+            ],
             fileNoteTranslate: "materials/translate-notes-304.pdf",
             isExam: true,
             examStartTime: "14:00:00",
