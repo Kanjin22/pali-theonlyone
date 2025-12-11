@@ -447,6 +447,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๘-๕๙",
             activityTranslate: "(อ่าน) เก็งที่ ๕ น.๓๒-๓๔ อถ สตฺถา ปาโต ว - เชตวนทฺวารโกฏฺเฐ โหตูติ อธิฏฺฐาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/C_Yj2nM7LYg?si=GbHPSmUWokr10Xrm&t=199",
+                "https://youtu.be/t9OQZ7IiTMM?si=KwvDA16y1z7tfLLI",
+            ],
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-305.pdf"
         },
