@@ -457,6 +457,9 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๓",
             activityTranslate: "(อ่าน) เก็งที่ ๖ น.๓๘-๔๐ สาวตฺถิยํ กิร เอกา - วตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/-lrYl1Ec9CM?si=KIjSWwLoyizHnRmo&t=44",
+            ],
             fileNoteTranslate: "materials/translate-notes-306.pdf",
             isExam: true,
             examStartTime: "14:00:00",
