@@ -420,7 +420,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๒",
-            activityTranslate: "(อ่าน) เก็งที่ ๔ น.๓๐-๓๒ อถ สตฺถา ปาโตว - ปูเว ปจิตุํ อารภิ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๔ น.๓๐-๓๒ วตฺถุ ราชคเห สมุฏฺฐิตํ - ปูเว ปจิตุํ อารภิ ฯ",
             fileNoteTranslate: "materials/translate-notes-304.pdf",
             isExam: true,
             examStartTime: "14:00:00",
