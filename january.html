@@ -245,6 +245,9 @@
             let links = '';
             if (period.linkZoom) { links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; }
             if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (YouTube)</a>`; }
+            if (period.slideId) {
+                links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
+            }
             
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; }
             if (period.fileNoteTranslate) {
