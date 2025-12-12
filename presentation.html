@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สื่อการสอนบาลี</title>
+    <!-- ... (ส่วน CSS ทั้งหมด เหมือนไฟล์ kosiya.html เดิมของคุณเป๊ะๆ) ... -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ก๊อปปี้ CSS จากไฟล์ kosiya.html มาวางตรงนี้ทั้งหมดเลยครับ */
+        body { margin: 0; padding: 0; background-color: #eceff1; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; }
+        .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
+        button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        .card { width: 1000px; height: 700px; background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; }
+        .content-area { flex: 1; padding: 40px 80px 20px 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
+        .content-area::-webkit-scrollbar { width: 6px; }
+        .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
+        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 1.6; margin-bottom: 25px; }
+        .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
+        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 1.8; font-weight: 300; }
+        .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
+        .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
+        .footer-section:last-child { border-right: none; }
+        .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
+        .sec-content { font-size: 0.95rem; color: #37474f; line-height: 1.5; }
+        .pali-word { font-family: 'Niramit', serif; color: #0277bd; font-weight: 500; }
+        .page-badge { position: absolute; top: 25px; right: 30px; background-color: #eceff1; padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-content { animation: slideIn 0.4s ease-out forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="cardContainer">
+        <div class="header-bar"></div>
+        <div class="page-badge" id="pageNumber">1</div>
+        <div class="content-area animate-content" id="mainContent">
+            <div class="pali-text" id="paliContent">...</div>
+            <div class="divider"></div>
+            <div class="thai-text" id="thaiContent">...</div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-section" style="flex: 1.2;">
+                <div class="sec-title">📝 บริบท / คำอธิบาย</div>
+                <div class="sec-content" id="contextContent">...</div>
+            </div>
+            <div class="footer-section" style="flex: 0.8;">
+                <div class="sec-title">🔹 กิริยาอาขยาต (คุมพากย์)</div>
+                <div class="sec-content pali-word" id="akhyataContent">...</div>
+            </div>
+            <div class="footer-section" style="flex: 1;">
+                <div class="sec-title">🔸 กิริยากิตก์ / ต ปัจจัย</div>
+                <div class="sec-content pali-word" id="kitakaContent">...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">❮ ย้อนกลับ</button>
+        <button onclick="nextSlide()">ถัดไป ❯</button>
+    </div>
+
+    <!-- เรียกใช้ฐานข้อมูล -->
+    <script src="slides-data.js"></script>
+
+    <script>
+        // 1. อ่านค่า ID จาก URL (เช่น presentation.html?id=p1_geng3)
+        const params = new URLSearchParams(window.location.search);
+        const slideId = params.get('id');
+
+        // 2. ดึงข้อมูลจากฐานข้อมูล
+        let slides = [];
+        if (slideId && slidesDatabase[slideId]) {
+            slides = slidesDatabase[slideId];
+        } else {
+            // กรณีหาไม่เจอ ให้แสดงข้อความแจ้งเตือน
+            slides = [{
+                pali: "ไม่พบข้อมูลสื่อการสอน",
+                thai: "กรุณาตรวจสอบรหัส (ID) ของสื่อการสอนอีกครั้ง",
+                context: "-", akhyata: "-", kitaka: "-"
+            }];
+        }
+
+        let currentIndex = 0;
+        const mainContent = document.getElementById('mainContent');
+        const contentArea = document.querySelector('.content-area');
+        
+        function updateSlide() {
+            mainContent.classList.remove('animate-content');
+            void mainContent.offsetWidth; 
+            mainContent.classList.add('animate-content');
+            contentArea.scrollTop = 0;
+
+            const s = slides[currentIndex];
+            document.getElementById('paliContent').innerText = s.pali;
+            document.getElementById('thaiContent').innerText = s.thai;
+            document.getElementById('contextContent').innerText = s.context;
+            document.getElementById('akhyataContent').innerText = s.akhyata;
+            document.getElementById('kitakaContent').innerText = s.kitaka;
+            document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "ArrowRight") nextSlide();
+            if (event.key === "ArrowLeft") prevSlide();
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
