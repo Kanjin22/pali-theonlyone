@@ -462,6 +462,7 @@ const dataDecember = [
             linkYoutube: [
                 "https://youtu.be/-lrYl1Ec9CM?si=KIjSWwLoyizHnRmo&t=44",
             ],
+            slideId: "p3_geng6",
             fileNoteTranslate: "materials/translate-notes-306.pdf",
             isExam: true,
             examStartTime: "14:00:00",
