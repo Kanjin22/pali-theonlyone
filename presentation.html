@@ -14,14 +14,31 @@
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
         button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
-        .card { width: 1000px; height: 700px; background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+/* การ์ดนำเสนอ (แก้ไขใหม่ให้ยืดหยุ่น) */
+        .card {
+            width: 95%;            /* กว้าง 95% ของหน้าจอ (ไม่ล้นมือถือ) */
+            max-width: 1000px;     /* แต่ไม่เกิน 1000px ในจอคอม */
+            height: 85vh;          /* สูง 85% ของความสูงหน้าจอ */
+            max-height: 800px;     /* สูงสุดไม่เกิน 800px */
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
         .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; }
         .content-area { flex: 1; padding: 40px 80px 20px 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
-        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 1.6; margin-bottom: 25px; }
+        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 1.6; margin-bottom: 25px; word-wrap: break-word;      /* ตัดคำยาวๆ */
+            overflow-wrap: break-word;  /* ตัดคำยาวๆ */
+        }
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
-        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 1.8; font-weight: 300; }
+        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 1.8; font-weight: 300;  word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
         .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
         .footer-section:last-child { border-right: none; }
@@ -31,6 +48,43 @@
         .page-badge { position: absolute; top: 25px; right: 30px; background-color: #eceff1; padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
+        /* --- เพิ่ม CSS สำหรับมือถือ --- */
+        @media screen and (max-width: 768px) {
+            .card {
+                height: 90vh; /* ในมือถือให้สูงเกือบเต็มจอ */
+                margin-top: -40px; /* ขยับขึ้นหลบปุ่มกดด้านล่าง */
+            }
+            .content-area {
+                padding: 20px; /* ลดขอบลง */
+            }
+            .pali-text {
+                font-size: 1.4rem; /* ลดขนาดตัวบาลี */
+                margin-bottom: 15px;
+            }
+            .thai-text {
+                font-size: 1.1rem; /* ลดขนาดตัวไทย */
+            }
+            .footer-box {
+                height: auto; /* ให้ความสูงยืดตามเนื้อหา */
+                flex-direction: column; /* เรียง footer ลงมาแนวตั้ง */
+                overflow-y: auto; /* ให้เลื่อนได้ถ้าข้อมูลเยอะ */
+                min-height: 120px;
+                max-height: 30%;
+            }
+            .footer-section {
+                border-right: none;
+                border-bottom: 1px solid #eceff1;
+                padding: 10px 20px;
+            }
+            .controls {
+                bottom: 10px;
+                gap: 10px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
