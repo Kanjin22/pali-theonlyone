@@ -483,10 +483,15 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
+            linkYoutube: ["https://youtu.be/AySNS0QsciU?si=JORHnHbuKhoSF5J7"],
             fileNoteTranslate: "materials/translate-notes-307.pdf",
         },
         afternoon: {
             activityTranslate: "(อ่าน) เก็งที่ ๘ น.๔๙-๕๑ อถสฺส มาตาปิตโร - ตํ สุวณฺณมาลํ ปิลนฺธยึสุ ฯ",
+            linkYoutube: [
+                "https://youtu.be/AySNS0QsciU?si=kVeLpnbWQUE-Vvz3&t=836",
+                "https://youtu.be/e6EfF6zWhPU?si=v7WdjwTdBCENvDhX",
+            ],
             fileNoteTranslate: "materials/translate-notes-308.pdf",
         },
         evening: {
