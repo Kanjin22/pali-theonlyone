@@ -262,6 +262,10 @@
                 }
             }
             
+            if (period.slideId) {
+                links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
+            }
+            
             // --- เนื้อหา ---
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { 
                 links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
