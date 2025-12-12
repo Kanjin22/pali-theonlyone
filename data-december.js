@@ -482,7 +482,7 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๕-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
             fileNoteTranslate: "materials/translate-notes-307.pdf",
         },
         afternoon: {
