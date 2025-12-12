@@ -425,7 +425,7 @@ const dataDecember = [
                 "https://youtu.be/UnecSVndhdE?si=vqSB7eBH_gxKNkxN&t=478",
                 "https://youtu.be/C_Yj2nM7LYg?si=FV82-BS-Q3ULhvyU",
             ],
-            slideId: "p1_geng4",
+            slideId: "p3_geng4",
             fileNoteTranslate: "materials/translate-notes-304.pdf",
             isExam: true,
             examStartTime: "14:00:00",
