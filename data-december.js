@@ -484,6 +484,7 @@ const dataDecember = [
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
             linkYoutube: ["https://youtu.be/AySNS0QsciU?si=JORHnHbuKhoSF5J7"],
+            slideId: "p3_geng7",
             fileNoteTranslate: "materials/translate-notes-307.pdf",
         },
         afternoon: {
