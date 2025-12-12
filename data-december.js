@@ -493,6 +493,7 @@ const dataDecember = [
                 "https://youtu.be/AySNS0QsciU?si=kVeLpnbWQUE-Vvz3&t=836",
                 "https://youtu.be/e6EfF6zWhPU?si=v7WdjwTdBCENvDhX",
             ],
+            slideId: "p3_geng8",
             fileNoteTranslate: "materials/translate-notes-308.pdf",
         },
         evening: {
