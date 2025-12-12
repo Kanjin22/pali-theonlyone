@@ -29,7 +29,20 @@
             position: relative;
         }
         .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; }
-        .content-area { flex: 1; padding: 40px 80px 20px 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
+        .content-area {
+            flex: 1;
+            /* ปรับ padding ด้านข้างให้มากขึ้น (จาก 80px เป็น 100px หรือตามชอบ) */
+            padding: 40px 100px 20px 100px; 
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* จัดกึ่งกลางแนวตั้ง */
+            /* align-items: center;  <-- ลบบรรทัดนี้ออก หรือเปลี่ยนเป็น stretch เพื่อให้กล่องข้อความกว้างเต็มที่ */
+            align-items: stretch; 
+            
+            text-align: left; /* ค่าเริ่มต้น */
+            overflow-y: auto;
+        }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
         .pali-text {
@@ -37,12 +50,16 @@
             font-size: 1.8rem;
             color: #263238;
             font-weight: 500;
-            line-height: 1.6;
+            line-height: 1.8; /* เพิ่มความสูงบรรทัดนิดหน่อยให้อ่านง่ายเมื่อจัดชิดขอบ */
             margin-bottom: 25px;
 
-            /* --- โค้ดแก้ไขเรื่องตัดคำ --- */
-            word-break: normal;        /* ให้ตัดคำตามปกติ (ที่ช่องว่าง) */
-            overflow-wrap: break-word; /* ตัดคำกลางคำ "เฉพาะเมื่อ" คำนั้นยาวเกินหน้าจอจริงๆ เท่านั้น */
+            /* --- จัดหน้าแบบหนังสือ --- */
+            text-align: justify;       /* จัดเสมอซ้ายขวา */
+            text-indent: 50px;         /* ย่อหน้าบรรทัดแรก (เหมือนในหนังสือ) */
+            
+            /* การตัดคำ (จากรอบที่แล้ว) */
+            word-break: normal;
+            overflow-wrap: break-word;
         }
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
         .thai-text {
@@ -51,10 +68,14 @@
             color: #546e7a;
             line-height: 1.8;
             font-weight: 300;
-            
-            /* --- โค้ดแก้ไขเรื่องตัดคำ --- */
-            word-break: normal;        /* ให้ตัดคำตามปกติ (ที่ช่องว่าง) */
-            overflow-wrap: break-word; /* ตัดคำกลางคำ "เฉพาะเมื่อ" คำนั้นยาวเกินหน้าจอจริงๆ เท่านั้น */
+
+            /* --- จัดหน้าแบบหนังสือ --- */
+            text-align: justify;       /* จัดเสมอซ้ายขวา */
+            text-indent: 50px;         /* ย่อหน้าบรรทัดแรก */
+
+            /* การตัดคำ (จากรอบที่แล้ว) */
+            word-break: normal;
+            overflow-wrap: break-word;
         }
         .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
