@@ -32,12 +32,29 @@
         .content-area { flex: 1; padding: 40px 80px 20px 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
-        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 1.6; margin-bottom: 25px; word-wrap: break-word;      /* ตัดคำยาวๆ */
-            overflow-wrap: break-word;  /* ตัดคำยาวๆ */
+        .pali-text {
+            font-family: 'Niramit', serif;
+            font-size: 1.8rem;
+            color: #263238;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 25px;
+
+            /* --- โค้ดแก้ไขเรื่องตัดคำ --- */
+            word-break: normal;        /* ให้ตัดคำตามปกติ (ที่ช่องว่าง) */
+            overflow-wrap: break-word; /* ตัดคำกลางคำ "เฉพาะเมื่อ" คำนั้นยาวเกินหน้าจอจริงๆ เท่านั้น */
         }
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
-        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 1.8; font-weight: 300;  word-wrap: break-word;
-            overflow-wrap: break-word;
+        .thai-text {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.3rem;
+            color: #546e7a;
+            line-height: 1.8;
+            font-weight: 300;
+            
+            /* --- โค้ดแก้ไขเรื่องตัดคำ --- */
+            word-break: normal;        /* ให้ตัดคำตามปกติ (ที่ช่องว่าง) */
+            overflow-wrap: break-word; /* ตัดคำกลางคำ "เฉพาะเมื่อ" คำนั้นยาวเกินหน้าจอจริงๆ เท่านั้น */
         }
         .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
@@ -58,7 +75,7 @@
                 padding: 20px; /* ลดขอบลง */
             }
             .pali-text {
-                font-size: 1.4rem; /* ลดขนาดตัวบาลี */
+                font-size: 1.3rem; /* ลดขนาดตัวบาลี */
                 margin-bottom: 15px;
             }
             .thai-text {
