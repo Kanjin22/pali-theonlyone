@@ -73,7 +73,7 @@ const dataDecember = [
         date: "2025-12-01", displayDate: "จ. ๑-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๔",
-            translate: "แปลมคธเป็นไทย ครัั้งที่ ๓ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครัั้งที่ ๓ ภาค ๒ (เก็งที่ ๕-๖)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๘-๕๙",
@@ -108,7 +108,7 @@ const dataDecember = [
         date: "2025-12-02", displayDate: "อ. ๒-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๕",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๒ (เก็งที่ ๗-๘)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๐-๖๑",
@@ -144,7 +144,7 @@ const dataDecember = [
         date: "2025-12-03", displayDate: "พ. ๓-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๖",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๒ (เก็งที่ ๙-๑๐)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๒-๖๓",
@@ -179,7 +179,7 @@ const dataDecember = [
         date: "2025-12-04", displayDate: "พฤ. ๔-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๗",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๒ (เก็งที่ ๑๑-๑๒)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๔-๖๕",
@@ -213,7 +213,7 @@ const dataDecember = [
         date: "2025-12-05", displayDate: "ศ. ๕-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๘",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๒ (เก็งที่ ๑๓-๑๔)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๖-๖๗",
@@ -247,7 +247,7 @@ const dataDecember = [
     {
         date: "2025-12-06", displayDate: "ส. ๖-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒ (เก็งที่ ๑๕-๑๖)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๐๕-๑๐๗ สุชาตา ปน กาลํ - ธีตา หุตฺวา นิพฺพตฺติ ฯ",
@@ -272,7 +272,7 @@ const dataDecember = [
     {
         date: "2025-12-07", displayDate: "อา. ๗-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๒ (เก็งที่ ๑๗-๑๘)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๒-๑๒๔ อญฺญตโร ภิกฺขุ ตสฺสา - วตฺวา อิมํ คาถมาห ฯ",
@@ -298,7 +298,7 @@ const dataDecember = [
         date: "2025-12-08", displayDate: "จ. ๘-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๑๙",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๑๐ ภาค ๒"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๑๐ ภาค ๒ (เก็งที่ ๑๙-๒๐)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๐-๕๑",
@@ -334,7 +334,7 @@ const dataDecember = [
         date: "2025-12-09", displayDate: "อ. ๙-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๐",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๑๑ ภาค ๒ (สิ้นสุด)"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๑๑ ภาค ๒ (เก็งที่ ๑๒-๒๒) (สิ้นสุด)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๒-๕๓",
@@ -370,7 +370,7 @@ const dataDecember = [
         date: "2025-12-10", displayDate: "พ. ๑๐-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๑",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๓ (เก็งที่ ๑-๒)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๔-๕๕",
@@ -406,7 +406,7 @@ const dataDecember = [
         date: "2025-12-11", displayDate: "พฤ. ๑๑-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๒",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๓ (เก็งที่ ๓-๔)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๖-๕๗",
@@ -443,7 +443,7 @@ const dataDecember = [
         date: "2025-12-12", displayDate: "ศ. ๑๒-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๓",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๓ (เก็งที่ ๕-๖)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๘-๕๙",
@@ -479,7 +479,7 @@ const dataDecember = [
     {
         date: "2025-12-13", displayDate: "ส. ๑๓-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓ (เก็งที่ ๗-๘)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
@@ -504,7 +504,7 @@ const dataDecember = [
     {
         date: "2025-12-14", displayDate: "อา. ๑๔-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓ (เก็งที่ ๙-๑๐)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๙ น.๖๓-๖๕ อถ นํ กุฏุมฺพิกา - มิคาโรติสฺส นามํ อกาสิ ฯ",
@@ -533,7 +533,7 @@ const dataDecember = [
         date: "2025-12-15", displayDate: "จ. ๑๕-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๔",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๓ (เก็งที่ ๑๑-๑๒)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๐-๖๑",
@@ -563,7 +563,7 @@ const dataDecember = [
         date: "2025-12-16", displayDate: "อ. ๑๖-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๕",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๓ (เก็งที่ ๑๓-๑๔)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๒-๖๓",
@@ -593,7 +593,7 @@ const dataDecember = [
         date: "2025-12-17", displayDate: "พ. ๑๗-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๖",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๓"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๓ (เก็งที่ ๑๕-๑๖)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๔-๖๕",
@@ -623,7 +623,7 @@ const dataDecember = [
         date: "2025-12-18", displayDate: "พฤ. ๑๘-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๗",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๓ (สิ้นสุด)"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๓ (เก็งที่ ๑๗-๑๘) (สิ้นสุด)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๖-๖๗",
@@ -652,7 +652,7 @@ const dataDecember = [
         date: "2025-12-19", displayDate: "ศ. ๑๙-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๘",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๔ (เก็งที่ ๑-๒)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๐-๕๑",
@@ -680,7 +680,7 @@ const dataDecember = [
     {
         date: "2025-12-20", displayDate: "ส. ๒๐-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔ (เก็งที่ ๓-๔)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๓ น.๒๑-๒๓ อตีเต กิร กสฺสปสมฺมาสมฺพุทฺโธ - ทาตุํ น วฏฺฏตีติ ฯ",
@@ -700,7 +700,7 @@ const dataDecember = [
     {
         date: "2025-12-21", displayDate: "อา. ๒๑-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔ (เก็งที่ ๕-๖)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๕ น.๒๗-๒๙ ตํทิวสํ ปน สตฺถา - แาเทตฺวา อฏฺฐาสิ ฯ",
@@ -721,7 +721,7 @@ const dataDecember = [
         date: "2025-12-22", displayDate: "จ. ๒๒-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๒๙",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๔ (เก็งที่ ๗-๘)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๒-๕๓",
@@ -751,7 +751,7 @@ const dataDecember = [
         date: "2025-12-23", displayDate: "อ. ๒๓-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๐",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๔ (เก็งที่ ๙-๑๐)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๔-๕๕",
@@ -781,7 +781,7 @@ const dataDecember = [
         date: "2025-12-24", displayDate: "พ. ๒๔-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๑",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๖ ภาค ๔ (เก็งที่ ๑๑-๑๒)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๖-๕๗",
@@ -811,7 +811,7 @@ const dataDecember = [
         date: "2025-12-25", displayDate: "พฤ. ๒๕-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๒",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๗ ภาค ๔ (เก็งที่ ๑๓-๑๔)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๘-๕๙",
@@ -841,7 +841,7 @@ const dataDecember = [
         date: "2025-12-26", displayDate: "ศ. ๒๖-ธ.ค.-๖๘",
         remarks: {
             grammar: "บาลีไวยากรณ์ ครั้งที่ ๓๓",
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๔ (เก็งที่ ๑๕-๑๖)"
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๐-๖๑",
@@ -870,7 +870,7 @@ const dataDecember = [
     {
         date: "2025-12-27", displayDate: "ส. ๒๗-ธ.ค.-๖๘",
         remarks: {
-            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔ (สิ้นสุด)"
+            translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔ (เก็งที่ ๑๗-๑๘) (สิ้นสุด)"
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๓-๑๒๕ ภิกฺขู คณฺฑิสทฺทํ - อิมํ คาถมาห ฯ",
