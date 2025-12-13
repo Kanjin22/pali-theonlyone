@@ -131,17 +131,27 @@
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
-        /* ปุ่มเครื่องมือ (รูปตา) */
         
-        .tool-btn { 
-            position: absolute; 
-            top: 20px; 
-            right: 100px; /* วางถัดจากเลขหน้า */
-            padding: 8px 12px; 
-            border-radius: 8px; 
+        /* *** เพิ่ม Class ใหม่นี้เข้าไป *** */
+        .top-tools {
+            position: absolute;
+            top: 20px;
+            right: 20px; /* อาจจะต้องปรับระยะห่างจากขวาใหม่ตามความสวยงาม */
+            display: flex; /* สั่งให้ของข้างในเรียงต่อกัน */
+            gap: 10px;     /* สร้างระยะห่างระหว่างปุ่ม */
             z-index: 10;
-            background-color: #eceff1; 
-            color: #546e7a; 
+        }
+        
+        /* *** แก้ไข .tool-btn เดิม โดยการลบ position, top, right ออกไป *** */
+        .tool-btn {
+            /* position: absolute;  <-- ลบบรรทัดนี้ */
+            /* top: 20px;           <-- ลบบรรทัดนี้ */
+            /* right: 100px;        <-- ลบบรรทัดนี้ */
+            padding: 8px 12px;
+            border-radius: 8px;
+            /* z-index: 10;         <-- ย้ายไปไว้ใน .top-tools แล้ว */
+            background-color: #eceff1;
+            color: #546e7a;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
