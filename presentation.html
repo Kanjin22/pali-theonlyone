@@ -6,128 +6,63 @@
     <title>สื่อการสอนบาลี (Interactive Text)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* --- CSS พื้นฐาน --- */
         body { margin: 0; padding: 0; background-color: #eceff1; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; }
         
-        .card {
-            width: 95%; max-width: 1000px; height: 85vh; max-height: 800px;
-            background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
-        }
-        
+        .card { width: 95%; max-width: 1000px; height: 85vh; max-height: 800px; background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; flex-shrink: 0; }
         
-        .content-area {
-            flex: 1;
-            padding: 40px 100px 20px 100px;
-            display: flex; flex-direction: column;
-            justify-content: flex-start; /* เริ่มจากบน */
-            align-items: stretch;
-            text-align: left;
-            overflow-y: auto;
-        }
+        .content-area { flex: 1; padding: 40px 100px 20px 100px; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; text-align: left; overflow-y: auto; }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
 
-        /* --- CSS สำหรับคำศัพท์ (แบบตัวหนังสือปกติ ไม่กินที่) --- */
-        .word-span {
-            cursor: pointer;
-            display: inline;
-            padding: 0;
-            margin: 0;
-            border-bottom: 2px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
-        }
+        /* --- CSS คำศัพท์ --- */
+        .word-span { cursor: pointer; display: inline; padding: 0; margin: 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+        .word-span:hover { color: #1565C0; }
+        .word-span.translated { color: #1565C0; border-bottom-color: #1565C0; }
         
-        /* สถานะเมื่อเอาเมาส์ชี้ */
-        .word-span:hover {
-            color: #1565C0; /* เปลี่ยนสีตอนชี้ */
-        }
+        .word-span.has-info { border-bottom: 2px dotted #aaa; }
+        .word-span.has-info.translated { border-bottom: 2px dotted #1565C0; }
 
-        /* สถานะเมื่อถูกคลิก (แปลแล้ว) */
-        .word-span.translated {
-            color: #1565C0;           /* เปลี่ยนสีตัวอักษรเป็นน้ำเงิน */
-            border-bottom-color: #1565C0; /* เติมสีให้เส้นใต้ */
+        /* --- CSS ข้อความ --- */
+        .pali-text { font-family: 'Sarabun', sans-serif; font-size: 1.8rem; color: #263238; font-weight: 600; line-height: 2; margin-bottom: 25px; text-align: left; text-indent: 50px; word-spacing: 0; letter-spacing: 0; word-break: normal; overflow-wrap: break-word; }
+        
+        .thai-text { 
+            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300; line-height: 2; text-align: left; text-indent: 50px; word-break: normal; overflow-wrap: break-word; 
+            transition: opacity 0.3s ease; opacity: 1; 
         }
+        .thai-text.hidden { opacity: 0; user-select: none; pointer-events: none; }
 
-        /* สำหรับบาลี */
-        .pali-text {
-            font-family: 'Sarabun', sans-serif; font-size: 1.8rem; color: #263238; font-weight: 500;
-            line-height: 2; margin-bottom: 25px;
-            text-align: justify; text-indent: 50px; word-spacing: 0; letter-spacing: 0;
-            word-break: normal; overflow-wrap: break-word;
-        }
+        /* --- Tooltip --- */
+        #sandhi-tooltip { position: fixed; display: none; background-color: #37474f; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 1.1rem; font-family: 'Sarabun', sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2000; pointer-events: none; white-space: nowrap; border: 1px solid #546e7a; }
+        #sandhi-tooltip span.split { color: #ffca28; font-weight: bold; }
+        #sandhi-tooltip span.origin { color: #b0bec5; font-size: 0.9em; margin-left: 5px; }
 
-        /* สำหรับไทย */
-        .thai-text {
-            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300;
-            line-height: 2;
-            text-align: justify; text-indent: 50px;
-            word-break: normal; overflow-wrap: break-word;
-            transition: opacity 0.3s ease; /* เพิ่มเอฟเฟกต์การจางหาย */
-            opacity: 1; /* ค่าปกติคือมองเห็น */
-        }
-
-        /* คลาสสำหรับซ่อนข้อความ */
-        .thai-text.hidden {
-            opacity: 0;       /* มองไม่เห็น */
-            user-select: none; /* ห้ามคลุมดำ (กันโกง) */
-            pointer-events: none; /* ห้ามคลิก */
-        }
-
-        /* --- CSS สำหรับคำที่มีข้อมูลสนธิ/ไวยากรณ์ --- */
-        .word-span.has-info {
-            border-bottom: 2px dotted #aaa; /* เส้นปะสีเทาจางๆ บอกใบ้ว่ามีข้อมูล */
-        }
-        /* ถ้าคลิกแล้ว (เป็นสีน้ำเงิน) ให้เปลี่ยนสีเส้นปะตาม */
-        .word-span.has-info.translated {
-            border-bottom: 2px dotted #1565C0;
-        }
-
-        /* --- กล่อง Tooltip (แสดงคำตัดบท) --- */
-        #sandhi-tooltip {
-            position: fixed; /* ให้ลอยอยู่เหนือทุกอย่าง */
-            display: none; /* ซ่อนไว้ก่อน */
-            background-color: #37474f; /* สีเทาเข้ม */
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-family: 'Sarabun', sans-serif;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 2000;
-            pointer-events: none; /* ให้เมาส์ทะลุผ่านได้ ไม่บังการกด */
-            white-space: nowrap; /* ไม่ให้ข้อความขึ้นบรรทัดใหม่ */
-            border: 1px solid #546e7a;
-        }
-        /* ตกแต่งตัวอักษรข้างใน Tooltip */
-        #sandhi-tooltip span.split {
-            color: #ffca28; /* สีเหลืองทอง สำหรับคำที่แยกแล้ว */
-            font-weight: bold;
-        }
-        #sandhi-tooltip span.origin {
-            color: #b0bec5; /* สีเทาอ่อน สำหรับวงเล็บที่มา */
-            font-size: 0.9em;
-            margin-left: 5px;
-        }
-
+        /* --- อื่นๆ --- */
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
         .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
         .footer-section:last-child { border-right: none; }
         .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
         .sec-content { font-size: 0.95rem; color: #37474f; line-height: 1.5; }
-        .pali-word { font-family: 'Sarabun', sans-serif; color: #0277bd; font-weight: 500; }
-        
+        .pali-word { font-family: 'Sarabun', sans-serif; color: #0277bd; font-weight: 600; }
         .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
         
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
         button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+
+        /* ปุ่มใน Card (เช่น ปุ่มตา) */
+        .tool-btn { 
+            position: absolute; top: 20px; right: 100px; /* วางข้างๆ เลขหน้า */
+            padding: 8px 12px; border-radius: 8px; z-index: 10;
+            background-color: #eceff1; color: #546e7a; box-shadow: none;
+        }
+        .tool-btn:hover { background-color: #cfd8dc; transform: none; }
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
@@ -141,6 +76,7 @@
             .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
             .controls { bottom: 10px; gap: 10px; }
             button { padding: 10px 20px; font-size: 0.9rem; }
+            .tool-btn { right: 80px; }
         }
     </style>
 </head>
@@ -149,17 +85,13 @@
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
-        <div class="tool-divider"></div>
         
-        <!-- *** ปุ่มใหม่: ซ่อน/แสดง คำแปล *** -->
+        <!-- *** ปุ่มซ่อน/แสดง คำแปล (มี ID แล้ว) *** -->
         <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
             <i class="fa-solid fa-eye"></i>
         </button>
 
-        <button class="tool-btn" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()"><i class="fa-solid fa-note-sticky"></i></button>
-
         <div class="content-area animate-content" id="mainContent">
-            <!-- ID จะถูกใช้โดย JavaScript เพื่อแทรกคำ -->
             <div class="pali-text" id="paliContent">...</div>
             <div class="divider"></div>
             <div class="thai-text" id="thaiContent">...</div>
@@ -187,7 +119,6 @@
         <button onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
-    <!-- กล่อง Tooltip สำหรับแสดงสนธิ -->
     <div id="sandhi-tooltip"></div>
 
     <script src="slides-data.js"></script>
@@ -207,55 +138,7 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (เวอร์ชันรองรับการเชื่อมคำด้วย _)
-        function wrapWords(text, vocabData) {
-            if (!text) return "";
-            
-            return text.split(' ').map(word => {
-                if (word.trim() === "") return "";
-                
-                // 1. แยกเครื่องหมายหน้า-หลัง (เหมือนเดิม)
-                const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
-                
-                let prefix = "";
-                let cleanWord = word;
-                let suffix = "";
-                
-                if (parts) {
-                    prefix = parts[1] || "";
-                    cleanWord = parts[2];
-                    suffix = parts[3] || "";
-                }
-
-                // 2. *** ขั้นตอนใหม่: แปลง _ กลับเป็นช่องว่าง ***
-                // สร้างคำสำหรับแสดงผล (มีช่องว่าง)
-                let displayText = cleanWord.replace(/_/g, ' '); 
-                
-                // สร้างคำสำหรับค้นหาใน Vocab (ถ้าใน vocab คุณเก็บแบบมีช่องว่าง ก็ใช้ตัวนี้)
-                let searchKey = displayText; 
-                
-                // หรือถ้าใน vocab คุณเก็บแบบมี _ ก็ใช้ cleanWord (เลือกตามสะดวกครับ แต่ใช้ displayText น่าจะง่ายกว่า)
-
-                // 3. เช็คข้อมูลจากฐานข้อมูล
-                let vocabInfo = "";
-                let hasInfoClass = "";
-                
-                if (vocabData && vocabData[searchKey]) {
-                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
-                    hasInfoClass = "has-info";
-                }
-
-                // 4. สร้าง HTML
-                return `${prefix}<span class="word-span ${hasInfoClass}" 
-                              ${vocabInfo}
-                              onmouseenter="showTooltip(this)" 
-                              onmouseleave="hideTooltip()"
-                              onclick="toggleHighlight(this)">${displayText}</span>${suffix}`;
-            }).join(' ');
-        }
-
-
-        // --- ตัวแปรและฟังก์ชันสำหรับโหมดซ่อน/แสดง คำแปล ---
+        // --- ฟังก์ชันสำหรับโหมดซ่อน/แสดง คำแปล (เพิ่มเข้ามาแล้ว) ---
         let isThaiHidden = false;
 
         function toggleThai() {
@@ -265,10 +148,6 @@
 
         function applyThaiState() {
             const thaiElem = document.getElementById('thaiContent');
-            // *** แก้ไข: เปลี่ยน selector ให้ตรงกับโครงสร้าง HTML จริง ***
-            // เนื่องจากเราไม่มี id="btn-toggle-thai" ที่ปุ่ม เราต้องอ้างอิงผ่าน onclick หรือเพิ่ม ID
-            // แต่เพื่อความง่ายและปลอดภัย ผมขอแนะนำให้เพิ่ม ID ให้ปุ่มก่อนครับ
-            
             const btn = document.getElementById('btn-toggle-thai');
             const btnIcon = btn.querySelector('i');
 
@@ -276,13 +155,31 @@
                 thaiElem.classList.add('hidden');
                 btnIcon.classList.remove('fa-eye');
                 btnIcon.classList.add('fa-eye-slash');
-                // btn.classList.add('active'); // ถ้าต้องการให้ปุ่มบุ๋มลงไป
             } else {
                 thaiElem.classList.remove('hidden');
                 btnIcon.classList.remove('fa-eye-slash');
                 btnIcon.classList.add('fa-eye');
-                // btn.classList.remove('active');
             }
+        }
+        // --------------------------------------------------------
+
+        function wrapWords(text, vocabData) {
+            if (!text) return "";
+            return text.split(' ').map(word => {
+                if (word.trim() === "") return "";
+                let cleanWord = word.replace(/[ฯ,.]/g, ''); 
+                let vocabInfo = "";
+                let hasInfoClass = "";
+                if (vocabData && vocabData[cleanWord]) {
+                    vocabInfo = `data-sandhi="${vocabData[cleanWord]}"`;
+                    hasInfoClass = "has-info";
+                }
+                return `<span class="word-span ${hasInfoClass}" 
+                              ${vocabInfo}
+                              onmouseenter="showTooltip(this)" 
+                              onmouseleave="hideTooltip()"
+                              onclick="toggleHighlight(this)">${word}</span>`;
+            }).join(' ');
         }
 
         function updateSlide() {
@@ -293,25 +190,24 @@
 
             const s = slides[currentIndex];
 
-            // *** แก้ไขแล้ว: ส่ง s.vocab เข้าไปด้วย ***
             document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
-            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai); // ถ้าต้องการไฮไลท์ไทยด้วย
+            // document.getElementById('thaiContent').innerText = s.thai; // ถ้าไม่ต้องการไฮไลท์ไทย ใช้บรรทัดนี้แทน
             
             document.getElementById('contextContent').innerText = s.context;
             document.getElementById('akhyataContent').innerText = s.akhyata;
             document.getElementById('kitakaContent').innerText = s.kitaka;
             
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
+
+            // *** เรียกใช้เพื่อคงสถานะการซ่อนไว้เมื่อเปลี่ยนหน้า ***
+            applyThaiState();
         }
 
-        // --- ฟังก์ชันจัดการ Tooltip ---
         const tooltip = document.getElementById('sandhi-tooltip');
-
         function showTooltip(element) {
             const info = element.getAttribute('data-sandhi');
             if (!info) return;
-
-            // จัดรูปแบบข้อความ
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -319,53 +215,22 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
-
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
-
-            // คำนวณตำแหน่ง (ให้ลอยอยู่เหนือคำ)
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
-            
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
-
-            // กันตกขอบจอ
             if (top < 0) top = rect.bottom + 10; 
             if (left < 10) left = 10;
-            
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
-
-        function hideTooltip() {
-            tooltip.style.display = 'none';
-        }
-
-        // ฟังก์ชันเปลี่ยนสถานะ (ทำงานเมื่อคลิกที่คำ)
-        window.toggleHighlight = function(element) {
-            element.classList.toggle('translated');
-        }
-
-        // ฟังก์ชันล้างค่า (ปุ่มรีเซ็ต)
-        window.resetHighlights = function() {
-            document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated'));
-        }
-
-        function nextSlide() {
-            if (currentIndex < slides.length - 1) {
-                currentIndex++;
-                updateSlide();
-            }
-        }
-
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlide();
-            }
-        }
-
+        function hideTooltip() { tooltip.style.display = 'none'; }
+        window.toggleHighlight = function(element) { element.classList.toggle('translated'); }
+        window.resetHighlights = function() { document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated')); }
+        function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); } }
+        function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlide(); } }
         document.addEventListener('keydown', function(event) {
             if (event.key === "ArrowRight") nextSlide();
             if (event.key === "ArrowLeft") prevSlide();
