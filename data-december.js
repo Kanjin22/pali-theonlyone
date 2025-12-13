@@ -517,6 +517,10 @@ const dataDecember = [
         },
         afternoon: {
             activityTranslate: "(อ่าน) เก็งที่ ๑๐ น.๘๐-๘๓ เอกสฺมึ หิ ทิวเส - มยฺหํ ภาโร ภนฺเตติ ฯ",
+            linkYoutube: [
+                "https://youtu.be/ERLSzPh_mSI?si=-0VQRipBX5dMjbre&t=759",
+                "https://youtu.be/_Tf4EHA48r8?si=KQzZkdJlacb9i1fv",
+            ],
             slideId: "p3_geng10",
             fileNoteTranslate: "materials/translate-notes-310.pdf",
         },
