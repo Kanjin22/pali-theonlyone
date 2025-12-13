@@ -10,102 +10,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* --- CSS พื้นฐาน --- */
         body { margin: 0; padding: 0; background-color: #eceff1; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; }
-        .card {
-            width: 95%; max-width: 1000px; height: 85vh; max-height: 800px;
-            background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
-        }
+        
+        .card { width: 95%; max-width: 1000px; height: 85vh; max-height: 800px; background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; flex-shrink: 0; }
-        .content-area {
-            flex: 1;
-            padding: 40px 100px 20px 100px;
-            display: flex; flex-direction: column;
-            justify-content: flex-start; /* เริ่มจากบน */
-            align-items: stretch;
-            text-align: left;
-            overflow-y: auto;
-        }
+        
+        .content-area { flex: 1; padding: 40px 100px 20px 100px; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; text-align: left; overflow-y: auto; }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
-        .word-span {
-            cursor: pointer;
-            display: inline;
-            padding: 0;
-            margin: 0;
-            border-bottom: 2px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
-        }
-        .word-span:hover {
-            color: #1565C0; /* เปลี่ยนสีตอนชี้ */
-        }
-        .word-span.translated {
-            color: #1565C0;           /* เปลี่ยนสีตัวอักษรเป็นน้ำเงิน */
-            border-bottom-color: #1565C0; /* เติมสีให้เส้นใต้ */
-        }
-        .pali-text {
-            font-family: 'Sarabun', sans-serif; font-size: 1.8rem; color: #263238; font-weight: 500;
-            line-height: 2; margin-bottom: 25px;
-            text-align: justify; text-indent: 50px; word-spacing: 0; letter-spacing: 0;
-            word-break: normal; overflow-wrap: break-word;
-        }
-        .thai-text {
-            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300;
-            line-height: 2;
-            text-align: justify; text-indent: 50px;
-            word-break: normal; overflow-wrap: break-word;
-            transition: opacity 0.3s ease; /* เพิ่มเอฟเฟกต์การจางหาย */
-            opacity: 1; /* ค่าปกติคือมองเห็น */
-        }
-        .thai-text.hidden {
-            opacity: 0;       /* มองไม่เห็น */
-            user-select: none; /* ห้ามคลุมดำ (กันโกง) */
-            pointer-events: none; /* ห้ามคลิก */
-        }
-        .word-span.has-info {
-            border-bottom: 2px dotted #aaa; /* เส้นปะสีเทาจางๆ บอกใบ้ว่ามีข้อมูล */
-        }
-        .word-span.has-info.translated {
-            border-bottom: 2px dotted #1565C0;
-        }
-        #sandhi-tooltip {
-            position: fixed; /* ให้ลอยอยู่เหนือทุกอย่าง */
-            display: none; /* ซ่อนไว้ก่อน */
-            background-color: #37474f; /* สีเทาเข้ม */
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-family: 'Sarabun', sans-serif;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 2000;
-            pointer-events: none; /* ให้เมาส์ทะลุผ่านได้ ไม่บังการกด */
-            white-space: nowrap; /* ไม่ให้ข้อความขึ้นบรรทัดใหม่ */
-            border: 1px solid #546e7a;
-        }
-        #sandhi-tooltip span.split {
-            color: #ffca28; /* สีเหลืองทอง สำหรับคำที่แยกแล้ว */
-            font-weight: bold;
-        }
-        #sandhi-tooltip span.origin {
-            color: #b0bec5; /* สีเทาอ่อน สำหรับวงเล็บที่มา */
-            font-size: 0.9em;
-            margin-left: 5px;
-        }
 
+        /* --- CSS คำศัพท์ --- */
+        .word-span { cursor: pointer; display: inline; padding: 0; margin: 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+        .word-span:hover { color: #1565C0; }
+        .word-span.translated { color: #1565C0; border-bottom-color: #1565C0; }
+        .word-span.has-info { border-bottom: 2px dotted #aaa; }
+        .word-span.has-info.translated { border-bottom: 2px dotted #1565C0; }
+
+        /* --- CSS ข้อความ --- */
+        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 2; margin-bottom: 25px; text-align: justify; text-indent: 50px; word-spacing: 0; letter-spacing: 0; word-break: normal; overflow-wrap: break-word; }
+        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300; line-height: 2; text-align: justify; text-indent: 50px; word-break: normal; overflow-wrap: break-word; transition: opacity 0.3s ease; opacity: 1; }
+        .thai-text.hidden { opacity: 0; user-select: none; pointer-events: none; }
+
+        /* --- Tooltip --- */
+        #sandhi-tooltip { position: fixed; display: none; background-color: #37474f; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 1.1rem; font-family: 'Sarabun', sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2000; pointer-events: none; white-space: nowrap; border: 1px solid #546e7a; }
+        #sandhi-tooltip span.split { color: #ffca28; font-weight: bold; }
+        #sandhi-tooltip span.origin { color: #b0bec5; font-size: 0.9em; margin-left: 5px; }
+
+        /* --- Footer & Divider --- */
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
         .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
         .footer-section:last-child { border-right: none; }
         .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
         .sec-content { font-size: 0.95rem; color: #37474f; line-height: 1.5; }
-        .pali-word { font-family: 'Sarabun', sans-serif; color: #0277bd; font-weight: 500; }
+        .pali-word { font-family: 'Niramit', serif; color: #0277bd; font-weight: 500; }
+        
+        /* --- Controls --- */
         .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
-        button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
-        
-         /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ (ที่เพิ่มเข้ามา) --- */
+        button.nav-btn { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        button.nav-btn:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+
+        /* ปุ่มเครื่องมือ */
+        .tool-btn { position: absolute; top: 20px; padding: 8px 12px; border-radius: 8px; z-index: 20; background-color: #eceff1; color: #546e7a; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tool-btn:hover { background-color: #cfd8dc; }
+        #btn-toggle-thai { right: 100px; } 
+        #btn-add-note { right: 150px; } 
+
+        /* --- Sticky Note --- */
+        .sticky-note { position: absolute; background: #fff9c4; border: 1px solid #fbc02d; padding: 10px; min-width: 150px; max-width: 250px; border-radius: 5px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 100; font-size: 1rem; color: #333; cursor: move; font-family: 'Sarabun', sans-serif; }
+        .sticky-note:focus { outline: 2px solid #2980b9; }
+        .close-note { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; font-size: 12px; cursor: pointer; display: none; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+        .sticky-note:hover .close-note { display: block; }
+
+        /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ (ที่เพิ่มเข้ามา) --- */
         .analysis-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(3px); }
         .analysis-card { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; animation: popIn 0.3s ease-out; }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -123,28 +82,6 @@
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
-        .tool-btn { 
-            position: absolute; 
-            top: 20px; 
-            padding: 8px 12px; 
-            border-radius: 8px; 
-            z-index: 20; 
-            background-color: #eceff1; 
-            color: #546e7a; 
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* เพิ่มเงาให้นูนขึ้นมาชัดเจน */
-        }
-        .tool-btn:hover { 
-            background-color: #cfd8dc; 
-        }
-        #btn-add-note { 
-            right: 120px; /* ขยับออกมาจากเลขหน้า */
-        } 
-        #btn-toggle-thai { 
-            right: 170px; /* ห่างจากปุ่ม Note 50px */
-        }
 
         @media screen and (max-width: 768px) {
             .card { height: 90vh; margin-top: -40px; }
@@ -154,119 +91,15 @@
             .footer-box { height: auto; flex-direction: column; overflow-y: auto; min-height: 120px; max-height: 30%; }
             .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
             .controls { bottom: 10px; gap: 10px; }
-            button { padding: 10px 20px; font-size: 0.9rem; }
-            .page-badge { right: 15px; top: 15px; } /* เลขหน้าชิดขวา */
+            button.nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+            .page-badge { right: 15px; top: 15px; } 
             #btn-add-note { right: 90px; top: 15px; } 
             #btn-toggle-thai { right: 140px; top: 15px; }
         }
-        .sticky-note {
-            position: absolute;
-            background: #fff9c4; /* สีเหลืองอ่อน */
-            border: 1px solid #fbc02d;
-            padding: 10px;
-            min-width: 150px;
-            max-width: 250px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 100; /* ให้อยู่เหนือตัวหนังสือ */
-            font-size: 1rem;
-            color: #333;
-            cursor: move; /* เมาส์เป็นรูปย้าย */
-            font-family: 'Sarabun', sans-serif;
-        }
-        .sticky-note:focus { outline: 2px solid #2980b9; }
-        .close-note {
-            position: absolute; top: -8px; right: -8px;
-            background: #e74c3c; color: white;
-            border-radius: 50%; width: 20px; height: 20px;
-            text-align: center; line-height: 20px;
-            font-size: 12px; cursor: pointer; display: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-        .sticky-note:hover .close-note { display: block; }
-        /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ --- */
-        .analysis-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: none; /* ซ่อนไว้ก่อน */
-            justify-content: center; align-items: center;
-            z-index: 3000; /* อยู่เหนือทุกอย่าง */
-            backdrop-filter: blur(3px); /* เบลอฉากหลังนิดๆ */
-        }
-        .analysis-card {
-            background: white;
-            width: 90%; max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: popIn 0.3s ease-out;
-        }
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .analysis-header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px;
-            position: relative;
-        }
-        .analysis-word {
-            font-family: 'Niramit', serif;
-            font-size: 2rem;
-            margin: 0;
-            font-weight: 500;
-        }
-        .analysis-close {
-            position: absolute; top: 15px; right: 20px;
-            font-size: 1.5rem; cursor: pointer; color: #ccc;
-        }
-        .analysis-close:hover { color: white; }
-        
-        .analysis-body { padding: 25px; }
-        .analysis-split {
-            font-size: 1.4rem;
-            color: #d35400; /* สีส้มอิฐ */
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .analysis-list { list-style: none; padding: 0; margin: 0; }
-        .analysis-list li {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-        }
-        .analysis-list li::before {
-            content: "•";
-            color: #3498db;
-            font-weight: bold;
-            font-size: 1.5rem;
-            line-height: 1;
-            margin-right: 10px;
-        }
-
-        /* คลาสสำหรับคำที่กดดูวิเคราะห์ได้ (ใน Footer) */
-        .clickable-analysis {
-            color: #1976D2;
-            cursor: pointer;
-            text-decoration: underline;
-            text-decoration-style: dotted;
-            text-underline-offset: 3px;
-            transition: all 0.2s;
-        }
-        .clickable-analysis:hover {
-            color: #0D47A1;
-            background-color: #e3f2fd;
-            border-radius: 4px;
-        }
     </style>
 </head>
-
 <body>
+
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
@@ -300,12 +133,28 @@
     </div>
 
     <div class="controls">
-        <button onclick="prevSlide()">❮ ย้อนกลับ</button>
-        <button onclick="resetHighlights()" style="background-color: #e57373;">รีเซ็ต</button>
-        <button onclick="nextSlide()">ถัดไป ❯</button>
+        <button class="nav-btn" onclick="prevSlide()">❮ ย้อนกลับ</button>
+        <button class="nav-btn" onclick="resetHighlights()" style="background-color: #e57373;">รีเซ็ต</button>
+        <button class="nav-btn" onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
     <div id="sandhi-tooltip"></div>
+
+    <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
+    <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <h2 id="ana-word" class="analysis-word">...</h2>
+                <span class="analysis-close" onclick="closeAnalysisModal(event, true)">&times;</span>
+            </div>
+            <div class="analysis-body">
+                <div id="ana-split" class="analysis-split">...</div>
+                <ul id="ana-details" class="analysis-list">
+                    <!-- รายการจะถูกสร้างที่นี่ -->
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <script src="slides-data.js"></script>
 
@@ -326,22 +175,15 @@
         
         function wrapWords(text, vocabData) {
             if (!text) return "";
-            
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
-                
                 const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
-                
-                let prefix = "";
-                let cleanWord = word;
-                let suffix = "";
-                
+                let prefix = "", cleanWord = word, suffix = "";
                 if (parts) {
                     prefix = parts[1] || "";
                     cleanWord = parts[2];
                     suffix = parts[3] || "";
                 }
-
                 let displayText = cleanWord.replace(/_/g, ' '); 
                 let searchKey = displayText; 
                 let vocabInfo = "";
@@ -357,19 +199,16 @@
                               onclick="toggleHighlight(this)">${displayText}</span>${suffix}`;
             }).join(' ');
         }
-        let isThaiHidden = false;
 
+        let isThaiHidden = false;
         function toggleThai() {
             isThaiHidden = !isThaiHidden;
             applyThaiState();
         }
-
         function applyThaiState() {
             const thaiElem = document.getElementById('thaiContent');
-            
             const btn = document.getElementById('btn-toggle-thai');
             const btnIcon = btn.querySelector('i');
-
             if (isThaiHidden) {
                 thaiElem.classList.add('hidden');
                 btnIcon.classList.remove('fa-eye');
@@ -382,58 +221,45 @@
         }
 
         function addNote() {
-            const card = document.getElementById('cardContainer'); // อ้างอิงกรอบหลัก
+            const card = document.getElementById('cardContainer'); 
             const note = document.createElement('div');
             note.className = 'sticky-note';
-            note.contentEditable = true; // ให้พิมพ์ข้อความได้
+            note.contentEditable = true; 
             note.innerText = 'พิมพ์บันทึก...';
-            
             note.style.left = '50px';
             note.style.top = '100px';
-            
             const closeBtn = document.createElement('div');
             closeBtn.className = 'close-note';
             closeBtn.innerHTML = '&times;';
             closeBtn.contentEditable = false;
             closeBtn.onclick = function() { note.remove(); };
-            
             note.appendChild(closeBtn);
-            
             makeDraggable(note);
-            
             card.appendChild(note);
-            note.focus(); // โฟกัสเพื่อให้พิมพ์ได้เลย
+            note.focus();
         }
 
         function makeDraggable(el) {
             let isDragging = false;
             let startX, startY, initialLeft, initialTop;
-
             el.addEventListener('mousedown', function(e) {
-                if (e.target.className === 'close-note') return; // อย่าลากถ้ากดปุ่มปิด
+                if (e.target.className === 'close-note') return; 
                 isDragging = true;
                 startX = e.clientX;
                 startY = e.clientY;
                 initialLeft = el.offsetLeft;
                 initialTop = el.offsetTop;
-                el.style.zIndex = 1000; // ดันขึ้นบนสุดตอนลาก
+                el.style.zIndex = 1000;
             });
-
             window.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
-                e.preventDefault(); // กันเลือกข้อความ
+                e.preventDefault(); 
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
                 el.style.left = `${initialLeft + dx}px`;
                 el.style.top = `${initialTop + dy}px`;
             });
-
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-                el.style.zIndex = 100; // คืนค่า z-index
-            });
-            
-            // รองรับระบบสัมผัส (มือถือ/ไอแพด)
+            window.addEventListener('mouseup', () => { isDragging = false; el.style.zIndex = 100; });
             el.addEventListener('touchstart', function(e) {
                 if (e.target.className === 'close-note') return;
                 isDragging = true;
@@ -443,7 +269,6 @@
                 initialLeft = el.offsetLeft;
                 initialTop = el.offsetTop;
             });
-            
             window.addEventListener('touchmove', function(e) {
                 if (!isDragging) return;
                 const touch = e.touches[0];
@@ -462,7 +287,6 @@
         function updateSlide() {
             if (typeof removeAllNotes === 'function') removeAllNotes(); 
             mainContent.classList.remove('animate-content');
-            mainContent.classList.remove('animate-content');
             void mainContent.offsetWidth; 
             mainContent.classList.add('animate-content');
             contentArea.scrollTop = 0;
@@ -472,29 +296,22 @@
             document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
             document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
-            document.getElementById('contextContent').innerText = s.context;
-
+            // *** แก้ไขแล้ว: สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์ ***
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
+            
+            document.getElementById('contextContent').innerText = s.context;
             
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             applyThaiState();
         }
 
         // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
-        
-        // 1. ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
         function processFooterAnalysis(text, analysisData) {
             if (!text || !analysisData) return text;
-            
             let processedText = text;
-            // วนลูปหาคำที่มีข้อมูลวิเคราะห์
             for (const word in analysisData) {
-                // สร้าง Regex เพื่อหาคำนั้น (ต้องตรงเป๊ะๆ)
                 const regex = new RegExp(word, 'g');
-                
-                // แทนที่ด้วย Span ที่กดได้
-                // เราใช้ onclick เพื่อเรียกฟังก์ชัน showAnalysis
                 processedText = processedText.replace(regex, 
                     `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
                 );
@@ -502,44 +319,32 @@
             return processedText;
         }
 
-        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
         function showAnalysis(word) {
             const s = slides[currentIndex];
             if (!s.analysis || !s.analysis[word]) return;
-
             const data = s.analysis[word];
-
-            // ใส่ข้อมูลลงใน Modal
             document.getElementById('ana-word').innerText = word;
             document.getElementById('ana-split').innerText = data.split;
-            
             const list = document.getElementById('ana-details');
-            list.innerHTML = ''; // ล้างของเก่า
-            
+            list.innerHTML = ''; 
             data.details.forEach(detail => {
                 const li = document.createElement('li');
                 li.innerText = detail;
                 list.appendChild(li);
             });
-
-            // แสดง Modal
             document.getElementById('analysis-modal').style.display = 'flex';
         }
 
-        // 3. ฟังก์ชันปิด Modal
         function closeAnalysisModal(event, force = false) {
-            // ปิดเมื่อกดปุ่มกากบาท (force=true) หรือคลิกที่พื้นหลัง (overlay)
             if (force || event.target.id === 'analysis-modal') {
                 document.getElementById('analysis-modal').style.display = 'none';
             }
         }
 
         const tooltip = document.getElementById('sandhi-tooltip');
-
         function showTooltip(element) {
             const info = element.getAttribute('data-sandhi');
             if (!info) return;
-
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -547,49 +352,22 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
-
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
-
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
-            
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
-
             if (top < 0) top = rect.bottom + 10; 
             if (left < 10) left = 10;
-            
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
-
-        function hideTooltip() {
-            tooltip.style.display = 'none';
-        }
-
-        window.toggleHighlight = function(element) {
-            element.classList.toggle('translated');
-        }
-
-        window.resetHighlights = function() {
-            document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated'));
-        }
-
-        function nextSlide() {
-            if (currentIndex < slides.length - 1) {
-                currentIndex++;
-                updateSlide();
-            }
-        }
-
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlide();
-            }
-        }
-
+        function hideTooltip() { tooltip.style.display = 'none'; }
+        window.toggleHighlight = function(element) { element.classList.toggle('translated'); }
+        window.resetHighlights = function() { document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated')); }
+        function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); } }
+        function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlide(); } }
         document.addEventListener('keydown', function(event) {
             if (event.key === "ArrowRight") nextSlide();
             if (event.key === "ArrowLeft") prevSlide();
