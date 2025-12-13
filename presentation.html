@@ -217,14 +217,17 @@
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
-        <!-- *** ปุ่มใหม่: ซ่อน/แสดง คำแปล *** -->
-         <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
+        
+        <!-- ปุ่มตา (ซ้าย) -->
+        <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
             <i class="fa-solid fa-eye"></i>
         </button>
-        <div class="tool-divider"></div>
 
-        <button class="tool-btn" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()"><i class="fa-solid fa-note-sticky"></i></button>
-
+        <!-- ปุ่ม Note (ขวา) -->
+        <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
+            <i class="fa-solid fa-note-sticky"></i>
+        </button>
+        
         <div class="content-area animate-content" id="mainContent">
             <!-- ID จะถูกใช้โดย JavaScript เพื่อแทรกคำ -->
             <div class="pali-text" id="paliContent">...</div>
