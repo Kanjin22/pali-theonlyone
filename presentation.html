@@ -322,36 +322,44 @@
             return null; // หาไม่เจอเลย
         }
 
-        // ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
+        // ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้ (ฉบับแก้ไข: ป้องกันคำซ้อนกัน)
         function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
             
             let processedText = text;
-
-            // 1. รวบรวมคำศัพท์ทั้งหมดที่มี (Local + Common)
-            let allKeys = [];
             
-            // เอาคำศัพท์เฉพาะหน้ามาใส่
-            if (localAnalysis) {
-                allKeys = allKeys.concat(Object.keys(localAnalysis));
-            }
-            // เอาคำศัพท์กองกลางมาใส่ (ถ้ามี)
-            if (typeof commonAnalysis !== 'undefined') {
-                allKeys = allKeys.concat(Object.keys(commonAnalysis));
-            }
+            // 1. รวมคำศัพท์ทั้งหมด
+            let allKeys = getAllAnalysisKeys(localAnalysis);
 
-            // ตัดคำซ้ำออก (Unique)
-            allKeys = [...new Set(allKeys)];
+            // 2. *** สำคัญมาก: เรียงลำดับคำจาก "ยาว -> สั้น" ***
+            // เพื่อให้คำยาว (เช่น โอโลเกติ) ถูกหาก่อนคำสั้น (เช่น กติ)
+            allKeys.sort((a, b) => b.length - a.length);
 
-            // 2. วนลูปตรวจสอบและสร้างลิงก์
+            let replacements = [];
+            let index = 0;
+
+            // 3. วนลูปแทนที่คำศัพท์ด้วย "รหัสลับ" (Placeholder) ก่อน
             allKeys.forEach(word => {
-                // ตรวจสอบว่าในข้อความมีคำนี้อยู่จริงไหม (เพื่อประหยัดแรง)
-                if (text.includes(word)) {
-                    const regex = new RegExp(word, 'g');
-                    processedText = processedText.replace(regex, 
-                        `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
-                    );
+                if (processedText.includes(word)) {
+                    // สร้างรหัสลับ เช่น ##TOKEN_0##
+                    const token = `##TOKEN_${index}##`;
+                    
+                    // เก็บ HTML ที่ต้องการไว้ในโกดัง
+                    replacements.push({
+                        token: token,
+                        html: `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
+                    });
+
+                    // แทนที่คำศัพท์ในข้อความด้วยรหัสลับ (ใช้ split/join เพื่อแทนที่ทั้งหมด)
+                    processedText = processedText.split(word).join(token);
+                    
+                    index++;
                 }
+            });
+
+            // 4. เอารหัสลับออก แล้วใส่ HTML จริงกลับเข้าไป
+            replacements.forEach(item => {
+                processedText = processedText.split(item.token).join(item.html);
             });
 
             return processedText;
