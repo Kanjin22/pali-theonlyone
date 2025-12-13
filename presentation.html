@@ -33,26 +33,36 @@
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
 
-        /* --- CSS สำหรับคำศัพท์ที่คลิกได้ (พระเอกของเรา) --- */
+        /* --- CSS สำหรับคำศัพท์ที่คลิกได้ (ปรับปรุงให้ขีดเส้นพอดีคำ) --- */
         .word-span {
             cursor: pointer;
-            padding: 0 2px;
+            
+            /* *** แก้ไข 1: ลด padding ซ้ายขวาให้เหลือ 0 (หรือน้อยที่สุด) *** */
+            padding: 2px 1px; 
+            
+            /* *** แก้ไข 2: เพิ่ม margin เพื่อเว้นระยะห่างระหว่างคำแทน *** */
+            margin: 0 3px; 
+            
             border-radius: 3px;
             transition: all 0.1s;
-            display: inline-block; /* เพื่อให้ border สวยงาม */
+            display: inline-block;
         }
         
         /* สถานะเมื่อเอาเมาส์ชี้ */
         .word-span:hover {
             background-color: #f5f5f5;
+            color: #d35400; /* เพิ่มสีตอนชี้ให้รู้ว่ากดได้ */
         }
 
         /* สถานะเมื่อถูกคลิก (แปลแล้ว) */
         .word-span.translated {
-            color: #d35400; /* เปลี่ยนสีตัวอักษรเป็นสีส้มอิฐ */
-            font-weight: 600; /* ตัวหนาขึ้น */
-            border-bottom: 3px solid #d35400; /* ขีดเส้นใต้ */
-            background-color: rgba(211, 84, 0, 0.05); /* พื้นหลังจางๆ */
+            color: #d35400;
+            font-weight: 600;
+            
+            /* *** แก้ไข 3: ปรับขนาดเส้นใต้ *** */
+            border-bottom: 2px solid #d35400; 
+            
+            background-color: rgba(211, 84, 0, 0.08);
         }
 
         /* สำหรับบาลี */
