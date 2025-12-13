@@ -619,7 +619,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๖-๖๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๕๐-๑๕๓ อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๕๐-๑๕๒ อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
             slideId: "p3_geng17",
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-317.pdf"
