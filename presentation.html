@@ -125,10 +125,38 @@
         
         .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
         
-        .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
-        button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        /* --- 1. แก้ไข Container ที่ครอบปุ่ม --- */
+.controls {
+    position: fixed;
+    bottom: 25px;
+    right: 30px;      /*  <-- แก้ไข: ย้ายไปชิดขอบขวา */
+    display: flex;
+    gap: 15px;        /*  <-- ปรับระยะห่างระหว่างปุ่มตามความสวยงาม */
+    z-index: 100;
+}
 
+/* --- 2. สร้างกฎใหม่สำหรับปุ่มควบคุมด้านล่างโดยเฉพาะ --- */
+/* เพื่อไม่ให้กระทบกับปุ่มเครื่องมือด้านบน */
+.controls button {
+    padding: 10px 20px;       /* <-- ลดขนาดให้ปุ่มเล็กลง */
+    background-color: #455a64;
+    border: none;
+    border-radius: 8px;       /* <-- ทำให้เป็น "สี่เหลี่ยมมน" */
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.9rem;        /* <-- ลดขนาดตัวอักษรลงเล็กน้อย */
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+/* --- 3. แก้ไข Hover Effect ให้ตรงกัน --- */
+.controls button:hover {
+    background-color: #607d8b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
         
