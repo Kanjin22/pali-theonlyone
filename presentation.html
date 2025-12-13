@@ -190,30 +190,41 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (แยกด้วยช่องว่าง)
+        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (ฉลาดขึ้น: แยกเครื่องหมายฯ ออกจากคำ)
         function wrapWords(text, vocabData) {
             if (!text) return "";
             
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
                 
-                // ล้างเครื่องหมายวรรคตอนบางตัวออกเพื่อให้ Match key ได้ง่ายขึ้น (ถ้าต้องการ)
-                let cleanWord = word.replace(/[ฯ,.]/g, ''); 
+                // 1. ใช้ Regex แยก "คำศัพท์" กับ "เครื่องหมายต่อท้าย" ออกจากกัน
+                // ^(.+?) หมายถึง ตัวคำศัพท์ (เก็บลงตัวแปร parts[1])
+                // ([ฯ.,;:"'()]+)$ หมายถึง เครื่องหมายต่างๆ ที่อยู่ท้ายคำ (เก็บลงตัวแปร parts[2])
+                const parts = word.match(/^(.+?)([ฯ.,;:"'()]+)$/);
+                
+                let cleanWord = word;      // สมมติว่าเป็นคำปกติก่อน
+                let punctuation = "";      // ยังไม่มีเครื่องหมาย
+                
+                if (parts) {
+                    cleanWord = parts[1];  // นี่คือคำศัพท์เพียวๆ (เช่น "ตตฺเถกํ")
+                    punctuation = parts[2]; // นี่คือเครื่องหมาย (เช่น "ฯ")
+                }
+
+                // 2. เช็คข้อมูลจากฐานข้อมูล (ด้วยคำที่สะอาดแล้ว)
                 let vocabInfo = "";
                 let hasInfoClass = "";
                 
-                // เช็คว่ามีข้อมูลของคำนี้ไหม
                 if (vocabData && vocabData[cleanWord]) {
                     vocabInfo = `data-sandhi="${vocabData[cleanWord]}"`;
                     hasInfoClass = "has-info";
                 }
 
-                // สร้าง Span พร้อม Event
+                // 3. สร้าง HTML: เอา punctuation (เครื่องหมาย) ไว้นอก <span>
                 return `<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
                               onmouseleave="hideTooltip()"
-                              onclick="toggleHighlight(this)">${word}</span>`;
+                              onclick="toggleHighlight(this)">${cleanWord}</span>${punctuation}`;
             }).join(' ');
         }
 
