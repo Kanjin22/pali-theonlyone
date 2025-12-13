@@ -131,53 +131,55 @@
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
-        /* --- แถบเครื่องมือแนวตั้ง (Sidebar) --- */
-        .tools-sidebar {
-            position: absolute;
-            top: 70px;  /* อยู่ต่ำลงมาจากเลขหน้า */
-            right: 20px; /* ชิดขวาเท่ากับเลขหน้า */
-            display: flex;
-            flex-direction: column; /* เรียงแนวตั้ง */
-            gap: 10px; /* ระยะห่างระหว่างปุ่ม */
-            z-index: 20;
-        }
-
-        /* ปุ่มเครื่องมือ */
+        /* ปุ่มเครื่องมือ (รูปตา) */
+        
         .tool-btn { 
-            /* ลบ Position absolute ออก เพราะเราให้กล่องแม่จัดการแล้ว */
-            position: relative; 
+            position: absolute; 
+            top: 20px; 
+            
+            /* ลบ right: 100px ออกจากตรงกลาง */
+            
             padding: 8px 12px; 
             border-radius: 8px; 
+            z-index: 20; 
             background-color: #eceff1; 
             color: #546e7a; 
             border: none;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 40px; /* กำหนดความกว้างให้เท่ากันสวยๆ */
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* เพิ่มเงาให้นูนขึ้นมาชัดเจน */
         }
         
         .tool-btn:hover { 
             background-color: #cfd8dc; 
-            transform: translateX(-2px); /* ขยับซ้ายนิดนึงตอนชี้ */
         }
 
-        /* --- ปรับแต่งสำหรับมือถือ --- */
+        /* --- กำหนดตำแหน่งปุ่มแยกกัน (ให้ห่างจากขอบขวามากขึ้น) --- */
+        
+        /* ปุ่ม Note (อยู่ขวาสุด ถัดจากเลขหน้า) */
+        #btn-add-note { 
+            right: 120px; /* ขยับออกมาจากเลขหน้า */
+        } 
+        
+        /* ปุ่มตา (อยู่ถัดจากปุ่ม Note ไปทางซ้าย) */
+        #btn-toggle-thai { 
+            right: 170px; /* ห่างจากปุ่ม Note 50px */
+        }
+
         @media screen and (max-width: 768px) {
-            /* ในมือถือ ให้ขยับหลบเลขหน้า หรือเลื่อนลงมาอีกหน่อย */
-            .tools-sidebar {
-                top: 60px;
-                right: 15px;
-            }
+            .card { height: 90vh; margin-top: -40px; }
+            .content-area { padding: 60px 20px 40px 20px; }
+            .pali-text { font-size: 1.4rem; margin-bottom: 15px; }
+            .thai-text { font-size: 1.2rem; }
+            .footer-box { height: auto; flex-direction: column; overflow-y: auto; min-height: 120px; max-height: 30%; }
+            .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
+            .controls { bottom: 10px; gap: 10px; }
+            button { padding: 10px 20px; font-size: 0.9rem; }
+            .page-badge { right: 15px; top: 15px; } /* เลขหน้าชิดขวา */
             
-            /* ดันเนื้อหาด้านขวาเข้ามาหน่อย ไม่ให้ปุ่มบังตัวหนังสือ */
-            .content-area {
-                padding-right: 60px !important; 
-            }
+            /* ขยับปุ่มในมือถือให้ชิดกันหน่อย */
+            #btn-add-note { right: 90px; top: 15px; } 
+            #btn-toggle-thai { right: 140px; top: 15px; }
         }
 
         /* --- CSS สำหรับ Sticky Note (กระดาษโน้ต) --- */
@@ -225,7 +227,7 @@
         <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
             <i class="fa-solid fa-note-sticky"></i>
         </button>
-
+        
         <div class="content-area animate-content" id="mainContent">
             <!-- ID จะถูกใช้โดย JavaScript เพื่อแทรกคำ -->
             <div class="pali-text" id="paliContent">...</div>
