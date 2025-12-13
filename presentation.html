@@ -190,22 +190,19 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (ฉลาดสุดๆ: แยกเครื่องหมายทั้ง หน้า และ หลัง)
+        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (เวอร์ชันรองรับการเชื่อมคำด้วย _)
         function wrapWords(text, vocabData) {
             if (!text) return "";
             
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
                 
-                // Regex ใหม่: แยก 3 ส่วน (หน้า - กลาง - หลัง)
-                // 1. ^([“"'(]*)        -> เก็บเครื่องหมายเปิด (เช่น “ " ( ) ไว้ใน parts[1]
-                // 2. (.+?)             -> เก็บตัวคำศัพท์ ไว้ใน parts[2]
-                // 3. ([)”"'.ฯ,;:?]+)?$ -> เก็บเครื่องหมายปิด (เช่น ” ) ฯ .) ไว้ใน parts[3]
+                // 1. แยกเครื่องหมายหน้า-หลัง (เหมือนเดิม)
                 const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
                 
-                let prefix = "";       // เครื่องหมายข้างหน้า
-                let cleanWord = word;  // คำศัพท์เพียวๆ
-                let suffix = "";       // เครื่องหมายข้างหลัง
+                let prefix = "";
+                let cleanWord = word;
+                let suffix = "";
                 
                 if (parts) {
                     prefix = parts[1] || "";
@@ -213,21 +210,30 @@
                     suffix = parts[3] || "";
                 }
 
-                // เช็คข้อมูลจากฐานข้อมูล (ด้วยคำที่สะอาดแล้ว)
+                // 2. *** ขั้นตอนใหม่: แปลง _ กลับเป็นช่องว่าง ***
+                // สร้างคำสำหรับแสดงผล (มีช่องว่าง)
+                let displayText = cleanWord.replace(/_/g, ' '); 
+                
+                // สร้างคำสำหรับค้นหาใน Vocab (ถ้าใน vocab คุณเก็บแบบมีช่องว่าง ก็ใช้ตัวนี้)
+                let searchKey = displayText; 
+                
+                // หรือถ้าใน vocab คุณเก็บแบบมี _ ก็ใช้ cleanWord (เลือกตามสะดวกครับ แต่ใช้ displayText น่าจะง่ายกว่า)
+
+                // 3. เช็คข้อมูลจากฐานข้อมูล
                 let vocabInfo = "";
                 let hasInfoClass = "";
                 
-                if (vocabData && vocabData[cleanWord]) {
-                    vocabInfo = `data-sandhi="${vocabData[cleanWord]}"`;
+                if (vocabData && vocabData[searchKey]) {
+                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
                     hasInfoClass = "has-info";
                 }
 
-                // สร้าง HTML: เอา prefix และ suffix ไว้นอก <span>
+                // 4. สร้าง HTML
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
                               onmouseleave="hideTooltip()"
-                              onclick="toggleHighlight(this)">${cleanWord}</span>${suffix}`;
+                              onclick="toggleHighlight(this)">${displayText}</span>${suffix}`;
             }).join(' ');
         }
 
