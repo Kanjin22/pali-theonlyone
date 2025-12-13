@@ -104,6 +104,22 @@
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
         button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        
+         /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ (ที่เพิ่มเข้ามา) --- */
+        .analysis-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(3px); }
+        .analysis-card { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; animation: popIn 0.3s ease-out; }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .analysis-header { background: #2c3e50; color: white; padding: 20px; position: relative; }
+        .analysis-word { font-family: 'Niramit', serif; font-size: 2rem; margin: 0; font-weight: 500; }
+        .analysis-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #ccc; }
+        .analysis-close:hover { color: white; }
+        .analysis-body { padding: 25px; }
+        .analysis-split { font-size: 1.4rem; color: #d35400; font-weight: bold; text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .analysis-list { list-style: none; padding: 0; margin: 0; }
+        .analysis-list li { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: flex-start; }
+        .analysis-list li::before { content: "•"; color: #3498db; font-weight: bold; font-size: 1.5rem; line-height: 1; margin-right: 10px; }
+        .clickable-analysis { color: #1976D2; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; transition: all 0.2s; }
+        .clickable-analysis:hover { color: #0D47A1; background-color: #e3f2fd; border-radius: 4px; }
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
@@ -457,11 +473,65 @@
             document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
             document.getElementById('contextContent').innerText = s.context;
-            document.getElementById('akhyataContent').innerText = s.akhyata;
-            document.getElementById('kitakaContent').innerText = s.kitaka;
+
+            document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
+            document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
             
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             applyThaiState();
+        }
+
+        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
+        
+        // 1. ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
+        function processFooterAnalysis(text, analysisData) {
+            if (!text || !analysisData) return text;
+            
+            let processedText = text;
+            // วนลูปหาคำที่มีข้อมูลวิเคราะห์
+            for (const word in analysisData) {
+                // สร้าง Regex เพื่อหาคำนั้น (ต้องตรงเป๊ะๆ)
+                const regex = new RegExp(word, 'g');
+                
+                // แทนที่ด้วย Span ที่กดได้
+                // เราใช้ onclick เพื่อเรียกฟังก์ชัน showAnalysis
+                processedText = processedText.replace(regex, 
+                    `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
+                );
+            }
+            return processedText;
+        }
+
+        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
+        function showAnalysis(word) {
+            const s = slides[currentIndex];
+            if (!s.analysis || !s.analysis[word]) return;
+
+            const data = s.analysis[word];
+
+            // ใส่ข้อมูลลงใน Modal
+            document.getElementById('ana-word').innerText = word;
+            document.getElementById('ana-split').innerText = data.split;
+            
+            const list = document.getElementById('ana-details');
+            list.innerHTML = ''; // ล้างของเก่า
+            
+            data.details.forEach(detail => {
+                const li = document.createElement('li');
+                li.innerText = detail;
+                list.appendChild(li);
+            });
+
+            // แสดง Modal
+            document.getElementById('analysis-modal').style.display = 'flex';
+        }
+
+        // 3. ฟังก์ชันปิด Modal
+        function closeAnalysisModal(event, force = false) {
+            // ปิดเมื่อกดปุ่มกากบาท (force=true) หรือคลิกที่พื้นหลัง (overlay)
+            if (force || event.target.id === 'analysis-modal') {
+                document.getElementById('analysis-modal').style.display = 'none';
+            }
         }
 
         const tooltip = document.getElementById('sandhi-tooltip');
@@ -527,21 +597,5 @@
 
         updateSlide();
     </script>
-
-    <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
-    <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
-        <div class="analysis-card">
-            <div class="analysis-header">
-                <h2 id="ana-word" class="analysis-word">...</h2>
-                <span class="analysis-close" onclick="closeAnalysisModal(event, true)">&times;</span>
-            </div>
-            <div class="analysis-body">
-                <div id="ana-split" class="analysis-split">...</div>
-                <ul id="ana-details" class="analysis-list">
-                    <!-- รายการจะถูกสร้างที่นี่ -->
-                </ul>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
