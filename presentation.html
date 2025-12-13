@@ -306,30 +306,73 @@
             applyThaiState();
         }
 
-        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
-        function processFooterAnalysis(text, analysisData) {
+        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ (ฉบับแก้ไข: รองรับข้อมูลกองกลาง) ---
+
+        // ฟังก์ชันช่วย: ค้นหาข้อมูล (หาใน Local ก่อน ถ้าไม่มีไปหาใน Common)
+        function getAnalysisData(word, localAnalysis) {
+            // 1. ลองหาในเฉพาะหน้านี้ก่อน (Local)
+            if (localAnalysis && localAnalysis[word]) {
+                return localAnalysis[word];
+            }
+            // 2. ถ้าไม่เจอ ให้ไปหาในกองกลาง (Common)
+            // (ต้องมั่นใจว่าในไฟล์ slides-data.js มีตัวแปร commonAnalysis อยู่)
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
+                return commonAnalysis[word];
+            }
+            return null; // หาไม่เจอเลย
+        }
+
+        // ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
+        function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
-            // ถ้าไม่มี analysisData ให้ return text เดิม (ป้องกัน Error)
-            if (!analysisData) return text; 
             
             let processedText = text;
-            for (const word in analysisData) {
-                const regex = new RegExp(word, 'g');
-                processedText = processedText.replace(regex, 
-                    `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
-                );
+
+            // 1. รวบรวมคำศัพท์ทั้งหมดที่มี (Local + Common)
+            let allKeys = [];
+            
+            // เอาคำศัพท์เฉพาะหน้ามาใส่
+            if (localAnalysis) {
+                allKeys = allKeys.concat(Object.keys(localAnalysis));
             }
+            // เอาคำศัพท์กองกลางมาใส่ (ถ้ามี)
+            if (typeof commonAnalysis !== 'undefined') {
+                allKeys = allKeys.concat(Object.keys(commonAnalysis));
+            }
+
+            // ตัดคำซ้ำออก (Unique)
+            allKeys = [...new Set(allKeys)];
+
+            // 2. วนลูปตรวจสอบและสร้างลิงก์
+            allKeys.forEach(word => {
+                // ตรวจสอบว่าในข้อความมีคำนี้อยู่จริงไหม (เพื่อประหยัดแรง)
+                if (text.includes(word)) {
+                    const regex = new RegExp(word, 'g');
+                    processedText = processedText.replace(regex, 
+                        `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
+                    );
+                }
+            });
+
             return processedText;
         }
 
+        // ฟังก์ชันเปิด Modal และแสดงข้อมูล
         function showAnalysis(word) {
             const s = slides[currentIndex];
-            if (!s.analysis || !s.analysis[word]) return;
-            const data = s.analysis[word];
             
-            // อ้างอิง Element ที่เราเพิ่งเติมกลับเข้าไป
+            // *** ใช้ฟังก์ชัน getAnalysisData แทนการหาตรงๆ ***
+            const data = getAnalysisData(word, s.analysis);
+
+            if (!data) {
+                console.warn(`ไม่พบข้อมูลวิเคราะห์สำหรับคำว่า: ${word}`);
+                return;
+            }
+
+            // แสดงผลข้อมูล
             document.getElementById('ana-word').innerText = word;
             document.getElementById('ana-split').innerText = data.split;
+            
             const list = document.getElementById('ana-details');
             list.innerHTML = ''; 
             data.details.forEach(detail => {
