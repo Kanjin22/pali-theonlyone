@@ -132,22 +132,24 @@
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
         /* ปุ่มเครื่องมือ (รูปตา) */
-.tool-btn { 
-    position: absolute; 
-    top: 20px; 
-    right: 100px; /* วางถัดจากเลขหน้า */
-    padding: 8px 12px; 
-    border-radius: 8px; 
-    z-index: 10;
-    background-color: #eceff1; 
-    color: #546e7a; 
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.tool-btn:hover { 
-    background-color: #cfd8dc; 
-}
+        
+        .tool-btn { 
+            position: absolute; 
+            top: 20px; 
+            right: 100px; /* วางถัดจากเลขหน้า */
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            z-index: 10;
+            background-color: #eceff1; 
+            color: #546e7a; 
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tool-btn:hover { 
+            background-color: #cfd8dc; 
+        }
 
         @media screen and (max-width: 768px) {
             .card { height: 90vh; margin-top: -40px; }
@@ -159,6 +161,35 @@
             .controls { bottom: 10px; gap: 10px; }
             button { padding: 10px 20px; font-size: 0.9rem; }
         }
+
+        /* --- CSS สำหรับ Sticky Note (กระดาษโน้ต) --- */
+        .sticky-note {
+            position: absolute;
+            background: #fff9c4; /* สีเหลืองอ่อน */
+            border: 1px solid #fbc02d;
+            padding: 10px;
+            min-width: 150px;
+            max-width: 250px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 100; /* ให้อยู่เหนือตัวหนังสือ */
+            font-size: 1rem;
+            color: #333;
+            cursor: move; /* เมาส์เป็นรูปย้าย */
+            font-family: 'Sarabun', sans-serif;
+        }
+        .sticky-note:focus { outline: 2px solid #2980b9; }
+        
+        /* ปุ่มลบโน้ต */
+        .close-note {
+            position: absolute; top: -8px; right: -8px;
+            background: #e74c3c; color: white;
+            border-radius: 50%; width: 20px; height: 20px;
+            text-align: center; line-height: 20px;
+            font-size: 12px; cursor: pointer; display: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .sticky-note:hover .close-note { display: block; }
     </style>
 </head>
 <body>
@@ -300,7 +331,93 @@
             }
         }
 
+        // --- ส่วนจัดการ Sticky Notes (เพิ่มกลับมาใหม่) ---
+        function addNote() {
+            const card = document.getElementById('cardContainer'); // อ้างอิงกรอบหลัก
+            const note = document.createElement('div');
+            note.className = 'sticky-note';
+            note.contentEditable = true; // ให้พิมพ์ข้อความได้
+            note.innerText = 'พิมพ์บันทึก...';
+            
+            // ตำแหน่งเริ่มต้น
+            note.style.left = '50px';
+            note.style.top = '100px';
+            
+            // ปุ่มลบ
+            const closeBtn = document.createElement('div');
+            closeBtn.className = 'close-note';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.contentEditable = false;
+            closeBtn.onclick = function() { note.remove(); };
+            
+            note.appendChild(closeBtn);
+            
+            // ทำให้ลากได้
+            makeDraggable(note);
+            
+            card.appendChild(note);
+            note.focus(); // โฟกัสเพื่อให้พิมพ์ได้เลย
+        }
+
+        // ฟังก์ชันช่วยให้ลากวางได้
+        function makeDraggable(el) {
+            let isDragging = false;
+            let startX, startY, initialLeft, initialTop;
+
+            el.addEventListener('mousedown', function(e) {
+                if (e.target.className === 'close-note') return; // อย่าลากถ้ากดปุ่มปิด
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                initialLeft = el.offsetLeft;
+                initialTop = el.offsetTop;
+                el.style.zIndex = 1000; // ดันขึ้นบนสุดตอนลาก
+            });
+
+            window.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                e.preventDefault(); // กันเลือกข้อความ
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                el.style.left = `${initialLeft + dx}px`;
+                el.style.top = `${initialTop + dy}px`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                el.style.zIndex = 100; // คืนค่า z-index
+            });
+            
+            // รองรับระบบสัมผัส (มือถือ/ไอแพด)
+            el.addEventListener('touchstart', function(e) {
+                if (e.target.className === 'close-note') return;
+                isDragging = true;
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                initialLeft = el.offsetLeft;
+                initialTop = el.offsetTop;
+            });
+            
+            window.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                const touch = e.touches[0];
+                const dx = touch.clientX - startX;
+                const dy = touch.clientY - startY;
+                el.style.left = `${initialLeft + dx}px`;
+                el.style.top = `${initialTop + dy}px`;
+            });
+             window.addEventListener('touchend', () => isDragging = false);
+        }
+
+        // เพิ่มฟังก์ชันลบโน้ตทั้งหมด (ใช้ตอนเปลี่ยนหน้าสไลด์)
+        function removeAllNotes() {
+            document.querySelectorAll('.sticky-note').forEach(n => n.remove());
+        }
+
         function updateSlide() {
+            if (typeof removeAllNotes === 'function') removeAllNotes(); 
+            mainContent.classList.remove('animate-content');
             mainContent.classList.remove('animate-content');
             void mainContent.offsetWidth; 
             mainContent.classList.add('animate-content');
