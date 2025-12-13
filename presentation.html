@@ -306,53 +306,55 @@
             applyThaiState();
         }
 
-        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ (ฉบับแก้ไข: รองรับข้อมูลกองกลาง) ---
+        // --- ฟังก์ชันช่วย 1: รวมรายการคำศัพท์ทั้งหมด (จากหน้าปัจจุบัน + กองกลาง) ---
+        function getAllAnalysisKeys(localAnalysis) {
+            const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
+            const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
+            // รวมกันและตัดตัวซ้ำ
+            return [...new Set([...localKeys, ...commonKeys])];
+        }
 
-        // ฟังก์ชันช่วย: ค้นหาข้อมูล (หาใน Local ก่อน ถ้าไม่มีไปหาใน Common)
+        // --- ฟังก์ชันช่วย 2: ดึงข้อมูล (หาในหน้าปัจจุบันก่อน ถ้าไม่มีไปหาในกองกลาง) ---
         function getAnalysisData(word, localAnalysis) {
             // 1. ลองหาในเฉพาะหน้านี้ก่อน (Local)
             if (localAnalysis && localAnalysis[word]) {
                 return localAnalysis[word];
             }
             // 2. ถ้าไม่เจอ ให้ไปหาในกองกลาง (Common)
-            // (ต้องมั่นใจว่าในไฟล์ slides-data.js มีตัวแปร commonAnalysis อยู่)
             if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
                 return commonAnalysis[word];
             }
             return null; // หาไม่เจอเลย
         }
 
-        // ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้ (ฉบับแก้ไข: ป้องกันคำซ้อนกัน)
+        // --- ฟังก์ชัน 3: แปลงข้อความใน Footer ให้คลิกได้ (ฉบับแก้ไข: ป้องกันคำซ้อนกัน) ---
         function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
             
             let processedText = text;
             
-            // 1. รวมคำศัพท์ทั้งหมด
+            // 1. รวมคำศัพท์ทั้งหมด (เรียกใช้ฟังก์ชันช่วย 1)
             let allKeys = getAllAnalysisKeys(localAnalysis);
 
-            // 2. *** สำคัญมาก: เรียงลำดับคำจาก "ยาว -> สั้น" ***
-            // เพื่อให้คำยาว (เช่น โอโลเกติ) ถูกหาก่อนคำสั้น (เช่น กติ)
+            // 2. เรียงลำดับคำจาก "ยาว -> สั้น" (ป้องกันคำสั้นไปแทนที่คำยาว)
             allKeys.sort((a, b) => b.length - a.length);
 
             let replacements = [];
             let index = 0;
 
-            // 3. วนลูปแทนที่คำศัพท์ด้วย "รหัสลับ" (Placeholder) ก่อน
+            // 3. วนลูปแทนที่คำศัพท์ด้วย "รหัสลับ" (Placeholder)
             allKeys.forEach(word => {
                 if (processedText.includes(word)) {
-                    // สร้างรหัสลับ เช่น ##TOKEN_0##
                     const token = `##TOKEN_${index}##`;
                     
-                    // เก็บ HTML ที่ต้องการไว้ในโกดัง
+                    // เก็บ HTML ที่ต้องการไว้
                     replacements.push({
                         token: token,
                         html: `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
                     });
 
-                    // แทนที่คำศัพท์ในข้อความด้วยรหัสลับ (ใช้ split/join เพื่อแทนที่ทั้งหมด)
+                    // แทนที่คำศัพท์ด้วยรหัสลับ
                     processedText = processedText.split(word).join(token);
-                    
                     index++;
                 }
             });
