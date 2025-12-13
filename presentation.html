@@ -140,21 +140,71 @@
 
     <div id="sandhi-tooltip"></div>
 
-    <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
-    <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
-        <div class="analysis-card">
-            <div class="analysis-header">
-                <h2 id="ana-word" class="analysis-word">...</h2>
-                <span class="analysis-close" onclick="closeAnalysisModal(event, true)">&times;</span>
-            </div>
-            <div class="analysis-body">
-                <div id="ana-split" class="analysis-split">...</div>
-                <ul id="ana-details" class="analysis-list">
-                    <!-- รายการจะถูกสร้างที่นี่ -->
-                </ul>
-            </div>
-        </div>
-    </div>
+    // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ (เวอร์ชันอัปเกรด: รองรับคลังกลาง) ---
+    // ฟังก์ชันช่วย: รวมคำศัพท์จาก "เฉพาะหน้า" + "กองกลาง"
+    
+    function getAllAnalysisKeys(localAnalysis) {
+        const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
+            const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
+            // รวมกันและตัดตัวซ้ำ
+            return [...new Set([...localKeys, ...commonKeys])];
+        }
+
+        // ฟังก์ชันช่วย: ดึงข้อมูล (หาในหน้าก่อน ถ้าไม่มีไปหาในกองกลาง)
+        function getAnalysisData(word, localAnalysis) {
+            if (localAnalysis && localAnalysis[word]) {
+                return localAnalysis[word];
+            }
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
+                return commonAnalysis[word];
+            }
+            return null;
+        }
+
+        // 1. ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
+        function processFooterAnalysis(text, localAnalysis) {
+            if (!text) return "";
+            
+            let processedText = text;
+            // ดึงรายชื่อคำศัพท์ทั้งหมดที่มี (ทั้งเฉพาะหน้าและกองกลาง)
+            const allWords = getAllAnalysisKeys(localAnalysis);
+
+            allWords.forEach(word => {
+                // สร้าง Regex เพื่อหาคำนั้น (ต้องตรงเป๊ะๆ)
+                const regex = new RegExp(word, 'g');
+                
+                // ตรวจสอบว่าใน text มีคำนี้อยู่จริงไหม ก่อนจะแทนที่
+                if (text.includes(word)) {
+                    processedText = processedText.replace(regex, 
+                        `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
+                    );
+                }
+            });
+            return processedText;
+        }
+
+        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
+        function showAnalysis(word) {
+            const s = slides[currentIndex];
+            // ใช้ฟังก์ชันช่วยดึงข้อมูล (หาทั้ง 2 ที่)
+            const data = getAnalysisData(word, s.analysis);
+
+            if (!data) return; // ถ้าหาไม่เจอเลย
+
+            document.getElementById('ana-word').innerText = word;
+            document.getElementById('ana-split').innerText = data.split;
+            
+            const list = document.getElementById('ana-details');
+            list.innerHTML = ''; 
+            
+            data.details.forEach(detail => {
+                const li = document.createElement('li');
+                li.innerText = detail;
+                list.appendChild(li);
+            });
+
+            document.getElementById('analysis-modal').style.display = 'flex';
+        }
 
     <script src="slides-data.js"></script>
 
