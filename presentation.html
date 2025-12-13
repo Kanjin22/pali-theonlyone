@@ -28,7 +28,7 @@
         .word-span.has-info.translated { border-bottom: 2px dotted #1565C0; }
 
         /* --- CSS ข้อความ --- */
-        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 2; margin-bottom: 25px; text-align: justify; text-indent: 50px; word-spacing: 0; letter-spacing: 0; word-break: normal; overflow-wrap: break-word; }
+        .pali-text { font-family: 'Sarabun', sans-serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 2; margin-bottom: 25px; text-align: justify; text-indent: 50px; word-spacing: 0; letter-spacing: 0; word-break: normal; overflow-wrap: break-word; }
         .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300; line-height: 2; text-align: justify; text-indent: 50px; word-break: normal; overflow-wrap: break-word; transition: opacity 0.3s ease; opacity: 1; }
         .thai-text.hidden { opacity: 0; user-select: none; pointer-events: none; }
 
@@ -44,13 +44,13 @@
         .footer-section:last-child { border-right: none; }
         .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
         .sec-content { font-size: 0.95rem; color: #37474f; line-height: 1.5; }
-        .pali-word { font-family: 'Niramit', serif; color: #0277bd; font-weight: 500; }
+        .pali-word { font-family: 'Sarabun', sans-serif; color: #0277bd; font-weight: 500; }
         
         /* --- Controls --- */
         .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
-        button.nav-btn { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        button.nav-btn:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
 
         /* ปุ่มเครื่องมือ */
         .tool-btn { position: absolute; top: 20px; padding: 8px 12px; border-radius: 8px; z-index: 20; background-color: #eceff1; color: #546e7a; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -64,7 +64,7 @@
         .close-note { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; font-size: 12px; cursor: pointer; display: none; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         .sticky-note:hover .close-note { display: block; }
 
-        /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ (ที่เพิ่มเข้ามา) --- */
+        /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ --- */
         .analysis-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(3px); }
         .analysis-card { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; animation: popIn 0.3s ease-out; }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -80,9 +80,6 @@
         .clickable-analysis { color: #1976D2; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; transition: all 0.2s; }
         .clickable-analysis:hover { color: #0D47A1; background-color: #e3f2fd; border-radius: 4px; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-content { animation: slideIn 0.4s ease-out forwards; }
-
         @media screen and (max-width: 768px) {
             .card { height: 90vh; margin-top: -40px; }
             .content-area { padding: 60px 20px 40px 20px; }
@@ -91,7 +88,7 @@
             .footer-box { height: auto; flex-direction: column; overflow-y: auto; min-height: 120px; max-height: 30%; }
             .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
             .controls { bottom: 10px; gap: 10px; }
-            button.nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+            button { padding: 10px 20px; font-size: 0.9rem; }
             .page-badge { right: 15px; top: 15px; } 
             #btn-add-note { right: 90px; top: 15px; } 
             #btn-toggle-thai { right: 140px; top: 15px; }
@@ -133,78 +130,31 @@
     </div>
 
     <div class="controls">
-        <button class="nav-btn" onclick="prevSlide()">❮ ย้อนกลับ</button>
-        <button class="nav-btn" onclick="resetHighlights()" style="background-color: #e57373;">รีเซ็ต</button>
-        <button class="nav-btn" onclick="nextSlide()">ถัดไป ❯</button>
+        <button onclick="prevSlide()">❮ ย้อนกลับ</button>
+        <button onclick="resetHighlights()" style="background-color: #e57373;">รีเซ็ต</button>
+        <button onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
+    <!-- กล่อง Tooltip สำหรับแสดงสนธิ -->
     <div id="sandhi-tooltip"></div>
 
-    // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ (เวอร์ชันอัปเกรด: รองรับคลังกลาง) ---
-    // ฟังก์ชันช่วย: รวมคำศัพท์จาก "เฉพาะหน้า" + "กองกลาง"
-    
-    function getAllAnalysisKeys(localAnalysis) {
-        const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
-            const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
-            // รวมกันและตัดตัวซ้ำ
-            return [...new Set([...localKeys, ...commonKeys])];
-        }
-
-        // ฟังก์ชันช่วย: ดึงข้อมูล (หาในหน้าก่อน ถ้าไม่มีไปหาในกองกลาง)
-        function getAnalysisData(word, localAnalysis) {
-            if (localAnalysis && localAnalysis[word]) {
-                return localAnalysis[word];
-            }
-            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
-                return commonAnalysis[word];
-            }
-            return null;
-        }
-
-        // 1. ฟังก์ชันแปลงข้อความใน Footer ให้คลิกได้
-        function processFooterAnalysis(text, localAnalysis) {
-            if (!text) return "";
-            
-            let processedText = text;
-            // ดึงรายชื่อคำศัพท์ทั้งหมดที่มี (ทั้งเฉพาะหน้าและกองกลาง)
-            const allWords = getAllAnalysisKeys(localAnalysis);
-
-            allWords.forEach(word => {
-                // สร้าง Regex เพื่อหาคำนั้น (ต้องตรงเป๊ะๆ)
-                const regex = new RegExp(word, 'g');
-                
-                // ตรวจสอบว่าใน text มีคำนี้อยู่จริงไหม ก่อนจะแทนที่
-                if (text.includes(word)) {
-                    processedText = processedText.replace(regex, 
-                        `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
-                    );
-                }
-            });
-            return processedText;
-        }
-
-        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
-        function showAnalysis(word) {
-            const s = slides[currentIndex];
-            // ใช้ฟังก์ชันช่วยดึงข้อมูล (หาทั้ง 2 ที่)
-            const data = getAnalysisData(word, s.analysis);
-
-            if (!data) return; // ถ้าหาไม่เจอเลย
-
-            document.getElementById('ana-word').innerText = word;
-            document.getElementById('ana-split').innerText = data.split;
-            
-            const list = document.getElementById('ana-details');
-            list.innerHTML = ''; 
-            
-            data.details.forEach(detail => {
-                const li = document.createElement('li');
-                li.innerText = detail;
-                list.appendChild(li);
-            });
-
-            document.getElementById('analysis-modal').style.display = 'flex';
-        }
+    <!-- *** ส่วนที่เพิ่มเข้ามาใหม่ (ที่ขาดหายไป) *** -->
+    <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
+    <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <h2 id="ana-word" class="analysis-word">...</h2>
+                <span class="analysis-close" onclick="closeAnalysisModal(event, true)">&times;</span>
+            </div>
+            <div class="analysis-body">
+                <div id="ana-split" class="analysis-split">...</div>
+                <ul id="ana-details" class="analysis-list">
+                    <!-- รายการจะถูกสร้างที่นี่โดย JS -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ******************************************* -->
 
     <script src="slides-data.js"></script>
 
@@ -346,7 +296,7 @@
             document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
             document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
-            // *** แก้ไขแล้ว: สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์ ***
+            // --- ส่วนสร้างลิงก์สำหรับวิเคราะห์ศัพท์ ---
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
             
@@ -358,7 +308,10 @@
 
         // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
         function processFooterAnalysis(text, analysisData) {
-            if (!text || !analysisData) return text;
+            if (!text) return "";
+            // ถ้าไม่มี analysisData ให้ return text เดิม (ป้องกัน Error)
+            if (!analysisData) return text; 
+            
             let processedText = text;
             for (const word in analysisData) {
                 const regex = new RegExp(word, 'g');
@@ -373,6 +326,8 @@
             const s = slides[currentIndex];
             if (!s.analysis || !s.analysis[word]) return;
             const data = s.analysis[word];
+            
+            // อ้างอิง Element ที่เราเพิ่งเติมกลับเข้าไป
             document.getElementById('ana-word').innerText = word;
             document.getElementById('ana-split').innerText = data.split;
             const list = document.getElementById('ana-details');
