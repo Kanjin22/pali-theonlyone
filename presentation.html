@@ -33,41 +33,33 @@
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
 
-        /* --- CSS สำหรับคำศัพท์ที่คลิกได้ (ปรับปรุงให้ขีดเส้นพอดีคำ) --- */
+        /* --- CSS สำหรับคำศัพท์ (แบบตัวหนังสือปกติ ไม่กินที่) --- */
         .word-span {
             cursor: pointer;
-            
-            /* *** แก้ไข 1: ลด padding ซ้ายขวาให้เหลือ 0 (หรือน้อยที่สุด) *** */
-            padding: 2px 1px; 
-            
-            /* *** แก้ไข 2: เพิ่ม margin เพื่อเว้นระยะห่างระหว่างคำแทน *** */
-            margin: 0 3px; 
-            
-            border-radius: 3px;
-            transition: all 0.1s;
-            display: inline-block;
+            display: inline; /* สำคัญมาก: ให้ทำตัวเป็นตัวอักษรธรรมดา ไม่ใช่กล่อง */
+            padding: 0;      /* เอาพื้นที่รอบตัวออก */
+            margin: 0;       /* เอาระยะห่างออก */
+            border-bottom: 2px solid transparent; /* เตรียมเส้นใต้ไว้ (แต่ซ่อนสีไว้ก่อน) เพื่อกันบรรทัดขยับ */
+            transition: color 0.2s, border-color 0.2s;
         }
         
         /* สถานะเมื่อเอาเมาส์ชี้ */
         .word-span:hover {
-            background-color: #f5f5f5;
-            color: #d35400; /* เพิ่มสีตอนชี้ให้รู้ว่ากดได้ */
+            color: #e67e22; /* เปลี่ยนแค่สีตัวอักษร */
         }
 
         /* สถานะเมื่อถูกคลิก (แปลแล้ว) */
         .word-span.translated {
-            color: #d35400;
-            font-weight: 600;
+            color: #d35400;           /* เปลี่ยนสีตัวอักษร */
+            border-bottom-color: #d35400; /* เติมสีให้เส้นใต้ */
             
-            /* *** แก้ไข 3: ปรับขนาดเส้นใต้ *** */
-            border-bottom: 2px solid #d35400; 
-            
-            background-color: rgba(211, 84, 0, 0.08);
+            /* *** สำคัญ: ไม่ใส่ background-color และไม่ทำตัวหนา (bold) *** 
+               เพื่อป้องกันไม่ให้ข้อความขยับหรือกินพื้นที่เพิ่มครับ */
         }
 
         /* สำหรับบาลี */
         .pali-text {
-            font-family: 'Niramit', serif;
+            font-family: 'Sarabun', sans-serif;
             font-size: 1.8rem; /* หรือขนาดที่คุณปรับไว้ */
             color: #263238;
             font-weight: 500;
@@ -77,6 +69,9 @@
             /* *** แก้ไขตรงนี้ *** */
             text-align: left;  /* เปลี่ยนจาก justify เป็น left */
             text-indent: 50px; /* ยังคงย่อหน้าไว้เหมือนเดิม */
+            line-height: 2;         /* ระยะห่างบรรทัด */
+            word-spacing: 0;        /* (เพิ่ม) ระยะห่างระหว่างคำเป็นปกติ */
+             letter-spacing: 0;      /* (เพิ่ม) ระยะห่างระหว่างตัวอักษรเป็นปกติ */
             
             /* การตัดคำ */
             word-break: normal;
