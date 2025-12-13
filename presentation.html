@@ -68,6 +68,15 @@
             line-height: 2;
             text-align: justify; text-indent: 50px;
             word-break: normal; overflow-wrap: break-word;
+            transition: opacity 0.3s ease; /* เพิ่มเอฟเฟกต์การจางหาย */
+            opacity: 1; /* ค่าปกติคือมองเห็น */
+        }
+
+        /* คลาสสำหรับซ่อนข้อความ */
+        .thai-text.hidden {
+            opacity: 0;       /* มองไม่เห็น */
+            user-select: none; /* ห้ามคลุมดำ (กันโกง) */
+            pointer-events: none; /* ห้ามคลิก */
         }
 
         /* --- CSS สำหรับคำที่มีข้อมูลสนธิ/ไวยากรณ์ --- */
@@ -140,6 +149,14 @@
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
+        <div class="tool-divider"></div>
+        
+        <!-- *** ปุ่มใหม่: ซ่อน/แสดง คำแปล *** -->
+        <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
+            <i class="fa-solid fa-eye"></i>
+        </button>
+
+        <button class="tool-btn" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()"><i class="fa-solid fa-note-sticky"></i></button>
 
         <div class="content-area animate-content" id="mainContent">
             <!-- ID จะถูกใช้โดย JavaScript เพื่อแทรกคำ -->
@@ -237,6 +254,36 @@
             }).join(' ');
         }
 
+
+        // --- ตัวแปรและฟังก์ชันสำหรับโหมดซ่อน/แสดง คำแปล ---
+        let isThaiHidden = false;
+
+        function toggleThai() {
+            isThaiHidden = !isThaiHidden;
+            applyThaiState();
+        }
+
+        function applyThaiState() {
+            const thaiElem = document.getElementById('thaiContent');
+            // *** แก้ไข: เปลี่ยน selector ให้ตรงกับโครงสร้าง HTML จริง ***
+            // เนื่องจากเราไม่มี id="btn-toggle-thai" ที่ปุ่ม เราต้องอ้างอิงผ่าน onclick หรือเพิ่ม ID
+            // แต่เพื่อความง่ายและปลอดภัย ผมขอแนะนำให้เพิ่ม ID ให้ปุ่มก่อนครับ
+            
+            const btn = document.getElementById('btn-toggle-thai');
+            const btnIcon = btn.querySelector('i');
+
+            if (isThaiHidden) {
+                thaiElem.classList.add('hidden');
+                btnIcon.classList.remove('fa-eye');
+                btnIcon.classList.add('fa-eye-slash');
+                // btn.classList.add('active'); // ถ้าต้องการให้ปุ่มบุ๋มลงไป
+            } else {
+                thaiElem.classList.remove('hidden');
+                btnIcon.classList.remove('fa-eye-slash');
+                btnIcon.classList.add('fa-eye');
+                // btn.classList.remove('active');
+            }
+        }
 
         function updateSlide() {
             mainContent.classList.remove('animate-content');
