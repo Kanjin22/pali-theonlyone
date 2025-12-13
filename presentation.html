@@ -36,63 +36,74 @@
         /* --- CSS สำหรับคำศัพท์ (แบบตัวหนังสือปกติ ไม่กินที่) --- */
         .word-span {
             cursor: pointer;
-            display: inline; /* สำคัญมาก: ให้ทำตัวเป็นตัวอักษรธรรมดา ไม่ใช่กล่อง */
-            padding: 0;      /* เอาพื้นที่รอบตัวออก */
-            margin: 0;       /* เอาระยะห่างออก */
-            border-bottom: 2px solid transparent; /* เตรียมเส้นใต้ไว้ (แต่ซ่อนสีไว้ก่อน) เพื่อกันบรรทัดขยับ */
+            display: inline;
+            padding: 0;
+            margin: 0;
+            border-bottom: 2px solid transparent;
             transition: color 0.2s, border-color 0.2s;
         }
         
         /* สถานะเมื่อเอาเมาส์ชี้ */
         .word-span:hover {
-            color: #0277bd; /* เปลี่ยนแค่สีตัวอักษร */
+            color: #1565C0; /* เปลี่ยนสีตอนชี้ */
         }
 
         /* สถานะเมื่อถูกคลิก (แปลแล้ว) */
         .word-span.translated {
-            color: #0277bd;           /* เปลี่ยนสีตัวอักษร */
-            border-bottom-color: #0277bd; /* เติมสีให้เส้นใต้ */
-            
-            /* *** สำคัญ: ไม่ใส่ background-color และไม่ทำตัวหนา (bold) *** 
-               เพื่อป้องกันไม่ให้ข้อความขยับหรือกินพื้นที่เพิ่มครับ */
+            color: #1565C0;           /* เปลี่ยนสีตัวอักษรเป็นน้ำเงิน */
+            border-bottom-color: #1565C0; /* เติมสีให้เส้นใต้ */
         }
 
         /* สำหรับบาลี */
         .pali-text {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1.8rem; /* หรือขนาดที่คุณปรับไว้ */
-            color: #263238;
-            font-weight: 500;
-            line-height: 2;
-            margin-bottom: 25px;
-
-            /* *** แก้ไขตรงนี้ *** */
-            text-align: left;  /* เปลี่ยนจาก justify เป็น left */
-            text-indent: 50px; /* ยังคงย่อหน้าไว้เหมือนเดิม */
-            line-height: 2;         /* ระยะห่างบรรทัด */
-            word-spacing: 0;        /* (เพิ่ม) ระยะห่างระหว่างคำเป็นปกติ */
-             letter-spacing: 0;      /* (เพิ่ม) ระยะห่างระหว่างตัวอักษรเป็นปกติ */
-            
-            /* การตัดคำ */
-            word-break: normal;
-            overflow-wrap: break-word;
+            font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500;
+            line-height: 2; margin-bottom: 25px;
+            text-align: left; text-indent: 50px; word-spacing: 0; letter-spacing: 0;
+            word-break: normal; overflow-wrap: break-word;
         }
 
         /* สำหรับไทย */
         .thai-text {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1.3rem; /* หรือขนาดที่คุณปรับไว้ */
-            color: #546e7a;
+            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; font-weight: 300;
             line-height: 2;
-            font-weight: 300;
+            text-align: left; text-indent: 50px;
+            word-break: normal; overflow-wrap: break-word;
+        }
 
-            /* *** แก้ไขตรงนี้ *** */
-            text-align: left;  /* เปลี่ยนจาก justify เป็น left */
-            text-indent: 50px; /* ยังคงย่อหน้าไว้เหมือนเดิม */
+        /* --- CSS สำหรับคำที่มีข้อมูลสนธิ/ไวยากรณ์ --- */
+        .word-span.has-info {
+            border-bottom: 2px dotted #aaa; /* เส้นปะสีเทาจางๆ บอกใบ้ว่ามีข้อมูล */
+        }
+        /* ถ้าคลิกแล้ว (เป็นสีน้ำเงิน) ให้เปลี่ยนสีเส้นปะตาม */
+        .word-span.has-info.translated {
+            border-bottom: 2px dotted #1565C0;
+        }
 
-            /* การตัดคำ */
-            word-break: normal;
-            overflow-wrap: break-word;
+        /* --- กล่อง Tooltip (แสดงคำตัดบท) --- */
+        #sandhi-tooltip {
+            position: fixed; /* ให้ลอยอยู่เหนือทุกอย่าง */
+            display: none; /* ซ่อนไว้ก่อน */
+            background-color: #37474f; /* สีเทาเข้ม */
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-family: 'Sarabun', sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+            pointer-events: none; /* ให้เมาส์ทะลุผ่านได้ ไม่บังการกด */
+            white-space: nowrap; /* ไม่ให้ข้อความขึ้นบรรทัดใหม่ */
+            border: 1px solid #546e7a;
+        }
+        /* ตกแต่งตัวอักษรข้างใน Tooltip */
+        #sandhi-tooltip span.split {
+            color: #ffca28; /* สีเหลืองทอง สำหรับคำที่แยกแล้ว */
+            font-weight: bold;
+        }
+        #sandhi-tooltip span.origin {
+            color: #b0bec5; /* สีเทาอ่อน สำหรับวงเล็บที่มา */
+            font-size: 0.9em;
+            margin-left: 5px;
         }
 
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
@@ -159,6 +170,9 @@
         <button onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
+    <!-- กล่อง Tooltip สำหรับแสดงสนธิ -->
+    <div id="sandhi-tooltip"></div>
+
     <script src="slides-data.js"></script>
 
     <script>
@@ -177,14 +191,32 @@
         const contentArea = document.querySelector('.content-area');
         
         // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (แยกด้วยช่องว่าง)
-        function wrapWords(text) {
+        function wrapWords(text, vocabData) {
             if (!text) return "";
-            // แยกคำด้วยช่องว่าง แล้วห่อด้วย <span>
+            
             return text.split(' ').map(word => {
-                if (word.trim() === "") return ""; // ข้ามช่องว่างเปล่า
-                return `<span class="word-span" onclick="toggleHighlight(this)">${word}</span>`;
-            }).join(' '); // เชื่อมกลับด้วยช่องว่าง
+                if (word.trim() === "") return "";
+                
+                // ล้างเครื่องหมายวรรคตอนบางตัวออกเพื่อให้ Match key ได้ง่ายขึ้น (ถ้าต้องการ)
+                let cleanWord = word.replace(/[ฯ,.]/g, ''); 
+                let vocabInfo = "";
+                let hasInfoClass = "";
+                
+                // เช็คว่ามีข้อมูลของคำนี้ไหม
+                if (vocabData && vocabData[cleanWord]) {
+                    vocabInfo = `data-sandhi="${vocabData[cleanWord]}"`;
+                    hasInfoClass = "has-info";
+                }
+
+                // สร้าง Span พร้อม Event
+                return `<span class="word-span ${hasInfoClass}" 
+                              ${vocabInfo}
+                              onmouseenter="showTooltip(this)" 
+                              onmouseleave="hideTooltip()"
+                              onclick="toggleHighlight(this)">${word}</span>`;
+            }).join(' ');
         }
+
 
         function updateSlide() {
             mainContent.classList.remove('animate-content');
@@ -194,8 +226,8 @@
 
             const s = slides[currentIndex];
 
-            // ใช้ฟังก์ชัน wrapWords กับเนื้อหาบาลีและไทย
-            document.getElementById('paliContent').innerHTML = wrapWords(s.pali);
+            // *** แก้ไขแล้ว: ส่ง s.vocab เข้าไปด้วย ***
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
             document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
             document.getElementById('contextContent').innerText = s.context;
@@ -203,6 +235,44 @@
             document.getElementById('kitakaContent').innerText = s.kitaka;
             
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
+        }
+
+        // --- ฟังก์ชันจัดการ Tooltip ---
+        const tooltip = document.getElementById('sandhi-tooltip');
+
+        function showTooltip(element) {
+            const info = element.getAttribute('data-sandhi');
+            if (!info) return;
+
+            // จัดรูปแบบข้อความ
+            let formattedInfo = info;
+            if (info.includes('(')) {
+                const parts = info.split('(');
+                formattedInfo = `<span class="split">${parts[0]}</span> <span class="origin">(${parts[1]}</span>`;
+            } else {
+                formattedInfo = `<span class="split">${info}</span>`;
+            }
+
+            tooltip.innerHTML = formattedInfo;
+            tooltip.style.display = 'block';
+
+            // คำนวณตำแหน่ง (ให้ลอยอยู่เหนือคำ)
+            const rect = element.getBoundingClientRect();
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            let top = rect.top - tooltipRect.height - 10; 
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
+
+            // กันตกขอบจอ
+            if (top < 0) top = rect.bottom + 10; 
+            if (left < 10) left = 10;
+            
+            tooltip.style.top = `${top}px`;
+            tooltip.style.left = `${left}px`;
+        }
+
+        function hideTooltip() {
+            tooltip.style.display = 'none';
         }
 
         // ฟังก์ชันเปลี่ยนสถานะ (ทำงานเมื่อคลิกที่คำ)
