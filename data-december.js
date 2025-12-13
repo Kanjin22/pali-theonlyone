@@ -508,6 +508,10 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) เก็งที่ ๙ น.๖๓-๖๕ อถ นํ กุฏุมฺพิกา - มิคาโรติสฺส นามํ อกาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/8H79-Tg7LWI?si=5VJJGEvusdoUNudr&t=1020",
+                "https://youtu.be/Zpe0NsZYGM8?si=yQkvr8aZJRw3XQ0z",
+            ],
             slideId: "p3_geng9",
             fileNoteTranslate: "materials/translate-notes-309.pdf",
         },
