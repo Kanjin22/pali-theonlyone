@@ -190,27 +190,30 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (ฉลาดขึ้น: แยกเครื่องหมายฯ ออกจากคำ)
+        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (ฉลาดสุดๆ: แยกเครื่องหมายทั้ง หน้า และ หลัง)
         function wrapWords(text, vocabData) {
             if (!text) return "";
             
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
                 
-                // 1. ใช้ Regex แยก "คำศัพท์" กับ "เครื่องหมายต่อท้าย" ออกจากกัน
-                // ^(.+?) หมายถึง ตัวคำศัพท์ (เก็บลงตัวแปร parts[1])
-                // ([ฯ.,;:"'()]+)$ หมายถึง เครื่องหมายต่างๆ ที่อยู่ท้ายคำ (เก็บลงตัวแปร parts[2])
-                const parts = word.match(/^(.+?)([ฯ.,;:"'()]+)$/);
+                // Regex ใหม่: แยก 3 ส่วน (หน้า - กลาง - หลัง)
+                // 1. ^([“"'(]*)        -> เก็บเครื่องหมายเปิด (เช่น “ " ( ) ไว้ใน parts[1]
+                // 2. (.+?)             -> เก็บตัวคำศัพท์ ไว้ใน parts[2]
+                // 3. ([)”"'.ฯ,;:?]+)?$ -> เก็บเครื่องหมายปิด (เช่น ” ) ฯ .) ไว้ใน parts[3]
+                const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
                 
-                let cleanWord = word;      // สมมติว่าเป็นคำปกติก่อน
-                let punctuation = "";      // ยังไม่มีเครื่องหมาย
+                let prefix = "";       // เครื่องหมายข้างหน้า
+                let cleanWord = word;  // คำศัพท์เพียวๆ
+                let suffix = "";       // เครื่องหมายข้างหลัง
                 
                 if (parts) {
-                    cleanWord = parts[1];  // นี่คือคำศัพท์เพียวๆ (เช่น "ตตฺเถกํ")
-                    punctuation = parts[2]; // นี่คือเครื่องหมาย (เช่น "ฯ")
+                    prefix = parts[1] || "";
+                    cleanWord = parts[2];
+                    suffix = parts[3] || "";
                 }
 
-                // 2. เช็คข้อมูลจากฐานข้อมูล (ด้วยคำที่สะอาดแล้ว)
+                // เช็คข้อมูลจากฐานข้อมูล (ด้วยคำที่สะอาดแล้ว)
                 let vocabInfo = "";
                 let hasInfoClass = "";
                 
@@ -219,12 +222,12 @@
                     hasInfoClass = "has-info";
                 }
 
-                // 3. สร้าง HTML: เอา punctuation (เครื่องหมาย) ไว้นอก <span>
-                return `<span class="word-span ${hasInfoClass}" 
+                // สร้าง HTML: เอา prefix และ suffix ไว้นอก <span>
+                return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
                               onmouseleave="hideTooltip()"
-                              onclick="toggleHighlight(this)">${cleanWord}</span>${punctuation}`;
+                              onclick="toggleHighlight(this)">${cleanWord}</span>${suffix}`;
             }).join(' ');
         }
 
