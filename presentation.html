@@ -3,180 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สื่อการสอนบาลี (Interactive Board)</title>
+    <title>สื่อการสอนบาลี (Interactive Text)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- ใช้ Font Awesome สำหรับไอคอนเครื่องมือ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CSS เดิม (พื้นฐาน) --- */
-        body { margin: 0; padding: 0; background-color: #eceff1; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; overflow: hidden; /* ป้องกัน scrollbar ซ้อน */ }
+        /* --- CSS พื้นฐาน --- */
+        body { margin: 0; padding: 0; background-color: #eceff1; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; }
         
-        /* --- การ์ดหลัก --- */
         .card {
             width: 95%; max-width: 1000px; height: 85vh; max-height: 800px;
             background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
         
-        /* --- พื้นที่เนื้อหา (ปรับให้รองรับ Canvas) --- */
-        .content-wrapper {
-            position: relative; /* สำคัญ: เพื่อให้ Canvas วางทับได้ */
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* ซ่อน scrollbar ของ wrapper */
-        }
-
+        .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; flex-shrink: 0; }
+        
         .content-area {
             flex: 1;
             padding: 40px 100px 20px 100px;
-            overflow-y: auto; /* เนื้อหาเลื่อนได้ */
-            display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; text-align: left;
-            z-index: 1; /* อยู่ล่างสุด */
+            display: flex; flex-direction: column;
+            justify-content: flex-start; /* เริ่มจากบน */
+            align-items: stretch;
+            text-align: left;
+            overflow-y: auto;
         }
-        
-        /* --- Canvas สำหรับวาดเขียน (แผ่นใส) --- */
-        #drawing-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 5; /* อยู่เหนือเนื้อหา แต่ใต้ Tool */
-            pointer-events: none; /* ปกติให้ทะลุผ่าน (เพื่อให้เลื่อนเนื้อหาได้) */
-            cursor: crosshair;
-        }
-        .drawing-mode #drawing-canvas {
-            pointer-events: auto; /* เมื่อเปิดโหมดวาด ให้รับเมาส์ได้ */
-        }
-
-        /* --- กล่องข้อความ (Sticky Note) --- */
-        .sticky-note {
-            position: absolute;
-            background: #fff9c4;
-            border: 1px solid #fbc02d;
-            padding: 10px;
-            min-width: 150px;
-            max-width: 300px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 20;
-            font-size: 1rem;
-            cursor: move;
-        }
-        .sticky-note:focus { outline: 2px solid #2980b9; }
-        .close-note {
-            position: absolute; top: -10px; right: -10px;
-            background: #e74c3c; color: white;
-            border-radius: 50%; width: 20px; height: 20px;
-            text-align: center; line-height: 20px;
-            font-size: 12px; cursor: pointer; display: none;
-        }
-        .sticky-note:hover .close-note { display: block; }
-
-        /* --- แถบเครื่องมือ (Toolbar) --- */
-        .toolbar {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: white;
-            padding: 8px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 50;
-        }
-        .tool-btn {
-            width: 40px; height: 40px;
-            border: none; background: #f0f0f0;
-            border-radius: 8px; cursor: pointer;
-            font-size: 1.2rem; color: #555;
-            transition: all 0.2s;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .tool-btn:hover { background: #e0e0e0; }
-        .tool-btn.active { background: #3498db; color: white; }
-        .tool-divider { height: 1px; background: #ddd; margin: 4px 0; }
-        
-        /* สีปากกา */
-        .color-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 2px #ddd; cursor: pointer; }
-        .color-dot.active { box-shadow: 0 0 0 2px #3498db; transform: scale(1.1); }
-
-        /* --- CSS เดิม (ตกแต่งเนื้อหา) --- */
-        .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; flex-shrink: 0; }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-thumb { background-color: #cfd8dc; border-radius: 4px; }
-        .pali-text { font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; line-height: 1.8; margin-bottom: 25px; text-align: justify; text-indent: 50px; word-break: normal; overflow-wrap: break-word; }
+
+        /* --- CSS สำหรับคำศัพท์ที่คลิกได้ (พระเอกของเรา) --- */
+        .word-span {
+            cursor: pointer;
+            padding: 0 2px;
+            border-radius: 3px;
+            transition: all 0.1s;
+            display: inline-block; /* เพื่อให้ border สวยงาม */
+        }
+        
+        /* สถานะเมื่อเอาเมาส์ชี้ */
+        .word-span:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* สถานะเมื่อถูกคลิก (แปลแล้ว) */
+        .word-span.translated {
+            color: #d35400; /* เปลี่ยนสีตัวอักษรเป็นสีส้มอิฐ */
+            font-weight: 600; /* ตัวหนาขึ้น */
+            border-bottom: 3px solid #d35400; /* ขีดเส้นใต้ */
+            background-color: rgba(211, 84, 0, 0.05); /* พื้นหลังจางๆ */
+        }
+
+        /* สำหรับบาลี */
+        .pali-text {
+            font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; 
+            line-height: 2; /* เพิ่มระยะบรรทัดให้คลิกง่าย */
+            margin-bottom: 25px; text-align: justify; text-indent: 50px;
+        }
+
+        /* สำหรับไทย */
+        .thai-text {
+            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 2; font-weight: 300;
+            text-align: justify; text-indent: 50px;
+        }
+
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
-        .thai-text { font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 1.8; font-weight: 300; text-align: justify; text-indent: 50px; word-break: normal; overflow-wrap: break-word; }
-        .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; position: relative; z-index: 10; }
+        .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 150px; display: flex; padding: 0; flex-shrink: 0; }
         .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
         .footer-section:last-child { border-right: none; }
-        .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
+        .sec-title { font-size: 0.8rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
         .sec-content { font-size: 0.95rem; color: #37474f; line-height: 1.5; }
         .pali-word { font-family: 'Niramit', serif; color: #0277bd; font-weight: 500; }
-        .page-badge { position: absolute; top: 20px; right: 80px; /* ขยับหนี toolbar */ background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
+        
+        .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: #78909c; font-weight: bold; z-index: 10; }
         
         .controls { position: fixed; bottom: 25px; display: flex; gap: 20px; z-index: 100; }
-        button.nav-btn { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        button.nav-btn:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
-        
+        button { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        button:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-content { animation: slideIn 0.4s ease-out forwards; }
 
         @media screen and (max-width: 768px) {
             .card { height: 90vh; margin-top: -40px; }
             .content-area { padding: 60px 20px 40px 20px; }
-            .pali-text { font-size: 1.3rem; margin-bottom: 15px; }
-            .thai-text { font-size: 1.1rem; }
+            .pali-text { font-size: 1.4rem; margin-bottom: 15px; }
+            .thai-text { font-size: 1.2rem; }
             .footer-box { height: auto; flex-direction: column; overflow-y: auto; min-height: 120px; max-height: 30%; }
             .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
             .controls { bottom: 10px; gap: 10px; }
-            button.nav-btn { padding: 10px 20px; font-size: 0.9rem; }
-            .toolbar { top: auto; bottom: 20px; right: 20px; flex-direction: row; } /* ย้าย toolbar ลงล่างในมือถือ */
-            .page-badge { right: 20px; }
+            button { padding: 10px 20px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
 
-        <!-- Toolbar เครื่องมือ -->
-        <div class="toolbar">
-            <button class="tool-btn" id="btn-pointer" title="โหมดอ่าน (เลื่อนหน้าจอ)" onclick="setTool('pointer')"><i class="fa-solid fa-arrow-pointer"></i></button>
-            <button class="tool-btn" id="btn-pen" title="ปากกา" onclick="setTool('pen')"><i class="fa-solid fa-pen"></i></button>
-            <button class="tool-btn" id="btn-highlighter" title="ไฮไลท์" onclick="setTool('highlighter')"><i class="fa-solid fa-highlighter"></i></button>
-            <div class="tool-divider"></div>
-            
-            <!-- เลือกสี -->
-            <div style="display:flex; flex-direction:column; gap:5px; align-items:center;">
-                <div class="color-dot active" style="background:#ef5350;" onclick="setColor('#ef5350', this)"></div> <!-- แดง -->
-                <div class="color-dot" style="background:#42a5f5;" onclick="setColor('#42a5f5', this)"></div> <!-- ฟ้า -->
-                <div class="color-dot" style="background:#66bb6a;" onclick="setColor('#66bb6a', this)"></div> <!-- เขียว -->
-                <div class="color-dot" style="background:#ffca28;" onclick="setColor('#ffca28', this)"></div> <!-- เหลือง -->
-            </div>
-
-            <div class="tool-divider"></div>
-            <button class="tool-btn" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()"><i class="fa-solid fa-note-sticky"></i></button>
-            <button class="tool-btn" title="ล้างหน้าจอ" onclick="clearCanvas()"><i class="fa-solid fa-trash-can"></i></button>
-        </div>
-
-        <!-- Wrapper สำหรับซ้อน Layer -->
-        <div class="content-wrapper" id="contentWrapper">
-            <!-- Canvas วาดเขียน -->
-            <canvas id="drawing-canvas"></canvas>
-
-            <!-- พื้นที่เนื้อหา -->
-            <div class="content-area animate-content" id="mainContent">
-                <div class="pali-text" id="paliContent">...</div>
-                <div class="divider"></div>
-                <div class="thai-text" id="thaiContent">...</div>
-            </div>
+        <div class="content-area animate-content" id="mainContent">
+            <!-- ID จะถูกใช้โดย JavaScript เพื่อแทรกคำ -->
+            <div class="pali-text" id="paliContent">...</div>
+            <div class="divider"></div>
+            <div class="thai-text" id="thaiContent">...</div>
         </div>
 
         <div class="footer-box">
@@ -196,16 +127,17 @@
     </div>
 
     <div class="controls">
-        <button class="nav-btn" onclick="prevSlide()">❮ ย้อนกลับ</button>
-        <button class="nav-btn" onclick="nextSlide()">ถัดไป ❯</button>
+        <button onclick="prevSlide()">❮ ย้อนกลับ</button>
+        <button onclick="resetHighlights()" style="background-color: #e57373;">รีเซ็ต</button>
+        <button onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
     <script src="slides-data.js"></script>
 
     <script>
-        // --- ส่วนจัดการ Slide ---
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id');
+
         let slides = [];
         if (slideId && typeof slidesDatabase !== 'undefined' && slidesDatabase[slideId]) {
             slides = slidesDatabase[slideId];
@@ -217,203 +149,65 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        function updateSlide() {
-            // เคลียร์กระดานทุกครั้งที่เปลี่ยนหน้า
-            clearCanvas(true);
-            removeAllNotes();
+        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (แยกด้วยช่องว่าง)
+        function wrapWords(text) {
+            if (!text) return "";
+            // แยกคำด้วยช่องว่าง แล้วห่อด้วย <span>
+            return text.split(' ').map(word => {
+                if (word.trim() === "") return ""; // ข้ามช่องว่างเปล่า
+                return `<span class="word-span" onclick="toggleHighlight(this)">${word}</span>`;
+            }).join(' '); // เชื่อมกลับด้วยช่องว่าง
+        }
 
+        function updateSlide() {
             mainContent.classList.remove('animate-content');
             void mainContent.offsetWidth; 
             mainContent.classList.add('animate-content');
             contentArea.scrollTop = 0;
 
             const s = slides[currentIndex];
-            document.getElementById('paliContent').innerText = s.pali;
-            document.getElementById('thaiContent').innerText = s.thai;
+
+            // ใช้ฟังก์ชัน wrapWords กับเนื้อหาบาลีและไทย
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali);
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
+            
             document.getElementById('contextContent').innerText = s.context;
             document.getElementById('akhyataContent').innerText = s.akhyata;
             document.getElementById('kitakaContent').innerText = s.kitaka;
+            
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
         }
 
+        // ฟังก์ชันเปลี่ยนสถานะ (ทำงานเมื่อคลิกที่คำ)
+        window.toggleHighlight = function(element) {
+            element.classList.toggle('translated');
+        }
+
+        // ฟังก์ชันล้างค่า (ปุ่มรีเซ็ต)
+        window.resetHighlights = function() {
+            document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated'));
+        }
+
         function nextSlide() {
-            if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); }
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                updateSlide();
+            }
         }
+
         function prevSlide() {
-            if (currentIndex > 0) { currentIndex--; updateSlide(); }
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlide();
+            }
         }
+
         document.addEventListener('keydown', function(event) {
             if (event.key === "ArrowRight") nextSlide();
             if (event.key === "ArrowLeft") prevSlide();
         });
 
-        // --- ส่วนจัดการ Whiteboard ---
-        const canvas = document.getElementById('drawing-canvas');
-        const ctx = canvas.getContext('2d');
-        const wrapper = document.getElementById('contentWrapper');
-        let isDrawing = false;
-        let currentTool = 'pointer'; // pointer, pen, highlighter
-        let currentColor = '#ef5350';
-        let lastX = 0;
-        let lastY = 0;
-
-        // ตั้งขนาด Canvas ให้พอดีจอเสมอ
-        function resizeCanvas() {
-            canvas.width = wrapper.offsetWidth;
-            canvas.height = wrapper.offsetHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        // เรียกใช้ตอนโหลด
-        setTimeout(resizeCanvas, 100);
-
-        function setTool(tool) {
-            currentTool = tool;
-            
-            // อัปเดต UI ปุ่ม
-            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${tool}`).classList.add('active');
-
-            // อัปเดตคลาส wrapper เพื่อเปลี่ยน cursor
-            if (tool === 'pointer') {
-                wrapper.classList.remove('drawing-mode');
-            } else {
-                wrapper.classList.add('drawing-mode');
-            }
-        }
-        
-        // เริ่มต้นเป็น Pointer
-        setTool('pointer');
-
-        function setColor(color, element) {
-            currentColor = color;
-            document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        // Event Listeners สำหรับการวาด
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-        
-        // รองรับ Touch Screen
-        canvas.addEventListener('touchstart', (e) => {
-            if(currentTool === 'pointer') return;
-            e.preventDefault(); // ป้องกันเลื่อนจอ
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent("mousedown", { clientX: touch.clientX, clientY: touch.clientY });
-            canvas.dispatchEvent(mouseEvent);
-        });
-        canvas.addEventListener('touchmove', (e) => {
-            if(currentTool === 'pointer') return;
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent("mousemove", { clientX: touch.clientX, clientY: touch.clientY });
-            canvas.dispatchEvent(mouseEvent);
-        });
-        canvas.addEventListener('touchend', (e) => {
-            if(currentTool === 'pointer') return;
-            const mouseEvent = new MouseEvent("mouseup", {});
-            canvas.dispatchEvent(mouseEvent);
-        });
-
-        function startDrawing(e) {
-            if (currentTool === 'pointer') return;
-            isDrawing = true;
-            [lastX, lastY] = [e.offsetX, e.offsetY];
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            if (currentTool === 'pointer') return;
-
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(e.offsetX, e.offsetY);
-            
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-
-            if (currentTool === 'pen') {
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = 3;
-                ctx.globalAlpha = 1.0;
-            } else if (currentTool === 'highlighter') {
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = 20;
-                ctx.globalAlpha = 0.3; // จางๆ ให้เห็นตัวหนังสือ
-            }
-
-            ctx.stroke();
-            [lastX, lastY] = [e.offsetX, e.offsetY];
-        }
-
-        function stopDrawing() {
-            isDrawing = false;
-        }
-
-        function clearCanvas(keepNotes = false) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (!keepNotes) removeAllNotes();
-        }
-
-        // --- ส่วนจัดการ Sticky Notes ---
-        function addNote() {
-            const note = document.createElement('div');
-            note.className = 'sticky-note';
-            note.contentEditable = true;
-            note.innerText = 'พิมพ์คำอธิบาย...';
-            note.style.left = '50px';
-            note.style.top = '50px';
-            
-            // ปุ่มลบ
-            const closeBtn = document.createElement('div');
-            closeBtn.className = 'close-note';
-            closeBtn.innerHTML = '&times;';
-            closeBtn.contentEditable = false;
-            closeBtn.onclick = function() { note.remove(); };
-            
-            note.appendChild(closeBtn);
-            
-            // ทำให้ลากได้
-            makeDraggable(note);
-            
-            wrapper.appendChild(note);
-            note.focus();
-        }
-
-        function removeAllNotes() {
-            const notes = document.querySelectorAll('.sticky-note');
-            notes.forEach(n => n.remove());
-        }
-
-        function makeDraggable(el) {
-            let isDragging = false;
-            let startX, startY, initialLeft, initialTop;
-
-            el.addEventListener('mousedown', function(e) {
-                if (e.target.className === 'close-note') return;
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                initialLeft = el.offsetLeft;
-                initialTop = el.offsetTop;
-            });
-
-            window.addEventListener('mousemove', function(e) {
-                if (!isDragging) return;
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-                el.style.left = `${initialLeft + dx}px`;
-                el.style.top = `${initialTop + dy}px`;
-            });
-
-            window.addEventListener('mouseup', () => isDragging = false);
-        }
-
-        // Initialize App
         updateSlide();
-        
     </script>
 </body>
 </html>
