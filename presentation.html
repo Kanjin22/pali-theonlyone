@@ -75,7 +75,15 @@
         .analysis-body { padding: 25px; }
         .analysis-split { font-size: 1.4rem; color: #d35400; font-weight: bold; text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
         .analysis-list { list-style: none; padding: 0; margin: 0; }
-        .analysis-list li { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: flex-start; }
+        .analysis-list li {
+            font-size: 1.1rem;
+            margin-bottom: 18px; /* เพิ่มระยะห่างระหว่างข้อ (เดิม 12px) */
+            line-height: 1.8;    /* เพิ่มระยะห่างระหว่างบรรทัด (สำคัญมากสำหรับข้อความยาว) */
+            display: flex;
+            align-items: flex-start;
+            color: #2c3e50;      /* ปรับสีให้อ่านง่ายขึ้น */
+            text-align: left;    /* บังคับชิดซ้าย */
+        }
         .analysis-list li::before { content: "•"; color: #3498db; font-weight: bold; font-size: 1.5rem; line-height: 1; margin-right: 10px; }
         .clickable-analysis { color: #1976D2; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; transition: all 0.2s; }
         .clickable-analysis:hover { color: #0D47A1; background-color: #e3f2fd; border-radius: 4px; }
