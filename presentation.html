@@ -136,19 +136,34 @@
         .tool-btn { 
             position: absolute; 
             top: 20px; 
-            right: 100px; /* วางถัดจากเลขหน้า */
+            
+            /* ลบ right: 100px ออกจากตรงกลาง */
+            
             padding: 8px 12px; 
             border-radius: 8px; 
-            z-index: 10;
+            z-index: 20; 
             background-color: #eceff1; 
             color: #546e7a; 
             border: none;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* เพิ่มเงาให้นูนขึ้นมาชัดเจน */
         }
         
         .tool-btn:hover { 
             background-color: #cfd8dc; 
+        }
+
+        /* --- กำหนดตำแหน่งปุ่มแยกกัน (ให้ห่างจากขอบขวามากขึ้น) --- */
+        
+        /* ปุ่ม Note (อยู่ขวาสุด ถัดจากเลขหน้า) */
+        #btn-add-note { 
+            right: 120px; /* ขยับออกมาจากเลขหน้า */
+        } 
+        
+        /* ปุ่มตา (อยู่ถัดจากปุ่ม Note ไปทางซ้าย) */
+        #btn-toggle-thai { 
+            right: 170px; /* ห่างจากปุ่ม Note 50px */
         }
 
         @media screen and (max-width: 768px) {
@@ -160,6 +175,11 @@
             .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
             .controls { bottom: 10px; gap: 10px; }
             button { padding: 10px 20px; font-size: 0.9rem; }
+            .page-badge { right: 15px; top: 15px; } /* เลขหน้าชิดขวา */
+            
+            /* ขยับปุ่มในมือถือให้ชิดกันหน่อย */
+            #btn-add-note { right: 90px; top: 15px; } 
+            #btn-toggle-thai { right: 140px; top: 15px; }
         }
 
         /* --- CSS สำหรับ Sticky Note (กระดาษโน้ต) --- */
