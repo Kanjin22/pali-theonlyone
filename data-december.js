@@ -596,7 +596,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๖",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๔๖-๑๕๘ โส ปทสา คมนกาลโต - สยมาโน วีตินาเมสิ ฯ",
+            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๔๖-๑๔๘ โส ปทสา คมนกาลโต - สยมาโน วีตินาเมสิ ฯ",
             slideId: "p3_geng16",
             fileNoteTranslate: "materials/translate-notes-316.pdf",
             isExam: true,
