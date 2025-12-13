@@ -57,15 +57,37 @@
 
         /* สำหรับบาลี */
         .pali-text {
-            font-family: 'Niramit', serif; font-size: 1.8rem; color: #263238; font-weight: 500; 
-            line-height: 2; /* เพิ่มระยะบรรทัดให้คลิกง่าย */
-            margin-bottom: 25px; text-align: justify; text-indent: 50px;
+            font-family: 'Niramit', serif;
+            font-size: 1.8rem; /* หรือขนาดที่คุณปรับไว้ */
+            color: #263238;
+            font-weight: 500;
+            line-height: 2;
+            margin-bottom: 25px;
+
+            /* *** แก้ไขตรงนี้ *** */
+            text-align: left;  /* เปลี่ยนจาก justify เป็น left */
+            text-indent: 50px; /* ยังคงย่อหน้าไว้เหมือนเดิม */
+            
+            /* การตัดคำ */
+            word-break: normal;
+            overflow-wrap: break-word;
         }
 
         /* สำหรับไทย */
         .thai-text {
-            font-family: 'Sarabun', sans-serif; font-size: 1.3rem; color: #546e7a; line-height: 2; font-weight: 300;
-            text-align: justify; text-indent: 50px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.3rem; /* หรือขนาดที่คุณปรับไว้ */
+            color: #546e7a;
+            line-height: 2;
+            font-weight: 300;
+
+            /* *** แก้ไขตรงนี้ *** */
+            text-align: left;  /* เปลี่ยนจาก justify เป็น left */
+            text-indent: 50px; /* ยังคงย่อหน้าไว้เหมือนเดิม */
+
+            /* การตัดคำ */
+            word-break: normal;
+            overflow-wrap: break-word;
         }
 
         .divider { width: 50px; height: 4px; background-color: #cfd8dc; border-radius: 2px; margin: 0 auto 25px auto; flex-shrink: 0; }
