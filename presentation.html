@@ -220,13 +220,10 @@
                 let searchKey = displayText; 
                 let vocabInfo = "";
                 let hasInfoClass = "";
-                
-                // *** อัปเกรด: ใช้ฟังก์ชัน getAnalysisData เพื่อหาทั้งใน Local และ Common ***
-                if (getAnalysisData(searchKey, vocabData)) {
-                    vocabInfo = `data-sandhi="${searchKey}"`; // เก็บ key ไว้
+                if (vocabData && vocabData[searchKey]) {
+                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
                     hasInfoClass = "has-info";
                 }
-                
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
@@ -234,16 +231,6 @@
                               onclick="toggleHighlight(this)">${displayText}</span>${suffix}`;
             }).join(' ');
         }
-
-        // --- เพิ่มฟังก์ชันจัดการข้อมูลกลาง (Common Data) ตรงนี้ ---
-        function getAnalysisData(word, localAnalysis) {
-            // 1. หาในเฉพาะหน้านี้ก่อน
-            if (localAnalysis && localAnalysis[word]) return localAnalysis[word];
-            // 2. ถ้าไม่เจอ หาในกองกลาง (commonAnalysis จากไฟล์ vocab-data.js)
-            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) return commonAnalysis[word];
-            return null;
-        }
-        // -----------------------------------------------------
 
         let isThaiHidden = false;
         function toggleThai() {
@@ -338,11 +325,10 @@
 
             const s = slides[currentIndex];
 
-            // ส่ง s.analysis (ข้อมูลเฉพาะหน้า) เข้าไปด้วย
-            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.analysis);
-            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai, null); // ภาษาไทยไม่ต้องวิเคราะห์ศัพท์
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
-            // ใช้ processFooterAnalysis เพื่อสร้างลิงก์ใน footer
+            // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
             
@@ -352,18 +338,25 @@
             applyThaiState();
         }
 
-        // --- ฟังก์ชันจัดการ Footer Analysis ---
+        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
+        function getAllAnalysisKeys(localAnalysis) {
+            const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
+            const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
+            return [...new Set([...localKeys, ...commonKeys])];
+        }
+
+        function getAnalysisData(word, localAnalysis) {
+            if (localAnalysis && localAnalysis[word]) return localAnalysis[word];
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) return commonAnalysis[word];
+            return null;
+        }
+
         function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
             
             let processedText = text;
-            // รวมคำศัพท์จาก Local และ Common
-            let allKeys = [];
-            if (localAnalysis) allKeys = allKeys.concat(Object.keys(localAnalysis));
-            if (typeof commonAnalysis !== 'undefined') allKeys = allKeys.concat(Object.keys(commonAnalysis));
-            
-            allKeys = [...new Set(allKeys)]; // ตัดคำซ้ำ
-            allKeys.sort((a, b) => b.length - a.length); // เรียงยาวไปสั้น
+            let allKeys = getAllAnalysisKeys(localAnalysis);
+            allKeys.sort((a, b) => b.length - a.length);
 
             let replacements = [];
             let index = 0;
@@ -371,7 +364,6 @@
             allKeys.forEach(key => {
                 if (processedText.includes(key)) {
                     const token = `##TOKEN_${index}##`;
-                    // ตัด # ออกเพื่อแสดงผล
                     const displayWord = key.split('#')[0]; 
                     replacements.push({
                         token: token,
@@ -387,7 +379,6 @@
             return processedText;
         }
 
-        // --- ฟังก์ชัน Modal ---
         function showAnalysis(word) {
             const s = slides[currentIndex];
             const data = getAnalysisData(word, s.analysis);
@@ -415,21 +406,10 @@
             }
         }
 
-        // --- Tooltip ---
         const tooltip = document.getElementById('sandhi-tooltip');
         function showTooltip(element) {
-            const key = element.getAttribute('data-sandhi');
-            if (!key) return;
-            
-            // ดึงข้อมูลจากฟังก์ชัน getAnalysisData (เพื่อรองรับ commonAnalysis)
-            const s = slides[currentIndex];
-            const data = getAnalysisData(key, s.analysis);
-            
-            if (!data) return;
-
-            // ใช้ข้อมูลจาก 'split' หรือถ้าไม่มีก็ใช้ key
-            const info = data.split || key;
-
+            const info = element.getAttribute('data-sandhi');
+            if (!info) return;
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -437,10 +417,8 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
-
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
-
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
             let top = rect.top - tooltipRect.height - 10; 
@@ -451,7 +429,6 @@
             tooltip.style.left = `${left}px`;
         }
         function hideTooltip() { tooltip.style.display = 'none'; }
-        
         window.toggleHighlight = function(element) { element.classList.toggle('translated'); }
         window.resetHighlights = function() { document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated')); }
         function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); } }
