@@ -204,26 +204,47 @@
         let currentIndex = 0;
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
-        
+        // ฟังก์ชันแปลงประโยคให้เป็นคำๆ (ฉลาดขึ้น: รู้จักเครื่องหมาย ' และ ‘ ’)
         function wrapWords(text, vocabData) {
             if (!text) return "";
+            
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
-                const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
-                let prefix = "", cleanWord = word, suffix = "";
+                
+                // *** จุดที่แก้ไข: เพิ่ม ' ‘ ’ ใน Regex ***
+                // Group 1 (หน้า): “ " ' ( ‘
+                // Group 2 (คำ): ตัวหนังสือ
+                // Group 3 (หลัง): ) ” " ' . ฯ , ; : ? ’
+                const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
+                
+                let prefix = "";
+                let cleanWord = word;
+                let suffix = "";
+                
                 if (parts) {
                     prefix = parts[1] || "";
                     cleanWord = parts[2];
                     suffix = parts[3] || "";
                 }
+
+                // แปลง _ เป็นช่องว่าง (สำหรับคำไทย)
                 let displayText = cleanWord.replace(/_/g, ' '); 
                 let searchKey = displayText; 
+                
                 let vocabInfo = "";
                 let hasInfoClass = "";
-                if (vocabData && vocabData[searchKey]) {
-                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
-                    hasInfoClass = "has-info";
+                
+                // เช็คข้อมูล
+                const data = getAnalysisData(searchKey, vocabData);
+
+                if (data) {
+                    // โชว์ Tooltip เฉพาะ 'sandhi' หรือข้อมูลเก่า
+                    if (data.type === 'sandhi' || !data.type) {
+                        vocabInfo = `data-word="${searchKey}"`;
+                        hasInfoClass = "has-info";
+                    }
                 }
+
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
