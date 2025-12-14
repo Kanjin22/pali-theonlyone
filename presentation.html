@@ -178,19 +178,18 @@
 
     <!-- 3. โค้ดควบคุมการทำงาน (Main Script) -->
     <script>
-        // *** รวมร่างข้อมูลทุกภาคเข้าด้วยกัน ***
-        // (ถ้าไฟล์ไหนยังไม่มี ก็ลบบรรทัดนั้นออกก่อน หรือใส่ [] ดักไว้ได้)
-        const slidesDatabase = {
-            ...(typeof slidesPart1 !== 'undefined' ? slidesPart1 : {}),
-            ...(typeof slidesPart2 !== 'undefined' ? slidesPart2 : {}),
-            ...(typeof slidesPart3 !== 'undefined' ? slidesPart3 : {}),
-            ...(typeof slidesPart4 !== 'undefined' ? slidesPart4 : {}),
-            ...(typeof slidesPart5 !== 'undefined' ? slidesPart5 : {}),
-            ...(typeof slidesPart6 !== 'undefined' ? slidesPart6 : {}),
-            ...(typeof slidesPart7 !== 'undefined' ? slidesPart7 : {}),
-            ...(typeof slidesPart8 !== 'undefined' ? slidesPart8 : {}),            
-            // ... รวมภาคอื่นๆ ...
-        };
+        // รวมข้อมูลจากทุกไฟล์เข้าด้วยกัน
+        // (ใช้ try-catch หรือ typeof เพื่อกัน Error กรณีไฟล์ไหนยังไม่สร้าง)
+        const slidesDatabase = Object.assign({},
+            (typeof slidesPart1 !== 'undefined' ? slidesPart1 : {}),
+            (typeof slidesPart2 !== 'undefined' ? slidesPart2 : {}),
+            (typeof slidesPart3 !== 'undefined' ? slidesPart3 : {}),
+            (typeof slidesPart4 !== 'undefined' ? slidesPart4 : {}),
+            (typeof slidesPart5 !== 'undefined' ? slidesPart5 : {}),
+            (typeof slidesPart6 !== 'undefined' ? slidesPart6 : {}),
+            (typeof slidesPart7 !== 'undefined' ? slidesPart7 : {}),
+            (typeof slidesPart8 !== 'undefined' ? slidesPart8 : {})
+        );
 
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id');
