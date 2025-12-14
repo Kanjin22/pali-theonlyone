@@ -343,16 +343,16 @@
 
             const s = slides[currentIndex];
 
-            // *** แก้ไขตรงนี้: ส่ง s.analysis เข้าไป ***
-            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.analysis);
-            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai, null);
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
-            // ส่วนอื่นๆ เหมือนเดิม...
+            // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
-            document.getElementById('contextContent').innerText = s.context;
-            document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             
+            document.getElementById('contextContent').innerText = s.context;
+            
+            document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             applyThaiState();
         }
 
@@ -424,30 +424,10 @@
             }
         }
 
-        // --- ฟังก์ชันจัดการ Tooltip (ฉบับปรับปรุง: รับข้อมูลได้ทุกแบบ) ---
         const tooltip = document.getElementById('sandhi-tooltip');
-
         function showTooltip(element) {
-            const key = element.getAttribute('data-sandhi'); // คำศัพท์
-            if (!key) return;
-            
-            const s = slides[currentIndex];
-            // ดึงข้อมูล (หาในหน้า -> ถ้าไม่มีหาในกองกลาง)
-            const data = getAnalysisData(key, s.analysis); 
-            
-            if (!data) return;
-
-            // *** จุดที่แก้ไข: ตรวจสอบว่าข้อมูลเป็น "ข้อความ" หรือ "Object" ***
-            let info = "";
-            if (typeof data === 'string') {
-                info = data; // ถ้าเป็นข้อความธรรมดา ใช้เลย
-            } else if (data.split) {
-                info = data.split; // ถ้าเป็น Object ให้ดึงค่า split มาแสดง
-            } else {
-                return; // ถ้าไม่มีข้อมูลที่แสดงได้
-            }
-
-            // จัดรูปแบบข้อความ (แยกสีวงเล็บ)
+            const info = element.getAttribute('data-sandhi');
+            if (!info) return;
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -455,22 +435,14 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
-
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
-
-            // คำนวณตำแหน่ง
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
-            
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
-            
-            // กันตกขอบ
             if (top < 0) top = rect.bottom + 10; 
             if (left < 10) left = 10;
-            if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 10;
-
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
