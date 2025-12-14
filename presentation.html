@@ -425,21 +425,30 @@
         }
 
         const tooltip = document.getElementById('sandhi-tooltip');
-        function showTooltip(element) {
-            const key = element.getAttribute('data-sandhi'); // นี่คือคำศัพท์ (Key)
-            if (!key) return;
+        // --- ฟังก์ชันจัดการ Tooltip (ฉบับปรับปรุง: รับข้อมูลได้ทุกแบบ) ---
+        const tooltip = document.getElementById('sandhi-tooltip');
 
-            // *** แก้ไขตรงนี้: ดึงข้อมูลจริงจาก Key โดยใช้ slides ปัจจุบัน ***
+        function showTooltip(element) {
+            const key = element.getAttribute('data-sandhi'); // คำศัพท์
+            if (!key) return;
+            
             const s = slides[currentIndex];
-            const data = getAnalysisData(key, s.analysis);
+            // ดึงข้อมูล (หาในหน้า -> ถ้าไม่มีหาในกองกลาง)
+            const data = getAnalysisData(key, s.analysis); 
             
             if (!data) return;
 
-            // ข้อมูลที่ได้จะเป็น Object { split: "...", details: [...] }
-            // เราจะเอาเฉพาะ split มาแสดงใน Tooltip
-            const info = data.split; 
+            // *** จุดที่แก้ไข: ตรวจสอบว่าข้อมูลเป็น "ข้อความ" หรือ "Object" ***
+            let info = "";
+            if (typeof data === 'string') {
+                info = data; // ถ้าเป็นข้อความธรรมดา ใช้เลย
+            } else if (data.split) {
+                info = data.split; // ถ้าเป็น Object ให้ดึงค่า split มาแสดง
+            } else {
+                return; // ถ้าไม่มีข้อมูลที่แสดงได้
+            }
 
-            // จัดรูปแบบข้อความ (สี)
+            // จัดรูปแบบข้อความ (แยกสีวงเล็บ)
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -454,6 +463,7 @@
             // คำนวณตำแหน่ง
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
+            
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
             
