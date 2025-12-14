@@ -538,6 +538,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๐-๖๑",
             activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.๑๐๐-๑๐๒ ราชา กิร ปเสนทิโกสโล - อรุณวตีมตฺติกํ อทาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/g54DU2TcaoI?si=zTfpMQInXVzSO3WF&t=1175",
+                "https://youtu.be/4l3lskFzGWg?si=1RjlujbWWTdDdBr8",
+            ],
             slideId: "p3_geng11",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-311.pdf"
@@ -545,6 +549,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๔",
             activityTranslate: "(อ่าน) เก็งที่ ๑๒ น.๑๐๔-๑๐๖ โส อรุณุคฺคมนกาเลเยว - วตฺวา อตีตํ อาหริ",
+            linkYoutube: [
+                "https://youtu.be/aRW0uecyzw0?si=fSy_8ioXfS8Chxzo&t=246",
+                "https://youtu.be/hwDAWWjY1qg?si=XhijKzrPEttwlTPt",
+            ],
             slideId: "p3_geng12",
             fileNoteTranslate: "materials/translate-notes-312.pdf",
             isExam: true,
