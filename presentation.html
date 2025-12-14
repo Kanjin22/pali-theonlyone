@@ -367,17 +367,20 @@
             return processedText;
         }
 
-        // *** ฟังก์ชันแสดงผล (อัปเกรด: ตัด # ออกจากหัวข้อ Modal) ***
+        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
         function showAnalysis(word) {
             const s = slides[currentIndex];
+            // ใช้ฟังก์ชันช่วยดึงข้อมูล
             const data = getAnalysisData(word, s.analysis);
 
             if (!data) return;
 
-            // ตัด # ออกจากหัวข้อที่จะโชว์ใน Modal
-            const displayTitle = word.split('#')[0];
+            // *** เพิ่มบรรทัดนี้: ตัดส่วนที่เป็น #... ออกจากหัวข้อที่จะโชว์ ***
+            const displayTitle = word.split('#')[0]; 
 
-            document.getElementById('ana-word').innerText = displayTitle;
+            // เปลี่ยนจาก word เป็น displayTitle
+            document.getElementById('ana-word').innerText = displayTitle; 
+            
             document.getElementById('ana-split').innerText = data.split;
             
             const list = document.getElementById('ana-details');
