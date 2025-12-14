@@ -176,9 +176,10 @@
     <script src="slides-part7.js"></script>
     <script src="slides-part8.js"></script>
 
-    <!-- 3. สคริปต์หลัก (รวมร่างข้อมูล) -->
+    <!-- 3. โค้ดควบคุมการทำงาน (Main Script) -->
     <script>
-        // *** แก้ไข: รวมข้อมูลจากทุกภาคเข้าด้วยกันเป็น slidesDatabase เดียว ***
+        // รวมข้อมูลจากทุกไฟล์เข้าด้วยกัน
+        // (ใช้ try-catch หรือ typeof เพื่อกัน Error กรณีไฟล์ไหนยังไม่สร้าง)
         const slidesDatabase = Object.assign({},
             (typeof slidesPart1 !== 'undefined' ? slidesPart1 : {}),
             (typeof slidesPart2 !== 'undefined' ? slidesPart2 : {}),
@@ -194,35 +195,20 @@
         const slideId = params.get('id');
 
         let slides = [];
-        // ตรวจสอบว่ามี id และมีข้อมูลในฐานข้อมูลหรือไม่
-        if (slideId && slidesDatabase[slideId]) {
+        if (slideId && typeof slidesDatabase !== 'undefined' && slidesDatabase[slideId]) {
             slides = slidesDatabase[slideId];
         } else {
-            slides = [{ pali: "ไม่พบข้อมูลสื่อการสอน", thai: "กรุณาตรวจสอบรหัส (ID) หรือไฟล์ข้อมูล", context: "-", akhyata: "-", kitaka: "-" }];
+            slides = [{ pali: "ไม่พบข้อมูลสื่อการสอน", thai: "กรุณาตรวจสอบรหัส (ID)", context: "-", akhyata: "-", kitaka: "-" }];
         }
 
         let currentIndex = 0;
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        // --- ฟังก์ชันช่วย: ค้นหาข้อมูล (หาใน Local ก่อน ถ้าไม่มีไปหาใน Common) ---
-        function getAnalysisData(word, localAnalysis) {
-            // 1. ลองหาในเฉพาะหน้านี้ก่อน (Local)
-            if (localAnalysis && localAnalysis[word]) {
-                return localAnalysis[word];
-            }
-            // 2. ถ้าไม่เจอ ให้ไปหาในกองกลาง (Common)
-            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
-                return commonAnalysis[word];
-            }
-            return null; // หาไม่เจอเลย
-        }
         function wrapWords(text, vocabData) {
             if (!text) return "";
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
-                
-                // แยกเครื่องหมายวรรคตอน
                 const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
                 let prefix = "", cleanWord = word, suffix = "";
                 if (parts) {
@@ -230,18 +216,14 @@
                     cleanWord = parts[2];
                     suffix = parts[3] || "";
                 }
-                
                 let displayText = cleanWord.replace(/_/g, ' '); 
                 let searchKey = displayText; 
                 let vocabInfo = "";
                 let hasInfoClass = "";
-
-                // *** แก้ไขตรงนี้: ใช้ getAnalysisData เพื่อเช็คทั้ง Local และ Common ***
-                if (getAnalysisData(searchKey, vocabData)) {
-                    vocabInfo = `data-sandhi="${searchKey}"`; // เก็บ Key ไว้ไปค้นหาทีหลัง
+                if (vocabData && vocabData[searchKey]) {
+                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
                     hasInfoClass = "has-info";
                 }
-
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
