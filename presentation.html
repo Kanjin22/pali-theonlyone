@@ -146,7 +146,6 @@
     <!-- กล่อง Tooltip สำหรับแสดงสนธิ -->
     <div id="sandhi-tooltip"></div>
 
-    <!-- *** ส่วนที่เพิ่มเข้ามาใหม่ (ที่ขาดหายไป) *** -->
     <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
     <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
         <div class="analysis-card">
@@ -314,65 +313,83 @@
             applyThaiState();
         }
 
-        // --- ฟังก์ชันช่วย 1: รวมรายการคำศัพท์ทั้งหมด (จากหน้าปัจจุบัน + กองกลาง) ---
+        // (ฟังก์ชัน getAllAnalysisKeys และ getAnalysisData เหมือนเดิม)
         function getAllAnalysisKeys(localAnalysis) {
             const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
             const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
-            // รวมกันและตัดตัวซ้ำ
             return [...new Set([...localKeys, ...commonKeys])];
         }
 
-        // --- ฟังก์ชันช่วย 2: ดึงข้อมูล (หาในหน้าปัจจุบันก่อน ถ้าไม่มีไปหาในกองกลาง) ---
-        function getAnalysisData(word, localAnalysis) {
-            // 1. ลองหาในเฉพาะหน้านี้ก่อน (Local)
-            if (localAnalysis && localAnalysis[word]) {
-                return localAnalysis[word];
-            }
-            // 2. ถ้าไม่เจอ ให้ไปหาในกองกลาง (Common)
-            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
-                return commonAnalysis[word];
-            }
-            return null; // หาไม่เจอเลย
+         function getAnalysisData(word, localAnalysis) {
+            if (localAnalysis && localAnalysis[word]) return localAnalysis[word];
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) return commonAnalysis[word];
+            return null;
         }
 
-        // --- ฟังก์ชัน 3: แปลงข้อความใน Footer ให้คลิกได้ (ฉบับแก้ไข: ป้องกันคำซ้อนกัน) ---
+        // *** ฟังก์ชันแปลงข้อความ (อัปเกรด: ซ่อน #tag) ***
         function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
             
             let processedText = text;
-            
-            // 1. รวมคำศัพท์ทั้งหมด (เรียกใช้ฟังก์ชันช่วย 1)
             let allKeys = getAllAnalysisKeys(localAnalysis);
 
-            // 2. เรียงลำดับคำจาก "ยาว -> สั้น" (ป้องกันคำสั้นไปแทนที่คำยาว)
+            // เรียงลำดับจากยาวไปสั้นเหมือนเดิม
             allKeys.sort((a, b) => b.length - a.length);
 
             let replacements = [];
             let index = 0;
 
-            // 3. วนลูปแทนที่คำศัพท์ด้วย "รหัสลับ" (Placeholder)
-            allKeys.forEach(word => {
-                if (processedText.includes(word)) {
+            allKeys.forEach(key => {
+                // ถ้าในข้อความมี key นี้อยู่ (เช่น "นิกฺกฑฺฒาเปสิ#1")
+                if (processedText.includes(key)) {
                     const token = `##TOKEN_${index}##`;
                     
-                    // เก็บ HTML ที่ต้องการไว้
+                    // แยกเอาเฉพาะคำศัพท์หน้าเครื่องหมาย # (เพื่อใช้แสดงผล)
+                    const displayWord = key.split('#')[0]; 
+                    
                     replacements.push({
                         token: token,
-                        html: `<span class="clickable-analysis" onclick="showAnalysis('${word}')">${word}</span>`
+                        // onclick ส่ง key เต็มๆ ไป (มี #) แต่แสดงผลแค่ displayWord (ไม่มี #)
+                        html: `<span class="clickable-analysis" onclick="showAnalysis('${key}')">${displayWord}</span>`
                     });
 
-                    // แทนที่คำศัพท์ด้วยรหัสลับ
-                    processedText = processedText.split(word).join(token);
+                    // แทนที่ key ในข้อความด้วย token
+                    processedText = processedText.split(key).join(token);
                     index++;
                 }
             });
 
-            // 4. เอารหัสลับออก แล้วใส่ HTML จริงกลับเข้าไป
+            // แปลง token กลับเป็น HTML
             replacements.forEach(item => {
                 processedText = processedText.split(item.token).join(item.html);
             });
 
             return processedText;
+        }
+
+        // *** ฟังก์ชันแสดงผล (อัปเกรด: ตัด # ออกจากหัวข้อ Modal) ***
+        function showAnalysis(word) {
+            const s = slides[currentIndex];
+            const data = getAnalysisData(word, s.analysis);
+
+            if (!data) return;
+
+            // ตัด # ออกจากหัวข้อที่จะโชว์ใน Modal
+            const displayTitle = word.split('#')[0];
+
+            document.getElementById('ana-word').innerText = displayTitle;
+            document.getElementById('ana-split').innerText = data.split;
+            
+            const list = document.getElementById('ana-details');
+            list.innerHTML = ''; 
+            
+            data.details.forEach(detail => {
+                const li = document.createElement('li');
+                li.innerText = detail;
+                list.appendChild(li);
+            });
+
+            document.getElementById('analysis-modal').style.display = 'flex';
         }
 
         // ฟังก์ชันเปิด Modal และแสดงข้อมูล
