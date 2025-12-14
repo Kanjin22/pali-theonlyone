@@ -303,7 +303,7 @@
             document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
             document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
             
-            // --- ส่วนสร้างลิงก์สำหรับวิเคราะห์ศัพท์ ---
+            // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
             
@@ -313,102 +313,56 @@
             applyThaiState();
         }
 
-        // (ฟังก์ชัน getAllAnalysisKeys และ getAnalysisData เหมือนเดิม)
+        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
         function getAllAnalysisKeys(localAnalysis) {
             const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
             const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
             return [...new Set([...localKeys, ...commonKeys])];
         }
 
-         function getAnalysisData(word, localAnalysis) {
+        function getAnalysisData(word, localAnalysis) {
             if (localAnalysis && localAnalysis[word]) return localAnalysis[word];
             if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) return commonAnalysis[word];
             return null;
         }
 
-        // *** ฟังก์ชันแปลงข้อความ (อัปเกรด: ซ่อน #tag) ***
         function processFooterAnalysis(text, localAnalysis) {
             if (!text) return "";
             
             let processedText = text;
             let allKeys = getAllAnalysisKeys(localAnalysis);
-
-            // เรียงลำดับจากยาวไปสั้นเหมือนเดิม
             allKeys.sort((a, b) => b.length - a.length);
 
             let replacements = [];
             let index = 0;
 
             allKeys.forEach(key => {
-                // ถ้าในข้อความมี key นี้อยู่ (เช่น "นิกฺกฑฺฒาเปสิ#1")
                 if (processedText.includes(key)) {
                     const token = `##TOKEN_${index}##`;
-                    
-                    // แยกเอาเฉพาะคำศัพท์หน้าเครื่องหมาย # (เพื่อใช้แสดงผล)
                     const displayWord = key.split('#')[0]; 
-                    
                     replacements.push({
                         token: token,
-                        // onclick ส่ง key เต็มๆ ไป (มี #) แต่แสดงผลแค่ displayWord (ไม่มี #)
                         html: `<span class="clickable-analysis" onclick="showAnalysis('${key}')">${displayWord}</span>`
                     });
-
-                    // แทนที่ key ในข้อความด้วย token
                     processedText = processedText.split(key).join(token);
                     index++;
                 }
             });
-
-            // แปลง token กลับเป็น HTML
             replacements.forEach(item => {
                 processedText = processedText.split(item.token).join(item.html);
             });
-
             return processedText;
         }
 
-        // 2. ฟังก์ชันเปิด Modal และแสดงข้อมูล
         function showAnalysis(word) {
             const s = slides[currentIndex];
-            // ใช้ฟังก์ชันช่วยดึงข้อมูล
             const data = getAnalysisData(word, s.analysis);
 
             if (!data) return;
 
-            // *** เพิ่มบรรทัดนี้: ตัดส่วนที่เป็น #... ออกจากหัวข้อที่จะโชว์ ***
             const displayTitle = word.split('#')[0]; 
 
-            // เปลี่ยนจาก word เป็น displayTitle
-            document.getElementById('ana-word').innerText = displayTitle; 
-            
-            document.getElementById('ana-split').innerText = data.split;
-            
-            const list = document.getElementById('ana-details');
-            list.innerHTML = ''; 
-            
-            data.details.forEach(detail => {
-                const li = document.createElement('li');
-                li.innerText = detail;
-                list.appendChild(li);
-            });
-
-            document.getElementById('analysis-modal').style.display = 'flex';
-        }
-
-        // ฟังก์ชันเปิด Modal และแสดงข้อมูล
-        function showAnalysis(word) {
-            const s = slides[currentIndex];
-            
-            // *** ใช้ฟังก์ชัน getAnalysisData แทนการหาตรงๆ ***
-            const data = getAnalysisData(word, s.analysis);
-
-            if (!data) {
-                console.warn(`ไม่พบข้อมูลวิเคราะห์สำหรับคำว่า: ${word}`);
-                return;
-            }
-
-            // แสดงผลข้อมูล
-            document.getElementById('ana-word').innerText = word;
+            document.getElementById('ana-word').innerText = displayTitle;
             document.getElementById('ana-split').innerText = data.split;
             
             const list = document.getElementById('ana-details');
