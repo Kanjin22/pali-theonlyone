@@ -205,10 +205,24 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
+        // --- ฟังก์ชันช่วย: ค้นหาข้อมูล (หาใน Local ก่อน ถ้าไม่มีไปหาใน Common) ---
+        function getAnalysisData(word, localAnalysis) {
+            // 1. ลองหาในเฉพาะหน้านี้ก่อน (Local)
+            if (localAnalysis && localAnalysis[word]) {
+                return localAnalysis[word];
+            }
+            // 2. ถ้าไม่เจอ ให้ไปหาในกองกลาง (Common)
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
+                return commonAnalysis[word];
+            }
+            return null; // หาไม่เจอเลย
+        }
         function wrapWords(text, vocabData) {
             if (!text) return "";
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
+                
+                // แยกเครื่องหมายวรรคตอน
                 const parts = word.match(/^([“"'(]*)(.+?)([)”"'.ฯ,;:?]+)?$/);
                 let prefix = "", cleanWord = word, suffix = "";
                 if (parts) {
@@ -216,14 +230,18 @@
                     cleanWord = parts[2];
                     suffix = parts[3] || "";
                 }
+                
                 let displayText = cleanWord.replace(/_/g, ' '); 
                 let searchKey = displayText; 
                 let vocabInfo = "";
                 let hasInfoClass = "";
-                if (vocabData && vocabData[searchKey]) {
-                    vocabInfo = `data-sandhi="${vocabData[searchKey]}"`;
+
+                // *** แก้ไขตรงนี้: ใช้ getAnalysisData เพื่อเช็คทั้ง Local และ Common ***
+                if (getAnalysisData(searchKey, vocabData)) {
+                    vocabInfo = `data-sandhi="${searchKey}"`; // เก็บ Key ไว้ไปค้นหาทีหลัง
                     hasInfoClass = "has-info";
                 }
+
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
                               onmouseenter="showTooltip(this)" 
@@ -325,16 +343,16 @@
 
             const s = slides[currentIndex];
 
-            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
-            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
+            // *** แก้ไขตรงนี้: ส่ง s.analysis เข้าไป ***
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.analysis);
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai, null);
             
-            // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
+            // ส่วนอื่นๆ เหมือนเดิม...
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
-            
             document.getElementById('contextContent').innerText = s.context;
-            
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
+            
             applyThaiState();
         }
 
@@ -408,8 +426,20 @@
 
         const tooltip = document.getElementById('sandhi-tooltip');
         function showTooltip(element) {
-            const info = element.getAttribute('data-sandhi');
-            if (!info) return;
+            const key = element.getAttribute('data-sandhi'); // นี่คือคำศัพท์ (Key)
+            if (!key) return;
+
+            // *** แก้ไขตรงนี้: ดึงข้อมูลจริงจาก Key โดยใช้ slides ปัจจุบัน ***
+            const s = slides[currentIndex];
+            const data = getAnalysisData(key, s.analysis);
+            
+            if (!data) return;
+
+            // ข้อมูลที่ได้จะเป็น Object { split: "...", details: [...] }
+            // เราจะเอาเฉพาะ split มาแสดงใน Tooltip
+            const info = data.split; 
+
+            // จัดรูปแบบข้อความ (สี)
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -417,14 +447,21 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
+
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
+
+            // คำนวณตำแหน่ง
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
+            
+            // กันตกขอบ
             if (top < 0) top = rect.bottom + 10; 
             if (left < 10) left = 10;
+            if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 10;
+
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
