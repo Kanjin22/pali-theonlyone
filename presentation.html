@@ -166,11 +166,32 @@
     <!-- 1. โหลดคลังศัพท์ก่อน (สำคัญ!) -->
     <script src="vocab-data.js"></script>
 
-    <!-- 2. โหลดเนื้อหาบทเรียน -->
-    <script src="slides-data.js"></script>
+    <!-- 2. โหลดเนื้อหาแยกตามภาค -->
+    <script src="slides-part1.js"></script>
+    <script src="slides-part2.js"></script>
+    <script src="slides-part3.js"></script>
+    <script src="slides-part4.js"></script>
+    <script src="slides-part5.js"></script>
+    <script src="slides-part6.js"></script>
+    <script src="slides-part7.js"></script>
+    <script src="slides-part8.js"></script>
 
     <!-- 3. โค้ดควบคุมการทำงาน (Main Script) -->
     <script>
+        // *** รวมร่างข้อมูลทุกภาคเข้าด้วยกัน ***
+        // (ถ้าไฟล์ไหนยังไม่มี ก็ลบบรรทัดนั้นออกก่อน หรือใส่ [] ดักไว้ได้)
+        const slidesDatabase = {
+            ...(typeof slidesPart1 !== 'undefined' ? slidesPart1 : {}),
+            ...(typeof slidesPart2 !== 'undefined' ? slidesPart2 : {}),
+            ...(typeof slidesPart3 !== 'undefined' ? slidesPart3 : {}),
+            ...(typeof slidesPart4 !== 'undefined' ? slidesPart4 : {}),
+            ...(typeof slidesPart5 !== 'undefined' ? slidesPart5 : {}),
+            ...(typeof slidesPart6 !== 'undefined' ? slidesPart6 : {}),
+            ...(typeof slidesPart7 !== 'undefined' ? slidesPart7 : {}),
+            ...(typeof slidesPart8 !== 'undefined' ? slidesPart8 : {}),            
+            // ... รวมภาคอื่นๆ ...
+        };
+
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id');
 
