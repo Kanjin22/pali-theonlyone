@@ -163,8 +163,13 @@
     </div>
     <!-- ******************************************* -->
 
+    <!-- 1. โหลดคลังศัพท์ก่อน (สำคัญ!) -->
+    <script src="vocab-data.js"></script>
+
+    <!-- 2. โหลดเนื้อหาบทเรียน -->
     <script src="slides-data.js"></script>
 
+    <!-- 3. โค้ดควบคุมการทำงาน (Main Script) -->
     <script>
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id');
