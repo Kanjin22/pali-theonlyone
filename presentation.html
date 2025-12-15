@@ -229,21 +229,14 @@
         const mainContent = document.getElementById('mainContent');
         const contentArea = document.querySelector('.content-area');
         
-        function wrapWords(text, vocabData) {
+        function wrapWords(text, slide) {
             if (!text) return "";
             
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
                 
-                // *** จุดที่แก้ไข: เพิ่ม ' ‘ ’ ใน Regex ***
-                // Group 1 (หน้า): “ " ' ( ‘
-                // Group 2 (คำ): ตัวหนังสือ
-                // Group 3 (หลัง): ) ” " ' . ฯ , ; : ? ’
                 const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
-                
-                let prefix = "";
-                let cleanWord = word;
-                let suffix = "";
+                let prefix = "", cleanWord = word, suffix = "";
                 
                 if (parts) {
                     prefix = parts[1] || "";
@@ -257,19 +250,14 @@
                 let vocabInfo = "";
                 let hasInfoClass = "";
                 
-                // ใช้ getAnalysisData เพื่อหาข้อมูล (ทั้งในหน้าและกองกลาง)
-                // หมายเหตุ: vocabData ในที่นี้คือ slide object ที่ส่งเข้ามา
-                const data = typeof getAnalysisData === 'function' 
-                             ? getAnalysisData(searchKey, vocabData) 
-                             : (vocabData && vocabData[searchKey] ? vocabData[searchKey] : null);
+                // ดึงข้อมูล
+                const data = getAnalysisData(searchKey, slide);
 
                 if (data) {
-                    // แสดง Tooltip เฉพาะเมื่อเป็น type 'sandhi' หรือเป็นข้อมูลแบบเก่า (String)
-                    // หรือถ้าไม่มี type ระบุ ก็ให้แสดงเผื่อไว้ก่อน
-                    const isSandhi = (typeof data === 'string') || (data.type === 'sandhi') || (!data.type);
-                    
-                    if (isSandhi) {
-                        vocabInfo = `data-sandhi="${searchKey}"`; // ใช้ data-sandhi ให้ตรงกับ showTooltip
+                    // *** เงื่อนไขสำคัญ: แสดง Tooltip ถ้าเป็น type 'sandhi' ***
+                    // หรือถ้าข้อมูลไม่มี type ระบุ (เช่นข้อมูลเก่า) ก็ให้แสดงเผื่อไว้ก่อน
+                    if (data.type === 'sandhi' || !data.type) {
+                        vocabInfo = `data-word="${searchKey}"`;
                         hasInfoClass = "has-info";
                     }
                 }
@@ -414,21 +402,23 @@
             return [...new Set(keys)]; // ตัดคำซ้ำ
         }
 
-        // --- ฟังก์ชันช่วย: ดึงข้อมูล (ฉบับแก้ไข: ป้องกัน Error เมื่อ slide เป็น null) ---
+        // --- ฟังก์ชันช่วย: ดึงข้อมูล (ฉบับแก้ไข: รองรับ 'sandhi' อย่างสมบูรณ์) ---
         function getAnalysisData(word, slide) {
-            // 1. ตรวจสอบก่อนว่า slide มีค่าหรือไม่ (ถ้าเป็น null ให้ข้ามไป)
+            // 1. ตรวจสอบว่ามีข้อมูล slide ส่งมาไหม
             if (slide) {
-                // หาใน analysis (ละเอียด)
+                
+                // A. หาใน 'sandhi' (ที่คุณใช้ปัจจุบัน)
+                if (slide.sandhi && slide.sandhi[word]) {
+                    // คืนค่าพร้อมระบุ type ว่าเป็น sandhi
+                    return { type: "sandhi", split: slide.sandhi[word] };
+                }
+
+                // B. หาใน 'analysis' (ละเอียด)
                 if (slide.analysis && slide.analysis[word]) {
                     return slide.analysis[word];
                 }
                 
-                // หาใน sandhi (สนธิ)
-                if (slide.sandhi && slide.sandhi[word]) {
-                    return { type: "sandhi", split: slide.sandhi[word] };
-                }
-                
-                // หาใน vocab (ของเก่า)
+                // C. หาใน 'vocab' (ของเก่า - เผื่อมีหลงเหลือ)
                 if (slide.vocab && slide.vocab[word]) {
                     return { type: "sandhi", split: slide.vocab[word] };
                 }
