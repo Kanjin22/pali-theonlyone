@@ -122,17 +122,28 @@
         </div>
 
         <div class="footer-box">
-            <div class="footer-section" style="flex: 1.2;">
+            <!-- 1. บริบท -->
+            <div class="footer-section" style="flex: 1;">
                 <div class="sec-title">📝 บริบท / คำอธิบาย</div>
                 <div class="sec-content" id="contextContent">...</div>
             </div>
+            
+            <!-- 2. อาขยาต -->
             <div class="footer-section" style="flex: 0.8;">
-                <div class="sec-title">🔹 กิริยาอาขยาต (คุมพากย์)</div>
+                <div class="sec-title">🔹 อาขยาต (คุมพากย์)</div>
                 <div class="sec-content pali-word" id="akhyataContent">...</div>
             </div>
-            <div class="footer-section" style="flex: 1;">
-                <div class="sec-title">🔸 กิริยากิตก์ / ต ปัจจัย</div>
+
+            <!-- 3. กิตก์ -->
+            <div class="footer-section" style="flex: 0.8;">
+                <div class="sec-title">🔸 กิริยากิตก์</div>
                 <div class="sec-content pali-word" id="kitakaContent">...</div>
+            </div>
+
+            <!-- *** 4. เพิ่มช่องใหม่: ศัพท์/วิเคราะห์ *** -->
+            <div class="footer-section" style="flex: 1.2;">
+                <div class="sec-title">📚 ศัพท์ / วิเคราะห์ (สมาส/ตัทธิต)</div>
+                <div class="sec-content pali-word" id="vocabContent">...</div>
             </div>
         </div>
     </div>
@@ -370,6 +381,7 @@
             // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
             document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
             document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
+            document.getElementById('vocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s.analysis);
             
             document.getElementById('contextContent').innerText = s.context;
             
