@@ -377,16 +377,50 @@
             applyThaiState();
         }
 
-        // --- ฟังก์ชันจัดการ Modal วิเคราะห์ศัพท์ ---
-        function getAllAnalysisKeys(localAnalysis) {
-            const localKeys = localAnalysis ? Object.keys(localAnalysis) : [];
-            const commonKeys = typeof commonAnalysis !== 'undefined' ? Object.keys(commonAnalysis) : [];
-            return [...new Set([...localKeys, ...commonKeys])];
+        // --- ฟังก์ชันช่วย: รวม Keys ทั้งหมด ---
+        function getAllAnalysisKeys(slide) {
+            let keys = [];
+            // 1. ข้อมูลวิเคราะห์ละเอียด
+            if (slide.analysis) keys = keys.concat(Object.keys(slide.analysis));
+            
+            // 2. *** เพิ่มตรงนี้: ข้อมูลสนธิ (เฉพาะหน้า) ***
+            if (slide.sandhi) keys = keys.concat(Object.keys(slide.sandhi));
+            
+            // 3. ข้อมูลเก่า (vocab - เผื่อมีหลงเหลือ)
+            if (slide.vocab) keys = keys.concat(Object.keys(slide.vocab));
+            
+            // 4. ข้อมูลกองกลาง
+            if (typeof commonAnalysis !== 'undefined') keys = keys.concat(Object.keys(commonAnalysis));
+            
+            return [...new Set(keys)]; // ตัดคำซ้ำ
         }
 
-        function getAnalysisData(word, localAnalysis) {
-            if (localAnalysis && localAnalysis[word]) return localAnalysis[word];
-            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) return commonAnalysis[word];
+        // --- ฟังก์ชันช่วย: ดึงข้อมูล ---
+        function getAnalysisData(word, slide) {
+            // 1. หาใน analysis (ละเอียด)
+            if (slide.analysis && slide.analysis[word]) {
+                return slide.analysis[word];
+            }
+            
+            // 2. *** เพิ่มตรงนี้: หาใน sandhi (แบบย่อ) ***
+            if (slide.sandhi && slide.sandhi[word]) {
+                // แปลงรูปแบบให้เป็น Object มาตรฐาน (Type: Sandhi)
+                return { 
+                    type: "sandhi", 
+                    split: slide.sandhi[word] 
+                };
+            }
+            
+            // 3. หาใน vocab (ของเก่า)
+            if (slide.vocab && slide.vocab[word]) {
+                return { type: "sandhi", split: slide.vocab[word] };
+            }
+
+            // 4. หาในกองกลาง (Common)
+            if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
+                return commonAnalysis[word];
+            }
+            
             return null;
         }
 
