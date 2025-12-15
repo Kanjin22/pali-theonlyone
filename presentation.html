@@ -375,16 +375,23 @@
 
             const s = slides[currentIndex];
 
-            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s.vocab);
-            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai);
+            // ส่ง s (slide ทั้งก้อน) เข้าไปสำหรับบาลี
+            document.getElementById('paliContent').innerHTML = wrapWords(s.pali, s);
             
-            // สร้างลิงก์สำหรับ Modal วิเคราะห์ศัพท์
-            document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s.analysis);
-            document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s.analysis);
-            document.getElementById('vocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s.analysis);
+            // สำหรับไทย ส่ง null ไปก็ได้ (เพราะเราแก้ getAnalysisData แล้ว) 
+            // หรือจะส่ง s ไปด้วยก็ได้ (เผื่ออนาคตอยากทำไฮไลท์ไทย)
+            document.getElementById('thaiContent').innerHTML = wrapWords(s.thai, null);
+            
+            // Footer
+            document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s);
+            document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s);
+            
+            // ถ้ามีช่อง vocabContent (ศัพท์ทั่วไป) ก็ใส่ด้วย
+            if (document.getElementById('vocabContent')) {
+                document.getElementById('vocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s);
+            }
             
             document.getElementById('contextContent').innerText = s.context;
-            
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             applyThaiState();
         }
@@ -407,33 +414,32 @@
             return [...new Set(keys)]; // ตัดคำซ้ำ
         }
 
-        // --- ฟังก์ชันช่วย: ดึงข้อมูล ---
+        // --- ฟังก์ชันช่วย: ดึงข้อมูล (ฉบับแก้ไข: ป้องกัน Error เมื่อ slide เป็น null) ---
         function getAnalysisData(word, slide) {
-            // 1. หาใน analysis (ละเอียด)
-            if (slide.analysis && slide.analysis[word]) {
-                return slide.analysis[word];
-            }
-            
-            // 2. *** เพิ่มตรงนี้: หาใน sandhi (แบบย่อ) ***
-            if (slide.sandhi && slide.sandhi[word]) {
-                // แปลงรูปแบบให้เป็น Object มาตรฐาน (Type: Sandhi)
-                return { 
-                    type: "sandhi", 
-                    split: slide.sandhi[word] 
-                };
-            }
-            
-            // 3. หาใน vocab (ของเก่า)
-            if (slide.vocab && slide.vocab[word]) {
-                return { type: "sandhi", split: slide.vocab[word] };
+            // 1. ตรวจสอบก่อนว่า slide มีค่าหรือไม่ (ถ้าเป็น null ให้ข้ามไป)
+            if (slide) {
+                // หาใน analysis (ละเอียด)
+                if (slide.analysis && slide.analysis[word]) {
+                    return slide.analysis[word];
+                }
+                
+                // หาใน sandhi (สนธิ)
+                if (slide.sandhi && slide.sandhi[word]) {
+                    return { type: "sandhi", split: slide.sandhi[word] };
+                }
+                
+                // หาใน vocab (ของเก่า)
+                if (slide.vocab && slide.vocab[word]) {
+                    return { type: "sandhi", split: slide.vocab[word] };
+                }
             }
 
-            // 4. หาในกองกลาง (Common)
+            // 2. หาในกองกลาง (Common)
             if (typeof commonAnalysis !== 'undefined' && commonAnalysis[word]) {
                 return commonAnalysis[word];
             }
             
-            return null;
+            return null; // หาไม่เจอเลย
         }
 
         function processFooterAnalysis(text, localAnalysis) {
