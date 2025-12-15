@@ -164,7 +164,11 @@
     <!-- ******************************************* -->
 
     <!-- 1. โหลดคลังศัพท์กลาง (พจนานุกรม) -->
-    <script src="vocab-data.js"></script>
+    <script src="vocab-akhyata.js"></script>
+    <script src="vocab-kitaka.js"></script>
+    <script src="vocab-samasa.js"></script>
+    <script src="vocab-taddhita.js"></script>
+    <script src="vocab-general.js"></script>
 
     <!-- 2. โหลดเนื้อหาแยกตามภาค (ถ้ายังไม่สร้างไฟล์ไหน ก็ปล่อยไว้ได้ ไม่ Error) -->
     <script src="slides-part1.js"></script>
@@ -178,8 +182,17 @@
 
     <!-- 3. โค้ดควบคุมการทำงาน (Main Script) -->
     <script>
-        // รวมข้อมูลจากทุกไฟล์เข้าด้วยกัน
-        // (ใช้ try-catch หรือ typeof เพื่อกัน Error กรณีไฟล์ไหนยังไม่สร้าง)
+        // *** รวมร่างฐานข้อมูลศัพท์ (The Great Merger) ***
+        // สร้าง commonAnalysis จากการรวมไฟล์ย่อยทั้งหมด
+        const commonAnalysis = Object.assign({}, 
+            (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
+            (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
+            (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
+            (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}),
+            (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {})
+        );
+
+        // *** รวมร่างข้อมูลสไลด์ (เหมือนเดิม) ***
         const slidesDatabase = Object.assign({},
             (typeof slidesPart1 !== 'undefined' ? slidesPart1 : {}),
             (typeof slidesPart2 !== 'undefined' ? slidesPart2 : {}),
