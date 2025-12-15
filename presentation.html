@@ -497,10 +497,36 @@
             }
         }
 
+        // --- ฟังก์ชันจัดการ Tooltip (ฉบับแก้ไข: รองรับข้อมูลทุกประเภท) ---
         const tooltip = document.getElementById('sandhi-tooltip');
+
         function showTooltip(element) {
-            const info = element.getAttribute('data-sandhi');
-            if (!info) return;
+            const key = element.getAttribute('data-word');
+            if (!key) return;
+            
+            const s = slides[currentIndex];
+            const data = getAnalysisData(key, s);
+            
+            if (!data) return;
+
+            // *** จุดที่แก้ไข: ตรวจสอบประเภทข้อมูลให้ครอบคลุม ***
+            let info = "";
+            
+            if (typeof data === 'string') {
+                // กรณี 1: ข้อมูลเป็นข้อความตรงๆ (เช่น "ตตฺถ + เอกํ")
+                info = data;
+            } else if (data.split) {
+                // กรณี 2: ข้อมูลเป็น Object และมีค่า split
+                info = data.split;
+            } else if (data.details) {
+                 // กรณี 3: (เผื่อไว้) ถ้าไม่มี split แต่มี details ให้เอาตัวแรกมาโชว์
+                 info = data.details[0];
+            } else {
+                // กรณีสุดท้าย: ถ้าไม่รู้อะไรเลย ให้โชว์คำศัพท์เดิม (หรือจะไม่โชว์ก็ได้)
+                info = key;
+            }
+
+            // จัดรูปแบบข้อความ (แยกสีวงเล็บ ถ้ามี)
             let formattedInfo = info;
             if (info.includes('(')) {
                 const parts = info.split('(');
@@ -508,14 +534,24 @@
             } else {
                 formattedInfo = `<span class="split">${info}</span>`;
             }
+
             tooltip.innerHTML = formattedInfo;
             tooltip.style.display = 'block';
+
+            // คำนวณตำแหน่ง
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
             let top = rect.top - tooltipRect.height - 10; 
             let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
+            
+            // กันตกขอบจอ
             if (top < 0) top = rect.bottom + 10; 
             if (left < 10) left = 10;
+            // กันตกขอบขวา
+            if (left + tooltipRect.width > window.innerWidth) {
+                left = window.innerWidth - tooltipRect.width - 10;
+            }
+
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
