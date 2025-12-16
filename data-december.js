@@ -576,6 +576,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๒-๖๓",
             activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๑๑๑-๑๑๓ อตีเต พาราณสีรญฺโญ - วตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/d2ogaiRZ_EE?si=0cXUpvIQsL7vWWxr&t=1209",
+                "https://youtu.be/h7AvrT3jiII?si=F9dzgopcd7rc3x1q",
+            ],
             slideId: "p3_geng13",
             fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
             fileNoteTranslate: "materials/translate-notes-313.pdf"
@@ -583,6 +587,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๕",
             activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๑๑๕-๑๑๗ เทสนา ราชคเห - วตฺวา อตีตํ อาหริ ฯ",
+            linkYoutube: [
+                "https://youtu.be/7i1YT0PugL0?si=I5UTWhn4BE0bryDR&t=57",
+                "https://youtu.be/1cwK8Igu7RY?si=E3awDYO0fqNNeUyP",
+            ],
             slideId: "p3_geng14",
             fileNoteTranslate: "materials/translate-notes-314.pdf",
             isExam: true,
