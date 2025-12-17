@@ -651,6 +651,9 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๖-๖๗",
             activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๕๐-๑๕๒ อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
+            linkYoutube: [
+                "https://youtu.be/fhD-FjmFMCk?si=uB0wLl0eLv2glrOz&t=183",
+            ],
             slideId: "p3_geng17",
             fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
             fileNoteTranslate: "materials/translate-notes-317.pdf"
@@ -658,6 +661,10 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๗",
             activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๖๓-๑๖๖ เทสนา ปน มจฺฉิกาสณฺเฑ - อิมา คาถา อกาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/wNPnKydqlj8?si=ndkvTQShr1Q5KGt4&t=346",
+                "https://youtu.be/ycJZW2gsiNM?si=x4nT0vh40YWiDz4b",
+            ],
             slideId: "p3_geng18",
             fileNoteTranslate: "materials/translate-notes-318.pdf",
             isExam: true, examStartTime: "14:00:00",
