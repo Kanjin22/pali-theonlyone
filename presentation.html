@@ -1,145 +1,599 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สื่อการสอนบาลี (Interactive Board)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&family=Sarabun:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* --- CSS พื้นฐาน (Full Screen Theme) --- */
-        body { margin: 0; padding: 0; background-color: #37474f; font-family: 'Sarabun', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #37474f; overflow: hidden; }
-        
-        /* --- การ์ดหลัก (เต็มจอ & แก้ Layout ไม่ให้บังปุ่ม) --- */
-        .card { 
-            width: 98%; max-width: none; 
-            height: 92vh; /* เผื่อที่ด้านล่างไว้ให้ปุ่ม Nav */
-            max-height: none; 
-            background-color: #ffffff; border-radius: 8px; 
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); 
-            display: flex; flex-direction: column; overflow: hidden; position: relative; 
-            margin-bottom: 50px; /* ดันปุ่ม Nav ลงไป */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #37474f;
+            font-family: 'Sarabun', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #37474f;
+            overflow: hidden;
         }
-        
-        .header-bar { height: 6px; background: linear-gradient(90deg, #263238, #546e7a, #78909c); width: 100%; flex-shrink: 0; }
-        
+
+        /* --- การ์ดหลัก (เต็มจอ & แก้ Layout ไม่ให้บังปุ่ม) --- */
+        .card {
+            width: 98%;
+            max-width: none;
+            height: 92vh;
+            /* เผื่อที่ด้านล่างไว้ให้ปุ่ม Nav */
+            max-height: none;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 50px;
+            /* ดันปุ่ม Nav ลงไป */
+        }
+
+        .header-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #263238, #546e7a, #78909c);
+            width: 100%;
+            flex-shrink: 0;
+        }
+
         /* --- พื้นที่เนื้อหาแบบ Split View --- */
-        .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 0; background-color: #f5f5f5; }
-        
-        .split-pane { 
-            flex: 1; overflow-y: auto; padding: 25px 60px; 
-            background-color: #fff; position: relative; 
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .split-pane {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 60px;
+            background-color: #fff;
+            position: relative;
             border-bottom: 4px solid #eceff1;
         }
-        .split-pane:last-child { border-bottom: none; }
-        .split-pane::-webkit-scrollbar { width: 10px; }
-        .split-pane::-webkit-scrollbar-track { background: #f1f1f1; }
-        .split-pane::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 5px; }
+
+        .split-pane:last-child {
+            border-bottom: none;
+        }
+
+        .split-pane::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .split-pane::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .split-pane::-webkit-scrollbar-thumb {
+            background: #b0bec5;
+            border-radius: 5px;
+        }
 
         /* ป้ายกำกับกล่อง */
-        .pane-label { position: sticky; top: 0; left: 0; display: inline-block; background: #eceff1; color: #78909c; padding: 2px 10px; border-radius: 4px; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; z-index: 5; opacity: 0.9; }
+        .pane-label {
+            position: sticky;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            background: #eceff1;
+            color: #78909c;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            z-index: 5;
+            opacity: 0.9;
+        }
 
         /* --- CSS ข้อความ (เริ่มต้น) --- */
-        .pali-text { 
-            font-family: 'Niramit', serif; font-size: 1.8rem; 
-            color: #263238; font-weight: 600; line-height: 2; margin-bottom: 0; 
-            text-align: left; text-indent: 50px; word-spacing: 0; letter-spacing: 0; 
-            word-break: normal; overflow-wrap: break-word; 
+        .pali-text {
+            font-family: 'Niramit', serif;
+            font-size: 1.8rem;
+            color: #263238;
+            font-weight: 600;
+            line-height: 2;
+            margin-bottom: 0;
+            text-align: left;
+            text-indent: 50px;
+            word-spacing: 0;
+            letter-spacing: 0;
+            word-break: normal;
+            overflow-wrap: break-word;
             transition: all 0.3s ease;
         }
-        .thai-text { 
-            font-family: 'Sarabun', sans-serif; font-size: 1.4rem; 
-            color: #546e7a; font-weight: 300; line-height: 2; 
-            text-align: left; text-indent: 50px; word-break: normal; overflow-wrap: break-word; 
-            transition: opacity 0.3s ease, font-size 0.3s ease, text-align 0.3s ease; 
-            opacity: 1; 
+
+        .thai-text {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.4rem;
+            color: #546e7a;
+            font-weight: 300;
+            line-height: 2;
+            text-align: left;
+            text-indent: 50px;
+            word-break: normal;
+            overflow-wrap: break-word;
+            transition: opacity 0.3s ease, font-size 0.3s ease, text-align 0.3s ease;
+            opacity: 1;
         }
-        .thai-text.hidden { opacity: 0; user-select: none; pointer-events: none; }
+
+        .thai-text.hidden {
+            opacity: 0;
+            user-select: none;
+            pointer-events: none;
+        }
 
         /* --- CSS คำศัพท์ --- */
-        .word-span { cursor: pointer; display: inline; padding: 0; margin: 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
-        .word-span:hover { color: #1565C0; }
-        .word-span.translated { color: #1565C0; border-bottom-color: #1565C0; }
-        .word-span.has-info { border-bottom: 2px dotted #aaa; }
-        .word-span.has-info.translated { border-bottom: 2px dotted #1565C0; }
+        .word-span {
+            cursor: pointer;
+            display: inline;
+            padding: 0;
+            margin: 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .word-span:hover {
+            color: #1565C0;
+        }
+
+        .word-span.translated {
+            color: #1565C0;
+            border-bottom-color: #1565C0;
+        }
+
+        .word-span.has-info {
+            border-bottom: 2px dotted #aaa;
+        }
+
+        .word-span.has-info.translated {
+            border-bottom: 2px dotted #1565C0;
+        }
 
         /* --- Footer (4 ช่อง) --- */
-        .footer-box { background-color: #f7f9f9; border-top: 1px solid #eceff1; height: 160px; display: flex; padding: 0; flex-shrink: 0; }
-        .footer-section { flex: 1; padding: 15px 25px; border-right: 1px solid #eceff1; display: flex; flex-direction: column; text-align: left; overflow-y: auto; }
-        .footer-section:last-child { border-right: none; }
-        .sec-title { font-size: 0.9rem; font-weight: 700; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #cfd8dc; padding-bottom: 3px; }
-        .sec-content { font-size: 1.1rem; color: #37474f; line-height: 1.6; }
-        .pali-word { font-family: 'Niramit', serif; color: #0277bd; font-weight: 600; }
-        .clickable-analysis { color: #1976D2; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; transition: all 0.2s; }
-        .clickable-analysis:hover { color: #0D47A1; background-color: #e3f2fd; border-radius: 4px; }
+        .footer-box {
+            background-color: #f7f9f9;
+            border-top: 1px solid #eceff1;
+            height: 160px;
+            display: flex;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .footer-section {
+            flex: 1;
+            padding: 15px 25px;
+            border-right: 1px solid #eceff1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            overflow-y: auto;
+        }
+
+        .footer-section:last-child {
+            border-right: none;
+        }
+
+        .sec-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #90a4ae;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #cfd8dc;
+            padding-bottom: 3px;
+        }
+
+        .sec-content {
+            font-size: 1.1rem;
+            color: #37474f;
+            line-height: 1.6;
+        }
+
+        .pali-word {
+            font-family: 'Niramit', serif;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        .clickable-analysis {
+            color: #1976D2;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            transition: all 0.2s;
+        }
+
+        .clickable-analysis:hover {
+            color: #0D47A1;
+            background-color: #e3f2fd;
+            border-radius: 4px;
+        }
 
         /* --- Controls & UI --- */
-        .page-badge { position: absolute; top: 20px; right: 20px; background-color: rgba(236, 239, 241, 0.9); padding: 6px 12px; border-radius: 8px; font-size: 1rem; color: #78909c; font-weight: bold; z-index: 100; }
-        
-        .controls { position: fixed; bottom: 20px; display: flex; gap: 20px; z-index: 200; }
-        button.nav-btn { padding: 12px 30px; background-color: #455a64; border: none; border-radius: 50px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        button.nav-btn:hover { background-color: #607d8b; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        .page-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(236, 239, 241, 0.9);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #78909c;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            gap: 20px;
+            z-index: 200;
+        }
+
+        button.nav-btn {
+            padding: 12px 30px;
+            background-color: #455a64;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button.nav-btn:hover {
+            background-color: #607d8b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
 
         /* Tools Sidebar */
-        .tools-sidebar { position: absolute; top: 70px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100; }
-        .tool-btn { position: relative; padding: 8px 12px; border-radius: 8px; background-color: #eceff1; color: #546e7a; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; }
-        .tool-btn:hover { background-color: #cfd8dc; transform: translateX(-2px); }
+        .tools-sidebar {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .tool-btn {
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #eceff1;
+            color: #546e7a;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .tool-btn:hover {
+            background-color: #cfd8dc;
+            transform: translateX(-2px);
+        }
 
         /* Settings Panel */
-        .settings-panel { position: absolute; top: 70px; right: 70px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 50; display: none; flex-direction: column; gap: 10px; width: 180px; border: 1px solid #eceff1; }
-        .settings-row { display: flex; justify-content: space-between; align-items: center; }
-        .settings-label { font-size: 0.9rem; font-weight: bold; color: #546e7a; }
-        .settings-btn-group { display: flex; gap: 5px; }
-        .set-btn { background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-size: 0.9rem; color: #333; }
-        .set-btn:hover { background: #e0e0e0; }
-        .set-btn.active { background: #3498db; color: white; border-color: #3498db; }
+        .settings-panel {
+            position: absolute;
+            top: 70px;
+            right: 70px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            width: 180px;
+            border: 1px solid #eceff1;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #546e7a;
+        }
+
+        .settings-btn-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .set-btn {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .set-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .set-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
 
         /* Tooltip & Sticky Note & Modal CSS */
-        #sandhi-tooltip { position: fixed; display: none; background-color: #37474f; color: #fff; padding: 10px 15px; border-radius: 6px; font-size: 1.2rem; font-family: 'Sarabun', sans-serif; box-shadow: 0 5px 20px rgba(0,0,0,0.4); z-index: 2000; pointer-events: none; white-space: nowrap; border: 1px solid #546e7a; }
-        #sandhi-tooltip span.split { color: #ffca28; font-weight: bold; }
-        #sandhi-tooltip span.origin { color: #b0bec5; font-size: 0.9em; margin-left: 5px; }
+        #sandhi-tooltip {
+            position: fixed;
+            display: none;
+            background-color: #37474f;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-family: 'Sarabun', sans-serif;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            pointer-events: none;
+            white-space: nowrap;
+            border: 1px solid #546e7a;
+        }
 
-        .sticky-note { position: absolute; background: #fff9c4; border: 1px solid #fbc02d; padding: 15px; min-width: 200px; max-width: 300px; border-radius: 5px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 500; font-size: 1.1rem; color: #333; cursor: move; font-family: 'Sarabun', sans-serif; }
-        .sticky-note:focus { outline: 2px solid #2980b9; }
-        .close-note { position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border-radius: 50%; width: 24px; height: 24px; text-align: center; line-height: 24px; font-size: 14px; cursor: pointer; display: none; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-        .sticky-note:hover .close-note { display: block; }
+        #sandhi-tooltip span.split {
+            color: #ffca28;
+            font-weight: bold;
+        }
 
-        .analysis-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(3px); }
-        .analysis-card { background: white; width: 90%; max-width: 600px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; animation: popIn 0.3s ease-out; }
-        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .analysis-header { background: #2c3e50; color: white; padding: 25px; position: relative; }
-        .analysis-word { font-family: 'Niramit', serif; font-size: 2.2rem; margin: 0; font-weight: 500; }
-        .analysis-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; color: #ccc; }
-        .analysis-close:hover { color: white; }
-        .analysis-body { padding: 30px; }
-        .analysis-split { font-size: 1.6rem; color: #d35400; font-weight: bold; text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-        .analysis-list { list-style: none; padding: 0; margin: 0; }
-        .analysis-list li { font-size: 1.2rem; margin-bottom: 18px; line-height: 1.8; display: flex; align-items: flex-start; color: #2c3e50; text-align: left; }
-        .analysis-list li::before { content: "•"; color: #3498db; font-weight: bold; font-size: 1.5rem; line-height: 1; margin-right: 10px; }
+        #sandhi-tooltip span.origin {
+            color: #b0bec5;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        .sticky-note {
+            position: absolute;
+            background: #fff9c4;
+            border: 1px solid #fbc02d;
+            padding: 15px;
+            min-width: 200px;
+            max-width: 300px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 500;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: move;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .sticky-note:focus {
+            outline: 2px solid #2980b9;
+        }
+
+        .close-note {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .sticky-note:hover .close-note {
+            display: block;
+        }
+
+        .analysis-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(3px);
+        }
+
+        .analysis-card {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .analysis-header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+
+        .analysis-word {
+            font-family: 'Niramit', serif;
+            font-size: 2.2rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .analysis-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .analysis-close:hover {
+            color: white;
+        }
+
+        .analysis-body {
+            padding: 30px;
+        }
+
+        .analysis-split {
+            font-size: 1.6rem;
+            color: #d35400;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .analysis-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .analysis-list li {
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            line-height: 1.8;
+            display: flex;
+            align-items: flex-start;
+            color: #2c3e50;
+            text-align: left;
+        }
+
+        .analysis-list li::before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.5rem;
+            line-height: 1;
+            margin-right: 10px;
+        }
 
         @media screen and (max-width: 768px) {
-            .card { height: 90vh; margin-top: -40px; width: 95%; margin-bottom: 60px; }
-            .split-pane { padding: 20px; }
-            .pali-text { font-size: 1.4rem; }
-            .thai-text { font-size: 1.2rem; }
-            .footer-box { height: auto; flex-direction: column; overflow-y: auto; min-height: 120px; max-height: 30%; }
-            .footer-section { border-right: none; border-bottom: 1px solid #eceff1; padding: 10px 20px; }
-            .controls { bottom: 10px; gap: 10px; }
-            button.nav-btn { padding: 10px 20px; font-size: 0.9rem; }
-            .page-badge { right: 15px; top: 15px; } 
-            .tools-sidebar { top: 60px; right: 15px; }
+            .card {
+                height: 90vh;
+                margin-top: -40px;
+                width: 95%;
+                margin-bottom: 60px;
+            }
+
+            .split-pane {
+                padding: 20px;
+            }
+
+            .pali-text {
+                font-size: 1.4rem;
+            }
+
+            .thai-text {
+                font-size: 1.2rem;
+            }
+
+            .footer-box {
+                height: auto;
+                flex-direction: column;
+                overflow-y: auto;
+                min-height: 120px;
+                max-height: 30%;
+            }
+
+            .footer-section {
+                border-right: none;
+                border-bottom: 1px solid #eceff1;
+                padding: 10px 20px;
+            }
+
+            .controls {
+                bottom: 10px;
+                gap: 10px;
+            }
+
+            button.nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .page-badge {
+                right: 15px;
+                top: 15px;
+            }
+
+            .tools-sidebar {
+                top: 60px;
+                right: 15px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
-        
+
         <div class="tools-sidebar">
             <!-- ปุ่มตั้งค่า -->
             <button class="tool-btn" id="btn-settings" title="ตั้งค่าการแสดงผล" onclick="toggleSettings()">
@@ -158,9 +612,12 @@
                 <div class="settings-row" style="margin-top:10px; display:block;">
                     <span class="settings-label" style="display:block; margin-bottom:5px;">การจัดวาง</span>
                     <div class="settings-btn-group" style="justify-content: space-between;">
-                        <button class="set-btn" onclick="setTextAlign('left')" title="ชิดซ้าย"><i class="fa-solid fa-align-left"></i></button>
-                        <button class="set-btn" onclick="setTextAlign('center')" title="กึ่งกลาง"><i class="fa-solid fa-align-center"></i></button>
-                        <button class="set-btn active" onclick="setTextAlign('justify')" title="เสมอหน้าหลัง"><i class="fa-solid fa-align-justify"></i></button>
+                        <button class="set-btn" onclick="setTextAlign('left')" title="ชิดซ้าย"><i
+                                class="fa-solid fa-align-left"></i></button>
+                        <button class="set-btn" onclick="setTextAlign('center')" title="กึ่งกลาง"><i
+                                class="fa-solid fa-align-center"></i></button>
+                        <button class="set-btn active" onclick="setTextAlign('justify')" title="เสมอหน้าหลัง"><i
+                                class="fa-solid fa-align-justify"></i></button>
                     </div>
                 </div>
             </div>
@@ -172,7 +629,7 @@
                 <i class="fa-solid fa-note-sticky"></i>
             </button>
         </div>
-        
+
         <!-- พื้นที่เนื้อหาแบบ Split View -->
         <div class="content-area">
             <div class="split-pane" style="flex: 1; border-bottom: 4px solid #eceff1;">
@@ -191,7 +648,7 @@
                 <div class="sec-title">📝 บริบท / คำอธิบาย</div>
                 <div class="sec-content" id="contextContent">...</div>
             </div>
-            
+
             <!-- 2. อาขยาต -->
             <div class="footer-section" style="flex: 0.8;">
                 <div class="sec-title">🔹 อาขยาต (คุมพากย์)</div>
@@ -251,7 +708,7 @@
     <script src="slides-part8.js"></script>
 
     <script>
-        const commonAnalysis = Object.assign({}, 
+        const commonAnalysis = Object.assign({},
             (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
             (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
             (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
@@ -281,7 +738,7 @@
         }
 
         let currentIndex = 0;
-        
+
         // --- Settings Logic ---
         let currentFontSizePali = 1.8;
         let currentFontSizeThai = 1.4;
@@ -297,7 +754,7 @@
             if (currentFontSizePali < 1.0) currentFontSizePali = 1.0;
             if (currentFontSizePali > 3.5) currentFontSizePali = 3.5;
             if (currentFontSizeThai < 0.8) currentFontSizeThai = 0.8;
-            
+
             document.querySelector('.pali-text').style.fontSize = `${currentFontSizePali}rem`;
             document.querySelector('.thai-text').style.fontSize = `${currentFontSizeThai}rem`;
         }
@@ -323,9 +780,9 @@
                 const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
                 let prefix = "", cleanWord = word, suffix = "";
                 if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
-                let displayText = cleanWord.replace(/_/g, ' '); 
-                let searchKey = displayText; 
-                
+                let displayText = cleanWord.replace(/_/g, ' ');
+                let searchKey = displayText;
+
                 const data = getAnalysisData(searchKey, vocabData);
                 let vocabInfo = ""; let hasInfoClass = "";
 
@@ -357,14 +814,14 @@
 
         function updateSlide() {
             if (typeof removeAllNotes === 'function') removeAllNotes();
-            
+
             const paliBox = document.getElementById('paliContent');
             const thaiBox = document.getElementById('thaiContent');
             const s = slides[currentIndex];
 
             paliBox.innerHTML = wrapWords(s.pali, s);
             thaiBox.innerHTML = wrapWords(s.thai, null);
-            
+
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
 
@@ -373,7 +830,7 @@
             if (document.getElementById('vocabContent')) {
                 document.getElementById('vocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s);
             }
-            
+
             document.getElementById('contextContent').innerText = s.context;
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             applyThaiState();
@@ -398,7 +855,7 @@
                 const data = getAnalysisData(key, slide);
                 if (data && processedText.includes(key)) {
                     const token = `##TOKEN_${index}##`;
-                    const displayWord = key.split('#')[0]; 
+                    const displayWord = key.split('#')[0];
                     replacements.push({
                         token: token,
                         html: `<span class="clickable-analysis" onclick="showAnalysis('${key}')">${displayWord}</span>`
@@ -415,11 +872,11 @@
             const s = slides[currentIndex];
             const data = getAnalysisData(word, s);
             if (!data) return;
-            const displayTitle = word.split('#')[0]; 
+            const displayTitle = word.split('#')[0];
             document.getElementById('ana-word').innerText = displayTitle;
             document.getElementById('ana-split').innerText = data.split || "";
             const list = document.getElementById('ana-details');
-            list.innerHTML = ''; 
+            list.innerHTML = '';
             if (data.details) {
                 data.details.forEach(detail => {
                     const li = document.createElement('li');
@@ -455,33 +912,33 @@
             tooltip.style.display = 'block';
             const rect = element.getBoundingClientRect();
             const tooltipRect = tooltip.getBoundingClientRect();
-            let top = rect.top - tooltipRect.height - 10; 
-            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2); 
-            if (top < 0) top = rect.bottom + 10; 
+            let top = rect.top - tooltipRect.height - 10;
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+            if (top < 0) top = rect.bottom + 10;
             if (left < 10) left = 10;
             if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 10;
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         }
         function hideTooltip() { tooltip.style.display = 'none'; }
-        
+
         let isThaiHidden = false;
         function toggleThai() { isThaiHidden = !isThaiHidden; applyThaiState(); }
         function applyThaiState() {
             const thaiElem = document.getElementById('thaiContent');
             const btn = document.getElementById('btn-toggle-thai');
             const btnIcon = btn.querySelector('i');
-            if (isThaiHidden) { thaiElem.classList.add('hidden'); btnIcon.classList.remove('fa-eye'); btnIcon.classList.add('fa-eye-slash'); } 
+            if (isThaiHidden) { thaiElem.classList.add('hidden'); btnIcon.classList.remove('fa-eye'); btnIcon.classList.add('fa-eye-slash'); }
             else { thaiElem.classList.remove('hidden'); btnIcon.classList.remove('fa-eye-slash'); btnIcon.classList.add('fa-eye'); }
         }
         function addNote() {
-            const card = document.getElementById('cardContainer'); 
+            const card = document.getElementById('cardContainer');
             const note = document.createElement('div');
             note.className = 'sticky-note'; note.contentEditable = true; note.innerText = 'พิมพ์บันทึก...';
             note.style.left = '50px'; note.style.top = '100px';
             const closeBtn = document.createElement('div');
             closeBtn.className = 'close-note'; closeBtn.innerHTML = '&times;'; closeBtn.contentEditable = false;
-            closeBtn.onclick = function() { note.remove(); };
+            closeBtn.onclick = function () { note.remove(); };
             note.appendChild(closeBtn); makeDraggable(note); card.appendChild(note); note.focus();
         }
         function makeDraggable(el) {
@@ -497,13 +954,14 @@
             window.addEventListener('touchend', stopDrag);
         }
         function removeAllNotes() { document.querySelectorAll('.sticky-note').forEach(n => n.remove()); }
-        window.toggleHighlight = function(element) { element.classList.toggle('translated'); }
-        window.resetHighlights = function() { document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated')); }
+        window.toggleHighlight = function (element) { element.classList.toggle('translated'); }
+        window.resetHighlights = function () { document.querySelectorAll('.word-span').forEach(el => el.classList.remove('translated')); }
         function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); } }
         function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlide(); } }
-        document.addEventListener('keydown', function(event) { if (event.key === "ArrowRight") nextSlide(); if (event.key === "ArrowLeft") prevSlide(); });
+        document.addEventListener('keydown', function (event) { if (event.key === "ArrowRight") nextSlide(); if (event.key === "ArrowLeft") prevSlide(); });
 
         updateSlide();
     </script>
 </body>
+
 </html>
