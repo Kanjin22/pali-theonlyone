@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สื่อการสอนบาลี (Interactive Board)</title>
+    <title>สื่อการสอนบาลี (Interactive Text)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,7 +18,6 @@
             margin: 0;
             padding: 0;
             background-color: #37474f;
-            /* เปลี่ยนพื้นหลังข้างนอกเป็นสีเข้มเพื่อให้จอหลักเด่น */
             font-family: 'Sarabun', sans-serif;
             display: flex;
             justify-content: center;
@@ -28,21 +27,15 @@
             overflow: hidden;
         }
 
-        /* --- การ์ดหลัก (ปรับให้เต็มจอมากขึ้น) --- */
+        /* --- การ์ดหลัก (เต็มจอ) --- */
         .card {
             width: 98%;
-            /* กว้างเกือบเต็มจอ */
             max-width: none;
-            /* ปลดล็อกความกว้างสูงสุด */
             height: 96vh;
-            /* สูงเกือบเต็มจอ */
             max-height: none;
-            /* ปลดล็อกความสูงสูงสุด */
             background-color: #ffffff;
             border-radius: 8px;
-            /* ลดความโค้งลงหน่อยให้ดูเป็นจอภาพ */
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            /* เพิ่มเงาให้ดูลอยเด่น */
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -56,45 +49,24 @@
             flex-shrink: 0;
         }
 
-        /* --- พื้นที่เนื้อหาแบบใหม่ (Split View) --- */
+        /* --- พื้นที่เนื้อหาแบบ Split View --- */
         .content-area {
             flex: 1;
             display: flex;
             flex-direction: column;
-            /* แบ่งบนล่าง */
             overflow: hidden;
-            /* ห้าม Scroll ที่ตัวแม่ */
             padding: 0;
-            /* เอา padding ออก ให้ไปอยู่ที่ลูกแทน */
             background-color: #f5f5f5;
-            /* สีพื้นหลังรอยต่อ */
         }
 
-        /* กล่องย่อยสำหรับบาลีและไทย */
         .split-pane {
             flex: 1;
-            /* แบ่งพื้นที่กันคนละครึ่ง */
             overflow-y: auto;
-            /* *** ให้ Scroll แยกกันได้อิสระ *** */
-            padding: 30px 60px;
-            /* ระยะห่างข้อความ */
+            padding: 25px 50px;
             background-color: #fff;
             position: relative;
         }
 
-        /* เส้นคั่นกลาง */
-        .split-divider {
-            height: 4px;
-            background-color: #cfd8dc;
-            cursor: row-resize;
-            /* ในอนาคตอาจทำเป็นตัวลากปรับขนาดได้ */
-            flex-shrink: 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        /* แต่ง Scrollbar ให้สวยงาม */
         .split-pane::-webkit-scrollbar {
             width: 10px;
         }
@@ -108,49 +80,7 @@
             border-radius: 5px;
         }
 
-        .split-pane::-webkit-scrollbar-thumb:hover {
-            background: #78909c;
-        }
-
-        /* --- CSS ข้อความ --- */
-        .pali-text {
-            font-family: 'Niramit', serif;
-            font-size: 2.2rem;
-            /* เพิ่มขนาดตัวหนังสือให้ใหญ่สะใจสำหรับจอใหญ่ */
-            color: #263238;
-            font-weight: 600;
-            line-height: 2.2;
-            margin-bottom: 0;
-            text-align: left;
-            text-indent: 50px;
-            word-spacing: 0;
-            letter-spacing: 0;
-            word-break: normal;
-            overflow-wrap: break-word;
-        }
-
-        .thai-text {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1.6rem;
-            /* เพิ่มขนาดตัวหนังสือ */
-            color: #546e7a;
-            font-weight: 300;
-            line-height: 2.2;
-            text-align: left;
-            text-indent: 50px;
-            word-break: normal;
-            overflow-wrap: break-word;
-            transition: opacity 0.3s ease;
-            opacity: 1;
-        }
-
-        .thai-text.hidden {
-            opacity: 0;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        /* --- ป้ายกำกับกล่อง (Label) --- */
+        /* ป้ายกำกับกล่อง */
         .pane-label {
             position: sticky;
             top: 0;
@@ -194,140 +124,55 @@
             border-bottom: 2px dotted #1565C0;
         }
 
-        /* --- Footer & Tooltip & Modal & Sticky Note & Controls --- */
-        /* (ส่วนนี้คงเดิม แต่ปรับขนาดนิดหน่อยให้เหมาะกับจอใหญ่) */
-        .footer-box {
-            background-color: #f7f9f9;
-            border-top: 1px solid #eceff1;
-            height: 160px;
-            display: flex;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .footer-section {
-            flex: 1;
-            padding: 20px 30px;
-            border-right: 1px solid #eceff1;
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            overflow-y: auto;
-        }
-
-        .footer-section:last-child {
-            border-right: none;
-        }
-
-        .sec-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #90a4ae;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #cfd8dc;
-            padding-bottom: 5px;
-        }
-
-        .sec-content {
-            font-size: 1.1rem;
-            color: #37474f;
-            line-height: 1.6;
-        }
-
-        /* เพิ่มขนาดตัวอักษร footer */
-        .pali-word {
+        /* --- CSS ข้อความ (ปรับขนาดลง) --- */
+        .pali-text {
             font-family: 'Niramit', serif;
-            color: #0277bd;
+            font-size: 1.8rem;
+            /* ลดจาก 2.2 เหลือ 1.8 */
+            color: #263238;
             font-weight: 600;
+            line-height: 2;
+            margin-bottom: 0;
+            text-align: left;
+            text-indent: 50px;
+            word-spacing: 0;
+            letter-spacing: 0;
+            word-break: normal;
+            overflow-wrap: break-word;
         }
 
-        .page-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(236, 239, 241, 0.9);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            color: #78909c;
-            font-weight: bold;
-            z-index: 100;
-        }
-
-        .controls {
-            position: fixed;
-            bottom: 30px;
-            display: flex;
-            gap: 20px;
-            z-index: 200;
-        }
-
-        button.nav-btn {
-            padding: 12px 35px;
-            background-color: #455a64;
-            border: none;
-            border-radius: 50px;
+        .thai-text {
             font-family: 'Sarabun', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        button.nav-btn:hover {
-            background-color: #607d8b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-        }
-
-        /* Tools Sidebar */
-        .tools-sidebar {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 100;
-        }
-
-        .tool-btn {
-            position: relative;
-            padding: 0;
-            border-radius: 8px;
-            background-color: #eceff1;
+            font-size: 1.4rem;
+            /* ลดจาก 1.6 เหลือ 1.4 */
             color: #546e7a;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
+            font-weight: 300;
+            line-height: 2;
+            text-align: left;
+            text-indent: 50px;
+            word-break: normal;
+            overflow-wrap: break-word;
+            transition: opacity 0.3s ease;
+            opacity: 1;
         }
 
-        .tool-btn:hover {
-            background-color: #cfd8dc;
-            transform: translateX(-2px);
+        .thai-text.hidden {
+            opacity: 0;
+            user-select: none;
+            pointer-events: none;
         }
 
-        /* Tooltip */
+        /* --- Tooltip --- */
         #sandhi-tooltip {
             position: fixed;
             display: none;
             background-color: #37474f;
             color: #fff;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border-radius: 6px;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-family: 'Sarabun', sans-serif;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 2000;
             pointer-events: none;
             white-space: nowrap;
@@ -345,18 +190,139 @@
             margin-left: 5px;
         }
 
-        /* Sticky Note */
+        /* --- Footer --- */
+        .footer-box {
+            background-color: #f7f9f9;
+            border-top: 1px solid #eceff1;
+            height: 150px;
+            display: flex;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .footer-section {
+            flex: 1;
+            padding: 15px 25px;
+            border-right: 1px solid #eceff1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            overflow-y: auto;
+        }
+
+        .footer-section:last-child {
+            border-right: none;
+        }
+
+        .sec-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #90a4ae;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #cfd8dc;
+            padding-bottom: 3px;
+        }
+
+        .sec-content {
+            font-size: 1rem;
+            color: #37474f;
+            line-height: 1.5;
+        }
+
+        .pali-word {
+            font-family: 'Niramit', serif;
+            color: #0277bd;
+            font-weight: 600;
+        }
+
+        /* --- Controls --- */
+        .page-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(236, 239, 241, 0.9);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #78909c;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 25px;
+            display: flex;
+            gap: 20px;
+            z-index: 200;
+        }
+
+        button.nav-btn {
+            padding: 12px 30px;
+            background-color: #455a64;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button.nav-btn:hover {
+            background-color: #607d8b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .tools-sidebar {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .tool-btn {
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #eceff1;
+            color: #546e7a;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .tool-btn:hover {
+            background-color: #cfd8dc;
+            transform: translateX(-2px);
+        }
+
+        /* --- Sticky Note --- */
         .sticky-note {
             position: absolute;
             background: #fff9c4;
             border: 1px solid #fbc02d;
-            padding: 15px;
-            min-width: 200px;
-            max-width: 300px;
+            padding: 10px;
+            min-width: 150px;
+            max-width: 250px;
             border-radius: 5px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             z-index: 500;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #333;
             cursor: move;
             font-family: 'Sarabun', sans-serif;
@@ -368,16 +334,16 @@
 
         .close-note {
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: -8px;
+            right: -8px;
             background: #e74c3c;
             color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             text-align: center;
-            line-height: 24px;
-            font-size: 14px;
+            line-height: 20px;
+            font-size: 12px;
             cursor: pointer;
             display: none;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -387,7 +353,7 @@
             display: block;
         }
 
-        /* Modal */
+        /* --- CSS สำหรับ Modal วิเคราะห์ศัพท์ --- */
         .analysis-modal-overlay {
             position: fixed;
             top: 0;
@@ -405,7 +371,7 @@
         .analysis-card {
             background: white;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
@@ -427,22 +393,22 @@
         .analysis-header {
             background: #2c3e50;
             color: white;
-            padding: 25px;
+            padding: 20px;
             position: relative;
         }
 
         .analysis-word {
             font-family: 'Niramit', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin: 0;
             font-weight: 500;
         }
 
         .analysis-close {
             position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 2rem;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
             cursor: pointer;
             color: #ccc;
         }
@@ -452,16 +418,16 @@
         }
 
         .analysis-body {
-            padding: 30px;
+            padding: 25px;
         }
 
         .analysis-split {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #d35400;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #eee;
         }
 
@@ -472,13 +438,10 @@
         }
 
         .analysis-list li {
-            font-size: 1.2rem;
-            margin-bottom: 18px;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
             display: flex;
             align-items: flex-start;
-            color: #2c3e50;
-            text-align: left;
         }
 
         .analysis-list li::before {
@@ -506,10 +469,9 @@
         }
 
         @media screen and (max-width: 768px) {
-
-            /* Mobile adjustments */
             .card {
                 height: 90vh;
+                margin-top: -40px;
                 width: 95%;
             }
 
@@ -552,16 +514,12 @@
             .page-badge {
                 right: 15px;
                 top: 15px;
-                font-size: 0.9rem;
-                padding: 5px 10px;
             }
 
             .tools-sidebar {
                 top: 60px;
                 right: 15px;
             }
-
-            /* ในมือถือ อาจจะไม่ต้อง Split ก็ได้ หรือ Split แต่เล็กหน่อย */
         }
     </style>
 </head>
@@ -572,7 +530,6 @@
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
 
-        <!-- แถบเครื่องมือขวา -->
         <div class="tools-sidebar">
             <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
                 <i class="fa-solid fa-eye"></i>
@@ -582,26 +539,19 @@
             </button>
         </div>
 
-        <!-- *** พื้นที่เนื้อหาแบบใหม่: Split View (แยกบนล่าง อิสระ) *** -->
+        <!-- พื้นที่เนื้อหาแบบ Split View -->
         <div class="content-area">
-
-            <!-- กล่องบน: บาลี -->
             <div class="split-pane" style="flex: 1; border-bottom: 4px solid #eceff1;">
                 <span class="pane-label">บาลี</span>
                 <div class="pali-text" id="paliContent">...</div>
             </div>
-
-            <!-- กล่องล่าง: ไทย -->
             <div class="split-pane" style="flex: 1;">
                 <span class="pane-label">ไทย</span>
                 <div class="thai-text" id="thaiContent">...</div>
             </div>
-
         </div>
-        <!-- ******************************************************* -->
 
         <div class="footer-box">
-            <!-- Footer เนื้อหา (เหมือนเดิม) -->
             <div class="footer-section" style="flex: 1;">
                 <div class="sec-title">📝 บริบท / คำอธิบาย</div>
                 <div class="sec-content" id="contextContent">...</div>
@@ -627,10 +577,8 @@
         <button class="nav-btn" onclick="nextSlide()">ถัดไป ❯</button>
     </div>
 
-    <!-- กล่อง Tooltip สำหรับแสดงสนธิ -->
     <div id="sandhi-tooltip"></div>
 
-    <!-- Modal สำหรับวิเคราะห์ศัพท์ -->
     <div id="analysis-modal" class="analysis-modal-overlay" onclick="closeAnalysisModal(event)">
         <div class="analysis-card">
             <div class="analysis-header">
@@ -644,7 +592,7 @@
         </div>
     </div>
 
-    <!-- Load Scripts -->
+    <!-- Scripts -->
     <script src="vocab-akhyata.js"></script>
     <script src="vocab-kitaka.js"></script>
     <script src="vocab-samasa.js"></script>
@@ -738,17 +686,13 @@
         function updateSlide() {
             if (typeof removeAllNotes === 'function') removeAllNotes();
 
-            // เนื่องจากเราแบ่งเป็น 2 กล่องแล้ว เราไม่ต้องจัดการ class animate กับตัว content-area โดยตรงก็ได้
-            // หรือจะใส่ animation ให้ทั้งสองกล่องก็ได้
             const paliBox = document.getElementById('paliContent');
             const thaiBox = document.getElementById('thaiContent');
-
             const s = slides[currentIndex];
 
             paliBox.innerHTML = wrapWords(s.pali, s);
             thaiBox.innerHTML = wrapWords(s.thai, null);
 
-            // Scroll กลับไปบนสุดของทั้งสองกล่อง
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
 
@@ -763,12 +707,6 @@
             applyThaiState();
         }
 
-        // ... (ฟังก์ชันอื่นๆ: processFooterAnalysis, showAnalysis, closeAnalysisModal, 
-        //      showTooltip, hideTooltip, toggleThai, applyThaiState, addNote, 
-        //      makeDraggable, removeAllNotes, toggleHighlight, resetHighlights, 
-        //      nextSlide, prevSlide, EventListeners ... ทั้งหมดเหมือนเดิม) ...
-
-        // (ผมใส่มาให้ครบเพื่อความชัวร์ครับ)
         function getAllAnalysisKeys(localAnalysis) {
             let keys = [];
             if (localAnalysis && localAnalysis.analysis) keys = keys.concat(Object.keys(localAnalysis.analysis));
