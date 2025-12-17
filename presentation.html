@@ -749,11 +749,10 @@
         }
 
         function changeFontSize(change) {
-            currentFontSizePali += (change * 0.1);
-            currentFontSizeThai += (change * 0.1);
+            currentFontSizePali += (change * 0.2);
+            currentFontSizeThai += (change * 0.2);
             if (currentFontSizePali < 1.0) currentFontSizePali = 1.0;
-            if (currentFontSizePali > 3.5) currentFontSizePali = 3.5;
-            if (currentFontSizeThai < 0.8) currentFontSizeThai = 0.8;
+            if (currentFontSizeThai < 1.0) currentFontSizeThai = 1.0;
 
             document.querySelector('.pali-text').style.fontSize = `${currentFontSizePali}rem`;
             document.querySelector('.thai-text').style.fontSize = `${currentFontSizeThai}rem`;
