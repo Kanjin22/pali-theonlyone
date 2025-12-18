@@ -169,6 +169,34 @@
             border-bottom: 2px dotted #1565C0;
         }
 
+        /* --- CSS สำหรับ Canvas วาดเขียน (Whiteboard) --- */
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            /* อยู่เหนือเนื้อหา (text) แต่อยู่ใต้ปุ่มเครื่องมือ */
+            pointer-events: none;
+            /* ปกติให้ทะลุผ่านเพื่อคลิกคำศัพท์ได้ */
+            touch-action: none;
+            /* ป้องกันจอเลื่อนเวลาเขียนบน iPad */
+        }
+
+        /* เมื่อเข้าโหมดวาดเขียน */
+        .card.drawing-mode #drawing-canvas {
+            pointer-events: auto;
+            /* รับการขีดเขียน */
+            cursor: crosshair;
+        }
+
+        /* เปลี่ยนสีปุ่มเมื่อเปิดโหมดวาด */
+        .tool-btn.active-pen {
+            background-color: #3498db !important;
+            color: white !important;
+        }
+
         /* --- Footer (4 ช่อง) --- */
         .footer-box {
             background-color: #f7f9f9;
@@ -625,10 +653,22 @@
             <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
                 <i class="fa-solid fa-eye"></i>
             </button>
+
+            <!-- ********** 1. เพิ่มปุ่มปากกา ตรงนี้ครับ ********** -->
+            <button class="tool-btn" id="btn-pen" title="เขียนหน้าจอ (Whiteboard)" onclick="toggleDrawingMode()">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="tool-btn" id="btn-clear-ink" title="ลบหมึกทั้งหมด" onclick="clearCanvas()"
+                style="display:none; color: #e74c3c;">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+
             <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
                 <i class="fa-solid fa-note-sticky"></i>
             </button>
         </div>
+
+        <canvas id="drawing-canvas"></canvas>
 
         <!-- พื้นที่เนื้อหาแบบ Split View -->
         <div class="content-area">
@@ -811,7 +851,100 @@
             return null;
         }
 
+        // ==========================================
+        // ==      ระบบวาดเขียน (Whiteboard)       ==
+        // ==========================================
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        const card = document.getElementById('cardContainer');
+        let isDrawing = false;
+        let isPenMode = false;
+
+        // ฟังก์ชันปรับขนาด Canvas ให้ตรงกับจอ (แก้ภาพเบลอ/เส้นเยื้อง)
+        function resizeCanvas() {
+            const rect = card.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            // ตั้งค่าเส้นปากกาใหม่ (เพราะค่าจะรีเซ็ตเมื่อเปลี่ยนขนาด)
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#e74c3c'; // สีแดง
+        }
+
+        // เรียกใช้ตอนโหลดและเมื่อย่อขยายจอ
+        window.addEventListener('resize', resizeCanvas);
+        setTimeout(resizeCanvas, 500); // เรียกซ้ำเผื่อโหลดไม่ทัน
+
+        // --- เปิด/ปิด โหมดปากกา ---
+        function toggleDrawingMode() {
+            isPenMode = !isPenMode;
+            const btnPen = document.getElementById('btn-pen');
+            const btnClear = document.getElementById('btn-clear-ink');
+
+            if (isPenMode) {
+                card.classList.add('drawing-mode');
+                btnPen.classList.add('active-pen');
+                btnClear.style.display = 'block'; // โชว์ปุ่มถังขยะ
+                resizeCanvas(); // รีเซ็ตพิกัดให้ชัวร์
+            } else {
+                card.classList.remove('drawing-mode');
+                btnPen.classList.remove('active-pen');
+                btnClear.style.display = 'none';
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // --- สูตรคำนวณพิกัด (สำคัญมาก: แก้เส้นเยื้อง) ---
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        // --- Event Listeners สำหรับการวาด ---
+        function startDraw(e) {
+            if (!isPenMode) return;
+            if (e.type === 'touchstart') e.preventDefault();
+            isDrawing = true;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing || !isPenMode) return;
+            if (e.type === 'touchmove') e.preventDefault();
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+        }
+
+        // Mouse Events (คอมพิวเตอร์)
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDraw);
+        canvas.addEventListener('mouseout', stopDraw);
+
+        // Touch Events (iPad/มือถือ)
+        canvas.addEventListener('touchstart', startDraw, { passive: false });
+        canvas.addEventListener('touchmove', draw, { passive: false });
+        canvas.addEventListener('touchend', stopDraw);
+
         function updateSlide() {
+            clearCanvas();
             if (typeof removeAllNotes === 'function') removeAllNotes();
 
             const paliBox = document.getElementById('paliContent');
