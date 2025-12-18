@@ -4,51 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ห้องเรียน ป.ธ. ๓</title>
-    <!-- (ใช้ CSS เดียวกับ home_pt12.html หรือ index.html) -->
+    <!-- ... (Link Fonts/CSS เหมือนเดิม) ... -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* (ก๊อปปี้ CSS จากไฟล์ index.html มาวางได้เลยครับ เพื่อความสวยงามเหมือนกัน) */
+        /* CSS เหมือนเดิม แต่เปลี่ยนสีธีม */
         body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .container { max-width: 800px; width: 100%; text-align: center; }
-        .page-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #34495e; }
-        h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; }
+        .page-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #16a085; } /* สีเขียวเข้ม */
+        h1 { font-size: 2.5em; color: #16a085; margin-bottom: 10px; }
         p { font-size: 1.2em; color: #7f8c8d; }
         hr { border: 0; height: 1px; background-color: #e0e0e0; margin: 50px auto; width: 80%; }
         .menu-container { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
         .menu-button { display: block; padding: 25px 20px; background-color: #fff; color: #34495e; text-decoration: none; font-size: 1.3em; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; }
-        .menu-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); background-color: #34495e; color: #fff; }
-        .back-link { display: inline-block; margin-bottom: 20px; color: #777; text-decoration: none; }
+        .menu-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); background-color: #16a085; color: #fff; }
         @media (min-width: 768px) { .menu-container { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        <div style="text-align: left; margin-bottom: 20px;">
+            <a href="index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        </div>
         
         <div class="page-header">
             <h1>ห้องเรียน ป.ธ. ๓</h1>
             <p>วิชาสัมพันธ์ไทย และ แปลมคธเป็นไทย</p>
         </div>
+
+        <div style="margin-bottom: 40px;">
+            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊 ดูสถิติและความคืบหน้า</a>
+        </div>
         
-        <h2>📅 ตารางเรียนรายเดือน</h2>
+        <h2>📅 ตารางเรียน</h2>
         <div class="menu-container">
-            <!-- สร้างลิงก์ไปยังตารางของ ป.ธ. 3 (ตอนนี้ใส่ # ไว้ก่อน) -->
             <a href="construction.html" class="menu-button">ตารางเรียน (เร็วๆ นี้)</a>
         </div>
 
         <hr>
 
-        <h2>📚 คลังความรู้ & ตำรา</h2>
+        <h2>📚 วิชาเรียน</h2>
         <div class="menu-container">
-            <!-- 1. ใช้ลิงก์ไวยากรณ์เดิม (ใช้ร่วมกันได้) -->
-            <a href="grammar_principles.html" class="menu-button">หลักบาลีไวยากรณ์</a>
-            
-            <!-- 2. หน้าใหม่: หลักการสัมพันธ์ -->
-            <a href="sampan_principles.html" class="menu-button">หลักการสัมพันธ์ไทย</a>
-            
-            <!-- 3. หน้าใหม่: ห้องสมุดบทแปล 5-8 -->
-            <a href="library_pt3.html" class="menu-button">บทแปล (ภาค ๕-๘)</a>
+            <a href="grammar_principles.html" class="menu-button">วิชาบาลีไวยากรณ์</a>
+            <a href="construction.html" class="menu-button">สัมพันธ์ไทย (ธ. ภาค ๕-๘)</a>
+            <a href="construction.html" class="menu-button">แปลมคธเป็นไทย (ธ. ภาค ๕-๘)</a>
+        </div>
+
+        <hr>
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt3" alt="visitor badge"/>
         </div>
     </div>
 </body>
