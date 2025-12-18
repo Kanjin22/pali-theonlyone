@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,39 +8,118 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
-        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
-        
-        .hero-section { margin-bottom: 50px; animation: fadeInDown 0.8s ease; }
-        .hero-title { font-size: 2.8rem; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
-        .hero-subtitle { font-size: 1.3rem; color: #7f8c8d; font-weight: 300; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
 
-        .section-label { text-align: left; font-size: 1.2rem; font-weight: bold; color: #34495e; margin: 30px 0 15px 0; border-left: 5px solid #3498db; padding-left: 10px; }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-section {
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .section-label {
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+        }
 
         /* Grid Layout */
-        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; animation: fadeInUp 0.8s ease; }
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
 
         /* Card Styles */
         .menu-card {
-            background: white; border-radius: 12px; padding: 30px 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-decoration: none; color: inherit;
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
             transition: all 0.3s ease;
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #eee;
         }
-        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: transparent; }
-        
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
         /* Icon & Text */
-        .icon-box { font-size: 2.5rem; margin-bottom: 15px; }
-        .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; color: #2c3e50; }
-        .card-desc { font-size: 0.9rem; color: #999; }
+        .icon-box {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #999;
+        }
 
         /* Color Coding */
-        .level-basic .icon-box { color: #27ae60; } /* เขียว - ชั้นต้น */
-        .level-inter .icon-box { color: #f39c12; } /* ส้ม - ชั้นกลาง */
-        .level-adv .icon-box { color: #e74c3c; }   /* แดง - ชั้นสูง */
-        .level-tool .icon-box { color: #8e44ad; }  /* ม่วง - เครื่องมือ */
+        .level-basic .icon-box {
+            color: #27ae60;
+        }
+
+        /* เขียว - ชั้นต้น */
+        .level-inter .icon-box {
+            color: #f39c12;
+        }
+
+        /* ส้ม - ชั้นกลาง */
+        .level-adv .icon-box {
+            color: #e74c3c;
+        }
+
+        /* แดง - ชั้นสูง */
+        .level-tool .icon-box {
+            color: #8e44ad;
+        }
+
+        /* ม่วง - เครื่องมือ */
 
         /* Disabled State (สำหรับชั้นที่ยังไม่เปิด) */
         .menu-card.disabled {
@@ -47,15 +127,49 @@
             cursor: not-allowed;
             background-color: #f9f9f9;
         }
-        .menu-card.disabled:hover { transform: none; box-shadow: none; }
-        .badge-soon {
-            background: #95a5a6; color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; position: absolute; top: 10px; right: 10px;
+
+        .menu-card.disabled:hover {
+            transform: none;
+            box-shadow: none;
         }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .badge-soon {
+            background: #95a5a6;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="hero-section">
@@ -65,7 +179,7 @@
 
         <div class="section-label">📚 ชั้นประโยคบาลีสนามหลวง</div>
         <div class="grid-menu">
-            
+
             <!-- ป.ธ. 1-2 -->
             <a href="home_pt12.html" class="menu-card level-basic">
                 <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
@@ -114,7 +228,8 @@
             </a>
 
             <!-- ป.ธ. 8 -->
-            <a href="construction.html" class="menu-card level-adv disabled"> <!-- เปลี่ยนเป็น home_pt8.html เมื่อพร้อม -->
+            <a href="construction.html" class="menu-card level-adv disabled">
+                <!-- เปลี่ยนเป็น home_pt8.html เมื่อพร้อม -->
                 <span class="badge-soon">เร็วๆ นี้</span>
                 <div class="icon-box"><i class="fa-solid fa-chess-queen"></i></div>
                 <div class="card-title">ป.ธ. ๘</div>
@@ -132,13 +247,13 @@
 
         <div class="section-label" style="margin-top: 50px;">🛠️ เครื่องมือและคลังความรู้</div>
         <div class="grid-menu">
-             <a href="library_center.html" class="menu-card level-tool">
+            <a href="library_center.html" class="menu-card level-tool">
                 <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
                 <div class="card-title">คลังความรู้กลาง</div>
                 <div class="card-desc">ไวยากรณ์ & หลักการแปล</div>
             </a>
-            
-             <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-card level-tool">
+
+            <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-card level-tool">
                 <div class="icon-box"><i class="fa-solid fa-magnifying-glass"></i></div>
                 <div class="card-title">พจนานุกรมธาตุ</div>
                 <div class="card-desc">ค้นหาธาตุและปัจจัย</div>
@@ -147,4 +262,5 @@
 
     </div>
 </body>
+
 </html>
