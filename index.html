@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,159 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* (CSS เดิม) */
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 40px 20px;
-            color: #333;
-        }
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .hero-section { margin-bottom: 50px; animation: fadeInDown 0.8s ease; }
+        .hero-title { font-size: 2.8rem; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+        .hero-subtitle { font-size: 1.3rem; color: #7f8c8d; font-weight: 300; }
+        .section-label { text-align: left; font-size: 1.2rem; font-weight: bold; color: #34495e; margin: 30px 0 15px 0; border-left: 5px solid #3498db; padding-left: 10px; }
+        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; animation: fadeInUp 0.8s ease; }
+        .menu-card { background: white; border-radius: 12px; padding: 30px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; border: 1px solid #eee; }
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: transparent; }
+        .icon-box { font-size: 2.5rem; margin-bottom: 15px; }
+        .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; color: #2c3e50; }
+        .card-desc { font-size: 0.9rem; color: #999; }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        /* Color Coding */
+        .level-basic .icon-box { color: #27ae60; } 
+        .level-inter .icon-box { color: #f39c12; } 
+        .level-adv .icon-box { color: #e74c3c; }   
+        .level-tool .icon-box { color: #8e44ad; }
 
-        .hero-section {
-            margin-bottom: 50px;
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .hero-title {
-            font-size: 2.8rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #7f8c8d;
-            font-weight: 300;
-        }
-
-        .section-label {
-            text-align: left;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #34495e;
-            margin: 30px 0 15px 0;
-            border-left: 5px solid #3498db;
-            padding-left: 10px;
-        }
-
-        .grid-menu {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .menu-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #eee;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-            border-color: transparent;
-        }
-
-        .icon-box {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .level-basic .icon-box {
-            color: #27ae60;
-        }
-
-        .level-inter .icon-box {
-            color: #f39c12;
-        }
-
-        .level-adv .icon-box {
-            color: #e74c3c;
-        }
-
-        .level-tool .icon-box {
-            color: #8e44ad;
-        }
-
-        .menu-card.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background-color: #f9f9f9;
-        }
-
-        .menu-card.disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .badge-soon {
-            background: #95a5a6;
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="hero-section">
@@ -170,84 +39,68 @@
 
         <div class="section-label">📚 ชั้นประโยคบาลีสนามหลวง</div>
         <div class="grid-menu">
-            <!-- ป.ธ. 1-2 -->
+            
+            <!-- ชั้นต้น (สีเขียว) -->
             <a href="home_pt12.html" class="menu-card level-basic">
                 <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
                 <div class="card-title">ประโยค ๑-๒</div>
                 <div class="card-desc">ไวยากรณ์, แปล ๑-๔</div>
             </a>
-            <!-- ป.ธ. 3 -->
             <a href="home_pt3.html" class="menu-card level-basic">
                 <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
                 <div class="card-title">ป.ธ. ๓</div>
                 <div class="card-desc">สัมพันธ์, แปล ๕-๘</div>
             </a>
-            <!-- ป.ธ. 4 -->
-            <a href="construction.html" class="menu-card level-inter disabled">
-                <span class="badge-soon">เร็วๆ นี้</span>
+
+            <!-- ชั้นกลาง (สีส้ม) -->
+            <a href="home_pt4.html" class="menu-card level-inter">
                 <div class="icon-box"><i class="fa-solid fa-tree"></i></div>
                 <div class="card-title">ป.ธ. ๔</div>
-                <div class="card-desc">แปลไทยเป็นมคธ</div>
+                <div class="card-desc">แปลไทย (ธ.๑), แปลมคธ (มงฺ.๑)</div>
             </a>
-
-            <!-- ป.ธ. 5 -->
-            <a href="construction.html" class="menu-card level-inter disabled">
-                <span class="badge-soon">เร็วๆ นี้</span>
+            <a href="home_pt5.html" class="menu-card level-inter">
                 <div class="icon-box"><i class="fa-solid fa-book-open-reader"></i></div>
                 <div class="card-title">ป.ธ. ๕</div>
-                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+                <div class="card-desc">แปลไทย (ธ.๒-๔), แปลมคธ (มงฺ.๒-๓)</div>
             </a>
-
-            <!-- ป.ธ. 6 -->
-            <a href="construction.html" class="menu-card level-inter disabled">
-                <span class="badge-soon">เร็วๆ นี้</span>
+            <a href="home_pt6.html" class="menu-card level-inter">
                 <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
                 <div class="card-title">ป.ธ. ๖</div>
-                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+                <div class="card-desc">แปลไทย (สมันต.๑-๒), แปลมคธ (๓-๕)</div>
             </a>
 
-            <!-- ป.ธ. 7 -->
-            <a href="construction.html" class="menu-card level-adv disabled">
-                <span class="badge-soon">เร็วๆ นี้</span>
+            <!-- ชั้นสูง (สีแดง) -->
+            <a href="home_pt7.html" class="menu-card level-adv">
                 <div class="icon-box"><i class="fa-solid fa-chess-knight"></i></div>
                 <div class="card-title">ป.ธ. ๗</div>
-                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+                <div class="card-desc">แปลไทย (มงฺ.๑), แปลมคธ (สมันต.๑-๒)</div>
             </a>
-
-            <!-- ป.ธ. 8 -->
-            <a href="construction.html" class="menu-card level-adv disabled">
-                <!-- เปลี่ยนเป็น home_pt8.html เมื่อพร้อม -->
-                <span class="badge-soon">เร็วๆ นี้</span>
+            <a href="home_pt8.html" class="menu-card level-adv">
                 <div class="icon-box"><i class="fa-solid fa-chess-queen"></i></div>
                 <div class="card-title">ป.ธ. ๘</div>
-                <div class="card-desc">วิชาแต่งฉันท์</div>
+                <div class="card-desc">แต่งฉันท์, แปลไทย (สมันต.๓)</div>
             </a>
-
-            <!-- ป.ธ. 9 -->
-            <a href="construction.html" class="menu-card level-adv disabled">
-                <span class="badge-soon">เร็วๆ นี้</span>
+            <a href="home_pt9.html" class="menu-card level-adv">
                 <div class="icon-box"><i class="fa-solid fa-crown"></i></div>
                 <div class="card-title">ป.ธ. ๙</div>
-                <div class="card-desc">ชั้นสูงสุด</div>
+                <div class="card-desc">แต่งไทย, แปลมคธ (วิสุทธิ/อภิ)</div>
             </a>
         </div>
 
         <div class="section-label" style="margin-top: 50px;">🛠️ เครื่องมือและคลังความรู้</div>
         <div class="grid-menu">
-            <a href="library_center.html" class="menu-card level-tool">
+             <a href="library_center.html" class="menu-card level-tool">
                 <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
                 <div class="card-title">คลังความรู้กลาง</div>
                 <div class="card-desc">ไวยากรณ์ & หลักการแปล</div>
             </a>
-
-            <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-card level-tool">
+            
+             <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-card level-tool">
                 <div class="icon-box"><i class="fa-solid fa-magnifying-glass"></i></div>
                 <div class="card-title">พจนานุกรมธาตุ</div>
                 <div class="card-desc">ค้นหาธาตุและปัจจัย</div>
             </a>
         </div>
-
     </div>
 </body>
-
 </html>
