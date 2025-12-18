@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ห้องเรียน ป.ธ. ๘</title>
-    <!-- ใช้ CSS ชุดเดิม -->
+    <title>ห้องเรียน ป.ธ. ๖</title>
+    <!-- ... (Link Fonts/CSS เหมือนเดิม) ... -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS เหมือนเดิม แต่เปลี่ยนสีธีม */
         body {
             font-family: 'Sarabun', sans-serif;
             background-color: #f4f7f6;
@@ -29,13 +30,13 @@
         .page-header {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #e74c3c;
-            /* สีแดงสำหรับ ป.ธ.8 */
+            border-bottom: 2px solid #16a085;
         }
 
+        /* สีเขียวเข้ม */
         h1 {
             font-size: 2.5em;
-            color: #c0392b;
+            color: #16a085;
             margin-bottom: 10px;
         }
 
@@ -63,7 +64,7 @@
             display: block;
             padding: 25px 20px;
             background-color: #fff;
-            color: #c0392b;
+            color: #34495e;
             text-decoration: none;
             font-size: 1.3em;
             font-weight: 600;
@@ -75,15 +76,8 @@
         .menu-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            background-color: #c0392b;
+            background-color: #16a085;
             color: #fff;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #777;
-            text-decoration: none;
         }
 
         @media (min-width: 768px) {
@@ -91,31 +85,34 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-
-        /* ปุ่มพิเศษสำหรับ Python App */
-        .btn-python {
-            border-left: 8px solid #2ecc71;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        <div style="text-align: left; margin-bottom: 20px;">
+            <a href="index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i
+                    class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        </div>
 
         <div class="page-header" style="border-bottom-color: #c0392b;">
             <h1 style="color: #c0392b;">ห้องเรียน ป.ธ. ๘</h1>
-            <p>วิชาแต่งฉันท์ แปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
+            <p>วิชาแต่งฉันท์ และ วิชาแปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
         </div>
 
-        <h2>📅 ตารางเรียน/อบรม</h2>
+        <div style="margin-bottom: 40px;">
+            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊
+                ดูสถิติและความคืบหน้า</a>
+        </div>
+
+        <h2>📅 ตารางเรียน</h2>
         <div class="menu-container">
             <a href="construction.html" class="menu-button">ตารางเรียน (เร็วๆ นี้)</a>
         </div>
 
         <hr>
 
-        <h2>📚 วิชาและเครื่องมือ</h2>
+        <h2>📚 วิชาเรียน</h2>
         <div class="menu-container">
             <!-- 1. ลิงก์ไปยัง Python App -->
             <a href="https://kanjijn.pythonanywhere.com/" target="_blank" class="menu-button btn-python">
@@ -127,6 +124,12 @@
 
             <!-- 3. วิชาแปล -->
             <a href="construction.html" class="menu-button">แปลมคธเป็นไทย (วิสุทธิมรรค)</a>
+        </div>
+
+        <hr>
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt3" alt="visitor badge" />
         </div>
     </div>
 </body>
