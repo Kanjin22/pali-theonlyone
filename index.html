@@ -3,110 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pali Study & Exam Schedule - Main Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <title>ระบบการเรียนบาลีออนไลน์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
-        .page-header {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #34495e;
-        }
-        h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; }
-        h2 { font-size: 1.8em; color: #34495e; margin: 0; padding: 0;}
-        p { font-size: 1.2em; color: #7f8c8d; }
-        hr {
-            border: 0;
-            height: 1px;
-            background-color: #e0e0e0;
-            margin: 50px auto;
-            width: 80%;
-        }
-        .menu-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .menu-button {
-            display: block;
-            padding: 25px 20px;
-            background-color: #fff;
-            color: #34495e;
-            text-decoration: none;
-            font-size: 1.5em;
-            font-weight: 600;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        
+        .hero-section { margin-bottom: 50px; animation: fadeInDown 0.8s ease; }
+        .hero-title { font-size: 2.8rem; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+        .hero-subtitle { font-size: 1.3rem; color: #7f8c8d; font-weight: 300; }
+
+        .section-label { text-align: left; font-size: 1.2rem; font-weight: bold; color: #34495e; margin: 30px 0 15px 0; border-left: 5px solid #3498db; padding-left: 10px; }
+
+        /* Grid Layout */
+        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; animation: fadeInUp 0.8s ease; }
+
+        /* Card Styles */
+        .menu-card {
+            background: white; border-radius: 12px; padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-decoration: none; color: inherit;
             transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; border: 1px solid #eee;
         }
-        .menu-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            background-color: #34495e;
-            color: #fff;
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: transparent; }
+        
+        /* Icon & Text */
+        .icon-box { font-size: 2.5rem; margin-bottom: 15px; }
+        .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; color: #2c3e50; }
+        .card-desc { font-size: 0.9rem; color: #999; }
+
+        /* Color Coding */
+        .level-basic .icon-box { color: #27ae60; } /* เขียว - ชั้นต้น */
+        .level-inter .icon-box { color: #f39c12; } /* ส้ม - ชั้นกลาง */
+        .level-adv .icon-box { color: #e74c3c; }   /* แดง - ชั้นสูง */
+        .level-tool .icon-box { color: #8e44ad; }  /* ม่วง - เครื่องมือ */
+
+        /* Disabled State (สำหรับชั้นที่ยังไม่เปิด) */
+        .menu-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: #f9f9f9;
         }
-        @media (min-width: 768px) {
-            .menu-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .menu-card.disabled:hover { transform: none; box-shadow: none; }
+        .badge-soon {
+            background: #95a5a6; color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; position: absolute; top: 10px; right: 10px;
         }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="page-header">
-            <h1>ตารางเรียน-สอบบาลีสนามหลวง ๒๕๖๙</h1>
-            <p>ชั้นประโยค ๑-๒ (นวกะ ๒ ห้อง ๔)</p>
+        <div class="hero-section">
+            <div class="hero-title">ระบบการเรียนบาลีออนไลน์</div>
+            <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
         </div>
 
-        <div style="margin-bottom: 40px;">
-            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊 ดูสถิติและความคืบหน้า</a>
-        </div>
-        
-        <h2>ตารางเรียนรายเดือน</h2>
-        <div class="menu-container">
-            <a href="november.html" class="menu-button">พฤศจิกายน ๒๕๖๘</a>
-            <a href="december.html" class="menu-button">ธันวาคม ๒๕๖๘</a>
-            <a href="january.html" class="menu-button">มกราคม ๒๕๖๙</a>
-            <a href="february.html" class="menu-button">กุมภาพันธ์ ๒๕๖๙</a>
-        </div>
-
-        <hr>
-
-        <!-- (ส่วนเมนูคลังความรู้เดิมของคุณ) -->
-        <h2>คลังความรู้</h2>
-        <div class="menu-container">
-            <a href="grammar_principles.html" class="menu-button">หลักบาลีไวยากรณ์</a>
-            <a href="translation_principles.html" class="menu-button">หลักการแปลมคธเป็นไทย</a>
-            <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-button">คลังความรู้ธาตุ</a>
-        </div>
-
-        <!-- *** ส่วนที่เพิ่มใหม่: สถิติผู้เข้าชม (ใช้บริการใหม่) *** -->
-        <hr>
-        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
+        <div class="section-label">📚 ชั้นประโยคบาลีสนามหลวง</div>
+        <div class="grid-menu">
             
-            <!-- โค้ดจาก Visitor Badge (เสถียรกว่า) -->
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone" alt="visitor badge"/>
-            
-        </div>
-        <!-- *********************************** -->
+            <!-- ป.ธ. 1-2 -->
+            <a href="home_pt12.html" class="menu-card level-basic">
+                <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
+                <div class="card-title">ประโยค ๑-๒</div>
+                <div class="card-desc">เปิดเรียนแล้ว ✅</div>
+            </a>
 
-    </div> <!-- ปิด container -->
+            <!-- ป.ธ. 3 -->
+            <a href="construction.html" class="menu-card level-basic disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
+                <div class="card-title">ป.ธ. ๓</div>
+                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+            </a>
+
+            <!-- ป.ธ. 4 -->
+            <a href="construction.html" class="menu-card level-inter disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-tree"></i></div>
+                <div class="card-title">ป.ธ. ๔</div>
+                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+            </a>
+
+            <!-- ป.ธ. 5 -->
+            <a href="construction.html" class="menu-card level-inter disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-book-open-reader"></i></div>
+                <div class="card-title">ป.ธ. ๕</div>
+                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+            </a>
+
+            <!-- ป.ธ. 6 -->
+            <a href="construction.html" class="menu-card level-inter disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
+                <div class="card-title">ป.ธ. ๖</div>
+                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+            </a>
+
+            <!-- ป.ธ. 7 -->
+            <a href="construction.html" class="menu-card level-adv disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-chess-knight"></i></div>
+                <div class="card-title">ป.ธ. ๗</div>
+                <div class="card-desc">กำลังปรับปรุงข้อมูล</div>
+            </a>
+
+            <!-- ป.ธ. 8 -->
+            <a href="construction.html" class="menu-card level-adv disabled"> <!-- เปลี่ยนเป็น home_pt8.html เมื่อพร้อม -->
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-chess-queen"></i></div>
+                <div class="card-title">ป.ธ. ๘</div>
+                <div class="card-desc">วิชาแต่งฉันท์</div>
+            </a>
+
+            <!-- ป.ธ. 9 -->
+            <a href="construction.html" class="menu-card level-adv disabled">
+                <span class="badge-soon">เร็วๆ นี้</span>
+                <div class="icon-box"><i class="fa-solid fa-crown"></i></div>
+                <div class="card-title">ป.ธ. ๙</div>
+                <div class="card-desc">ชั้นสูงสุด</div>
+            </a>
+        </div>
+
+        <div class="section-label" style="margin-top: 50px;">🛠️ เครื่องมือและคลังความรู้</div>
+        <div class="grid-menu">
+             <a href="library_center.html" class="menu-card level-tool">
+                <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
+                <div class="card-title">คลังความรู้กลาง</div>
+                <div class="card-desc">ไวยากรณ์ & หลักการแปล</div>
+            </a>
+            
+             <a href="https://pali-dhatu-app.web.app/search" target="_blank" class="menu-card level-tool">
+                <div class="icon-box"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="card-title">พจนานุกรมธาตุ</div>
+                <div class="card-desc">ค้นหาธาตุและปัจจัย</div>
+            </a>
+        </div>
+
+    </div>
 </body>
 </html>
