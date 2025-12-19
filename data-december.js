@@ -667,7 +667,8 @@ const dataDecember = [
             ],
             slideId: "p3_geng18",
             fileNoteTranslate: "materials/translate-notes-318.pdf",
-            isExam: true, examStartTime: "14:00:00",
+            isExam: true,
+            examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam45-66-67.pdf",
             fileAnswerGrammar: "answers/grammar-answer45-66-67.pdf"
@@ -687,6 +688,10 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๐-๕๑",
             activityTranslate: "(อ่าน) เก็งที่ ๑ น.๑๓-๑๕ ราชา เต ปาโตว โภเชตฺวา - อคฺคา เนว เตมึสุ ฯ",
+            linkYoutube: [
+                "https://youtu.be/DKYg3F8REQQ?si=HsQQFZybytFaRLI-&t=647",
+                "https://youtu.be/9d9U-Gg4L08?si=N4J4GJ969LydSn_D",
+            ],
             slideId: "p4_geng1",
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
             fileNoteTranslate: "materials/translate-notes-401.pdf"
@@ -694,9 +699,14 @@ const dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๘",
             activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๑๙ เตปิ วาณิชกา ราชกุลํ - เทฺว นทิโย อุตฺตริ ฯ",
+            linkYoutube: [
+                "https://youtu.be/9d9U-Gg4L08?si=1oLa97YVYLo4i0D4&t=1132",
+                "https://youtu.be/viw9y7kSpe0?si=XxVaLNDj57_Yhh3f"
+            ],
             slideId: "p4_geng2",
             fileNoteTranslate: "materials/translate-notes-402.pdf",
-            isExam: true, examStartTime: "14:00:00",
+            isExam: true,
+            examStartTime: "14:00:00",
             examEndTime: "15:00:00",
             fileExamGrammar: "exams/grammar-exam67-50-51.pdf",
             fileAnswerGrammar: "answers/grammar-answer67-50-51.pdf"
