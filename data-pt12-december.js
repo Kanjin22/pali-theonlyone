@@ -692,7 +692,7 @@ const dataDecember = [
                 "https://youtu.be/DKYg3F8REQQ?si=HsQQFZybytFaRLI-&t=647",
                 "https://youtu.be/9d9U-Gg4L08?si=N4J4GJ969LydSn_D",
             ],
-            slideId: "p4_geng1",
+            slideId: "d04_v06_s04_mahakappina",
             fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
             fileNoteTranslate: "materials/translate-notes-401.pdf"
         },
@@ -703,7 +703,7 @@ const dataDecember = [
                 "https://youtu.be/9d9U-Gg4L08?si=1oLa97YVYLo4i0D4&t=1132",
                 "https://youtu.be/viw9y7kSpe0?si=XxVaLNDj57_Yhh3f"
             ],
-            slideId: "p4_geng2",
+            slideId: "d04_v06_s04_mahakappina",
             fileNoteTranslate: "materials/translate-notes-402.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -724,12 +724,12 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๓ น.๒๑-๒๓ อตีเต กิร กสฺสปสมฺมาสมฺพุทฺโธ - ทาตุํ น วฏฺฏตีติ ฯ",
-            slideId: "p4_geng3",
+            slideId: "d04_v06_s04_mahakappina",
             fileNoteTranslate: "materials/translate-notes-403.pdf"
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๔ น.๒๓-๒๖ โส ตสฺมึ กเถนฺเต - เต ตสฺส อทาสิ ฯ",
-            slideId: "p4_geng4",
+            slideId: "d04_v06_s04_mahakappina",
             fileNoteTranslate: "materials/translate-notes-404.pdf"
         },
         evening: {
