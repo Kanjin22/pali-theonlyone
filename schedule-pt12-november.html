@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางเรียนเดือนธันวาคม</title>
+    <title>ตารางเรียนเดือนพฤศจิกายน</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS เดิม --- */
@@ -104,7 +104,7 @@
 </head>
 <body>
     <div class="page-header">
-        <h1 class="main-title">ตารางเรียนเดือนธันวาคม ๒๕๖๘</h1>
+        <h1 class="main-title">ตารางเรียนเดือนพฤศจิกายน ๒๕๖๘</h1>
         <h2 class="sub-title">ชั้นประโยค ๑-๒ (นวกะ ๒ ห้อง ๔)</h2>
         <p class="description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
@@ -115,7 +115,7 @@
         <div class="stat-card grammar">
             <div class="stat-icon">📘</div>
             <div class="stat-details">
-                <h3>สถิติ ไวยากรณ์ (ธ.ค.)</h3>
+                <h3>สถิติ ไวยากรณ์ (พ.ย.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-gram-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-gram-exam">0</span></div>
             </div>
@@ -123,7 +123,7 @@
         <div class="stat-card translate">
             <div class="stat-icon">📙</div>
             <div class="stat-details">
-                <h3>สถิติ แปล (ธ.ค.)</h3>
+                <h3>สถิติ แปล (พ.ย.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-trans-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-trans-exam">0</span></div>
             </div>
@@ -142,7 +142,7 @@
         </thead>
         <tbody id="schedule-body"></tbody>
     </table>
-    <a href="index.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
+    <a href="home_pt12.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     <div id="toast-notification"></div>
     
     <!-- Modal Pop-up -->
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <script src="data-december.js"></script>
+    <script src="data-pt12-november.js"></script>
     <script>
         // === 1. ฟังก์ชันสร้างปุ่ม ===
         function generateCellContent(period, date, periodName) {
@@ -191,7 +191,7 @@
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
+            const data = typeof dataNovember !== 'undefined' ? dataNovember : [];
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -208,7 +208,7 @@
 
         // === 4. ฟังก์ชันเปิด Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = dataDecember.find(item => item.date === date);
+            const dayData = dataNovember.find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
@@ -265,7 +265,7 @@
             if (period.slideId) {
                 links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
             }
-            
+
             // --- เนื้อหา ---
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { 
                 links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
@@ -355,7 +355,7 @@
 
         // === 7. ฟังก์ชันคำนวณสถิติ (สำคัญ! ต้องมี) ===
         function calculateMonthlyStats() {
-            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
+            const data = typeof dataNovember !== 'undefined' ? dataNovember : [];
             let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
 
             data.forEach(day => {

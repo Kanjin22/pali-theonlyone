@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางเรียนเดือนมกราคม</title>
+    <title>ตารางเรียนเดือนธันวาคม</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS เดิม --- */
@@ -104,7 +104,7 @@
 </head>
 <body>
     <div class="page-header">
-        <h1 class="main-title">ตารางเรียนเดือนมกราคม ๒๕๖๘</h1>
+        <h1 class="main-title">ตารางเรียนเดือนธันวาคม ๒๕๖๘</h1>
         <h2 class="sub-title">ชั้นประโยค ๑-๒ (นวกะ ๒ ห้อง ๔)</h2>
         <p class="description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
@@ -115,7 +115,7 @@
         <div class="stat-card grammar">
             <div class="stat-icon">📘</div>
             <div class="stat-details">
-                <h3>สถิติ ไวยากรณ์ (ม.ค.)</h3>
+                <h3>สถิติ ไวยากรณ์ (ธ.ค.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-gram-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-gram-exam">0</span></div>
             </div>
@@ -123,7 +123,7 @@
         <div class="stat-card translate">
             <div class="stat-icon">📙</div>
             <div class="stat-details">
-                <h3>สถิติ แปล (ม.ค.)</h3>
+                <h3>สถิติ แปล (ธ.ค.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-trans-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-trans-exam">0</span></div>
             </div>
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <script src="data-january.js"></script>
+    <script src="data-pt12-december.js"></script>
     <script>
         // === 1. ฟังก์ชันสร้างปุ่ม ===
         function generateCellContent(period, date, periodName) {
@@ -191,7 +191,7 @@
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            const data = typeof dataJanuary !== 'undefined' ? dataJanuary : [];
+            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -208,7 +208,7 @@
 
         // === 4. ฟังก์ชันเปิด Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = dataJanuary.find(item => item.date === date);
+            const dayData = dataDecember.find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
@@ -240,16 +240,36 @@
             updateAllExamButtons();
         }
 
-        // === 5. ฟังก์ชันสร้างลิงก์ใน Modal ===
+        // === 5. ฟังก์ชันใหม่: สร้างลิงก์ต่างๆ ภายใน Modal (รองรับ YouTube หลายลิงก์) ===
         function generateModalLinks(period, date) {
             let links = '';
-            if (period.linkZoom) { links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; }
-            if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (YouTube)</a>`; }
+            
+            // --- Zoom ---
+            if (period.linkZoom) { 
+                links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
+            }
+            
+            // --- YouTube (รองรับหลายลิงก์) ---
+            if (period.linkYoutube) {
+                if (Array.isArray(period.linkYoutube)) {
+                    // กรณีมีหลายลิงก์: สร้างปุ่ม YouTube (1), YouTube (2), ...
+                    period.linkYoutube.forEach((link, index) => {
+                        links += `<a href="${link}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (${index + 1})</a>`;
+                    });
+                } else {
+                    // กรณีมีลิงก์เดียว
+                    links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (YouTube)</a>`;
+                }
+            }
+            
             if (period.slideId) {
                 links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
             }
             
-            if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; }
+            // --- เนื้อหา ---
+            if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { 
+                links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
+            }
             if (period.fileNoteTranslate) {
                 if (Array.isArray(period.fileNoteTranslate)) {
                     period.fileNoteTranslate.forEach((file, index) => {
@@ -259,28 +279,22 @@
                     links += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล</a>`;
                 }
             }
+            
+            // --- ข้อสอบ/เฉลย ---
             if (period.isExam) {
                 if (period.fileExamGrammar) {
+                    const examType = "ข้อสอบ ไวย.", answerType = "เฉลย ไวย.";
                     links += `<a href="#" target="_blank" class="btn exam-button" 
-                                data-date="${date}" 
-                                data-start-time="${period.examStartTime}" 
-                                data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamGrammar}" 
-                                data-answer-file="${period.fileAnswerGrammar || '#'}"
-                                data-type="grammar">
-                                กำลังโหลดสถานะ...
-                            </a>`;
+                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
+                                data-type="grammar">กำลังโหลดสถานะ...</a>`;
                 }
                 if (period.fileExamTranslate) {
+                    const examType = "ข้อสอบ แปล", answerType = "เฉลย แปล";
                     links += `<a href="#" target="_blank" class="btn exam-button"
-                                data-date="${date}" 
-                                data-start-time="${period.examStartTime}" 
-                                data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamTranslate}" 
-                                data-answer-file="${period.fileAnswerTranslate || '#'}"
-                                data-type="translate">
-                                กำลังโหลดสถานะ...
-                            </a>`;
+                                data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
+                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
+                                data-type="translate">กำลังโหลดสถานะ...</a>`;
                 }
             }
             return links;
@@ -341,7 +355,7 @@
 
         // === 7. ฟังก์ชันคำนวณสถิติ (สำคัญ! ต้องมี) ===
         function calculateMonthlyStats() {
-            const data = typeof dataJanuary !== 'undefined' ? dataJanuary : [];
+            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
             let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
 
             data.forEach(day => {
