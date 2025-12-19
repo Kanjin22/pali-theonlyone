@@ -106,6 +106,112 @@
                 <div class="card-desc">ค้นความหมาย (PED/CPED) และอ้างอิง</div>
             </a>
         </div>
+
+        <div class="section-label" style="margin-top: 40px;">🔎 ค้นคำเร็ว</div>
+        <div class="grid-menu">
+            <div class="menu-card level-tool" style="width:100%; display:flex; flex-direction:row; gap:10px; align-items:center; justify-content:center;">
+                <input id="quick-search-input" type="text" placeholder="พิมพ์คำบาลี..." style="flex:1; max-width:380px; padding:10px 14px; border-radius:8px; border:1px solid #ddd; font-size:1rem;">
+                <button onclick="openRootSearch()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee;"><i class="fa-solid fa-bolt"></i> ธาตุ</button>
+                <button onclick="openWordSearch()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee;"><i class="fa-solid fa-book-open"></i> คำ</button>
+            </div>
+        </div>
+
+        <div class="section-label" style="margin-top: 40px;">🎯 ทางลัด</div>
+        <div class="grid-menu">
+            <a id="latest-board-link" href="#" class="menu-card level-tool">
+                <div class="icon-box"><i class="fa-solid fa-chalkboard"></i></div>
+                <div class="card-title">สื่อการสอนล่าสุด</div>
+                <div class="card-desc" id="latest-board-desc">กำลังโหลด...</div>
+            </a>
+            <a id="last-classroom-link" href="#" class="menu-card level-tool" style="display:none;">
+                <div class="icon-box"><i class="fa-solid fa-door-open"></i></div>
+                <div class="card-title" id="last-classroom-title">ห้องเรียนล่าสุด</div>
+                <div class="card-desc">กลับไปหน้าห้องเรียนเดิม</div>
+            </a>
+        </div>
+
+        <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
+        <div class="grid-menu">
+            <div class="menu-card level-tool" style="text-align:left;">
+                <div class="card-title">ตารางวันนี้</div>
+                <div class="card-desc" id="today-summary">กำลังโหลด...</div>
+            </div>
+        </div>
     </div>
+    <script src="data-november.js"></script>
+    <script src="data-december.js"></script>
+    <script src="data-january.js"></script>
+    <script src="data-february.js"></script>
+    <script>
+        function norm(s) { return (s || "").trim(); }
+        function openRootSearch() {
+            const q = encodeURIComponent(norm(document.getElementById('quick-search-input').value));
+            if (!q) return;
+            window.open(`https://pali-dhatu-app.web.app/search?q=${q}`, '_blank');
+        }
+        function openWordSearch() {
+            const q = encodeURIComponent(norm(document.getElementById('quick-search-input').value));
+            if (!q) return;
+            window.open(`https://suttacentral.net/define?lang=en&query=${q}`, '_blank');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            let allData = [];
+            if (typeof dataNovember !== 'undefined') allData = allData.concat(dataNovember);
+            if (typeof dataDecember !== 'undefined') allData = allData.concat(dataDecember);
+            if (typeof dataJanuary !== 'undefined') allData = allData.concat(dataJanuary);
+            if (typeof dataFebruary !== 'undefined') allData = allData.concat(dataFebruary);
+            if (allData.length > 0) {
+                allData.sort((a,b) => new Date(a.date) - new Date(b.date));
+                let latest = null;
+                for (let i = allData.length - 1; i >= 0; i--) {
+                    const day = allData[i];
+                    const p = day.afternoon || day.morning || day.evening;
+                    if (p && p.slideId) { latest = { slideId: p.slideId, date: day.displayDate }; break; }
+                }
+                const link = document.getElementById('latest-board-link');
+                const desc = document.getElementById('latest-board-desc');
+                if (latest) {
+                    link.href = `presentation.html?id=${latest.slideId}`;
+                    desc.textContent = `วันที่ ${latest.date}`;
+                } else {
+                    link.href = '#';
+                    desc.textContent = 'ยังไม่มีข้อมูลสไลด์';
+                }
+                const today = new Date();
+                const y = today.getFullYear();
+                const m = String(today.getMonth()+1).padStart(2,'0');
+                const d = String(today.getDate()).padStart(2,'0');
+                const todayStr = `${y}-${m}-${d}`;
+                const dayData = allData.find(x => x.date === todayStr);
+                const todayBox = document.getElementById('today-summary');
+                if (dayData) {
+                    let lines = [];
+                    if (dayData.morning && (dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity)) {
+                        lines.push(`เช้า: ${dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity}`);
+                    }
+                    if (dayData.afternoon && (dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity)) {
+                        lines.push(`บ่าย: ${dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity}`);
+                    }
+                    if (dayData.evening && (dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity)) {
+                        lines.push(`ค่ำ: ${dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity}`);
+                    }
+                    todayBox.textContent = lines.join(' | ');
+                } else {
+                    todayBox.textContent = 'ไม่มีตารางสำหรับวันนี้';
+                }
+            }
+            const last = localStorage.getItem('lastClassroom');
+            if (last) {
+                try {
+                    const obj = JSON.parse(last);
+                    const a = document.getElementById('last-classroom-link');
+                    const t = document.getElementById('last-classroom-title');
+                    a.href = obj.href || '#';
+                    t.textContent = obj.title || 'ห้องเรียนล่าสุด';
+                    a.style.display = 'flex';
+                } catch(e) {}
+            }
+        });
+    </script>
 </body>
 </html>
