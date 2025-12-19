@@ -114,19 +114,12 @@
             </a>
              <a href="https://digitalpalireader.online/" target="_blank" class="menu-card level-tool">
                 <div class="icon-box"><i class="fa-solid fa-book"></i></div>
-                <div class="card-title">พจนานุกรมคำบาลี</div>
-                <div class="card-desc">ค้นความหมาย (PED/CPED) และอ้างอิง</div>
+                <div class="card-title">พจนานุกรมภายนอก (DPR)</div>
+                <div class="card-desc">Digital Pali Reader (PED/CPED)</div>
             </a>
         </div>
 
-        <div class="section-label" style="margin-top: 40px;">🔎 ค้นคำเร็ว (ในเว็บไซต์)</div>
-        <div class="grid-menu" style="display:flex; flex-direction:column; gap:10px;">
-            <div class="menu-card level-tool" style="width:100%; display:flex; flex-direction:row; gap:10px; align-items:center; justify-content:center; box-sizing: border-box;">
-                <input id="quick-search-input" type="text" placeholder="พิมพ์คำบาลี... (เช่น นิพฺพตฺติ)" style="flex:1; max-width:380px; padding:10px 14px; border-radius:8px; border:1px solid #ddd; font-size:1rem;" onkeypress="if(event.key==='Enter') searchInternal()">
-                <button onclick="searchInternal()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee; cursor:pointer;"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
-            </div>
-            <div id="search-results" style="display:none; flex-direction:column; gap:15px; width:100%;"></div>
-        </div>
+
 
         <div class="section-label" style="margin-top: 40px;">🎯 ทางลัด</div>
         <div class="grid-menu">
@@ -148,73 +141,7 @@
     <script src="data-pt12-january.js"></script>
     <script src="data-pt12-february.js"></script>
     <script>
-        function norm(s) { 
-            // Normalize: trim, remove Phinthu (U+0E3A) for looser matching
-            return (s || "").trim().replace(/\u0E3A/g, ''); 
-        }
-        
-        function searchInternal() {
-            const input = document.getElementById('quick-search-input');
-            const rawQ = (input.value || "").trim();
-            const q = rawQ.replace(/\u0E3A/g, ''); // Search key without Phinthu
-            
-            const resultsDiv = document.getElementById('search-results');
-            resultsDiv.innerHTML = '';
-            
-            if (!rawQ) {
-                resultsDiv.style.display = 'none';
-                return;
-            }
 
-            const allVocab = [
-                { name: 'อาขยาต', data: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}) },
-                { name: 'กิตก์', data: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}) },
-                { name: 'สมาส', data: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}) },
-                { name: 'ตัทธิต', data: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {}) }
-            ];
-
-            let foundCount = 0;
-            const maxResults = 50; 
-
-            for (const group of allVocab) {
-                for (const [word, info] of Object.entries(group.data)) {
-                    // Normalize dictionary word too (remove Phinthu) for comparison
-                    const normWord = word.replace(/\u0E3A/g, '');
-                    
-                    // Match if normalized query is in normalized word
-                    if (normWord.includes(q)) {
-                        foundCount++;
-                        
-                        const card = document.createElement('div');
-                        card.className = 'menu-card';
-                        card.style.textAlign = 'left';
-                        card.style.alignItems = 'flex-start';
-                        card.style.padding = '20px';
-                        
-                        let detailsHtml = '';
-                        if (info.details && Array.isArray(info.details)) {
-                            detailsHtml = `<ul style="margin:5px 0 0 20px; padding:0; color:#555;">${info.details.map(d => `<li>${d}</li>`).join('')}</ul>`;
-                        }
-
-                        card.innerHTML = `
-                            <div style="font-size:1.2rem; font-weight:bold; color:#2c3e50; margin-bottom:5px;">${word} <span style="font-size:0.8rem; color:#888; font-weight:normal;">(${group.name})</span></div>
-                            <div style="font-size:1rem; color:#2980b9; margin-bottom:5px;">${info.split || ''}</div>
-                            <div style="font-size:0.9rem;">${detailsHtml}</div>
-                        `;
-                        resultsDiv.appendChild(card);
-
-                        if (foundCount >= maxResults) break;
-                    }
-                }
-                if (foundCount >= maxResults) break;
-            }
-
-            if (foundCount === 0) {
-                resultsDiv.innerHTML = '<div class="menu-card" style="padding:20px; color:#777;">ไม่พบคำที่ค้นหา</div>';
-            }
-            
-            resultsDiv.style.display = 'flex';
-        }
         function labelWithLevel(prefix, slot, day) {
             const level = (slot && (slot.level || slot.classLevel || slot.grade)) || (day && day.level);
             return level ? `${prefix} (${level})` : prefix;
