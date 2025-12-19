@@ -1,4 +1,4 @@
-const slidesPart4 = {
+const contentDhamma04 = {
     "p4_geng1": [
         {
             part: "ภาคที่ ๔",
