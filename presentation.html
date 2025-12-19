@@ -278,16 +278,13 @@
 
         /* --- Controls & UI --- */
         .page-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            display: inline-block;
             background-color: rgba(236, 239, 241, 0.9);
             padding: 6px 12px;
             border-radius: 8px;
             font-size: 1rem;
             color: #78909c;
             font-weight: bold;
-            z-index: 100;
         }
 
         .controls {
@@ -638,10 +635,10 @@
 
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
-        <div class="page-badge" id="pageNumber">1</div>
         <div class="slide-meta">
             <div id="slideTitle" class="slide-title">สื่อการสอน</div>
             <div id="slideSubtitle" class="slide-subtitle"></div>
+            <div class="page-badge" id="pageNumber">1</div>
         </div>
 
         <div class="tools-sidebar">
