@@ -51,6 +51,24 @@
             width: 100%;
             flex-shrink: 0;
         }
+        .slide-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 12px 20px 6px 20px;
+            background-color: #f7f9f9;
+            border-bottom: 1px solid #eceff1;
+        }
+        .slide-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .slide-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #607d8b;
+        }
 
         /* --- พื้นที่เนื้อหาแบบ Split View --- */
         .content-area {
@@ -621,6 +639,10 @@
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
         <div class="page-badge" id="pageNumber">1</div>
+        <div class="slide-meta">
+            <div id="slideTitle" class="slide-title">สื่อการสอน</div>
+            <div id="slideSubtitle" class="slide-subtitle"></div>
+        </div>
 
         <div class="tools-sidebar">
             <!-- ปุ่มตั้งค่า -->
@@ -778,6 +800,46 @@
         }
 
         let currentIndex = 0;
+        function computeMeta(slideId, slideObj) {
+            let title = "สื่อการสอน";
+            let subtitle = "";
+            if (slideObj) {
+                if (slideObj.title) {
+                    title = slideObj.title;
+                } else {
+                    const partText = slideObj.part ? `ภาคที่ ${slideObj.part}` : "";
+                    const pageText = slideObj.page ? `หน้า ${slideObj.page}` : "";
+                    const combined = [partText, pageText].filter(Boolean).join(" ");
+                    if (combined) title = combined;
+                }
+                if (slideObj.subtitle) {
+                    subtitle = slideObj.subtitle;
+                } else {
+                    const details = [slideObj.story, slideObj.episode].filter(Boolean).join(" · ");
+                    if (details) subtitle = details;
+                }
+            }
+            if (!slideObj) {
+                if (slideId) {
+                    const m = slideId.match(/^p(\d+)_(\w+)(\d+)$/);
+                    if (m) {
+                        const part = m[1];
+                        const group = m[2];
+                        const num = m[3];
+                        title = `ภาค ${part}`;
+                        if (group === 'geng') {
+                            subtitle = `เก็งที่ ${num}`;
+                        } else {
+                            subtitle = `${group} ${num}`;
+                        }
+                    }
+                }
+            }
+            const titleEl = document.getElementById('slideTitle');
+            const subEl = document.getElementById('slideSubtitle');
+            if (titleEl) titleEl.innerText = title;
+            if (subEl) subEl.innerText = subtitle;
+        }
 
         // --- Settings Logic ---
         let currentFontSizePali = 1.8;
@@ -965,6 +1027,7 @@
 
             document.getElementById('contextContent').innerText = s.context;
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
+            computeMeta(slideId, s);
             applyThaiState();
         }
 
