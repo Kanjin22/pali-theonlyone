@@ -744,12 +744,12 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๕ น.๒๗-๒๙ ตํทิวสํ ปน สตฺถา - แาเทตฺวา อฏฺฐาสิ ฯ",
-            slideId: "p4_geng5",
+            slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/translate-notes-405.pdf"
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๖ น.เถโร อฏฺฐเม ทิวเส - อตฺตภาวํ สมฺมสนฺโต นิสีทิ ฯ",
-            slideId: "p4_geng6",
+            slideId: "d04_v06_s06_lakuntaka",
             fileNoteTranslate: "materials/translate-notes-406.pdf"
         },
         evening: {
@@ -766,14 +766,14 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๒-๕๓",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๗ น.๕๕-๕๗ เอกสฺมึ หิ สมเย สตฺถา - เทเสนฺโต อิมํ คาถมาห ฯ",
-            slideId: "p4_geng7",
+            slideId: "d04_v06_s07_kana_mother",
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-407.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๙",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๘ น.๖๕-๖๗ เอกสฺมึ หิ สมเย อายสฺมา - เทเสนฺโต อิมํ คาถมาห ฯ",
-            slideId: "p4_geng8",
+            slideId: "d04_v06_s08_500_monks",
             fileNoteTranslate: "materials/translate-notes-408.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -856,14 +856,14 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๘-๕๙",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๓ น.๙๘-๑๐๐ ราชคเห กิร เอกา - อหํ ปฏิยาเทสฺสามีติ ฯ",
-            slideId: "p4_geng13",
+            slideId: "d04_v07_s02_mahakassapa",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-413.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๒",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๔ น.๑๐๒-๑๐๔ สาปิ โจรํ ปปาเต - เอกมนฺตํ นิสีทึสุ ฯ",
-            slideId: "p4_geng14",
+            slideId: "d04_v07_s03_belatthasisa",
             fileNoteTranslate: "materials/translate-notes-414.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -886,14 +886,14 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๐-๖๑",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๕ น.๑๑๓-๑๑๕ ฑีฆลมฺพวาสิโน กิร - อุปาสกสเตหิ ปริวุโต วิจริ ฯ",
-            slideId: "p4_geng15",
+            slideId: "d04_v07_s05_mahakaccayana",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-415.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๓",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๖ น.๑๑๙-๑๒๑ สตฺถา เอตสฺมึ คเต ตํ - ตสฺมา เตปิ ตถา อทํสุ ฯ",
-            slideId: "p4_geng16",
+            slideId: "d04_v07_s06_sariputta",
             fileNoteTranslate: "materials/translate-notes-416.pdf",
             isExam: true,
             examStartTime: "14:00:00",
