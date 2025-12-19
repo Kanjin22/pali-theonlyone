@@ -154,6 +154,10 @@
             if (!q) return;
             window.open(`https://suttacentral.net/define?lang=en&query=${q}`, '_blank');
         }
+        function labelWithLevel(prefix, slot, day) {
+            const level = (slot && (slot.level || slot.classLevel || slot.grade)) || (day && day.level);
+            return level ? `${prefix} (${level})` : prefix;
+        }
         document.addEventListener('DOMContentLoaded', () => {
             let allData = [];
             if (typeof dataNovember !== 'undefined') allData = allData.concat(dataNovember);
@@ -187,13 +191,13 @@
                 if (dayData) {
                     let lines = [];
                     if (dayData.morning && (dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity)) {
-                        lines.push(`เช้า: ${dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity}`);
+                        lines.push(`${labelWithLevel('เช้า', dayData.morning, dayData)}: ${dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity}`);
                     }
                     if (dayData.afternoon && (dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity)) {
-                        lines.push(`บ่าย: ${dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity}`);
+                        lines.push(`${labelWithLevel('บ่าย', dayData.afternoon, dayData)}: ${dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity}`);
                     }
                     if (dayData.evening && (dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity)) {
-                        lines.push(`ค่ำ: ${dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity}`);
+                        lines.push(`${labelWithLevel('ค่ำ', dayData.evening, dayData)}: ${dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity}`);
                     }
                     todayBox.textContent = lines.join(' | ');
                 } else {
