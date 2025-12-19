@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พจนานุกรม - ระบบการเรียนบาลีออนไลน์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header-section { text-align: center; margin-bottom: 40px; }
+        .page-title { font-size: 2.5rem; color: #2c3e50; font-weight: 700; margin-bottom: 10px; }
+        .page-subtitle { color: #7f8c8d; font-size: 1.2rem; }
+        
+        .search-box-container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+        }
+        
+        .search-input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Sarabun', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 1.2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: #f1f2f6;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #57606f;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .filter-btn:hover {
+            background: #dfe4ea;
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .vocab-card {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #bdc3c7;
+            transition: transform 0.2s;
+        }
+        
+        .vocab-card:hover {
+            transform: translateX(5px);
+        }
+
+        .vocab-card.type-akhyata { border-left-color: #e74c3c; } /* อาขยาต - แดง */
+        .vocab-card.type-kitaka { border-left-color: #f39c12; } /* กิตก์ - ส้ม */
+        .vocab-card.type-samasa { border-left-color: #27ae60; } /* สมาส - เขียว */
+        .vocab-card.type-taddhita { border-left-color: #9b59b6; } /* ตัทธิต - ม่วง */
+        .vocab-card.type-general { border-left-color: #34495e; } /* ทั่วไป - เทาเข้ม */
+
+        .word-title {
+            font-family: 'Niramit', serif;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .word-type-badge {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #ecf0f1;
+            color: #7f8c8d;
+            font-weight: normal;
+        }
+
+        .word-split {
+            color: #e67e22;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .word-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #555;
+        }
+
+        .word-details li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .word-details li::before {
+            content: "•";
+            color: #3498db;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: #34495e; }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #95a5a6;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        
+        <div class="header-section">
+            <div class="page-title">📚 พจนานุกรมศัพท์บาลี</div>
+            <div class="page-subtitle">รวบรวมศัพท์ อาขยาต กิตก์ สมาส และตัทธิต</div>
+        </div>
+
+        <div class="search-box-container">
+            <div class="search-input-group">
+                <input type="text" id="dict-search" class="search-input" placeholder="พิมพ์คำศัพท์ที่ต้องการค้นหา..." oninput="performSearch()">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
+            
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="toggleFilter('all')">ทั้งหมด</button>
+                <button class="filter-btn" onclick="toggleFilter('akhyata')">อาขยาต</button>
+                <button class="filter-btn" onclick="toggleFilter('kitaka')">กิตก์</button>
+                <button class="filter-btn" onclick="toggleFilter('samasa')">สมาส</button>
+                <button class="filter-btn" onclick="toggleFilter('taddhita')">ตัทธิต</button>
+            </div>
+        </div>
+
+        <div id="results-area" class="results-container">
+            <!-- Results will be injected here -->
+            <div class="empty-state">
+                <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Vocab Files -->
+    <script src="vocab-akhyata.js"></script>
+    <script src="vocab-kitaka.js"></script>
+    <script src="vocab-samasa.js"></script>
+    <script src="vocab-taddhita.js"></script>
+    <script src="vocab-general.js"></script>
+
+    <script>
+        // Combine all vocab data
+        let allVocabData = [];
+        let activeFilter = 'all';
+
+        function initData() {
+            // Helper to process object into array
+            const process = (source, type, label) => {
+                if (typeof source === 'undefined') return;
+                Object.keys(source).forEach(key => {
+                    const item = source[key];
+                    allVocabData.push({
+                        word: key,
+                        type: type,
+                        label: label,
+                        split: item.split || '-',
+                        details: item.details || []
+                    });
+                });
+            };
+
+            process((typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}), 'akhyata', 'อาขยาต');
+            process((typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}), 'kitaka', 'กิตก์');
+            process((typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}), 'samasa', 'สมาส');
+            process((typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {}), 'taddhita', 'ตัทธิต');
+            process((typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}), 'general', 'ศัพท์ทั่วไป');
+        }
+
+        function normalize(str) {
+            if (!str) return "";
+            // Remove diacritics (upper/lower vowels/marks)
+            return str.replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, "");
+        }
+
+        function toggleFilter(filter) {
+            activeFilter = filter;
+            
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText === getFilterLabel(filter) || (filter === 'all' && btn.innerText === 'ทั้งหมด')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Re-run search if there is query, else clear
+            const query = document.getElementById('dict-search').value;
+            if (query.trim()) performSearch();
+        }
+
+        function getFilterLabel(key) {
+            const map = {
+                'akhyata': 'อาขยาต',
+                'kitaka': 'กิตก์',
+                'samasa': 'สมาส',
+                'taddhita': 'ตัทธิต'
+            };
+            return map[key] || '';
+        }
+
+        function performSearch() {
+            const input = document.getElementById('dict-search');
+            const queryRaw = input.value.trim();
+            const queryNorm = normalize(queryRaw);
+            const container = document.getElementById('results-area');
+
+            if (!queryRaw) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา
+                    </div>`;
+                return;
+            }
+
+            // Filter data
+            const results = allVocabData.filter(item => {
+                // Check Type Filter
+                if (activeFilter !== 'all' && item.type !== activeFilter) return false;
+
+                // Check Search Query (Match word or split)
+                const wordNorm = normalize(item.word);
+                const splitNorm = normalize(item.split);
+                
+                return wordNorm.includes(queryNorm) || splitNorm.includes(queryNorm);
+            });
+
+            // Limit results for performance
+            const displayResults = results.slice(0, 50);
+
+            if (displayResults.length === 0) {
+                container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในหมวดที่เลือก</div>`;
+                return;
+            }
+
+            container.innerHTML = displayResults.map(item => `
+                <div class="vocab-card type-${item.type}">
+                    <div class="word-title">
+                        ${item.word}
+                        <span class="word-type-badge">${item.label}</span>
+                    </div>
+                    <div class="word-split">${item.split}</div>
+                    <ul class="word-details">
+                        ${item.details.map(d => `<li>${d}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initData();
+            
+            // Check for URL param 'q' to auto-search
+            const params = new URLSearchParams(window.location.search);
+            const q = params.get('q');
+            if (q) {
+                document.getElementById('dict-search').value = q;
+                performSearch();
+            }
+        });
+
+    </script>
+</body>
+</html>
