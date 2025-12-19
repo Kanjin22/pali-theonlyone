@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ห้องสมุดบทเรียน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #16a085; padding-bottom: 20px; }
+        h1 { color: #16a085; margin: 0; }
+        .subtitle { color: #7f8c8d; margin-top: 10px; }
+
+        .search-box { margin-bottom: 30px; position: relative; }
+        .search-input { width: 100%; padding: 15px 20px; font-size: 1.1em; border: 2px solid #ecf0f1; border-radius: 30px; outline: none; transition: border-color 0.3s; box-sizing: border-box; }
+        .search-input:focus { border-color: #16a085; }
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #bdc3c7; }
+
+        .book-section { margin-bottom: 40px; }
+        .book-title { font-size: 1.5em; color: #2c3e50; margin-bottom: 15px; border-left: 5px solid #16a085; padding-left: 15px; background-color: #f9f9f9; padding: 10px 15px; border-radius: 0 5px 5px 0; }
+        
+        .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .story-card { background-color: #fff; border: 1px solid #ecf0f1; border-radius: 8px; padding: 15px; transition: all 0.2s; text-decoration: none; color: #34495e; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; }
+        .story-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: #16a085; }
+        .story-title { font-weight: bold; font-size: 1.1em; margin-bottom: 5px; color: #2c3e50; }
+        .story-episode { font-size: 0.9em; color: #7f8c8d; flex-grow: 1; }
+        .story-meta { margin-top: 10px; font-size: 0.8em; color: #bdc3c7; text-align: right; }
+
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #7f8c8d; text-decoration: none; font-weight: bold; }
+        .back-btn:hover { color: #2c3e50; }
+
+        .empty-state { text-align: center; color: #bdc3c7; padding: 40px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="library_center.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่คลังความรู้</a>
+        
+        <div class="header">
+            <h1>ห้องสมุดบทเรียน</h1>
+            <p class="subtitle">รวบรวมเนื้อหาบทเรียนทั้งหมดไว้ในที่เดียว</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาชื่อเรื่อง, ตอน, หรือเนื้อหา...">
+            <i class="fa-solid fa-search search-icon"></i>
+        </div>
+
+        <div id="libraryContent">
+            <!-- Content will be injected here -->
+        </div>
+        <div id="emptyState" class="empty-state">
+            <i class="fa-regular fa-folder-open" style="font-size: 3em; margin-bottom: 10px;"></i>
+            <p>ไม่พบเนื้อหาที่ค้นหา</p>
+        </div>
+    </div>
+
+    <!-- Load all content scripts -->
+    <script src="content-dhamma01.js"></script>
+    <script src="content-dhamma02.js"></script>
+    <script src="content-dhamma03.js"></script>
+    <script src="content-dhamma04.js"></script>
+    <script src="content-dhamma05.js"></script>
+    <script src="content-dhamma06.js"></script>
+    <script src="content-dhamma07.js"></script>
+    <script src="content-dhamma08.js"></script>
+    <script src="content-mangala01.js"></script>
+    <script src="content-mangala02.js"></script>
+    <script src="content-samanta01.js"></script>
+    <script src="content-samanta02.js"></script>
+    <script src="content-samanta03.js"></script>
+    <script src="content-visuddhi01.js"></script>
+    <script src="content-visuddhi02.js"></script>
+    <script src="content-visuddhi03.js"></script>
+    <script src="content-abhidhamma01.js"></script>
+
+    <script>
+        // Mapping of content objects
+        // Note: We check if variable exists to avoid errors if file is missing
+        const books = [];
+
+        function registerBook(name, varObj) {
+            if (typeof varObj !== 'undefined') {
+                books.push({ name: name, data: varObj });
+            }
+        }
+
+        try { registerBook("ธรรมบท ภาค ๑", contentDhamma01); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๒", contentDhamma02); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๓", contentDhamma03); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๔", contentDhamma04); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๕", contentDhamma05); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๖", contentDhamma06); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๗", contentDhamma07); } catch(e) {}
+        try { registerBook("ธรรมบท ภาค ๘", contentDhamma08); } catch(e) {}
+        try { registerBook("มังคลัถทีปนี ภาค ๑", contentMangala01); } catch(e) {}
+        try { registerBook("มังคลัถทีปนี ภาค ๒", contentMangala02); } catch(e) {}
+        try { registerBook("สมันตปาสาทิกา ภาค ๑", contentSamanta01); } catch(e) {}
+        try { registerBook("สมันตปาสาทิกา ภาค ๒", contentSamanta02); } catch(e) {}
+        try { registerBook("สมันตปาสาทิกา ภาค ๓", contentSamanta03); } catch(e) {}
+        try { registerBook("วิสุทธิมรรค ภาค ๑", contentVisuddhi01); } catch(e) {}
+        try { registerBook("วิสุทธิมรรค ภาค ๒", contentVisuddhi02); } catch(e) {}
+        try { registerBook("วิสุทธิมรรค ภาค ๓", contentVisuddhi03); } catch(e) {}
+        try { registerBook("อภิธรรม ภาค ๑", contentAbhidhamma01); } catch(e) {}
+
+        const libraryContainer = document.getElementById('libraryContent');
+        const searchInput = document.getElementById('searchInput');
+        const emptyState = document.getElementById('emptyState');
+
+        function renderLibrary(filterText = '') {
+            libraryContainer.innerHTML = '';
+            let hasResults = false;
+            const filter = filterText.toLowerCase();
+
+            books.forEach(book => {
+                // Collect stories from this book
+                const matchingStories = [];
+                
+                // data is like { "id1": [...slides], "id2": [...slides] }
+                Object.keys(book.data).forEach(storyId => {
+                    const slides = book.data[storyId];
+                    if (!slides || slides.length === 0) return;
+                    
+                    // Use the first slide for metadata
+                    const firstSlide = slides[0];
+                    const storyTitle = firstSlide.story || "ไม่ระบุชื่อเรื่อง";
+                    const episode = firstSlide.episode || "";
+                    
+                    // Search logic
+                    const textToSearch = `${book.name} ${storyTitle} ${episode}`.toLowerCase();
+                    if (textToSearch.includes(filter)) {
+                        matchingStories.push({
+                            id: storyId,
+                            title: storyTitle,
+                            episode: episode,
+                            page: firstSlide.page || ""
+                        });
+                    }
+                });
+
+                if (matchingStories.length > 0) {
+                    hasResults = true;
+                    
+                    const bookSection = document.createElement('div');
+                    bookSection.className = 'book-section';
+                    
+                    const bookHeader = document.createElement('div');
+                    bookHeader.className = 'book-title';
+                    bookHeader.textContent = book.name;
+                    bookSection.appendChild(bookHeader);
+                    
+                    const grid = document.createElement('div');
+                    grid.className = 'story-grid';
+                    
+                    matchingStories.forEach(story => {
+                        const card = document.createElement('a');
+                        card.href = `presentation.html?id=${story.id}`;
+                        card.className = 'story-card';
+                        card.target = "_blank"; // Open in new tab? Maybe same tab is better for mobile. Let's keep same tab or user preference. Standard is same tab.
+                        card.removeAttribute('target'); // Removing target blank for smoother nav
+                        
+                        card.innerHTML = `
+                            <div class="story-title">${story.title}</div>
+                            <div class="story-episode">${story.episode}</div>
+                            <div class="story-meta"><i class="fa-regular fa-file-lines"></i> ${story.page}</div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                    
+                    bookSection.appendChild(grid);
+                    libraryContainer.appendChild(bookSection);
+                }
+            });
+
+            if (!hasResults) {
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
+        }
+
+        // Initial Render
+        renderLibrary();
+
+        // Search Event
+        searchInput.addEventListener('input', (e) => {
+            renderLibrary(e.target.value);
+        });
+
+    </script>
+</body>
+</html>

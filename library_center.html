@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้กลาง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { max-width: 800px; width: 100%; text-align: center; }
+        
+        .page-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #34495e; }
+        h1 { font-size: 2.5em; color: #34495e; margin-bottom: 10px; }
+        
+        p { font-size: 1.2em; color: #7f8c8d; }
+        hr { border: 0; height: 1px; background-color: #e0e0e0; margin: 50px auto; width: 80%; }
+        .menu-container { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+        .menu-button { display: block; padding: 25px 20px; background-color: #fff; color: #34495e; text-decoration: none; font-size: 1.3em; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        .menu-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); background-color: #34495e; color: #fff; }
+        .menu-icon { font-size: 1.5em; margin-bottom: 10px; display: block; color: #34495e; }
+        .menu-button:hover .menu-icon { color: #fff; }
+        @media (min-width: 768px) { .menu-container { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: left; margin-bottom: 20px;">
+            <a href="index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        </div>
+        
+        <div class="page-header">
+            <h1>คลังความรู้กลาง</h1>
+            <p>แหล่งรวมความรู้ ไวยากรณ์ หลักการแปล และบทเรียนต่างๆ</p>
+        </div>
+
+        <div class="menu-container">
+            <a href="grammar_principles.html" class="menu-button">
+                <i class="fa-solid fa-book menu-icon"></i>
+                หลักบาลีไวยากรณ์
+            </a>
+            <a href="translation_principles.html" class="menu-button">
+                <i class="fa-solid fa-language menu-icon"></i>
+                หลักการแปลมคธเป็นไทย
+            </a>
+            <a href="content_browser.html" class="menu-button" style="grid-column: 1 / -1; background-color: #e8f6f3; color: #16a085;">
+                <i class="fa-solid fa-layer-group menu-icon" style="color: #16a085;"></i>
+                ห้องสมุดบทเรียน (เนื้อหาทั้งหมด)
+            </a>
+        </div>
+        
+        <hr>
+
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-library" alt="visitor badge"/>
+        </div>
+    </div>
+</body>
+</html>
