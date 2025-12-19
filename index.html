@@ -107,13 +107,13 @@
             </a>
         </div>
 
-        <div class="section-label" style="margin-top: 40px;">🔎 ค้นคำเร็ว</div>
-        <div class="grid-menu">
-            <div class="menu-card level-tool" style="width:100%; display:flex; flex-direction:row; gap:10px; align-items:center; justify-content:center;">
-                <input id="quick-search-input" type="text" placeholder="พิมพ์คำบาลี..." style="flex:1; max-width:380px; padding:10px 14px; border-radius:8px; border:1px solid #ddd; font-size:1rem;">
-                <button onclick="openRootSearch()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee;"><i class="fa-solid fa-bolt"></i> ธาตุ</button>
-                <button onclick="openWordSearch()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee;"><i class="fa-solid fa-book-open"></i> คำ</button>
+        <div class="section-label" style="margin-top: 40px;">🔎 ค้นคำเร็ว (ในเว็บไซต์)</div>
+        <div class="grid-menu" style="display:flex; flex-direction:column; gap:10px;">
+            <div class="menu-card level-tool" style="width:100%; display:flex; flex-direction:row; gap:10px; align-items:center; justify-content:center; box-sizing: border-box;">
+                <input id="quick-search-input" type="text" placeholder="พิมพ์คำบาลี... (เช่น นิพฺพตฺติ)" style="flex:1; max-width:380px; padding:10px 14px; border-radius:8px; border:1px solid #ddd; font-size:1rem;" onkeypress="if(event.key==='Enter') searchInternal()">
+                <button onclick="searchInternal()" class="menu-card" style="padding:10px 16px; border-radius:8px; border:1px solid #eee; cursor:pointer;"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
             </div>
+            <div id="search-results" style="display:none; flex-direction:column; gap:15px; width:100%;"></div>
         </div>
 
         <div class="section-label" style="margin-top: 40px;">🎯 ทางลัด</div>
@@ -144,15 +144,62 @@
     <script src="data-february.js"></script>
     <script>
         function norm(s) { return (s || "").trim(); }
-        function openRootSearch() {
-            const q = encodeURIComponent(norm(document.getElementById('quick-search-input').value));
-            if (!q) return;
-            window.open(`https://pali-dhatu-app.web.app/search?q=${q}`, '_blank');
-        }
-        function openWordSearch() {
-            const q = encodeURIComponent(norm(document.getElementById('quick-search-input').value));
-            if (!q) return;
-            window.open(`https://suttacentral.net/define?lang=en&query=${q}`, '_blank');
+        
+        function searchInternal() {
+            const input = document.getElementById('quick-search-input');
+            const q = norm(input.value);
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = '';
+            
+            if (!q) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+
+            const allVocab = [
+                { name: 'อาขยาต', data: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}) },
+                { name: 'กิตก์', data: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}) },
+                { name: 'สมาส', data: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}) },
+                { name: 'ตัทธิต', data: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {}) }
+            ];
+
+            let foundCount = 0;
+            const maxResults = 50; 
+
+            for (const group of allVocab) {
+                for (const [word, info] of Object.entries(group.data)) {
+                    if (word.includes(q)) {
+                        foundCount++;
+                        
+                        const card = document.createElement('div');
+                        card.className = 'menu-card';
+                        card.style.textAlign = 'left';
+                        card.style.alignItems = 'flex-start';
+                        card.style.padding = '20px';
+                        
+                        let detailsHtml = '';
+                        if (info.details && Array.isArray(info.details)) {
+                            detailsHtml = `<ul style="margin:5px 0 0 20px; padding:0; color:#555;">${info.details.map(d => `<li>${d}</li>`).join('')}</ul>`;
+                        }
+
+                        card.innerHTML = `
+                            <div style="font-size:1.2rem; font-weight:bold; color:#2c3e50; margin-bottom:5px;">${word} <span style="font-size:0.8rem; color:#888; font-weight:normal;">(${group.name})</span></div>
+                            <div style="font-size:1rem; color:#2980b9; margin-bottom:5px;">${info.split || ''}</div>
+                            <div style="font-size:0.9rem;">${detailsHtml}</div>
+                        `;
+                        resultsDiv.appendChild(card);
+
+                        if (foundCount >= maxResults) break;
+                    }
+                }
+                if (foundCount >= maxResults) break;
+            }
+
+            if (foundCount === 0) {
+                resultsDiv.innerHTML = '<div class="menu-card" style="padding:20px; color:#777;">ไม่พบคำที่ค้นหา</div>';
+            }
+            
+            resultsDiv.style.display = 'flex';
         }
         function labelWithLevel(prefix, slot, day) {
             const level = (slot && (slot.level || slot.classLevel || slot.grade)) || (day && day.level);
