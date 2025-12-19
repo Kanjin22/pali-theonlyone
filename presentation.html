@@ -618,11 +618,6 @@
                 font-size: 0.9rem;
             }
 
-            .page-badge {
-                right: 15px;
-                top: 15px;
-            }
-
             .tools-sidebar {
                 top: 60px;
                 right: 15px;
@@ -807,8 +802,14 @@
                 if (slideObj.title) {
                     title = slideObj.title;
                 } else {
-                    const partText = slideObj.part ? `ภาคที่ ${slideObj.part}` : "";
-                    const pageText = slideObj.page ? `หน้า ${slideObj.page}` : "";
+                    let partText = "";
+                    if (typeof slideObj.part !== 'undefined') {
+                        partText = (typeof slideObj.part === 'number') ? `ภาคที่ ${slideObj.part}` : String(slideObj.part);
+                    }
+                    let pageText = "";
+                    if (typeof slideObj.page !== 'undefined') {
+                        pageText = (typeof slideObj.page === 'number') ? `หน้า ${slideObj.page}` : String(slideObj.page);
+                    }
                     const combined = [partText, pageText].filter(Boolean).join(" ");
                     if (combined) title = combined;
                 }
