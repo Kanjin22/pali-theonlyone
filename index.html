@@ -307,17 +307,7 @@
                     }
                 }
             }
-            const last = localStorage.getItem('lastClassroom');
-            if (last) {
-                try {
-                    const obj = JSON.parse(last);
-                    const a = document.getElementById('last-classroom-link');
-                    const t = document.getElementById('last-classroom-title');
-                    a.href = obj.href || '#';
-                    t.textContent = obj.title || 'ห้องเรียนล่าสุด';
-                    a.style.display = 'flex';
-                } catch(e) {}
-            }
+
         });
     </script>
 </body>
