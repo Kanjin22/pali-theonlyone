@@ -77,7 +77,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๘-๕๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๒๔-๒๗ เสฏฺฐี มโตติ - ทานพฺยาวโฏ อโหสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๕ น.๒๔-๒๗ เสฏฺฐี มโตติ - ทานพฺยาวโฏ อโหสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/Fxi6Fzm2lGA?si=pgtiXdt3Z6VIVpXY&t=2940",
                 "https://youtu.be/tcbWtQK70X4?si=EYY2dc0JYFTB5Gse",
@@ -87,7 +87,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๔",
-            activityTranslate: "(อ่าน) เก็งที่ ๖ น. ๒๙-๓๑ สา ทานคฺเค อุจฺจาสทฺทํ - ตสฺสาเยว ปริวาริตฺถิโย อเหสุํ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๖ น. ๒๙-๓๑ สา ทานคฺเค อุจฺจาสทฺทํ - ตสฺสาเยว ปริวาริตฺถิโย อเหสุํ ฯ",
             linkYoutube: [
                 "https://youtu.be/FdhxWVZTC00?si=TSX7tmticVRhHHe4&t=86",
             ],
@@ -112,7 +112,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๐-๖๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๓๓-๓๕ จณฺฑปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๗ น.๓๓-๓๕ จณฺฑปชฺโชโต ปิ อุเทนํ - หตฺถคตํ กรึสุ ฯ",
             linkYoutube: [
                 "https://youtu.be/1UUn6E6TdGY?si=lWewLM7WqyGIc_7p&t=479",
                 "https://youtu.be/brBfFITuq5E?si=uOnAQGX2O5gCcECb",
@@ -122,7 +122,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๘ น.๔๒-๔๔ ตสฺมึ โข ปน สมเย - มยา ลทฺธาติ อาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๘ น.๔๒-๔๔ ตสฺมึ โข ปน สมเย - มยา ลทฺธาติ อาห ฯ",
             linkYoutube: [
                 "https://youtu.be/iniianWQ0Zw?si=4WzsTv0VpPJkvz8q&t=421",
                 "https://youtu.be/DIoXAa37r6A?si=kxSJtqwObPDQv5lj",
@@ -148,7 +148,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๒-๖๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๙ น.๔๖-๔๘ เตสํ ปน ติณฺณํ - วนฺทึสุ เจว ปูเชสุํ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๙ น.๔๖-๔๘ เตสํ ปน ติณฺณํ - วนฺทึสุ เจว ปูเชสุํ ฯ",
             linkYoutube: [
                 "https://youtu.be/DIoXAa37r6A?si=WUF9b2rMjTCDmr8F&t=1122",
                 "https://youtu.be/VaB0JZhQF-c?si=aB7OSCs4nUeHXNMa",
@@ -158,7 +158,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๖",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๐ น.๕๕-๕๘ ตา เอกทิวสํ เถรสฺส - อิมํ อุทานํ อุทาเนสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๐ น.๕๕-๕๘ ตา เอกทิวสํ เถรสฺส - อิมํ อุทานํ อุทาเนสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/AuqvGqy6q4E?si=y3bVGODAUCxP2qMc&t=63",
             ],
@@ -183,7 +183,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๔-๖๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.๗๐-๗๒ สา กติปาหจฺจเยน - น ทิฏฺฐปุพฺโพติ อาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๑ น.๗๐-๗๒ สา กติปาหจฺจเยน - น ทิฏฺฐปุพฺโพติ อาห ฯ",
             linkYoutube: [
                 "https://youtu.be/co8ARPoXiBs?si=dZCgB7uOFbzHAbgB&t=184",
             ],
@@ -192,7 +192,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๒ น.๘๒-๘๔ อถ สายณฺหสมเย ภิกฺขู - มาตา มหาสกฺการสมฺมานมกาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๒ น.๘๒-๘๔ อถ สายณฺหสมเย ภิกฺขู - มาตา มหาสกฺการสมฺมานมกาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/BL1qQqmfGJg?si=FKJ3TP3H2xDCR81y&t=222",
             ],
@@ -217,7 +217,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๖๖-๖๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๘๔-๘๗ ตทา พาราณสีราชา - ทิสาปาโมกฺขาจริโยติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๓ น.๘๔-๘๗ ตทา พาราณสีราชา - ทิสาปาโมกฺขาจริโยติ ฯ",
             linkYoutube: [
                 "https://youtu.be/ISq7VTxJdIY?si=gjfm1yRZdQ9fvi2_",
             ],
@@ -226,7 +226,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๘",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๙๗-๙๙ อตีเต มคธรฏฺเฐ - กุชฺฌิตฺวา เอวมาหาติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๔ น.๙๗-๙๙ อตีเต มคธรฏฺเฐ - กุชฺฌิตฺวา เอวมาหาติ ฯ",
             linkYoutube: [
                 "https://youtu.be/BR_aEZQy8es?si=JK4oCfVfzCyBOkGP&t=483",
                 "https://youtu.be/QxjOjO-14QM?si=WL7lz85Cbi41pLch",
@@ -250,14 +250,14 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๘ ภาค ๒ (เก็งที่ ๑๕-๑๖)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๐๕-๑๐๗ สุชาตา ปน กาลํ - ธีตา หุตฺวา นิพฺพตฺติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๕ น.๑๐๕-๑๐๗ สุชาตา ปน กาลํ - ธีตา หุตฺวา นิพฺพตฺติ ฯ",
             linkYoutube: [
                 "https://youtu.be/CFIfKWK-hL8?si=CaXCgAIp6axmGucV",
             ],
             fileNoteTranslate: "materials/translate-notes-215.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๒๐-๑๒๒ เตสุ เอวํ กติกํ กตฺวา - ตสฺสา คุณกถํ กถยึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๖ น.๑๒๐-๑๒๒ เตสุ เอวํ กติกํ กตฺวา - ตสฺสา คุณกถํ กถยึสุ ฯ",
             linkYoutube: [
                 "https://youtu.be/EzE3vYLukbY?si=wiF8CEaSsiDigRnr&t=995",
                 "https://youtu.be/xp-n1g51qm0?si=AD8DxD7YhcyTfto1",
@@ -275,7 +275,7 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๒ (เก็งที่ ๑๗-๑๘)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๒-๑๒๔ อญฺญตโร ภิกฺขุ ตสฺสา - วตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๗ น.๑๒๒-๑๒๔ อญฺญตโร ภิกฺขุ ตสฺสา - วตฺวา อิมํ คาถมาห ฯ",
             linkYoutube: [
                 "https://youtu.be/xp-n1g51qm0?si=ihUniziGjaLa47Eq&t=937",
                 "https://youtu.be/kU-Wx3poJM0?si=QXlPeMuvEKYV-p8_",
@@ -283,7 +283,7 @@ const dataDecember = [
             fileNoteTranslate: "materials/translate-notes-217.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๘ น.๑๒๖-๑๒๘ สตฺถริ กิร สาวตฺถิยํ - ทตฺวา อิมํ คาถมาห ฯ",
             linkYoutube: [
                 "https://youtu.be/ki46xNs2Qsw?si=iqu4LGoYGuZ1vuoG&t=431",
             ],
@@ -302,7 +302,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๐-๕๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๙ น.๑๒๙-๑๓๒ สาวตฺถิยํ กิเรโก - วตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๑๙ น.๑๒๙-๑๓๒ สาวตฺถิยํ กิเรโก - วตฺวา อิมํ คาถมาห ฯ",
             linkYoutube: [
                 "https://youtu.be/SKUDuGGyl1Q?si=3IN16juV8VTCP7Ts&t=261",
                 "https://youtu.be/qKiQPCLPo2A?si=WbpdzuVSDjRYcJO-",
@@ -312,7 +312,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๐ น.๑๓๓-๑๓๕ เอโก กิร สาวตฺถีวาสี - อรหตฺตํ ปาปุณิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๒๐ น.๑๓๓-๑๓๕ เอโก กิร สาวตฺถีวาสี - อรหตฺตํ ปาปุณิ ฯ",
             linkYoutube: [
                 "https://youtu.be/qKiQPCLPo2A?si=junc2Fa0jH8tTNW1&t=676",
                 "https://youtu.be/hx4zxu90xuA?si=Z1zTgjL0mBi1nuLO",
@@ -338,7 +338,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๒-๕๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๑ น.๑๔๐-๑๔๒ สาวตฺถิยํ กิร ปญฺจสตา - ปวิเสยฺยาถาติ อุยฺโยเชสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๒๑ น.๑๔๐-๑๔๒ สาวตฺถิยํ กิร ปญฺจสตา - ปวิเสยฺยาถาติ อุยฺโยเชสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/I9jYkFWC1a8?si=3-u8eVsJagBK6gBf&t=44",
             ],
@@ -347,7 +347,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๐",
-            activityTranslate: "(อ่าน) เก็งที่ ๒๒ น.๑๕๒-๑๕๖ สมฺมาสมฺพุทฺเธ สาวตฺถิยํ - ปุริสลิงฺคํ ปาตุภาวิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๒๒ น.๑๕๒-๑๕๖ สมฺมาสมฺพุทฺเธ สาวตฺถิยํ - ปุริสลิงฺคํ ปาตุภาวิ ฯ",
             linkYoutube: [
                 "https://youtu.be/o4x0BtfXuYE?si=kCbeQt1et347FX9g&t=936",
                 "https://youtu.be/n1Sk7r06nRQ?si=iogtpZ-xByZMWZS3",
@@ -374,7 +374,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๔-๕๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๑ น.๙-๑๑ อิติ โข มหาราช - สุวณฺณวณฺโณ อโหสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑ น.๙-๑๑ อิติ โข มหาราช - สุวณฺณวณฺโณ อโหสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/JEVbneGdqQA?si=Qloo8zO_DmHPR6bY&t=784",
                 "https://youtu.be/eHxUIL6Kei0?si=I2YApUFvHGiRw0Zf",
@@ -384,7 +384,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๒๐ พนฺธุโล เตนหิ อิมา - ลภติ รชฺชสุขํ นานุโภติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๒ น.๑๗-๒๐ พนฺธุโล เตนหิ อิมา - ลภติ รชฺชสุขํ นานุโภติ ฯ",
             linkYoutube: [
                 "https://youtu.be/22hxOtjBmnI?si=QnR9JQkVj2xmNcUL&t=304",
                 "https://youtu.be/R3YYWFUjUig?si=u9oe_N4X984fE8vw",
@@ -410,7 +410,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๖-๕๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๓ น.๒๑-๒๓ สมฺมาสมฺพุทฺธสฺส ปน - ตตฺถ มจฺฉกจฺฉปภกฺขา อเหสุํ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๓ น.๒๑-๒๓ สมฺมาสมฺพุทฺธสฺส ปน - ตตฺถ มจฺฉกจฺฉปภกฺขา อเหสุํ",
             linkYoutube: [
                 "https://youtu.be/R3YYWFUjUig?si=szxoV7JhplaIPaha&t=953",
                 "https://youtu.be/NkFHoo6KWoo?si=8hJWaA2cBmyWdE5L",
@@ -420,7 +420,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๒",
-            activityTranslate: "(อ่าน) เก็งที่ ๔ น.๓๐-๓๒ วตฺถุ ราชคเห สมุฏฺฐิตํ - ปูเว ปจิตุํ อารภิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๔ น.๓๐-๓๒ วตฺถุ ราชคเห สมุฏฺฐิตํ - ปูเว ปจิตุํ อารภิ ฯ",
             linkYoutube: [
                 "https://youtu.be/UnecSVndhdE?si=vqSB7eBH_gxKNkxN&t=478",
                 "https://youtu.be/C_Yj2nM7LYg?si=FV82-BS-Q3ULhvyU",
@@ -447,7 +447,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๕๘-๕๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๓๒-๓๔ อถ สตฺถา ปาโต ว - เชตวนทฺวารโกฏฺเฐ โหตูติ อธิฏฺฐาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๕ น.๓๒-๓๔ อถ สตฺถา ปาโต ว - เชตวนทฺวารโกฏฺเฐ โหตูติ อธิฏฺฐาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/C_Yj2nM7LYg?si=GbHPSmUWokr10Xrm&t=199",
                 "https://youtu.be/t9OQZ7IiTMM?si=KwvDA16y1z7tfLLI",
@@ -458,7 +458,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๖ น.๓๘-๔๐ สาวตฺถิยํ กิร เอกา - วตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๖ น.๓๘-๔๐ สาวตฺถิยํ กิร เอกา - วตฺวา อิมํ คาถมาห ฯ",
             linkYoutube: [
                 "https://youtu.be/-lrYl1Ec9CM?si=KIjSWwLoyizHnRmo&t=44",
             ],
@@ -482,13 +482,13 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๔ ภาค ๓ (เก็งที่ ๗-๘)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๗ น.๔๗-๔๙ เตน โข ปน สมเยน - อิทํ วยกลฺยาณํ นามาติ ฯ",
             linkYoutube: ["https://youtu.be/AySNS0QsciU?si=JORHnHbuKhoSF5J7"],
             slideId: "p3_geng7",
             fileNoteTranslate: "materials/translate-notes-307.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๘ น.๔๙-๕๑ อถสฺส มาตาปิตโร - ตํ สุวณฺณมาลํ ปิลนฺธยึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๘ น.๔๙-๕๑ อถสฺส มาตาปิตโร - ตํ สุวณฺณมาลํ ปิลนฺธยึสุ ฯ",
             linkYoutube: [
                 "https://youtu.be/AySNS0QsciU?si=kVeLpnbWQUE-Vvz3&t=836",
                 "https://youtu.be/e6EfF6zWhPU?si=v7WdjwTdBCENvDhX",
@@ -507,7 +507,7 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๕ ภาค ๓ (เก็งที่ ๙-๑๐)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๙ น.๖๓-๖๕ อถ นํ กุฏุมฺพิกา - มิคาโรติสฺส นามํ อกาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๙ น.๖๓-๖๕ อถ นํ กุฏุมฺพิกา - มิคาโรติสฺส นามํ อกาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/8H79-Tg7LWI?si=5VJJGEvusdoUNudr&t=1020",
                 "https://youtu.be/Zpe0NsZYGM8?si=yQkvr8aZJRw3XQ0z",
@@ -516,7 +516,7 @@ const dataDecember = [
             fileNoteTranslate: "materials/translate-notes-309.pdf",
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๐ น.๘๐-๘๓ เอกสฺมึ หิ ทิวเส - มยฺหํ ภาโร ภนฺเตติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๐ น.๘๐-๘๓ เอกสฺมึ หิ ทิวเส - มยฺหํ ภาโร ภนฺเตติ ฯ",
             linkYoutube: [
                 "https://youtu.be/ERLSzPh_mSI?si=-0VQRipBX5dMjbre&t=759",
                 "https://youtu.be/_Tf4EHA48r8?si=KQzZkdJlacb9i1fv",
@@ -537,7 +537,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๐-๖๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.๑๐๐-๑๐๒ ราชา กิร ปเสนทิโกสโล - อรุณวตีมตฺติกํ อทาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๑ น.๑๐๐-๑๐๒ ราชา กิร ปเสนทิโกสโล - อรุณวตีมตฺติกํ อทาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/g54DU2TcaoI?si=zTfpMQInXVzSO3WF&t=1175",
                 "https://youtu.be/4l3lskFzGWg?si=1RjlujbWWTdDdBr8",
@@ -548,7 +548,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๔",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๒ น.๑๐๔-๑๐๖ โส อรุณุคฺคมนกาเลเยว - วตฺวา อตีตํ อาหริ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๒ น.๑๐๔-๑๐๖ โส อรุณุคฺคมนกาเลเยว - วตฺวา อตีตํ อาหริ",
             linkYoutube: [
                 "https://youtu.be/aRW0uecyzw0?si=fSy_8ioXfS8Chxzo&t=246",
                 "https://youtu.be/hwDAWWjY1qg?si=XhijKzrPEttwlTPt",
@@ -575,7 +575,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๒-๖๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๑๑๑-๑๑๓ อตีเต พาราณสีรญฺโญ - วตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๓ น.๑๑๑-๑๑๓ อตีเต พาราณสีรญฺโญ - วตฺวา อิมํ คาถมาห ฯ",
             linkYoutube: [
                 "https://youtu.be/d2ogaiRZ_EE?si=0cXUpvIQsL7vWWxr&t=1209",
                 "https://youtu.be/h7AvrT3jiII?si=F9dzgopcd7rc3x1q",
@@ -586,7 +586,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๑๑๕-๑๑๗ เทสนา ราชคเห - วตฺวา อตีตํ อาหริ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๔ น.๑๑๕-๑๑๗ เทสนา ราชคเห - วตฺวา อตีตํ อาหริ ฯ",
             linkYoutube: [
                 "https://youtu.be/7i1YT0PugL0?si=I5UTWhn4BE0bryDR&t=57",
                 "https://youtu.be/1cwK8Igu7RY?si=E3awDYO0fqNNeUyP",
@@ -613,7 +613,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๔-๖๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๓๔-๑๓๖ โส กิร เทวสิกํ - คเหตฺวา เคหํ อคมาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๕ น.๑๓๔-๑๓๖ โส กิร เทวสิกํ - คเหตฺวา เคหํ อคมาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/aJ0fXUFJWqQ?si=CuszIleZ68HAqzL6",
             ],
@@ -623,7 +623,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๖",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๔๖-๑๔๘ โส ปทสา คมนกาลโต - สยมาโน วีตินาเมสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๖ น.๑๔๖-๑๔๘ โส ปทสา คมนกาลโต - สยมาโน วีตินาเมสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/QZFe1-YeiTw?si=iN7ucUMm_txoYm_d&t=856",
                 "https://youtu.be/pSK3XRVkmZU?si=4YAwThnZPIhUmmXL",
@@ -650,7 +650,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๔-๕ (อาขยาต-กิตก์) ปี' ๖๖-๖๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๕๐-๑๕๒ อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๗ น.๑๕๐-๑๕๒ อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
             linkYoutube: [
                 "https://youtu.be/fhD-FjmFMCk?si=uB0wLl0eLv2glrOz&t=183",
             ],
@@ -660,7 +660,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๖๓-๑๖๖ เทสนา ปน มจฺฉิกาสณฺเฑ - อิมา คาถา อกาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๓ เก็งที่ ๑๘ น.๑๖๓-๑๖๖ เทสนา ปน มจฺฉิกาสณฺเฑ - อิมา คาถา อกาสิ ฯ",
             linkYoutube: [
                 "https://youtu.be/wNPnKydqlj8?si=ndkvTQShr1Q5KGt4&t=346",
                 "https://youtu.be/ycJZW2gsiNM?si=x4nT0vh40YWiDz4b",
@@ -687,7 +687,7 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๐-๕๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑ น.๑๓-๑๕ ราชา เต ปาโตว โภเชตฺวา - อคฺคา เนว เตมึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑ น.๑๓-๑๕ ราชา เต ปาโตว โภเชตฺวา - อคฺคา เนว เตมึสุ ฯ",
             linkYoutube: [
                 "https://youtu.be/DKYg3F8REQQ?si=HsQQFZybytFaRLI-&t=647",
                 "https://youtu.be/9d9U-Gg4L08?si=N4J4GJ969LydSn_D",
@@ -698,7 +698,7 @@ const dataDecember = [
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๘",
-            activityTranslate: "(อ่าน) เก็งที่ ๒ น.๑๗-๑๙ เตปิ วาณิชกา ราชกุลํ - เทฺว นทิโย อุตฺตริ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๒ น.๑๗-๑๙ เตปิ วาณิชกา ราชกุลํ - เทฺว นทิโย อุตฺตริ ฯ",
             linkYoutube: [
                 "https://youtu.be/9d9U-Gg4L08?si=1oLa97YVYLo4i0D4&t=1132",
                 "https://youtu.be/viw9y7kSpe0?si=XxVaLNDj57_Yhh3f"
@@ -723,12 +723,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๔ (เก็งที่ ๓-๔)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๓ น.๒๑-๒๓ อตีเต กิร กสฺสปสมฺมาสมฺพุทฺโธ - ทาตุํ น วฏฺฏตีติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๓ น.๒๑-๒๓ อตีเต กิร กสฺสปสมฺมาสมฺพุทฺโธ - ทาตุํ น วฏฺฏตีติ ฯ",
             slideId: "p4_geng3",
             fileNoteTranslate: "materials/translate-notes-403.pdf"
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๔ น.๒๓-๒๖ โส ตสฺมึ กเถนฺเต - เต ตสฺส อทาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๔ น.๒๓-๒๖ โส ตสฺมึ กเถนฺเต - เต ตสฺส อทาสิ ฯ",
             slideId: "p4_geng4",
             fileNoteTranslate: "materials/translate-notes-404.pdf"
         },
@@ -743,12 +743,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔ (เก็งที่ ๕-๖)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๕ น.๒๗-๒๙ ตํทิวสํ ปน สตฺถา - แาเทตฺวา อฏฺฐาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๕ น.๒๗-๒๙ ตํทิวสํ ปน สตฺถา - แาเทตฺวา อฏฺฐาสิ ฯ",
             slideId: "p4_geng5",
             fileNoteTranslate: "materials/translate-notes-405.pdf"
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๖ น.เถโร อฏฺฐเม ทิวเส - อตฺตภาวํ สมฺมสนฺโต นิสีทิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๖ น.เถโร อฏฺฐเม ทิวเส - อตฺตภาวํ สมฺมสนฺโต นิสีทิ ฯ",
             slideId: "p4_geng6",
             fileNoteTranslate: "materials/translate-notes-406.pdf"
         },
@@ -765,14 +765,14 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๒-๕๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๗ น.๕๕-๕๗ เอกสฺมึ หิ สมเย สตฺถา - เทเสนฺโต อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๗ น.๕๕-๕๗ เอกสฺมึ หิ สมเย สตฺถา - เทเสนฺโต อิมํ คาถมาห ฯ",
             slideId: "p4_geng7",
             fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
             fileNoteTranslate: "materials/translate-notes-407.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๘ น.๖๕-๖๗ เอกสฺมึ หิ สมเย อายสฺมา - เทเสนฺโต อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๘ น.๖๕-๖๗ เอกสฺมึ หิ สมเย อายสฺมา - เทเสนฺโต อิมํ คาถมาห ฯ",
             slideId: "p4_geng8",
             fileNoteTranslate: "materials/translate-notes-408.pdf",
             isExam: true,
@@ -795,14 +795,14 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๔-๕๕",
-            activityTranslate: "(อ่าน) เก็งที่ ๙ น.๖๙-๗๑ เถโร ปน ปุถุชฺชโน - วตฺวา อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๙ น.๖๙-๗๑ เถโร ปน ปุถุชฺชโน - วตฺวา อิมํ คาถมาห ฯ",
             slideId: "p4_geng9",
             fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
             fileNoteTranslate: "materials/translate-notes-409.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๐",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๐ น.๗๔-๗๖ อายสฺมา หิ สารีปุตฺโต - คุมฺพาภิมุโข อโหสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๐ น.๗๔-๗๖ อายสฺมา หิ สารีปุตฺโต - คุมฺพาภิมุโข อโหสิ ฯ",
             slideId: "p4_geng10",
             fileNoteTranslate: "materials/translate-notes-410.pdf",
             isExam: true,
@@ -825,14 +825,14 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๖-๕๗",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๑ น.๗๗-๗๙ สามเณโรปิ สจาหํ อิธ - คนฺตฺวา ปญฺญตฺตาสเน นิสีทิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๑ น.๗๗-๗๙ สามเณโรปิ สจาหํ อิธ - คนฺตฺวา ปญฺญตฺตาสเน นิสีทิ ฯ",
             slideId: "p4_geng11",
             fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
             fileNoteTranslate: "materials/translate-notes-411.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๒ น.๙๔-๙๗ ตสฺส พฺรหฺมุโน เอตทโหสิ - ตสฺส อภิสมฺปรายํ ปุจฺฉึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๒ น.๙๔-๙๗ ตสฺส พฺรหฺมุโน เอตทโหสิ - ตสฺส อภิสมฺปรายํ ปุจฺฉึสุ ฯ",
             slideId: "p4_geng12",
             fileNoteTranslate: "materials/translate-notes-412.pdf",
             isExam: true,
@@ -855,14 +855,14 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๘-๕๙",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๓ น.๙๘-๑๐๐ ราชคเห กิร เอกา - อหํ ปฏิยาเทสฺสามีติ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๓ น.๙๘-๑๐๐ ราชคเห กิร เอกา - อหํ ปฏิยาเทสฺสามีติ ฯ",
             slideId: "p4_geng13",
             fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
             fileNoteTranslate: "materials/translate-notes-413.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๒",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๔ น.๑๐๒-๑๐๔ สาปิ โจรํ ปปาเต - เอกมนฺตํ นิสีทึสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๔ น.๑๐๒-๑๐๔ สาปิ โจรํ ปปาเต - เอกมนฺตํ นิสีทึสุ ฯ",
             slideId: "p4_geng14",
             fileNoteTranslate: "materials/translate-notes-414.pdf",
             isExam: true,
@@ -885,14 +885,14 @@ const dataDecember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๖๐-๖๑",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๕ น.๑๑๓-๑๑๕ ฑีฆลมฺพวาสิโน กิร - อุปาสกสเตหิ ปริวุโต วิจริ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๕ น.๑๑๓-๑๑๕ ฑีฆลมฺพวาสิโน กิร - อุปาสกสเตหิ ปริวุโต วิจริ ฯ",
             slideId: "p4_geng15",
             fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
             fileNoteTranslate: "materials/translate-notes-415.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๓",
-            activityTranslate: "(อ่าน) เก็งที่ ๑๖ น.๑๑๙-๑๒๑ สตฺถา เอตสฺมึ คเต ตํ - ตสฺมา เตปิ ตถา อทํสุ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๖ น.๑๑๙-๑๒๑ สตฺถา เอตสฺมึ คเต ตํ - ตสฺมา เตปิ ตถา อทํสุ ฯ",
             slideId: "p4_geng16",
             fileNoteTranslate: "materials/translate-notes-416.pdf",
             isExam: true,
@@ -913,12 +913,12 @@ const dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๙ ภาค ๔ (เก็งที่ ๑๗-๑๘) (สิ้นสุด)"
         },
         morning: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๗ น.๑๒๓-๑๒๕ ภิกฺขู คณฺฑิสทฺทํ - อิมํ คาถมาห ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๗ น.๑๒๓-๑๒๕ ภิกฺขู คณฺฑิสทฺทํ - อิมํ คาถมาห ฯ",
             slideId: "p4_geng17",
             fileNoteTranslate: "materials/translate-notes-417.pdf"
         },
         afternoon: {
-            activityTranslate: "(อ่าน) เก็งที่ ๑๘ น.๑๓๖-๑๓๙ สา ปริปุณฺคพฺภา หุตฺวา - ปูริตปารมี อภินีหารสมฺปนฺนํ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๘ น.๑๓๖-๑๓๙ สา ปริปุณฺคพฺภา หุตฺวา - ปูริตปารมี อภินีหารสมฺปนฺนํ ฯ",
             slideId: "p4_geng18",
             fileNoteTranslate: "materials/translate-notes-418.pdf"
         },
