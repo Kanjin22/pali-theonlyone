@@ -349,7 +349,77 @@
             transform: translateX(-2px);
         }
 
-        /* Settings Panel */
+        /* --- TOC Sidebar (Right Side) --- */
+        .toc-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 300px;
+            background: white;
+            box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+            z-index: 2500;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .toc-panel.open {
+            transform: translateX(0);
+        }
+        .toc-header {
+            padding: 20px;
+            background: #37474f;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toc-header h3 { margin: 0; font-size: 1.2rem; }
+        .close-toc { cursor: pointer; font-size: 1.5rem; transition: color 0.2s; }
+        .close-toc:hover { color: #cfd8dc; }
+
+        .toc-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+        .toc-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eceff1;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .toc-item:hover {
+            background-color: #f5f5f5;
+            padding-left: 25px;
+        }
+        .toc-item.active {
+            background-color: #e3f2fd;
+            border-left: 5px solid #1976D2;
+        }
+        .toc-page-label {
+            font-size: 0.85rem;
+            color: #78909c;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .toc-content-label {
+            font-size: 1rem;
+            color: #37474f;
+            font-weight: 500;
+        }
+        
+        /* Scrollbar for TOC */
+        .toc-list::-webkit-scrollbar { width: 6px; }
+        .toc-list::-webkit-scrollbar-track { background: #f1f1f1; }
+        .toc-list::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 3px; }
+
+        /* --- Settings Panel --- */
         .settings-panel {
             position: absolute;
             top: 70px;
@@ -637,6 +707,10 @@
         </div>
 
         <div class="tools-sidebar">
+            <button class="tool-btn" id="btn-toc" title="สารบัญเนื้อหา (Table of Contents)" onclick="toggleTOC()">
+                <i class="fa-solid fa-list-ul"></i>
+            </button>
+
             <!-- ปุ่มตั้งค่า -->
             <button class="tool-btn" id="btn-settings" title="ตั้งค่าการแสดงผล" onclick="toggleSettings()">
                 <i class="fa-solid fa-gear"></i>
@@ -723,6 +797,17 @@
                 <div class="sec-title">📚 ศัพท์ / วิเคราะห์ (สมาส/ตัทธิต)</div>
                 <div class="sec-content pali-word" id="vocabContent">...</div>
             </div>
+        </div>
+    </div>
+
+    <!-- TOC Panel -->
+    <div id="toc-panel" class="toc-panel">
+        <div class="toc-header">
+            <h3><i class="fa-solid fa-list-ul"></i> สารบัญเนื้อหา</h3>
+            <span class="close-toc" onclick="toggleTOC()">&times;</span>
+        </div>
+        <div id="toc-list" class="toc-list">
+            <!-- TOC items will be injected here -->
         </div>
     </div>
 
@@ -878,6 +963,88 @@
             if (subEl) subEl.innerText = subtitle;
         }
 
+        // --- TOC Logic ---
+        function toggleTOC() {
+            const panel = document.getElementById('toc-panel');
+            // Close settings if open
+            const settings = document.getElementById('settings-panel');
+            if(settings) settings.style.display = 'none';
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+            } else {
+                generateTOC();
+                panel.classList.add('open');
+            }
+        }
+
+        function generateTOC() {
+            const list = document.getElementById('toc-list');
+            if (!list) return;
+            list.innerHTML = '';
+            
+            if (!slides || slides.length === 0) return;
+
+            let lastPage = null;
+            let lastSection = null; 
+
+            slides.forEach((slide, index) => {
+                let shouldAdd = false;
+                
+                // Construct current section identifier
+                let currentSection = slide.episode || slide.story || slide.section || "";
+                
+                if (index === 0) {
+                    shouldAdd = true;
+                } else {
+                    if (slide.page !== lastPage) shouldAdd = true;
+                    if (currentSection !== lastSection && currentSection !== "") shouldAdd = true;
+                }
+
+                if (shouldAdd) {
+                    const item = document.createElement('div');
+                    item.className = 'toc-item';
+                    
+                    // Simple active check: if currentIndex is within this block?
+                    // Hard to know exact block without lookahead. 
+                    // Just highlight if it matches the current page exactly.
+                    if (slide.page === slides[currentIndex].page) {
+                         // item.classList.add('active'); 
+                    }
+                    
+                    item.onclick = () => {
+                        currentIndex = index;
+                        updateSlide();
+                        if (window.innerWidth < 768) {
+                             toggleTOC(); // Close on mobile
+                        }
+                    };
+
+                    let pageText = "";
+                    if (typeof slide.page !== 'undefined') {
+                         pageText = (typeof slide.page === 'number') ? `หน้า ${slide.page}` : String(slide.page);
+                    } else {
+                         pageText = `รายการที่ ${index + 1}`;
+                    }
+
+                    let contentText = currentSection;
+                    if (!contentText) {
+                        contentText = (slide.thai_sense || slide.thai || slide.pali || "").substring(0, 30) + "...";
+                    }
+
+                    item.innerHTML = `
+                        <div class="toc-page-label">${pageText}</div>
+                        <div class="toc-content-label">${contentText}</div>
+                    `;
+                    
+                    list.appendChild(item);
+
+                    lastPage = slide.page;
+                    lastSection = currentSection;
+                }
+            });
+        }
+
         // --- Settings Logic ---
         let currentFontSizePali = 1.8;
         let currentFontSizeThai = 1.8;
@@ -885,6 +1052,11 @@
 
         function toggleSettings() {
             const panel = document.getElementById('settings-panel');
+            
+            // Close TOC if open
+            const toc = document.getElementById('toc-panel');
+            if(toc && toc.classList.contains('open')) toc.classList.remove('open');
+            
             panel.style.display = (panel.style.display === 'flex') ? 'none' : 'flex';
         }
 
