@@ -675,6 +675,9 @@
             <button class="tool-btn" id="btn-toggle-thai" title="ซ่อน/แสดง คำแปล" onclick="toggleThai()">
                 <i class="fa-solid fa-eye"></i>
             </button>
+            <button class="tool-btn" id="btn-toggle-thai-mode" title="สลับโหมดคำแปล" onclick="toggleThaiMode()">
+                <i class="fa-solid fa-right-left"></i>
+            </button>
 
             <!-- ********** 1. เพิ่มปุ่มปากกา ตรงนี้ครับ ********** -->
             <button class="tool-btn" id="btn-pen" title="เขียนหน้าจอ (Whiteboard)" onclick="toggleDrawingMode()">
@@ -699,7 +702,7 @@
                 <div class="pali-text" id="paliContent">...</div>
             </div>
             <div class="split-pane" style="flex: 1;">
-                <span class="pane-label">ไทย</span>
+                <span class="pane-label" id="thaiLabel">ไทย</span>
                 <div class="thai-text" id="thaiContent">...</div>
             </div>
         </div>
@@ -844,6 +847,7 @@
         // --- Settings Logic ---
         let currentFontSizePali = 1.8;
         let currentFontSizeThai = 1.8;
+        let isThaiSense = false;
 
         function toggleSettings() {
             const panel = document.getElementById('settings-panel');
@@ -1014,7 +1018,8 @@
             const s = slides[currentIndex];
 
             paliBox.innerHTML = wrapWords(s.pali, s);
-            thaiBox.innerHTML = wrapWords(s.thai, null);
+            const thaiText = (isThaiSense && s.thai_sense) ? s.thai_sense : s.thai;
+            thaiBox.innerHTML = wrapWords(thaiText, null);
 
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
@@ -1029,6 +1034,7 @@
             document.getElementById('pageNumber').innerText = `${currentIndex + 1} / ${slides.length}`;
             computeMeta(slideId, s);
             applyThaiState();
+            applyThaiModeLabel();
         }
 
         function getAllAnalysisKeys(localAnalysis) {
@@ -1125,6 +1131,13 @@
             const btnIcon = btn.querySelector('i');
             if (isThaiHidden) { thaiElem.classList.add('hidden'); btnIcon.classList.remove('fa-eye'); btnIcon.classList.add('fa-eye-slash'); }
             else { thaiElem.classList.remove('hidden'); btnIcon.classList.remove('fa-eye-slash'); btnIcon.classList.add('fa-eye'); }
+        }
+        function toggleThaiMode() { isThaiSense = !isThaiSense; updateSlide(); }
+        function applyThaiModeLabel() {
+            const label = document.getElementById('thaiLabel');
+            const btn = document.getElementById('btn-toggle-thai-mode');
+            if (label) label.innerText = isThaiSense ? 'ไทย (โดยอรรถ)' : 'ไทย (โดยพยัญชนะ)';
+            if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
         }
         function addNote() {
             const card = document.getElementById('cardContainer');
