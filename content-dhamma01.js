@@ -5,7 +5,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑. เรื่องพระจักขุปาลเถระ",
+            story: "๑. เรื่องพระจักขุปาลเถระ [๑]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -22,7 +22,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๒. เรื่องมัฏฐกุณฑลีมานพ",
+            story: "๒. เรื่องมัฏฐกุณฑลี [๒]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -39,7 +39,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๓. เรื่องพระติสสเถระ",
+            story: "๓. เรื่องพระติสสะเถระ [๓]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -56,7 +56,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๔. เรื่องนางกาลียักษิณี",
+            story: "๔. เรื่องความเกิดขึ้นของนางกาลียักษิณี [๔]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -73,7 +73,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๕. เรื่องภิกษุชาวเมืองโกสัมพี",
+            story: "๕. เรื่องภิกษุชาวเมืองโกสัมพี [๕]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -90,7 +90,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๖. เรื่องพระจุลกาลและพระมหากาล",
+            story: "๖. เรื่องจุลกาลและมหากาล [๖]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -107,7 +107,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๗. เรื่องพระเทวทัต",
+            story: "๗. เรื่องพระเทวทัต [๗]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -124,7 +124,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๘. เรื่องสญชัย",
+            story: "๘. เรื่องสญชัย [๘]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -141,7 +141,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๙. เรื่องพระนันทเถระ",
+            story: "๙. เรื่องพระนันทเถระ [๙]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -158,7 +158,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑๐. เรื่องนายจุนทสูกริก",
+            story: "๑๐. เรื่องนายจุนทสูกริก [๑๐]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -175,7 +175,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑๑. เรื่องธัมมิกอุบาสก",
+            story: "๑๑. เรื่องธัมมิกอุบาสก [๑๑]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -192,7 +192,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑๒. เรื่องพระเทวทัต",
+            story: "๑๒. เรื่องพระเทวทัต [๑๒]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -209,7 +209,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑๓. เรื่องนางสุมนาเทวี",
+            story: "๑๓. เรื่องนางสุมนาเทวี [๑๓]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -226,162 +226,7 @@ const contentDhamma01 = {
         {
             part: "ภาคที่ ๑",
             vagga: "๑. ยมกวรรค",
-            story: "๑๔. เรื่องภิกษุสองรูป",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    
-    // วรรรคที่ ๒ อัปปมาทวรรค
-    "d01_v02_s01_samavati": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๑. เรื่องพระนางสามาวดี",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s02_kumbhaghosaka": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๒. เรื่องกุมภโฆสกเศรษฐี",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s03_culapanthaka": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๓. เรื่องพระจูฬปันถกเถระ",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s04_bala": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๔. เรื่องนักษัตรของคนพาล",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s05_mahakassapa": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๕. เรื่องพระมหากัสสปเถระ",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s06_two_monks": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๖. เรื่องภิกษุสองสหาย",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s07_sakka": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๗. เรื่องท้าวสักกะ",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s08_monk": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๘. เรื่องภิกษุรูปใดรูปหนึ่ง",
-            episode: "...",
-            page: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
-            sandhi: {}
-        }
-    ],
-    "d01_v02_s09_tissa": [
-        {
-            part: "ภาคที่ ๑",
-            vagga: "๒. อัปปมาทวรรค",
-            story: "๙. เรื่องพระติสสเถระผู้อยู่ในนิคม",
+            story: "๑๔. เรื่องภิกษุ ๒ สหาย [๑๔]",
             episode: "...",
             page: "...",
             pali: "...",
