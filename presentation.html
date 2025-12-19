@@ -992,7 +992,10 @@
                 let shouldAdd = false;
                 
                 // Construct current section identifier
-                let currentSection = slide.episode || slide.story || slide.section || "";
+                let currentSection = "";
+                if (slide.episode && slide.episode !== "...") currentSection = slide.episode;
+                else if (slide.story && slide.story !== "...") currentSection = slide.story;
+                else if (slide.section && slide.section !== "...") currentSection = slide.section;
                 
                 if (index === 0) {
                     shouldAdd = true;
@@ -1027,14 +1030,32 @@
                          pageText = `รายการที่ ${index + 1}`;
                     }
 
-                    let contentText = currentSection;
+                    let contentText = "";
+                    
+                    // 1. Try to get Pali text (Start ... End)
+                    if (slide.pali && slide.pali !== "..." && slide.pali.length > 2) {
+                        let p = slide.pali.replace(/<[^>]+>/g, '').trim();
+                        if (p.length > 60) {
+                            contentText = p.substring(0, 40) + " ... " + p.substring(p.length - 20);
+                        } else {
+                            contentText = p;
+                        }
+                    }
+
+                    // 2. Fallback to Episode/Story if Pali is not available
                     if (!contentText) {
-                        contentText = (slide.thai_sense || slide.thai || slide.pali || "").substring(0, 30) + "...";
+                         if (currentSection && currentSection !== "...") {
+                             contentText = currentSection;
+                         } else {
+                             // Fallback chain
+                             contentText = (slide.thai_sense || slide.thai || "").substring(0, 30);
+                             if (!contentText || contentText === "...") contentText = "เนื้อหา";
+                         }
                     }
 
                     item.innerHTML = `
                         <div class="toc-page-label">${pageText}</div>
-                        <div class="toc-content-label">${contentText}</div>
+                        <div class="toc-content-label" style="font-family: 'Niramit', serif; font-size: 1.1rem; color: #455a64;">${contentText}</div>
                     `;
                     
                     list.appendChild(item);
