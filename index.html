@@ -37,7 +37,14 @@
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
         </div>
 
-        <div class="section-label">📚 ชั้นประโยคบาลีสนามหลวง</div>
+        <div class="section-label">� ปักหมุดวันนี้</div>
+        <div class="grid-menu" style="margin-bottom:40px;">
+            <div id="today-schedule-container" class="menu-card level-tool" style="text-align:left; display:block; width:100%; padding:0; overflow:hidden;">
+                <div style="padding:20px; text-align:center; color:#999;">กำลังโหลดข้อมูล...</div>
+            </div>
+        </div>
+
+        <div class="section-label">� ชั้นประโยคบาลีสนามหลวง</div>
         <div class="grid-menu">
             
             <!-- ชั้นต้น (สีเขียว) -->
@@ -233,22 +240,78 @@
                 const m = String(today.getMonth()+1).padStart(2,'0');
                 const d = String(today.getDate()).padStart(2,'0');
                 const todayStr = `${y}-${m}-${d}`;
-                const dayData = allData.find(x => x.date === todayStr);
-                const todayBox = document.getElementById('today-summary');
-                if (dayData) {
-                    let lines = [];
-                    if (dayData.morning && (dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity)) {
-                        lines.push(`${labelWithLevel('เช้า', dayData.morning, dayData)}: ${dayData.morning.activityTranslate || dayData.morning.activityGrammar || dayData.morning.activity}`);
-                    }
-                    if (dayData.afternoon && (dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity)) {
-                        lines.push(`${labelWithLevel('บ่าย', dayData.afternoon, dayData)}: ${dayData.afternoon.activityTranslate || dayData.afternoon.activityGrammar || dayData.afternoon.activity}`);
-                    }
-                    if (dayData.evening && (dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity)) {
-                        lines.push(`${labelWithLevel('ค่ำ', dayData.evening, dayData)}: ${dayData.evening.activityTranslate || dayData.evening.activityGrammar || dayData.evening.activity}`);
-                    }
-                    todayBox.textContent = lines.join(' | ');
+                const dayEntries = allData.filter(x => x.date === todayStr);
+                const container = document.getElementById('today-schedule-container');
+                
+                if (dayEntries.length === 0) {
+                     container.innerHTML = '<div style="padding:20px; text-align:center; color:#777;">ไม่มีตารางเรียนสำหรับวันนี้</div>';
                 } else {
-                    todayBox.textContent = 'ไม่มีตารางสำหรับวันนี้';
+                    container.innerHTML = ''; 
+                    const groups = {}; 
+                    
+                    dayEntries.forEach(day => {
+                        const slots = [
+                           { key: 'morning', label: 'เช้า', colorBg: '#fff3cd', colorText: '#856404' },
+                           { key: 'afternoon', label: 'บ่าย', colorBg: '#d1ecf1', colorText: '#0c5460' },
+                           { key: 'evening', label: 'ค่ำ', colorBg: '#d4edda', colorText: '#155724' }
+                        ];
+                        
+                        slots.forEach(slotType => {
+                            const s = day[slotType.key];
+                            if (s && (s.activity || s.activityGrammar || s.activityTranslate)) {
+                                const act = s.activityTranslate || s.activityGrammar || s.activity;
+                                let lvl = s.level || s.classLevel || s.grade || day.level || 'ชั้นเรียนทั่วไป';
+                                
+                                if (!groups[lvl]) groups[lvl] = [];
+                                groups[lvl].push({
+                                    time: slotType.label,
+                                    act: act,
+                                    bg: slotType.colorBg,
+                                    text: slotType.colorText
+                                });
+                            }
+                        });
+                    });
+                    
+                    if (Object.keys(groups).length === 0) {
+                         container.innerHTML = '<div style="padding:20px; text-align:center; color:#777;">ไม่มีกิจกรรมการเรียนการสอนวันนี้</div>';
+                    } else {
+                        Object.keys(groups).sort().forEach((lvl, index) => {
+                             const wrapper = document.createElement('div');
+                             wrapper.style.padding = '20px';
+                             if (index > 0) wrapper.style.borderTop = '1px solid #eee';
+                             
+                             const title = document.createElement('div');
+                             title.style.fontWeight = 'bold';
+                             title.style.color = '#2c3e50';
+                             title.style.marginBottom = '12px';
+                             title.style.fontSize = '1.15rem';
+                             title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:8px; color:#3498db;"></i>${lvl}`;
+                             wrapper.appendChild(title);
+                             
+                             const list = document.createElement('div');
+                             list.style.display = 'flex';
+                             list.style.flexDirection = 'column';
+                             list.style.gap = '8px';
+                             
+                             groups[lvl].forEach(item => {
+                                 const itemDiv = document.createElement('div');
+                                 itemDiv.style.background = item.bg;
+                                 itemDiv.style.color = item.text;
+                                 itemDiv.style.padding = '10px 14px';
+                                 itemDiv.style.borderRadius = '8px';
+                                 itemDiv.style.fontSize = '0.95rem';
+                                 itemDiv.style.display = 'flex';
+                                 itemDiv.style.alignItems = 'flex-start'; 
+                                 
+                                 itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
+                                 list.appendChild(itemDiv);
+                             });
+                             
+                             wrapper.appendChild(list);
+                             container.appendChild(wrapper);
+                        });
+                    }
                 }
             }
             const last = localStorage.getItem('lastClassroom');
