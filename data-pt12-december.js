@@ -796,14 +796,14 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๔-๕๕",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๙ น.๖๙-๗๑ เถโร ปน ปุถุชฺชโน - วตฺวา อิมํ คาถมาห ฯ",
-            slideId: "p4_geng9",
+            slideId: "d04_v06_s09_thera_dhamma",
             fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
             fileNoteTranslate: "materials/translate-notes-409.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๐",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๐ น.๗๔-๗๖ อายสฺมา หิ สารีปุตฺโต - คุมฺพาภิมุโข อโหสิ ฯ",
-            slideId: "p4_geng10",
+            slideId: "d04_v06_s10_listening_dhamma",
             fileNoteTranslate: "materials/translate-notes-410.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -826,14 +826,14 @@ const dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๖-๕๗",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๑ น.๗๗-๗๙ สามเณโรปิ สจาหํ อิธ - คนฺตฺวา ปญฺญตฺตาสเน นิสีทิ ฯ",
-            slideId: "p4_geng11",
+            slideId: "d04_v06_s11_visiting_monk",
             fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
             fileNoteTranslate: "materials/translate-notes-411.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๑",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๒ น.๙๔-๙๗ ตสฺส พฺรหฺมุโน เอตทโหสิ - ตสฺส อภิสมฺปรายํ ปุจฺฉึสุ ฯ",
-            slideId: "p4_geng12",
+            slideId: "d04_v07_s01_jivaka",
             fileNoteTranslate: "materials/translate-notes-412.pdf",
             isExam: true,
             examStartTime: "14:00:00",
@@ -914,12 +914,12 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๗ น.๑๒๓-๑๒๕ ภิกฺขู คณฺฑิสทฺทํ - อิมํ คาถมาห ฯ",
-            slideId: "p4_geng17",
+            slideId: "d04_v07_s06_sariputta",
             fileNoteTranslate: "materials/translate-notes-417.pdf"
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๘ น.๑๓๖-๑๓๙ สา ปริปุณฺคพฺภา หุตฺวา - ปูริตปารมี อภินีหารสมฺปนฺนํ ฯ",
-            slideId: "p4_geng18",
+            slideId: "d04_v07_s07_tissa_kosambi",
             fileNoteTranslate: "materials/translate-notes-418.pdf"
         },
         evening: {
