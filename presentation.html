@@ -819,25 +819,41 @@
             let title = "สื่อการสอน";
             let subtitle = "";
             if (slideObj) {
+                // --- 1. Title Construction (Book/Part/Niddesa/Vagga) ---
                 if (slideObj.title) {
                     title = slideObj.title;
                 } else {
-                    let partText = "";
-                    if (typeof slideObj.part !== 'undefined') {
-                        partText = (typeof slideObj.part === 'number') ? `ภาคที่ ${slideObj.part}` : String(slideObj.part);
+                    let parts = [];
+                    // Handle various book structures
+                    if (slideObj.part) parts.push(slideObj.part);
+                    if (slideObj.niddesa) parts.push(slideObj.niddesa); // Visuddhi
+                    if (slideObj.vagga) parts.push(slideObj.vagga);     // Samanta
+                    if (slideObj.mangala_no) parts.push(slideObj.mangala_no); // Mangala
+                    
+                    if (parts.length > 0) {
+                        title = parts.join(" - ");
+                    } else if (typeof slideObj.page !== 'undefined') {
+                        // Fallback to page if no structural info
+                        title = (typeof slideObj.page === 'number') ? `หน้า ${slideObj.page}` : String(slideObj.page);
                     }
-                    let pageText = "";
-                    if (typeof slideObj.page !== 'undefined') {
-                        pageText = (typeof slideObj.page === 'number') ? `หน้า ${slideObj.page}` : String(slideObj.page);
-                    }
-                    const combined = [partText, pageText].filter(Boolean).join(" ");
-                    if (combined) title = combined;
                 }
+
+                // --- 2. Subtitle Construction (Story/Section/Episode/Page) ---
                 if (slideObj.subtitle) {
                     subtitle = slideObj.subtitle;
                 } else {
-                    const details = [slideObj.story, slideObj.episode].filter(Boolean).join(" · ");
-                    if (details) subtitle = details;
+                    let subParts = [];
+                    if (slideObj.section) subParts.push(slideObj.section);
+                    if (slideObj.story) subParts.push(slideObj.story);
+                    if (slideObj.episode) subParts.push(slideObj.episode);
+                    
+                    // Always append page number to subtitle for reference
+                    if (slideObj.page) {
+                         const pageStr = (typeof slideObj.page === 'number') ? `หน้า ${slideObj.page}` : String(slideObj.page);
+                         subParts.push(pageStr);
+                    }
+
+                    subtitle = subParts.filter(Boolean).join(" · ");
                 }
             }
             if (!slideObj) {
@@ -1036,8 +1052,21 @@
             const s = slides[currentIndex];
 
             paliBox.innerHTML = wrapWords(s.pali, s);
-            const thaiText = (isThaiSense && s.thai_sense) ? s.thai_sense : s.thai;
-            thaiBox.innerHTML = wrapWords(thaiText, null);
+            
+            // Auto-detect translation mode:
+            // If literal translation (thai) is missing but sense translation (thai_sense) exists,
+            // we force display of thai_sense.
+            let displayThai = "";
+            if (!s.thai && s.thai_sense) {
+                 displayThai = s.thai_sense;
+                 // Optionally update global state to reflect this, but for now just display it
+                 // We don't change isThaiSense globally to avoid flipping back and forth unexpectedly
+                 // when navigating between mixed slides.
+            } else {
+                 displayThai = (isThaiSense && s.thai_sense) ? s.thai_sense : s.thai;
+            }
+            
+            thaiBox.innerHTML = wrapWords(displayThai, null);
 
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
