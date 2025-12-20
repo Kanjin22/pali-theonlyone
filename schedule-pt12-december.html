@@ -381,7 +381,7 @@
 
         // === 7. ฟังก์ชันคำนวณสถิติ (สำคัญ! ต้องมี) ===
         function calculateMonthlyStats() {
-            const data = typeof dataDecember !== 'undefined' ? dataDecember : [];
+            const data = getData();
             let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
 
             data.forEach(day => {
