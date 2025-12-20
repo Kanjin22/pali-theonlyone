@@ -23,7 +23,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-50-51.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๑"
             ]
         }
@@ -47,7 +48,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-52-53.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๒"
             ]
         }
@@ -71,7 +73,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-54-55.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๓"
             ]
         }
@@ -121,7 +124,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-56-57.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔"
             ],
             "isExam": true,
@@ -148,7 +152,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-58-59.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕"
             ]
         }
@@ -178,7 +183,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-60-61.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖"
             ]
         }
@@ -208,7 +214,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-62-63.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๗"
             ]
         }
@@ -238,7 +245,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-64-65.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๘"
             ]
         }
@@ -284,7 +292,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer12-66-67.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๙"
             ]
         }
@@ -314,7 +323,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer3-50-51.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๑๐"
             ]
         }
@@ -344,7 +354,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer3-52-53.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๑๑"
             ]
         }
@@ -374,7 +385,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer3-54-55.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๑๒"
             ]
         }
@@ -404,7 +416,8 @@ const dataNovember = [
             "fileAnswerGrammar": "answers/grammar-answer3-56-57.pdf"
         },
         "evening": {
-            "activityGrammar": [
+            activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๑๓"
             ]
         }
