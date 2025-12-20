@@ -437,6 +437,99 @@
         document.getElementById('varName').value = varName;
     }
 
+    function loadExistingData() {
+        const roomId = document.getElementById('selectRoom').value;
+        const monthIdx = document.getElementById('selectMonth').value;
+        const year = document.getElementById('inputYear').value;
+        const monthName = monthNamesEn[monthIdx];
+        
+        if (!roomId) {
+            alert('กรุณาเลือกห้องเรียนก่อน');
+            return;
+        }
+
+        // Get Prefix
+        let prefix = 'pt12'; // Default
+        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms[roomId]) {
+             prefix = systemConfig.classrooms[roomId].schedulePrefix;
+        }
+        
+        // Construct filename and variable name
+        // Filename format based on observation: data-[prefix]-[month].js or data-[prefix]-[month]-[year].js
+        // Based on file list: data-pt12-january.js (no year?)
+        // Let's try to detect if year is needed or check standard.
+        // User files: data-pt12-january.js
+        // But variable name logic uses: data_pt12_january_2025
+        
+        // Let's try the file format that seems to exist: `data-${prefix}-${monthName}.js`
+        // Note: The file list showed 'data-pt12-january.js'.
+        const filename = `data-${prefix}-${monthName}.js`;
+        
+        // Variable name expected inside the file.
+        // Based on 'data-pt12-january.js' content read earlier: "const dataJanuary = [...]"
+        // Wait, the file I read 'data-pt12-january.js' had 'const dataJanuary = ...'
+        // This is inconsistent with 'updateVarName' which produces 'data_pt12_january_2025'.
+        
+        // Strategy: 
+        // 1. Try to load the file.
+        // 2. Look for multiple possible variable names.
+        
+        const possibleVarNames = [
+            `data${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`, // dataJanuary
+            `${document.getElementById('varName').value}` // data_pt12_january_2025
+        ];
+
+        console.log(`Attempting to load: ${filename}`);
+
+        const script = document.createElement('script');
+        script.src = filename;
+        
+        script.onload = function() {
+            let data = null;
+            let foundVar = '';
+            
+            for (const v of possibleVarNames) {
+                // Try window property first (for var)
+                if (window[v]) {
+                    data = window[v];
+                    foundVar = v;
+                    break;
+                }
+                
+                // Try direct access (for const/let) using eval
+                try {
+                    const evalData = eval(v); // Indirect eval? No, simple eval might catch it if it's in scope
+                    if (evalData) {
+                        data = evalData;
+                        foundVar = v;
+                        break;
+                    }
+                } catch (e) {
+                    // Variable not defined
+                }
+            }
+            
+            if (data) {
+                if (confirm(`พบข้อมูลจากตัวแปร "${foundVar}"\nต้องการนำเข้าข้อมูลนี้หรือไม่?`)) {
+                    generateTable(); // Ensure table structure matches
+                    fillTable(data);
+                    alert('นำเข้าข้อมูลเรียบร้อยแล้ว');
+                }
+            } else {
+                alert(`โหลดไฟล์ "${filename}" สำเร็จ แต่ไม่พบตัวแปรข้อมูลที่คาดหวัง\n(ตรวจสอบ: ${possibleVarNames.join(', ')})`);
+            }
+            // Clean up
+            // document.head.removeChild(script); // Keep it? No, remove to allow reload
+        };
+
+        script.onerror = function() {
+            alert(`ไม่พบไฟล์ "${filename}"\n\nระบบพยายามหาไฟล์ที่ชื่อ: ${filename}\nกรุณาตรวจสอบว่าไฟล์ดังกล่าวอยู่ในโฟลเดอร์เดียวกัน`);
+        };
+
+        document.head.appendChild(script);
+    }
+
+
 
     function generateTable() {
         const roomId = document.getElementById('selectRoom').value;
