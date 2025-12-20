@@ -82,6 +82,29 @@
             background-color: #27ae60;
         }
         
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; padding: 20px; border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 24px; cursor: pointer; color: #aaa;
+        }
+        .search-result-item {
+            padding: 10px; border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .search-result-item:hover { background: #f9f9f9; }
+        .search-result-item strong { color: #2c3e50; display: block; }
+        .search-result-item small { color: #7f8c8d; }
+
         /* Table Styles */
         .editor-table {
             width: 100%;
@@ -490,6 +513,10 @@
                             <input type="text" class="input-mini input-subject-act" value="${subj.defaultAct}" placeholder="กิจกรรม (Activity)">
                             <input type="text" class="input-mini input-subject-title" placeholder="เรื่อง / หัวข้อ (Title)">
                             <input type="text" class="input-mini input-subject-file" placeholder="ชื่อไฟล์ (File Name)">
+                            <div style="display:flex; gap:5px;">
+                                <input type="text" class="input-mini input-subject-slide-id" placeholder="รหัสสไลด์ (Slide ID) เช่น d04_v06_s04_mahakappina" style="flex:1;">
+                                <button type="button" onclick="openContentSearch(this)" style="padding: 5px 10px; background-color: #f39c12;" title="ค้นหาเนื้อหา">🔍</button>
+                            </div>
                             <textarea class="input-mini input-subject-youtube" placeholder="Youtube Links (บรรทัดละ 1 ลิงก์)" rows="2" style="height:auto;"></textarea>
                         </div>
                     `;
@@ -614,9 +641,10 @@
                     const title = section.querySelector('.input-subject-title').value.trim();
                     const file = section.querySelector('.input-subject-file').value.trim();
                     const youtubeVal = section.querySelector('.input-subject-youtube').value.trim();
+                    const slideId = section.querySelector('.input-subject-slide-id').value.trim();
                     const zoomVal = section.querySelector('.input-subject-zoom').value.trim();
                     
-                    if (title || file || youtubeVal || zoomVal) {
+                    if (title || file || youtubeVal || zoomVal || slideId) {
                         hasData = true;
                         
                         // 1. Build specific Activity String for this subject
@@ -629,6 +657,7 @@
                         // 2. Add specific properties
                         if (fullAct) props.push(`activity${subjId}: "${fullAct}"`);
                         if (file) props.push(`fileNote${subjId}: "${file}"`);
+                        if (slideId) props.push(`slideId: "${slideId}"`);
                         
                         // 3. Collect Youtube Links
                         if (youtubeVal) {
@@ -741,5 +770,122 @@
     };
 </script>
 
+    <!-- Load Content Data for Search -->
+    <script src="content-dhamma01.js"></script>
+    <script src="content-dhamma02.js"></script>
+    <script src="content-dhamma03.js"></script>
+    <script src="content-dhamma04.js"></script>
+    <script src="content-dhamma05.js"></script>
+    <script src="content-dhamma06.js"></script>
+    <script src="content-dhamma07.js"></script>
+    <script src="content-dhamma08.js"></script>
+    <script src="content-visuddhi01.js"></script>
+    <script src="content-visuddhi02.js"></script>
+    <script src="content-visuddhi03.js"></script>
+    <script src="content-samanta01.js"></script>
+    <script src="content-samanta02.js"></script>
+    <script src="content-samanta03.js"></script>
+    <script src="content-mangala01.js"></script>
+    <script src="content-mangala02.js"></script>
+    <script src="content-abhidhamma01.js"></script>
+
+    <!-- Content Search Modal -->
+    <div id="content-search-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="width: 80%; max-width: 800px; max-height: 80vh; overflow-y: auto;">
+            <span class="modal-close" onclick="closeContentModal()">&times;</span>
+            <h2 style="margin-top:0;">ค้นหาเนื้อหา (Slide Content)</h2>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="content-search-input" placeholder="พิมพ์ชื่อเรื่อง, วรรค, หรือคำสำคัญ..." style="flex:1; padding: 10px;" onkeyup="if(event.key==='Enter') performContentSearch()">
+                <button onclick="performContentSearch()" class="success">ค้นหา</button>
+            </div>
+            <div id="content-search-results"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSearchInput = null;
+
+        function openContentSearch(btn) {
+            currentSearchInput = btn.previousElementSibling;
+            document.getElementById('content-search-modal').style.display = 'flex';
+            document.getElementById('content-search-input').focus();
+        }
+
+        function closeContentModal() {
+            document.getElementById('content-search-modal').style.display = 'none';
+        }
+
+        function performContentSearch() {
+            const keyword = document.getElementById('content-search-input').value.trim().toLowerCase();
+            if (!keyword) return;
+
+            const resultsContainer = document.getElementById('content-search-results');
+            resultsContainer.innerHTML = '<p>กำลังค้นหา...</p>';
+            
+            const results = [];
+            
+            // Iterate over all global variables starting with 'content'
+            for (const key in window) {
+                if (key.startsWith('content') && typeof window[key] === 'object') {
+                    const contentObj = window[key];
+                    for (const id in contentObj) {
+                        const items = contentObj[id];
+                        if (Array.isArray(items) && items.length > 0) {
+                            // Check first item usually contains metadata
+                            const item = items[0];
+                            let match = false;
+                            
+                            if (id.toLowerCase().includes(keyword)) match = true;
+                            if (item.story && item.story.toLowerCase().includes(keyword)) match = true;
+                            if (item.vagga && item.vagga.toLowerCase().includes(keyword)) match = true;
+                            if (item.part && item.part.toLowerCase().includes(keyword)) match = true;
+                            
+                            if (match) {
+                                results.push({
+                                    id: id,
+                                    story: item.story || 'ไม่มีชื่อเรื่อง',
+                                    vagga: item.vagga || '',
+                                    part: item.part || ''
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p>ไม่พบข้อมูล</p>';
+                return;
+            }
+
+            let html = '';
+            results.forEach(r => {
+                html += `
+                    <div class="search-result-item" onclick="selectContent('${r.id}', '${r.story.replace(/'/g, "\\'")}')">
+                        <strong>${r.story}</strong>
+                        <small>ID: ${r.id} | ${r.vagga} | ${r.part}</small>
+                    </div>
+                `;
+            });
+            resultsContainer.innerHTML = html;
+        }
+
+        function selectContent(id, title) {
+            if (currentSearchInput) {
+                currentSearchInput.value = id;
+                
+                // Try to auto-fill Title if empty
+                const container = currentSearchInput.closest('.subject-section');
+                if (container) {
+                    const titleInput = container.querySelector('.input-subject-title');
+                    if (titleInput && !titleInput.value) {
+                        titleInput.value = title;
+                    }
+                }
+                
+                closeContentModal();
+            }
+        }
+    </script>
 </body>
 </html>
