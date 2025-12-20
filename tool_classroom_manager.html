@@ -394,6 +394,65 @@
         document.execCommand("copy");
         alert("คัดลอกโค้ดเรียบร้อยแล้ว!");
     }
+
+    function saveSystemConfig() {
+        const level = document.getElementById('selectLevel').value;
+        const idRaw = document.getElementById('roomId').value.trim();
+        const name = document.getElementById('roomName').value.trim();
+        const desc = document.getElementById('roomDesc').value.trim();
+        const teachersStr = document.getElementById('roomTeachers').value.trim();
+        const prefix = document.getElementById('schedulePrefix').value.trim();
+        const status = document.getElementById('roomStatus').value;
+
+        if (!idRaw) {
+            alert('กรุณาระบุรหัสห้อง (Room ID)');
+            return;
+        }
+
+        const id = idRaw.replace(/[^a-zA-Z0-9_]/g, '');
+        const teachers = teachersStr.split(',').map(t => t.trim()).filter(t => t);
+
+        // Update Global Config
+        if (typeof systemConfig === 'undefined') {
+            alert('ไม่พบข้อมูล systemConfig เริ่มต้น');
+            return;
+        }
+
+        // Update or Add
+        systemConfig.classrooms[id] = {
+            id: id,
+            level: level,
+            name: name,
+            description: desc,
+            schedulePrefix: prefix,
+            teachers: teachers,
+            status: status
+        };
+
+        // Generate File Content
+        // We use stringify but it quotes keys. To make it look like original JS, we can just accept quotes.
+        const fileContent = `const systemConfig = {
+    // รายชื่อห้องเรียนทั้งหมด (อัปเดตล่าสุด: ${new Date().toLocaleString('th-TH')})
+    classrooms: ${JSON.stringify(systemConfig.classrooms, null, 4)},
+    
+    // ฟังก์ชันสำหรับดึงข้อมูลห้อง
+    getRoom: function(id) {
+        return this.classrooms[id] || this.classrooms["room1"];
+    }
+};`;
+
+        // Download
+        const blob = new Blob([fileContent], { type: "text/javascript" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "system_config.js";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        alert("ดาวน์โหลดไฟล์ system_config.js เรียบร้อยแล้ว\n\nคำแนะนำ:\n1. ไฟล์จะถูกบันทึกลงเครื่องคอมพิวเตอร์\n2. กรุณานำไฟล์ที่ได้ไปวางทับไฟล์ 'system_config.js' เดิมในโฟลเดอร์โปรแกรม\n3. รีเฟรชหน้าเว็บเพื่อเห็นการเปลี่ยนแปลง");
+    }
 </script>
 
 </body>
