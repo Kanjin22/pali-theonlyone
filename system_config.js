@@ -12,7 +12,7 @@ const systemConfig = {
         },
         "room2": {
             id: "room2",
-            level: "balisuksa",
+            level: "pt12",
             name: "สาธุชนทั่วไป",
             description: "สำหรับบุคคลทั่วไปที่สนใจศึกษาบาลี",
             schedulePrefix: "pt12", 
