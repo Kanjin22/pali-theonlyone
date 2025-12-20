@@ -3,27 +3,19 @@ const systemConfig = {
     classrooms: {
         "room1": {
             id: "room1",
-            name: "ห้องเรียนที่ ๑ (ปกติ)",
-            description: "สำหรับนักเรียนชั้นประโยค ๑-๒ ภาคปกติ",
-            schedulePrefix: "pt12", // ใช้ data-pt12-xxx.js
-            teachers: ["พระอาจารย์ A", "พระอาจารย์ B"],
-            status: "active" // active, maintenance, closed
+            name: "สามเณรนวกะ ๒ ชุด C ห้อง ๔",
+            description: "สำหรับสามเณรนวกะ (ชุด C)",
+            schedulePrefix: "pt12", 
+            teachers: ["พระมหากาญจน์"],
+            status: "active"
         },
         "room2": {
             id: "room2",
-            name: "ห้องเรียนที่ ๒ (เร่งรัด)",
-            description: "สำหรับนักเรียนที่ต้องการจบหลักสูตรเร็วขึ้น",
-            schedulePrefix: "pt12_fast", // จะใช้ data-pt12_fast-xxx.js (สมมติ)
-            teachers: ["พระอาจารย์ C"],
+            name: "สาธุชนทั่วไป",
+            description: "สำหรับบุคคลทั่วไปที่สนใจศึกษาบาลี",
+            schedulePrefix: "pt12_public", 
+            teachers: ["พระมหากาญจน์"],
             status: "active"
-        },
-        "room3": {
-            id: "room3",
-            name: "ห้องเรียนที่ ๓ (ทบทวน)",
-            description: "สำหรับนักเรียนที่ต้องการปูพื้นฐานใหม่",
-            schedulePrefix: "pt12_review",
-            teachers: ["พระอาจารย์ D"],
-            status: "maintenance" // ปิดปรับปรุงชั่วคราว
         }
     },
     
