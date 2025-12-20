@@ -369,6 +369,16 @@
             document.getElementById('count-gram-exam').innerText = stats.gramExam + " ครั้ง";
             document.getElementById('count-trans-read').innerText = stats.transRead + " ครั้ง";
             document.getElementById('count-trans-exam').innerText = stats.transExam + " ครั้ง";
+            
+            // Auto-hide Translate Stats if 0
+            const transCard = document.querySelector('.stat-card.translate');
+            if (transCard) {
+                if (stats.transRead === 0 && stats.transExam === 0) {
+                    transCard.style.display = 'none';
+                } else {
+                    transCard.style.display = 'flex';
+                }
+            }
         }
 
         // === 8. เริ่มทำงานเมื่อโหลดหน้าเว็บ ===
