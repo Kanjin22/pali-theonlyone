@@ -158,7 +158,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room') || 'room1';
-        let prefix = 'pt12';
+        var prefix = 'pt12';
         
         if (typeof systemConfig !== 'undefined') {
             const room = systemConfig.getRoom(roomId);
@@ -179,6 +179,14 @@
         function getData() {
             if (typeof dataJanuary !== 'undefined') return dataJanuary;
             if (typeof dataJanuary_Novice !== 'undefined') return dataJanuary_Novice;
+            
+            if (typeof prefix !== 'undefined') {
+                 const v1 = `data_${prefix}_january_2025`;
+                 if (window[v1]) return window[v1];
+                 
+                 const v2 = `data_${prefix}_january`;
+                 if (window[v2]) return window[v2];
+            }
             return [];
         }
 

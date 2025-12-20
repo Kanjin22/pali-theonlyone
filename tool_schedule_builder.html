@@ -445,7 +445,7 @@
         const rows = document.querySelectorAll('.editor-table tbody tr');
         
         let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder V2)\n`;
-        code += `const ${varName} = [\n`;
+        code += `var ${varName} = [\n`;
 
         rows.forEach(row => {
             const date = row.querySelector('.date-val').value;
