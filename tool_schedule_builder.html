@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือสร้างตารางเรียน - Pali The Only One</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f5f6fa;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: none; /* Hide by default for security */
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .config-section {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-family: 'Sarabun', sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.success {
+            background-color: #2ecc71;
+        }
+        button.success:hover {
+            background-color: #27ae60;
+        }
+        .editor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .editor-table th, .editor-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            vertical-align: top;
+        }
+        .editor-table th {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+        }
+        .editor-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .weekend-row {
+            background-color: #ffeaa7 !important;
+        }
+        .input-full {
+            width: 95%;
+            margin-bottom: 5px;
+        }
+        .sub-label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-bottom: 2px;
+        }
+        .output-section {
+            margin-top: 30px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1><i class="fa-solid fa-calendar-plus"></i> เครื่องมือสร้างตารางเรียน (Schedule Builder)</h1>
+    <p style="text-align: center;">เครื่องมือสำหรับสร้างไฟล์ข้อมูลตารางเรียน (.js) สำหรับนำไปอัปโหลดเข้าสู่ระบบ</p>
+
+    <div class="config-section">
+        <div class="form-group">
+            <label>เดือน (Month)</label>
+            <select id="selectMonth">
+                <option value="0">มกราคม</option>
+                <option value="1">กุมภาพันธ์</option>
+                <option value="2">มีนาคม</option>
+                <option value="3">เมษายน</option>
+                <option value="4">พฤษภาคม</option>
+                <option value="5">มิถุนายน</option>
+                <option value="6">กรกฎาคม</option>
+                <option value="7">สิงหาคม</option>
+                <option value="8">กันยายน</option>
+                <option value="9">ตุลาคม</option>
+                <option value="10" selected>พฤศจิกายน</option>
+                <option value="11">ธันวาคม</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>ปี ค.ศ. (Year AD)</label>
+            <input type="number" id="inputYear" value="2025">
+        </div>
+        <div class="form-group">
+            <label>ชื่อตัวแปร (Variable Name)</label>
+            <input type="text" id="varName" value="dataNovember" placeholder="เช่น dataNovember">
+        </div>
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <button onclick="generateTable()"><i class="fa-solid fa-rotate"></i> สร้างตารางกรอกข้อมูล</button>
+        </div>
+    </div>
+
+    <div id="tableContainer">
+        <!-- Table will be generated here -->
+    </div>
+
+    <div class="output-section">
+        <h2>ผลลัพธ์โค้ด (Output Code)</h2>
+        <div class="btn-group">
+            <button onclick="generateCode()" class="success"><i class="fa-solid fa-code"></i> สร้างโค้ด</button>
+            <button onclick="copyCode()"><i class="fa-regular fa-copy"></i> คัดลอกโค้ด</button>
+            <button onclick="downloadFile()"><i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์ .js</button>
+        </div>
+        <br>
+        <textarea id="outputCode" readonly placeholder="กดปุ่ม 'สร้างโค้ด' เพื่อดูผลลัพธ์..."></textarea>
+    </div>
+</div>
+
+<script>
+    const thaiMonths = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+    const thaiMonthsShort = [
+        "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+        "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+    ];
+    const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+
+    function generateTable() {
+        const month = parseInt(document.getElementById('selectMonth').value);
+        const year = parseInt(document.getElementById('inputYear').value);
+        const container = document.getElementById('tableContainer');
+        
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        let html = `
+            <table class="editor-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">วันที่</th>
+                        <th style="width: 25%;">เช้า (Morning)</th>
+                        <th style="width: 25%;">บ่าย (Afternoon)</th>
+                        <th style="width: 20%;">เย็น (Evening)</th>
+                        <th style="width: 15%;">หมายเหตุ (Remarks)</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        for (let i = 1; i <= daysInMonth; i++) {
+            const date = new Date(year, month, i);
+            const dayOfWeek = date.getDay();
+            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+            const rowClass = isWeekend ? 'weekend-row' : '';
+            
+            const dayStr = thaiDaysShort[dayOfWeek];
+            const dateStr = `${i < 10 ? '0'+i : i}`;
+            const monthStr = thaiMonthsShort[month];
+            const yearThai = (year + 543).toString().slice(2);
+            const displayDate = `${dayStr} ${dateStr}-${monthStr}-${yearThai}`;
+            const dateValue = `${year}-${(month+1).toString().padStart(2, '0')}-${dateStr}`;
+
+            html += `
+                <tr class="${rowClass}" id="row-${i}">
+                    <td>
+                        <strong>${displayDate}</strong>
+                        <input type="hidden" class="date-val" value="${dateValue}">
+                        <input type="hidden" class="display-date-val" value="${displayDate}">
+                        <div class="checkbox-wrapper" style="margin-top: 5px;">
+                            <input type="checkbox" id="weekend-${i}" ${isWeekend ? 'checked' : ''} onchange="toggleWeekend(${i})">
+                            <label for="weekend-${i}" style="font-size: 0.8em; cursor:pointer;">วันหยุด</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="sub-label">กิจกรรมไวยากรณ์</div>
+                        <input type="text" class="input-full morning-grammar" placeholder="เช่น (อ่าน) บาลีไวยากรณ์...">
+                        <div class="sub-label">กิจกรรมแปล</div>
+                        <input type="text" class="input-full morning-translate" placeholder="เช่น แปลเรื่อง...">
+                        <div class="sub-label">ไฟล์ประกอบ (ถ้ามี)</div>
+                        <input type="text" class="input-full morning-file" placeholder="เช่น materials/file.pdf">
+                    </td>
+                    <td>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="exam-${i}" onchange="toggleExam(${i})">
+                            <label for="exam-${i}" style="color: #e74c3c;">มีการสอบ</label>
+                        </div>
+                        <div class="sub-label">กิจกรรม / วิชาที่สอบ</div>
+                        <input type="text" class="input-full afternoon-activity" placeholder="กิจกรรมช่วงบ่าย หรือ ชื่อวิชาที่สอบ...">
+                        
+                        <div id="exam-afternoon-${i}" style="display:none; background: #ffe6e6; padding: 5px; border-radius: 5px; margin-top: 5px;">
+                            <div class="sub-label">เวลาเริ่ม - จบ</div>
+                            <div style="display:flex; gap:5px;">
+                                <input type="time" class="exam-start" value="14:00"> - 
+                                <input type="time" class="exam-end" value="16:00">
+                            </div>
+                            <div class="sub-label">ไฟล์ข้อสอบ</div>
+                            <input type="text" class="input-full exam-file" placeholder="exams/exam.pdf">
+                            <div class="sub-label">ไฟล์เฉลย</div>
+                            <input type="text" class="input-full answer-file" placeholder="answers/answer.pdf">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="sub-label">กิจกรรม</div>
+                        <input type="text" class="input-full evening-activity" placeholder="เช่น (เฉลย) หรือ กิจกรรม...">
+                    </td>
+                    <td>
+                        <div class="sub-label">หมายเหตุทั่วไป</div>
+                        <input type="text" class="input-full remark-general" placeholder="...">
+                        <div class="sub-label">หมายเหตุไวยากรณ์</div>
+                        <input type="text" class="input-full remark-grammar" placeholder="...">
+                    </td>
+                </tr>
+            `;
+        }
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    function toggleWeekend(id) {
+        const row = document.getElementById(`row-${id}`);
+        const checkbox = document.getElementById(`weekend-${id}`);
+        if (checkbox.checked) {
+            row.classList.add('weekend-row');
+        } else {
+            row.classList.remove('weekend-row');
+        }
+    }
+
+    function toggleExam(id) {
+        const isExam = document.getElementById(`exam-${id}`).checked;
+        document.getElementById(`exam-afternoon-${id}`).style.display = isExam ? 'block' : 'none';
+    }
+
+    function generateCode() {
+        const varName = document.getElementById('varName').value || 'dataSchedule';
+        const rows = document.querySelectorAll('.editor-table tbody tr');
+        
+        let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder)\n`;
+        code += `const ${varName} = [\n`;
+
+        rows.forEach(row => {
+            const date = row.querySelector('.date-val').value;
+            const displayDate = row.querySelector('.display-date-val').value;
+            const isWeekend = row.querySelector('input[type="checkbox"][id^="weekend-"]').checked;
+            
+            // Get values
+            const mGrammar = row.querySelector('.morning-grammar').value.trim();
+            const mTranslate = row.querySelector('.morning-translate').value.trim();
+            const mFile = row.querySelector('.morning-file').value.trim();
+            
+            const isExam = row.querySelector('input[type="checkbox"][id^="exam-"]').checked;
+            const aActivity = row.querySelector('.afternoon-activity').value.trim();
+            const examStart = row.querySelector('.exam-start').value;
+            const examEnd = row.querySelector('.exam-end').value;
+            const examFile = row.querySelector('.exam-file').value.trim();
+            const answerFile = row.querySelector('.answer-file').value.trim();
+            
+            const eActivity = row.querySelector('.evening-activity').value.trim();
+            
+            const rGeneral = row.querySelector('.remark-general').value.trim();
+            const rGrammar = row.querySelector('.remark-grammar').value.trim();
+
+            // Skip empty rows if strictly empty? No, keep all dates for continuity, or just weekends?
+            // Existing data includes weekends as "isWeekend: true".
+            
+            code += `    {\n`;
+            code += `        date: "${date}", displayDate: "${displayDate}",\n`;
+            
+            if (isWeekend) {
+                code += `        isWeekend: true,\n`;
+            }
+            
+            // Remarks
+            let remarksObj = [];
+            if (rGeneral) remarksObj.push(`general: "${rGeneral}"`);
+            if (rGrammar) remarksObj.push(`grammar: "${rGrammar}"`);
+            if (remarksObj.length > 0) {
+                code += `        remarks: { ${remarksObj.join(', ')} },\n`;
+            }
+
+            // Morning
+            let morningObj = [];
+            if (mGrammar) morningObj.push(`activityGrammar: "${mGrammar}"`);
+            if (mTranslate) morningObj.push(`activityTranslate: "${mTranslate}"`);
+            if (mFile) morningObj.push(`fileNoteGrammar: "${mFile}"`);
+            
+            if (morningObj.length > 0) {
+                code += `        morning: {\n            ${morningObj.join(',\n            ')}\n        },\n`;
+            }
+
+            // Afternoon
+            let afternoonObj = [];
+            // Always include activity if present
+            if (aActivity) afternoonObj.push(`activityGrammar: "${aActivity}"`);
+
+            if (isExam) {
+                afternoonObj.push(`isExam: true`);
+                afternoonObj.push(`examStartTime: "${examStart}:00"`);
+                afternoonObj.push(`examEndTime: "${examEnd}:00"`);
+                
+                if (examFile) afternoonObj.push(`fileExamGrammar: "${examFile}"`);
+                if (answerFile) afternoonObj.push(`fileAnswerGrammar: "${answerFile}"`);
+            }
+
+            if (afternoonObj.length > 0) {
+                 code += `        afternoon: {\n            ${afternoonObj.join(',\n            ')}\n        },\n`;
+            }
+
+            // Evening
+            if (eActivity) {
+                code += `        evening: {\n            activityGrammar: ["${eActivity}"]\n        }\n`;
+            }
+
+            code += `    },\n`;
+        });
+
+        code += `];\n`;
+        document.getElementById('outputCode').value = code;
+    }
+
+    function copyCode() {
+        const copyText = document.getElementById("outputCode");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("คัดลอกโค้ดเรียบร้อยแล้ว!");
+    }
+
+    function downloadFile() {
+        const text = document.getElementById("outputCode").value;
+        if (!text) {
+            alert("กรุณาสร้างโค้ดก่อนดาวน์โหลด");
+            return;
+        }
+        const varName = document.getElementById('varName').value || 'dataSchedule';
+        // Guess filename from varName
+        let filename = varName.replace('data', 'data-pt12-').toLowerCase() + ".js"; // rough guess
+        // Better: data-pt12-november.js
+        const monthIndex = parseInt(document.getElementById('selectMonth').value);
+        const monthName = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"][monthIndex];
+        filename = `data-pt12-${monthName}.js`;
+
+        const blob = new Blob([text], { type: "text/javascript" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Auto generate table on load after auth
+    window.onload = function() {
+        const password = prompt("กรุณาใส่รหัสผ่านผู้ดูแลระบบ (Admin Password):");
+        if (password === "admin123") {
+            document.querySelector('.container').style.display = 'block';
+            generateTable();
+        } else {
+            alert("รหัสผ่านไม่ถูกต้อง");
+            window.location.href = "home_pt12.html";
+        }
+    };
+</script>
+
+</body>
+</html>
