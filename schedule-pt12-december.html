@@ -105,8 +105,8 @@
 <body>
     <div class="page-header">
         <h1 class="main-title">ตารางเรียนเดือนธันวาคม ๒๕๖๘</h1>
-        <h2 class="sub-title">ชั้นประโยค ๑-๒ (นวกะ ๒ ห้อง ๔)</h2>
-        <p class="description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
+        <h2 class="sub-title" id="room-subtitle">ชั้นประโยค ๑-๒</h2>
+        <p class="description" id="room-description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
     </div>
 
@@ -154,7 +154,26 @@
         </div>
     </div>
 
-    <script src="data-pt12-december.js"></script>
+    <script src="system_config.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomId = urlParams.get('room') || 'room1';
+        let prefix = 'pt12';
+        
+        if (typeof systemConfig !== 'undefined') {
+            const room = systemConfig.getRoom(roomId);
+            if (room) {
+                prefix = room.schedulePrefix;
+                // Update Title & Description
+                const subtitle = document.getElementById('room-subtitle');
+                const description = document.getElementById('room-description');
+                if (subtitle) subtitle.textContent = `ชั้นประโยค ๑-๒ (${room.name})`;
+                if (description) description.textContent = room.description;
+            }
+        }
+        
+        document.write('<script src="data-' + prefix + '-december.js"><\/script>');
+    </script>
     <script>
         // === 1. ฟังก์ชันสร้างปุ่ม ===
         function generateCellContent(period, date, periodName) {
