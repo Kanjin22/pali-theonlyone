@@ -125,9 +125,16 @@
             // 1. รวมข้อมูล
             let allData = [];
             if (typeof dataNovember !== 'undefined') allData = allData.concat(dataNovember);
+            else if (typeof dataNovember_Novice !== 'undefined') allData = allData.concat(dataNovember_Novice);
+
             if (typeof dataDecember !== 'undefined') allData = allData.concat(dataDecember);
+            else if (typeof dataDecember_Novice !== 'undefined') allData = allData.concat(dataDecember_Novice);
+
             if (typeof dataJanuary !== 'undefined') allData = allData.concat(dataJanuary);
+            else if (typeof dataJanuary_Novice !== 'undefined') allData = allData.concat(dataJanuary_Novice);
+
             if (typeof dataFebruary !== 'undefined') allData = allData.concat(dataFebruary);
+            else if (typeof dataFebruary_Novice !== 'undefined') allData = allData.concat(dataFebruary_Novice);
 
             // ถ้าไม่มีข้อมูลเลย ให้หยุดทำงาน
             if (allData.length === 0) return;

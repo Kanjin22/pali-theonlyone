@@ -175,6 +175,13 @@
         document.write('<script src="data-' + prefix + '-february.js"><\/script>');
     </script>
     <script>
+        // === Resolve Data Source ===
+        function getData() {
+            if (typeof dataFebruary !== 'undefined') return dataFebruary;
+            if (typeof dataFebruary_Novice !== 'undefined') return dataFebruary_Novice;
+            return [];
+        }
+
         // === 1. ฟังก์ชันสร้างปุ่ม ===
         function generateCellContent(period, date, periodName) {
             if (!period || (!period.activityGrammar && !period.activityTranslate && !period.activity)) {
@@ -210,7 +217,7 @@
         function buildScheduleTable() {
             const tableBody = document.getElementById('schedule-body');
             let tableHTML = '';
-            const data = typeof dataFebruary !== 'undefined' ? dataFebruary : [];
+            const data = getData();
             data.forEach(item => {
                 if (item.isWeekend) {
                     tableHTML += `<tr class="weekend-row" data-date="${item.date}"><td data-label="วดป.">${item.displayDate}</td><td></td><td></td><td></td><td class="remarks-cell"></td></tr>`;
@@ -227,7 +234,7 @@
 
         // === 4. ฟังก์ชันเปิด Modal ===
         function openDetailsModal(date, periodName) {
-            const dayData = dataFebruary.find(item => item.date === date);
+            const dayData = getData().find(item => item.date === date);
             if (!dayData) return;
             const periodData = dayData[periodName];
             if (!periodData) return;
