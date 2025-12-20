@@ -36,7 +36,7 @@
         </div>
 
         <div style="margin-bottom: 40px;">
-            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊 ดูสถิติและความคืบหน้า</a>
+            <a href="statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white;">📊 ดูสถิติและความคืบหน้า</a>
         </div>
         
         <h2>📅 ตารางเรียนรายเดือน</h2>
@@ -78,6 +78,12 @@
                 document.getElementById('roomNameBadge').innerText = room.name;
                 document.getElementById('roomNameBadge').style.display = 'inline-block';
                 document.getElementById('roomDescription').innerText = room.description;
+                
+                // อัปเดตลิงก์สถิติ
+                const statsLink = document.getElementById('statsLink');
+                if (statsLink) {
+                    statsLink.href = `statistics.html?room=${roomId}`;
+                }
 
                 // อัปเดตลิงก์ตารางเรียน
                 // สมมติว่าไฟล์ชื่อ schedule-{prefix}-{month}.html
