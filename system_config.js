@@ -5,7 +5,7 @@ const systemConfig = {
             id: "room1",
             level: "pt12",
             name: "สามเณรนวกะ ๒ ชุด C ห้อง ๔",
-            description: "สำหรับสามเณรนวกะ (ชุด C)",
+            description: "สำหรับสามเณรนวกะ ๒",
             schedulePrefix: "pt12_novice", 
             teachers: ["พระมหากาญจน์"],
             status: "active"
