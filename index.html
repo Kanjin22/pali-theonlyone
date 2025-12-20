@@ -140,10 +140,10 @@
                 <div class="card-title">ดาวน์โหลด</div>
                 <div class="card-desc">แบบฟอร์มและเอกสาร</div>
             </a>
-            <a id="latest-board-link" href="#" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-chalkboard-user"></i></div>
-                <div class="card-title">กระดานล่าสุด</div>
-                <div class="card-desc" id="latest-board-desc">ยังไม่มีข้อมูล</div>
+            <a href="tool_schedule_builder.html" class="menu-card level-tool">
+                <div class="icon-box"><i class="fa-solid fa-wrench"></i></div>
+                <div class="card-title">ระบบเปิดห้องเรียน</div>
+                <div class="card-desc">สร้างตารางเรียน (สำหรับครู)</div>
             </a>
             <a id="last-classroom-link" href="#" class="menu-card level-tool" style="display:none;">
                 <div class="icon-box"><i class="fa-solid fa-door-open"></i></div>
@@ -191,21 +191,7 @@
 
             if (allData.length > 0) {
                 allData.sort((a,b) => new Date(a.date) - new Date(b.date));
-                let latest = null;
-                for (let i = allData.length - 1; i >= 0; i--) {
-                    const day = allData[i];
-                    const p = day.afternoon || day.morning || day.evening;
-                    if (p && p.slideId) { latest = { slideId: p.slideId, date: day.displayDate }; break; }
-                }
-                const link = document.getElementById('latest-board-link');
-                const desc = document.getElementById('latest-board-desc');
-                if (latest) {
-                    link.href = `presentation.html?id=${latest.slideId}`;
-                    desc.textContent = `วันที่ ${latest.date}`;
-                } else {
-                    link.href = '#';
-                    desc.textContent = 'ยังไม่มีข้อมูลสไลด์';
-                }
+                
                 const today = new Date();
                 const y = today.getFullYear();
                 const m = String(today.getMonth()+1).padStart(2,'0');
