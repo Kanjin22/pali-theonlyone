@@ -143,8 +143,7 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
         th { background-color: #f8f9fa; color: #7f8c8d; font-weight: 600; width: 30%; }
-        td.date-col { font-weight: bold; color: #e67e22; width: 25%; }
-        td.lunar-col { color: #7f8c8d; font-size: 0.9em; width: 20%; }
+        td.date-col { font-weight: bold; color: #e67e22; width: 30%; }
         
         /* Responsive */
         @media (max-width: 600px) {
@@ -414,7 +413,6 @@
                         rowsHtml += `
                             <tr>
                                 <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
-                                <td class="lunar-col">${row.lunar}</td>
                                 <td>${row.subject}</td>
                             </tr>
                         `;
