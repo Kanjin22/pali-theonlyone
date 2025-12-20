@@ -347,6 +347,18 @@
             <button onclick="copyCode()"><i class="fa-regular fa-copy"></i> คัดลอกโค้ด</button>
             <button onclick="downloadFile()"><i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์ .js</button>
         </div>
+        
+        <div class="import-section" style="margin-top: 15px; padding: 15px; background: #e8f6f3; border-radius: 8px; border: 1px dashed #1abc9c;">
+            <h3><i class="fa-solid fa-file-import"></i> นำเข้าข้อมูลเดิม (Import Existing Data)</h3>
+            <p style="font-size: 0.9em; color: #555;">วางโค้ดจากไฟล์ .js เดิม หรือคลิก "โหลดจากไฟล์" เพื่อแก้ไขตาราง</p>
+            <textarea id="importCode" placeholder="วางโค้ดที่นี่ (เช่น var data_pt12_novice_november_2025 = [ ... ];)" style="height: 100px;"></textarea>
+            <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <input type="file" id="fileInput" accept=".js" style="display:none;" onchange="handleFileUpload(this)">
+                <button onclick="document.getElementById('fileInput').click()" style="background-color: #f39c12;"><i class="fa-solid fa-folder-open"></i> โหลดจากไฟล์</button>
+                <button onclick="importData()" class="success"><i class="fa-solid fa-check"></i> นำเข้าข้อมูล</button>
+            </div>
+        </div>
+
         <br>
         <textarea id="outputCode" readonly placeholder="กดปุ่ม 'สร้างโค้ด' เพื่อดูผลลัพธ์..."></textarea>
     </div>
@@ -749,6 +761,241 @@
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('importCode').value = e.target.result;
+            // Optionally auto-import
+            // importData();
+        };
+        reader.readAsText(file);
+    }
+
+    function importData() {
+        const code = document.getElementById('importCode').value;
+        if (!code) {
+            alert("กรุณาวางโค้ดหรือโหลดไฟล์ก่อน");
+            return;
+        }
+
+        try {
+            // 1. Extract array content using regex
+            // Pattern: var [name] = [ ... ];
+            const match = code.match(/var\s+([a-zA-Z0-9_]+)\s*=\s*(\[\s*\{[\s\S]*\}\s*\]);?/);
+            
+            if (!match) {
+                // Try finding just the array
+                const arrayMatch = code.match(/(\[\s*\{[\s\S]*\}\s*\])/);
+                if (!arrayMatch) {
+                    throw new Error("ไม่พบโครงสร้างข้อมูลตารางเรียนที่ถูกต้อง (var ... = [...];)");
+                }
+            }
+
+            // Clean up the code to make it JSON-parsable or Eval-able safely
+            // Since the file format uses JS keys without quotes (e.g. date: "...") and variable names, 
+            // the safest/easiest way in this context is 'eval' but scoped.
+            // However, we can use Function constructor.
+            
+            // Extract the variable name if possible to set context
+            if (match && match[1]) {
+                const varName = match[1];
+                // Try to parse parts from varName: data_pt12_novice_november_2025
+                const parts = varName.split('_');
+                // parts[0] = data
+                // parts[1..N-2] = prefix components
+                // parts[N-2] = month
+                // parts[N-1] = year
+                
+                if (parts.length >= 4) {
+                    const year = parts[parts.length - 1];
+                    const monthEn = parts[parts.length - 2];
+                    const monthIdx = monthNamesEn.indexOf(monthEn);
+                    
+                    if (monthIdx !== -1) {
+                        document.getElementById('selectMonth').value = monthIdx;
+                    }
+                    if (year && !isNaN(year)) {
+                        document.getElementById('inputYear').value = year;
+                    }
+                    
+                    // Attempt to find room by matching prefix
+                    // prefix is data_PREFIX_month_year
+                    // so prefix string is parts[1]...parts[N-3] joined by _
+                    // But wait, the var name is Constructed from prefix.
+                    // Let's reconstruct prefix from varName
+                    // varName = `${prefix}_${monthName}_${year}`;
+                    const prefix = varName.substring(0, varName.lastIndexOf(`_${monthEn}_${year}`));
+                    // data_pt12_novice
+                    // remove 'data_'
+                    const cleanPrefix = prefix.replace(/^data_/, '');
+                    
+                    // Find room with this prefix
+                    if (typeof systemConfig !== 'undefined') {
+                        const rooms = Object.values(systemConfig.classrooms);
+                        const room = rooms.find(r => r.schedulePrefix === cleanPrefix);
+                        if (room) {
+                            document.getElementById('selectLevel').value = room.level;
+                            updateRoomList(); // Refresh room list for this level
+                            document.getElementById('selectRoom').value = room.id;
+                        }
+                    }
+                }
+            }
+
+            // Execute code to get data
+            // Wrap in function to avoid global pollution
+            const data = new Function(code + "\n return " + (match ? match[1] : "null") + ";")();
+            
+            if (!data || !Array.isArray(data)) {
+                 // Try manual eval of just the array part if specific variable name failed
+                 // This is a fallback for complex cases
+                 const start = code.indexOf('[');
+                 const end = code.lastIndexOf(']') + 1;
+                 if (start > -1 && end > start) {
+                     const arrayStr = code.substring(start, end);
+                     // We need to fix unquoted keys to make it JSON? No, JS object is fine for Function
+                     const dataFallback = new Function("return " + arrayStr + ";")();
+                     if (Array.isArray(dataFallback)) {
+                         fillTable(dataFallback);
+                         return;
+                     }
+                 }
+                 throw new Error("ไม่สามารถอ่านข้อมูลได้");
+            }
+            
+            // Generate table first (in case dates changed)
+            // But we should probably use the dates from the file?
+            // The generateTable function rebuilds the HTML based on Year/Month inputs.
+            // So we must ensure inputs are correct first (which we tried above).
+            generateTable();
+            
+            // Now fill data
+            fillTable(data);
+            alert("นำเข้าข้อมูลเรียบร้อยแล้ว");
+
+        } catch (e) {
+            console.error(e);
+            alert("เกิดข้อผิดพลาดในการอ่านข้อมูล: " + e.message);
+        }
+    }
+
+    function fillTable(data) {
+        data.forEach(item => {
+            // Find row by Date
+            // item.date is "YYYY-MM-DD"
+            // Our rows have input with class .date-val matching this
+            const dateInput = document.querySelector(`.date-val[value="${item.date}"]`);
+            if (!dateInput) return; // Date not in current view
+            
+            const row = dateInput.closest('tr');
+            
+            // Weekend Checkbox
+            if (item.isWeekend) {
+                const chk = row.querySelector('input[type="checkbox"][id^="weekend-"]');
+                if (chk && !chk.checked) {
+                    chk.checked = true;
+                    toggleWeekend(chk.id.replace('weekend-', ''));
+                }
+            }
+
+            // Fill Slots
+            const periods = ['morning', 'afternoon', 'evening'];
+            periods.forEach(p => {
+                if (item[p]) {
+                    const slotData = item[p];
+                    const cellIndex = periods.indexOf(p) + 1; // 0->1, 1->2...
+                    const container = row.cells[cellIndex].querySelector('.slot-container');
+                    
+                    // Exam Mode
+                    if (slotData.isExam) {
+                        const examChk = container.querySelector('.is-exam-chk');
+                        if (!examChk.checked) {
+                            examChk.checked = true;
+                            toggleExamMode(examChk);
+                        }
+                        
+                        container.querySelector('.input-exam-start').value = slotData.examStartTime || '13:00';
+                        container.querySelector('.input-exam-end').value = slotData.examEndTime || '16:00';
+                        
+                        // Try to infer exam type from fileExam/Answer keys
+                        // e.g. fileExamTranslate -> type=Translate
+                        // This is tricky because we support multiple types.
+                        // We'll look for first matching key
+                        const examTypes = Array.from(container.querySelector('.input-exam-type').options).map(o => o.value);
+                        for (const type of examTypes) {
+                            if (slotData[`fileExam${type}`] || slotData[`fileAnswer${type}`]) {
+                                container.querySelector('.input-exam-type').value = type;
+                                container.querySelector('.input-exam-file').value = slotData[`fileExam${type}`] || '';
+                                container.querySelector('.input-answer-file').value = slotData[`fileAnswer${type}`] || '';
+                                break;
+                            }
+                        }
+                    }
+
+                    // Subjects
+                    // We need to parse 'activity' string or specific 'activityId'
+                    // Existing structure: activityId: "Activity : Title"
+                    // Or activity: "Activity1 / Activity2"
+                    
+                    // Map subject IDs from DOM
+                    const subjectSections = container.querySelectorAll('.subject-section');
+                    subjectSections.forEach(section => {
+                        const subjId = section.dataset.subjectId;
+                        
+                        // Check specific activity first
+                        if (slotData[`activity${subjId}`]) {
+                            const val = slotData[`activity${subjId}`];
+                            // Split "Activity : Title"
+                            const parts = val.split(' : ');
+                            section.querySelector('.input-subject-act').value = parts[0] || '';
+                            section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
+                        }
+                        
+                        if (slotData[`fileNote${subjId}`]) {
+                             section.querySelector('.input-subject-file').value = slotData[`fileNote${subjId}`];
+                        }
+                        
+                        if (slotData.slideId) {
+                            // Note: slideId in old format might be single. 
+                            // If multiple subjects have slideId, this simple logic might overlap.
+                            // But usually 1 slide per slot.
+                            section.querySelector('.input-subject-slide-id').value = slotData.slideId;
+                        }
+                    });
+
+                    // Youtube & Zoom (Shared or distributed?)
+                    // Current import logic puts shared back to... where?
+                    // We changed structure to per-subject Youtube, shared Zoom.
+                    // But older data might be array.
+                    
+                    if (slotData.linkYoutube && Array.isArray(slotData.linkYoutube)) {
+                        // Distribute to first subject for now, or just dump in first
+                        if (subjectSections.length > 0) {
+                             subjectSections[0].querySelector('.input-subject-youtube').value = slotData.linkYoutube.join('\n');
+                        }
+                    }
+                    
+                    if (slotData.linkZoom) {
+                        // Support string or array
+                        const zoom = Array.isArray(slotData.linkZoom) ? slotData.linkZoom[0] : slotData.linkZoom;
+                        container.querySelector('.input-zoom').value = zoom || '';
+                    }
+                }
+            });
+
+            // Remark
+            if (item.remarks && item.remarks.general) {
+                row.querySelector('.input-remark').value = item.remarks.general;
+            }
+        });
+        
+        // Update generated code preview
+        generateCode();
     }
 
     // Auth & Init

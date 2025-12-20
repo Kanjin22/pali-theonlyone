@@ -266,9 +266,14 @@
             
             if (rooms.length > 0) {
                 roomsHtml = rooms.map(r => `
-                    <div class="existing-room-item">
-                        <span><strong>${r.name}</strong> (${r.id})</span>
-                        <span class="status-badge ${r.status === 'active' ? 'status-active' : 'status-maintenance'}" style="position:static;">${r.status}</span>
+                    <div class="existing-room-item" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; border-bottom: 1px solid #eee;">
+                        <div>
+                            <span><strong>${r.name}</strong> (${r.id})</span>
+                            <span class="status-badge ${r.status === 'active' ? 'status-active' : 'status-maintenance'}" style="position:static; margin-left:10px; font-size:0.8em; padding:2px 6px;">${r.status}</span>
+                        </div>
+                        <button class="btn-edit" onclick="editRoom('${r.id}')" style="padding: 5px 10px; font-size: 0.8em; background-color: #f39c12;">
+                            <i class="fa-solid fa-pen-to-square"></i> แก้ไข
+                        </button>
                     </div>
                 `).join('');
             } else {
@@ -319,6 +324,34 @@
         `;
         
         document.getElementById('previewContainer').innerHTML = html;
+    }
+
+    function editRoom(roomId) {
+        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms && systemConfig.classrooms[roomId]) {
+            const room = systemConfig.classrooms[roomId];
+            
+            // Populate form
+            document.getElementById('roomId').value = room.id;
+            document.getElementById('roomName').value = room.name;
+            document.getElementById('roomDesc').value = room.description;
+            document.getElementById('roomTeachers').value = room.teachers.join(', ');
+            document.getElementById('roomStatus').value = room.status;
+            document.getElementById('selectLevel').value = room.level;
+            
+            // Trigger updates
+            updateAutoFields(); // Will regenerate prefix based on ID
+            // Override prefix if it was different (though standard is auto)
+            if (room.schedulePrefix) {
+                document.getElementById('schedulePrefix').value = room.schedulePrefix;
+            }
+            updatePreview();
+            
+            // Scroll to form
+            document.getElementById('roomId').scrollIntoView({ behavior: 'smooth' });
+            
+            // Highlight intent
+            alert(`โหลดข้อมูลห้อง ${room.name} (${room.id}) เรียบร้อยแล้ว\nคุณสามารถแก้ไขและกด "สร้างโค้ด" เพื่อรับโค้ดอัปเดต`);
+        }
     }
 
     function generateCode() {
