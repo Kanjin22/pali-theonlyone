@@ -435,6 +435,10 @@
         
         const varName = `${prefix}_${monthName}_${year}`;
         document.getElementById('varName').value = varName;
+
+        // Force regenerate table if level/room/month changed to ensure structure matches
+        // But this function is called on input change... 
+        // Let's just update the label. The user must click "Generate Table" to rebuild the structure.
     }
 
     function loadExistingData() {
