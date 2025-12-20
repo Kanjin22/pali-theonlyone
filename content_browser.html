@@ -82,8 +82,29 @@
         // Note: We check if variable exists to avoid errors if file is missing
         const books = [];
 
+        // Define filtering rules based on URL parameter ?level=xxx
+        const levelConfig = {
+            "pt12": ["ธรรมบท ภาค ๑", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+            "pt3": ["ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+            "pt4": ["มงคลัถทีปนี ภาค ๑", "ธรรมบท ภาค ๑"],
+            "pt5": ["มงคลัถทีปนี ภาค ๒", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+            "pt6": ["สมันตปาสาทิกา ภาค ๓", "ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+            "pt7": ["สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒", "มงคลัถทีปนี ภาค ๑"],
+            "pt8": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒"],
+            "pt9": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "อภิธรรม ภาค ๑"]
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLevel = urlParams.get('level');
+
         function registerBook(name, varObj) {
             if (typeof varObj !== 'undefined') {
+                // If level is specified, filter books
+                if (currentLevel && levelConfig[currentLevel]) {
+                    if (!levelConfig[currentLevel].includes(name)) {
+                        return; // Skip this book
+                    }
+                }
                 books.push({ name: name, data: varObj });
             }
         }
