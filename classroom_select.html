@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เลือกห้องเรียน - บาลีศึกษา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        
+        .header { text-align: center; margin-bottom: 40px; }
+        h1 { color: #2c3e50; margin-bottom: 10px; font-size: 2.5em; }
+        p { color: #7f8c8d; font-size: 1.2em; }
+
+        .classroom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        
+        .room-card { 
+            background: #fff; border-radius: 12px; padding: 25px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            transition: all 0.3s ease; text-decoration: none; color: inherit; 
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+            border-top: 5px solid #bdc3c7;
+        }
+        
+        .room-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .room-card.active:hover { border-top-color: #27ae60; }
+        .room-card.maintenance { opacity: 0.7; cursor: not-allowed; }
+        .room-card.maintenance:hover { transform: none; }
+
+        .room-icon { font-size: 3em; margin-bottom: 20px; color: #34495e; }
+        .room-name { font-size: 1.5em; font-weight: bold; margin-bottom: 10px; color: #2c3e50; }
+        .room-desc { color: #7f8c8d; margin-bottom: 20px; flex-grow: 1; }
+        
+        .teacher-list { font-size: 0.9em; color: #95a5a6; border-top: 1px solid #eee; padding-top: 15px; }
+        
+        .status-badge { 
+            position: absolute; top: 15px; right: 15px; 
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold;
+        }
+        .status-active { background-color: #e8f8f5; color: #27ae60; }
+        .status-maintenance { background-color: #fef9e7; color: #f1c40f; }
+
+        .back-btn { display: inline-block; margin-top: 40px; color: #7f8c8d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>เลือกห้องเรียน</h1>
+            <p>กรุณาเลือกห้องเรียนของท่านเพื่อเข้าสู่บทเรียน</p>
+        </div>
+
+        <div class="classroom-grid" id="classroomGrid">
+            <!-- Rooms will be injected via JS -->
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        </div>
+    </div>
+
+    <script src="system_config.js"></script>
+    <script>
+        const grid = document.getElementById('classroomGrid');
+        
+        Object.values(systemConfig.classrooms).forEach(room => {
+            const card = document.createElement('a');
+            
+            // ถ้าห้องเปิดใช้งาน ให้ลิงก์ไปหน้า home_pt12.html พร้อมแนบ room_id
+            if (room.status === 'active') {
+                card.href = `home_pt12.html?room=${room.id}`;
+                card.className = 'room-card active';
+            } else {
+                card.href = '#';
+                card.className = 'room-card maintenance';
+                card.onclick = (e) => { e.preventDefault(); alert('ห้องเรียนนี้ปิดปรับปรุงชั่วคราว'); }
+            }
+
+            // Status Badge
+            const statusText = room.status === 'active' ? 'เปิดการสอน' : 'ปิดปรับปรุง';
+            const statusClass = room.status === 'active' ? 'status-active' : 'status-maintenance';
+
+            card.innerHTML = `
+                <div class="status-badge ${statusClass}">${statusText}</div>
+                <div class="room-icon">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <div class="room-name">${room.name}</div>
+                <div class="room-desc">${room.description}</div>
+                <div class="teacher-list">
+                    <i class="fa-solid fa-user-tie"></i> ${room.teachers.join(', ')}
+                </div>
+            `;
+            
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
