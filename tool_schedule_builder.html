@@ -170,6 +170,26 @@
             border: 1px dashed #e57373;
             border-radius: 4px;
         }
+        
+        /* New Subject Section Styles */
+        .subject-section {
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 0 4px 4px 0;
+        }
+        .subject-label {
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .subject-section input, .subject-section textarea {
+            margin-bottom: 4px;
+            font-size: 0.85em;
+        }
 
         .output-section {
             margin-top: 30px;
@@ -319,6 +339,33 @@
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
     const monthNamesEn = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
+    // Configuration for Subjects per Level
+    const SUBJECT_CONFIG = {
+        "pt12": [
+            { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' }
+        ],
+        "pt3": [
+             { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
+             { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' },
+             { id: 'Samphan', label: 'วิชาสัมพันธ์ (Relation)', defaultAct: 'สัมพันธ์ไทย' }
+        ],
+        "pt4": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt5": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt6": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt7": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt8": [
+            { id: 'Chan', label: 'วิชาฉันท์ (Chan)', defaultAct: 'แต่งฉันท์มคธ' },
+            { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }
+        ],
+        "pt9": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "balisuksa": [
+            { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' }
+        ]
+    };
+
     function updateVarName() {
         const level = document.getElementById('selectLevel').value;
         const room = document.getElementById('inputRoom').value.trim() || 'roomX';
@@ -362,8 +409,8 @@
             { id: 'evening', label: 'ค่ำ' }
         ];
 
-        // Determine which datalist to use
-        const datalistId = `subjects-${level.startsWith('pt') ? level : 'pt12'}`; // fallback to pt12
+        // Get subjects for current level, fallback to pt12 if not found
+        const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
 
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(year, month, i);
@@ -400,20 +447,35 @@
                             <label class="exam-toggle">
                                 <input type="checkbox" class="is-exam-chk" onchange="toggleExamMode(this)"> สอบ
                             </label>
+                        </div>`;
+                
+                // --- Generate Dynamic Subject Sections ---
+                subjects.forEach(subj => {
+                    html += `
+                        <div class="subject-section" data-subject-id="${subj.id}">
+                            <span class="subject-label">${subj.label}</span>
+                            <input type="text" class="input-mini input-subject-act" value="${subj.defaultAct}" placeholder="กิจกรรม (Activity)">
+                            <input type="text" class="input-mini input-subject-title" placeholder="เรื่อง / หัวข้อ (Title)">
+                            <input type="text" class="input-mini input-subject-file" placeholder="ชื่อไฟล์ (File Name)">
+                            <textarea class="input-mini input-subject-youtube" placeholder="Youtube Links (บรรทัดละ 1 ลิงก์)" rows="2" style="height:auto;"></textarea>
                         </div>
-                        <input type="text" list="${datalistId}" class="input-mini input-subject" placeholder="วิชา / กิจกรรม">
-                        <input type="text" class="input-mini input-title" placeholder="เรื่อง / หัวข้อ (สำหรับเลือกสไลด์)">
-                        
-                        <div class="input-row">
-                            <input type="text" class="input-mini input-file" placeholder="ชื่อไฟล์ (File)" style="flex:1;">
-                            <input type="text" class="input-mini input-youtube" placeholder="Youtube Link" style="flex:1;">
-                        </div>
-                        <div class="input-row">
-                            <input type="text" class="input-mini input-zoom" placeholder="Zoom Link" style="flex:1;">
+                    `;
+                });
+
+                // --- Shared Zoom Link ---
+                html += `
+                        <div class="input-row" style="margin-top: 5px; border-top:1px solid #eee; padding-top:5px;">
+                            <input type="text" class="input-mini input-zoom" placeholder="Zoom Link (ใช้ร่วมกัน)" style="flex:1;">
                         </div>
                         
                         <!-- Exam Details Section -->
                         <div class="exam-details">
+                            <div class="input-row" style="margin-bottom:5px;">
+                                <span style="font-size:0.8em; font-weight:bold;">วิชาที่สอบ:</span>
+                                <select class="input-mini input-exam-type" style="flex:1;">
+                                    ${subjects.map(s => `<option value="${s.id}">${s.label}</option>`).join('')}
+                                </select>
+                            </div>
                             <div class="input-row" style="margin-bottom:5px;">
                                 <input type="time" class="input-mini input-exam-start" value="13:00">
                                 <span style="font-size:0.8em; align-self:center;">ถึง</span>
@@ -475,7 +537,7 @@
         const varName = document.getElementById('varName').value;
         const rows = document.querySelectorAll('.editor-table tbody tr');
         
-        let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder V2)\n`;
+        let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder V2 - Multi Subject)\n`;
         code += `var ${varName} = [\n`;
 
         rows.forEach(row => {
@@ -495,12 +557,8 @@
                 const cell = cells[index + 1]; // Offset by 1 for Date col
                 const container = cell.querySelector('.slot-container');
                 
+                // Common Slot Fields
                 const isExam = container.querySelector('.is-exam-chk').checked;
-                const subject = container.querySelector('.input-subject').value.trim();
-                const title = container.querySelector('.input-title').value.trim();
-                const file = container.querySelector('.input-file').value.trim();
-                const youtube = container.querySelector('.input-youtube').value.trim();
-                const zoom = container.querySelector('.input-zoom').value.trim();
                 
                 // Exam Fields
                 const examStart = container.querySelector('.input-exam-start').value;
@@ -508,49 +566,89 @@
                 const examFile = container.querySelector('.input-exam-file').value.trim();
                 const answerFile = container.querySelector('.input-answer-file').value.trim();
 
-                // Generate object if there is any data
-                if (subject || title || file || youtube || zoom || isExam) {
-                    let props = [];
+                // Process Subject Sections
+                const subjectSections = container.querySelectorAll('.subject-section');
+                let props = [];
+                let hasData = false;
+                
+                let allActivities = [];
+                let allYoutube = [];
+                let allZoom = [];
+
+                subjectSections.forEach(section => {
+                    const subjId = section.dataset.subjectId; // e.g., 'Grammar', 'Translate'
+                    const act = section.querySelector('.input-subject-act').value.trim();
+                    const title = section.querySelector('.input-subject-title').value.trim();
+                    const file = section.querySelector('.input-subject-file').value.trim();
+                    const youtubeVal = section.querySelector('.input-subject-youtube').value.trim();
+                    const zoomVal = section.querySelector('.input-subject-zoom').value.trim();
                     
-                    // Core activity field (backward compatibility mapping)
-                    // If it's an exam, we might want to flag it in the activity text or keep it clean
-                    if (subject) props.push(`subject: "${subject}"`);
-                    if (title) props.push(`title: "${title}"`);
-                    
-                    // Compatibility mapping for Home Page Renderer
-                    // The renderer usually looks for 'activity' or 'activityGrammar' or 'activityTranslate'
-                    // We will inject a generic 'activity' field combining Subject + Title
-                    let actText = subject;
-                    if (title) actText += ` : ${title}`;
-                    if (isExam) actText = `(สอบ) ${actText}`;
-                    
-                    if (actText) props.push(`activity: "${actText}"`); // Universal fallback
-                    
+                    if (title || file || youtubeVal || zoomVal) {
+                        hasData = true;
+                        
+                        // 1. Build specific Activity String for this subject
+                        let fullAct = act;
+                        if (title) fullAct += ` : ${title}`;
+                        
+                        // Push to combined list
+                        if (fullAct) allActivities.push(fullAct);
+
+                        // 2. Add specific properties
+                        if (fullAct) props.push(`activity${subjId}: "${fullAct}"`);
+                        if (file) props.push(`fileNote${subjId}: "${file}"`);
+                        
+                        // 3. Collect Youtube Links
+                        if (youtubeVal) {
+                            const links = youtubeVal.split('\n').map(l => l.trim()).filter(l => l);
+                            allYoutube = allYoutube.concat(links);
+                        }
+
+                        // 4. Collect Zoom Links
+                        if (zoomVal) {
+                            allZoom.push(zoomVal);
+                        }
+                    }
+                });
+
+                // Check global slot data
+                if (allZoom.length > 0 || isExam) hasData = true;
+
+                if (hasData) {
+                    // Combine Activities for fallback 'activity' field
+                    if (isExam) {
+                         allActivities.unshift('(สอบ)');
+                    }
+                    if (allActivities.length > 0) {
+                        props.push(`activity: "${allActivities.join(' / ')}"`);
+                    }
+
+                    // Youtube Array
+                    if (allYoutube.length > 0) {
+                        // Output as array of strings
+                        const linksStr = allYoutube.map(l => `"${l}"`).join(', ');
+                        props.push(`linkYoutube: [${linksStr}]`);
+                    }
+
+                    // Zoom Link (Array or String)
+                    if (allZoom.length > 0) {
+                        if (allZoom.length === 1) {
+                            props.push(`linkZoom: "${allZoom[0]}"`);
+                        } else {
+                            const zLinks = allZoom.map(z => `"${z}"`).join(', ');
+                            props.push(`linkZoom: [${zLinks}]`);
+                        }
+                    }
+
                     if (isExam) {
                         props.push(`isExam: true`);
                         props.push(`examStartTime: "${examStart}"`);
                         props.push(`examEndTime: "${examEnd}"`);
                         
-                        // Heuristic for Exam Type
-                        const isGrammar = subject.includes("ไวยากรณ์");
-                        if (isGrammar) {
-                             if(examFile) props.push(`fileExamGrammar: "${examFile}"`);
-                             if(answerFile) props.push(`fileAnswerGrammar: "${answerFile}"`);
-                        } else {
-                             // Default to Translate
-                             if(examFile) props.push(`fileExamTranslate: "${examFile}"`);
-                             if(answerFile) props.push(`fileAnswerTranslate: "${answerFile}"`);
-                        }
+                        // Exam Type Logic
+                        const examType = container.querySelector('.input-exam-type').value;
+                        if(examFile) props.push(`fileExam${examType}: "${examFile}"`);
+                        if(answerFile) props.push(`fileAnswer${examType}: "${answerFile}"`);
                     }
-                    
-                    if (file) {
-                        const isGrammar = subject.includes("ไวยากรณ์");
-                        if (isGrammar) props.push(`fileNoteGrammar: "${file}"`);
-                        else props.push(`fileNoteTranslate: "${file}"`);
-                    }
-                    
-                    if (youtube) props.push(`linkYoutube: "${youtube}"`);
-                    if (zoom) props.push(`linkZoom: "${zoom}"`);
 
                     code += `        ${p}: {\n            ${props.join(',\n            ')}\n        },\n`;
                 }

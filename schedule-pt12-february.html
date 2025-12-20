@@ -277,8 +277,29 @@
         // === 5. ฟังก์ชันสร้างลิงก์ใน Modal ===
         function generateModalLinks(period, date) {
             let links = '';
-            if (period.linkZoom) { links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; }
-            if (period.linkYoutube) { links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (YouTube)</a>`; }
+            // --- Zoom ---
+            if (period.linkZoom) { 
+                if (Array.isArray(period.linkZoom)) {
+                     period.linkZoom.forEach((link, index) => {
+                         links += `<a href="${link}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom ${index + 1})</a>`;
+                     });
+                } else {
+                     links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
+                }
+            }
+            
+            // --- YouTube (รองรับหลายลิงก์) ---
+            if (period.linkYoutube) {
+                if (Array.isArray(period.linkYoutube)) {
+                    // กรณีมีหลายลิงก์: สร้างปุ่ม YouTube (1), YouTube (2), ...
+                    period.linkYoutube.forEach((link, index) => {
+                        links += `<a href="${link}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (${index + 1})</a>`;
+                    });
+                } else {
+                    // กรณีมีลิงก์เดียว
+                    links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (YouTube)</a>`;
+                }
+            }
             if (period.slideId) {
                 links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
             }

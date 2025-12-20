@@ -284,7 +284,13 @@
             
             // --- Zoom ---
             if (period.linkZoom) { 
-                links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
+                if (Array.isArray(period.linkZoom)) {
+                     period.linkZoom.forEach((link, index) => {
+                         links += `<a href="${link}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom ${index + 1})</a>`;
+                     });
+                } else {
+                     links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
+                }
             }
             
             // --- YouTube (รองรับหลายลิงก์) ---
@@ -292,11 +298,11 @@
                 if (Array.isArray(period.linkYoutube)) {
                     // กรณีมีหลายลิงก์: สร้างปุ่ม YouTube (1), YouTube (2), ...
                     period.linkYoutube.forEach((link, index) => {
-                        links += `<a href="${link}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (${index + 1})</a>`;
+                        links += `<a href="${link}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (${index + 1})</a>`;
                     });
                 } else {
                     // กรณีมีลิงก์เดียว
-                    links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอแปลยกศัพท์ (YouTube)</a>`;
+                    links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (YouTube)</a>`;
                 }
             }
             
