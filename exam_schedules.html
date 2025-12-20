@@ -3,259 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางสอบสนามหลวง</title>
+    <title>ตารางสอบบาลีสนามหลวง</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Sarabun', sans-serif; margin: 0; background-color: #f7f7f7; color: #333; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { max-width: 900px; width: 100%; }
         
-        /* Header */
-        .page-header { text-align: center; margin-bottom: 30px; padding: 20px 0; border-bottom: 2px solid #34495e; }
-        .main-title { font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; }
-        .sub-title { font-size: 1.1em; color: #7f8c8d; margin-top: 5px; }
+        .page-header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        
+        .back-link { text-decoration: none; color: #7f8c8d; font-weight: bold; display: inline-block; margin-bottom: 20px; align-self: flex-start; }
+        .back-link:hover { color: #2c3e50; }
 
-        /* Countdown Section */
+        /* Countdown Card */
         .countdown-card {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #d35400, #e67e22);
             color: white;
-            border-radius: 15px;
             padding: 30px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
-            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(211, 84, 0, 0.3);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
         }
-        .countdown-title { font-size: 1.2em; margin-bottom: 15px; opacity: 0.9; }
-        .countdown-timer { display: flex; justify-content: center; gap: 20px; }
-        .timer-item { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; min-width: 80px; }
-        .timer-val { font-size: 2.5em; font-weight: bold; line-height: 1; }
-        .timer-label { font-size: 0.9em; opacity: 0.8; margin-top: 5px; }
-
-        /* Calendar Section */
-        .calendar-section { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-        .section-title { font-size: 1.4em; font-weight: bold; color: #2c3e50; margin: 0; }
+        .countdown-card::before {
+            content: "\f017";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 150px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        .timer-display {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .timer-label { font-size: 1.2em; opacity: 0.9; }
         
-        .year-selector {
-            padding: 8px 15px;
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        select {
+            padding: 10px 20px;
+            font-size: 1.1em;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #bdc3c7;
             font-family: 'Sarabun', sans-serif;
-            font-size: 1em;
-            background-color: #f9f9f9;
             cursor: pointer;
         }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        /* Schedule Tables */
+        .schedule-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #3498db;
+        }
+        .section-title {
+            color: #2980b9;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .exam-group { margin-bottom: 30px; }
+        .group-header {
+            background-color: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-left: 5px solid #2c3e50;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background-color: #f8f9fa; color: #2c3e50; font-weight: bold; }
-        tr:last-child td { border-bottom: none; }
-        .exam-date { font-weight: bold; color: #e74c3c; width: 30%; }
-        .exam-subject { font-weight: bold; color: #2c3e50; }
-        .exam-time { color: #7f8c8d; font-size: 0.9em; }
-
-        .back-btn { display: inline-block; margin-top: 30px; color: #7f8c8d; text-decoration: none; transition: color 0.2s; }
-        .back-btn:hover { color: #2c3e50; }
-
+        th { background-color: #f8f9fa; color: #7f8c8d; font-weight: 600; width: 30%; }
+        td.date-col { font-weight: bold; color: #e67e22; width: 25%; }
+        td.lunar-col { color: #7f8c8d; font-size: 0.9em; width: 20%; }
+        
+        /* Responsive */
         @media (max-width: 600px) {
-            .countdown-timer { gap: 10px; }
-            .timer-item { min-width: 60px; padding: 10px; }
-            .timer-val { font-size: 1.8em; }
-            .exam-date { width: auto; display: block; margin-bottom: 5px; }
-            td { display: block; padding: 8px 15px; }
-            th { display: none; }
-            tr { display: block; margin-bottom: 15px; border: 1px solid #eee; border-radius: 8px; padding: 10px; }
-            tr:last-child td { border-bottom: 1px solid #eee; }
-            tr:last-child td:last-child { border-bottom: none; }
+            .timer-display { font-size: 2em; }
+            th, td { display: block; width: 100%; }
+            th { background: none; color: #34495e; padding-bottom: 5px; }
+            td { padding-top: 0; border: none; }
+            td.date-col { padding-top: 5px; }
+            tr { border-bottom: 1px solid #eee; display: block; padding: 10px 0; }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
+        <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+        
         <div class="page-header">
-            <h1 class="main-title">ตารางสอบสนามหลวง</h1>
-            <div class="sub-title">กำหนดการสอบประโยคบาลีสนามหลวง</div>
+            <h1><i class="fa-solid fa-calendar-days"></i> ตารางสอบบาลีสนามหลวง</h1>
+            <p>กำหนดการสอบประโยคบาลีสนามหลวงและบาลีศึกษา</p>
         </div>
 
-        <!-- Countdown -->
-        <div class="countdown-card" id="countdown-container">
-            <div class="countdown-title">⏳ เหลือเวลาเตรียมตัวสอบ (ครั้งที่ ๑)</div>
-            <div class="countdown-timer">
-                <div class="timer-item">
-                    <div class="timer-val" id="days">00</div>
-                    <div class="timer-label">วัน</div>
-                </div>
-                <div class="timer-item">
-                    <div class="timer-val" id="hours">00</div>
-                    <div class="timer-label">ชั่วโมง</div>
-                </div>
-            </div>
-            <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.9;" id="target-exam-label">
-                เป้าหมาย: สอบครั้งที่ ๑ (รอข้อมูล)
-            </div>
+        <div class="countdown-card">
+            <div class="timer-label" id="countdown-label">กำลังโหลดข้อมูล...</div>
+            <div class="timer-display" id="countdown-timer">-- วัน -- ชั่วโมง</div>
+            <div style="font-size: 0.9em; margin-top: 10px;">เตรียมตัวให้พร้อม! ความพยายามอยู่ที่ไหน ความสำเร็จอยู่ที่นั่น</div>
         </div>
 
-        <!-- Calendar -->
-        <div class="calendar-section">
-            <div class="section-header">
-                <h2 class="section-title">📅 ปฏิทินการสอบ</h2>
-                <select id="year-select" class="year-selector">
-                    <option value="2568">พ.ศ. ๒๕๖๘</option>
-                    <option value="2567">พ.ศ. ๒๕๖๗</option>
-                </select>
-            </div>
-            <div id="schedule-container">
-                <!-- Table will be injected here -->
-            </div>
+        <div class="controls">
+            <label for="yearSelect"><i class="fa-solid fa-filter"></i> เลือกปี พ.ศ.: </label>
+            <select id="yearSelect" onchange="renderSchedule()">
+                <option value="2568" selected>๒๕๖๘</option>
+                <option value="2569">๒๕๖๙ (รอประกาศ)</option>
+            </select>
         </div>
 
-        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+        <div id="schedule-content">
+            <!-- Content will be injected here -->
+        </div>
     </div>
 
     <script>
-        // --- Mock Data (รอข้อมูลจริงจากผู้ใช้) ---
-        const examData = {
+        // Data Structure
+        const scheduleData = {
             "2568": {
                 exam1: [
-                    { date: "รอข้อมูล", subject: "รอข้อมูล", time: "13:00 - 16:00" },
+                    {
+                        title: "ชั้นประโยค ป.ธ.๖ - ๗ และ บ.ศ.๖ - ๗",
+                        rows: [
+                            { date: "30 ม.ค. 2568", lunar: "ขึ้น ๒ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
+                            { date: "31 ม.ค. 2568", lunar: "ขึ้น ๓ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
+                        ]
+                    },
+                    {
+                        title: "ชั้นประโยค ป.ธ.๘ - ๙ และ บ.ศ.๘ - ๙",
+                        rows: [
+                            { date: "1 ก.พ. 2568", lunar: "ขึ้น ๔ ค่ำ เดือน ๓", subject: "วิชาแต่งฉันท์ (ป.ธ.๘), แต่งไทย (ป.ธ.๙)" },
+                            { date: "2 ก.พ. 2568", lunar: "ขึ้น ๕ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
+                            { date: "3 ก.พ. 2568", lunar: "ขึ้น ๖ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
+                        ]
+                    },
+                    {
+                        title: "ครั้งหลัง: ชั้นประโยค ๑-๒, ป.ธ.๓-๕ และ บ.ศ.๑-๕",
+                        rows: [
+                            { date: "22 ก.พ. 2568", lunar: "แรม ๑๐ ค่ำ เดือน ๓", subject: "ป.๑-๒: แปล | ป.๓: แปล | ป.๔-๕: กลับ" },
+                            { date: "23 ก.พ. 2568", lunar: "แรม ๑๑ ค่ำ เดือน ๓", subject: "ป.๑-๒: ไวยากรณ์ | ป.๓: สัมพันธ์ | ป.๔-๕: แปล" },
+                            { date: "24 ก.พ. 2568", lunar: "แรม ๑๒ ค่ำ เดือน ๓", subject: "ป.๓: ไวยากรณ์, พุทธศาสน์" }
+                        ]
+                    }
                 ],
                 exam2: [
-                    { date: "รอข้อมูล", subject: "รอข้อมูล", time: "13:00 - 16:00" }
-                ],
-                targetDate1: "2025-01-01", // YYYY-MM-DD (ตัวอย่าง)
-                targetDate2: "2025-04-01"  // YYYY-MM-DD (ตัวอย่าง)
-            },
-            "2567": {
-                exam1: [
-                    { date: "5 มีนาคม 2567", subject: "แปลมคธเป็นไทย", time: "13:00 - 17:00" },
-                    { date: "6 มีนาคม 2567", subject: "ไวยากรณ์", time: "13:00 - 16:00" }
-                ],
-                targetDate1: "2024-03-05"
+                    {
+                        title: "สอบซ่อม (ครั้งที่ ๒): ทุกชั้นประโยค",
+                        rows: [
+                            { date: "22 เม.ย. 2568", lunar: "แรม ๑๐ ค่ำ เดือน ๕", subject: "ป.๑-๒: แปล | ป.๓: แปล | ป.๔-๕: กลับ" },
+                            { date: "23 เม.ย. 2568", lunar: "แรม ๑๑ ค่ำ เดือน ๕", subject: "ป.๑-๒: ไวยากรณ์ | ป.๓: สัมพันธ์ | ป.๔-๕: แปล" },
+                            { date: "24 เม.ย. 2568", lunar: "แรม ๑๒ ค่ำ เดือน ๕", subject: "ป.๓: ไวยากรณ์" }
+                        ]
+                    }
+                ]
             }
         };
 
-        const yearSelect = document.getElementById('year-select');
-        const scheduleContainer = document.getElementById('schedule-container');
-        const countdownContainer = document.getElementById('countdown-container');
+        function renderSchedule() {
+            const year = document.getElementById('yearSelect').value;
+            const container = document.getElementById('schedule-content');
+            container.innerHTML = "";
 
-        // --- Countdown Logic ---
-        function updateCountdown(targetDateStr, examLabel) {
-            const targetLabel = document.getElementById('target-exam-label');
-            const dayEl = document.getElementById('days');
-            const hourEl = document.getElementById('hours');
-
-            if (!targetDateStr) {
-                dayEl.innerText = "-";
-                hourEl.innerText = "-";
-                targetLabel.innerText = "ยังไม่มีกำหนดการสอบ";
+            if (!scheduleData[year]) {
+                container.innerHTML = "<p style='text-align:center; color:#95a5a6;'>ยังไม่มีข้อมูลสำหรับปีนี้</p>";
                 return;
             }
 
-            const targetDate = new Date(targetDateStr);
-            targetDate.setHours(0,0,0,0); // Reset time to midnight for day calculation
-            
-            // Update Label
-            const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            const thaiDate = targetDate.toLocaleDateString('th-TH', dateOptions);
-            targetLabel.innerText = `เป้าหมาย: ${examLabel} (${thaiDate})`;
+            const data = scheduleData[year];
 
-            function calculate() {
+            // Exam 1
+            const section1 = document.createElement('div');
+            section1.className = 'schedule-section';
+            section1.innerHTML = `<h2 class="section-title">สอบครั้งที่ ๑ (สอบไล่)</h2>`;
+            
+            data.exam1.forEach(group => {
+                let rowsHtml = "";
+                group.rows.forEach(row => {
+                    rowsHtml += `
+                        <tr>
+                            <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
+                            <td class="lunar-col">${row.lunar}</td>
+                            <td>${row.subject}</td>
+                        </tr>
+                    `;
+                });
+
+                section1.innerHTML += `
+                    <div class="exam-group">
+                        <div class="group-header">${group.title}</div>
+                        <table>${rowsHtml}</table>
+                    </div>
+                `;
+            });
+            container.appendChild(section1);
+
+            // Exam 2
+            if (data.exam2) {
+                const section2 = document.createElement('div');
+                section2.className = 'schedule-section';
+                section2.style.borderTopColor = "#e74c3c"; // Red for re-exam
+                section2.innerHTML = `<h2 class="section-title" style="color:#c0392b;">สอบครั้งที่ ๒ (สอบซ่อม)</h2>`;
+                
+                data.exam2.forEach(group => {
+                    let rowsHtml = "";
+                    group.rows.forEach(row => {
+                        rowsHtml += `
+                            <tr>
+                                <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
+                                <td class="lunar-col">${row.lunar}</td>
+                                <td>${row.subject}</td>
+                            </tr>
+                        `;
+                    });
+
+                    section2.innerHTML += `
+                        <div class="exam-group">
+                            <div class="group-header">${group.title}</div>
+                            <table>${rowsHtml}</table>
+                        </div>
+                    `;
+                });
+                container.appendChild(section2);
+            }
+            
+            updateCountdown(year);
+        }
+
+        function updateCountdown(year) {
+            if (year !== "2568") {
+                 document.getElementById('countdown-label').innerText = "แสดงข้อมูลปี " + year;
+                 document.getElementById('countdown-timer').innerText = "-";
+                 return;
+            }
+
+            // Find next exam date
+            const today = new Date();
+            // Parse dates manually for simplicity (DD MMM YYYY to Date object)
+            // Month map
+            const monthMap = { "ม.ค.": 0, "ก.พ.": 1, "มี.ค.": 2, "เม.ย.": 3 };
+            
+            let allDates = [];
+            // Collect all dates from 2568 schedule
+            [...scheduleData["2568"].exam1, ...scheduleData["2568"].exam2].forEach(group => {
+                group.rows.forEach(row => {
+                    const parts = row.date.split(" ");
+                    const d = parseInt(parts[0]);
+                    const m = monthMap[parts[1]];
+                    const y = parseInt(parts[2]) - 543; // Convert to AD
+                    const dateObj = new Date(y, m, d);
+                    // Add end of day time to ensure we don't skip today if it's the exam day
+                    dateObj.setHours(23, 59, 59); 
+                    allDates.push({ date: dateObj, label: group.title + " (" + row.subject + ")" });
+                });
+            });
+
+            // Sort dates
+            allDates.sort((a, b) => a.date - b.date);
+
+            // Find first future date
+            const nextExam = allDates.find(item => item.date >= today);
+
+            if (nextExam) {
+                const targetDate = nextExam.date;
+                // Reset to midnight for calculation
+                targetDate.setHours(0,0,0,0);
                 const now = new Date();
-                const diff = targetDate - now;
-
-                if (diff <= 0) {
-                    dayEl.innerText = "0";
-                    hourEl.innerText = "0";
-                    targetLabel.innerText = `ถึงวันสอบแล้ว (${examLabel})`;
-                    return;
+                now.setHours(0,0,0,0);
+                
+                const diffTime = targetDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                document.getElementById('countdown-label').innerText = "เหลือเวลาอีก... (สอบวันที่ " + targetDate.getDate() + " " + Object.keys(monthMap).find(key => monthMap[key] === targetDate.getMonth()) + ")";
+                
+                if (diffDays === 0) {
+                    document.getElementById('countdown-timer').innerText = "วันนี้สอบ!";
+                } else {
+                    document.getElementById('countdown-timer').innerText = diffDays + " วัน";
                 }
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-                dayEl.innerText = days;
-                hourEl.innerText = hours;
-            }
-
-            calculate();
-            // Update every minute (no need for second precision for days)
-            if (window.countdownInterval) clearInterval(window.countdownInterval);
-            window.countdownInterval = setInterval(calculate, 60000);
-        }
-
-        // --- Render Table Logic ---
-        function renderSchedule(year) {
-            const data = examData[year];
-            if (!data) {
-                scheduleContainer.innerHTML = '<div style="text-align:center; padding:20px; color:#777;">ไม่พบข้อมูลสำหรับปีนี้</div>';
-                return;
-            }
-
-            let html = '';
-
-            // Exam 1 (สอบครั้งที่ ๑)
-            if (data.exam1 && data.exam1.length > 0) {
-                html += '<h3 style="color:#3498db; margin-top:0;">สอบครั้งที่ ๑ (สนามหลวง)</h3>';
-                html += '<table><thead><tr><th>วันที่</th><th>วิชา</th><th>เวลา</th></tr></thead><tbody>';
-                data.exam1.forEach(row => {
-                    html += `<tr>
-                        <td class="exam-date">${row.date}</td>
-                        <td class="exam-subject">${row.subject}</td>
-                        <td class="exam-time">${row.time}</td>
-                    </tr>`;
-                });
-                html += '</tbody></table>';
-            }
-
-            // Exam 2 (สอบครั้งที่ ๒ - ซ่อม)
-            if (data.exam2 && data.exam2.length > 0) {
-                html += '<h3 style="color:#e67e22; margin-top:30px;">สอบครั้งที่ ๒ (สอบซ่อม)</h3>';
-                html += '<table><thead><tr><th>วันที่</th><th>วิชา</th><th>เวลา</th></tr></thead><tbody>';
-                data.exam2.forEach(row => {
-                    html += `<tr>
-                        <td class="exam-date">${row.date}</td>
-                        <td class="exam-subject">${row.subject}</td>
-                        <td class="exam-time">${row.time}</td>
-                    </tr>`;
-                });
-                html += '</tbody></table>';
-            }
-
-            scheduleContainer.innerHTML = html;
-
-            // Update Countdown automatically based on current year selection
-            // Logic: If selected year is current or future, find the next upcoming exam
-            // For simplicity now: Just use exam1 of the selected year if it's in the future, else exam2
-            
-            const now = new Date();
-            let target = null;
-            let label = "";
-
-            if (data.targetDate1 && new Date(data.targetDate1) > now) {
-                target = data.targetDate1;
-                label = "สอบครั้งที่ ๑";
-            } else if (data.targetDate2 && new Date(data.targetDate2) > now) {
-                target = data.targetDate2;
-                label = "สอบครั้งที่ ๒ (ซ่อม)";
             } else {
-                // If both passed, show "End" or keep previous? 
-                // Let's just default to Exam 1 of that year for display purposes
-                target = data.targetDate1;
-                label = "สอบครั้งที่ ๑";
+                document.getElementById('countdown-label').innerText = "การสอบปี " + year;
+                document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว";
             }
-
-            updateCountdown(target, label);
         }
-
-        // Event Listeners
-        yearSelect.addEventListener('change', (e) => {
-            renderSchedule(e.target.value);
-        });
 
         // Initialize
-        renderSchedule("2568");
-
+        renderSchedule();
     </script>
 </body>
 </html>
