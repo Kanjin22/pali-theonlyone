@@ -157,6 +157,10 @@
     <script src="data-pt12-december.js"></script>
     <script src="data-pt12-january.js"></script>
     <script src="data-pt12-february.js"></script>
+    <script src="data-pt12_novice-november.js"></script>
+    <script src="data-pt12_novice-december.js"></script>
+    <script src="data-pt12_novice-january.js"></script>
+    <script src="data-pt12_novice-february.js"></script>
     <script>
 
         function labelWithLevel(prefix, slot, day) {
@@ -165,10 +169,26 @@
         }
         document.addEventListener('DOMContentLoaded', () => {
             let allData = [];
-            if (typeof dataNovember !== 'undefined') allData = allData.concat(dataNovember);
-            if (typeof dataDecember !== 'undefined') allData = allData.concat(dataDecember);
-            if (typeof dataJanuary !== 'undefined') allData = allData.concat(dataJanuary);
-            if (typeof dataFebruary !== 'undefined') allData = allData.concat(dataFebruary);
+            
+            // Helper to add metadata safely
+            const addMeta = (data, meta) => (data || []).map(d => ({...d, ...meta}));
+
+            // 1. Load Public Room Data
+            let publicData = [];
+            if (typeof dataNovember !== 'undefined') publicData = publicData.concat(dataNovember);
+            if (typeof dataDecember !== 'undefined') publicData = publicData.concat(dataDecember);
+            if (typeof dataJanuary !== 'undefined') publicData = publicData.concat(dataJanuary);
+            if (typeof dataFebruary !== 'undefined') publicData = publicData.concat(dataFebruary);
+            allData = allData.concat(addMeta(publicData, { level: 'ประโยค ๑-๒ (สาธุชนทั่วไป)' }));
+
+            // 2. Load Novice Room Data
+            let noviceData = [];
+            if (typeof dataNovember_Novice !== 'undefined') noviceData = noviceData.concat(dataNovember_Novice);
+            if (typeof dataDecember_Novice !== 'undefined') noviceData = noviceData.concat(dataDecember_Novice);
+            if (typeof dataJanuary_Novice !== 'undefined') noviceData = noviceData.concat(dataJanuary_Novice);
+            if (typeof dataFebruary_Novice !== 'undefined') noviceData = noviceData.concat(dataFebruary_Novice);
+            allData = allData.concat(addMeta(noviceData, { level: 'ประโยค ๑-๒ (สามเณรนวกะ)' }));
+
             if (allData.length > 0) {
                 allData.sort((a,b) => new Date(a.date) - new Date(b.date));
                 let latest = null;
