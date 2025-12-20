@@ -1032,11 +1032,15 @@
 
                     let contentText = "";
                     
-                    // 1. Try to get Pali text (Start ... End)
-                    if (slide.pali && slide.pali !== "..." && slide.pali.length > 2) {
+                    // 1. Try to get Pali text (Start ... End) - PRIORITIZE THIS
+                    if (slide.pali && slide.pali !== "..." && slide.pali !== "รอข้อมูล" && slide.pali.length > 2) {
                         let p = slide.pali.replace(/<[^>]+>/g, '').trim();
-                        if (p.length > 60) {
-                            contentText = p.substring(0, 40) + " ... " + p.substring(p.length - 20);
+                        // Remove punctuation for cleaner look? No, keep it.
+                        
+                        // User wants "Start ... End"
+                        // If text is long, take first 25 chars and last 20 chars
+                        if (p.length > 50) {
+                            contentText = p.substring(0, 35) + " ... " + p.substring(p.length - 20);
                         } else {
                             contentText = p;
                         }
@@ -1044,7 +1048,7 @@
 
                     // 2. Fallback to Episode/Story if Pali is not available
                     if (!contentText) {
-                         if (currentSection && currentSection !== "...") {
+                         if (currentSection && currentSection !== "..." && currentSection !== "รอข้อมูล") {
                              contentText = currentSection;
                          } else {
                              // Fallback chain
@@ -1054,8 +1058,10 @@
                     }
 
                     item.innerHTML = `
-                        <div class="toc-page-label">${pageText}</div>
-                        <div class="toc-content-label" style="font-family: 'Niramit', serif; font-size: 1.1rem; color: #455a64;">${contentText}</div>
+                        <div style="display: flex; gap: 10px; align-items: baseline;">
+                            <div class="toc-page-label" style="min-width: 60px;">${pageText}</div>
+                            <div class="toc-content-label" style="font-family: 'Niramit', serif; font-size: 1rem; color: #455a64; flex: 1;">${contentText}</div>
+                        </div>
                     `;
                     
                     list.appendChild(item);
