@@ -6,6 +6,7 @@
     <title>เครื่องมือสร้างตารางเรียน (Schedule Builder) - Pali The Only One</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="system_config.js"></script>
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
@@ -221,7 +222,7 @@
     <div class="config-section">
         <div class="form-group">
             <label><i class="fa-solid fa-layer-group"></i> ระดับชั้น (Level)</label>
-            <select id="selectLevel" onchange="updateVarName()">
+            <select id="selectLevel" onchange="updateRoomList()">
                 <option value="pt12">ประโยค ๑-๒</option>
                 <option value="pt3">ประโยค ป.ธ.๓</option>
                 <option value="pt4">ประโยค ป.ธ.๔</option>
@@ -235,8 +236,10 @@
         </div>
         
         <div class="form-group">
-            <label><i class="fa-solid fa-door-open"></i> ชื่อห้อง (Room Name)</label>
-            <input type="text" id="inputRoom" placeholder="เช่น room1, roomA" oninput="updateVarName()">
+            <label><i class="fa-solid fa-door-open"></i> ห้องเรียน (Classroom)</label>
+            <select id="selectRoom" onchange="updateVarName()">
+                <option value="">-- กรุณาเลือกห้อง --</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -366,22 +369,52 @@
         ]
     };
 
-    function updateVarName() {
+    function updateRoomList() {
         const level = document.getElementById('selectLevel').value;
-        const room = document.getElementById('inputRoom').value.trim() || 'roomX';
+        const selectRoom = document.getElementById('selectRoom');
+        selectRoom.innerHTML = '<option value="">-- กรุณาเลือกห้อง --</option>';
+        
+        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
+            const rooms = Object.values(systemConfig.classrooms).filter(r => r.level === level && r.status === 'active');
+            rooms.forEach(r => {
+                const option = document.createElement('option');
+                option.value = r.id;
+                option.textContent = `${r.name} (${r.id})`;
+                selectRoom.appendChild(option);
+            });
+            
+            // Select first room if available
+            if (rooms.length > 0) {
+                selectRoom.value = rooms[0].id;
+            }
+        }
+        updateVarName();
+    }
+
+    function updateVarName() {
+        const roomId = document.getElementById('selectRoom').value;
         const monthIdx = document.getElementById('selectMonth').value;
         const year = document.getElementById('inputYear').value;
         const monthName = monthNamesEn[monthIdx];
         
-        // Sanitize room name
-        const cleanRoom = room.replace(/[^a-zA-Z0-9]/g, '');
+        let prefix = 'data_unknown';
+        if (roomId && typeof systemConfig !== 'undefined' && systemConfig.classrooms[roomId]) {
+             const roomConfig = systemConfig.classrooms[roomId];
+             prefix = `data_${roomConfig.schedulePrefix}`;
+        }
         
-        // Format: data_{level}_{room}_{month}_{year}
-        const varName = `data_${level}_${cleanRoom}_${monthName}_${year}`;
+        const varName = `${prefix}_${monthName}_${year}`;
         document.getElementById('varName').value = varName;
     }
 
+
     function generateTable() {
+        const roomId = document.getElementById('selectRoom').value;
+        if (!roomId) {
+            alert("กรุณาเลือกห้องเรียนก่อนสร้างตาราง");
+            return;
+        }
+
         const level = document.getElementById('selectLevel').value;
         const month = parseInt(document.getElementById('selectMonth').value);
         const year = parseInt(document.getElementById('inputYear').value);
@@ -699,7 +732,7 @@
         const password = prompt("กรุณาใส่รหัสผ่านผู้ดูแลระบบ (Admin Password):");
         if (password === "admin123") {
             document.querySelector('.container').style.display = 'block';
-            updateVarName();
+            updateRoomList();
             generateTable(); // Init with defaults
         } else {
             alert("รหัสผ่านไม่ถูกต้อง");

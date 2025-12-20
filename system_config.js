@@ -3,6 +3,7 @@ const systemConfig = {
     classrooms: {
         "room1": {
             id: "room1",
+            level: "pt12",
             name: "สามเณรนวกะ ๒ ชุด C ห้อง ๔",
             description: "สำหรับสามเณรนวกะ (ชุด C)",
             schedulePrefix: "pt12_novice", 
@@ -11,6 +12,7 @@ const systemConfig = {
         },
         "room2": {
             id: "room2",
+            level: "balisuksa",
             name: "สาธุชนทั่วไป",
             description: "สำหรับบุคคลทั่วไปที่สนใจศึกษาบาลี",
             schedulePrefix: "pt12", 
