@@ -266,8 +266,9 @@
 
         <div class="form-group">
             <label><i class="fa-regular fa-calendar"></i> เดือน (Month)</label>
-            <select id="selectMonth" onchange="updateVarName()">
-                <option value="0">มกราคม</option>
+            <div style="display:flex; gap:5px;">
+                <select id="selectMonth" onchange="updateVarName()" style="flex:1;">
+                    <option value="0">มกราคม</option>
                 <option value="1">กุมภาพันธ์</option>
                 <option value="2">มีนาคม</option>
                 <option value="3">เมษายน</option>
