@@ -32,6 +32,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๓๗"
             ]
         }
@@ -56,6 +57,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๓๘"
             ]
         }
@@ -80,6 +82,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๓๙"
             ]
         }
@@ -104,6 +107,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๐"
             ]
         }
@@ -128,6 +132,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๑"
             ]
         }
@@ -152,6 +157,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๒"
             ]
         }
@@ -176,6 +182,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๓"
             ]
         }
@@ -200,6 +207,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๔"
             ]
         }
@@ -224,6 +232,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๕"
             ]
         }
@@ -248,6 +257,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๖"
             ]
         }
@@ -272,6 +282,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๗"
             ]
         }
@@ -296,6 +307,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๘"
             ]
         }
@@ -320,6 +332,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๔๙"
             ]
         }
@@ -344,6 +357,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๐"
             ]
         }
@@ -368,6 +382,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๑"
             ]
         }
@@ -392,6 +407,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๒"
             ]
         }
@@ -416,6 +432,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๓"
             ]
         }
@@ -440,6 +457,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๔"
             ]
         }
@@ -464,6 +482,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๕"
             ]
         }
@@ -488,6 +507,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๖"
             ]
         }
@@ -512,6 +532,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๗"
             ]
         }
@@ -536,6 +557,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๘"
             ]
         }
@@ -560,6 +582,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๕๙"
             ]
         }
@@ -584,6 +607,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๐"
             ]
         }
@@ -608,6 +632,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๑"
             ]
         }
@@ -632,6 +657,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๒"
             ]
         }
@@ -656,6 +682,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๓"
             ]
         }
@@ -680,6 +707,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๔"
             ]
         }
@@ -704,6 +732,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๕"
             ]
         }
@@ -728,6 +757,7 @@ const dataJanuary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) บาลีไวยากรณ์ ครั้งที่ ๖๖"
             ]
         }

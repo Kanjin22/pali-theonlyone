@@ -24,6 +24,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๕๐-๕๑"
             ]
         }
@@ -48,6 +49,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๕๒-๕๓"
             ]
         }
@@ -72,6 +74,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๕๔-๕๕"
             ]
         }
@@ -96,6 +99,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๕๖-๕๗"
             ]
         }
@@ -120,6 +124,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๕๘-๕๙"
             ]
         }
@@ -144,6 +149,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๖๐-๖๑"
             ]
         }
@@ -168,6 +174,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๖๒-๖๓"
             ]
         }
@@ -192,6 +199,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๖๔-๖๕"
             ]
         }
@@ -216,6 +224,7 @@ const dataFebruary = [
         },
         evening: {
             activityGrammar: [
+                "เรียนอุภัยพากย์ปริวัตน์",
                 "(เฉลย) รวม ๔ เล่ม ปี' ๖๖-๖๗"
             ]
         }
