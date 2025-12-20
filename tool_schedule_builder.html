@@ -162,6 +162,14 @@
             padding: 5px;
             border-radius: 5px;
         }
+        .exam-details {
+            display: none;
+            margin-top: 5px;
+            padding: 8px;
+            background: #fff5f5;
+            border: 1px dashed #e57373;
+            border-radius: 4px;
+        }
 
         .output-section {
             margin-top: 30px;
@@ -403,6 +411,21 @@
                         <div class="input-row">
                             <input type="text" class="input-mini input-zoom" placeholder="Zoom Link" style="flex:1;">
                         </div>
+                        
+                        <!-- Exam Details Section -->
+                        <div class="exam-details">
+                            <div class="input-row" style="margin-bottom:5px;">
+                                <input type="time" class="input-mini input-exam-start" value="13:00">
+                                <span style="font-size:0.8em; align-self:center;">ถึง</span>
+                                <input type="time" class="input-mini input-exam-end" value="16:00">
+                            </div>
+                            <div class="input-row" style="margin-bottom:5px;">
+                                <input type="text" class="input-mini input-exam-file" placeholder="ลิงก์ไฟล์ข้อสอบ (Exam File)" style="flex:1;">
+                            </div>
+                            <div class="input-row">
+                                <input type="text" class="input-mini input-answer-file" placeholder="ลิงก์ไฟล์เฉลย (Answer File)" style="flex:1;">
+                            </div>
+                        </div>
                     </div>
                 </td>`;
             });
@@ -424,19 +447,27 @@
     function toggleWeekend(id) {
         const row = document.getElementById(`row-${id}`);
         const checkbox = document.getElementById(`weekend-${id}`);
+        const inputs = row.querySelectorAll('input:not([id^="weekend-"]), select, textarea');
+
         if (checkbox.checked) {
             row.classList.add('weekend-row');
+            inputs.forEach(input => input.disabled = true);
         } else {
             row.classList.remove('weekend-row');
+            inputs.forEach(input => input.disabled = false);
         }
     }
 
     function toggleExamMode(checkbox) {
         const container = checkbox.closest('.slot-container');
+        const examDetails = container.querySelector('.exam-details');
+        
         if (checkbox.checked) {
             container.classList.add('is-exam-mode');
+            if(examDetails) examDetails.style.display = 'block';
         } else {
             container.classList.remove('is-exam-mode');
+            if(examDetails) examDetails.style.display = 'none';
         }
     }
 
@@ -470,6 +501,12 @@
                 const file = container.querySelector('.input-file').value.trim();
                 const youtube = container.querySelector('.input-youtube').value.trim();
                 const zoom = container.querySelector('.input-zoom').value.trim();
+                
+                // Exam Fields
+                const examStart = container.querySelector('.input-exam-start').value;
+                const examEnd = container.querySelector('.input-exam-end').value;
+                const examFile = container.querySelector('.input-exam-file').value.trim();
+                const answerFile = container.querySelector('.input-answer-file').value.trim();
 
                 // Generate object if there is any data
                 if (subject || title || file || youtube || zoom || isExam) {
@@ -489,8 +526,29 @@
                     
                     if (actText) props.push(`activity: "${actText}"`); // Universal fallback
                     
-                    if (isExam) props.push(`isExam: true`);
-                    if (file) props.push(`file: "${file}"`);
+                    if (isExam) {
+                        props.push(`isExam: true`);
+                        props.push(`examStartTime: "${examStart}"`);
+                        props.push(`examEndTime: "${examEnd}"`);
+                        
+                        // Heuristic for Exam Type
+                        const isGrammar = subject.includes("ไวยากรณ์");
+                        if (isGrammar) {
+                             if(examFile) props.push(`fileExamGrammar: "${examFile}"`);
+                             if(answerFile) props.push(`fileAnswerGrammar: "${answerFile}"`);
+                        } else {
+                             // Default to Translate
+                             if(examFile) props.push(`fileExamTranslate: "${examFile}"`);
+                             if(answerFile) props.push(`fileAnswerTranslate: "${answerFile}"`);
+                        }
+                    }
+                    
+                    if (file) {
+                        const isGrammar = subject.includes("ไวยากรณ์");
+                        if (isGrammar) props.push(`fileNoteGrammar: "${file}"`);
+                        else props.push(`fileNoteTranslate: "${file}"`);
+                    }
+                    
                     if (youtube) props.push(`linkYoutube: "${youtube}"`);
                     if (zoom) props.push(`linkZoom: "${zoom}"`);
 
