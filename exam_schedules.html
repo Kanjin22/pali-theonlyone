@@ -96,6 +96,50 @@
             border-left: 5px solid #2c3e50;
         }
 
+        /* New Card Layout Styles */
+        .exam-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .exam-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+        .card-status {
+            font-size: 0.85em;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .status-coming { background-color: #e3f2fd; color: #1976d2; }
+        .status-today { background-color: #ffebee; color: #c62828; animation: pulse 2s infinite; }
+        .status-finished { background-color: #f5f5f5; color: #9e9e9e; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+        }
+
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
         th { background-color: #f8f9fa; color: #7f8c8d; font-weight: 600; width: 30%; }
@@ -216,84 +260,123 @@
             if (!baseDates[year]) return null;
             const start = baseDates[year];
 
-            // Calculate dates
-            const d_e1_1 = addDays(start, offsets.exam1_1);
-            const d_e1_2 = addDays(start, offsets.exam1_2);
-            const d_e1_3 = addDays(start, offsets.exam1_3);
-            const d_e1_4 = addDays(start, offsets.exam1_4);
-            const d_e1_5 = addDays(start, offsets.exam1_5);
+            // Helper to build row object
+            const mkRow = (offset, lunar, subject) => {
+                const d = addDays(start, offset);
+                return { dateObj: d, date: formatDateThai(d), lunar, subject };
+            };
 
-            const d_e1_p2_1 = addDays(start, offsets.exam1_part2_1);
-            const d_e1_p2_2 = addDays(start, offsets.exam1_part2_2);
-            const d_e1_p2_3 = addDays(start, offsets.exam1_part2_3);
+            // Exam 1 (P.T. 6-9)
+            // P.T. 6
+            const pt6 = {
+                id: "pt6", name: "ชั้นประโยค ป.ธ. ๖", examRound: 1, subGroup: 1,
+                rows: [
+                    mkRow(offsets.exam1_1, "ขึ้น ๒ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_2, "ขึ้น ๓ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+            // P.T. 7
+            const pt7 = {
+                id: "pt7", name: "ชั้นประโยค ป.ธ. ๗", examRound: 1, subGroup: 1,
+                rows: [
+                    mkRow(offsets.exam1_1, "ขึ้น ๒ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_2, "ขึ้น ๓ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+            // P.T. 8
+            const pt8 = {
+                id: "pt8", name: "ชั้นประโยค ป.ธ. ๘", examRound: 1, subGroup: 1,
+                rows: [
+                    mkRow(offsets.exam1_3, "ขึ้น ๔ ค่ำ เดือน ๓", "วิชาแต่งฉันท์ภาษามคธ"),
+                    mkRow(offsets.exam1_4, "ขึ้น ๕ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_5, "ขึ้น ๖ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+            // P.T. 9
+            const pt9 = {
+                id: "pt9", name: "ชั้นประโยค ป.ธ. ๙", examRound: 1, subGroup: 1,
+                rows: [
+                    mkRow(offsets.exam1_3, "ขึ้น ๔ ค่ำ เดือน ๓", "วิชาแต่ง (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_4, "ขึ้น ๕ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_5, "ขึ้น ๖ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
 
+            // Exam 1 Part 2 (P.T. 1-2 to 5)
+            // P.T. 1-2
+            const pt12 = {
+                id: "pt12", name: "ชั้นประโยค ๑ - ๒", examRound: 1, subGroup: 2,
+                rows: [
+                    mkRow(offsets.exam1_part2_1, "แรม ๑๐ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)"),
+                    mkRow(offsets.exam1_part2_2, "แรม ๑๑ ค่ำ เดือน ๓", "วิชาบาลีไวยากรณ์")
+                ]
+            };
+            // P.T. 3
+            const pt3 = {
+                id: "pt3", name: "ชั้นประโยค ป.ธ. ๓", examRound: 1, subGroup: 2,
+                rows: [
+                    mkRow(offsets.exam1_part2_1, "แรม ๑๐ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)"),
+                    mkRow(offsets.exam1_part2_2, "แรม ๑๑ ค่ำ เดือน ๓", "วิชาสัมพันธ์ไทย"),
+                    mkRow(offsets.exam1_part2_3, "แรม ๑๒ ค่ำ เดือน ๓", "วิชาบุรพภาค และ วิชาบาลีไวยากรณ์")
+                ]
+            };
+            // P.T. 4
+            const pt4 = {
+                id: "pt4", name: "ชั้นประโยค ป.ธ. ๔", examRound: 1, subGroup: 2,
+                rows: [
+                    mkRow(offsets.exam1_part2_1, "แรม ๑๐ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_part2_2, "แรม ๑๑ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+            // P.T. 5
+            const pt5 = {
+                id: "pt5", name: "ชั้นประโยค ป.ธ. ๕", examRound: 1, subGroup: 2,
+                rows: [
+                    mkRow(offsets.exam1_part2_1, "แรม ๑๐ ค่ำ เดือน ๓", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam1_part2_2, "แรม ๑๑ ค่ำ เดือน ๓", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+
+            // Marking Dates
             const d_m1_s = addDays(start, offsets.marking1_start);
             const d_m1_e = addDays(start, offsets.marking1_end);
-
-            const d_e2_1 = addDays(start, offsets.exam2_1);
-            const d_e2_2 = addDays(start, offsets.exam2_2);
-            const d_e2_3 = addDays(start, offsets.exam2_3);
-
-            const d_m2_s = addDays(start, offsets.marking2_start);
-            const d_m2_e = addDays(start, offsets.marking2_end);
-
-            return {
-                exam1: [
-                    {
-                        title: "ชั้นประโยค ป.ธ.๖ - ๗ และ บ.ศ.๖ - ๗",
-                        rows: [
-                            { date: formatDateThai(d_e1_1), lunar: "ขึ้น ๒ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
-                            { date: formatDateThai(d_e1_2), lunar: "ขึ้น ๓ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
-                        ]
-                    },
-                    {
-                        title: "ชั้นประโยค ป.ธ.๘ - ๙ และ บ.ศ.๘ - ๙",
-                        rows: [
-                            { date: formatDateThai(d_e1_3), lunar: "ขึ้น ๔ ค่ำ เดือน ๓", subject: "วิชาแต่งฉันท์ (ป.ธ.๘), แต่งไทย (ป.ธ.๙)" },
-                            { date: formatDateThai(d_e1_4), lunar: "ขึ้น ๕ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
-                            { date: formatDateThai(d_e1_5), lunar: "ขึ้น ๖ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
-                        ]
-                    },
-                    {
-                        title: "ครั้งหลัง: ชั้นประโยค ๑-๒, ป.ธ.๓-๕ และ บ.ศ.๑-๕",
-                        rows: [
-                            { date: formatDateThai(d_e1_p2_1), lunar: "แรม ๑๐ ค่ำ เดือน ๓", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
-                            { date: formatDateThai(d_e1_p2_2), lunar: "แรม ๑๑ ค่ำ เดือน ๓", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
-                            { date: formatDateThai(d_e1_p2_3), lunar: "แรม ๑๒ ค่ำ เดือน ๓", subject: "ป.ธ.๓: บุรพภาค, ไวยากรณ์" }
-                        ]
-                    },
-                    {
-                        title: "🔍 วันตรวจข้อสอบ (ครั้งที่ ๑)",
-                        rows: [
-                            { 
-                                date: `${formatDateThai(d_m1_s)} - ${formatDateThai(d_m1_e)}`, 
-                                lunar: "แรม ๒ - ๖ ค่ำ เดือน ๔", 
-                                subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (ช่วงเวลาลุ้นระทึก!)" 
-                            }
-                        ]
-                    }
-                ],
-                exam2: [
-                    {
-                        title: "สอบซ่อม (ครั้งที่ ๒): ป ๑-๒ - ป.ธ.๕",
-                        rows: [
-                            { date: formatDateThai(d_e2_1), lunar: "แรม ๑๐ ค่ำ เดือน ๕", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
-                            { date: formatDateThai(d_e2_2), lunar: "แรม ๑๑ ค่ำ เดือน ๕", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
-                            { date: formatDateThai(d_e2_3), lunar: "แรม ๑๒ ค่ำ เดือน ๕", subject: "ป.ธ.๓: ไวยากรณ์" }
-                        ]
-                    },
-                    {
-                        title: "🔍 วันตรวจข้อสอบ (ครั้งที่ ๒)",
-                        rows: [
-                            { 
-                                date: `${formatDateThai(d_m2_s)} - ${formatDateThai(d_m2_e)}`, 
-                                lunar: "แรม ๑๐ - ๑๒ ค่ำ เดือน ๖", 
-                                subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (วัดสามพระยา)" 
-                            }
-                        ]
+            const marking1 = {
+                id: "marking1", name: "วันตรวจข้อสอบ (ครั้งที่ ๑)", examRound: 1, isMarking: true,
+                rows: [
+                    { 
+                        dateObj: d_m1_s, 
+                        date: `${formatDateThai(d_m1_s)} - ${formatDateThai(d_m1_e)}`, 
+                        lunar: "แรม ๒ - ๖ ค่ำ เดือน ๔", 
+                        subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (ช่วงเวลาลุ้นระทึก!)" 
                     }
                 ]
             };
+
+            // Exam 2 (Re-exam)
+            const exam2 = {
+                id: "exam2", name: "สอบซ่อม (ครั้งที่ ๒) - ทุกชั้นประโยค", examRound: 2,
+                rows: [
+                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ"),
+                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล"),
+                    mkRow(offsets.exam2_3, "แรม ๑๒ ค่ำ เดือน ๕", "ป.ธ.๓: ไวยากรณ์")
+                ]
+            };
+            
+            const d_m2_s = addDays(start, offsets.marking2_start);
+            const d_m2_e = addDays(start, offsets.marking2_end);
+            const marking2 = {
+                id: "marking2", name: "วันตรวจข้อสอบ (ครั้งที่ ๒)", examRound: 2, isMarking: true,
+                rows: [
+                    { 
+                        dateObj: d_m2_s,
+                        date: `${formatDateThai(d_m2_s)} - ${formatDateThai(d_m2_e)}`, 
+                        lunar: "แรม ๑๐ - ๑๒ ค่ำ เดือน ๖", 
+                        subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (วัดสามพระยา)" 
+                    }
+                ]
+            };
+
+            return [pt6, pt7, pt8, pt9, pt12, pt3, pt4, pt5, marking1, exam2, marking2];
         }
 
         // --- Render Logic ---
@@ -302,49 +385,32 @@
             const container = document.getElementById('schedule-content');
             container.innerHTML = "";
 
-            const data = getScheduleData(year);
+            const dataList = getScheduleData(year);
 
-            if (!data) {
+            if (!dataList) {
                 container.innerHTML = "<p style='text-align:center; color:#95a5a6;'>ยังไม่มีข้อมูลสำหรับปีนี้</p>";
                 return;
             }
 
-            // Exam 1
-            const section1 = document.createElement('div');
-            section1.className = 'schedule-section';
-            section1.innerHTML = `<h2 class="section-title">สอบครั้งที่ ๑ (สอบไล่)</h2>`;
-            
-            data.exam1.forEach(group => {
-                let rowsHtml = "";
-                group.rows.forEach(row => {
-                    rowsHtml += `
-                        <tr>
-                            <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
-                            <td class="lunar-col">${row.lunar}</td>
-                            <td>${row.subject}</td>
-                        </tr>
-                    `;
-                });
+            // Group by Round
+            const round1_1 = dataList.filter(d => d.examRound === 1 && d.subGroup === 1 && !d.isMarking);
+            const round1_2 = dataList.filter(d => d.examRound === 1 && d.subGroup === 2 && !d.isMarking);
+            const round1Marking = dataList.find(d => d.examRound === 1 && d.isMarking);
+            const round2 = dataList.filter(d => d.examRound === 2 && !d.isMarking);
+            const round2Marking = dataList.find(d => d.examRound === 2 && d.isMarking);
 
-                section1.innerHTML += `
-                    <div class="exam-group">
-                        <div class="group-header">${group.title}</div>
-                        <table>${rowsHtml}</table>
-                    </div>
-                `;
-            });
-            container.appendChild(section1);
-
-            // Exam 2
-            if (data.exam2) {
-                const section2 = document.createElement('div');
-                section2.className = 'schedule-section';
-                section2.style.borderTopColor = "#e74c3c"; // Red for re-exam
-                section2.innerHTML = `<h2 class="section-title" style="color:#c0392b;">สอบครั้งที่ ๒ (สอบซ่อม)</h2>`;
+            // Helper to render a list of cards
+            const renderCards = (items, title, colorClass) => {
+                if (!items || items.length === 0) return "";
                 
-                data.exam2.forEach(group => {
+                let html = `<h2 class="section-title" style="${colorClass ? 'color:'+colorClass : ''}">${title}</h2>`;
+                html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px;">`;
+                
+                items.forEach(item => {
                     let rowsHtml = "";
-                    group.rows.forEach(row => {
+                    let firstDate = null;
+                    item.rows.forEach((row, idx) => {
+                        if (idx === 0) firstDate = row.dateObj;
                         rowsHtml += `
                             <tr>
                                 <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
@@ -354,71 +420,98 @@
                         `;
                     });
 
-                    section2.innerHTML += `
-                        <div class="exam-group">
-                            <div class="group-header">${group.title}</div>
+                    // Countdown for this specific item
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    let statusHtml = "";
+                    if (firstDate) {
+                         const diffTime = firstDate - today;
+                         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                         
+                         if (diffDays > 0) {
+                             statusHtml = `<div class="card-status status-coming">อีก ${diffDays} วัน</div>`;
+                         } else if (diffDays === 0) {
+                             statusHtml = `<div class="card-status status-today">สอบวันนี้!</div>`;
+                         } else {
+                             statusHtml = `<div class="card-status status-finished">ผ่านไปแล้ว</div>`;
+                         }
+                    }
+
+                    html += `
+                        <div class="exam-card">
+                            <div class="card-header">
+                                <div class="card-title">${item.name}</div>
+                                ${statusHtml}
+                            </div>
                             <table>${rowsHtml}</table>
                         </div>
                     `;
                 });
-                container.appendChild(section2);
+                html += `</div>`;
+                return html;
+            };
+
+            // Render Round 1 - First Group
+            container.innerHTML += renderCards(round1_1, "สอบครั้งแรก (สอบไล่) - ป.ธ. ๖ ถึง ป.ธ. ๙", "");
+            
+            // Render Round 1 - Second Group
+            container.innerHTML += renderCards(round1_2, "สอบครั้งหลัง (สอบไล่) - ประโยค ๑-๒ ถึง ป.ธ. ๕", "");
+
+            // Render Round 1 Marking
+            if (round1Marking) {
+                 container.innerHTML += renderCards([round1Marking], "", "#e67e22");
+            }
+
+            // Render Round 2
+            container.innerHTML += renderCards(round2, "สอบครั้งที่ ๒ (สอบซ่อม)", "#c0392b");
+            
+            // Render Round 2 Marking
+            if (round2Marking) {
+                 container.innerHTML += renderCards([round2Marking], "", "#e67e22");
             }
             
-            updateCountdown(year, data);
+            updateGlobalCountdown(year, dataList);
         }
 
-        function updateCountdown(year, data) {
+        function updateGlobalCountdown(year, dataList) {
+            // Update the big countdown to show the very NEXT event across all schedules
+            const today = new Date();
+            today.setHours(0,0,0,0);
             const currentYear = new Date().getFullYear() + 543;
-            if (parseInt(year) < currentYear) {
+
+             if (parseInt(year) < currentYear) {
                  document.getElementById('countdown-label').innerText = "การสอบปี " + year;
                  document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว";
                  return;
             }
 
-            // Find next exam date from generated data
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            
-            let allDates = [];
-            
-            // Helper to parse Thai date back to JS Date (rough check, or use calculated dates directly if stored)
-            // Better to re-calculate logic or store dates in data object
-            // Let's use the baseDate and offsets again for precision
-            const start = baseDates[year];
-            if (!start) return;
-
-            // Collect key dates (Exam 1 Part 2 Start and Exam 2 Start are most critical for mass students)
-            // But let's collect all exam dates
-            const targetOffsets = [
-                { off: offsets.exam1_1, label: "สอบ ป.ธ.๖-๗ (ครั้งที่ ๑)" },
-                { off: offsets.exam1_part2_1, label: "สอบ ป.๑-๒ ถึง ป.ธ.๕ (ครั้งที่ ๑)" },
-                { off: offsets.exam2_1, label: "สอบซ่อม (ครั้งที่ ๒)" }
-            ];
-
-            targetOffsets.forEach(item => {
-                const d = addDays(start, item.off);
-                d.setHours(0,0,0,0);
-                allDates.push({ date: d, label: item.label });
+            let allEvents = [];
+            dataList.forEach(group => {
+                if (group.rows && group.rows.length > 0) {
+                    // Use the first date of the group as the "Start" event
+                    allEvents.push({
+                        date: group.rows[0].dateObj,
+                        name: group.name
+                    });
+                }
             });
 
-            // Sort and find next
-            allDates.sort((a, b) => a.date - b.date);
-            const nextExam = allDates.find(item => item.date >= today);
+            allEvents.sort((a, b) => a.date - b.date);
+            const nextEvent = allEvents.find(e => e.date >= today);
 
-            if (nextExam) {
-                const diffTime = nextExam.date - today;
+            if (nextEvent) {
+                const diffTime = nextEvent.date - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 
-                document.getElementById('countdown-label').innerText = "เหลือเวลาอีก... (" + nextExam.label + ")";
-                
+                document.getElementById('countdown-label').innerText = "ใกล้ถึง... " + nextEvent.name;
                 if (diffDays === 0) {
-                    document.getElementById('countdown-timer').innerText = "วันนี้สอบ!";
+                    document.getElementById('countdown-timer').innerText = "วันนี้!";
                 } else {
                     document.getElementById('countdown-timer').innerText = diffDays + " วัน";
                 }
             } else {
-                 document.getElementById('countdown-label').innerText = "การสอบปี " + year;
-                 document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว (หรือรอประกาศกำหนดการใหม่)";
+                document.getElementById('countdown-label').innerText = "การสอบปี " + year;
+                document.getElementById('countdown-timer').innerText = "สิ้นสุดทุกรายการ";
             }
         }
 
