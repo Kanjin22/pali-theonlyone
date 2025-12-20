@@ -387,13 +387,9 @@
 
         // === 8. เริ่มทำงานเมื่อโหลดหน้าเว็บ ===
         document.addEventListener('DOMContentLoaded', () => {
-            buildScheduleTable();
-            highlightCurrentDay();
-            calculateMonthlyStats(); // เรียกใช้ฟังก์ชันนี้ เพื่อให้ตัวเลขขึ้น!
-            updateAllExamButtons();
-            setInterval(updateAllExamButtons, 30000);
+            // Logic moved to initPage() which is called after data loads
             
-            // Modal Logic
+            // Modal Logic (Independent of data)
             const modal = document.getElementById('details-modal');
             const closeModalBtn = document.getElementById('modal-close-btn');
 
