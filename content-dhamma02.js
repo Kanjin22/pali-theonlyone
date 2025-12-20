@@ -1,6 +1,6 @@
 const contentDhamma02 = {
     // ภาคที่ ๒
-    // วรรรคที่ ๒ อัปปมาทวรรค
+    // วรรคที่ ๒ อัปปมาทวรรค
     "d02_v02_s01_samavati": [
         {
             part: "ภาคที่ ๒",
@@ -90,7 +90,7 @@ const contentDhamma02 = {
         {
             part: "ภาคที่ ๒",
             vagga: "๒. อัปปมาทวรรค",
-            story: "๖. เรื่องภิกษุ ๒ สหาย [๒๐]",
+            story: "๖. เรื่องภิกษุสองสหาย [๒๐]",
             episode: "...",
             page: "...",
             pali: "...",
@@ -275,7 +275,7 @@ const contentDhamma02 = {
             sandhi: {}
         }
     ],
-    "d02_v03_s08_nanda": [
+    "d02_v03_s08_nandagopala": [
         {
             part: "ภาคที่ ๒",
             vagga: "๓. จิตตวรรค",

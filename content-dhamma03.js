@@ -9,7 +9,7 @@ const contentDhamma03 = {
     "d03_v04_s01_pathavikatha": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๑. เรื่องภิกษุ ๕๐๐ รูปผู้ขวนขวายในปฐวีกถา [๓๓]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -26,7 +26,7 @@ const contentDhamma03 = {
     "d03_v04_s02_marici": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๒. เรื่องพระเถระผู้เจริญมรีจิกัมมัฏฐาน [๓๔]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -43,7 +43,7 @@ const contentDhamma03 = {
     "d03_v04_s03_vidudabha": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๓. เรื่องพระเจ้าวิฑูฑภะ [๓๕]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -60,7 +60,7 @@ const contentDhamma03 = {
     "d03_v04_s04_patipujika": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๔. เรื่องนางปติปูชิกา [๓๖]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -75,10 +75,9 @@ const contentDhamma03 = {
         }
     ],
     "d03_v04_s05_kosiya": [
-        // Migrated from p3_geng4 and p3_geng5
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๕. เรื่องโกสิยเศรษฐีผู้มีความตระหนี่ [๓๗]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -90,13 +89,11 @@ const contentDhamma03 = {
             vocab_list: "",
             sandhi: {}
         }
-        // ... Content from p3_geng4 and p3_geng5 will be merged here via script if possible, or placeholder
     ],
     "d03_v04_s06_patika": [
-        // Migrated from p3_geng6
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๖. เรื่องปาฏิกาชีวก [๓๘]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -120,7 +117,7 @@ const contentDhamma03 = {
     "d03_v04_s07_chattapani": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๗. เรื่องฉัตตปาณิอุบาสก [๓๙]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -135,10 +132,9 @@ const contentDhamma03 = {
         }
     ],
     "d03_v04_s08_visakha": [
-        // Migrated from p3_geng7, 8, 9...
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๘. เรื่องนางวิสาขา [๔๐]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -154,8 +150,8 @@ const contentDhamma03 = {
     "d03_v04_s09_ananda": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
-            story: "๙. เรื่องปัญหาของพระอานนทเถระ [๓๑]", // User: [๔๑] but text might differ. Using user's [๔๑]
+            vagga: "๔. ปุปผวรรค",
+            story: "๙. เรื่องปัญหาของพระอานนทเถระ [๔๑]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
             pali: "...",
@@ -171,7 +167,7 @@ const contentDhamma03 = {
     "d03_v04_s10_mahakassapa": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๑๐. เรื่องถวายบิณฑบาตแก่พระมหากัสสปเถระ [๔๒]",
             episode: "ตอนที่ ๑",
             page: "หน้า ๑๐๐-๑๐๒",
@@ -186,7 +182,7 @@ const contentDhamma03 = {
         },
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๑๐. เรื่องถวายบิณฑบาตแก่พระมหากัสสปเถระ [๔๒]",
             episode: "ตอนที่ ๒",
             page: "หน้า ๑๐๔-๑๐๖",
@@ -203,7 +199,7 @@ const contentDhamma03 = {
     "d03_v04_s11_godhika": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๑๑. เรื่องปรินิพพานของพระโคธิกเถระ [๔๓]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -220,7 +216,7 @@ const contentDhamma03 = {
     "d03_v04_s12_garahadinna": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๔. ปุปผวรรค วรรณนา",
+            vagga: "๔. ปุปผวรรค",
             story: "๑๒. เรื่องครหทินน์ [๔๔]",
             episode: "ตอนที่ ๑",
             page: "หน้า ๑๑๑-๑๑๓",
@@ -239,7 +235,7 @@ const contentDhamma03 = {
     "d03_v05_s01_anyaman": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๑. เรื่องบุรุษคนใดคนหนึ่ง [๔๕]",
             episode: "ตอนที่ ๑",
             page: "หน้า ๑๑๕-๑๑๗",
@@ -256,7 +252,7 @@ const contentDhamma03 = {
     "d03_v05_s02_saddhiviharika": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๒. เรื่องสัทธิวิหาริกของพระมหากัสสปเถระ [๔๖]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -273,7 +269,7 @@ const contentDhamma03 = {
     "d03_v05_s03_ananda_setthi": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๓. เรื่องอานนทเศรษฐี [๔๗]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -287,10 +283,10 @@ const contentDhamma03 = {
             sandhi: {}
         }
     ],
-    "d03_v05_s04_thieves": [
+    "d03_v05_s04_ganthibhedaka": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๔. เรื่องโจรผู้ทำลายปม [๔๘]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -307,8 +303,8 @@ const contentDhamma03 = {
     "d03_v05_s05_udayi": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
-            story: "๕. เรื่องพระอุทายีเถระ [๔๙]", // User typo [๔๗] fixed to [๔๙]
+            vagga: "๕. พาลวรรค",
+            story: "๕. เรื่องพระอุทายีเถระ [๔๙]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
             pali: "...",
@@ -324,7 +320,7 @@ const contentDhamma03 = {
     "d03_v05_s06_patha": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๖. เรื่องภิกษุชาวเมืองปาฐา [๕๐]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -341,7 +337,7 @@ const contentDhamma03 = {
     "d03_v05_s07_suppabuddha": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๗. เรื่องสุปปพุทธกุฏฐิ [๕๑]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -358,8 +354,8 @@ const contentDhamma03 = {
     "d03_v05_s08_farmer": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
-            story: "๘. เรื่องชาวนา [๕๒]", // User typo [๔๒] fixed to [๕๒]
+            vagga: "๕. พาลวรรค",
+            story: "๘. เรื่องชาวนา [๕๒]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
             pali: "...",
@@ -375,7 +371,7 @@ const contentDhamma03 = {
     "d03_v05_s09_sumana": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๙. เรื่องนายสุมนมาลาการ [๕๓]",
             episode: "ตอนที่ ๑",
             page: "หน้า ๑๓๔-๑๓๖",
@@ -392,7 +388,7 @@ const contentDhamma03 = {
     "d03_v05_s10_uppalavanna": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๑๐. เรื่องพระอุบลวรรณาเถรี [๕๔]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
@@ -406,12 +402,62 @@ const contentDhamma03 = {
             sandhi: {}
         }
     ],
-    // Skipping 11, 12, 13 as per User List
+    "d03_v05_s11_jambuka": [
+        {
+            "part": "ภาคที่ ๓",
+            "vagga": "๕. พาลวรรค",
+            "story": "๑๑. เรื่องชัมพุกาชีวก [๕๕]",
+            "episode": "ตอนที่ ๑",
+            "page": "หน้า ...",
+            "pali": "...",
+            "thai": "...",
+            "thai_sense": "...",
+            "context": "...",
+            "akhyata": "...",
+            "kitaka": "...",
+            "vocab_list": "...",
+            "sandhi": {}
+        }
+    ],
+    "d03_v05_s12_ahi_peta": [
+        {
+            "part": "ภาคที่ ๓",
+            "vagga": "๕. พาลวรรค",
+            "story": "๑๒. เรื่องอหิเปรต [๕๖]",
+            "episode": "ตอนที่ ๑",
+            "page": "หน้า ...",
+            "pali": "...",
+            "thai": "...",
+            "thai_sense": "...",
+            "context": "...",
+            "akhyata": "...",
+            "kitaka": "...",
+            "vocab_list": "...",
+            "sandhi": {}
+        }
+    ],
+    "d03_v05_s13_satthikuta_peta": [
+        {
+            "part": "ภาคที่ ๓",
+            "vagga": "๕. พาลวรรค",
+            "story": "๑๓. เรื่องสัฏฐิกูฏเปรต [๕๗]",
+            "episode": "ตอนที่ ๑",
+            "page": "หน้า ...",
+            "pali": "...",
+            "thai": "...",
+            "thai_sense": "...",
+            "context": "...",
+            "akhyata": "...",
+            "kitaka": "...",
+            "vocab_list": "...",
+            "sandhi": {}
+        }
+    ],
     "d03_v05_s14_sudhamma": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
-            story: "๑๔. เรื่องพระสุธรรมเถระ [๕๘]",
+            vagga: "๕. พาลวรรค",
+            story: "๑๔. เรื่องพระสุธรรมเถระ [๕๓]",
             episode: "ตอนที่ ๑",
             page: "หน้า ๑๕๐-๑๕๒",
             pali: "อถ ปฐมยาเม จตฺตาโร - สฏฺฐิวสฺสตเฺถโร วิย อเหสุํ ฯ",
@@ -425,8 +471,8 @@ const contentDhamma03 = {
         },
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
-            story: "๑๔. เรื่องพระสุธรรมเถระ [๕๘]",
+            vagga: "๕. พาลวรรค",
+            story: "๑๔. เรื่องพระสุธรรมเถระ [๕๓]",
             episode: "ตอนที่ ๒",
             page: "หน้า ๑๖๓-๑๖๖",
             pali: "เทสนา ปน มจฺฉิกาสณฺเฑ - อิมา คาถา อกาสิ ฯ",
@@ -442,7 +488,7 @@ const contentDhamma03 = {
     "d03_v05_s15_vanavasi": [
         {
             part: "ภาคที่ ๓",
-            vagga: "๕. พาลวรรค วรรณนา",
+            vagga: "๕. พาลวรรค",
             story: "๑๕. เรื่องพระวนวาสีติสสเถระ [๕๙]",
             episode: "ตอนที่ ๑",
             page: "หน้า ...",
