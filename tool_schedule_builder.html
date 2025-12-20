@@ -529,8 +529,13 @@
         };
 
         script.onerror = function() {
-            alert(`ไม่พบไฟล์ "${filename}"\n\nระบบพยายามหาไฟล์ที่ชื่อ: ${filename}\nกรุณาตรวจสอบว่าไฟล์ดังกล่าวอยู่ในโฟลเดอร์เดียวกัน`);
-        };
+                // alert(`ไม่พบไฟล์ "${filename}"\n\nระบบพยายามหาไฟล์ที่ชื่อ: ${filename}\nกรุณาตรวจสอบว่าไฟล์ดังกล่าวอยู่ในโฟลเดอร์เดียวกัน`);
+                // Use smarter error message suggesting file upload
+                if (confirm(`ไม่สามารถโหลดไฟล์ "${filename}" ได้โดยตรง\n\n(อาจเกิดจาก Browser Block การโหลดไฟล์ Local หรือไม่มีไฟล์อยู่จริง)\n\nต้องการเปิดหน้าต่างเพื่อเลือกไฟล์เองหรือไม่?`)) {
+                    document.querySelector('.output-section').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('fileInput').click();
+                }
+            };
 
         document.head.appendChild(script);
     }
@@ -881,8 +886,8 @@
 
         try {
             // 1. Extract array content using regex
-            // Pattern: var [name] = [ ... ];
-            const match = code.match(/var\s+([a-zA-Z0-9_]+)\s*=\s*(\[\s*\{[\s\S]*\}\s*\]);?/);
+            // Support var, const, let
+            const match = code.match(/(?:var|const|let)\s+([a-zA-Z0-9_]+)\s*=\s*(\[\s*\{[\s\S]*\}\s*\]);?/);
             
             if (!match) {
                 // Try finding just the array
@@ -1040,13 +1045,21 @@
                     
                     // Map subject IDs from DOM
                     const subjectSections = container.querySelectorAll('.subject-section');
-                    subjectSections.forEach(section => {
+                    subjectSections.forEach((section, idx) => {
                         const subjId = section.dataset.subjectId;
                         
                         // Check specific activity first
                         if (slotData[`activity${subjId}`]) {
                             const val = slotData[`activity${subjId}`];
                             // Split "Activity : Title"
+                            const parts = val.split(' : ');
+                            section.querySelector('.input-subject-act').value = parts[0] || '';
+                            section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
+                        } 
+                        // Fallback for legacy 'activity' field (only for first subject to avoid duplication)
+                        else if (idx === 0 && slotData.activity && !slotData.isExam) {
+                            const val = slotData.activity;
+                            // Attempt to parse "Act : Title"
                             const parts = val.split(' : ');
                             section.querySelector('.input-subject-act').value = parts[0] || '';
                             section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
