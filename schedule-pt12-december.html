@@ -387,7 +387,10 @@
 
         // === 8. เริ่มทำงานเมื่อโหลดหน้าเว็บ ===
         document.addEventListener('DOMContentLoaded', () => {
-            // Logic moved to initPage() which is called after data loads
+            // Initialize page
+            buildScheduleTable();
+            highlightCurrentDay();
+            calculateMonthlyStats();
             
             // Modal Logic (Independent of data)
             const modal = document.getElementById('details-modal');
