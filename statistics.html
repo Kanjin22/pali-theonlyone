@@ -96,11 +96,29 @@
         <a href="index.html" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     </div>
 
-    <!-- โหลดข้อมูล -->
-    <script src="data-pt12-november.js"></script>
-    <script src="data-pt12-december.js"></script>
-    <script src="data-pt12-january.js"></script>
-    <script src="data-pt12-february.js"></script>
+    <!-- โหลด Config ระบบ -->
+    <script src="system_config.js"></script>
+    <script>
+        // อ่าน roomId จาก URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomId = urlParams.get('room') || 'room1';
+        let prefix = 'pt12'; // ค่าเริ่มต้น (เผื่อไว้)
+
+        if (typeof systemConfig !== 'undefined') {
+            const room = systemConfig.getRoom(roomId);
+            if (room) {
+                prefix = room.schedulePrefix;
+                document.title = `สถิติและความคืบหน้า - ${room.name}`;
+                document.querySelector('h1').innerText = `📊 สรุปสถิติและความคืบหน้า (${room.name})`;
+            }
+        }
+
+        // โหลดข้อมูลตาม prefix ของห้อง
+        document.write(`<script src="data-${prefix}-november.js"><\/script>`);
+        document.write(`<script src="data-${prefix}-december.js"><\/script>`);
+        document.write(`<script src="data-${prefix}-january.js"><\/script>`);
+        document.write(`<script src="data-${prefix}-february.js"><\/script>`);
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -185,6 +203,16 @@
             document.getElementById('gram-exam').innerText = stats.gramExam;
             document.getElementById('trans-read').innerText = stats.transRead;
             document.getElementById('trans-exam').innerText = stats.transExam;
+
+            // Auto-hide Translate Stats if 0 (สำหรับห้องที่ไม่มีเรียนแปล)
+            const transCard = document.querySelector('.stat-card.bg-translate');
+            if (transCard) {
+                if (stats.transRead === 0 && stats.transExam === 0) {
+                    transCard.style.display = 'none';
+                } else {
+                    transCard.style.display = 'block'; // หรือ flex/grid แล้วแต่ layout เดิม
+                }
+            }
         });
     </script>
 </body>
