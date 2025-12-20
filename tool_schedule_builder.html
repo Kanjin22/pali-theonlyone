@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องมือสร้างตารางเรียน - Pali The Only One</title>
+    <title>เครื่องมือสร้างตารางเรียน (Schedule Builder) - Pali The Only One</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -16,7 +16,7 @@
         }
         .container {
             display: none; /* Hide by default for security */
-            max-width: 1200px;
+            max-width: 95%; /* Use more width */
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -32,10 +32,10 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
         }
         .form-group {
             display: flex;
@@ -44,12 +44,20 @@
         }
         label {
             font-weight: bold;
+            font-size: 0.9em;
         }
         input, select {
             padding: 8px;
             border: 1px solid #bdc3c7;
             border-radius: 5px;
             font-family: 'Sarabun', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .readonly-input {
+            background-color: #e0e0e0;
+            color: #7f8c8d;
+            cursor: not-allowed;
         }
         button {
             padding: 10px 20px;
@@ -61,6 +69,7 @@
             font-family: 'Sarabun', sans-serif;
             font-weight: bold;
             transition: background 0.3s;
+            white-space: nowrap;
         }
         button:hover {
             background-color: #2980b9;
@@ -71,6 +80,8 @@
         button.success:hover {
             background-color: #27ae60;
         }
+        
+        /* Table Styles */
         .editor-table {
             width: 100%;
             border-collapse: collapse;
@@ -85,6 +96,9 @@
             background-color: #34495e;
             color: white;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         .editor-table tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -92,15 +106,63 @@
         .weekend-row {
             background-color: #ffeaa7 !important;
         }
-        .input-full {
-            width: 95%;
-            margin-bottom: 5px;
+        
+        /* Input Groups within Cell */
+        .slot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
         }
-        .sub-label {
-            font-size: 0.8em;
+        .slot-container:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+        .slot-label {
+            font-weight: bold;
+            font-size: 0.85em;
             color: #7f8c8d;
-            margin-bottom: 2px;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
+        
+        /* Exam Toggle */
+        .exam-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+        .exam-toggle input {
+            width: auto;
+        }
+        
+        /* Slot Inputs */
+        .input-row {
+            display: flex;
+            gap: 5px;
+        }
+        .input-mini {
+            font-size: 0.85em;
+            padding: 4px;
+        }
+        .is-exam-mode {
+            background-color: #ffe6e6;
+            border: 1px solid #ffcccc;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
         .output-section {
             margin-top: 30px;
             border-top: 2px solid #eee;
@@ -120,24 +182,38 @@
             justify-content: center;
             margin-top: 10px;
         }
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1><i class="fa-solid fa-calendar-plus"></i> เครื่องมือสร้างตารางเรียน (Schedule Builder)</h1>
-    <p style="text-align: center;">เครื่องมือสำหรับสร้างไฟล์ข้อมูลตารางเรียน (.js) สำหรับนำไปอัปโหลดเข้าสู่ระบบ</p>
+    <p style="text-align: center;">ระบบสร้างตารางเรียนรองรับทุกชั้นประโยค (ป.๑-๒ ถึง ป.ธ.๙)</p>
 
     <div class="config-section">
         <div class="form-group">
-            <label>เดือน (Month)</label>
-            <select id="selectMonth">
+            <label><i class="fa-solid fa-layer-group"></i> ระดับชั้น (Level)</label>
+            <select id="selectLevel" onchange="updateVarName()">
+                <option value="pt12">ประโยค ๑-๒</option>
+                <option value="pt3">ประโยค ป.ธ.๓</option>
+                <option value="pt4">ประโยค ป.ธ.๔</option>
+                <option value="pt5">ประโยค ป.ธ.๕</option>
+                <option value="pt6">ประโยค ป.ธ.๖</option>
+                <option value="pt7">ประโยค ป.ธ.๗</option>
+                <option value="pt8">ประโยค ป.ธ.๘</option>
+                <option value="pt9">ประโยค ป.ธ.๙</option>
+                <option value="balisuksa">บาลีศึกษา</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label><i class="fa-solid fa-door-open"></i> ชื่อห้อง (Room Name)</label>
+            <input type="text" id="inputRoom" placeholder="เช่น room1, roomA" oninput="updateVarName()">
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-regular fa-calendar"></i> เดือน (Month)</label>
+            <select id="selectMonth" onchange="updateVarName()">
                 <option value="0">มกราคม</option>
                 <option value="1">กุมภาพันธ์</option>
                 <option value="2">มีนาคม</option>
@@ -152,19 +228,60 @@
                 <option value="11">ธันวาคม</option>
             </select>
         </div>
+        
         <div class="form-group">
-            <label>ปี ค.ศ. (Year AD)</label>
-            <input type="number" id="inputYear" value="2025">
+            <label><i class="fa-solid fa-calendar-days"></i> ปี ค.ศ. (Year AD)</label>
+            <input type="number" id="inputYear" value="2025" oninput="updateVarName()">
         </div>
-        <div class="form-group">
-            <label>ชื่อตัวแปร (Variable Name)</label>
-            <input type="text" id="varName" value="dataNovember" placeholder="เช่น dataNovember">
+        
+        <div class="form-group" style="grid-column: span 2;">
+            <label><i class="fa-solid fa-code"></i> ชื่อตัวแปร (Auto Generated)</label>
+            <input type="text" id="varName" class="readonly-input" readonly>
         </div>
+        
         <div class="form-group">
             <label>&nbsp;</label>
-            <button onclick="generateTable()"><i class="fa-solid fa-rotate"></i> สร้างตารางกรอกข้อมูล</button>
+            <button onclick="generateTable()"><i class="fa-solid fa-rotate"></i> สร้างตาราง</button>
         </div>
     </div>
+
+    <!-- Data Lists for Subjects -->
+    <datalist id="subjects-pt12">
+        <option value="แปลมคธเป็นไทย">
+        <option value="บาลีไวยากรณ์">
+    </datalist>
+    <datalist id="subjects-pt3">
+        <option value="แปลมคธเป็นไทย">
+        <option value="สัมพันธ์ไทย">
+        <option value="บาลีไวยากรณ์">
+        <option value="บุรพภาค">
+    </datalist>
+    <datalist id="subjects-pt4">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
+    <datalist id="subjects-pt5">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
+    <datalist id="subjects-pt6">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
+    <datalist id="subjects-pt7">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
+    <datalist id="subjects-pt8">
+        <option value="แต่งฉันท์มคธ">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
+    <datalist id="subjects-pt9">
+        <option value="แต่งไทยเป็นมคธ">
+        <option value="แปลไทยเป็นมคธ">
+        <option value="แปลมคธเป็นไทย">
+    </datalist>
 
     <div id="tableContainer">
         <!-- Table will be generated here -->
@@ -192,8 +309,25 @@
         "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
     ];
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+    const monthNamesEn = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+
+    function updateVarName() {
+        const level = document.getElementById('selectLevel').value;
+        const room = document.getElementById('inputRoom').value.trim() || 'roomX';
+        const monthIdx = document.getElementById('selectMonth').value;
+        const year = document.getElementById('inputYear').value;
+        const monthName = monthNamesEn[monthIdx];
+        
+        // Sanitize room name
+        const cleanRoom = room.replace(/[^a-zA-Z0-9]/g, '');
+        
+        // Format: data_{level}_{room}_{month}_{year}
+        const varName = `data_${level}_${cleanRoom}_${monthName}_${year}`;
+        document.getElementById('varName').value = varName;
+    }
 
     function generateTable() {
+        const level = document.getElementById('selectLevel').value;
         const month = parseInt(document.getElementById('selectMonth').value);
         const year = parseInt(document.getElementById('inputYear').value);
         const container = document.getElementById('tableContainer');
@@ -204,15 +338,24 @@
             <table class="editor-table">
                 <thead>
                     <tr>
-                        <th style="width: 15%;">วันที่</th>
+                        <th style="width: 10%;">วันที่</th>
                         <th style="width: 25%;">เช้า (Morning)</th>
                         <th style="width: 25%;">บ่าย (Afternoon)</th>
-                        <th style="width: 20%;">เย็น (Evening)</th>
-                        <th style="width: 15%;">หมายเหตุ (Remarks)</th>
+                        <th style="width: 25%;">ค่ำ (Evening)</th>
+                        <th style="width: 15%;">หมายเหตุ</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
+
+        const periods = [
+            { id: 'morning', label: 'เช้า' },
+            { id: 'afternoon', label: 'บ่าย' },
+            { id: 'evening', label: 'ค่ำ' }
+        ];
+
+        // Determine which datalist to use
+        const datalistId = `subjects-${level.startsWith('pt') ? level : 'pt12'}`; // fallback to pt12
 
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(year, month, i);
@@ -238,43 +381,36 @@
                             <label for="weekend-${i}" style="font-size: 0.8em; cursor:pointer;">วันหยุด</label>
                         </div>
                     </td>
-                    <td>
-                        <div class="sub-label">กิจกรรมไวยากรณ์</div>
-                        <input type="text" class="input-full morning-grammar" placeholder="เช่น (อ่าน) บาลีไวยากรณ์...">
-                        <div class="sub-label">กิจกรรมแปล</div>
-                        <input type="text" class="input-full morning-translate" placeholder="เช่น แปลเรื่อง...">
-                        <div class="sub-label">ไฟล์ประกอบ (ถ้ามี)</div>
-                        <input type="text" class="input-full morning-file" placeholder="เช่น materials/file.pdf">
-                    </td>
-                    <td>
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="exam-${i}" onchange="toggleExam(${i})">
-                            <label for="exam-${i}" style="color: #e74c3c;">มีการสอบ</label>
+            `;
+
+            // Generate Columns for Morning, Afternoon, Evening
+            periods.forEach(p => {
+                html += `<td>
+                    <div class="slot-container" id="${p.id}-container-${i}">
+                        <div class="slot-header">
+                            <span class="slot-label">${p.label}</span>
+                            <label class="exam-toggle">
+                                <input type="checkbox" class="is-exam-chk" onchange="toggleExamMode(this)"> สอบ
+                            </label>
                         </div>
-                        <div class="sub-label">กิจกรรม / วิชาที่สอบ</div>
-                        <input type="text" class="input-full afternoon-activity" placeholder="กิจกรรมช่วงบ่าย หรือ ชื่อวิชาที่สอบ...">
+                        <input type="text" list="${datalistId}" class="input-mini input-subject" placeholder="วิชา / กิจกรรม">
+                        <input type="text" class="input-mini input-title" placeholder="เรื่อง / หัวข้อ (สำหรับเลือกสไลด์)">
                         
-                        <div id="exam-afternoon-${i}" style="display:none; background: #ffe6e6; padding: 5px; border-radius: 5px; margin-top: 5px;">
-                            <div class="sub-label">เวลาเริ่ม - จบ</div>
-                            <div style="display:flex; gap:5px;">
-                                <input type="time" class="exam-start" value="14:00"> - 
-                                <input type="time" class="exam-end" value="16:00">
-                            </div>
-                            <div class="sub-label">ไฟล์ข้อสอบ</div>
-                            <input type="text" class="input-full exam-file" placeholder="exams/exam.pdf">
-                            <div class="sub-label">ไฟล์เฉลย</div>
-                            <input type="text" class="input-full answer-file" placeholder="answers/answer.pdf">
+                        <div class="input-row">
+                            <input type="text" class="input-mini input-file" placeholder="ชื่อไฟล์ (File)" style="flex:1;">
+                            <input type="text" class="input-mini input-youtube" placeholder="Youtube Link" style="flex:1;">
                         </div>
-                    </td>
+                        <div class="input-row">
+                            <input type="text" class="input-mini input-zoom" placeholder="Zoom Link" style="flex:1;">
+                        </div>
+                    </div>
+                </td>`;
+            });
+
+            // Remarks Column
+            html += `
                     <td>
-                        <div class="sub-label">กิจกรรม</div>
-                        <input type="text" class="input-full evening-activity" placeholder="เช่น (เฉลย) หรือ กิจกรรม...">
-                    </td>
-                    <td>
-                        <div class="sub-label">หมายเหตุทั่วไป</div>
-                        <input type="text" class="input-full remark-general" placeholder="...">
-                        <div class="sub-label">หมายเหตุไวยากรณ์</div>
-                        <input type="text" class="input-full remark-grammar" placeholder="...">
+                        <textarea class="input-mini input-remark" style="height: 100px;" placeholder="หมายเหตุ..."></textarea>
                     </td>
                 </tr>
             `;
@@ -282,6 +418,7 @@
 
         html += `</tbody></table>`;
         container.innerHTML = html;
+        updateVarName();
     }
 
     function toggleWeekend(id) {
@@ -294,16 +431,20 @@
         }
     }
 
-    function toggleExam(id) {
-        const isExam = document.getElementById(`exam-${id}`).checked;
-        document.getElementById(`exam-afternoon-${id}`).style.display = isExam ? 'block' : 'none';
+    function toggleExamMode(checkbox) {
+        const container = checkbox.closest('.slot-container');
+        if (checkbox.checked) {
+            container.classList.add('is-exam-mode');
+        } else {
+            container.classList.remove('is-exam-mode');
+        }
     }
 
     function generateCode() {
-        const varName = document.getElementById('varName').value || 'dataSchedule';
+        const varName = document.getElementById('varName').value;
         const rows = document.querySelectorAll('.editor-table tbody tr');
         
-        let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder)\n`;
+        let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder V2)\n`;
         code += `const ${varName} = [\n`;
 
         rows.forEach(row => {
@@ -311,72 +452,56 @@
             const displayDate = row.querySelector('.display-date-val').value;
             const isWeekend = row.querySelector('input[type="checkbox"][id^="weekend-"]').checked;
             
-            // Get values
-            const mGrammar = row.querySelector('.morning-grammar').value.trim();
-            const mTranslate = row.querySelector('.morning-translate').value.trim();
-            const mFile = row.querySelector('.morning-file').value.trim();
-            
-            const isExam = row.querySelector('input[type="checkbox"][id^="exam-"]').checked;
-            const aActivity = row.querySelector('.afternoon-activity').value.trim();
-            const examStart = row.querySelector('.exam-start').value;
-            const examEnd = row.querySelector('.exam-end').value;
-            const examFile = row.querySelector('.exam-file').value.trim();
-            const answerFile = row.querySelector('.answer-file').value.trim();
-            
-            const eActivity = row.querySelector('.evening-activity').value.trim();
-            
-            const rGeneral = row.querySelector('.remark-general').value.trim();
-            const rGrammar = row.querySelector('.remark-grammar').value.trim();
-
-            // Skip empty rows if strictly empty? No, keep all dates for continuity, or just weekends?
-            // Existing data includes weekends as "isWeekend: true".
-            
             code += `    {\n`;
             code += `        date: "${date}", displayDate: "${displayDate}",\n`;
-            
-            if (isWeekend) {
-                code += `        isWeekend: true,\n`;
-            }
-            
-            // Remarks
-            let remarksObj = [];
-            if (rGeneral) remarksObj.push(`general: "${rGeneral}"`);
-            if (rGrammar) remarksObj.push(`grammar: "${rGrammar}"`);
-            if (remarksObj.length > 0) {
-                code += `        remarks: { ${remarksObj.join(', ')} },\n`;
-            }
+            if (isWeekend) code += `        isWeekend: true,\n`;
 
-            // Morning
-            let morningObj = [];
-            if (mGrammar) morningObj.push(`activityGrammar: "${mGrammar}"`);
-            if (mTranslate) morningObj.push(`activityTranslate: "${mTranslate}"`);
-            if (mFile) morningObj.push(`fileNoteGrammar: "${mFile}"`);
-            
-            if (morningObj.length > 0) {
-                code += `        morning: {\n            ${morningObj.join(',\n            ')}\n        },\n`;
-            }
+            // Process Slots: Morning, Afternoon, Evening
+            const periods = ['morning', 'afternoon', 'evening'];
+            const cells = row.querySelectorAll('td'); // 0=Date, 1=M, 2=A, 3=E, 4=Remark
 
-            // Afternoon
-            let afternoonObj = [];
-            // Always include activity if present
-            if (aActivity) afternoonObj.push(`activityGrammar: "${aActivity}"`);
-
-            if (isExam) {
-                afternoonObj.push(`isExam: true`);
-                afternoonObj.push(`examStartTime: "${examStart}:00"`);
-                afternoonObj.push(`examEndTime: "${examEnd}:00"`);
+            periods.forEach((p, index) => {
+                const cell = cells[index + 1]; // Offset by 1 for Date col
+                const container = cell.querySelector('.slot-container');
                 
-                if (examFile) afternoonObj.push(`fileExamGrammar: "${examFile}"`);
-                if (answerFile) afternoonObj.push(`fileAnswerGrammar: "${answerFile}"`);
-            }
+                const isExam = container.querySelector('.is-exam-chk').checked;
+                const subject = container.querySelector('.input-subject').value.trim();
+                const title = container.querySelector('.input-title').value.trim();
+                const file = container.querySelector('.input-file').value.trim();
+                const youtube = container.querySelector('.input-youtube').value.trim();
+                const zoom = container.querySelector('.input-zoom').value.trim();
 
-            if (afternoonObj.length > 0) {
-                 code += `        afternoon: {\n            ${afternoonObj.join(',\n            ')}\n        },\n`;
-            }
+                // Generate object if there is any data
+                if (subject || title || file || youtube || zoom || isExam) {
+                    let props = [];
+                    
+                    // Core activity field (backward compatibility mapping)
+                    // If it's an exam, we might want to flag it in the activity text or keep it clean
+                    if (subject) props.push(`subject: "${subject}"`);
+                    if (title) props.push(`title: "${title}"`);
+                    
+                    // Compatibility mapping for Home Page Renderer
+                    // The renderer usually looks for 'activity' or 'activityGrammar' or 'activityTranslate'
+                    // We will inject a generic 'activity' field combining Subject + Title
+                    let actText = subject;
+                    if (title) actText += ` : ${title}`;
+                    if (isExam) actText = `(สอบ) ${actText}`;
+                    
+                    if (actText) props.push(`activity: "${actText}"`); // Universal fallback
+                    
+                    if (isExam) props.push(`isExam: true`);
+                    if (file) props.push(`file: "${file}"`);
+                    if (youtube) props.push(`linkYoutube: "${youtube}"`);
+                    if (zoom) props.push(`linkZoom: "${zoom}"`);
 
-            // Evening
-            if (eActivity) {
-                code += `        evening: {\n            activityGrammar: ["${eActivity}"]\n        }\n`;
+                    code += `        ${p}: {\n            ${props.join(',\n            ')}\n        },\n`;
+                }
+            });
+
+            // Remarks
+            const remark = cells[4].querySelector('.input-remark').value.trim();
+            if (remark) {
+                code += `        remarks: { general: "${remark}" },\n`;
             }
 
             code += `    },\n`;
@@ -400,13 +525,8 @@
             alert("กรุณาสร้างโค้ดก่อนดาวน์โหลด");
             return;
         }
-        const varName = document.getElementById('varName').value || 'dataSchedule';
-        // Guess filename from varName
-        let filename = varName.replace('data', 'data-pt12-').toLowerCase() + ".js"; // rough guess
-        // Better: data-pt12-november.js
-        const monthIndex = parseInt(document.getElementById('selectMonth').value);
-        const monthName = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"][monthIndex];
-        filename = `data-pt12-${monthName}.js`;
+        const varName = document.getElementById('varName').value;
+        const filename = `${varName}.js`;
 
         const blob = new Blob([text], { type: "text/javascript" });
         const url = URL.createObjectURL(blob);
@@ -418,15 +538,16 @@
         document.body.removeChild(a);
     }
 
-    // Auto generate table on load after auth
+    // Auth & Init
     window.onload = function() {
         const password = prompt("กรุณาใส่รหัสผ่านผู้ดูแลระบบ (Admin Password):");
         if (password === "admin123") {
             document.querySelector('.container').style.display = 'block';
-            generateTable();
+            updateVarName();
+            generateTable(); // Init with defaults
         } else {
             alert("รหัสผ่านไม่ถูกต้อง");
-            window.location.href = "home_pt12.html";
+            window.location.href = "index.html";
         }
     };
 </script>
