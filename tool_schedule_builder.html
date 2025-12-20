@@ -748,9 +748,8 @@
                     const file = section.querySelector('.input-subject-file').value.trim();
                     const youtubeVal = section.querySelector('.input-subject-youtube').value.trim();
                     const slideId = section.querySelector('.input-subject-slide-id').value.trim();
-                    const zoomVal = section.querySelector('.input-subject-zoom').value.trim();
                     
-                    if (title || file || youtubeVal || zoomVal || slideId) {
+                    if (title || file || youtubeVal || slideId) {
                         hasData = true;
                         
                         // 1. Build specific Activity String for this subject
@@ -770,16 +769,14 @@
                             const links = youtubeVal.split('\n').map(l => l.trim()).filter(l => l);
                             allYoutube = allYoutube.concat(links);
                         }
-
-                        // 4. Collect Zoom Links
-                        if (zoomVal) {
-                            allZoom.push(zoomVal);
-                        }
                     }
                 });
 
+                // Get Shared Zoom
+                const zoomVal = container.querySelector('.input-zoom').value.trim();
+
                 // Check global slot data
-                if (allZoom.length > 0 || isExam) hasData = true;
+                if (zoomVal || isExam) hasData = true;
 
                 if (hasData) {
                     // Combine Activities for fallback 'activity' field
@@ -797,14 +794,9 @@
                         props.push(`linkYoutube: [${linksStr}]`);
                     }
 
-                    // Zoom Link (Array or String)
-                    if (allZoom.length > 0) {
-                        if (allZoom.length === 1) {
-                            props.push(`linkZoom: "${allZoom[0]}"`);
-                        } else {
-                            const zLinks = allZoom.map(z => `"${z}"`).join(', ');
-                            props.push(`linkZoom: [${zLinks}]`);
-                        }
+                    // Zoom Link
+                    if (zoomVal) {
+                        props.push(`linkZoom: "${zoomVal}"`);
                     }
 
                     if (isExam) {
@@ -844,6 +836,11 @@
     }
 
     function downloadFile() {
+        // Auto-generate if empty
+        if (!document.getElementById("outputCode").value) {
+            generateCode();
+        }
+
         const text = document.getElementById("outputCode").value;
         if (!text) {
             alert("กรุณาสร้างโค้ดก่อนดาวน์โหลด");
