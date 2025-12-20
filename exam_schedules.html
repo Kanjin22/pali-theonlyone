@@ -148,11 +148,39 @@
         /* Responsive */
         @media (max-width: 600px) {
             .timer-display { font-size: 2em; }
-            th, td { display: block; width: 100%; }
-            th { background: none; color: #34495e; padding-bottom: 5px; }
-            td { padding-top: 0; border: none; }
-            td.date-col { padding-top: 5px; }
-            tr { border-bottom: 1px solid #eee; display: block; padding: 10px 0; }
+            
+            /* Table Responsive Style like Monthly Schedule */
+            table { border: 0; }
+            thead { display: none; }
+            tr { 
+                display: block; 
+                border: 1px solid #eee; 
+                margin-bottom: 10px; 
+                border-radius: 8px;
+                background-color: #f9f9f9;
+            }
+            td { 
+                display: block; 
+                text-align: right; 
+                border: none; 
+                position: relative; 
+                padding-left: 35%; 
+                padding-right: 15px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px dotted #e0e0e0;
+            }
+            td:last-child { border-bottom: none; }
+            td:before { 
+                content: attr(data-label); 
+                position: absolute; 
+                left: 15px; 
+                font-weight: bold; 
+                text-align: left; 
+                color: #7f8c8d;
+                top: 12px;
+            }
+            td.date-col { width: auto; text-align: right; color: #e67e22; }
         }
     </style>
 </head>
@@ -351,13 +379,38 @@
                 ]
             };
 
-            // Exam 2 (Re-exam)
-            const exam2 = {
-                id: "exam2", name: "สอบซ่อม (ครั้งที่ ๒) - ทุกชั้นประโยค", examRound: 2,
+            // Exam 2 (Re-exam) - Split by Level
+            // P.T. 1-2
+            const exam2_pt12 = {
+                id: "exam2_pt12", name: "สอบซ่อม: ชั้นประโยค ๑ - ๒", examRound: 2,
                 rows: [
-                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ"),
-                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล"),
-                    mkRow(offsets.exam2_3, "แรม ๑๒ ค่ำ เดือน ๕", "ป.ธ.๓: ไวยากรณ์")
+                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "วิชาแปล (มคธเป็นไทย)"),
+                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "วิชาบาลีไวยากรณ์")
+                ]
+            };
+            // P.T. 3
+            const exam2_pt3 = {
+                id: "exam2_pt3", name: "สอบซ่อม: ชั้นประโยค ป.ธ. ๓", examRound: 2,
+                rows: [
+                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "วิชาแปล (มคธเป็นไทย)"),
+                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "วิชาสัมพันธ์ไทย"),
+                    mkRow(offsets.exam2_3, "แรม ๑๒ ค่ำ เดือน ๕", "วิชาบาลีไวยากรณ์")
+                ]
+            };
+            // P.T. 4
+            const exam2_pt4 = {
+                id: "exam2_pt4", name: "สอบซ่อม: ชั้นประโยค ป.ธ. ๔", examRound: 2,
+                rows: [
+                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "วิชาแปล (มคธเป็นไทย)")
+                ]
+            };
+            // P.T. 5
+            const exam2_pt5 = {
+                id: "exam2_pt5", name: "สอบซ่อม: ชั้นประโยค ป.ธ. ๕", examRound: 2,
+                rows: [
+                    mkRow(offsets.exam2_1, "แรม ๑๐ ค่ำ เดือน ๕", "วิชากลับ (ไทยเป็นมคธ)"),
+                    mkRow(offsets.exam2_2, "แรม ๑๑ ค่ำ เดือน ๕", "วิชาแปล (มคธเป็นไทย)")
                 ]
             };
             
@@ -370,12 +423,12 @@
                         dateObj: d_m2_s,
                         date: `${formatDateThai(d_m2_s)} - ${formatDateThai(d_m2_e)}`, 
                         lunar: "แรม ๑๐ - ๑๒ ค่ำ เดือน ๖", 
-                        subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (วัดสามพระยา)" 
+                        subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่" 
                     }
                 ]
             };
 
-            return [pt6, pt7, pt8, pt9, pt12, pt3, pt4, pt5, marking1, exam2, marking2];
+            return [pt6, pt7, pt8, pt9, pt12, pt3, pt4, pt5, marking1, exam2_pt12, exam2_pt3, exam2_pt4, exam2_pt5, marking2];
         }
 
         // --- Render Logic ---
@@ -412,8 +465,8 @@
                         if (idx === 0) firstDate = row.dateObj;
                         rowsHtml += `
                             <tr>
-                                <td class="date-col"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
-                                <td>${row.subject}</td>
+                                <td class="date-col" data-label="วันที่"><i class="fa-regular fa-calendar"></i> ${row.date}</td>
+                                <td data-label="วิชาสอบ">${row.subject}</td>
                             </tr>
                         `;
                     });
@@ -441,7 +494,17 @@
                                 <div class="card-title">${item.name}</div>
                                 ${statusHtml}
                             </div>
-                            <table>${rowsHtml}</table>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 35%;">วันที่</th>
+                                        <th>วิชาสอบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
                         </div>
                     `;
                 });
@@ -450,10 +513,10 @@
             };
 
             // Render Round 1 - First Group
-            container.innerHTML += renderCards(round1_1, "สอบครั้งแรก (สอบไล่) - ป.ธ. ๖ ถึง ป.ธ. ๙", "");
+            container.innerHTML += renderCards(round1_1, "สอบครั้งแรก - ป.ธ. ๖ ถึง ป.ธ. ๙", "");
             
             // Render Round 1 - Second Group
-            container.innerHTML += renderCards(round1_2, "สอบครั้งหลัง (สอบไล่) - ประโยค ๑-๒ ถึง ป.ธ. ๕", "");
+            container.innerHTML += renderCards(round1_2, "สอบครั้งหลัง - ประโยค ๑-๒ ถึง ป.ธ. ๕", "");
 
             // Render Round 1 Marking
             if (round1Marking) {
