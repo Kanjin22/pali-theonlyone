@@ -480,7 +480,8 @@
         
         const possibleVarNames = [
             `data${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`, // dataJanuary
-            `${document.getElementById('varName').value}` // data_pt12_january_2025
+            `${document.getElementById('varName').value}`, // data_pt12_january_2025
+            `data${monthName.charAt(0).toUpperCase() + monthName.slice(1)}_Novice` // dataJanuary_Novice (Legacy/Manual)
         ];
 
         console.log(`Attempting to load: ${filename}`);
