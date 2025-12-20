@@ -724,12 +724,12 @@ const dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๓ น.๒๑-๒๓ อตีเต กิร กสฺสปสมฺมาสมฺพุทฺโธ - ทาตุํ น วฏฺฏตีติ ฯ",
-            slideId: "d04_v06_s04_mahakappina",
+            slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/translate-notes-403.pdf"
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๔ น.๒๓-๒๖ โส ตสฺมึ กเถนฺเต - เต ตสฺส อทาสิ ฯ",
-            slideId: "d04_v06_s04_mahakappina",
+            slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/translate-notes-404.pdf"
         },
         evening: {
