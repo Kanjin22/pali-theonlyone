@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รวมลิงค์พจนานุกรมบาลี</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background-color: #fff9c4; /* สีเหลืองอ่อนตามที่ขอ */
+            margin: 0; 
+            padding: 40px 20px; 
+            color: #5d4037; 
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { 
+            color: #f57f17; 
+            text-align: center; 
+            margin-bottom: 10px; 
+            border-bottom: 3px solid #fbc02d;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        .header-container { text-align: center; margin-bottom: 40px; }
+        
+        .link-card { 
+            background: #ffffff; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: all 0.2s; 
+            border-left: 6px solid #fbc02d;
+        }
+        .link-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
+            background-color: #fffde7;
+        }
+        .icon { 
+            font-size: 28px; 
+            color: #fbc02d; 
+            margin-right: 25px; 
+            width: 50px; 
+            text-align: center; 
+        }
+        .info h3 { margin: 0 0 5px 0; color: #f57f17; font-size: 1.2rem; }
+        .info p { margin: 0; color: #8d6e63; font-size: 0.95em; }
+        
+        .section-title {
+            font-size: 1.3em;
+            color: #795548;
+            margin: 30px 0 15px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 25px;
+            background-color: #fbc02d;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 40px; 
+            color: #795548; 
+            text-decoration: none; 
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #795548;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #795548;
+            color: #fff9c4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h1><i class="fa-solid fa-book-journal-whills"></i> รวมลิงค์พจนานุกรม</h1>
+            <p>แหล่งค้นคว้าคำศัพท์บาลี-ไทย และ บาลี-อังกฤษ</p>
+        </div>
+        
+        <div class="section-title">พจนานุกรม บาลี-ไทย</div>
+
+        <a href="https://84000.org/tipitaka/dic/v_seek.php" target="_blank" class="link-card">
+            <div class="icon"><i class="fa-solid fa-language"></i></div>
+            <div class="info">
+                <h3>พจนานุกรมพุทธศาสน์ ฉบับประมวลศัพท์</h3>
+                <p>โดย สมเด็จพระพุทธโฆษาจารย์ (ป. อ. ปยุตฺโต)</p>
+            </div>
+        </a>
+        
+        <a href="https://palidict.com/" target="_blank" class="link-card">
+            <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <div class="info">
+                <h3>PaliDict.com</h3>
+                <p>พจนานุกรมบาลี-ไทย ออนไลน์ ใช้ง่าย รวดเร็ว</p>
+            </div>
+        </a>
+
+        <div class="section-title">Pali-English Dictionaries</div>
+
+        <a href="https://dsal.uchicago.edu/dictionaries/pali/" target="_blank" class="link-card">
+            <div class="icon"><i class="fa-solid fa-earth-americas"></i></div>
+            <div class="info">
+                <h3>Pali Text Society (PTS) Dictionary</h3>
+                <p>The classic standard Pali-English dictionary by U. Chicago</p>
+            </div>
+        </a>
+
+        <a href="https://www.buddha-vacana.org/toolbox/dictionary.html" target="_blank" class="link-card">
+            <div class="icon"><i class="fa-solid fa-book-open-reader"></i></div>
+            <div class="info">
+                <h3>Buddha-Vacana Dictionary</h3>
+                <p>Useful tool for looking up Pali terms with English definitions</p>
+            </div>
+        </a>
+        
+        <a href="https://suttacentral.net/" target="_blank" class="link-card">
+            <div class="icon"><i class="fa-solid fa-dharmachakra"></i></div>
+            <div class="info">
+                <h3>SuttaCentral</h3>
+                <p>Early Buddhist texts, translations, and parallels (Multiple Languages)</p>
+            </div>
+        </a>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        </div>
+    </div>
+</body>
+</html>
