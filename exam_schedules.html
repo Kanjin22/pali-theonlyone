@@ -131,8 +131,7 @@
         <div class="controls">
             <label for="yearSelect"><i class="fa-solid fa-filter"></i> เลือกปี พ.ศ.: </label>
             <select id="yearSelect" onchange="renderSchedule()">
-                <option value="2568" selected>๒๕๖๘</option>
-                <option value="2569">๒๕๖๙ (รอประกาศ)</option>
+                <!-- Options will be generated dynamically -->
             </select>
         </div>
 
@@ -142,70 +141,173 @@
     </div>
 
     <script>
-        // Data Structure
-        const scheduleData = {
-            "2568": {
+        // --- Configuration ---
+        // ใส่เฉพาะ "วันแรก" ของปีนั้นๆ (วันขึ้น ๒ ค่ำ เดือน ๓)
+        // Format: "YYYY-MM-DD"
+        const baseDates = {
+            "2567": "2024-02-11",
+            "2568": "2025-01-30",
+            "2569": "2026-01-20",
+            "2570": "2027-02-08",
+            "2571": "2028-01-28",
+            "2572": "2029-01-16",
+            "2573": "2030-02-04",
+            "2574": "2031-01-24",
+            "2575": "2032-02-12",
+            "2576": "2033-02-01",
+            "2577": "2034-01-21",
+            "2578": "2035-02-09",
+            "2579": "2036-01-30",
+            "2580": "2037-01-18",
+            "2581": "2038-02-06",
+            "2582": "2039-01-26",
+            "2583": "2040-01-15",
+            "2584": "2041-02-02",
+            "2585": "2042-01-23",
+            "2586": "2043-01-12",
+            "2587": "2044-01-31",
+            "2588": "2045-01-19",
+            "2589": "2046-02-07",
+            "2590": "2047-01-28"
+        };
+
+        // Offsets from Day 0 (Start Date)
+        const offsets = {
+            exam1_1: 0, // Waxing 2
+            exam1_2: 1, // Waxing 3
+            exam1_3: 2, // Waxing 4
+            exam1_4: 3, // Waxing 5
+            exam1_5: 4, // Waxing 6
+            
+            exam1_part2_1: 23, // Waning 10
+            exam1_part2_2: 24, // Waning 11
+            exam1_part2_3: 25, // Waning 12
+            
+            marking1_start: 44, // Waning 2 Month 4 (Approx)
+            marking1_end: 48,   // Waning 6 Month 4 (Approx)
+            
+            exam2_1: 82, // Waning 10 Month 5
+            exam2_2: 83, // Waning 11 Month 5
+            exam2_3: 84, // Waning 12 Month 5
+            
+            marking2_start: 112, // Waning 10 Month 6 (Approx)
+            marking2_end: 114    // Waning 12 Month 6 (Approx)
+        };
+
+        // --- Helper Functions ---
+        function addDays(dateStr, days) {
+            const result = new Date(dateStr);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function formatDateThai(dateObj) {
+            const months = [
+                "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+                "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+            ];
+            const d = dateObj.getDate();
+            const m = months[dateObj.getMonth()];
+            const y = dateObj.getFullYear() + 543;
+            return `${d} ${m} ${y}`;
+        }
+
+        function getScheduleData(year) {
+            if (!baseDates[year]) return null;
+            const start = baseDates[year];
+
+            // Calculate dates
+            const d_e1_1 = addDays(start, offsets.exam1_1);
+            const d_e1_2 = addDays(start, offsets.exam1_2);
+            const d_e1_3 = addDays(start, offsets.exam1_3);
+            const d_e1_4 = addDays(start, offsets.exam1_4);
+            const d_e1_5 = addDays(start, offsets.exam1_5);
+
+            const d_e1_p2_1 = addDays(start, offsets.exam1_part2_1);
+            const d_e1_p2_2 = addDays(start, offsets.exam1_part2_2);
+            const d_e1_p2_3 = addDays(start, offsets.exam1_part2_3);
+
+            const d_m1_s = addDays(start, offsets.marking1_start);
+            const d_m1_e = addDays(start, offsets.marking1_end);
+
+            const d_e2_1 = addDays(start, offsets.exam2_1);
+            const d_e2_2 = addDays(start, offsets.exam2_2);
+            const d_e2_3 = addDays(start, offsets.exam2_3);
+
+            const d_m2_s = addDays(start, offsets.marking2_start);
+            const d_m2_e = addDays(start, offsets.marking2_end);
+
+            return {
                 exam1: [
                     {
                         title: "ชั้นประโยค ป.ธ.๖ - ๗ และ บ.ศ.๖ - ๗",
                         rows: [
-                            { date: "30 ม.ค. 2568", lunar: "ขึ้น ๒ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
-                            { date: "31 ม.ค. 2568", lunar: "ขึ้น ๓ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
+                            { date: formatDateThai(d_e1_1), lunar: "ขึ้น ๒ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
+                            { date: formatDateThai(d_e1_2), lunar: "ขึ้น ๓ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
                         ]
                     },
                     {
                         title: "ชั้นประโยค ป.ธ.๘ - ๙ และ บ.ศ.๘ - ๙",
                         rows: [
-                            { date: "1 ก.พ. 2568", lunar: "ขึ้น ๔ ค่ำ เดือน ๓", subject: "วิชาแต่งฉันท์ (ป.ธ.๘), แต่งไทย (ป.ธ.๙)" },
-                            { date: "2 ก.พ. 2568", lunar: "ขึ้น ๕ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
-                            { date: "3 ก.พ. 2568", lunar: "ขึ้น ๖ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
+                            { date: formatDateThai(d_e1_3), lunar: "ขึ้น ๔ ค่ำ เดือน ๓", subject: "วิชาแต่งฉันท์ (ป.ธ.๘), แต่งไทย (ป.ธ.๙)" },
+                            { date: formatDateThai(d_e1_4), lunar: "ขึ้น ๕ ค่ำ เดือน ๓", subject: "วิชากลับ (ไทยเป็นมคธ)" },
+                            { date: formatDateThai(d_e1_5), lunar: "ขึ้น ๖ ค่ำ เดือน ๓", subject: "วิชาแปล (มคธเป็นไทย)" }
                         ]
                     },
                     {
                         title: "ครั้งหลัง: ชั้นประโยค ๑-๒, ป.ธ.๓-๕ และ บ.ศ.๑-๕",
                         rows: [
-                            { date: "22 ก.พ. 2568", lunar: "แรม ๑๐ ค่ำ เดือน ๓", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
-                            { date: "23 ก.พ. 2568", lunar: "แรม ๑๑ ค่ำ เดือน ๓", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
-                            { date: "24 ก.พ. 2568", lunar: "แรม ๑๒ ค่ำ เดือน ๓", subject: "ป.ธ.๓: ไวยากรณ์, พุทธศาสน์" }
+                            { date: formatDateThai(d_e1_p2_1), lunar: "แรม ๑๐ ค่ำ เดือน ๓", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
+                            { date: formatDateThai(d_e1_p2_2), lunar: "แรม ๑๑ ค่ำ เดือน ๓", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
+                            { date: formatDateThai(d_e1_p2_3), lunar: "แรม ๑๒ ค่ำ เดือน ๓", subject: "ป.ธ.๓: บุรพภาค, ไวยากรณ์" }
                         ]
                     },
                     {
                         title: "🔍 วันตรวจข้อสอบ (ครั้งที่ ๑)",
                         rows: [
-                            { date: "16 - 20 มี.ค. 2568", lunar: "แรม ๒ - ๖ ค่ำ เดือน ๔", subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (ช่วงเวลาลุ้นระทึก!)" }
+                            { 
+                                date: `${formatDateThai(d_m1_s)} - ${formatDateThai(d_m1_e)}`, 
+                                lunar: "แรม ๒ - ๖ ค่ำ เดือน ๔", 
+                                subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (ช่วงเวลาลุ้นระทึก!)" 
+                            }
                         ]
                     }
                 ],
                 exam2: [
                     {
-                        title: "สอบซ่อม (ครั้งที่ ๒): ทุกชั้นประโยค",
+                        title: "สอบซ่อม (ครั้งที่ ๒): ป ๑-๒ - ป.ธ.๕",
                         rows: [
-                            { date: "22 เม.ย. 2568", lunar: "แรม ๑๐ ค่ำ เดือน ๕", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
-                            { date: "23 เม.ย. 2568", lunar: "แรม ๑๑ ค่ำ เดือน ๕", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
-                            { date: "24 เม.ย. 2568", lunar: "แรม ๑๒ ค่ำ เดือน ๕", subject: "ป.ธ.๓: ไวยากรณ์" }
+                            { date: formatDateThai(d_e2_1), lunar: "แรม ๑๐ ค่ำ เดือน ๕", subject: "ป.๑-๒: แปล | ป.ธ.๓: แปล | ป.ธ.๔-๕: กลับ" },
+                            { date: formatDateThai(d_e2_2), lunar: "แรม ๑๑ ค่ำ เดือน ๕", subject: "ป.๑-๒: ไวยากรณ์ | ป.ธ.๓: สัมพันธ์ | ป.ธ.๔-๕: แปล" },
+                            { date: formatDateThai(d_e2_3), lunar: "แรม ๑๒ ค่ำ เดือน ๕", subject: "ป.ธ.๓: ไวยากรณ์" }
                         ]
                     },
                     {
                         title: "🔍 วันตรวจข้อสอบ (ครั้งที่ ๒)",
                         rows: [
-                            { date: "22 - 24 พ.ค. 2568", lunar: "แรม ๑๐ - ๑๒ ค่ำ เดือน ๖", subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (วัดสามพระยา)" }
+                            { 
+                                date: `${formatDateThai(d_m2_s)} - ${formatDateThai(d_m2_e)}`, 
+                                lunar: "แรม ๑๐ - ๑๒ ค่ำ เดือน ๖", 
+                                subject: "กรรมการตรวจข้อสอบปฏิบัติหน้าที่ (วัดสามพระยา)" 
+                            }
                         ]
                     }
                 ]
-            }
-        };
+            };
+        }
 
+        // --- Render Logic ---
         function renderSchedule() {
             const year = document.getElementById('yearSelect').value;
             const container = document.getElementById('schedule-content');
             container.innerHTML = "";
 
-            if (!scheduleData[year]) {
+            const data = getScheduleData(year);
+
+            if (!data) {
                 container.innerHTML = "<p style='text-align:center; color:#95a5a6;'>ยังไม่มีข้อมูลสำหรับปีนี้</p>";
                 return;
             }
-
-            const data = scheduleData[year];
 
             // Exam 1
             const section1 = document.createElement('div');
@@ -262,54 +364,52 @@
                 container.appendChild(section2);
             }
             
-            updateCountdown(year);
+            updateCountdown(year, data);
         }
 
-        function updateCountdown(year) {
-            if (year !== "2568") {
-                 document.getElementById('countdown-label').innerText = "แสดงข้อมูลปี " + year;
-                 document.getElementById('countdown-timer').innerText = "-";
+        function updateCountdown(year, data) {
+            const currentYear = new Date().getFullYear() + 543;
+            if (parseInt(year) < currentYear) {
+                 document.getElementById('countdown-label').innerText = "การสอบปี " + year;
+                 document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว";
                  return;
             }
 
-            // Find next exam date
+            // Find next exam date from generated data
             const today = new Date();
-            // Parse dates manually for simplicity (DD MMM YYYY to Date object)
-            // Month map
-            const monthMap = { "ม.ค.": 0, "ก.พ.": 1, "มี.ค.": 2, "เม.ย.": 3 };
+            today.setHours(0,0,0,0);
             
             let allDates = [];
-            // Collect all dates from 2568 schedule
-            [...scheduleData["2568"].exam1, ...scheduleData["2568"].exam2].forEach(group => {
-                group.rows.forEach(row => {
-                    const parts = row.date.split(" ");
-                    const d = parseInt(parts[0]);
-                    const m = monthMap[parts[1]];
-                    const y = parseInt(parts[2]) - 543; // Convert to AD
-                    const dateObj = new Date(y, m, d);
-                    // Add end of day time to ensure we don't skip today if it's the exam day
-                    dateObj.setHours(23, 59, 59); 
-                    allDates.push({ date: dateObj, label: group.title + " (" + row.subject + ")" });
-                });
+            
+            // Helper to parse Thai date back to JS Date (rough check, or use calculated dates directly if stored)
+            // Better to re-calculate logic or store dates in data object
+            // Let's use the baseDate and offsets again for precision
+            const start = baseDates[year];
+            if (!start) return;
+
+            // Collect key dates (Exam 1 Part 2 Start and Exam 2 Start are most critical for mass students)
+            // But let's collect all exam dates
+            const targetOffsets = [
+                { off: offsets.exam1_1, label: "สอบ ป.ธ.๖-๗ (ครั้งที่ ๑)" },
+                { off: offsets.exam1_part2_1, label: "สอบ ป.๑-๒ ถึง ป.ธ.๕ (ครั้งที่ ๑)" },
+                { off: offsets.exam2_1, label: "สอบซ่อม (ครั้งที่ ๒)" }
+            ];
+
+            targetOffsets.forEach(item => {
+                const d = addDays(start, item.off);
+                d.setHours(0,0,0,0);
+                allDates.push({ date: d, label: item.label });
             });
 
-            // Sort dates
+            // Sort and find next
             allDates.sort((a, b) => a.date - b.date);
-
-            // Find first future date
             const nextExam = allDates.find(item => item.date >= today);
 
             if (nextExam) {
-                const targetDate = nextExam.date;
-                // Reset to midnight for calculation
-                targetDate.setHours(0,0,0,0);
-                const now = new Date();
-                now.setHours(0,0,0,0);
-                
-                const diffTime = targetDate - now;
+                const diffTime = nextExam.date - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 
-                document.getElementById('countdown-label').innerText = "เหลือเวลาอีก... (สอบวันที่ " + targetDate.getDate() + " " + Object.keys(monthMap).find(key => monthMap[key] === targetDate.getMonth()) + ")";
+                document.getElementById('countdown-label').innerText = "เหลือเวลาอีก... (" + nextExam.label + ")";
                 
                 if (diffDays === 0) {
                     document.getElementById('countdown-timer').innerText = "วันนี้สอบ!";
@@ -317,13 +417,46 @@
                     document.getElementById('countdown-timer').innerText = diffDays + " วัน";
                 }
             } else {
-                document.getElementById('countdown-label').innerText = "การสอบปี " + year;
-                document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว";
+                 document.getElementById('countdown-label').innerText = "การสอบปี " + year;
+                 document.getElementById('countdown-timer').innerText = "สิ้นสุดแล้ว (หรือรอประกาศกำหนดการใหม่)";
             }
         }
 
+        function init() {
+            const select = document.getElementById('yearSelect');
+            const years = Object.keys(baseDates).sort();
+            const currentYearThai = new Date().getFullYear() + 543;
+            
+            let defaultYear = years[0];
+            // Try to find current year or next closest
+            for (let y of years) {
+                if (parseInt(y) >= currentYearThai) {
+                    defaultYear = y;
+                    break;
+                }
+            }
+            // If we are late in the year (e.g. Dec), maybe prefer next year? 
+            // But logic above handles ">= currentYear", so if currentYear exists in list, it picks it.
+            // If currentYear is past (not in list??), it picks next. 
+            // Actually, if currentYear is 2568 and list has 2568, it picks 2568.
+
+            years.forEach(y => {
+                const option = document.createElement('option');
+                option.value = y;
+                option.text = "๒" + y.slice(1); // Ensure Thai numerals if needed, but simple text is fine. User used "๒๕๖๘"
+                // Let's use Thai numerals for display
+                const thaiNumerals = y.replace(/0/g, '๐').replace(/1/g, '๑').replace(/2/g, '๒').replace(/3/g, '๓').replace(/4/g, '๔')
+                                      .replace(/5/g, '๕').replace(/6/g, '๖').replace(/7/g, '๗').replace(/8/g, '๘').replace(/9/g, '๙');
+                option.text = thaiNumerals;
+                if (y === defaultYear) option.selected = true;
+                select.appendChild(option);
+            });
+
+            renderSchedule();
+        }
+
         // Initialize
-        renderSchedule();
+        init();
     </script>
 </body>
 </html>
