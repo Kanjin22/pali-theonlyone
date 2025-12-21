@@ -1010,9 +1010,28 @@
         generateTable();
     };
 
-    // Placeholder for content search (Mockup)
+    let activeSlideInput = null;
+
     function openContentSearch(btn) {
-        alert("ระบบค้นหาเนื้อหาต้องเชื่อมต่อไฟล์ข้อมูลจริง");
+        const container = btn.parentElement;
+        activeSlideInput = container.querySelector('.input-subject-slide-id');
+        
+        const level = document.getElementById('selectLevel').value;
+        const width = 1000;
+        const height = 800;
+        const left = (screen.width - width) / 2;
+        const top = (screen.height - height) / 2;
+        
+        window.open(`../content_browser.html?level=${level}&mode=picker`, 'ContentBrowser', 
+            `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`);
+    }
+
+    // Called by popup
+    function receiveSlideId(id) {
+        if (activeSlideInput) {
+            activeSlideInput.value = id;
+            activeSlideInput = null;
+        }
     }
 </script>
 </body>
