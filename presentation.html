@@ -692,11 +692,69 @@
                 top: 60px;
                 right: 15px;
             }
+            
+            /* ซ่อน Sidebar เมื่อมีคลาส collapsed บนมือถือ */
+            .tools-sidebar.collapsed {
+                display: none;
+            }
+            
+            /* ปุ่มเปิด Sidebar (แสดงเฉพาะตอนซ่อน) */
+            .sidebar-toggle-btn {
+                position: absolute;
+                top: 70px;
+                right: 15px;
+                z-index: 90; /* ต่ำกว่า sidebar นิดหน่อย */
+                background: rgba(236, 239, 241, 0.9);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                cursor: pointer;
+                color: #546e7a;
+                font-size: 1.2rem;
+            }
+
+            /* ซ่อน footer-box เมื่อมีคลาส hidden */
+            .footer-box.hidden {
+                display: none;
+            }
+
+            /* ปุ่ม Toggle Footer */
+            .footer-toggle-btn {
+                position: fixed;
+                bottom: 80px; /* เหนือปุ่ม Nav */
+                right: 20px;
+                z-index: 210;
+                background: rgba(55, 71, 79, 0.8);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                cursor: pointer;
+            }
         }
     </style>
 </head>
 
 <body>
+
+    <!-- ปุ่มเปิด Sidebar (สำหรับมือถือ) -->
+    <div id="sidebar-toggle" class="sidebar-toggle-btn" style="display: none;" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- ปุ่ม Toggle Footer (สำหรับมือถือ) -->
+    <button id="footer-toggle" class="footer-toggle-btn" style="display: none;" onclick="toggleFooter()" title="แสดง/ซ่อน รายละเอียดด้านล่าง">
+        <i class="fa-solid fa-info"></i>
+    </button>
 
     <div class="card" id="cardContainer">
         <div class="header-bar"></div>
@@ -706,7 +764,12 @@
             <div class="page-badge" id="pageNumber">1</div>
         </div>
 
-        <div class="tools-sidebar">
+        <div class="tools-sidebar" id="toolsSidebar">
+            <!-- ปุ่มปิด Sidebar (เฉพาะมือถือ) -->
+            <button class="tool-btn" id="btn-close-sidebar" title="ซ่อนเครื่องมือ" onclick="toggleSidebar()" style="display: none;">
+                 <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
             <button class="tool-btn" id="btn-toc" title="สารบัญเนื้อหา (Table of Contents)" onclick="toggleTOC()">
                 <i class="fa-solid fa-list-ul"></i>
             </button>
@@ -773,7 +836,7 @@
             </div>
         </div>
 
-        <div class="footer-box">
+        <div class="footer-box" id="footerBox">
             <!-- 1. บริบท -->
             <div class="footer-section" style="flex: 1;">
                 <div class="sec-title">📝 บริบท / คำอธิบาย</div>
@@ -1018,6 +1081,82 @@
                     item.onclick = () => {
                         currentIndex = index;
                         updateSlide();
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('toolsSidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const closeBtn = document.getElementById('btn-close-sidebar');
+
+            // ตรวจสอบสถานะปัจจุบัน
+            if (sidebar.classList.contains('collapsed')) {
+                // เปิด Sidebar
+                sidebar.classList.remove('collapsed');
+                if (toggleBtn) toggleBtn.style.display = 'none'; // ซ่อนปุ่มเปิด
+                if (closeBtn) closeBtn.style.display = 'flex'; // แสดงปุ่มปิด
+            } else {
+                // ปิด Sidebar
+                sidebar.classList.add('collapsed');
+                if (toggleBtn) toggleBtn.style.display = 'flex'; // แสดงปุ่มเปิด
+                if (closeBtn) closeBtn.style.display = 'none'; // ซ่อนปุ่มปิด
+            }
+        }
+
+        function toggleFooter() {
+            const footer = document.getElementById('footerBox');
+            const toggleBtn = document.getElementById('footer-toggle');
+            
+            if (footer.classList.contains('hidden')) {
+                footer.classList.remove('hidden');
+                // เปลี่ยนไอคอนเป็น info
+                toggleBtn.innerHTML = '<i class="fa-solid fa-info"></i>';
+                toggleBtn.title = "ซ่อนรายละเอียด";
+            } else {
+                footer.classList.add('hidden');
+                // เปลี่ยนไอคอนเป็น expand/show
+                toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+                toggleBtn.title = "แสดงรายละเอียด";
+            }
+        }
+
+        // Auto-hide on mobile init
+        function initMobileView() {
+            if (window.innerWidth <= 768) {
+                // เริ่มต้นมาซ่อน Sidebar และ Footer
+                toggleSidebar(); 
+                // toggleFooter(); // Footer อาจจะเปิดไว้ก่อน หรือปิดไว้ก็ได้ตามต้องการ (user ขอซ่อน/แสดงได้)
+                // ถ้า user บอกว่า "พื้นที่จำกัด" อาจจะปิดไปก่อนก็ได้ แต่ user ขอ "สามารถแสดง/ซ่อน ได้ไหม"
+                // เอาเป็นว่าเปิดไว้ก่อน แต่มีปุ่มให้ซ่อน
+                const toggleBtn = document.getElementById('footer-toggle');
+                if (toggleBtn) toggleBtn.style.display = 'flex';
+                
+                // ให้ Sidebar เริ่มต้นเป็น collapsed (เรียก toggleSidebar ครั้งแรกจะ add collapsed)
+            }
+        }
+
+        // Call init on load
+        window.addEventListener('load', initMobileView);
+        window.addEventListener('resize', () => {
+             const toggleBtn = document.getElementById('footer-toggle');
+             const sidebarToggle = document.getElementById('sidebar-toggle');
+             if (window.innerWidth <= 768) {
+                 if(toggleBtn) toggleBtn.style.display = 'flex';
+                 // Check sidebar state
+                 const sidebar = document.getElementById('toolsSidebar');
+                 if(sidebar && sidebar.classList.contains('collapsed')) {
+                     if(sidebarToggle) sidebarToggle.style.display = 'flex';
+                 }
+             } else {
+                 if(toggleBtn) toggleBtn.style.display = 'none';
+                 if(sidebarToggle) sidebarToggle.style.display = 'none';
+                 
+                 // Reset sidebar visibility on desktop
+                 const sidebar = document.getElementById('toolsSidebar');
+                 if(sidebar) sidebar.classList.remove('collapsed');
+                 
+                 const footer = document.getElementById('footerBox');
+                 if(footer) footer.classList.remove('hidden');
+             }
+        });
                         if (window.innerWidth < 768) {
                              toggleTOC(); // Close on mobile
                         }
@@ -1413,6 +1552,83 @@
         function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; updateSlide(); } }
         function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlide(); } }
         document.addEventListener('keydown', function (event) { if (event.key === "ArrowRight") nextSlide(); if (event.key === "ArrowLeft") prevSlide(); });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('toolsSidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const closeBtn = document.getElementById('btn-close-sidebar');
+
+            // ตรวจสอบสถานะปัจจุบัน
+            if (sidebar.classList.contains('collapsed')) {
+                // เปิด Sidebar
+                sidebar.classList.remove('collapsed');
+                if (toggleBtn) toggleBtn.style.display = 'none'; // ซ่อนปุ่มเปิด
+                if (closeBtn) closeBtn.style.display = 'flex'; // แสดงปุ่มปิด
+            } else {
+                // ปิด Sidebar
+                sidebar.classList.add('collapsed');
+                if (toggleBtn) toggleBtn.style.display = 'flex'; // แสดงปุ่มเปิด
+                if (closeBtn) closeBtn.style.display = 'none'; // ซ่อนปุ่มปิด
+            }
+        }
+
+        function toggleFooter() {
+            const footer = document.getElementById('footerBox');
+            const toggleBtn = document.getElementById('footer-toggle');
+            
+            if (footer.classList.contains('hidden')) {
+                footer.classList.remove('hidden');
+                // เปลี่ยนไอคอนเป็น info
+                toggleBtn.innerHTML = '<i class="fa-solid fa-info"></i>';
+                toggleBtn.title = "ซ่อนรายละเอียด";
+            } else {
+                footer.classList.add('hidden');
+                // เปลี่ยนไอคอนเป็น expand/show
+                toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+                toggleBtn.title = "แสดงรายละเอียด";
+            }
+        }
+
+        // Auto-hide on mobile init
+        function initMobileView() {
+            if (window.innerWidth <= 768) {
+                // เริ่มต้นมาซ่อน Sidebar และ Footer
+                toggleSidebar(); 
+                
+                // toggleFooter(); // Footer อาจจะเปิดไว้ก่อน หรือปิดไว้ก็ได้ตามต้องการ (user ขอซ่อน/แสดงได้)
+                // ถ้า user บอกว่า "พื้นที่จำกัด" อาจจะปิดไปก่อนก็ได้ แต่ user ขอ "สามารถแสดง/ซ่อน ได้ไหม"
+                // เอาเป็นว่าเปิดไว้ก่อน แต่มีปุ่มให้ซ่อน
+                const toggleBtn = document.getElementById('footer-toggle');
+                if (toggleBtn) toggleBtn.style.display = 'flex';
+                
+                // ให้ Sidebar เริ่มต้นเป็น collapsed (เรียก toggleSidebar ครั้งแรกจะ add collapsed)
+            }
+        }
+
+        // Call init on load
+        window.addEventListener('load', initMobileView);
+        window.addEventListener('resize', () => {
+             const toggleBtn = document.getElementById('footer-toggle');
+             const sidebarToggle = document.getElementById('sidebar-toggle');
+             if (window.innerWidth <= 768) {
+                 if(toggleBtn) toggleBtn.style.display = 'flex';
+                 // Check sidebar state
+                 const sidebar = document.getElementById('toolsSidebar');
+                 if(sidebar && sidebar.classList.contains('collapsed')) {
+                     if(sidebarToggle) sidebarToggle.style.display = 'flex';
+                 }
+             } else {
+                 if(toggleBtn) toggleBtn.style.display = 'none';
+                 if(sidebarToggle) sidebarToggle.style.display = 'none';
+                 
+                 // Reset sidebar visibility on desktop
+                 const sidebar = document.getElementById('toolsSidebar');
+                 if(sidebar) sidebar.classList.remove('collapsed');
+                 
+                 const footer = document.getElementById('footerBox');
+                 if(footer) footer.classList.remove('hidden');
+             }
+        });
 
         updateSlide();
     </script>
