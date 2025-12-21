@@ -813,6 +813,14 @@
         const yearThai = (parseInt(year) + 543);
         const title = `${roomName} - ประจำเดือน${monthName} ${yearThai}`;
 
+        // Prepare Default Acts for filtering
+        const level = document.getElementById('selectLevel').value;
+        const subjectsConfig = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
+        const defaultActs = {};
+        if(subjectsConfig) {
+            subjectsConfig.forEach(s => defaultActs[s.id] = s.defaultAct);
+        }
+
         let html = `
         <html>
         <head>
@@ -882,15 +890,22 @@
                  
                  const subjectSections = container.querySelectorAll('.subject-section');
                  subjectSections.forEach(section => {
+                     const subjId = section.dataset.subjectId;
                      const act = section.querySelector('.input-subject-act').value.trim();
                      const title = section.querySelector('.input-subject-title').value.trim();
                      const file = section.querySelector('.input-subject-file').value.trim();
                      const youtube = section.querySelector('.input-subject-youtube').value.trim();
                      const slideId = section.querySelector('.input-subject-slide-id').value.trim();
                      
-                     // Filter Logic: Show ONLY if there is actual content (Title, File, Youtube, SlideID)
-                     // If only "Activity Name" (e.g. "Translate") is present but no details, SKIP IT.
-                     if (title || file || youtube || slideId) {
+                     // Filter Logic: 
+                     // Show if there is specific content (Title, File, etc.)
+                     // OR if the Activity Name has been changed from the default (e.g. changed to "(สอบ)...")
+                     
+                     const defaultAct = defaultActs[subjId];
+                     const isDefaultName = (act === defaultAct);
+                     const hasDetails = (title || file || youtube || slideId);
+
+                     if (act && (!isDefaultName || hasDetails)) {
                          let text = act;
                          if (title) text += ` : ${title}`;
                          content += `<div class="subject-item">• ${text}</div>`;
