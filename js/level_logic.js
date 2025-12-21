@@ -26,9 +26,10 @@ function initLevelPage(levelId) {
         }
     } else {
         // Default behavior: Select the first available room for this level
-        const rooms = systemConfig.getRoomsByLevel(levelId);
-        if (rooms.length > 0) {
-            // Redirect to the first room to have a default view
+    // Ensure strict filtering
+    const rooms = systemConfig.getRoomsByLevel(levelId).filter(r => r.level === levelId);
+    if (rooms.length > 0) {
+        // Redirect to the first room to have a default view
             // window.location.search = `?room=${rooms[0].id}`;
             // Better: Just render it without reload
             renderRoomContent(rooms[0]);
@@ -74,7 +75,10 @@ function formatThaiDate(dateStr) {
 }
 
 function renderRoomSelection(levelId) {
-    const rooms = systemConfig.getRoomsByLevel(levelId);
+    // Ensure we only get rooms for this specific level
+    const allRooms = systemConfig.getRoomsByLevel(levelId);
+    const rooms = allRooms.filter(r => r.level === levelId);
+    
     const container = document.getElementById('room-selection-container');
     const urlParams = new URLSearchParams(window.location.search);
     const currentRoomId = urlParams.get('room') || (rooms.length > 0 ? rooms[0].id : null);
