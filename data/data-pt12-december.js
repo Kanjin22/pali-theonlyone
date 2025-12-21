@@ -751,7 +751,7 @@ var dataDecember = [
             translate: "แปลมคธเป็นไทย ครั้งที่ ๓ ภาค ๔ (เก็งที่ ๕-๖)"
         },
         morning: {
-            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๕ น.๒๗-๒๙ ตํทิวสํ ปน สตฺถา - แาเทตฺวา อฏฺฐาสิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๕ น.๒๖-๒๙ ตํทิวสํ ปน สตฺถา - ฉาเทตฺวา อฏฺฐาสิ ฯ",
             slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_05.pdf"
         },
