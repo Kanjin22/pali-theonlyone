@@ -309,7 +309,7 @@ var data_pt12_novice_november_2025 = [
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
-            activityGrammar: ["เฉลย) บาลีไวยากรณ์"]
+            activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๓" },
     },
