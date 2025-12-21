@@ -184,11 +184,14 @@
     </div>
 
     <!-- Step 2: Create New Room -->
-    <h2><i class="fa-solid fa-plus-circle"></i> เพิ่มห้องเรียนใหม่</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2><i class="fa-solid fa-plus-circle"></i> เพิ่ม/แก้ไข ห้องเรียน</h2>
+        <button onclick="resetForm()" style="font-size:0.9em; background-color:#95a5a6;"><i class="fa-solid fa-rotate-left"></i> ล้างข้อมูล / สร้างใหม่</button>
+    </div>
     <div class="config-section">
         <div class="form-group">
-            <label>รหัสห้อง (Room ID) *ภาษาอังกฤษเท่านั้น</label>
-            <input type="text" id="roomId" placeholder="เช่น room_a, room_1" oninput="updateAutoFields()">
+            <label>รหัสห้อง (Room ID) *สร้างอัตโนมัติเพื่อป้องกันการซ้ำ</label>
+            <input type="text" id="roomId" class="readonly-input" readonly placeholder="ระบบจะสร้างให้อัตโนมัติ">
         </div>
         
         <div class="form-group">
@@ -249,11 +252,47 @@
         if (password === "admin123") {
             document.querySelector('.container').style.display = 'block';
             onLevelChange(); // Init
+            generateNextRoomId(); // Auto-generate ID for new room
         } else {
             alert("รหัสผ่านไม่ถูกต้อง");
             window.location.href = "index.html";
         }
     };
+
+    function generateNextRoomId() {
+        const level = document.getElementById('selectLevel').value;
+        
+        if (typeof systemConfig === 'undefined' || !systemConfig.classrooms) {
+            document.getElementById('roomId').value = `${level}_1`;
+            updateAutoFields();
+            return;
+        }
+
+        // Find next available ID for this level (e.g. pt8_1, pt8_2)
+        let counter = 1;
+        let nextId = `${level}_${counter}`;
+        
+        while (systemConfig.classrooms[nextId]) {
+            counter++;
+            nextId = `${level}_${counter}`;
+        }
+
+        document.getElementById('roomId').value = nextId;
+        updateAutoFields();
+    }
+
+    function resetForm() {
+        document.getElementById('roomName').value = '';
+        document.getElementById('roomDesc').value = '';
+        document.getElementById('roomTeachers').value = '';
+        document.getElementById('roomStatus').value = 'active';
+        
+        generateNextRoomId();
+        updatePreview();
+        
+        // Scroll to top of form
+        document.getElementById('roomId').scrollIntoView({ behavior: 'smooth' });
+    }
 
     function onLevelChange() {
         const level = document.getElementById('selectLevel').value;
@@ -284,16 +323,30 @@
         }
         
         listContainer.innerHTML = roomsHtml;
-        updateAutoFields();
+        
+        // Auto-generate ID for the selected level (Only if not in edit mode? logic handles it by overwriting)
+        // Better to reset form when level changes to avoid confusion
+        // But if user was editing, maybe warn? For now, we assume level change = new intention.
+        generateNextRoomId();
     }
 
     function updateAutoFields() {
         const level = document.getElementById('selectLevel').value;
-        const roomId = document.getElementById('roomId').value.trim().replace(/[^a-zA-Z0-9]/g, ''); // Sanitize
+        let roomId = document.getElementById('roomId').value.trim();
         
-        // Auto-generate prefix: level_roomId (e.g., pt12_roomA)
-        // If roomId is empty, just show level_...
-        const prefix = roomId ? `${level}_${roomId}` : `${level}_...`;
+        // Auto-generate prefix logic
+        // If roomId starts with level (e.g. pt8_1), use it as is.
+        // If not (e.g. room1), prepend level.
+        let prefix = roomId;
+        if (roomId && !roomId.startsWith(level)) {
+            prefix = `${level}_${roomId}`;
+        } else if (!roomId) {
+            prefix = `${level}_...`;
+        }
+        
+        // Sanitize
+        prefix = prefix.replace(/[^a-zA-Z0-9_]/g, '');
+
         document.getElementById('schedulePrefix').value = prefix;
         
         updatePreview();
@@ -304,6 +357,10 @@
         const desc = document.getElementById('roomDesc').value || 'คำอธิบายห้องเรียน';
         const teachers = document.getElementById('roomTeachers').value || '-';
         const status = document.getElementById('roomStatus').value;
+        
+        // Get Level Name
+        const levelSelect = document.getElementById('selectLevel');
+        const levelName = levelSelect.options[levelSelect.selectedIndex].text;
         
         const statusText = status === 'active' ? 'เปิดการสอน' : 'ปิดปรับปรุง';
         const statusClass = status === 'active' ? 'status-active' : 'status-maintenance';
@@ -316,6 +373,7 @@
                     <i class="fa-solid fa-chalkboard-user"></i>
                 </div>
                 <div class="room-name">${name}</div>
+                <div style="text-align:center; color:#3498db; font-weight:bold; font-size:0.9em; margin-bottom:5px;">${levelName}</div>
                 <div class="room-desc">${desc}</div>
                 <div class="teacher-list">
                     <i class="fa-solid fa-user-tie"></i> ${teachers}
@@ -376,7 +434,7 @@
 
         const code = `        "${id}": {
             id: "${id}",
-            level: "${level}",
+            level: "${level}", // ${document.getElementById('selectLevel').options[document.getElementById('selectLevel').selectedIndex].text}
             name: "${name}",
             description: "${desc}",
             schedulePrefix: "${prefix}", 
