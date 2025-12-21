@@ -120,6 +120,7 @@
                     <option value="10" selected>พฤศจิกายน</option>
                     <option value="11">ธันวาคม</option>
                 </select>
+                <button type="button" onclick="loadExistingData()" style="padding: 0 10px; background-color: #9b59b6; color: white; border: none; border-radius: 5px;" title="ดึงข้อมูลจากไฟล์ที่มีอยู่"><i class="fa-solid fa-cloud-arrow-down"></i> ดึงข้อมูล</button>
             </div>
         </div>
         
@@ -629,6 +630,85 @@
                 row.querySelector('.input-remark').value = item.remarks.general;
             }
         });
+    }
+
+    function loadExistingData() {
+        const roomId = document.getElementById('selectRoom').value;
+        const monthIdx = document.getElementById('selectMonth').value;
+        const year = document.getElementById('inputYear').value;
+        const monthName = monthNamesEn[monthIdx];
+        
+        if (!roomId) {
+            alert('กรุณาเลือกห้องเรียนก่อน');
+            return;
+        }
+
+        // Get Prefix
+        let prefix = 'pt12'; // Default
+        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms[roomId]) {
+             prefix = systemConfig.classrooms[roomId].schedulePrefix;
+        }
+        
+        // Construct filename
+        const filename = `data-${prefix}-${monthName}.js`;
+        
+        const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+        const possibleVarNames = [
+            `data${monthCap}`, // dataNovember
+            `data${monthName}`, // datanovember
+            `data_${monthName}`, // data_november
+            `data_${monthCap}`, // data_November
+            `${document.getElementById('varName').value}`, // data_pt12_january_2025
+            `data${monthCap}_Novice` // dataNovember_Novice
+        ];
+
+        const script = document.createElement('script');
+        script.src = filename;
+        
+        script.onload = function() {
+            let data = null;
+            let foundVar = '';
+            
+            for (const v of possibleVarNames) {
+                // Try window property first (for var)
+                if (window[v]) {
+                    data = window[v];
+                    foundVar = v;
+                    break;
+                }
+                
+                // Try direct access (for const/let) using eval
+                try {
+                    const evalData = eval(v);
+                    if (evalData) {
+                        data = evalData;
+                        foundVar = v;
+                        break;
+                    }
+                } catch (e) {
+                    // Variable not defined
+                }
+            }
+            
+            if (data) {
+                if (confirm(`พบข้อมูลจากตัวแปร "${foundVar}"\nต้องการนำเข้าข้อมูลนี้หรือไม่?`)) {
+                    generateTable(); // Ensure table structure matches
+                    fillTable(data);
+                    alert('นำเข้าข้อมูลเรียบร้อยแล้ว');
+                }
+            } else {
+                alert(`โหลดไฟล์ "${filename}" สำเร็จ แต่ไม่พบตัวแปรข้อมูลที่คาดหวัง\n(ตรวจสอบ: ${possibleVarNames.join(', ')})`);
+            }
+        };
+
+        script.onerror = function() {
+            if (confirm(`ไม่สามารถโหลดไฟล์ "${filename}" ได้โดยตรง\n\n(อาจเกิดจาก Browser Block การโหลดไฟล์ Local หรือไม่มีไฟล์อยู่จริง)\n\nต้องการเปิดหน้าต่างเพื่อเลือกไฟล์เองหรือไม่?`)) {
+                document.querySelector('.output-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('fileInput').click();
+            }
+        };
+
+        document.head.appendChild(script);
     }
 
     function copyCode() {
