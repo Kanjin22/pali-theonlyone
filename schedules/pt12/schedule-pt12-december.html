@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตารางเรียนเดือนพฤศจิกายน</title>
+    <title>ตารางเรียนเดือนธันวาคม</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* --- CSS เดิม --- */
@@ -104,7 +104,7 @@
 </head>
 <body>
     <div class="page-header">
-        <h1 class="main-title">ตารางเรียนเดือนพฤศจิกายน ๒๕๖๘</h1>
+        <h1 class="main-title">ตารางเรียนเดือนธันวาคม ๒๕๖๘</h1>
         <h2 class="sub-title" id="room-subtitle">ชั้นประโยค ๑-๒</h2>
         <p class="description" id="room-description">เพื่อส่งเสริมการท่องบาลีไวยากรณ์อย่างต่อเนื่อง, ปูพื้นฐานการแปลไปตามลำดับ</p>
         <p class="description"><strong>เป้าหมาย:</strong> สอบผ่านบาลีไวยากรณ์, สอบซ่อมแปลมคธเป็นไทย</p>
@@ -115,7 +115,7 @@
         <div class="stat-card grammar">
             <div class="stat-icon">📘</div>
             <div class="stat-details">
-                <h3>สถิติ ไวยากรณ์ (พ.ย.)</h3>
+                <h3>สถิติ ไวยากรณ์ (ธ.ค.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-gram-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-gram-exam">0</span></div>
             </div>
@@ -123,7 +123,7 @@
         <div class="stat-card translate">
             <div class="stat-icon">📙</div>
             <div class="stat-details">
-                <h3>สถิติ แปล (พ.ย.)</h3>
+                <h3>สถิติ แปล (ธ.ค.)</h3>
                 <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="count-trans-read">0</span></div>
                 <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="count-trans-exam">0</span></div>
             </div>
@@ -142,7 +142,7 @@
         </thead>
         <tbody id="schedule-body"></tbody>
     </table>
-    <a href="home_pt12.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
+    <a href="index.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     <div id="toast-notification"></div>
     
     <!-- Modal Pop-up -->
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <script src="system_config.js"></script>
+    <script src="../../js/system_config.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room') || 'room1';
@@ -172,23 +172,30 @@
             }
         }
         
-        document.write('<script src="data-' + prefix + '-november.js"><\/script>');
+        document.write('<script src="../../data/data-' + prefix + '-december.js"><\/script>');
     </script>
     <script>
         // === Resolve Data Source ===
+        function resolvePath(path) {
+            if (typeof systemConfig !== 'undefined' && systemConfig.resolvePath) {
+                 return systemConfig.resolvePath(path, prefix);
+            }
+            return path;
+        }
+
         function getData() {
             // 1. Legacy Checks
-            if (typeof dataNovember !== 'undefined') return dataNovember;
-            if (typeof dataNovember_Novice !== 'undefined') return dataNovember_Novice;
+            if (typeof dataDecember !== 'undefined') return dataDecember;
+            if (typeof dataDecember_Novice !== 'undefined') return dataDecember_Novice;
             
             // 2. Dynamic Checks (for generated files)
             if (typeof prefix !== 'undefined') {
-                 // Try with year 2025 (Standard)
-                 const v1 = `data_${prefix}_november_2025`;
+                 // Try with year 2025
+                 const v1 = `data_${prefix}_december_2025`;
                  if (window[v1]) return window[v1];
                  
                  // Try without year
-                 const v2 = `data_${prefix}_november`;
+                 const v2 = `data_${prefix}_december`;
                  if (window[v2]) return window[v2];
             }
             return [];
@@ -307,20 +314,20 @@
             }
             
             if (period.slideId) {
-                links += `<a href="presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
+                links += `<a href="../presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
             }
 
             // --- เนื้อหา ---
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { 
-                links += `<a href="${period.fileNoteGrammar}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
+                links += `<a href="${resolvePath(period.fileNoteGrammar)}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
             }
             if (period.fileNoteTranslate) {
                 if (Array.isArray(period.fileNoteTranslate)) {
                     period.fileNoteTranslate.forEach((file, index) => {
-                        if (file !== '#') links += `<a href="${file}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล (${index + 1})</a>`;
+                        if (file !== '#') links += `<a href="${resolvePath(file)}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล (${index + 1})</a>`;
                     });
                 } else if (period.fileNoteTranslate !== '#') {
-                    links += `<a href="${period.fileNoteTranslate}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล</a>`;
+                    links += `<a href="${resolvePath(period.fileNoteTranslate)}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล</a>`;
                 }
             }
             
@@ -330,14 +337,14 @@
                     const examType = "ข้อสอบ ไวย.", answerType = "เฉลย ไวย.";
                     links += `<a href="#" target="_blank" class="btn exam-button" 
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamGrammar}" data-answer-file="${period.fileAnswerGrammar || '#'}"
+                                data-exam-file="${resolvePath(period.fileExamGrammar)}" data-answer-file="${resolvePath(period.fileAnswerGrammar) || '#'}"
                                 data-type="grammar">กำลังโหลดสถานะ...</a>`;
                 }
                 if (period.fileExamTranslate) {
                     const examType = "ข้อสอบ แปล", answerType = "เฉลย แปล";
                     links += `<a href="#" target="_blank" class="btn exam-button"
                                 data-date="${date}" data-start-time="${period.examStartTime}" data-end-time="${period.examEndTime}"
-                                data-exam-file="${period.fileExamTranslate}" data-answer-file="${period.fileAnswerTranslate || '#'}"
+                                data-exam-file="${resolvePath(period.fileExamTranslate)}" data-answer-file="${resolvePath(period.fileAnswerTranslate) || '#'}"
                                 data-type="translate">กำลังโหลดสถานะ...</a>`;
                 }
             }
@@ -345,6 +352,11 @@
         }
 
         // === 6. Helper Functions ===
+        function resolvePath(path) {
+            if (!path || path === '#' || path.startsWith('http') || path.startsWith('..')) return path;
+            return '../' + path;
+        }
+
         function highlightCurrentDay() {
             const today = new Date();
             const year = today.getFullYear();
@@ -441,13 +453,12 @@
 
         // === 8. เริ่มทำงานเมื่อโหลดหน้าเว็บ ===
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize page
             buildScheduleTable();
             highlightCurrentDay();
-            calculateMonthlyStats(); // เรียกใช้ฟังก์ชันนี้ เพื่อให้ตัวเลขขึ้น!
-            updateAllExamButtons();
-            setInterval(updateAllExamButtons, 30000);
+            calculateMonthlyStats();
             
-            // Modal Logic
+            // Modal Logic (Independent of data)
             const modal = document.getElementById('details-modal');
             const closeModalBtn = document.getElementById('modal-close-btn');
 
