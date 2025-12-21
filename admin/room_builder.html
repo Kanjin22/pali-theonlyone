@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สร้างห้องเรียนใหม่</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #bdc3c7; border-radius: 5px; font-family: 'Sarabun'; font-size: 1em; }
+        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #2ecc71; }
+        .output-area { margin-top: 20px; background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; display: none; }
+        .copy-btn { background-color: #3498db; margin-top: 10px; }
+        .note { font-size: 0.9em; color: #e74c3c; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-solid fa-school"></i> สร้างห้องเรียนใหม่</h1>
+        
+        <div class="form-group">
+            <label>ระดับชั้น</label>
+            <select id="level">
+                <option value="pt12">ประโยค ๑-๒</option>
+                <option value="pt3">ป.ธ.๓</option>
+                <option value="pt4">ป.ธ.๔</option>
+                <option value="pt5">ป.ธ.๕</option>
+                <option value="pt6">ป.ธ.๖</option>
+                <option value="pt7">ป.ธ.๗</option>
+                <option value="pt8">ป.ธ.๘</option>
+                <option value="pt9">ป.ธ.๙</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>รหัสห้อง (ID) <small>(ภาษาอังกฤษเท่านั้น เช่น pt4_2)</small></label>
+            <input type="text" id="roomId" placeholder="เช่น pt4_2">
+        </div>
+
+        <div class="form-group">
+            <label>ชื่อห้องเรียน</label>
+            <input type="text" id="roomName" placeholder="เช่น ป.ธ.๔ ห้อง ๒ (บุคคลทั่วไป)">
+        </div>
+
+        <div class="form-group">
+            <label>คำอธิบาย</label>
+            <textarea id="roomDesc" rows="3" placeholder="เช่น สำหรับบุคคลทั่วไป..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Schedule Prefix <small>(ใช้สำหรับชื่อไฟล์ตารางเรียน เช่น pt4_lay)</small></label>
+            <input type="text" id="schedulePrefix" placeholder="เช่น pt4_lay">
+        </div>
+
+        <button onclick="generateConfig()">สร้างโค้ดห้องเรียน</button>
+
+        <div id="output" class="output-area"></div>
+        <button id="copyBtn" class="copy-btn" style="display:none;" onclick="copyCode()">คัดลอกโค้ด</button>
+        
+        <p class="note">
+            * หมายเหตุ: เนื่องจากระบบเป็น Static Site ท่านต้องนำโค้ดที่ได้ไปวางในไฟล์ <strong>js/system_config.js</strong> 
+            ในส่วน <code>classrooms: { ... }</code> ต่อจากห้องสุดท้าย
+        </p>
+    </div>
+
+    <script>
+        // Auto-fill defaults based on level
+        document.getElementById('level').addEventListener('change', function() {
+            const level = this.value;
+            document.getElementById('roomId').value = `${level}_new`;
+            document.getElementById('schedulePrefix').value = `${level}_new`;
+        });
+
+        // Check URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const levelParam = urlParams.get('level');
+        if (levelParam) {
+            document.getElementById('level').value = levelParam;
+            document.getElementById('roomId').value = `${levelParam}_new`;
+            document.getElementById('schedulePrefix').value = `${levelParam}_new`;
+        }
+
+        function generateConfig() {
+            const level = document.getElementById('level').value;
+            const id = document.getElementById('roomId').value;
+            const name = document.getElementById('roomName').value;
+            const desc = document.getElementById('roomDesc').value;
+            const prefix = document.getElementById('schedulePrefix').value;
+
+            if (!id || !name) {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                return;
+            }
+
+            const json = `"${id}": {
+    id: "${id}",
+    level: "${level}",
+    name: "${name}",
+    description: "${desc}",
+    schedulePrefix: "${prefix}",
+    teachers: [],
+    status: "active"
+},`;
+
+            const output = document.getElementById('output');
+            output.textContent = json;
+            output.style.display = 'block';
+            document.getElementById('copyBtn').style.display = 'block';
+        }
+
+        function copyCode() {
+            const code = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("คัดลอกเรียบร้อย! กรุณานำไปวางในไฟล์ js/system_config.js");
+            });
+        }
+    </script>
+</body>
+</html>

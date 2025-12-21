@@ -50,16 +50,22 @@
             <a href="../construction.html" class="menu-button">แปลมคธเป็นไทย (ธ. ภาค ๕-๘)</a>
         </div>
 
-        <hr>
+            <hr>
+        </div>
+
         <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
             <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
             <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt3" alt="visitor badge"/>
         </div>
     </div>
+
+    <script src="../js/system_config.js"></script>
+    <script src="../js/level_logic.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initLevelPage('pt3');
+            localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt3.html', title: 'ห้องเรียน ป.ธ. ๓' }));
+        });
+    </script>
 </body>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('lastClassroom', JSON.stringify({ href: 'levels/home_pt3.html', title: 'ห้องเรียน ป.ธ. ๓' }));
-});
-</script>
 </html>

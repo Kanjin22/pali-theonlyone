@@ -39,9 +39,26 @@ const systemConfig = {
         },
     },
 
+    // วันสอบของแต่ละชั้นประโยค (YYYY-MM-DD)
+    examDates: {
+        "pt12": "2025-02-23", // ตัวอย่าง
+        "pt3": "2025-02-24",
+        "pt4": "2025-02-25",
+        "pt5": "2025-02-26",
+        "pt6": "2025-02-27",
+        "pt7": "2025-02-28",
+        "pt8": "2025-03-01",
+        "pt9": "2025-03-02"
+    },
+
     // ฟังก์ชันสำหรับดึงข้อมูลห้อง
     getRoom: function (id) {
         return this.classrooms[id] || this.classrooms["pt12_2"]; // Default to Laypeople room if not found
+    },
+
+    // ดึงห้องเรียนทั้งหมดในระดับชั้นที่ระบุ
+    getRoomsByLevel: function(level) {
+        return Object.values(this.classrooms).filter(r => r.level === level && r.status === 'active');
     },
 
     // ฟังก์ชันช่วยแปลง path ไฟล์ให้ถูกต้องตามโครงสร้างใหม่

@@ -71,7 +71,13 @@
     </div>
 </div>
 
-<script src="../js/system_config.js"></script>
+<script src="../js/system_config.js">    // Check URL params to pre-select room
+    const urlParams = new URLSearchParams(window.location.search);
+    const preRoom = urlParams.get('room');
+    if (preRoom) {
+        roomSelect.value = preRoom;
+    }
+</script>
 <script src="../js/file_index.js"></script>
 <script>
     // Load Rooms

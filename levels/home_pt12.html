@@ -21,44 +21,50 @@
         .menu-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); background-color: #27ae60; color: #fff; }
         @media (min-width: 768px) { .menu-container { grid-template-columns: repeat(2, 1fr); } }
 
-        .room-badge { background-color: #27ae60; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.6em; vertical-align: middle; margin-left: 10px; }
+        .room-btn:hover { transform: translateY(-2px); }
     </style>
 </head>
 <body>
     <div class="container">
         <div style="text-align: left; margin-bottom: 20px;">
-            <a href="../classroom_select.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> เปลี่ยนห้องเรียน</a>
+            <a href="../index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
         </div>
         
         <div class="page-header">
-            <h1>ห้องเรียน ป.๑-๒ <span id="roomNameBadge" class="room-badge" style="display:none;"></span></h1>
-            <p id="roomDescription">วิชาแปลมคธเป็นไทย และ ไวยากรณ์</p>
+            <h1 id="page-title">ห้องเรียน ป.๑-๒</h1>
+            <p id="page-description">วิชาแปลมคธเป็นไทย และ ไวยากรณ์</p>
         </div>
 
-        <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
-            <a href="../statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
-            <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบ & นับถอยหลัง</a>
-        </div>
-        
-        <h2>📅 ตารางเรียนรายเดือน</h2>
-        <div class="menu-container" id="scheduleLinks">
-            <!-- Links will be injected by JS -->
-            <a href="../schedules/schedule-pt12-november.html" class="menu-button">พฤศจิกายน ๒๕๖๘</a>
-            <a href="../schedules/schedule-pt12-december.html" class="menu-button">ธันวาคม ๒๕๖๘</a>
-            <a href="../schedules/schedule-pt12-january.html" class="menu-button">มกราคม ๒๕๖๙</a>
-            <a href="../schedules/schedule-pt12-february.html" class="menu-button">กุมภาพันธ์ ๒๕๖๙</a>
+        <!-- 1.1 Exam Countdown -->
+        <div id="exam-info-container"></div>
+
+        <!-- 1.2 Room Selection -->
+        <div id="room-selection-container"></div>
+
+        <!-- 2. Room Content -->
+        <div id="room-content-section" style="display:none;">
+            <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
+                <a href="../statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
+                <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบแบบละเอียด</a>
+            </div>
+            
+            <h2>📅 ตารางเรียนรายเดือน</h2>
+            <div class="menu-container" id="schedule-links-container">
+                <!-- Links will be injected by JS -->
+            </div>
+
+            <hr>
+
+            <h2>📚 วิชาเรียน</h2>
+            <div class="menu-container">
+                <a href="../grammar_principles.html" class="menu-button">เรียนบาลีไวยากรณ์</a>
+                <a href="../translation_principles.html" class="menu-button">เรียนหลักการแปล</a>
+                <a href="../content_browser.html?level=pt12" class="menu-button">ห้องสมุดบทเรียน (แปลมคธเป็นไทย)</a>
+            </div>
+
+            <hr>
         </div>
 
-        <hr>
-
-        <h2>📚 วิชาเรียน</h2>
-        <div class="menu-container">
-            <a href="../grammar_principles.html" class="menu-button">เรียนบาลีไวยากรณ์</a>
-            <a href="../translation_principles.html" class="menu-button">เรียนหลักการแปล</a>
-            <a href="../content_browser.html?level=pt12" class="menu-button">ห้องสมุดบทเรียน (แปลมคธเป็นไทย)</a>
-        </div>
-
-        <hr>
         <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
             <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
             <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt12" alt="visitor badge"/>
@@ -66,53 +72,12 @@
     </div>
 
     <script src="../js/system_config.js"></script>
+    <script src="../js/level_logic.js"></script>
     <script>
-        // อ่าน roomId จาก URL (e.g., ?room=room2)
-        const urlParams = new URLSearchParams(window.location.search);
-        const roomId = urlParams.get('room') || 'room1'; // Default เป็น room1
-
-        if (typeof systemConfig !== 'undefined') {
-            const room = systemConfig.getRoom(roomId);
-            
-            // อัปเดตชื่อห้อง
-            if (room) {
-                document.getElementById('roomNameBadge').innerText = room.name;
-                document.getElementById('roomNameBadge').style.display = 'inline-block';
-                document.getElementById('roomDescription').innerText = room.description;
-                
-                // อัปเดตลิงก์สถิติ
-                const statsLink = document.getElementById('statsLink');
-                if (statsLink) {
-                    statsLink.href = `../statistics.html?room=${roomId}`;
-                }
-
-                // อัปเดตลิงก์ตารางเรียน
-                // สมมติว่าไฟล์ชื่อ schedule-{prefix}-{month}.html
-                // ถ้าไม่มีไฟล์จริง อาจจะลิงก์ไปที่เดิม หรือหน้าแจ้งเตือน
-                // ในตัวอย่างนี้ เราจะแก้ลิงก์ให้ชี้ไปที่ schedule-pt12-xxx.html โดยเติม query param ?room=xxx
-                // เพื่อให้หน้า schedule รู้ตัวว่าต้องโหลด data ไฟล์ไหน
-                
-                const months = [
-                    { name: "พฤศจิกายน ๒๕๖๘", file: "november" },
-                    { name: "ธันวาคม ๒๕๖๘", file: "december" },
-                    { name: "มกราคม ๒๕๖๙", file: "january" },
-                    { name: "กุมภาพันธ์ ๒๕๖๙", file: "february" }
-                ];
-
-                const scheduleContainer = document.getElementById('scheduleLinks');
-                scheduleContainer.innerHTML = ''; // Clear old static links
-
-                months.forEach(m => {
-                    const a = document.createElement('a');
-                    // ลิงก์ไปยังไฟล์ schedule เดิม แต่ส่ง room param ไปด้วย
-                    // หน้า schedule ต้องเขียน script รับค่านี้ไปเลือก data file
-                    a.href = `../schedules/pt12/schedule-pt12-${m.file}.html?room=${roomId}`;
-                    a.className = 'menu-button';
-                    a.innerText = m.name;
-                    scheduleContainer.appendChild(a);
-                });
-            }
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            initLevelPage('pt12');
+            localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt12.html', title: 'ห้องเรียน ป.๑-๒' }));
+        });
     </script>
 </body>
 </html>
