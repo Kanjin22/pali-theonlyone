@@ -45,7 +45,7 @@ var data_pt12_novice_november_2025 = [
             activity: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑"
         },
         afternoon: {
-            activity: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑",
+            activity: "(สอบ)",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",

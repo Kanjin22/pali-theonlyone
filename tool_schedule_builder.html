@@ -925,7 +925,13 @@
                      const isDefaultName = (act === defaultAct);
                      const hasDetails = (title || file || youtube || slideId);
 
-                     if (act && (!isDefaultName || hasDetails)) {
+                     // Special logic for Exam Mode:
+                     // If Exam Mode is checked, we ALWAYS show the activity regardless of default name check
+                     // Because the user might have set the activity name to "(สอบ)..." which might differ from default.
+                     // Or even if it is default name, but Exam mode is ON, we might want to show it?
+                     // Actually, user requirement: "If exam, show the subject/activity text too".
+                     
+                     if (act && (isExam || !isDefaultName || hasDetails)) {
                          let text = act;
                          if (title) text += ` : ${title}`;
                          content += `<div class="subject-item">• ${text}</div>`;
