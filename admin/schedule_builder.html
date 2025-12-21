@@ -8,57 +8,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h1 { color: #2c3e50; margin-bottom: 10px; }
         h2 { color: #34495e; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         
         .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; font-size: 0.95em; }
-        select, input[type="text"], input[type="date"], textarea { 
-            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; 
-            font-family: 'Sarabun', sans-serif; font-size: 1em; box-sizing: border-box;
-            transition: border-color 0.3s;
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9em; }
+        select, input[type="text"], input[type="date"], input[type="time"], textarea { 
+            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; 
+            font-family: 'Sarabun', sans-serif; font-size: 0.9em; box-sizing: border-box;
+            transition: border-color 0.2s;
         }
-        select:focus, input:focus { border-color: #3498db; outline: none; }
+        select:focus, input:focus, textarea:focus { border-color: #3498db; outline: none; }
 
         .row-entry { 
             background: #fff; 
-            padding: 20px; 
+            padding: 15px; 
             border: 1px solid #e0e0e0; 
             margin-bottom: 20px; 
             border-radius: 8px; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             display: grid; 
-            grid-template-columns: 200px 1fr 1fr 60px; 
-            gap: 20px; 
+            grid-template-columns: 200px 1fr 1fr 1fr 40px; 
+            gap: 15px; 
             align-items: start; 
-            position: relative;
         }
 
-        .row-entry:hover { border-color: #b2bec3; }
-
-        .col-group { display: flex; flex-direction: column; gap: 10px; }
-        .col-group label { font-size: 0.85em; color: #7f8c8d; margin-bottom: 2px; }
+        .col-group { display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
+        .col-group > div { width: 100%; }
         
+        /* Slot Styles */
+        .slot-container { }
+        .slot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px dashed #ccc; }
+        .slot-header strong { color: #2c3e50; }
+        
+        .field-group { margin-bottom: 8px; }
+        .field-group label { font-size: 0.8em; color: #7f8c8d; margin-bottom: 2px; }
+        
+        .is-exam { background-color: #fff0f0; border: 1px solid #ffcccc; padding: 5px; border-radius: 4px; }
+
         .btn { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; transition: 0.2s; }
         .btn:hover { background: #219150; transform: translateY(-1px); }
         
-        .btn-danger { background: #e74c3c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.2em; padding: 0; }
+        .btn-danger { background: #e74c3c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
         .btn-danger:hover { background: #c0392b; }
         
         .btn-primary { background: #3498db; }
         .btn-primary:hover { background: #2980b9; }
 
-        .file-select-group { background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px dashed #cbd5e0; }
-        .file-select-group label { color: #2c3e50; font-weight: bold; margin-bottom: 5px; }
-
         #output-area { margin-top: 30px; background: #2c3e50; padding: 20px; border-radius: 8px; color: white; }
-        textarea#json-output { height: 400px; font-family: 'Consolas', monospace; background: #1e272e; color: #a5d6a7; border: none; }
+        textarea#json-output { height: 400px; font-family: 'Consolas', monospace; background: #1e272e; color: #a5d6a7; border: none; font-size: 14px; }
 
         /* Responsive */
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
             .row-entry { grid-template-columns: 1fr; gap: 15px; }
-            .btn-danger { height: auto; padding: 10px; margin-top: 10px; }
+            .col-group { min-width: auto; }
+            .btn-danger { height: 40px; margin-top: 10px; }
         }
     </style>
 </head>
@@ -118,117 +123,135 @@
 </script>
 <script src="../js/file_index.js"></script>
 <script>
-    // Load Rooms
-    const roomSelect = document.getElementById('room-select');
-    if (typeof systemConfig !== 'undefined') {
-        for (let key in systemConfig.classrooms) {
-            let room = systemConfig.classrooms[key];
-            let option = document.createElement('option');
-            option.value = room.id; // pt12_1, pt12_2
-            option.dataset.level = room.level; // pt12
-            option.textContent = `${room.name} (${room.id})`;
-            roomSelect.appendChild(option);
+    const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+
+    function handleDateChange(input) {
+        const dateVal = input.value;
+        if (!dateVal) return;
+        
+        const dateObj = new Date(dateVal);
+        const day = thaiDaysShort[dateObj.getDay()];
+        const dateNum = dateObj.getDate();
+        const month = thaiMonthsShort[dateObj.getMonth()];
+        const year = (dateObj.getFullYear() + 543).toString().slice(2); // YY
+        
+        // Format: จ. ๑-ม.ค.-๖๘
+        // Convert dateNum to Thai digits? User example: "จ. ๑-ม.ค.-๖๘"
+        // Let's use standard digits for now unless requested, but user said "Like current code".
+        // Current code example: "จ. ๐๑-ม.ค.-๖๘" (from tool_schedule_builder logic I saw: `dateStr` was 0 padded).
+        // Let's stick to Arabic numerals for simplicity unless strictly required, or I can add a helper.
+        // Wait, the placeholder says "จ. ๑-ม.ค.-๖๘". That uses Thai digits.
+        
+        const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
+        const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
+        
+        const dateThai = toThaiNum(dateNum); // 1 -> ๑
+        const yearThai = toThaiNum(year);
+        
+        const displayStr = `${day} ${dateThai}-${month}-${yearThai}`;
+        
+        // Find the display date input in the same row
+        const row = input.closest('.row-entry');
+        const displayInput = row.querySelector('.input-display-date');
+        if (displayInput) {
+            displayInput.value = displayStr;
         }
-    } else {
-        alert('Error: system_config.js not found');
     }
 
-    // Helper to get files for a level
-    function getFiles(level, type) {
-        if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
-            return FILE_INDEX[level][type];
+    function toggleExamMode(checkbox) {
+        const slotContainer = checkbox.closest('.slot-container');
+        const normalMode = slotContainer.querySelector('.mode-normal');
+        const examMode = slotContainer.querySelector('.mode-exam');
+        
+        if (checkbox.checked) {
+            normalMode.style.display = 'none';
+            examMode.style.display = 'block';
+            slotContainer.classList.add('is-exam');
+        } else {
+            normalMode.style.display = 'block';
+            examMode.style.display = 'none';
+            slotContainer.classList.remove('is-exam');
         }
-        return [];
     }
 
-    function createFileDropdown(level, type, label) {
-        let container = document.createElement('div');
-        container.className = 'file-select-group';
+    function createSlotHTML(periodId, label, level) {
+        // Files helpers
+        const materials = getFiles(level, 'materials');
+        const exams = getFiles(level, 'exams');
+        const answers = getFiles(level, 'answers');
         
-        let lbl = document.createElement('label');
-        lbl.innerHTML = `${label} <small style="color:#888; font-weight:normal;">(เลือกจากรายการ หรือ กด Browse)</small>`;
-        container.appendChild(lbl);
-
-        // Wrapper for flex layout
-        let wrapper = document.createElement('div');
-        wrapper.style.display = 'flex';
-        wrapper.style.gap = '5px';
-
-        // 1. Dropdown (Existing logic)
-        let select = document.createElement('select');
-        select.className = `file-${type}`;
-        select.style.flex = '1';
-        
-        let defaultOpt = document.createElement('option');
-        defaultOpt.value = "";
-        defaultOpt.textContent = "-- เลือกไฟล์ --";
-        select.appendChild(defaultOpt);
-
-        let files = getFiles(level, type);
-        files.forEach(f => {
-            let opt = document.createElement('option');
-            opt.value = `${type}/${level}/${f}`; // Construct full path
-            opt.textContent = f;
-            select.appendChild(opt);
-        });
-
-        // 2. File Input (Browse button)
-        // Note: This input is for convenience to get the filename. 
-        // We assume the user picks the file from the correct folder.
-        let fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.style.display = 'none'; // Hide default input
-        fileInput.accept = '.pdf,.jpg,.png,.doc,.docx';
-
-        let browseBtn = document.createElement('button');
-        browseBtn.innerHTML = '📂 เลือกไฟล์...';
-        browseBtn.className = 'btn';
-        browseBtn.style.padding = '5px 10px';
-        browseBtn.style.background = '#607D8B';
-        browseBtn.style.whiteSpace = 'nowrap';
-        browseBtn.title = 'คลิกเพื่อเลือกไฟล์จากเครื่อง (ชื่อไฟล์จะถูกเลือกใน Dropdown อัตโนมัติ)';
-        
-        browseBtn.onclick = (e) => {
-            e.preventDefault(); // Prevent form submit
-            fileInput.click();
+        const createOptions = (files) => {
+             let opts = '<option value="">-- เลือกไฟล์ --</option>';
+             files.forEach(f => opts += `<option value="${f}">${f}</option>`);
+             return opts;
         };
 
-        fileInput.onchange = (e) => {
-            if (fileInput.files.length > 0) {
-                const filename = fileInput.files[0].name;
-                // Try to find this filename in the dropdown
-                let found = false;
-                const expectedPath = `${type}/${level}/${filename}`;
+        return `
+            <div class="slot-container" data-period="${periodId}">
+                <div class="slot-header">
+                    <strong>${label}</strong>
+                    <label style="font-size:0.9em; cursor:pointer;">
+                        <input type="checkbox" onchange="toggleExamMode(this)"> สอบ (Exam)
+                    </label>
+                </div>
                 
-                // Search in dropdown options
-                for (let i = 0; i < select.options.length; i++) {
-                    // Check if option value ends with filename or text content matches
-                    if (select.options[i].text === filename) {
-                        select.selectedIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                <!-- Normal Mode -->
+                <div class="mode-normal">
+                    <div class="field-group">
+                        <label>กิจกรรม (ไวยากรณ์)</label>
+                        <input type="text" class="input-act-gram" placeholder="เช่น บาลีไวยากรณ์">
+                    </div>
+                    <div class="field-group">
+                        <label>กิจกรรม (แปล)</label>
+                        <input type="text" class="input-act-trans" placeholder="เช่น แปลมคธเป็นไทย">
+                    </div>
+                    <div class="field-group">
+                        <label>YouTube (คั่นด้วย comma ,)</label>
+                        <input type="text" class="input-youtube" placeholder="id1, id2, ...">
+                    </div>
+                    <div class="field-group">
+                        <label>Zoom Link</label>
+                        <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
+                    </div>
+                    <div class="field-group">
+                        <label>เอกสาร (Grammar)</label>
+                        <select class="input-file-gram">${createOptions(materials)}</select>
+                    </div>
+                    <div class="field-group">
+                        <label>เอกสาร (Translate)</label>
+                        <select class="input-file-trans">${createOptions(materials)}</select>
+                    </div>
+                </div>
 
-                if (!found) {
-                    // If not found in index, add it dynamically but warn user
-                    // This handles case where user added file but didn't re-run indexer
-                    let opt = document.createElement('option');
-                    opt.value = expectedPath;
-                    opt.textContent = `${filename} (New)`;
-                    select.appendChild(opt);
-                    select.selectedIndex = select.options.length - 1;
-                    alert(`เลือกไฟล์ "${filename}" แล้ว\n\nหมายเหตุ: ไฟล์นี้ไม่อยู่ในรายการดั้งเดิม โปรดตรวจสอบว่าท่านได้นำไฟล์ไปวางในโฟลเดอร์ "${type}/${level}/" แล้วหรือไม่`);
-                }
-            }
-        };
-
-        wrapper.appendChild(select);
-        wrapper.appendChild(browseBtn);
-        container.appendChild(wrapper);
-        container.appendChild(fileInput); // Keep input in DOM but hidden
-
-        return container;
+                <!-- Exam Mode -->
+                <div class="mode-exam" style="display:none;">
+                    <div class="field-group">
+                        <label>เวลาเริ่ม - สิ้นสุด</label>
+                        <div style="display:flex; gap:5px;">
+                            <input type="time" class="input-exam-start" value="13:00">
+                            <input type="time" class="input-exam-end" value="16:00">
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label>ข้อสอบ (ไวยากรณ์)</label>
+                        <select class="input-exam-gram">${createOptions(exams)}</select>
+                    </div>
+                    <div class="field-group">
+                        <label>เฉลย (ไวยากรณ์)</label>
+                        <select class="input-ans-gram">${createOptions(answers)}</select>
+                    </div>
+                    <div class="field-group">
+                        <label>ข้อสอบ (แปล)</label>
+                        <select class="input-exam-trans">${createOptions(exams)}</select>
+                    </div>
+                    <div class="field-group">
+                        <label>เฉลย (แปล)</label>
+                        <select class="input-ans-trans">${createOptions(answers)}</select>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function addRow() {
@@ -245,114 +268,132 @@
         // Column 1: Date Info
         let col1 = document.createElement('div');
         col1.className = 'col-group';
+        col1.style.minWidth = '200px';
         col1.innerHTML = `
             <div>
-                <label>วันที่ (YYYY-MM-DD)</label>
-                <input type="date" class="input-date">
+                <label>วันที่</label>
+                <input type="date" class="input-date" onchange="handleDateChange(this)">
             </div>
             <div>
                 <label>ข้อความวันที่</label>
                 <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘">
             </div>
+            <div>
+                <label>หมายเหตุ (Remarks)</label>
+                <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป..."></textarea>
+            </div>
         `;
         
-        // Column 2: Subject & Links
-        let col2 = document.createElement('div');
-        col2.className = 'col-group';
-        col2.innerHTML = `
-            <div>
-                <label>วิชา/กิจกรรม</label>
-                <input type="text" class="input-subject" placeholder="เช่น บาลีไวยากรณ์">
-            </div>
-            <div>
-                <label>YouTube ID</label>
-                <input type="text" class="input-youtube" placeholder="เช่น xxxxxxx">
-            </div>
-            <div>
-                <label>Zoom Link</label>
-                <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
-            </div>
-        `;
+        // Slots
+        let colMorning = document.createElement('div');
+        colMorning.className = 'col-group';
+        colMorning.innerHTML = createSlotHTML('morning', 'เช้า (Morning)', level);
 
-        // Column 3: Files
-        let col3 = document.createElement('div');
-        col3.className = 'col-group';
-        col3.appendChild(createFileDropdown(level, 'materials', 'เอกสารประกอบ (Materials)'));
-        col3.appendChild(createFileDropdown(level, 'exams', 'ข้อสอบ (Exams)'));
-        col3.appendChild(createFileDropdown(level, 'answers', 'เฉลย (Answers)'));
+        let colAfternoon = document.createElement('div');
+        colAfternoon.className = 'col-group';
+        colAfternoon.innerHTML = createSlotHTML('afternoon', 'บ่าย (Afternoon)', level);
 
-        // Column 4: Delete Button
-        let col4 = document.createElement('div');
-        col4.style.height = '100%';
-        col4.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i> X</button>`;
+        let colEvening = document.createElement('div');
+        colEvening.className = 'col-group';
+        colEvening.innerHTML = createSlotHTML('evening', 'ค่ำ (Evening)', level);
+
+        // Column Delete
+        let colDel = document.createElement('div');
+        colDel.style.height = '100%';
+        colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
 
         div.appendChild(col1);
-        div.appendChild(col2);
-        div.appendChild(col3);
-        div.appendChild(col4);
+        div.appendChild(colMorning);
+        div.appendChild(colAfternoon);
+        div.appendChild(colEvening);
+        div.appendChild(colDel);
 
         document.getElementById('schedule-rows').appendChild(div);
-    }
-
-    function updateFileOptions() {
-        // Clear rows when room changes to avoid mismatch files
-        document.getElementById('schedule-rows').innerHTML = '';
     }
 
     function generateCode() {
         const month = document.getElementById('month-select').value;
         const rows = document.querySelectorAll('.row-entry');
         const data = [];
+        
+        // Helper to resolve file path
+        const level = roomSelect.options[roomSelect.selectedIndex]?.dataset.level || 'pt12';
+        const resolve = (type, file) => file ? `${type}/${level}/${file}` : "";
 
         rows.forEach(row => {
             const date = row.querySelector('.input-date').value;
             const displayDate = row.querySelector('.input-display-date').value;
-            const subject = row.querySelector('.input-subject').value;
-            const youtube = row.querySelector('.input-youtube').value;
-            const zoom = row.querySelector('.input-zoom').value;
-            
-            const matFile = row.querySelector('.file-materials').value;
-            const examFile = row.querySelector('.file-exams').value;
-            const ansFile = row.querySelector('.file-answers').value;
+            const remarksText = row.querySelector('.input-remarks').value;
 
             let obj = {
                 date: date,
                 displayDate: displayDate,
+                isWeekend: false, // Default, user can edit in JSON if needed or we add checkbox
                 remarks: {}
             };
-
-            // Simple logic mapping for demo
-            // In real app, might distinguish morning/afternoon slots
-            // Here we just map to 'grammar' or 'translate' based on text or put in general
             
-            // For simplicity, we put everything in 'grammar' slot for now, or 'general'
-            // User can edit later.
-            
-            let remarkContent = subject;
-            
-            // Construct File Objects
-            let files = [];
-            if (matFile) files.push({ name: "เอกสาร", url: matFile });
-            if (examFile) files.push({ name: "ข้อสอบ", url: examFile });
-            if (ansFile) files.push({ name: "เฉลย", url: ansFile });
+            if (remarksText) obj.remarks.general = remarksText;
 
-            // Add links
-            if (youtube) files.push({ name: "YouTube", url: "https://youtu.be/" + youtube, type: "youtube" });
-            if (zoom) files.push({ name: "Zoom", url: zoom, type: "zoom" });
+            // Process Slots
+            ['morning', 'afternoon', 'evening'].forEach(period => {
+                const container = row.querySelector(`.slot-container[data-period="${period}"]`);
+                if (!container) return;
 
-            // Assign to slot (assuming grammar slot for this demo)
-            obj.remarks.grammar = remarkContent;
-            if (files.length > 0) {
-                 obj.remarks.grammar_files = files;
-            }
+                const isExam = container.querySelector('input[type="checkbox"]').checked;
+                let periodObj = {};
+
+                if (isExam) {
+                    periodObj.isExam = true;
+                    periodObj.examStartTime = container.querySelector('.input-exam-start').value;
+                    periodObj.examEndTime = container.querySelector('.input-exam-end').value;
+                    
+                    const exG = container.querySelector('.input-exam-gram').value;
+                    const anG = container.querySelector('.input-ans-gram').value;
+                    const exT = container.querySelector('.input-exam-trans').value;
+                    const anT = container.querySelector('.input-ans-trans').value;
+
+                    if(exG) periodObj.fileExamGrammar = resolve('exams', exG);
+                    if(anG) periodObj.fileAnswerGrammar = resolve('answers', anG);
+                    if(exT) periodObj.fileExamTranslate = resolve('exams', exT);
+                    if(anT) periodObj.fileAnswerTranslate = resolve('answers', anT);
+
+                    // Add to object if not empty
+                    if (Object.keys(periodObj).length > 1) { // >1 because isExam is always there
+                        obj[period] = periodObj;
+                    }
+                } else {
+                    const actG = container.querySelector('.input-act-gram').value;
+                    const actT = container.querySelector('.input-act-trans').value;
+                    const yt = container.querySelector('.input-youtube').value;
+                    const zoom = container.querySelector('.input-zoom').value;
+                    const fileG = container.querySelector('.input-file-gram').value;
+                    const fileT = container.querySelector('.input-file-trans').value;
+
+                    if (actG) periodObj.activityGrammar = actG;
+                    if (actT) periodObj.activityTranslate = actT;
+                    
+                    if (yt) {
+                        const links = yt.split(',').map(s => s.trim()).filter(s => s);
+                        if (links.length > 1) periodObj.linkYoutube = links;
+                        else if (links.length === 1) periodObj.linkYoutube = links[0];
+                    }
+                    
+                    if (zoom) periodObj.linkZoom = zoom;
+                    
+                    if (fileG) periodObj.fileNoteGrammar = resolve('materials', fileG);
+                    if (fileT) periodObj.fileNoteTranslate = resolve('materials', fileT);
+
+                    if (Object.keys(periodObj).length > 0) {
+                        obj[period] = periodObj;
+                    }
+                }
+            });
 
             data.push(obj);
         });
 
         const varName = `data${month}`;
         const json = JSON.stringify(data, null, 4);
-        
-        // Remove quotes from keys for cleaner JS look (optional)
         const code = `var ${varName} = ${json};`;
 
         document.getElementById('json-output').value = code;
