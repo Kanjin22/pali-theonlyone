@@ -546,99 +546,109 @@
     }
 
     function fillTable(data) {
-        data.forEach(item => {
-            // Fix Date Matching: Ensure format YYYY-MM-DD matches perfectly
-            // item.date format: "2025-11-12"
-            // input value format: "2025-11-12"
-            // selector: .date-val[value="2025-11-12"]
-            
-            const dateInput = document.querySelector(`.date-val[value="${item.date}"]`);
-            if (!dateInput) {
-                // Debugging: Try to find why it fails
-                // console.log(`Date not found in table: ${item.date}`);
-                return;
-            }
-            const row = dateInput.closest('tr');
-
-            if (item.isWeekend) {
-                const chk = row.querySelector('input[type="checkbox"][id^="weekend-"]');
-                if (chk && !chk.checked) {
-                    chk.checked = true;
-                    toggleWeekend(chk.id.replace('weekend-', ''));
+        console.log(`Loading data... Found ${data.length} items.`);
+        let loadedCount = 0;
+        data.forEach((item, index) => {
+            try {
+                // Fix Date Matching: Ensure format YYYY-MM-DD matches perfectly
+                // item.date format: "2025-11-12"
+                // input value format: "2025-11-12"
+                // selector: .date-val[value="2025-11-12"]
+                
+                const dateInput = document.querySelector(`.date-val[value="${item.date}"]`);
+                if (!dateInput) {
+                    // Debugging: Try to find why it fails
+                    console.warn(`Date not found in table: ${item.date} (Item index: ${index})`);
+                    return;
                 }
-            }
+                const row = dateInput.closest('tr');
 
-            ['morning', 'afternoon', 'evening'].forEach((p, idx) => {
-                if (item[p]) {
-                    const slotData = item[p];
-                    const container = row.cells[idx + 1].querySelector('.slot-container');
-                    
-                    if (slotData.isExam) {
-                        const chk = container.querySelector('.is-exam-chk');
+                if (item.isWeekend) {
+                    const chk = row.querySelector('input[type="checkbox"][id^="weekend-"]');
+                    if (chk && !chk.checked) {
                         chk.checked = true;
-                        toggleExamMode(chk);
-                        container.querySelector('.input-exam-start').value = slotData.examStartTime || '13:00';
-                        container.querySelector('.input-exam-end').value = slotData.examEndTime || '16:00';
-                        
-                        // Attempt to find exam type
-                        const examSelect = container.querySelector('.input-exam-type');
-                        Array.from(examSelect.options).forEach(opt => {
-                            if (slotData[`fileExam${opt.value}`] || slotData[`fileAnswer${opt.value}`]) {
-                                examSelect.value = opt.value;
-                                container.querySelector('.input-exam-file').value = slotData[`fileExam${opt.value}`] || '';
-                                container.querySelector('.input-answer-file').value = slotData[`fileAnswer${opt.value}`] || '';
-                            }
-                        });
-                    }
-
-                    // Fill Subjects
-                    const subjectSections = container.querySelectorAll('.subject-section');
-                    let filledAny = false;
-
-                    subjectSections.forEach(section => {
-                        const subjId = section.dataset.subjectId;
-                        
-                        // 1. Try Specific Key first
-                        if (slotData[`activity${subjId}`]) {
-                            const val = slotData[`activity${subjId}`];
-                            const parts = val.split(' : ');
-                            section.querySelector('.input-subject-act').value = parts[0] || '';
-                            section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
-                            filledAny = true;
-                        }
-
-                        if (slotData[`fileNote${subjId}`]) section.querySelector('.input-subject-file').value = slotData[`fileNote${subjId}`];
-                        if (slotData.slideId) section.querySelector('.input-subject-slide-id').value = slotData.slideId; // Assumption: single slideId
-                    });
-
-                    // 2. Fallback: If no specific activity keys, try generic 'activity' string
-                    if (!filledAny && slotData.activity && !slotData.isExam) {
-                        // Logic: Put the generic activity into the FIRST subject slot
-                        if (subjectSections.length > 0) {
-                            const val = slotData.activity;
-                            const parts = val.split(' : ');
-                            subjectSections[0].querySelector('.input-subject-act').value = parts[0] || '';
-                            subjectSections[0].querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
-                        }
-                    }
-
-                    if (slotData.linkYoutube) {
-                        const links = Array.isArray(slotData.linkYoutube) ? slotData.linkYoutube.join('\n') : slotData.linkYoutube;
-                        // Put in first section for now
-                        if (subjectSections.length > 0) subjectSections[0].querySelector('.input-subject-youtube').value = links;
-                    }
-
-                    if (slotData.linkZoom) {
-                         const zoom = Array.isArray(slotData.linkZoom) ? slotData.linkZoom[0] : slotData.linkZoom;
-                         container.querySelector('.input-zoom').value = zoom || '';
+                        toggleWeekend(chk.id.replace('weekend-', ''));
                     }
                 }
-            });
 
-            if (item.remarks && item.remarks.general) {
-                row.querySelector('.input-remark').value = item.remarks.general;
+                ['morning', 'afternoon', 'evening'].forEach((p, idx) => {
+                    if (item[p]) {
+                        const slotData = item[p];
+                        const container = row.cells[idx + 1].querySelector('.slot-container');
+                        
+                        if (slotData.isExam) {
+                            const chk = container.querySelector('.is-exam-chk');
+                            chk.checked = true;
+                            toggleExamMode(chk);
+                            container.querySelector('.input-exam-start').value = slotData.examStartTime || '13:00';
+                            container.querySelector('.input-exam-end').value = slotData.examEndTime || '16:00';
+                            
+                            // Attempt to find exam type
+                            const examSelect = container.querySelector('.input-exam-type');
+                            if (examSelect) {
+                                Array.from(examSelect.options).forEach(opt => {
+                                    if (slotData[`fileExam${opt.value}`] || slotData[`fileAnswer${opt.value}`]) {
+                                        examSelect.value = opt.value;
+                                        container.querySelector('.input-exam-file').value = slotData[`fileExam${opt.value}`] || '';
+                                        container.querySelector('.input-answer-file').value = slotData[`fileAnswer${opt.value}`] || '';
+                                    }
+                                });
+                            }
+                        }
+
+                        // Fill Subjects
+                        const subjectSections = container.querySelectorAll('.subject-section');
+                        let filledAny = false;
+
+                        subjectSections.forEach(section => {
+                            const subjId = section.dataset.subjectId;
+                            
+                            // 1. Try Specific Key first
+                            if (slotData[`activity${subjId}`]) {
+                                const val = slotData[`activity${subjId}`];
+                                const parts = val.split(' : ');
+                                section.querySelector('.input-subject-act').value = parts[0] || '';
+                                section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
+                                filledAny = true;
+                            }
+
+                            if (slotData[`fileNote${subjId}`]) section.querySelector('.input-subject-file').value = slotData[`fileNote${subjId}`];
+                            if (slotData.slideId) section.querySelector('.input-subject-slide-id').value = slotData.slideId; // Assumption: single slideId
+                        });
+
+                        // 2. Fallback: If no specific activity keys, try generic 'activity' string
+                        if (!filledAny && slotData.activity && !slotData.isExam) {
+                            // Logic: Put the generic activity into the FIRST subject slot
+                            if (subjectSections.length > 0) {
+                                const val = slotData.activity;
+                                const parts = val.split(' : ');
+                                subjectSections[0].querySelector('.input-subject-act').value = parts[0] || '';
+                                subjectSections[0].querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
+                            }
+                        }
+
+                        if (slotData.linkYoutube) {
+                            const links = Array.isArray(slotData.linkYoutube) ? slotData.linkYoutube.join('\n') : slotData.linkYoutube;
+                            // Put in first section for now
+                            if (subjectSections.length > 0) subjectSections[0].querySelector('.input-subject-youtube').value = links;
+                        }
+
+                        if (slotData.linkZoom) {
+                            const zoom = Array.isArray(slotData.linkZoom) ? slotData.linkZoom[0] : slotData.linkZoom;
+                            container.querySelector('.input-zoom').value = zoom || '';
+                        }
+                    }
+                });
+
+                if (item.remarks && item.remarks.general) {
+                    row.querySelector('.input-remark').value = item.remarks.general;
+                }
+                loadedCount++;
+            } catch (err) {
+                console.error(`Error loading item index ${index} (Date: ${item.date}):`, err);
             }
         });
+        alert(`โหลดข้อมูลสำเร็จ ${loadedCount} รายการ (จากทั้งหมด ${data.length} รายการ)`);
     }
 
     function loadExistingData() {
@@ -662,12 +672,10 @@
         const filename = `data-${prefix}-${monthName}.js`;
         
         const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+        
+        // Prioritize specific variable names first!
         let possibleVarNames = [
-            `data${monthCap}`, // dataNovember
-            `data${monthName}`, // datanovember
-            `data_${monthName}`, // data_november
-            `data_${monthCap}`, // data_November
-            `${document.getElementById('varName').value}` // data_pt12_january_2025
+            `${document.getElementById('varName').value}` // Exact match from UI
         ];
 
         // Dynamic Prefix Support (e.g. pt12_novice -> dataNovember_Novice)
@@ -680,9 +688,15 @@
             possibleVarNames.push(`data${monthCap}_${suffix}`); // dataNovember_novice
         }
         
-        // Also add full prefix combo
+        // Full prefix combo
         possibleVarNames.push(`data_${prefix}_${monthName}`); // data_pt12_novice_november
         possibleVarNames.push(`data_${prefix}_${monthCap}`); // data_pt12_novice_November
+        
+        // Generic names (Last resort)
+        possibleVarNames.push(`data${monthCap}`); // dataNovember
+        possibleVarNames.push(`data${monthName}`); // datanovember
+        possibleVarNames.push(`data_${monthName}`); // data_november
+        possibleVarNames.push(`data_${monthCap}`); // data_November
 
         const script = document.createElement('script');
         script.src = filename;
