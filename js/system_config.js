@@ -28,6 +28,15 @@ const systemConfig = {
             teachers: ['พม.ดำรงค์ ปชฺโชตชโย ป.ธ.๙'],
             status: "active"
         },
+        "pt4_1": {
+            id: "pt4_1",
+            level: "pt4", // ประโยค ป.ธ.๔
+            name: "ป.ธ.๔ ห้อง ๑ (สามเณรประจำ)",
+            description: "สำหรับสามเณรชั้นประโยค ป.ธ.๔",
+            schedulePrefix: "pt4_novice",
+            teachers: [],
+            status: "active"
+        },
     },
 
     // ฟังก์ชันสำหรับดึงข้อมูลห้อง

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบสร้างตารางเรียน (Schedule Builder)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Sarabun', sans-serif; }
+        .row-entry { background: #f9f9f9; padding: 15px; border: 1px solid #eee; margin-bottom: 15px; border-radius: 4px; display: grid; grid-template-columns: 150px 1fr 1fr 1fr 50px; gap: 10px; align-items: start; }
+        .btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .btn-danger { background: #f44336; }
+        .btn-primary { background: #2196F3; }
+        .btn:hover { opacity: 0.9; }
+        #output-area { margin-top: 20px; }
+        textarea#json-output { height: 300px; font-family: monospace; background: #2d2d2d; color: #f8f8f2; }
+        .file-select-group { margin-top: 5px; }
+        .file-select-group label { font-size: 0.85em; color: #666; font-weight: normal; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ระบบสร้างโค้ดตารางเรียน</h1>
+    <p>เครื่องมือสำหรับสร้างโค้ด JSON เพื่อนำไปวางในไฟล์ข้อมูล (data-*.js)</p>
+
+    <div class="form-group">
+        <label>เลือกห้องเรียน (Room)</label>
+        <select id="room-select" onchange="updateFileOptions()">
+            <option value="">-- กรุณาเลือกห้อง --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>เลือกเดือน (สำหรับตั้งชื่อตัวแปร)</label>
+        <select id="month-select">
+            <option value="January">มกราคม (January)</option>
+            <option value="February">กุมภาพันธ์ (February)</option>
+            <option value="March">มีนาคม (March)</option>
+            <option value="April">เมษายน (April)</option>
+            <option value="May">พฤษภาคม (May)</option>
+            <option value="June">มิถุนายน (June)</option>
+            <option value="July">กรกฎาคม (July)</option>
+            <option value="August">สิงหาคม (August)</option>
+            <option value="September">กันยายน (September)</option>
+            <option value="October">ตุลาคม (October)</option>
+            <option value="November">พฤศจิกายน (November)</option>
+            <option value="December">ธันวาคม (December)</option>
+        </select>
+    </div>
+
+    <hr>
+
+    <div id="schedule-rows">
+        <!-- Rows will be added here -->
+    </div>
+
+    <button class="btn btn-primary" onclick="addRow()">+ เพิ่มวันเรียน</button>
+    <br><br>
+    <button class="btn" onclick="generateCode()">สร้างโค้ด (Generate Code)</button>
+
+    <div id="output-area" style="display:none;">
+        <h2>ผลลัพธ์ (Copy ไปวางในไฟล์ .js)</h2>
+        <textarea id="json-output"></textarea>
+    </div>
+</div>
+
+<script src="../js/system_config.js"></script>
+<script src="../js/file_index.js"></script>
+<script>
+    // Load Rooms
+    const roomSelect = document.getElementById('room-select');
+    if (typeof systemConfig !== 'undefined') {
+        for (let key in systemConfig.classrooms) {
+            let room = systemConfig.classrooms[key];
+            let option = document.createElement('option');
+            option.value = room.id; // pt12_1, pt12_2
+            option.dataset.level = room.level; // pt12
+            option.textContent = `${room.name} (${room.id})`;
+            roomSelect.appendChild(option);
+        }
+    } else {
+        alert('Error: system_config.js not found');
+    }
+
+    // Helper to get files for a level
+    function getFiles(level, type) {
+        if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
+            return FILE_INDEX[level][type];
+        }
+        return [];
+    }
+
+    function createFileDropdown(level, type, label) {
+        let container = document.createElement('div');
+        container.className = 'file-select-group';
+        
+        let lbl = document.createElement('label');
+        lbl.textContent = label;
+        container.appendChild(lbl);
+
+        let select = document.createElement('select');
+        select.className = `file-${type}`;
+        
+        let defaultOpt = document.createElement('option');
+        defaultOpt.value = "";
+        defaultOpt.textContent = "-- ไม่เลือกไฟล์ --";
+        select.appendChild(defaultOpt);
+
+        let files = getFiles(level, type);
+        files.forEach(f => {
+            let opt = document.createElement('option');
+            opt.value = `${type}/${level}/${f}`; // Construct full path
+            opt.textContent = f;
+            select.appendChild(opt);
+        });
+
+        container.appendChild(select);
+        return container;
+    }
+
+    function addRow() {
+        const roomVal = roomSelect.value;
+        if (!roomVal) {
+            alert("กรุณาเลือกห้องเรียนก่อนครับ");
+            return;
+        }
+        const level = roomSelect.options[roomSelect.selectedIndex].dataset.level;
+
+        const div = document.createElement('div');
+        div.className = 'row-entry';
+
+        // Date Column
+        let col1 = document.createElement('div');
+        col1.innerHTML = `<label>วันที่ (YYYY-MM-DD)</label><input type="date" class="input-date">
+                          <label>ข้อความวันที่</label><input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘">`;
+        
+        // Subject & Links
+        let col2 = document.createElement('div');
+        col2.innerHTML = `<label>วิชา/กิจกรรม</label><input type="text" class="input-subject" placeholder="เช่น บาลีไวยากรณ์">
+                          <label>YouTube ID</label><input type="text" class="input-youtube" placeholder="เช่น xxxxxxx">
+                          <label>Zoom Link</label><input type="text" class="input-zoom" placeholder="https://zoom.us/...">`;
+
+        // Files
+        let col3 = document.createElement('div');
+        col3.appendChild(createFileDropdown(level, 'materials', 'เอกสารประกอบ (Materials)'));
+        col3.appendChild(createFileDropdown(level, 'exams', 'ข้อสอบ (Exams)'));
+        col3.appendChild(createFileDropdown(level, 'answers', 'เฉลย (Answers)'));
+
+        // Delete Button
+        let col4 = document.createElement('div');
+        col4.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">X</button>`;
+
+        div.appendChild(col1);
+        div.appendChild(col2);
+        div.appendChild(col3);
+        div.appendChild(col4);
+
+        document.getElementById('schedule-rows').appendChild(div);
+    }
+
+    function updateFileOptions() {
+        // Clear rows when room changes to avoid mismatch files
+        document.getElementById('schedule-rows').innerHTML = '';
+    }
+
+    function generateCode() {
+        const month = document.getElementById('month-select').value;
+        const rows = document.querySelectorAll('.row-entry');
+        const data = [];
+
+        rows.forEach(row => {
+            const date = row.querySelector('.input-date').value;
+            const displayDate = row.querySelector('.input-display-date').value;
+            const subject = row.querySelector('.input-subject').value;
+            const youtube = row.querySelector('.input-youtube').value;
+            const zoom = row.querySelector('.input-zoom').value;
+            
+            const matFile = row.querySelector('.file-materials').value;
+            const examFile = row.querySelector('.file-exams').value;
+            const ansFile = row.querySelector('.file-answers').value;
+
+            let obj = {
+                date: date,
+                displayDate: displayDate,
+                remarks: {}
+            };
+
+            // Simple logic mapping for demo
+            // In real app, might distinguish morning/afternoon slots
+            // Here we just map to 'grammar' or 'translate' based on text or put in general
+            
+            // For simplicity, we put everything in 'grammar' slot for now, or 'general'
+            // User can edit later.
+            
+            let remarkContent = subject;
+            
+            // Construct File Objects
+            let files = [];
+            if (matFile) files.push({ name: "เอกสาร", url: matFile });
+            if (examFile) files.push({ name: "ข้อสอบ", url: examFile });
+            if (ansFile) files.push({ name: "เฉลย", url: ansFile });
+
+            // Add links
+            if (youtube) files.push({ name: "YouTube", url: "https://youtu.be/" + youtube, type: "youtube" });
+            if (zoom) files.push({ name: "Zoom", url: zoom, type: "zoom" });
+
+            // Assign to slot (assuming grammar slot for this demo)
+            obj.remarks.grammar = remarkContent;
+            if (files.length > 0) {
+                 obj.remarks.grammar_files = files;
+            }
+
+            data.push(obj);
+        });
+
+        const varName = `data${month}`;
+        const json = JSON.stringify(data, null, 4);
+        
+        // Remove quotes from keys for cleaner JS look (optional)
+        const code = `var ${varName} = ${json};`;
+
+        document.getElementById('json-output').value = code;
+        document.getElementById('output-area').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
