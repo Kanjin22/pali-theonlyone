@@ -267,6 +267,14 @@
                         </div>
                     </div>
                     <div class="field-group">
+                        <label>ข้อความกิจกรรม (ไวยากรณ์)</label>
+                        <input type="text" class="input-exam-act-gram" placeholder="เช่น (สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๐">
+                    </div>
+                    <div class="field-group">
+                        <label>ข้อความกิจกรรม (แปล)</label>
+                        <input type="text" class="input-exam-act-trans" placeholder="เช่น (สอบ) วิชาแปล">
+                    </div>
+                    <div class="field-group">
                         <label>ข้อสอบ (ไวยากรณ์)</label>
                         <select class="input-exam-gram">${createOptions(exams)}</select>
                     </div>
@@ -380,11 +388,15 @@
                     periodObj.examStartTime = container.querySelector('.input-exam-start').value;
                     periodObj.examEndTime = container.querySelector('.input-exam-end').value;
                     
+                    const exActG = container.querySelector('.input-exam-act-gram').value;
+                    const exActT = container.querySelector('.input-exam-act-trans').value;
                     const exG = container.querySelector('.input-exam-gram').value;
                     const anG = container.querySelector('.input-ans-gram').value;
                     const exT = container.querySelector('.input-exam-trans').value;
                     const anT = container.querySelector('.input-ans-trans').value;
 
+                    if(exActG) periodObj.activityGrammar = exActG;
+                    if(exActT) periodObj.activityTranslate = exActT;
                     if(exG) periodObj.fileExamGrammar = resolve('exams', exG);
                     if(anG) periodObj.fileAnswerGrammar = resolve('answers', anG);
                     if(exT) periodObj.fileExamTranslate = resolve('exams', exT);
