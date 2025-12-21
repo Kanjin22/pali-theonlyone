@@ -884,7 +884,13 @@
                  subjectSections.forEach(section => {
                      const act = section.querySelector('.input-subject-act').value.trim();
                      const title = section.querySelector('.input-subject-title').value.trim();
-                     if (act || title) {
+                     const file = section.querySelector('.input-subject-file').value.trim();
+                     const youtube = section.querySelector('.input-subject-youtube').value.trim();
+                     const slideId = section.querySelector('.input-subject-slide-id').value.trim();
+                     
+                     // Filter Logic: Show ONLY if there is actual content (Title, File, Youtube, SlideID)
+                     // If only "Activity Name" (e.g. "Translate") is present but no details, SKIP IT.
+                     if (title || file || youtube || slideId) {
                          let text = act;
                          if (title) text += ` : ${title}`;
                          content += `<div class="subject-item">• ${text}</div>`;
