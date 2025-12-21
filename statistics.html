@@ -114,27 +114,38 @@
         }
 
         // โหลดข้อมูลตาม prefix ของห้อง
-        document.write(`<script src="data-${prefix}-november.js"><\/script>`);
-        document.write(`<script src="data-${prefix}-december.js"><\/script>`);
-        document.write(`<script src="data-${prefix}-january.js"><\/script>`);
-        document.write(`<script src="data-${prefix}-february.js"><\/script>`);
+        document.write(`<script src="data/data-${prefix}-november.js"><\/script>`);
+        document.write(`<script src="data/data-${prefix}-december.js"><\/script>`);
+        document.write(`<script src="data/data-${prefix}-january.js"><\/script>`);
+        document.write(`<script src="data/data-${prefix}-february.js"><\/script>`);
     </script>
 
     <script>
+        function findDataArray(month, prefix) {
+            // 1. Standard Names
+            if (window[`data${month}`]) return window[`data${month}`];
+            if (window[`data${month}_Novice`]) return window[`data${month}_Novice`];
+            
+            // 2. Generated Names (format: data_{prefix}_{month}_{year})
+            // Estimate year based on month (Academic Year 2568: Nov 2025 - Feb 2026)
+            const year = (['January', 'February', 'March'].includes(month)) ? 2026 : 2025;
+            const genName = `data_${prefix}_${month.toLowerCase()}_${year}`;
+            if (window[genName]) return window[genName];
+            
+            return [];
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // 1. รวมข้อมูล
             let allData = [];
-            if (typeof dataNovember !== 'undefined') allData = allData.concat(dataNovember);
-            else if (typeof dataNovember_Novice !== 'undefined') allData = allData.concat(dataNovember_Novice);
-
-            if (typeof dataDecember !== 'undefined') allData = allData.concat(dataDecember);
-            else if (typeof dataDecember_Novice !== 'undefined') allData = allData.concat(dataDecember_Novice);
-
-            if (typeof dataJanuary !== 'undefined') allData = allData.concat(dataJanuary);
-            else if (typeof dataJanuary_Novice !== 'undefined') allData = allData.concat(dataJanuary_Novice);
-
-            if (typeof dataFebruary !== 'undefined') allData = allData.concat(dataFebruary);
-            else if (typeof dataFebruary_Novice !== 'undefined') allData = allData.concat(dataFebruary_Novice);
+            const months = ['November', 'December', 'January', 'February'];
+            
+            months.forEach(month => {
+                const data = findDataArray(month, prefix);
+                if (data && Array.isArray(data)) {
+                    allData = allData.concat(data);
+                }
+            });
 
             // ถ้าไม่มีข้อมูลเลย ให้หยุดทำงาน
             if (allData.length === 0) return;
