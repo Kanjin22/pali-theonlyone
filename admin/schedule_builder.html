@@ -136,10 +136,11 @@
         fileInput.accept = '.pdf,.jpg,.png,.doc,.docx';
 
         let browseBtn = document.createElement('button');
-        browseBtn.textContent = '📂';
+        browseBtn.innerHTML = '📂 เลือกไฟล์...';
         browseBtn.className = 'btn';
         browseBtn.style.padding = '5px 10px';
         browseBtn.style.background = '#607D8B';
+        browseBtn.style.whiteSpace = 'nowrap';
         browseBtn.title = 'คลิกเพื่อเลือกไฟล์จากเครื่อง (ชื่อไฟล์จะถูกเลือกใน Dropdown อัตโนมัติ)';
         
         browseBtn.onclick = (e) => {
