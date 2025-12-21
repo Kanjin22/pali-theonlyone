@@ -6,7 +6,7 @@ const systemConfig = {
             level: "pt12", // ประโยค ๑-๒
             name: "สามเณรนวกะ ๒ ชุด C ห้อง ๔",
             description: "สำหรับสามเณรนวกะ ๒",
-            schedulePrefix: "pt12_1",
+            schedulePrefix: "pt12_novice",
             teachers: ['พระมหากาญจน์'],
             status: "active"
         },
@@ -15,7 +15,7 @@ const systemConfig = {
             level: "pt12", // ประโยค ๑-๒
             name: "บ.ศ. ๑-๒ (สาธุชนทั่วไป)",
             description: "สำหรับบุคคลทั่วไปที่สนใจศึกษาบาลี",
-            schedulePrefix: "pt12_2",
+            schedulePrefix: "pt12",
             teachers: ['พระมหากาญจน์'],
             status: "active"
         },
@@ -64,9 +64,14 @@ const systemConfig = {
             if (targetLevel === 'pt12_2') targetLevel = 'pt12'; // Just in case
             
             // Logic พิเศษสำหรับไฟล์รวม (เช่น grammar-answer45)
-            if (filename.includes('answer45') || filename.includes('exam45')) targetLevel = 'pt45';
-            if (filename.includes('answer67') || filename.includes('exam67')) targetLevel = 'pt67';
+            if (filename.includes('answer12') || filename.includes('exam12')) targetLevel = 'pt12';
             if (filename.includes('answer3') || filename.includes('exam3')) targetLevel = 'pt3';
+            if (filename.includes('answer4') || filename.includes('exam4')) targetLevel = 'pt4';
+            if (filename.includes('answer5') || filename.includes('exam5')) targetLevel = 'pt5';
+            if (filename.includes('answer6') || filename.includes('exam6')) targetLevel = 'pt6';
+            if (filename.includes('answer7') || filename.includes('exam7')) targetLevel = 'pt7';
+            if (filename.includes('answer8') || filename.includes('exam8')) targetLevel = 'pt4';
+            if (filename.includes('answer9') || filename.includes('exam9')) targetLevel = 'pt9';
              
             // ถ้า filename เริ่มต้นด้วย folder level อยู่แล้ว (เช่น materials/pt12/file.pdf) ก็ไม่ต้องทำอะไร
             if (filename.startsWith(targetLevel + '/')) {
