@@ -114,17 +114,50 @@
     </div>
 </div>
 
-<script src="../js/system_config.js">    // Check URL params to pre-select room
+<script src="../js/system_config.js"></script>
+<script src="../js/file_index.js"></script>
+<script>
+    // --- Global Variables & Initialization ---
+    const roomSelect = document.getElementById('room-select');
+    const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+
+    // 1. Load Rooms into Dropdown
+    if (typeof systemConfig !== 'undefined') {
+        for (let key in systemConfig.classrooms) {
+            let room = systemConfig.classrooms[key];
+            let option = document.createElement('option');
+            option.value = room.id; // pt12_1, pt12_2
+            option.dataset.level = room.level; // pt12
+            option.textContent = `${room.name} (${room.id})`;
+            roomSelect.appendChild(option);
+        }
+    } else {
+        alert('Error: system_config.js not found');
+    }
+
+    // 2. Pre-select Room from URL
     const urlParams = new URLSearchParams(window.location.search);
     const preRoom = urlParams.get('room');
     if (preRoom) {
         roomSelect.value = preRoom;
     }
-</script>
-<script src="../js/file_index.js"></script>
-<script>
-    const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+
+    // --- Helper Functions ---
+
+    // Helper to get files for a level
+    function getFiles(level, type) {
+        if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
+            return FILE_INDEX[level][type];
+        }
+        return [];
+    }
+
+    // Update file options (optional, currently does nothing but placeholder)
+    function updateFileOptions() {
+        // We could clear rows here if we want to enforce consistency
+        // document.getElementById('schedule-rows').innerHTML = '';
+    }
 
     function handleDateChange(input) {
         const dateVal = input.value;
