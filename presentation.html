@@ -890,13 +890,19 @@
         );
 
         const params = new URLSearchParams(window.location.search);
-        const slideId = params.get('id');
+        const slideId = params.get('id') ? params.get('id').trim() : null;
 
         let slides = [];
         if (slideId && slidesDatabase[slideId]) {
             slides = slidesDatabase[slideId];
         } else {
-            slides = [{ pali: "ไม่พบข้อมูลสื่อการสอน", thai: "กรุณาตรวจสอบรหัส (ID) หรือไฟล์ข้อมูล", context: "-", akhyata: "-", kitaka: "-" }];
+            const dbKeysCount = Object.keys(slidesDatabase).length;
+            const isD4Loaded = (typeof contentDhamma04 !== 'undefined');
+            slides = [{ 
+                pali: "ไม่พบข้อมูลสื่อการสอน: " + (slideId || "No ID"), 
+                thai: "Debug: Keys=" + dbKeysCount + ", Dhamma04=" + isD4Loaded + ". กรุณาตรวจสอบรหัส (ID) หรือไฟล์ข้อมูล", 
+                context: "-", akhyata: "-", kitaka: "-" 
+            }];
         }
 
         let currentIndex = 0;
