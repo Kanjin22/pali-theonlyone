@@ -444,13 +444,7 @@
                     if (!isDefaultName || hasDetails) {
                         hasData = true;
                         
-                        // If Exam Mode, auto-prepend "(สอบ)" if not present
-                        let finalActName = act;
-                        if (isExam && !finalActName.includes('(สอบ)')) {
-                             finalActName = `(สอบ) ${finalActName}`;
-                        }
-
-                        let fullAct = finalActName;
+                        let fullAct = act;
                         if (title) fullAct += ` : ${title}`;
                         
                         if (fullAct) {
