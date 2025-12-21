@@ -19,6 +19,15 @@ const systemConfig = {
             teachers: ['พระมหากาญจน์'],
             status: "active"
         },
+        "pt8_1": {
+            id: "pt8_1",
+            level: "pt8", // ประโยค ป.ธ.๘
+            name: "พิเศษ",
+            description: "สำหรับใช้เรียนเฉพาะกลุ่ม",
+            schedulePrefix: "pt8_1",
+            teachers: ['พม.ดำรงค์ ปชฺโชตชโย ป.ธ.๙'],
+            status: "active"
+        },
     },
 
     // ฟังก์ชันสำหรับดึงข้อมูลห้อง
