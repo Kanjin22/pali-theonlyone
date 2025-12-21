@@ -76,15 +76,15 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑",
-            fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y50-51.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-50-51.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-50-51.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y50-51.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y50-51.pdf"
         },
         evening: {
             activityGrammar: [
@@ -101,9 +101,9 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓",
-            fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf",
             activityTranslate: "(เรียน) หลักการแปล ๙ ประการ ครั้งที่ ๑ (ทำความเข้าใจหลักการแปลมคธเป็นไทยเบื้องต้น)",
-            fileNoteTranslate: "materials/translate-notes-01.pdf"
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_01.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓",
@@ -111,10 +111,10 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-52-53.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-52-53.pdf",
-            fileExamTranslate: "exams/translate-exam-01.pdf",
-            fileAnswerTranslate: "answers/translate-answer-01.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y52-53.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y52-53.pdf",
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_01.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_01.pdf"
         },
         evening: {
             activityGrammar: [
@@ -134,9 +134,9 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
-            fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf",
             factivityTranslate: "(เรียน) หลักการแปล ๙ ประการ (๑. อาลปนะ)",
-            ileNoteTranslate: "materials/translate-notes-02.pdf"
+            ileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_02.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
@@ -144,10 +144,10 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-54-55.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-54-55.pdf",
-            fileExamTranslate: "exams/translate-exam-02.pdf",
-            fileAnswerTranslate: "answers/translate-answer-02.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y54-55.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y54-55.pdf",
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_02.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_02.pdf"
         },
         evening: {
             activityGrammar: [
@@ -171,22 +171,22 @@ const dataNovember = [
                 "(เรียน) หลักการแปล ๙ ประการ (๒. นิบาตต้นข้อความ)",
                 "(เรียน) หลักการแปล ๙ ประการ (๓. กาลสัตตมี)"
             ],
-            fileNoteTranslate: "materials/translate-notes-03.pdf"
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_03.pdf"
         },
         afternoon: {
             activityTranslate: "(สอบ) หลักการแปล ๙ ประการ ครั้งที่ ๓",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamTranslate: "exams/translate-exam-03.pdf",
-            fileAnswerTranslate: "answers/translate-answer-03.pdf"
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_03.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_03.pdf"
         },
         evening: {
             activityTranslate: [
                 "(เฉลย) หลักการแปล ๙ ประการ ครั้งที่ ๓",
                 "(เรียน) หลักการแปล ๙ ประการ (๔. บทประธาน)"
             ],
-            fileNoteTranslate: "materials/translate-notes-04.pdf"
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_04.pdf"
         }
     },
 
@@ -202,15 +202,15 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamTranslate: "exams/translate-exam-04.pdf",
-            fileAnswerTranslate: "answers/translate-answer-04.pdf"
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_04.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_04.pdf"
         },
         evening: {
             activityTranslate: [
                 "(เฉลย) หลักการแปล ๙ ประการ ครั้งที่ ๔",
                 "(เรียน) หลักการแปล ๙ ประการ (๕. ขยายประธาน)"
             ],
-            fileNoteTranslate: "materials/translate-notes-05.pdf"
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_05.pdf"
         }
     },
 
@@ -224,13 +224,13 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
-            fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y56-57.pdf",
             activityTranslate: "(สอบ) การแปล ๙ ประการ ครั้งที่ ๕",
             isExam: true,
             examStartTime: "09:00:00",
             examEndTime: "10:00:00",
-            fileExamTranslate: "exams/translate-exam-05.pdf",
-            fileAnswerTranslate: "answers/translate-answer-05.pdf"
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_05.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_05.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๔",
@@ -238,12 +238,12 @@ const dataNovember = [
                 "(เฉลย) หลักการแปล ๙ ประการ ครั้งที่ ๕",
                 "(เรียน) หลักการแปล ๙ ประการ (๖. กิริยาในระหว่างและประโยคแทรก)"
             ],
-            fileNoteTranslate: "materials/translate-notes-06.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_06.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-56-57.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-56-57.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y56-57.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y56-57.pdf"
         },
         evening: {
             activityGrammar: [
@@ -253,8 +253,8 @@ const dataNovember = [
             isExam: true,
             examStartTime: "18:30:00",
             examEndTime: "19:30:00",
-            fileExamTranslate: "exams/translate-exam-06.pdf",
-            fileAnswerTranslate: "answers/translate-answer-06.pdf"
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_06.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_06.pdf"
         }
     },
 
@@ -268,14 +268,14 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙",
-            fileNoteGrammar: "materials/grammar-notes-58-59.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y58-59.pdf",
             activityTranslate: [
                 "(เฉลย) หลักการแปล ๙ ประการ ครั้งที่ ๖",
                 "(เรียน) หลักการแปล ๙ ประการ (๗. บทขยายกิริยาในระหว่าง)",
                 "(เรียน) หลักการแปล ๙ ประการ (๘. กิริยาคุมพากย์)",
                 "(เรียน) หลักการแปล ๙ ประการ (๙. บทขยายกิริยาคุมพวกย์)"
             ],
-            fileNoteTranslate: "materials/translate-notes-07.pdf"
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_07.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๕",
@@ -283,10 +283,10 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-58-59.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-58-59.pdf",
-            fileExamTranslate: "exams/translate-exam-07.pdf",
-            fileAnswerTranslate: "answers/translate-answer-07.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y58-59.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y58-59.pdf",
+            fileExamTranslate: "exams/pt12/pt12_pali_translate_exam_07.pdf",
+            fileAnswerTranslate: "answers/pt12/pt12_pali_translate_ans_07.pdf"
         },
         evening: {
             activityGrammar: [
@@ -304,9 +304,9 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
-            fileNoteGrammar: "materials/grammar-notes-60-61.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y60-61.pdf",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๑ น.๗-๙ ตสฺส วรวนฺตสฺเสว - อาสิญฺจถาติ ปุนปฺปุนํ ยาจิ ฯ",
-            fileNoteTranslate: "materials/translate-notes-101.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_01.pdf",
             linkYoutube: [
                 "https://youtu.be/R8QsLUmUs90?si=zGUWc2AKWzNk0sbV&t=565",
                 "https://youtu.be/eOw1vJ0AJ-g?si=pFlLdsJrx3R9QYcD"
@@ -315,7 +315,7 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๖",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๒ น.๑๓-๑๕ โส อนุปุพฺเพน ตํ - อิมา คาถา อภาสิ ฯ",
-            fileNoteTranslate: "materials/translate-notes-102.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_02.pdf",
             linkYoutube: [
                 "https://youtu.be/3gujLYnrg0s?si=IQttvTA5zSqHWRiK&t=706",
                 "https://youtu.be/6ZaIEQcfITs?si=yIQw5gq8h13LzZRO",
@@ -323,8 +323,8 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-60-61.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-60-61.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y60-61.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y60-61.pdf"
         },
         evening: {
             activityGrammar: [
@@ -342,9 +342,9 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๒-๖๓",
-            fileNoteGrammar: "materials/grammar-notes-62-63.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y62-63.pdf",
             activityTranslate: "(อ่าน) ก็งที่ ๓ น.๑๘-๑๙ อเถกทิวสํ ทิสาวาสิโน - จกฺขุปาโล อโหสิ ฯ",
-            fileNoteTranslate: "materials/translate-notes-103.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_03.pdf",
             linkYoutube: [
                 "https://youtu.be/6ZaIEQcfITs?si=5Q_tn1_WJsPTIaRf&t=1200",
                 "https://youtu.be/HWt5O-HmVYU?si=43zsWD8cEZtXzbPc",
@@ -353,7 +353,7 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๗",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๔ น.๓๕-๓๗ โส กิรายสฺมา - วตฺวา อตีตํ อาหริ ฯ",
-            fileNoteTranslate: "materials/translate-notes-104.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_04.pdf",
             linkYoutube: [
                 "https://youtu.be/wYO0QtGbqH4?si=4uyDcW-Rx2i5oj8t&t=72",
                 "https://youtu.be/PXF3hbtgmpE?si=f1ru8mS0NIgCCvcE",
@@ -361,8 +361,8 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-62-63.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-62-63.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y62-63.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y62-63.pdf"
         },
         evening: {
             activityGrammar: [
@@ -380,9 +380,9 @@ const dataNovember = [
         },
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๔-๖๕",
-            fileNoteGrammar: "materials/grammar-notes-64-65.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y64-65.pdf",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๕ น.๓๗-๓๘ อตีเต พาราณสิยํ - มา เอวํ อกริตฺถ อาจริยาติ ฯ",
-            fileNoteTranslate: "materials/translate-notes-105.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_05.pdf",
             linkYoutube: [
                 "https://youtu.be/PXF3hbtgmpE?si=QQ4EDIuc_uDtkB63&t=128",
                 "https://youtu.be/Ua-6ouBapBY?si=We0jLD77EameWxvo",
@@ -391,7 +391,7 @@ const dataNovember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๘",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๖ น.๔๔-๔๖ อถสฺสา อิตรา อุทรํ - วตฺวา อิมํ คาถมาห ฯ",
-            fileNoteTranslate: "materials/translate-notes-106.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_06.pdf",
             linkYoutube: [
                 "https://youtu.be/OcEaVlcvVuY?si=2sUyAX1Adyk4leXb&t=797",
                 "https://youtu.be/x8TCfNLvOqQ?si=mWK3feIJ8xL6IXC0",
@@ -399,8 +399,8 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-64-65.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-64-65.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y64-65.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y64-65.pdf"
         },
         evening: {
             activityGrammar: [
@@ -418,7 +418,7 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๗ น.๕๒-๕๔ โส ตาย อากิณฺณวิหารตาย - อุณฺโหทกํ ปฏิยาเทติ",
-            fileNoteTranslate: "materials/translate-notes-107.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_07.pdf",
             linkYoutube: [
                 "https://youtu.be/NGP-LrmIP4w?si=JcP2w3FwtPRNSnbz&t=1200",
                 "https://youtu.be/9faWLXQEcYw?si=d68S4jEhMgj0W8iP",
@@ -426,7 +426,7 @@ const dataNovember = [
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๘ น.๕๔-๕๖ สตฺถา อุทกํ เต - เสยฺโยติ วตฺวา (อาห) ฯ",
-            fileNoteTranslate: "materials/translate-notes-108.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_08.pdf",
             linkYoutube: [
                 "https://youtu.be/9faWLXQEcYw?si=2mIVWc71lFp4g29U&t=594",
                 "https://youtu.be/jta8di0oBKE?si=sdOjiuaWWYqygKss",
@@ -443,14 +443,14 @@ const dataNovember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๙ น.๖๕-๖๗ ตสฺส ทิฏฺฐกาลโต ปฏฺฐาย - อิมา คาถาโย อภาสิ ฯ",
-            fileNoteTranslate: "materials/translate-notes-109.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_09.pdf",
             linkYoutube: [
                 "https://youtu.be/pEztrJFGb5Y?si=HAwQQEzxR3FR78vX&t=238",
             ],
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๑๐ น.๗๐-๗๒ เอกสฺมึ หิ สมเย - วตฺวา อตีตํ อาหริ ฯ",
-            fileNoteTranslate: "materials/translate-notes-110.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_10.pdf",
             linkYoutube: [
                 "https://youtu.be/_VeuCTS9aqc?si=v8g-DWnBWzoKSqQu&t=79",
             ],
@@ -473,13 +473,13 @@ const dataNovember = [
                 "https://youtu.be/-PGkPIpdq9A?si=3poa-rDYgYPrQVfS&t=1292",
                 "https://youtu.be/gAiC-673Gek?si=ezHluQfeqaSTbcRI",
             ],
-            fileNoteGrammar: "materials/grammar-notes-66-67.pdf",
-            fileNoteTranslate: "materials/translate-notes-111.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y66-67.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_11.pdf",
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๙",
             activityTranslate: "(อ่าน) ภาคที่ ๑ เก็งที่ ๑๒ น.๘๔-๘๖ ปริพฺพาชโก ปฐมปททฺวยเมว - สทฺธึ เวฬุวนํ อคมํสุ ฯ",
-            fileNoteTranslate: "materials/translate-notes-112.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_12.pdf",
             linkYoutube: [
                 "https://youtu.be/gAiC-673Gek?si=5Vc5LM375MqIIqZ-",
                 "https://youtu.be/DbPRlF_UhpQ?si=Nl-V182b6rFQfIV1",
@@ -487,8 +487,8 @@ const dataNovember = [
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam12-66-67.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-66-67.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y66-67.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y66-67.pdf"
         },
         evening: {
             activityGrammar: [
@@ -511,8 +511,8 @@ const dataNovember = [
                 "https://youtu.be/wKjwJesIDKM?si=UtsnkL2xot8yBs8u&t=920",
                 "https://youtu.be/LfaaIifBfbI?si=okd5o1jo7N7HPynT",
             ],
-            fileNoteGrammar: "materials/grammar-notes-50-51.pdf",
-            fileNoteTranslate: "materials/translate-notes-113.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y50-51.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_13.pdf",
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๐",
@@ -521,12 +521,12 @@ const dataNovember = [
                 "https://youtu.be/LfaaIifBfbI?si=WlCBPQYYf-vqtRXa&t=395",
                 "https://youtu.be/pG2QSG6Mvq0?si=1HeDpMgfmXijURmz",
             ],
-            fileNoteTranslate: "materials/translate-notes-114.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_14.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam3-50-51.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-50-51.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y50-51.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y50-51.pdf"
         },
         evening: {
             activityGrammar: [
@@ -548,8 +548,8 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/pG2QSG6Mvq0?si=0S6CPMBr6iRL-e3G&t=850",
             ],
-            fileNoteGrammar: "materials/grammar-notes-52-53.pdf",
-            fileNoteTranslate: "materials/translate-notes-115.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_15.pdf",
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๑",
@@ -558,12 +558,12 @@ const dataNovember = [
                 "https://youtu.be/mGL7wVrmP9k?si=KjEdUj3z9eKSOTy2&t=495",
                 "https://youtu.be/6Qyl-RWfioI?si=cHUT1fYpb8DsO-VF",
             ],
-            fileNoteTranslate: "materials/translate-notes-116.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_16.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam3-52-53.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-52-53.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y52-53.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y52-53.pdf"
         },
         evening: {
             activityGrammar: [
@@ -585,8 +585,8 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/mQJ4bkWQMtQ?si=5kkad5aaY0d8p5bE",
             ],
-            fileNoteGrammar: "materials/grammar-notes-54-55.pdf",
-            fileNoteTranslate: "materials/translate-notes-117.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_17.pdf",
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๒",
@@ -594,12 +594,12 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/yXl8QHKmdgQ?si=Cp_LdpVAWNH5w_GF",
             ],
-            fileNoteTranslate: "materials/translate-notes-118.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_18.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam3-54-55.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-54-55.pdf",
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y54-55.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y54-55.pdf",
         },
         evening: {
             activityGrammar: [
@@ -622,8 +622,8 @@ const dataNovember = [
                 "https://youtu.be/sb34IpqIEjw?si=jEaJQgtBzjTCxNf2&t=742",
                 "https://youtu.be/gzI7v5vT4YU?si=_7pXG-u-mFL-skZD",
             ],
-            fileNoteGrammar: "materials/grammar-notes-56-57.pdf",
-            fileNoteTranslate: "materials/translate-notes-119.pdf",
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y56-57.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_19.pdf",
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๑๓",
@@ -631,12 +631,12 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/Xyu5oWv-XL0?si=5-I8K_DyrGkIsc7g",
             ],
-            fileNoteTranslate: "materials/translate-notes-120.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp1_20.pdf",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "15:00:00",
-            fileExamGrammar: "exams/grammar-exam3-56-57.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-56-57.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y56-57.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y56-57.pdf"
         },
         evening: {
             activityGrammar: [
@@ -656,7 +656,7 @@ const dataNovember = [
             linkYoutube: [
                 "https://youtu.be/njG8dBKLuk4?si=P1Rf_Yi0u9Sd05kK&t=271",
             ],
-            fileNoteTranslate: "materials/translate-notes-201.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp2_01.pdf",
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๒ น.๘-๑๐ อลฺลกปฺปรฏฺเฐ ปน ทุพฺภิกฺเข - ภตึ กโรนฺตี วสิ ฯ",
@@ -664,7 +664,7 @@ const dataNovember = [
                 "https://youtu.be/JVBWiXwa-qs?si=H9Bw7tIXPcjaMqR-",
                 "https://youtu.be/9-VFvaw97eI?si=ybXnBnRpwdpCONIy",
             ],
-            fileNoteTranslate: "materials/translate-notes-202.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp2_02.pdf",
         },
         evening: {
             activityTranslate: "(เรียน) แปลมคธเป็นไทย ครั้งที่ ๑ ภาค ๒"
@@ -682,14 +682,14 @@ const dataNovember = [
                 "https://youtu.be/yjcrDc5apJA?si=bs6SCkbjMOZjEyOX&t=38",
                 "https://youtu.be/wfNS5MNXaBI?si=21ADDRJgCc8DIk31",
             ],
-            fileNoteTranslate: "materials/translate-notes-203.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp2_03.pdf",
         },
         afternoon: {
             activityTranslate: "(อ่าน) ภาคที่ ๒ เก็งที่ ๔ น.๑๖-๑๘ สา ตํ เนตฺวา - อปฺปทุฏฺฐสฺส ปทุฏฺฐมโน ฯ",
             linkYoutube: [
                 "https://youtu.be/wfNS5MNXaBI?si=pGyjMySmKSWVhJGJ&t=416",
             ],
-            fileNoteTranslate: "materials/translate-notes-204.pdf",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp2_04.pdf",
         },
         evening: {
             activityTranslate: "(เรียน) แปลมคธเป็นไทย ครั้งที่ ๒ ภาค ๒"
