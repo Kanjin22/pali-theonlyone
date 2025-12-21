@@ -19,7 +19,7 @@ const systemConfig = {
             teachers: ["พระมหากาญจน์"],
             status: "active"
         },
-        "room1": {
+        "room3": {
             id: "room1",
             level: "pt8",
             name: "",
