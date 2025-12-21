@@ -485,7 +485,7 @@
                                 }
                             }
                         }
-                        if (file) props.push(`fileNote${subjId}: "${
+                        if (file) props.push(`fileNote${subjId}: "${resolve('materials', file)}"`);
                         if (slideId) props.push(`slideId: "${slideId}"`);
                         if (youtubeVal) allYoutube.push(...youtubeVal.split('\n').map(l => l.trim()).filter(l => l));
                     }
@@ -654,8 +654,8 @@
                             
                             // Attempt to find exam type
                             const examSelect = container.querySelector('.input-exam-type');
-                            if (examSelect) {getFilename()
-                                Array.from(examSelect.options).forEach(opt => {getFilename()
+                            if (examSelect) {
+                                Array.from(examSelect.options).forEach(opt => {
                                     if (slotData[`fileExam${opt.value}`] || slotData[`fileAnswer${opt.value}`]) {
                                         examSelect.value = opt.value;
                                         container.querySelector('.input-exam-file').value = getFilename(slotData[`fileExam${opt.value}`]) || '';
