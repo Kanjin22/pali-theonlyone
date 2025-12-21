@@ -547,8 +547,17 @@
 
     function fillTable(data) {
         data.forEach(item => {
+            // Fix Date Matching: Ensure format YYYY-MM-DD matches perfectly
+            // item.date format: "2025-11-12"
+            // input value format: "2025-11-12"
+            // selector: .date-val[value="2025-11-12"]
+            
             const dateInput = document.querySelector(`.date-val[value="${item.date}"]`);
-            if (!dateInput) return;
+            if (!dateInput) {
+                // Debugging: Try to find why it fails
+                // console.log(`Date not found in table: ${item.date}`);
+                return;
+            }
             const row = dateInput.closest('tr');
 
             if (item.isWeekend) {
