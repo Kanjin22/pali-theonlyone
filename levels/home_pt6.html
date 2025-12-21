@@ -100,17 +100,25 @@
             <p>วิชาแปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
         </div>
 
-        <div style="margin-bottom: 40px;">
-            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊
-                ดูสถิติและความคืบหน้า</a>
-        </div>
+        <!-- 1.1 Exam Countdown -->
+        <div id="exam-info-container"></div>
 
-        <h2>📅 ตารางเรียน</h2>
-        <div class="menu-container">
-            <a href="construction.html" class="menu-button">ตารางเรียน (เร็วๆ นี้)</a>
-        </div>
+        <!-- 1.2 Room Selection -->
+        <div id="room-selection-container"></div>
 
-        <hr>
+        <!-- 2. Room Content -->
+        <div id="room-content-section" style="display:none;">
+            <div style="margin-bottom: 40px;">
+                <a href="../statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white;">📊
+                    ดูสถิติและความคืบหน้า</a>
+            </div>
+
+            <h2>📅 ตารางเรียนรายเดือน</h2>
+            <div class="menu-container" id="schedule-links-container">
+                <!-- Links will be injected by JS -->
+            </div>
+
+            <hr>
 
         <h2>📚 วิชาเรียน</h2>
         <div class="menu-container">

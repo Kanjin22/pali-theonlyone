@@ -125,10 +125,14 @@
             <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt7" alt="visitor badge" />
         </div>
     </div>
+
+    <script src="../js/system_config.js"></script>
+    <script src="../js/level_logic.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initLevelPage('pt7');
+            localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt7.html', title: 'ห้องเรียน ป.ธ. ๗' }));
+        });
+    </script>
 </body>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt7.html', title: 'ห้องเรียน ป.ธ. ๗' }));
-});
-</script>
 </html>
