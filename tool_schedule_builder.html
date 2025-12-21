@@ -422,6 +422,7 @@
                 let hasData = false;
                 let allActivities = [];
                 let allYoutube = [];
+                let hasSpecificActivity = false;
 
                 subjectSections.forEach(section => {
                     const subjId = section.dataset.subjectId;
@@ -450,11 +451,14 @@
                         if (fullAct) {
                             allActivities.push(fullAct);
                             
-                            // Check if this is Evening period
-                            if (p === 'evening') {
-                                 props.push(`activity${subjId}: ["${fullAct}"]`); 
-                            } else {
-                                 props.push(`activity${subjId}: "${fullAct}"`);
+                            // Only add specific key if subjId exists
+                            if (subjId) {
+                                hasSpecificActivity = true;
+                                if (p === 'evening') {
+                                     props.push(`activity${subjId}: ["${fullAct}"]`); 
+                                } else {
+                                     props.push(`activity${subjId}: "${fullAct}"`);
+                                }
                             }
                         }
                         if (file) props.push(`fileNote${subjId}: "${file}"`);
@@ -467,9 +471,8 @@
                 if (zoomVal || isExam) hasData = true;
 
                 if (hasData) {
-                    // if (isExam) allActivities.unshift('(สอบ)'); // Remove this auto-add for "Code Generation" because user wants their specific title
                     
-                    if (allActivities.length > 0) {
+                    if (allActivities.length > 0 && !hasSpecificActivity) {
                         if (p === 'evening') {
                             // Evening: Output as Array of strings
                              const actArrayString = allActivities.map(a => `"${a}"`).join(',\n                ');
