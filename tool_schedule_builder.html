@@ -423,7 +423,7 @@
                     const youtubeVal = section.querySelector('.input-subject-youtube').value.trim();
                     const slideId = section.querySelector('.input-subject-slide-id').value.trim();
                     
-                    if (title || file || youtubeVal || slideId) {
+                    if (title || file || youtubeVal || slideId || isExam) {
                         hasData = true;
                         let fullAct = act;
                         if (title) fullAct += ` : ${title}`;
@@ -450,7 +450,7 @@
                 if (zoomVal || isExam) hasData = true;
 
                 if (hasData) {
-                    if (isExam) allActivities.unshift('(สอบ)');
+                    // if (isExam) allActivities.unshift('(สอบ)'); // Remove this auto-add for "Code Generation" because user wants their specific title
                     
                     if (allActivities.length > 0) {
                         if (p === 'evening') {
@@ -925,13 +925,7 @@
                      const isDefaultName = (act === defaultAct);
                      const hasDetails = (title || file || youtube || slideId);
 
-                     // Special logic for Exam Mode:
-                     // If Exam Mode is checked, we ALWAYS show the activity regardless of default name check
-                     // Because the user might have set the activity name to "(สอบ)..." which might differ from default.
-                     // Or even if it is default name, but Exam mode is ON, we might want to show it?
-                     // Actually, user requirement: "If exam, show the subject/activity text too".
-                     
-                     if (act && (isExam || !isDefaultName || hasDetails)) {
+                     if (act && (!isDefaultName || hasDetails)) {
                          let text = act;
                          if (title) text += ` : ${title}`;
                          content += `<div class="subject-item">• ${text}</div>`;
