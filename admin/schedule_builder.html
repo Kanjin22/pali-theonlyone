@@ -8,20 +8,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1, h2 { color: #333; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        select, input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Sarabun', sans-serif; }
-        .row-entry { background: #f9f9f9; padding: 15px; border: 1px solid #eee; margin-bottom: 15px; border-radius: 4px; display: grid; grid-template-columns: 150px 1fr 1fr 1fr 50px; gap: 10px; align-items: start; }
-        .btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        .btn-danger { background: #f44336; }
-        .btn-primary { background: #2196F3; }
-        .btn:hover { opacity: 0.9; }
-        #output-area { margin-top: 20px; }
-        textarea#json-output { height: 300px; font-family: monospace; background: #2d2d2d; color: #f8f8f2; }
-        .file-select-group { margin-top: 5px; }
-        .file-select-group label { font-size: 0.85em; color: #666; font-weight: normal; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; font-size: 0.95em; }
+        select, input[type="text"], input[type="date"], textarea { 
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; 
+            font-family: 'Sarabun', sans-serif; font-size: 1em; box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        select:focus, input:focus { border-color: #3498db; outline: none; }
+
+        .row-entry { 
+            background: #fff; 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            margin-bottom: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: grid; 
+            grid-template-columns: 200px 1fr 1fr 60px; 
+            gap: 20px; 
+            align-items: start; 
+            position: relative;
+        }
+
+        .row-entry:hover { border-color: #b2bec3; }
+
+        .col-group { display: flex; flex-direction: column; gap: 10px; }
+        .col-group label { font-size: 0.85em; color: #7f8c8d; margin-bottom: 2px; }
+        
+        .btn { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; transition: 0.2s; }
+        .btn:hover { background: #219150; transform: translateY(-1px); }
+        
+        .btn-danger { background: #e74c3c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.2em; padding: 0; }
+        .btn-danger:hover { background: #c0392b; }
+        
+        .btn-primary { background: #3498db; }
+        .btn-primary:hover { background: #2980b9; }
+
+        .file-select-group { background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px dashed #cbd5e0; }
+        .file-select-group label { color: #2c3e50; font-weight: bold; margin-bottom: 5px; }
+
+        #output-area { margin-top: 30px; background: #2c3e50; padding: 20px; border-radius: 8px; color: white; }
+        textarea#json-output { height: 400px; font-family: 'Consolas', monospace; background: #1e272e; color: #a5d6a7; border: none; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .row-entry { grid-template-columns: 1fr; gap: 15px; }
+            .btn-danger { height: auto; padding: 10px; margin-top: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -204,26 +242,49 @@
         const div = document.createElement('div');
         div.className = 'row-entry';
 
-        // Date Column
+        // Column 1: Date Info
         let col1 = document.createElement('div');
-        col1.innerHTML = `<label>วันที่ (YYYY-MM-DD)</label><input type="date" class="input-date">
-                          <label>ข้อความวันที่</label><input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘">`;
+        col1.className = 'col-group';
+        col1.innerHTML = `
+            <div>
+                <label>วันที่ (YYYY-MM-DD)</label>
+                <input type="date" class="input-date">
+            </div>
+            <div>
+                <label>ข้อความวันที่</label>
+                <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘">
+            </div>
+        `;
         
-        // Subject & Links
+        // Column 2: Subject & Links
         let col2 = document.createElement('div');
-        col2.innerHTML = `<label>วิชา/กิจกรรม</label><input type="text" class="input-subject" placeholder="เช่น บาลีไวยากรณ์">
-                          <label>YouTube ID</label><input type="text" class="input-youtube" placeholder="เช่น xxxxxxx">
-                          <label>Zoom Link</label><input type="text" class="input-zoom" placeholder="https://zoom.us/...">`;
+        col2.className = 'col-group';
+        col2.innerHTML = `
+            <div>
+                <label>วิชา/กิจกรรม</label>
+                <input type="text" class="input-subject" placeholder="เช่น บาลีไวยากรณ์">
+            </div>
+            <div>
+                <label>YouTube ID</label>
+                <input type="text" class="input-youtube" placeholder="เช่น xxxxxxx">
+            </div>
+            <div>
+                <label>Zoom Link</label>
+                <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
+            </div>
+        `;
 
-        // Files
+        // Column 3: Files
         let col3 = document.createElement('div');
+        col3.className = 'col-group';
         col3.appendChild(createFileDropdown(level, 'materials', 'เอกสารประกอบ (Materials)'));
         col3.appendChild(createFileDropdown(level, 'exams', 'ข้อสอบ (Exams)'));
         col3.appendChild(createFileDropdown(level, 'answers', 'เฉลย (Answers)'));
 
-        // Delete Button
+        // Column 4: Delete Button
         let col4 = document.createElement('div');
-        col4.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">X</button>`;
+        col4.style.height = '100%';
+        col4.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i> X</button>`;
 
         div.appendChild(col1);
         div.appendChild(col2);
