@@ -19,12 +19,75 @@ const systemConfig = {
             teachers: ['พระมหากาญจน์'],
             status: "active"
         },
+        "pt3_1": {
+            id: "pt3_1",
+            level: "pt3",
+            name: "ห้องเรียน ป.ธ.๓",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๓",
+            schedulePrefix: "pt3",
+            teachers: [],
+            status: "active"
+        },
+        "pt4_1": {
+            id: "pt4_1",
+            level: "pt4",
+            name: "ห้องเรียน ป.ธ.๔",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๔",
+            schedulePrefix: "pt4",
+            teachers: [],
+            status: "active"
+        },
+        "pt5_1": {
+            id: "pt5_1",
+            level: "pt5",
+            name: "ห้องเรียน ป.ธ.๕",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๕",
+            schedulePrefix: "pt5",
+            teachers: [],
+            status: "active"
+        },
+        "pt6_1": {
+            id: "pt6_1",
+            level: "pt6",
+            name: "ห้องเรียน ป.ธ.๖",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๖",
+            schedulePrefix: "pt6",
+            teachers: [],
+            status: "active"
+        },
+        "pt7_1": {
+            id: "pt7_1",
+            level: "pt7",
+            name: "ห้องเรียน ป.ธ.๗",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๗",
+            schedulePrefix: "pt7",
+            teachers: [],
+            status: "active"
+        },
+        "pt8_1": {
+            id: "pt8_1",
+            level: "pt8",
+            name: "ห้องเรียน ป.ธ.๘",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๘",
+            schedulePrefix: "pt8",
+            teachers: [],
+            status: "active"
+        },
         "pt8_kan": {
             id: "pt8_kan",
             level: "pt8",
             name: "ป.ธ.๘ (พิเศษ)",
             description: "สำหรับเรียนส่วนตัวเท่านั้น",
             schedulePrefix: "pt8_kan",
+            teachers: [],
+            status: "active"
+        },
+        "pt9_1": {
+            id: "pt9_1",
+            level: "pt9",
+            name: "ห้องเรียน ป.ธ.๙",
+            description: "สำหรับนักเรียนชั้นประโยค ป.ธ.๙",
+            schedulePrefix: "pt9",
             teachers: [],
             status: "active"
         },
