@@ -429,7 +429,16 @@
                         if (title) fullAct += ` : ${title}`;
                         if (fullAct) {
                             allActivities.push(fullAct);
-                            props.push(`activity${subjId}: "${fullAct}"`);
+                            
+                            // Check if this is Evening period
+                            if (p === 'evening') {
+                                 // For Evening, we want specific keys to be arrays if there are multiple lines
+                                 // But here we just push the single string.
+                                 // If we want to support array format in output code for evening:
+                                 props.push(`activity${subjId}: ["${fullAct}"]`); 
+                            } else {
+                                 props.push(`activity${subjId}: "${fullAct}"`);
+                            }
                         }
                         if (file) props.push(`fileNote${subjId}: "${file}"`);
                         if (slideId) props.push(`slideId: "${slideId}"`);
@@ -442,7 +451,18 @@
 
                 if (hasData) {
                     if (isExam) allActivities.unshift('(สอบ)');
-                    if (allActivities.length > 0) props.push(`activity: "${allActivities.join(' / ')}"`);
+                    
+                    if (allActivities.length > 0) {
+                        if (p === 'evening') {
+                            // Evening: Output as Array of strings
+                             const actArrayString = allActivities.map(a => `"${a}"`).join(',\n                ');
+                             props.push(`activity: [\n                ${actArrayString}\n            ]`);
+                        } else {
+                            // Morning/Afternoon: Output as Single joined string
+                            props.push(`activity: "${allActivities.join(' / ')}"`);
+                        }
+                    }
+                    
                     if (allYoutube.length > 0) props.push(`linkYoutube: [${allYoutube.map(l => `"${l}"`).join(', ')}]`);
                     if (zoomVal) props.push(`linkZoom: "${zoomVal}"`);
 
