@@ -180,23 +180,26 @@
     const SUBJECT_CONFIG = {
         "pt12": [
             { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' }
+            { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' },
+            { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' }
         ],
         "pt3": [
              { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
              { id: 'Grammar', label: 'วิชาไวยากรณ์ (Grammar)', defaultAct: 'บาลีไวยากรณ์' },
-             { id: 'Samphan', label: 'วิชาสัมพันธ์ (Relation)', defaultAct: 'สัมพันธ์ไทย' }
+             { id: 'Samphan', label: 'วิชาสัมพันธ์ (Relation)', defaultAct: 'สัมพันธ์ไทย' },
+             { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' }
         ],
-        "pt4": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt5": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt6": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt7": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt4": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ],
+        "pt5": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ],
+        "pt6": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ],
+        "pt7": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ],
         "pt8": [
             { id: 'Chan', label: 'วิชาฉันท์ (Chan)', defaultAct: 'แต่งฉันท์มคธ' },
             { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' }
+            { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แปลไทยเป็นมคธ' },
+            { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' }
         ],
-        "pt9": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' } ]
+        "pt9": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ]
     };
 
     function updateRoomList() {
@@ -665,12 +668,18 @@
 
                         // 2. Fallback: If no specific activity keys, try generic 'activity' string
                         if (!filledAny && slotData.activity && !slotData.isExam) {
-                            // Logic: Put the generic activity into the FIRST subject slot
-                            if (subjectSections.length > 0) {
-                                const val = slotData.activity;
+                            // Logic: Try to find General slot (id="")
+                            let targetSection = Array.from(subjectSections).find(s => s.dataset.subjectId === "");
+                            // Fallback to first slot if General not found
+                            if (!targetSection && subjectSections.length > 0) targetSection = subjectSections[0];
+
+                            if (targetSection) {
+                                let val = slotData.activity;
+                                if (Array.isArray(val)) val = val.join(' / ');
+                                
                                 const parts = val.split(' : ');
-                                subjectSections[0].querySelector('.input-subject-act').value = parts[0] || '';
-                                subjectSections[0].querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
+                                targetSection.querySelector('.input-subject-act').value = parts[0] || '';
+                                targetSection.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
                             }
                         }
 
