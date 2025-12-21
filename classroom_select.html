@@ -64,40 +64,82 @@
     <script src="js/system_config.js"></script>
     <script>
         const grid = document.getElementById('classroomGrid');
-        
-        Object.values(systemConfig.classrooms).forEach(room => {
-            const card = document.createElement('a');
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLevel = urlParams.get('level') || 'pt12'; // Default to pt12 if not specified
+
+        // Level Names Mapping
+        const levelNames = {
+            'pt12': 'ประโยค ๑-๒',
+            'pt3': 'ป.ธ. ๓',
+            'pt4': 'ป.ธ. ๔',
+            'pt5': 'ป.ธ. ๕',
+            'pt6': 'ป.ธ. ๖',
+            'pt7': 'ป.ธ. ๗',
+            'pt8': 'ป.ธ. ๘',
+            'pt9': 'ป.ธ. ๙'
+        };
+
+        // Update Header
+        const headerTitle = document.querySelector('.header h1');
+        if (headerTitle) {
+            headerTitle.textContent = `เลือกห้องเรียน ${levelNames[currentLevel] || currentLevel}`;
+        }
+
+        // Render Rooms
+        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
+            const rooms = Object.values(systemConfig.classrooms).filter(r => r.level === currentLevel);
             
-            // ถ้าห้องเปิดใช้งาน ให้ลิงก์ไปหน้า home_ptXX.html พร้อมแนบ room_id
-            if (room.status === 'active') {
-                // ใช้ level จาก config เพื่อเลือกไฟล์ home ที่ถูกต้อง
-                // เช่น pt12 -> home_pt12.html, pt8 -> home_pt8.html
-                card.href = `levels/home_${room.level}.html?room=${room.id}`;
-                card.className = 'room-card active';
+            if (rooms.length > 0) {
+                rooms.forEach(room => {
+                    const card = document.createElement('a');
+                    
+                    if (room.status === 'active') {
+                        card.href = `levels/home_${room.level}.html?room=${room.id}`;
+                        card.className = 'room-card active';
+                    } else {
+                        card.href = '#';
+                        card.className = 'room-card maintenance';
+                        card.onclick = (e) => { e.preventDefault(); alert('ห้องเรียนนี้ปิดปรับปรุงชั่วคราว'); };
+                    }
+
+                    // Status Badge
+                    const statusText = room.status === 'active' ? 'เปิดการสอน' : 'ปิดปรับปรุง';
+                    const statusClass = room.status === 'active' ? 'status-active' : 'status-maintenance';
+
+                    card.innerHTML = `
+                        <div class="status-badge ${statusClass}">${statusText}</div>
+                        <div class="room-icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div class="room-name">${room.name}</div>
+                        <div class="room-desc">${room.description}</div>
+                        <div class="teacher-list">
+                            <i class="fa-solid fa-user-tie"></i> ${room.teachers.join(', ')}
+                        </div>
+                    `;
+                    
+                    grid.appendChild(card);
+                });
             } else {
-                card.href = '#';
-                card.className = 'room-card maintenance';
-                card.onclick = (e) => { e.preventDefault(); alert('ห้องเรียนนี้ปิดปรับปรุงชั่วคราว'); }
+                grid.innerHTML = `<p style="text-align:center; width:100%; color:#7f8c8d;">ยังไม่มีห้องเรียนในระดับชั้นนี้</p>`;
             }
 
-            // Status Badge
-            const statusText = room.status === 'active' ? 'เปิดการสอน' : 'ปิดปรับปรุง';
-            const statusClass = room.status === 'active' ? 'status-active' : 'status-maintenance';
-
-            card.innerHTML = `
-                <div class="status-badge ${statusClass}">${statusText}</div>
-                <div class="room-icon">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <div class="room-name">${room.name}</div>
-                <div class="room-desc">${room.description}</div>
-                <div class="teacher-list">
-                    <i class="fa-solid fa-user-tie"></i> ${room.teachers.join(', ')}
-                </div>
+            // Add Create Room Button (Admin)
+            const createBtn = document.createElement('a');
+            createBtn.href = `admin/room_builder.html?level=${currentLevel}`;
+            createBtn.className = 'room-card';
+            createBtn.style.border = '2px dashed #bdc3c7';
+            createBtn.style.background = '#f9f9f9';
+            createBtn.innerHTML = `
+                <div class="room-icon" style="color:#bdc3c7;"><i class="fa-solid fa-plus-circle"></i></div>
+                <div class="room-name" style="color:#7f8c8d;">สร้างห้องเรียนใหม่</div>
+                <div class="room-desc" style="color:#95a5a6;">สำหรับผู้ดูแลระบบ</div>
             `;
-            
-            grid.appendChild(card);
-        });
+            grid.appendChild(createBtn);
+
+        } else {
+            grid.innerHTML = '<p style="text-align:center; color:red;">ไม่สามารถโหลดข้อมูลห้องเรียนได้ (system_config.js Error)</p>';
+        }
     </script>
 </body>
 </html>
