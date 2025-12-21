@@ -658,8 +658,8 @@
                                 Array.from(examSelect.options).forEach(opt => {getFilename()
                                     if (slotData[`fileExam${opt.value}`] || slotData[`fileAnswer${opt.value}`]) {
                                         examSelect.value = opt.value;
-                                        container.querySelector('.input-exam-file').value = slotData[`fileExam${opt.value}`] || '';
-                                        container.querySelector('.input-answer-file').value = slotData[`fileAnswer${opt.value}`] || '';
+                                        container.querySelector('.input-exam-file').value = getFilename(slotData[`fileExam${opt.value}`]) || '';
+                                        container.querySelector('.input-answer-file').value = getFilename(slotData[`fileAnswer${opt.value}`]) || '';
                                     }
                                 });
                             }
