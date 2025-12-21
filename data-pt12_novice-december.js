@@ -15,7 +15,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer3-58-59.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๔" },
@@ -35,7 +35,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer3-60-61.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๕" },
@@ -55,7 +55,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer3-62-63.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๖" },
@@ -75,7 +75,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer3-64-65.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๗" },
@@ -95,7 +95,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer3-66-67.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๘" },
@@ -123,7 +123,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-50-51.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๑๙" },
@@ -143,7 +143,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-52-53.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๐" },
@@ -163,7 +163,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-54-55.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๑" },
@@ -183,7 +183,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-56-57.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๒" },
@@ -203,7 +203,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-58-59.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๓" },
@@ -231,7 +231,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-60-61.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๔" },
@@ -251,7 +251,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-62-63.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๕" },
@@ -271,7 +271,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-64-65.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๖" },
@@ -291,7 +291,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer45-66-67.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๗" },
@@ -311,7 +311,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-50-51.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๘" },
@@ -339,7 +339,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-52-53.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๒๙" },
@@ -359,7 +359,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-54-55.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๐" },
@@ -379,7 +379,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-56-57.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๑" },
@@ -399,7 +399,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-58-59.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๒" },
@@ -419,7 +419,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-60-61.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๓" },
@@ -447,7 +447,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-62-63.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๔" },
@@ -467,7 +467,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-64-65.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๕" },
@@ -487,7 +487,7 @@ var data_pt12_novice_december_2025 = [
             fileAnswerGrammar: "answers/grammar-answer67-66-67.pdf"
         },
         evening: {
-            activityTranslate: ["(เรียน) อภัยพากย์ปริวัตน์"],
+            activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
             activityGrammar: ["(เฉลย) บาลีไวยากรณ์"]
         },
         remarks: { general: "บาลีไวยากรณ์ ครั้งที่ ๓๖ (จบ)" },
