@@ -752,11 +752,19 @@ var dataDecember = [
         },
         morning: {
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๕ น.๒๖-๒๙ ตํทิวสํ ปน สตฺถา - ฉาเทตฺวา อฏฺฐาสิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/ViGwTiLsQSU?si=nayPm7QpEyAwMQUf&t=128",
+                "https://youtu.be/xlt0Zcsrig4?si=TgDJnZGEwM-VN2fC",
+            ],
             slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_05.pdf"
         },
         afternoon: {
-            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๖ น.เถโร อฏฺฐเม ทิวเส - อตฺตภาวํ สมฺมสนฺโต นิสีทิ ฯ",
+            activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๖ น.๓๓-๓๕ เถโร อฏฺฐเม ทิวเส - อตฺตภาวํ สมฺมสนฺโต นิสีทิ ฯ",
+            linkYoutube: [
+                "https://youtu.be/3Z6oMheqr7o?si=ZAoAKBXCeTQpQWJ-&t=752",
+                "https://youtu.be/NmvLWSoofog?si=mWuZf-sCTzBGZqY4",
+            ],
             slideId: "d04_v06_s06_lakuntaka",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_06.pdf"
         },
