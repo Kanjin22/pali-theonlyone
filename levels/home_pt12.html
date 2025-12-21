@@ -27,7 +27,7 @@
 <body>
     <div class="container">
         <div style="text-align: left; margin-bottom: 20px;">
-            <a href="classroom_select.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> เปลี่ยนห้องเรียน</a>
+            <a href="../classroom_select.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> เปลี่ยนห้องเรียน</a>
         </div>
         
         <div class="page-header">
@@ -36,26 +36,26 @@
         </div>
 
         <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
-            <a href="statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
-            <a href="exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบ & นับถอยหลัง</a>
+            <a href="../statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
+            <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบ & นับถอยหลัง</a>
         </div>
         
         <h2>📅 ตารางเรียนรายเดือน</h2>
         <div class="menu-container" id="scheduleLinks">
             <!-- Links will be injected by JS -->
-            <a href="schedule-pt12-november.html" class="menu-button">พฤศจิกายน ๒๕๖๘</a>
-            <a href="schedule-pt12-december.html" class="menu-button">ธันวาคม ๒๕๖๘</a>
-            <a href="schedule-pt12-january.html" class="menu-button">มกราคม ๒๕๖๙</a>
-            <a href="schedule-pt12-february.html" class="menu-button">กุมภาพันธ์ ๒๕๖๙</a>
+            <a href="../schedules/schedule-pt12-november.html" class="menu-button">พฤศจิกายน ๒๕๖๘</a>
+            <a href="../schedules/schedule-pt12-december.html" class="menu-button">ธันวาคม ๒๕๖๘</a>
+            <a href="../schedules/schedule-pt12-january.html" class="menu-button">มกราคม ๒๕๖๙</a>
+            <a href="../schedules/schedule-pt12-february.html" class="menu-button">กุมภาพันธ์ ๒๕๖๙</a>
         </div>
 
         <hr>
 
         <h2>📚 วิชาเรียน</h2>
         <div class="menu-container">
-            <a href="grammar_principles.html" class="menu-button">เรียนบาลีไวยากรณ์</a>
-            <a href="translation_principles.html" class="menu-button">เรียนหลักการแปล</a>
-            <a href="content_browser.html?level=pt12" class="menu-button">ห้องสมุดบทเรียน (แปลมคธเป็นไทย)</a>
+            <a href="../grammar_principles.html" class="menu-button">เรียนบาลีไวยากรณ์</a>
+            <a href="../translation_principles.html" class="menu-button">เรียนหลักการแปล</a>
+            <a href="../content_browser.html?level=pt12" class="menu-button">ห้องสมุดบทเรียน (แปลมคธเป็นไทย)</a>
         </div>
 
         <hr>
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <script src="system_config.js"></script>
+    <script src="../js/system_config.js"></script>
     <script>
         // อ่าน roomId จาก URL (e.g., ?room=room2)
         const urlParams = new URLSearchParams(window.location.search);
@@ -83,7 +83,7 @@
                 // อัปเดตลิงก์สถิติ
                 const statsLink = document.getElementById('statsLink');
                 if (statsLink) {
-                    statsLink.href = `statistics.html?room=${roomId}`;
+                    statsLink.href = `../statistics.html?room=${roomId}`;
                 }
 
                 // อัปเดตลิงก์ตารางเรียน
@@ -106,7 +106,7 @@
                     const a = document.createElement('a');
                     // ลิงก์ไปยังไฟล์ schedule เดิม แต่ส่ง room param ไปด้วย
                     // หน้า schedule ต้องเขียน script รับค่านี้ไปเลือก data file
-                    a.href = `schedule-pt12-${m.file}.html?room=${roomId}`;
+                    a.href = `../schedules/pt12/schedule-pt12-${m.file}.html?room=${roomId}`;
                     a.className = 'menu-button';
                     a.innerText = m.name;
                     scheduleContainer.appendChild(a);

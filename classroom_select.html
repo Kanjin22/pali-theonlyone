@@ -61,16 +61,18 @@
         </div>
     </div>
 
-    <script src="system_config.js"></script>
+    <script src="js/system_config.js"></script>
     <script>
         const grid = document.getElementById('classroomGrid');
         
         Object.values(systemConfig.classrooms).forEach(room => {
             const card = document.createElement('a');
             
-            // ถ้าห้องเปิดใช้งาน ให้ลิงก์ไปหน้า home_pt12.html พร้อมแนบ room_id
+            // ถ้าห้องเปิดใช้งาน ให้ลิงก์ไปหน้า home_ptXX.html พร้อมแนบ room_id
             if (room.status === 'active') {
-                card.href = `home_pt12.html?room=${room.id}`;
+                // ใช้ level จาก config เพื่อเลือกไฟล์ home ที่ถูกต้อง
+                // เช่น pt12 -> home_pt12.html, pt8 -> home_pt8.html
+                card.href = `levels/home_${room.level}.html?room=${room.id}`;
                 card.className = 'room-card active';
             } else {
                 card.href = '#';
