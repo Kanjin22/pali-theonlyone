@@ -32,7 +32,7 @@ const systemConfig = {
 
     // ฟังก์ชันสำหรับดึงข้อมูลห้อง
     getRoom: function (id) {
-        return this.classrooms[id] || this.classrooms["room1"];
+        return this.classrooms[id] || this.classrooms["pt12_2"]; // Default to Laypeople room if not found
     },
 
     // ฟังก์ชันช่วยแปลง path ไฟล์ให้ถูกต้องตามโครงสร้างใหม่

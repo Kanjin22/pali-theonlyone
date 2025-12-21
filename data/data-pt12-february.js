@@ -3,7 +3,7 @@
 // ==  รองรับลิงก์ Zoom/YouTube, ปุ่มรายละเอียด, และระบบเฉลยอัตโนมัติ  ==
 // ===================================================================
 
-const dataFebruary = [
+var dataFebruary = [
     // ===============================================================
     // ==                 *** ตัวอย่างต้นแบบ ***                     ==
     // ==   คัดลอกบล็อก {...}, นี้ไปใช้ แล้วแก้ไขข้อมูลตามต้องการ      ==
@@ -29,10 +29,10 @@ const dataFebruary = [
     //        activityTranslate: "ข้อความกิจกรรมของวิชาแปล (ถ้ามี)",
     //        linkZoom: "https://... (ลิงก์ Zoom ถ้ามี)",
     //        linkYoutube: "https://... (ลิงก์ YouTube ถ้ามี)",
-    //        fileNoteGrammar: "materials/... (ไฟล์เนื้อหาไวยากรณ์ ถ้ามี)",
+    //        fileNoteGrammar: "materials/pt12/... (ไฟล์เนื้อหาไวยากรณ์ ถ้ามี)",
     //        fileNoteTranslate: [
-    //            "materials/... (ไฟล์เนื้อหาแปล ไฟล์ที่ 1 ถ้ามี)",
-    //            "materials/... (ไฟล์เนื้อหาแปล ไฟล์ที่ 2 ถ้ามี)"
+    //            "materials/pt12/... (ไฟล์เนื้อหาแปล ไฟล์ที่ 1 ถ้ามี)",
+    //            "materials/pt12/... (ไฟล์เนื้อหาแปล ไฟล์ที่ 2 ถ้ามี)"
     //        ]
     //    },
 
@@ -43,10 +43,10 @@ const dataFebruary = [
     //        isExam: true, // ใส่ true ถ้าช่วงเวลานี้มีการสอบ
     //        examStartTime: "HH:MM:SS", // เวลาเริ่มสอบ (24-hour format)
     //        examEndTime: "HH:MM:SS",   // เวลาสิ้นสุดการสอบ (สำคัญสำหรับเฉลย)
-    //        fileExamGrammar: "exams/... (ไฟล์ข้อสอบไวยากรณ์ ถ้ามี)",
-    //        fileAnswerGrammar: "answers/... (ไฟล์เฉลยไวยากรณ์ ถ้ามี)",
-    //        fileExamTranslate: "exams/... (ไฟล์ข้อสอบแปล ถ้ามี)",
-    //        fileAnswerTranslate: "answers/... (ไฟล์เฉลยแปล ถ้ามี)"
+    //        fileExamGrammar: "exams/pt12/... (ไฟล์ข้อสอบไวยากรณ์ ถ้ามี)",
+    //        fileAnswerGrammar: "answers/pt12/... (ไฟล์เฉลยไวยากรณ์ ถ้ามี)",
+    //        fileExamTranslate: "exams/pt12/... (ไฟล์ข้อสอบแปล ถ้ามี)",
+    //        fileAnswerTranslate: "answers/pt12/... (ไฟล์เฉลยแปล ถ้ามี)"
     //    },
 
     // --- กิจกรรมช่วงค่ำ (ตัวอย่างกิจกรรมทั่วไป) ---
@@ -74,14 +74,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๐ - ๒๕๕๑" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๐-๕๑",
-            fileNoteGrammar: "materials/grammar-notes-total-2550-2551.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2550-2551.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๐-๕๑",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2550-2551.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2550-2551.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2550-2551.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2550-2551.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๐-๕๑"] }
     },
@@ -92,14 +92,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๒ - ๒๕๕๓" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๒-๕๓",
-            fileNoteGrammar: "materials/grammar-notes-total-2552-2553.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2552-2553.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๒-๕๓",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2552-2553.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2552-2553.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2552-2553.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2552-2553.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๒-๕๓"] }
     },
@@ -110,14 +110,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๔ - ๒๕๕๕" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๔-๕๕",
-            fileNoteGrammar: "materials/grammar-notes-total-2554-2555.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2554-2555.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๔-๕๕",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2554-2555.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2554-2555.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2554-2555.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2554-2555.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๔-๕๕"] }
     },
@@ -128,14 +128,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๖ - ๒๕๕๗" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๖-๕๗",
-            fileNoteGrammar: "materials/grammar-notes-total-2556-2557.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2556-2557.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๖-๕๗",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2556-2557.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2556-2557.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2556-2557.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2556-2557.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๖-๕๗"] }
     },
@@ -146,14 +146,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๕๘ - ๒๕๕๙" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๕๘-๕๙",
-            fileNoteGrammar: "materials/grammar-notes-total-2558-2559.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2558-2559.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๕๘-๕๙",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2558-2559.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2558-2559.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2558-2559.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2558-2559.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๕๘-๕๙"] }
     },
@@ -164,14 +164,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๐ - ๒๕๖๑" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๐-๖๑",
-            fileNoteGrammar: "materials/grammar-notes-total-2560-2561.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2560-2561.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๐-๖๑",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2560-2561.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2560-2561.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2560-2561.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2560-2561.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๐-๖๑"] }
     },
@@ -182,14 +182,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๒ - ๒๕๖๓" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๒-๖๓",
-            fileNoteGrammar: "materials/grammar-notes-total-2562-2563.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2562-2563.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๒-๖๓",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2562-2563.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2562-2563.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2562-2563.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2562-2563.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๒-๖๓"] }
     },
@@ -200,14 +200,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๔ - ๒๕๖๕" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๔-๖๕",
-            fileNoteGrammar: "materials/grammar-notes-total-2564-2565.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2564-2565.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๔-๖๕",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2564-2565.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2564-2565.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2564-2565.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2564-2565.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๔-๖๕"] }
     },
@@ -218,14 +218,14 @@ const dataFebruary = [
         remarks: { grammar: "ไวยากรณ์ รวม ๔ เล่ม ปี' ๒๕๖๖ - ๒๕๖๗ (จบ)" },
         morning: {
             activityGrammar: "(อ่าน) รวม ๔ เล่ม ปี' ๖๖-๖๗",
-            fileNoteGrammar: "materials/grammar-notes-total-2566-2567.pdf"
+            fileNoteGrammar: "materials/pt12/grammar-notes-total-2566-2567.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) รวม ๔ เล่ม ปี' ๖๖-๖๗",
             isExam: true,
             examStartTime: "14:00:00", examEndTime: "16:00:00",
-            fileExamGrammar: "exams/grammar-exam-total-2566-2567.pdf",
-            fileAnswerGrammar: "answers/grammar-answer-total-2566-2567.pdf"
+            fileExamGrammar: "exams/pt12/grammar-exam-total-2566-2567.pdf",
+            fileAnswerGrammar: "answers/pt12/grammar-answer-total-2566-2567.pdf"
         },
         evening: { activityGrammar: ["(เฉลย) รวม ๔ เล่ม ปี' ๖๖-๖๗"] }
     },
