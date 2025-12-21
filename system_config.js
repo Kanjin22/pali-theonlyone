@@ -1,22 +1,22 @@
 const systemConfig = {
     // รายชื่อห้องเรียนทั้งหมด
     classrooms: {
-        "room1": {
-            id: "room1",
-            level: "pt12",
+        "pt12_1": {
+            id: "pt12_1",
+            level: "pt12", // ประโยค ๑-๒
             name: "สามเณรนวกะ ๒ ชุด C ห้อง ๔",
             description: "สำหรับสามเณรนวกะ ๒",
-            schedulePrefix: "pt12_novice",
-            teachers: ["พระมหากาญจน์"],
+            schedulePrefix: "pt12_1",
+            teachers: ['พระมหากาญจน์'],
             status: "active"
         },
-        "room2": {
-            id: "room2",
-            level: "pt12",
-            name: "สาธุชนทั่วไป",
+        "pt12_1": {
+            id: "pt12_1",
+            level: "pt12", // ประโยค ๑-๒
+            name: "บ.ศ. ๑-๒ (สาธุชนทั่วไป)",
             description: "สำหรับบุคคลทั่วไปที่สนใจศึกษาบาลี",
-            schedulePrefix: "pt12",
-            teachers: ["พระมหากาญจน์"],
+            schedulePrefix: "pt12_1",
+            teachers: ['พระมหากาญจน์'],
             status: "active"
         },
     },
