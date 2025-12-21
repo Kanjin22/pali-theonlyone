@@ -653,14 +653,27 @@
         const filename = `data-${prefix}-${monthName}.js`;
         
         const monthCap = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-        const possibleVarNames = [
+        let possibleVarNames = [
             `data${monthCap}`, // dataNovember
             `data${monthName}`, // datanovember
             `data_${monthName}`, // data_november
             `data_${monthCap}`, // data_November
-            `${document.getElementById('varName').value}`, // data_pt12_january_2025
-            `data${monthCap}_Novice` // dataNovember_Novice
+            `${document.getElementById('varName').value}` // data_pt12_january_2025
         ];
+
+        // Dynamic Prefix Support (e.g. pt12_novice -> dataNovember_Novice)
+        if (prefix.includes('_')) {
+            const parts = prefix.split('_');
+            const suffix = parts[1]; // "novice"
+            const suffixCap = suffix.charAt(0).toUpperCase() + suffix.slice(1); // "Novice"
+            
+            possibleVarNames.push(`data${monthCap}_${suffixCap}`); // dataNovember_Novice
+            possibleVarNames.push(`data${monthCap}_${suffix}`); // dataNovember_novice
+        }
+        
+        // Also add full prefix combo
+        possibleVarNames.push(`data_${prefix}_${monthName}`); // data_pt12_novice_november
+        possibleVarNames.push(`data_${prefix}_${monthCap}`); // data_pt12_novice_November
 
         const script = document.createElement('script');
         script.src = filename;
