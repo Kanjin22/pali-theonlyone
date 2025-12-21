@@ -135,8 +135,8 @@ const dataNovember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
             fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf",
-            factivityTranslate: "(เรียน) หลักการแปล ๙ ประการ (๑. อาลปนะ)",
-            ileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_02.pdf"
+            activityTranslate: "(เรียน) หลักการแปล ๙ ประการ (๑. อาลปนะ)",
+            fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_02.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
