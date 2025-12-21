@@ -5,8 +5,9 @@ function initLevelPage(levelId) {
         return;
     }
 
-    renderExamCountdown(levelId);
-    renderRoomSelection(levelId);
+    // Disable Exam Countdown and Room Selection as per user request
+    // renderExamCountdown(levelId);
+    // renderRoomSelection(levelId);
     
     // Check if room is selected
     const urlParams = new URLSearchParams(window.location.search);
@@ -22,110 +23,52 @@ function initLevelPage(levelId) {
              // Or just show content if valid room.
              if (room) {
                  renderRoomContent(room);
+             } else {
+                 // Invalid room ID, maybe show error or redirect to select
+                 console.error("Invalid room ID:", roomId);
              }
         }
     } else {
-        // Default behavior: Select the first available room for this level
-    // Ensure strict filtering
-    const rooms = systemConfig.getRoomsByLevel(levelId).filter(r => r.level === levelId);
-    if (rooms.length > 0) {
-        // Redirect to the first room to have a default view
-            // window.location.search = `?room=${rooms[0].id}`;
-            // Better: Just render it without reload
+        // If no room selected (direct access), redirect to classroom selection
+        // window.location.href = `../classroom_select.html?level=${levelId}`;
+        
+        // OR fallback to first room (keeping old behavior for safety but it shouldn't happen from flow)
+        const rooms = systemConfig.getRoomsByLevel(levelId).filter(r => r.level === levelId);
+        if (rooms.length > 0) {
             renderRoomContent(rooms[0]);
-            
-            // Update URL without reload (optional, but good for UX)
-            const newUrl = window.location.pathname + `?room=${rooms[0].id}`;
-            window.history.replaceState({path: newUrl}, '', newUrl);
-            
-            // Update UI to reflect active state
-            renderRoomSelection(levelId); 
-        } else {
-             document.getElementById('room-content-section').style.display = 'none';
         }
     }
 }
 
 function renderExamCountdown(levelId) {
-    const dateStr = systemConfig.examDates[levelId];
-    if (!dateStr) return;
-
-    const examDate = new Date(dateStr);
-    const today = new Date();
-    const diffTime = examDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
+    // Disabled
     const container = document.getElementById('exam-info-container');
-    if (container) {
-        container.innerHTML = `
-            <div style="background: #e8f6f3; border: 1px solid #1abc9c; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-                <h3 style="margin: 0; color: #16a085;">📅 วันสอบ: ${formatThaiDate(dateStr)}</h3>
-                <p style="margin: 5px 0 0 0; font-size: 1.1em; color: #e67e22; font-weight: bold;">
-                    (เหลือเวลาอีก ${diffDays > 0 ? diffDays : 0} วัน)
-                </p>
-            </div>
-        `;
-    }
-}
-
-function formatThaiDate(dateStr) {
-    const d = new Date(dateStr);
-    const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+    if (container) container.style.display = 'none';
 }
 
 function renderRoomSelection(levelId) {
-    // Ensure we only get rooms for this specific level
-    const allRooms = systemConfig.getRoomsByLevel(levelId);
-    const rooms = allRooms.filter(r => r.level === levelId);
-    
+    // Disabled
     const container = document.getElementById('room-selection-container');
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentRoomId = urlParams.get('room') || (rooms.length > 0 ? rooms[0].id : null);
-
-    if (container) {
-        let html = '<div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">';
-        
-        rooms.forEach(room => {
-            const isActive = room.id === currentRoomId;
-            html += `
-                <a href="?room=${room.id}" class="room-btn" 
-                   style="padding: 10px 20px; border-radius: 20px; text-decoration: none; 
-                          background: ${isActive ? '#16a085' : '#fff'}; 
-                          color: ${isActive ? 'white' : '#2c3e50'}; 
-                          border: 1px solid ${isActive ? '#16a085' : '#bdc3c7'};
-                          font-weight: bold; transition: all 0.2s;
-                          box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                   ${room.name}
-                </a>
-            `;
-        });
-
-        // Add Create Room Button (Admin)
-        html += `
-            <a href="../admin/room_builder.html?level=${levelId}" class="room-btn" 
-               style="padding: 10px 20px; border-radius: 20px; text-decoration: none; 
-                      background: #fff; color: #7f8c8d; border: 1px dashed #7f8c8d;
-                      font-weight: normal; font-size: 0.9em;">
-               + สร้างห้องเรียนใหม่
-            </a>
-        `;
-
-        html += '</div>';
-        container.innerHTML = html;
-    }
+    if (container) container.style.display = 'none';
 }
 
 function renderRoomContent(room) {
     const section = document.getElementById('room-content-section');
     if(section) section.style.display = 'block';
     
-    // Update Header (Optional, if we want to change title dynamically)
-    // document.getElementById('page-title').innerText = `ห้องเรียน ${room.level.toUpperCase()} (${room.name})`;
+    // Update Header to show Room Name
+    const title = document.getElementById('page-title');
+    if (title) {
+        // Check if title already has room name to avoid duplication
+        // Or just overwrite it cleanly
+        // Mapping level to Thai name if needed, or just use room.name
+        title.innerHTML = `${room.name}`;
+    }
     
-    // Update Description
-    // const desc = document.getElementById('page-description');
-    // if(desc) desc.innerText = room.description;
+    const desc = document.getElementById('page-description');
+    if(desc) {
+        desc.innerText = room.description || '';
+    }
 
     // Render Schedule Links
     const scheduleContainer = document.getElementById('schedule-links-container');
