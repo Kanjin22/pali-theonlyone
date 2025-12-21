@@ -167,8 +167,14 @@
                 // Update Title & Description
                 const subtitle = document.getElementById('room-subtitle');
                 const description = document.getElementById('room-description');
-                if (subtitle) subtitle.textContent = `ชั้นประโยค ๑-๒ (${room.name})`;
+                if (subtitle) subtitle.textContent = room.name;
                 if (description) description.textContent = room.description;
+                
+                // Update Back Link
+                const homeLink = document.querySelector('.home-link');
+                if (homeLink) {
+                    homeLink.href = `../../levels/home_${room.level}.html?room=${roomId}`;
+                }
             }
         }
         
