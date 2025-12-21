@@ -47,7 +47,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-50-51.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-50-51.pdf"
         },
@@ -67,7 +67,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-52-53.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-52-53.pdf"
         },
@@ -87,7 +87,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-54-55.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-54-55.pdf"
         },
@@ -115,7 +115,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-56-57.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-56-57.pdf"
         },
@@ -135,7 +135,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-58-59.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-58-59.pdf"
         },
@@ -155,7 +155,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-60-61.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-60-61.pdf"
         },
@@ -175,7 +175,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-62-63.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-62-63.pdf"
         },
@@ -195,7 +195,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-64-65.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-64-65.pdf"
         },
@@ -223,7 +223,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam12-66-67.pdf",
             fileAnswerGrammar: "answers/grammar-answer12-66-67.pdf"
         },
@@ -243,7 +243,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam3-50-51.pdf",
             fileAnswerGrammar: "answers/grammar-answer3-50-51.pdf"
         },
@@ -263,7 +263,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam3-52-53.pdf",
             fileAnswerGrammar: "answers/grammar-answer3-52-53.pdf"
         },
@@ -283,7 +283,7 @@ var data_pt12_novice_november_2025 = [
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
-            examEndTime: "15:00:00",
+            examEndTime: "16:00",
             fileExamGrammar: "exams/grammar-exam3-54-55.pdf",
             fileAnswerGrammar: "answers/grammar-answer3-54-55.pdf"
         },
