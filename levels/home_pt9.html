@@ -91,7 +91,7 @@
 <body>
     <div class="container">
         <div style="text-align: left; margin-bottom: 20px;">
-            <a href="index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i
+            <a href="../index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i
                     class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
         </div>
 
@@ -100,26 +100,35 @@
             <p>แต่งไทยเป็นมคธ และ วิชาแปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
         </div>
 
-        <div style="margin-bottom: 40px;">
-            <a href="statistics.html" class="menu-button" style="background-color: #8e44ad; color: white;">📊
-                ดูสถิติและความคืบหน้า</a>
+        <!-- 1.1 Exam Countdown -->
+        <div id="exam-info-container"></div>
+
+        <!-- 1.2 Room Selection -->
+        <div id="room-selection-container"></div>
+
+        <!-- 2. Room Content -->
+        <div id="room-content-section" style="display:none;">
+            <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
+                <a href="../statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
+                <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบแบบละเอียด</a>
+            </div>
+
+            <h2>📅 ตารางเรียนรายเดือน</h2>
+            <div class="menu-container" id="schedule-links-container">
+                <!-- Links will be injected by JS -->
+            </div>
+
+            <hr>
+
+            <h2>📚 วิชาเรียน</h2>
+            <div class="menu-container">
+                <a href="construction.html" class="menu-button">วิชาแต่งไทยเป็นมคธ</a>
+                <a href="construction.html" class="menu-button">วิชาแปลไทยเป็นมคธ (วิสุทธิมรรค)</a>
+                <a href="construction.html" class="menu-button">วิชาแปลมคธเป็นไทย (อภิธรรม)</a>
+            </div>
+
+            <hr>
         </div>
-
-        <h2>📅 ตารางเรียน</h2>
-        <div class="menu-container">
-            <a href="construction.html" class="menu-button">ตารางเรียน (เร็วๆ นี้)</a>
-        </div>
-
-        <hr>
-
-        <h2>📚 วิชาเรียน</h2>
-        <div class="menu-container">
-            <a href="construction.html" class="menu-button">วิชาแต่งไทยเป็นมคธ</a>
-            <a href="construction.html" class="menu-button">วิชาแปลไทยเป็นมคธ (วิสุทธิมรรค)</a>
-            <a href="construction.html" class="menu-button">วิชาแปลมคธเป็นไทย (อภิธรรม)</a>
-        </div>
-
-        <hr>
         <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
             <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
             <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt9" alt="visitor badge" />
