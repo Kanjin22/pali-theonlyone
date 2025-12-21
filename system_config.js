@@ -19,15 +19,6 @@ const systemConfig = {
             teachers: ["พระมหากาญจน์"],
             status: "active"
         },
-        "room3": {
-            id: "room1",
-            level: "pt8",
-            name: "",
-            description: "",
-            schedulePrefix: "pt8_room1",
-            teachers: ['พม.ดำรงค์ ปชฺโชตชโย ป.ธ.๙', 'ดร.'],
-            status: "active"
-        },
     },
 
     // ฟังก์ชันสำหรับดึงข้อมูลห้อง
