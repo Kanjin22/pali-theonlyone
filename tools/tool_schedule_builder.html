@@ -518,8 +518,8 @@
                         const examType = container.querySelector('.input-exam-type').value;
                         const examFile = container.querySelector('.input-exam-file').value.trim();
                         const ansFile = container.querySelector('.input-answer-file').value.trim();
-                        if(examFile) props.push(`fileExam${examType}: "${l`);
-                        if(ansFile) props.push(`fileAnswer${examType}: "${`);
+                        if(examFile) props.push(`fileExam${examType}: "${resolve('exams', examFile)}"`);
+                        if(ansFile) props.push(`fileAnswer${examType}: "${resolve('answers', ansFile)}"`);
                     }
                     code += `        ${p}: {\n            ${props.join(',\n            ')}\n        },\n`;
                 }
