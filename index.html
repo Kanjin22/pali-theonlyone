@@ -188,10 +188,25 @@
 
             // 2. Load Novice Room Data
             let noviceData = [];
-            if (typeof dataNovember_Novice !== 'undefined') noviceData = noviceData.concat(dataNovember_Novice);
-            if (typeof dataDecember_Novice !== 'undefined') noviceData = noviceData.concat(dataDecember_Novice);
-            if (typeof dataJanuary_Novice !== 'undefined') noviceData = noviceData.concat(dataJanuary_Novice);
-            if (typeof dataFebruary_Novice !== 'undefined') noviceData = noviceData.concat(dataFebruary_Novice);
+            
+            // Helper function to find novice data with multiple naming conventions
+            function getNoviceData(month, year) {
+                // Check legacy name e.g. dataNovember_Novice
+                const legacyName = `data${month}_Novice`;
+                if (window[legacyName]) return window[legacyName];
+                
+                // Check generated name e.g. data_pt12_novice_november_2025
+                const genName = `data_pt12_novice_${month.toLowerCase()}_${year}`;
+                if (window[genName]) return window[genName];
+                
+                return [];
+            }
+
+            noviceData = noviceData.concat(getNoviceData('November', 2025));
+            noviceData = noviceData.concat(getNoviceData('December', 2025));
+            noviceData = noviceData.concat(getNoviceData('January', 2026));
+            noviceData = noviceData.concat(getNoviceData('February', 2026));
+            
             allData = allData.concat(addMeta(noviceData, { level: 'ประโยค ๑-๒ (สามเณรนวกะ)' }));
 
             if (allData.length > 0) {
