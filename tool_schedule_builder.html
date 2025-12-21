@@ -393,6 +393,14 @@
         let code = `// สร้างโดยเครื่องมือสร้างตารางเรียน (Schedule Builder V2)\n`;
         code += `var ${varName} = [\n`;
 
+        // Prepare Default Acts for filtering
+        const level = document.getElementById('selectLevel').value;
+        const subjectsConfig = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
+        const defaultActs = {};
+        if(subjectsConfig) {
+            subjectsConfig.forEach(s => defaultActs[s.id] = s.defaultAct);
+        }
+
         rows.forEach(row => {
             const date = row.querySelector('.date-val').value;
             const displayDate = row.querySelector('.display-date-val').value;
@@ -423,18 +431,33 @@
                     const youtubeVal = section.querySelector('.input-subject-youtube').value.trim();
                     const slideId = section.querySelector('.input-subject-slide-id').value.trim();
                     
-                    if (title || file || youtubeVal || slideId || isExam) {
+                    const defaultAct = defaultActs[subjId];
+                    const isDefaultName = (act === defaultAct);
+                    const hasDetails = (title || file || youtubeVal || slideId);
+
+                    // Filter Logic:
+                    // 1. If user changed name (not default) -> Include
+                    // 2. If user added details -> Include
+                    // 3. If Exam Mode is checked AND name is not default -> Include
+                    // 4. If Exam Mode is checked AND name IS default -> DO NOT Include (User wants to filter out unused default subjects even in exam mode)
+                    
+                    if (!isDefaultName || hasDetails) {
                         hasData = true;
-                        let fullAct = act;
+                        
+                        // If Exam Mode, auto-prepend "(สอบ)" if not present
+                        let finalActName = act;
+                        if (isExam && !finalActName.includes('(สอบ)')) {
+                             finalActName = `(สอบ) ${finalActName}`;
+                        }
+
+                        let fullAct = finalActName;
                         if (title) fullAct += ` : ${title}`;
+                        
                         if (fullAct) {
                             allActivities.push(fullAct);
                             
                             // Check if this is Evening period
                             if (p === 'evening') {
-                                 // For Evening, we want specific keys to be arrays if there are multiple lines
-                                 // But here we just push the single string.
-                                 // If we want to support array format in output code for evening:
                                  props.push(`activity${subjId}: ["${fullAct}"]`); 
                             } else {
                                  props.push(`activity${subjId}: "${fullAct}"`);
