@@ -605,7 +605,13 @@
                             
                             // 1. Try Specific Key first
                             if (slotData[`activity${subjId}`]) {
-                                const val = slotData[`activity${subjId}`];
+                                let val = slotData[`activity${subjId}`];
+                                
+                                // Handle Array (e.g. evening activities)
+                                if (Array.isArray(val)) {
+                                    val = val.join(' / ');
+                                }
+                                
                                 const parts = val.split(' : ');
                                 section.querySelector('.input-subject-act').value = parts[0] || '';
                                 section.querySelector('.input-subject-title').value = parts.slice(1).join(' : ') || '';
@@ -640,8 +646,18 @@
                     }
                 });
 
-                if (item.remarks && item.remarks.general) {
-                    row.querySelector('.input-remark').value = item.remarks.general;
+                if (item.remarks) {
+                    let remarkText = "";
+                    if (typeof item.remarks === 'string') {
+                         remarkText = item.remarks;
+                    } else if (typeof item.remarks === 'object') {
+                        // Concatenate all values from remarks object
+                        remarkText = Object.values(item.remarks).join(' / ');
+                    }
+                    
+                    if (remarkText) {
+                         row.querySelector('.input-remark').value = remarkText;
+                    }
                 }
                 loadedCount++;
             } catch (err) {
