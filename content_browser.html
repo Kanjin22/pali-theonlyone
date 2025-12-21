@@ -59,23 +59,23 @@
     </div>
 
     <!-- Load all content scripts -->
-    <script src="content-dhamma01.js"></script>
-    <script src="content-dhamma02.js"></script>
-    <script src="content-dhamma03.js"></script>
-    <script src="content-dhamma04.js"></script>
-    <script src="content-dhamma05.js"></script>
-    <script src="content-dhamma06.js"></script>
-    <script src="content-dhamma07.js"></script>
-    <script src="content-dhamma08.js"></script>
-    <script src="content-mangala01.js"></script>
-    <script src="content-mangala02.js"></script>
-    <script src="content-samanta01.js"></script>
-    <script src="content-samanta02.js"></script>
-    <script src="content-samanta03.js"></script>
-    <script src="content-visuddhi01.js"></script>
-    <script src="content-visuddhi02.js"></script>
-    <script src="content-visuddhi03.js"></script>
-    <script src="content-abhidhamma01.js"></script>
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
 
     <script>
         // Mapping of content objects
@@ -96,6 +96,7 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const currentLevel = urlParams.get('level');
+        const mode = urlParams.get('mode'); // 'picker' or null
 
         function registerBook(name, varObj) {
             if (typeof varObj !== 'undefined') {
@@ -178,10 +179,26 @@
                     
                     matchingStories.forEach(story => {
                         const card = document.createElement('a');
-                        card.href = `presentation.html?id=${story.id}`;
+                        
+                        if (mode === 'picker') {
+                            card.href = "#";
+                            card.onclick = (e) => {
+                                e.preventDefault();
+                                if (window.opener && typeof window.opener.receiveSlideId === 'function') {
+                                    window.opener.receiveSlideId(story.id);
+                                    window.close();
+                                } else {
+                                    alert(`เลือก ID: ${story.id}\n(ไม่พบหน้าต่างหลัก)`);
+                                }
+                            };
+                            card.style.cursor = "pointer";
+                        } else {
+                            card.href = `presentation.html?id=${story.id}`;
+                            card.target = "_blank"; 
+                            card.removeAttribute('target'); 
+                        }
+
                         card.className = 'story-card';
-                        card.target = "_blank"; // Open in new tab? Maybe same tab is better for mobile. Let's keep same tab or user preference. Standard is same tab.
-                        card.removeAttribute('target'); // Removing target blank for smoother nav
                         
                         card.innerHTML = `
                             <div class="story-title">${story.title}</div>
