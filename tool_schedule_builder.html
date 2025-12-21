@@ -734,12 +734,27 @@
     function downloadFile() {
         if (!document.getElementById("outputCode").value) generateCode();
         const text = document.getElementById("outputCode").value;
-        const varName = document.getElementById('varName').value;
+        
+        // Construct standard filename
+        const roomId = document.getElementById('selectRoom').value;
+        const monthIdx = document.getElementById('selectMonth').value;
+        const monthName = monthNamesEn[monthIdx];
+        
+        let filename = "schedule_data.js";
+        if (roomId && typeof systemConfig !== 'undefined' && systemConfig.classrooms[roomId]) {
+             const prefix = systemConfig.classrooms[roomId].schedulePrefix;
+             filename = `data-${prefix}-${monthName}.js`;
+        } else {
+             // Fallback
+             const varName = document.getElementById('varName').value;
+             filename = `${varName}.js`;
+        }
+
         const blob = new Blob([text], { type: "text/javascript" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${varName}.js`;
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
