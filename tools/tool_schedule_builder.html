@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/system_config.js"></script>
-    <script src="../js/file_index.js"></script>
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
@@ -203,19 +202,6 @@
         "pt9": [ { id: 'Return', label: 'วิชากลับ (Return)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'วิชาแปล (Translate)', defaultAct: 'แปลมคธเป็นไทย' }, { id: '', label: 'กิจกรรมอื่นๆ (General)', defaultAct: '' } ]
     };
 
-    function getFiles(level, type) {
-        if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
-            return FILE_INDEX[level][type];
-        }
-        return [];
-    }
-
-    const createOptions = (files) => {
-         let opts = '<option value="">-- เลือกไฟล์ --</option>';
-         files.forEach(f => opts += `<option value="${f}">${f}</option>`);
-         return opts;
-    };
-
     function updateRoomList() {
         const level = document.getElementById('selectLevel').value;
         const selectRoom = document.getElementById('selectRoom');
@@ -261,10 +247,6 @@
         const month = parseInt(document.getElementById('selectMonth').value);
         const year = parseInt(document.getElementById('inputYear').value);
         const container = document.getElementById('tableContainer');
-        
-        const materials = getFiles(level, 'materials');
-        const exams = getFiles(level, 'exams');
-        const answers = getFiles(level, 'answers');
         
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         
@@ -332,10 +314,10 @@
                             <span class="subject-label">${subj.label}</span>
                             <input type="text" class="input-mini input-subject-act" value="${subj.defaultAct}" placeholder="กิจกรรม (Activity)">
                             <input type="text" class="input-mini input-subject-title" placeholder="เรื่อง / หัวข้อ (Title)">
-                            <select class="input-mini input-subject-file" data-subj-id="${subj.id}">${createOptions(materials)}</select>
+                            <input type="text" class="input-mini input-subject-file" placeholder="ชื่อไฟล์ (File Name)">
                             <div style="display:flex; gap:5px;">
                                 <input type="text" class="input-mini input-subject-slide-id" placeholder="รหัสสไลด์ (Slide ID)" style="flex:1;">
-                                <button type="button" onclick="openContentSearch(this)" style="padding: 5px 10px; background-color: #f39c12; color: white; border: none; border-radius: 3px;" title="ค้นหา/ดึงรหัส">🔍</button>
+                                <button type="button" onclick="openContentSearch(this)" style="padding: 5px 10px; background-color: #f39c12; color: white; border: none; border-radius: 3px;" title="ค้นหาเนื้อหา">🔍</button>
                             </div>
                             <textarea class="input-mini input-subject-youtube" placeholder="Youtube Links (บรรทัดละ 1 ลิงก์)" rows="2" style="height:auto;"></textarea>
                         </div>
@@ -355,15 +337,15 @@
                                 </select>
                             </div>
                             <div class="input-row" style="margin-bottom:5px;">
-                                <input type="time" class="input-exam-start" value="13:00">
+                                <input type="time" class="input-mini input-exam-start" value="13:00">
                                 <span style="font-size:0.8em; align-self:center;">ถึง</span>
-                                <input type="time" class="input-exam-end" value="16:00">
+                                <input type="time" class="input-mini input-exam-end" value="16:00">
                             </div>
                             <div class="input-row" style="margin-bottom:5px;">
-                                <select class="input-mini input-exam-file" style="flex:1;">${createOptions(exams)}</select>
+                                <input type="text" class="input-mini input-exam-file" placeholder="ลิงก์ข้อสอบ" style="flex:1;">
                             </div>
                             <div class="input-row">
-                                <select class="input-mini input-answer-file" style="flex:1;">${createOptions(answers)}</select>
+                                <input type="text" class="input-mini input-answer-file" placeholder="ลิงก์เฉลย" style="flex:1;">
                             </div>
                         </div>
                     </div>
@@ -421,9 +403,6 @@
         if(subjectsConfig) {
             subjectsConfig.forEach(s => defaultActs[s.id] = s.defaultAct);
         }
-
-        // Helper to resolve file path
-        const resolve = (type, file) => file ? `${type}/${level}/${file}` : "";
 
         rows.forEach(row => {
             const date = row.querySelector('.date-val').value;
@@ -485,7 +464,7 @@
                                 }
                             }
                         }
-                        if (file) props.push(`fileNote${subjId}: "${resolve('materials', file)}"`);
+                        if (file) props.push(`fileNote${subjId}: "${file}"`);
                         if (slideId) props.push(`slideId: "${slideId}"`);
                         if (youtubeVal) allYoutube.push(...youtubeVal.split('\n').map(l => l.trim()).filter(l => l));
                     }
@@ -518,8 +497,8 @@
                         const examType = container.querySelector('.input-exam-type').value;
                         const examFile = container.querySelector('.input-exam-file').value.trim();
                         const ansFile = container.querySelector('.input-answer-file').value.trim();
-                        if(examFile) props.push(`fileExam${examType}: "${resolve('exams', examFile)}"`);
-                        if(ansFile) props.push(`fileAnswer${examType}: "${resolve('answers', ansFile)}"`);
+                        if(examFile) props.push(`fileExam${examType}: "${examFile}"`);
+                        if(ansFile) props.push(`fileAnswer${examType}: "${ansFile}"`);
                     }
                     code += `        ${p}: {\n            ${props.join(',\n            ')}\n        },\n`;
                 }
@@ -612,10 +591,6 @@
 
     function fillTable(data) {
         console.log(`Loading data... Found ${data.length} items.`);
-        
-        // Helper to extract filename from path
-        const getFilename = (path) => path ? path.split('/').pop() : "";
-
         let loadedCount = 0;
         data.forEach((item, index) => {
             try {
@@ -658,8 +633,8 @@
                                 Array.from(examSelect.options).forEach(opt => {
                                     if (slotData[`fileExam${opt.value}`] || slotData[`fileAnswer${opt.value}`]) {
                                         examSelect.value = opt.value;
-                                        container.querySelector('.input-exam-file').value = getFilename(slotData[`fileExam${opt.value}`]) || '';
-                                        container.querySelector('.input-answer-file').value = getFilename(slotData[`fileAnswer${opt.value}`]) || '';
+                                        container.querySelector('.input-exam-file').value = slotData[`fileExam${opt.value}`] || '';
+                                        container.querySelector('.input-answer-file').value = slotData[`fileAnswer${opt.value}`] || '';
                                     }
                                 });
                             }
@@ -1035,36 +1010,9 @@
         generateTable();
     };
 
-    // Content Search / ID Extractor
+    // Placeholder for content search (Mockup)
     function openContentSearch(btn) {
-        // ID Extractor for YouTube and Google Drive/Slides
-        const url = prompt("กรุณาวางลิงก์ YouTube หรือ Google Drive/Slides เพื่อดึงรหัส (ID):");
-        if (url) {
-            let id = "";
-            
-            // 1. Try YouTube
-            const ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const ytMatch = url.match(ytRegExp);
-            
-            // 2. Try Google Drive/Slides
-            // Matches .../d/FILE_ID/...
-            const driveRegExp = /\/d\/([a-zA-Z0-9_-]+)/;
-            const driveMatch = url.match(driveRegExp);
-
-            if (ytMatch && ytMatch[2].length === 11) {
-                id = ytMatch[2];
-            } else if (driveMatch && driveMatch[1]) {
-                id = driveMatch[1];
-            } else {
-                // Fallback: Use the whole text if it looks like an ID (alphanumeric, long enough)
-                // Or just assume the user pasted the ID directly
-                id = url.trim();
-            }
-            
-            // Find the input relative to the button (previous sibling)
-            const input = btn.previousElementSibling;
-            if(input) input.value = id;
-        }
+        alert("ระบบค้นหาเนื้อหาต้องเชื่อมต่อไฟล์ข้อมูลจริง");
     }
 </script>
 </body>
