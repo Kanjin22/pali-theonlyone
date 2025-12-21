@@ -41,15 +41,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-12", displayDate: "พ. 12-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๐-๕๑",
-            fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y50-51.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-50-51.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-50-51.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y50-51.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y50-51.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -61,15 +61,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-13", displayDate: "พฤ. 13-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๒-๕๓",
-            fileNoteGrammar: "materials/grammar-notes-52-53.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-52-53.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-52-53.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y52-53.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y52-53.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -81,15 +81,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-14", displayDate: "ศ. 14-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๔-๕๕",
-            fileNoteGrammar: "materials/grammar-notes-54-55.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-54-55.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-54-55.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y54-55.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y54-55.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -109,15 +109,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-17", displayDate: "จ. 17-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๖-๕๗",
-            fileNoteGrammar: "materials/grammar-notes-56-57.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y56-57.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-56-57.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-56-57.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y56-57.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y56-57.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -129,15 +129,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-18", displayDate: "อ. 18-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๕๘-๕๙",
-            fileNoteGrammar: "materials/grammar-notes-58-59.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y58-59.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-58-59.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-58-59.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y58-59.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y58-59.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -149,15 +149,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-19", displayDate: "พ. 19-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๐-๖๑",
-            fileNoteGrammar: "materials/grammar-notes-60-61.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y60-61.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-60-61.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-60-61.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y60-61.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y60-61.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -169,15 +169,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-20", displayDate: "พฤ. 20-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๒-๖๓",
-            fileNoteGrammar: "materials/grammar-notes-62-63.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y62-63.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-62-63.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-62-63.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y62-63.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y62-63.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -189,15 +189,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-21", displayDate: "ศ. 21-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๔-๖๕",
-            fileNoteGrammar: "materials/grammar-notes-64-65.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y64-65.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-64-65.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-64-65.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y64-65.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y64-65.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -217,15 +217,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-24", displayDate: "จ. 24-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๑-๒ (สมัญญาภิธาน-สนธิ) ปี' ๖๖-๖๗",
-            fileNoteGrammar: "materials/grammar-notes-66-67.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y66-67.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam12-66-67.pdf",
-            fileAnswerGrammar: "answers/grammar-answer12-66-67.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q1-2_y66-67.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q1-2_y66-67.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -237,15 +237,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-25", displayDate: "อ. 25-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๐-๕๑",
-            fileNoteGrammar: "materials/grammar-notes-50-51.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y50-51.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam3-50-51.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-50-51.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y50-51.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y50-51.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -257,15 +257,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-26", displayDate: "พ. 26-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๒-๕๓",
-            fileNoteGrammar: "materials/grammar-notes-52-53.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam3-52-53.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-52-53.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y52-53.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y52-53.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -277,15 +277,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-27", displayDate: "พฤ. 27-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๔-๕๕",
-            fileNoteGrammar: "materials/grammar-notes-54-55.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam3-54-55.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-54-55.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y54-55.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y54-55.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
@@ -297,15 +297,15 @@ var data_pt12_novice_november_2025 = [
         date: "2025-11-28", displayDate: "ศ. 28-พ.ย.-68",
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๓ (นามศัพท์-อัพยยศัพท์) ปี' ๕๖-๕๗",
-            fileNoteGrammar: "materials/grammar-notes-56-57.pdf"
+            fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y56-57.pdf"
         },
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์",
             isExam: true,
             examStartTime: "14:00:00",
             examEndTime: "16:00",
-            fileExamGrammar: "exams/grammar-exam3-56-57.pdf",
-            fileAnswerGrammar: "answers/grammar-answer3-56-57.pdf"
+            fileExamGrammar: "exams/pt12/pt12_pali_grammar_exam_q3_y56-57.pdf",
+            fileAnswerGrammar: "answers/pt12/pt12_pali_grammar_ans_q3_y56-57.pdf"
         },
         evening: {
             activityTranslate: ["(เรียน) อุภัยพากย์ปริวัตน์"],
