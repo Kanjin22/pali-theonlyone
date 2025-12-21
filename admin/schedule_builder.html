@@ -122,6 +122,32 @@
     const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 
+    // Configuration for Subjects per Level (Copied from tool_schedule_builder.html)
+    const SUBJECT_CONFIG = {
+        "pt12": [
+            { id: 'Grammar', label: 'กิจกรรม (ไวยากรณ์)', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' }
+        ],
+        "pt3": [
+            { id: 'Grammar', label: 'กิจกรรม (ไวยากรณ์)', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Samphan', label: 'กิจกรรม (สัมพันธ์)', defaultAct: 'สัมพันธ์ไทย' }
+        ],
+        "pt4": [
+            { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' },
+            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' }
+        ],
+        "pt5": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt6": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt7": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt8": [
+            { id: 'Chan', label: 'กิจกรรม (วิชาฉันท์)', defaultAct: 'แต่งฉันท์มคธ' },
+            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }
+        ],
+        "pt9": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ]
+    };
+
     // 1. Load Rooms into Dropdown
     if (typeof systemConfig !== 'undefined') {
         for (let key in systemConfig.classrooms) {
@@ -141,6 +167,14 @@
     const preRoom = urlParams.get('room');
     if (preRoom) {
         roomSelect.value = preRoom;
+        // Disable selection as per user request
+        roomSelect.disabled = true;
+        
+        // Add a visual hint (optional)
+        const roomLabel = roomSelect.previousElementSibling;
+        if (roomLabel) {
+            roomLabel.innerHTML += ` <span style="color:red; font-size:0.8em;">(Locked by URL)</span>`;
+        }
     }
 
     // --- Helper Functions ---
@@ -220,6 +254,76 @@
              return opts;
         };
 
+        const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
+
+        let normalInputs = '';
+        let examInputs = '';
+        
+        // 1. Generate Normal Mode Inputs
+        subjects.forEach(subj => {
+            normalInputs += `
+                <div class="field-group">
+                    <label>${subj.label}</label>
+                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}">
+                </div>
+            `;
+        });
+        
+        // Add Youtube, Zoom (Shared)
+        normalInputs += `
+            <div class="field-group">
+                <label>YouTube (คั่นด้วย comma ,)</label>
+                <input type="text" class="input-youtube" placeholder="id1, id2, ...">
+            </div>
+            <div class="field-group">
+                <label>Zoom Link</label>
+                <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
+            </div>
+        `;
+
+        // Add File Inputs (Dynamic)
+        subjects.forEach(subj => {
+             normalInputs += `
+                <div class="field-group">
+                    <label>เอกสาร (${subj.id})</label>
+                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials)}</select>
+                </div>
+            `;
+        });
+
+        // 2. Generate Exam Mode Inputs
+        examInputs += `
+            <div class="field-group">
+                <label>เวลาเริ่ม - สิ้นสุด</label>
+                <div style="display:flex; gap:5px;">
+                    <input type="time" class="input-exam-start" value="13:00">
+                    <input type="time" class="input-exam-end" value="16:00">
+                </div>
+            </div>
+        `;
+        
+        subjects.forEach(subj => {
+            examInputs += `
+                <div class="field-group">
+                    <label>ข้อความกิจกรรม (${subj.id})</label>
+                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}">
+                </div>
+            `;
+        });
+        
+        subjects.forEach(subj => {
+            examInputs += `
+                <div class="field-group">
+                    <label>ข้อสอบ (${subj.id})</label>
+                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams)}</select>
+                </div>
+                <div class="field-group">
+                    <label>เฉลย (${subj.id})</label>
+                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers)}</select>
+                </div>
+            `;
+        });
+
         return `
             <div class="slot-container" data-period="${periodId}">
                 <div class="slot-header">
@@ -231,65 +335,12 @@
                 
                 <!-- Normal Mode -->
                 <div class="mode-normal">
-                    <div class="field-group">
-                        <label>กิจกรรม (ไวยากรณ์)</label>
-                        <input type="text" class="input-act-gram" placeholder="เช่น บาลีไวยากรณ์">
-                    </div>
-                    <div class="field-group">
-                        <label>กิจกรรม (แปล)</label>
-                        <input type="text" class="input-act-trans" placeholder="เช่น แปลมคธเป็นไทย">
-                    </div>
-                    <div class="field-group">
-                        <label>YouTube (คั่นด้วย comma ,)</label>
-                        <input type="text" class="input-youtube" placeholder="id1, id2, ...">
-                    </div>
-                    <div class="field-group">
-                        <label>Zoom Link</label>
-                        <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
-                    </div>
-                    <div class="field-group">
-                        <label>เอกสาร (Grammar)</label>
-                        <select class="input-file-gram">${createOptions(materials)}</select>
-                    </div>
-                    <div class="field-group">
-                        <label>เอกสาร (Translate)</label>
-                        <select class="input-file-trans">${createOptions(materials)}</select>
-                    </div>
+                    ${normalInputs}
                 </div>
 
                 <!-- Exam Mode -->
                 <div class="mode-exam" style="display:none;">
-                    <div class="field-group">
-                        <label>เวลาเริ่ม - สิ้นสุด</label>
-                        <div style="display:flex; gap:5px;">
-                            <input type="time" class="input-exam-start" value="13:00">
-                            <input type="time" class="input-exam-end" value="16:00">
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label>ข้อความกิจกรรม (ไวยากรณ์)</label>
-                        <input type="text" class="input-exam-act-gram" placeholder="เช่น (สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๐">
-                    </div>
-                    <div class="field-group">
-                        <label>ข้อความกิจกรรม (แปล)</label>
-                        <input type="text" class="input-exam-act-trans" placeholder="เช่น (สอบ) วิชาแปล">
-                    </div>
-                    <div class="field-group">
-                        <label>ข้อสอบ (ไวยากรณ์)</label>
-                        <select class="input-exam-gram">${createOptions(exams)}</select>
-                    </div>
-                    <div class="field-group">
-                        <label>เฉลย (ไวยากรณ์)</label>
-                        <select class="input-ans-gram">${createOptions(answers)}</select>
-                    </div>
-                    <div class="field-group">
-                        <label>ข้อสอบ (แปล)</label>
-                        <select class="input-exam-trans">${createOptions(exams)}</select>
-                    </div>
-                    <div class="field-group">
-                        <label>เฉลย (แปล)</label>
-                        <select class="input-ans-trans">${createOptions(answers)}</select>
-                    </div>
+                    ${examInputs}
                 </div>
             </div>
         `;
@@ -301,7 +352,9 @@
             alert("กรุณาเลือกห้องเรียนก่อนครับ");
             return;
         }
-        const level = roomSelect.options[roomSelect.selectedIndex].dataset.level;
+        // Safely access level, fallback if not set
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
 
         const div = document.createElement('div');
         div.className = 'row-entry';
@@ -357,7 +410,6 @@
         const rows = document.querySelectorAll('.row-entry');
         const data = [];
         
-        // Helper to resolve file path
         const level = roomSelect.options[roomSelect.selectedIndex]?.dataset.level || 'pt12';
         const resolve = (type, file) => file ? `${type}/${level}/${file}` : "";
 
@@ -369,13 +421,12 @@
             let obj = {
                 date: date,
                 displayDate: displayDate,
-                isWeekend: false, // Default, user can edit in JSON if needed or we add checkbox
+                isWeekend: false,
                 remarks: {}
             };
             
             if (remarksText) obj.remarks.general = remarksText;
 
-            // Process Slots
             ['morning', 'afternoon', 'evening'].forEach(period => {
                 const container = row.querySelector(`.slot-container[data-period="${period}"]`);
                 if (!container) return;
@@ -388,35 +439,40 @@
                     periodObj.examStartTime = container.querySelector('.input-exam-start').value;
                     periodObj.examEndTime = container.querySelector('.input-exam-end').value;
                     
-                    const exActG = container.querySelector('.input-exam-act-gram').value;
-                    const exActT = container.querySelector('.input-exam-act-trans').value;
-                    const exG = container.querySelector('.input-exam-gram').value;
-                    const anG = container.querySelector('.input-ans-gram').value;
-                    const exT = container.querySelector('.input-exam-trans').value;
-                    const anT = container.querySelector('.input-ans-trans').value;
+                    // Dynamic Exam Inputs
+                    const examActInputs = container.querySelectorAll('.input-exam-act');
+                    examActInputs.forEach(inp => {
+                        if(inp.value) periodObj[`activity${inp.dataset.subjId}`] = inp.value;
+                    });
+                    
+                    const examInputs = container.querySelectorAll('.input-exam');
+                    examInputs.forEach(inp => {
+                        if(inp.value) periodObj[`fileExam${inp.dataset.subjId}`] = resolve('exams', inp.value);
+                    });
+                    
+                    const ansInputs = container.querySelectorAll('.input-ans');
+                    ansInputs.forEach(inp => {
+                        if(inp.value) periodObj[`fileAnswer${inp.dataset.subjId}`] = resolve('answers', inp.value);
+                    });
 
-                    if(exActG) periodObj.activityGrammar = exActG;
-                    if(exActT) periodObj.activityTranslate = exActT;
-                    if(exG) periodObj.fileExamGrammar = resolve('exams', exG);
-                    if(anG) periodObj.fileAnswerGrammar = resolve('answers', anG);
-                    if(exT) periodObj.fileExamTranslate = resolve('exams', exT);
-                    if(anT) periodObj.fileAnswerTranslate = resolve('answers', anT);
-
-                    // Add to object if not empty
-                    if (Object.keys(periodObj).length > 1) { // >1 because isExam is always there
+                    if (Object.keys(periodObj).length > 1) {
                         obj[period] = periodObj;
                     }
                 } else {
-                    const actG = container.querySelector('.input-act-gram').value;
-                    const actT = container.querySelector('.input-act-trans').value;
+                    // Dynamic Normal Inputs
+                    const actInputs = container.querySelectorAll('.input-act');
+                    actInputs.forEach(inp => {
+                        if(inp.value) periodObj[`activity${inp.dataset.subjId}`] = inp.value;
+                    });
+                    
                     const yt = container.querySelector('.input-youtube').value;
                     const zoom = container.querySelector('.input-zoom').value;
-                    const fileG = container.querySelector('.input-file-gram').value;
-                    const fileT = container.querySelector('.input-file-trans').value;
-
-                    if (actG) periodObj.activityGrammar = actG;
-                    if (actT) periodObj.activityTranslate = actT;
                     
+                    const fileInputs = container.querySelectorAll('.input-file');
+                    fileInputs.forEach(inp => {
+                         if(inp.value) periodObj[`fileNote${inp.dataset.subjId}`] = resolve('materials', inp.value);
+                    });
+
                     if (yt) {
                         const links = yt.split(',').map(s => s.trim()).filter(s => s);
                         if (links.length > 1) periodObj.linkYoutube = links;
@@ -424,9 +480,6 @@
                     }
                     
                     if (zoom) periodObj.linkZoom = zoom;
-                    
-                    if (fileG) periodObj.fileNoteGrammar = resolve('materials', fileG);
-                    if (fileT) periodObj.fileNoteTranslate = resolve('materials', fileT);
 
                     if (Object.keys(periodObj).length > 0) {
                         obj[period] = periodObj;
