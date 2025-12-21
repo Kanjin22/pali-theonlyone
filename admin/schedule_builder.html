@@ -101,15 +101,22 @@
         container.className = 'file-select-group';
         
         let lbl = document.createElement('label');
-        lbl.textContent = label;
+        lbl.innerHTML = `${label} <small style="color:#888; font-weight:normal;">(เลือกจากรายการ หรือ กด Browse)</small>`;
         container.appendChild(lbl);
 
+        // Wrapper for flex layout
+        let wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.gap = '5px';
+
+        // 1. Dropdown (Existing logic)
         let select = document.createElement('select');
         select.className = `file-${type}`;
+        select.style.flex = '1';
         
         let defaultOpt = document.createElement('option');
         defaultOpt.value = "";
-        defaultOpt.textContent = "-- ไม่เลือกไฟล์ --";
+        defaultOpt.textContent = "-- เลือกไฟล์ --";
         select.appendChild(defaultOpt);
 
         let files = getFiles(level, type);
@@ -120,7 +127,61 @@
             select.appendChild(opt);
         });
 
-        container.appendChild(select);
+        // 2. File Input (Browse button)
+        // Note: This input is for convenience to get the filename. 
+        // We assume the user picks the file from the correct folder.
+        let fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none'; // Hide default input
+        fileInput.accept = '.pdf,.jpg,.png,.doc,.docx';
+
+        let browseBtn = document.createElement('button');
+        browseBtn.textContent = '📂';
+        browseBtn.className = 'btn';
+        browseBtn.style.padding = '5px 10px';
+        browseBtn.style.background = '#607D8B';
+        browseBtn.title = 'คลิกเพื่อเลือกไฟล์จากเครื่อง (ชื่อไฟล์จะถูกเลือกใน Dropdown อัตโนมัติ)';
+        
+        browseBtn.onclick = (e) => {
+            e.preventDefault(); // Prevent form submit
+            fileInput.click();
+        };
+
+        fileInput.onchange = (e) => {
+            if (fileInput.files.length > 0) {
+                const filename = fileInput.files[0].name;
+                // Try to find this filename in the dropdown
+                let found = false;
+                const expectedPath = `${type}/${level}/${filename}`;
+                
+                // Search in dropdown options
+                for (let i = 0; i < select.options.length; i++) {
+                    // Check if option value ends with filename or text content matches
+                    if (select.options[i].text === filename) {
+                        select.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    // If not found in index, add it dynamically but warn user
+                    // This handles case where user added file but didn't re-run indexer
+                    let opt = document.createElement('option');
+                    opt.value = expectedPath;
+                    opt.textContent = `${filename} (New)`;
+                    select.appendChild(opt);
+                    select.selectedIndex = select.options.length - 1;
+                    alert(`เลือกไฟล์ "${filename}" แล้ว\n\nหมายเหตุ: ไฟล์นี้ไม่อยู่ในรายการดั้งเดิม โปรดตรวจสอบว่าท่านได้นำไฟล์ไปวางในโฟลเดอร์ "${type}/${level}/" แล้วหรือไม่`);
+                }
+            }
+        };
+
+        wrapper.appendChild(select);
+        wrapper.appendChild(browseBtn);
+        container.appendChild(wrapper);
+        container.appendChild(fileInput); // Keep input in DOM but hidden
+
         return container;
     }
 
