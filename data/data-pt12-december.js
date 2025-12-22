@@ -782,6 +782,9 @@ var dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๒-๕๓",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๗ น.๕๕-๕๗ เอกสฺมึ หิ สมเย สตฺถา - เทเสนฺโต อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/Xu4jDfKrswE?si=au0ELAhaSjH5z2PH&t=50",
+            ],
             slideId: "d04_v06_s07_kana_mother",
             fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_07.pdf"
@@ -789,6 +792,9 @@ var dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๒๙",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๘ น.๖๕-๖๗ เอกสฺมึ หิ สมเย อายสฺมา - เทเสนฺโต อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/CThqovQ9af8?si=LsTbMkrB4cEmDl_X&t=44",
+            ],
             slideId: "d04_v06_s08_500_monks",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_08.pdf",
             isExam: true,
