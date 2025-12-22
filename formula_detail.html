@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รายละเอียดสูตร</title>
+    <style>
+        body { font-family: "Noto Sans Thai", "Tahoma", sans-serif; margin: 0; background: #f5f7fa; color: #2c3e50; }
+        header { background: #2c3e50; color: #ecf0f1; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+        header .title { font-size: 20px; }
+        header .back { color: #ecf0f1; text-decoration: none; background: #34495e; padding: 8px 12px; border-radius: 6px; }
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 16px; }
+        .card { background: #fff; border: 1px solid #e0e6eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+        .card-header { padding: 16px; border-bottom: 1px solid #e0e6eb; }
+        .card-header .meta { color: #7f8c8d; font-size: 13px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid #e0e6eb; }
+        .grid .col { border-right: 1px solid #e0e6eb; }
+        .grid .col:last-child { border-right: none; }
+        .col-header { padding: 10px 12px; background: #f0f3f7; font-weight: 600; }
+        .col-body { padding: 12px; }
+        .pali { font-size: 18px; margin-bottom: 8px; color: #2c3e50; }
+        .thai { font-size: 14px; color: #34495e; margin-bottom: 8px; }
+        .desc { font-size: 13px; color: #7f8c8d; margin-bottom: 8px; }
+        .ref { font-size: 12px; color: #95a5a6; }
+        .examples { padding: 16px; border-top: 1px solid #e0e6eb; }
+        .examples h3 { margin: 0 0 8px 0; font-size: 16px; }
+        .examples .placeholder { color: #7f8c8d; font-size: 13px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .col { border-right: none; border-bottom: 1px solid #e0e6eb; } .col:last-child { border-bottom: none; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">รายละเอียดสูตร</div>
+        <a id="back-link" class="back" href="grammar_comparison.html">กลับหน้าตาราง</a>
+    </header>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div id="detail-title">สูตร</div>
+                <div class="meta" id="detail-meta">ตาราง: -, หมวด: -, ลำดับสูตร: -</div>
+            </div>
+            <div class="grid">
+                <div class="col">
+                    <div class="col-header">กัจจายนะ</div>
+                    <div class="col-body">
+                        <div class="pali" id="kaccayana-pali">-</div>
+                        <div class="thai" id="kaccayana-thai">-</div>
+                        <div class="desc" id="kaccayana-desc">-</div>
+                        <div class="ref" id="kaccayana-ref"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-header">ปทรูปสิทธิ</div>
+                    <div class="col-body">
+                        <div class="pali" id="padarupasiddhi-pali">-</div>
+                        <div class="thai" id="padarupasiddhi-thai">-</div>
+                        <div class="desc" id="padarupasiddhi-desc">-</div>
+                        <div class="ref" id="padarupasiddhi-ref"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-header">โมคคัลลานะ</div>
+                    <div class="col-body">
+                        <div class="pali" id="moggallana-pali">-</div>
+                        <div class="thai" id="moggallana-thai">-</div>
+                        <div class="desc" id="moggallana-desc">-</div>
+                        <div class="ref" id="moggallana-ref"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-header">สัททนีติ</div>
+                    <div class="col-body">
+                        <div class="pali" id="saddaniti-pali">-</div>
+                        <div class="thai" id="saddaniti-thai">-</div>
+                        <div class="desc" id="saddaniti-desc">-</div>
+                        <div class="ref" id="saddaniti-ref"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="examples">
+                <h3>อุทาหรณ์/ตัวอย่าง</h3>
+                <div class="placeholder">ยังไม่ได้เพิ่มตัวอย่างสำหรับสูตรนี้</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data/grammar_comparison_data.js"></script>
+    <script>
+        function getParams() {
+            const url = new URL(window.location.href);
+            const p = Object.fromEntries(url.searchParams.entries());
+            return p;
+        }
+
+        function getDatasetByMode(mode) {
+            if (mode === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') return sandhiTable1Data;
+            if (mode === 'nama2' && typeof namaTable2Data !== 'undefined') return namaTable2Data;
+            if (mode === 'karaka3' && typeof karakaTable3Data !== 'undefined') return karakaTable3Data;
+            if (mode === 'samasa4' && typeof samasaTable4Data !== 'undefined') return samasaTable4Data;
+            if (mode === 'taddhita5' && typeof taddhitaTable5Data !== 'undefined') return taddhitaTable5Data;
+            if (mode === 'akhyata6' && typeof akhyataTable6Data !== 'undefined') return akhyataTable6Data;
+            if (mode === 'kitta7' && typeof kittaTable7Data !== 'undefined') return kittaTable7Data;
+            if (mode === 'unadi8' && typeof unadiTable8Data !== 'undefined') return unadiTable8Data;
+            return grammarComparisonData;
+        }
+
+        function render() {
+            const params = getParams();
+            const mode = params.mode || 'combined';
+            const type = params.type || '';
+            const topicIdx = parseInt(params.topic || '0', 10);
+            const formulaIdx = parseInt(params.formula || '0', 10);
+
+            const dataset = getDatasetByMode(mode);
+            const section = dataset[topicIdx];
+            const row = section && section.formulas ? section.formulas[formulaIdx] : null;
+
+            const modeNameMap = {
+                'combined': 'รวมทุกหมวด',
+                'sandhi1': 'ตารางที่ ๑ — สนฺธิกปฺโป',
+                'nama2': 'ตารางที่ ๒ — นามกปฺโป',
+                'karaka3': 'ตารางที่ ๓ — การกกปฺโป',
+                'samasa4': 'ตารางที่ ๔ — สมาสกปฺโป',
+                'taddhita5': 'ตารางที่ ๕ — ตทฺธิตกปฺโป',
+                'akhyata6': 'ตารางที่ ๖ — อาขฺยาตกปฺโป',
+                'kitta7': 'ตารางที่ ๗ — กิพฺพิธานกปฺโป',
+                'unadi8': 'ตารางที่ ๘ — อุณาทิกปฺโป'
+            };
+
+            const back = document.getElementById('back-link');
+            back.href = `grammar_comparison.html?mode=${encodeURIComponent(mode)}`;
+
+            document.getElementById('detail-title').innerText = section ? section.topic : 'สูตร';
+            document.getElementById('detail-meta').innerText = `ตาราง: ${modeNameMap[mode] || mode}, หมวด: ${topicIdx + 1}, ลำดับสูตร: ${formulaIdx + 1}`;
+
+            function setCol(prefix, obj) {
+                document.getElementById(`${prefix}-pali`).innerText = (obj && obj.pali) ? obj.pali : '-';
+                document.getElementById(`${prefix}-thai`).innerText = (obj && obj.thai) ? obj.thai : '-';
+                document.getElementById(`${prefix}-desc`).innerText = (obj && obj.desc) ? obj.desc : '-';
+                document.getElementById(`${prefix}-ref`).innerText = (obj && obj.ref) ? `อ้างอิง: ${obj.ref}` : '';
+            }
+
+            if (row) {
+                setCol('kaccayana', row.kaccayana);
+                setCol('padarupasiddhi', row.padarupasiddhi);
+                setCol('moggallana', row.moggallana);
+                setCol('saddaniti', row.saddaniti);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
+
