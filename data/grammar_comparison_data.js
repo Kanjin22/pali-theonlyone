@@ -3,7 +3,7 @@ const grammarComparisonData = [
     // หมวดที่ ๑: สัญญาวิธาน (อักษรและบัญญัติเบื้องต้น)
     // =========================================================
     {
-        topic: "๑. สัญญาวิธาน (ว่าด้วยอักษรและการขนานนาม)",
+        topic: "ตารางที่ ๑. สนฺธิกปฺโป",
         formulas: [
     {
         kaccayana: {
@@ -262,7 +262,7 @@ const grammarComparisonData = [
     // หมวดที่ ๒: สนธิ (การต่อศัพท์)
     // =========================================================
     {
-        topic: "๒. สนธิ (การต่อศัพท์)",
+        topic: "ตารางที่ ๑. สนฺธิกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -508,7 +508,7 @@ const grammarComparisonData = [
     // หมวดที่ ๓: นาม (คำเรียกชื่อ)
     // =========================================================
     {
-        topic: "๓. นามกัณฑ์ (ว่าด้วยลิงค์ วจนะ วิภัตติ)",
+        topic: "ตารางที่ ๒. นามกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -568,7 +568,7 @@ const grammarComparisonData = [
     // หมวดที่ ๔: การก (หน้าที่ของนาม)
     // =========================================================
     {
-        topic: "๔. การก (หน้าที่ของนามในประโยค)",
+        topic: "ตารางที่ ๓. การกกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -628,7 +628,7 @@ const grammarComparisonData = [
     // หมวดที่ ๕: สมาส (การย่อนามศัพท์)
     // =========================================================
     {
-        topic: "๕. สมาส (การย่อนามศัพท์)",
+        topic: "ตารางที่ ๔. สมาสกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -688,7 +688,7 @@ const grammarComparisonData = [
     // หมวดที่ ๖: ตัทธิต (ปัจจัยแทนศัพท์)
     // =========================================================
     {
-        topic: "๖. ตัทธิต (ปัจจัยนาม)",
+        topic: "ตารางที่ ๕. ตทฺธิตกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -722,7 +722,7 @@ const grammarComparisonData = [
     // หมวดที่ ๗: อาขยาต (กิริยาศัพท์)
     // =========================================================
     {
-        topic: "๗. อาขยาต (กิริยาศัพท์)",
+        topic: "ตารางที่ ๖. อาขฺยาตกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -782,7 +782,7 @@ const grammarComparisonData = [
     // หมวดที่ ๘: กิตก์ (นามกิตก์-กิริยากิตก์)
     // =========================================================
     {
-        topic: "๘. กิตก์ (ศัพท์ที่ประกอบด้วยปัจจัยหมู่หนึ่ง)",
+        topic: "ตารางที่ ๗. กิพฺพิธานกปฺโป",
         formulas: [
             {
                 kaccayana: {
@@ -816,7 +816,7 @@ const grammarComparisonData = [
 
 const akhyataTable6Data = [
     {
-        topic: "ตารางที่ ๖ — ๖. อาขฺยาตกปฺโป",
+        topic: "ตารางที่ ๖. อาขฺยาตกปฺโป",
         formulas: [
             { kaccayana: { pali: "อถ ปุพฺพานิ วิภตฺตีนํ ฉ ปรสฺสปทานิ.", ref: "กัจ. ๔๐๖" }, padarupasiddhi: { ref: "ปท. ๔๒๙" } },
             { kaccayana: { pali: "ปราณฺยตฺตโนปทานิ.", ref: "กัจ. ๔๐๗" }, padarupasiddhi: { ref: "ปท. ๔๓๙" } },
@@ -950,7 +950,7 @@ const akhyataTable6Data = [
 
 const sandhiTable1Data = [
     {
-        topic: "ตารางที่ ๑ — ๑. สนฺธิกปฺโป",
+        topic: "ตารางที่ ๑. สนฺธิกปฺโป",
         formulas: [
             {
                 kaccayana: { pali: "อตฺโถ อกฺขรสญฺญาโต", ref: "กัจ. ๑" },
@@ -1313,7 +1313,7 @@ const sandhiTable1Data = [
 
 const namaTable2Data = [
     {
-        topic: "ตารางที่ ๒ — ๒. นามกปฺโป",
+        topic: "ตารางที่ ๒. นามกปฺโป",
         formulas: [
             {
                 kaccayana: { pali: "ชินวจนยุตฺตํ หิ", ref: "กัจ. ๕๒" },
@@ -2215,7 +2215,7 @@ const namaTable2Data = [
 
 const karakaTable3Data = [
     {
-        topic: "ตารางที่ ๓ — ๓. การกกปฺโป",
+        topic: "ตารางที่ ๓. การกกปฺโป",
         formulas: [
             { kaccayana: { pali: "ยสฺมาทเปติ ภยมาทตฺเต วา ตทปาทานํ", ref: "กัจ. ๒๗๑" }, padarupasiddhi: { ref: "ปท. ๘๘/๓๐๘" } },
             { kaccayana: { pali: "ธาตุนามานมุปสคฺคโยคาทีสฺวปิ จ", ref: "กัจ. ๒๗๒" }, padarupasiddhi: { ref: "ปท. ๓๐๘" } },
@@ -2271,7 +2271,7 @@ const karakaTable3Data = [
 
 const samasaTable4Data = [
     {
-        topic: "ตารางที่ ๔ — ๔. สมาสกปฺโป",
+        topic: "ตารางที่ ๔. สมาสกปฺโป",
         formulas: [
             { kaccayana: { pali: "นามานํ สมาโส ยุตฺตตฺโถ", ref: "กัจ. ๓๑๖" }, padarupasiddhi: { ref: "ปท. ๓๓๑" } },
             { kaccayana: { pali: "เตสํ วิภตฺติโย โลปา จ", ref: "กัจ. ๓๑๗" }, padarupasiddhi: { ref: "ปท. ๓๓๒" } },
@@ -2309,7 +2309,7 @@ const samasaTable4Data = [
 
 const taddhitaTable5Data = [
     {
-        topic: "ตารางที่ ๕ — ๕. ตทฺธิตกปฺโป",
+        topic: "ตารางที่ ๕. ตทฺธิตกปฺโป",
         formulas: [
             { kaccayana: { pali: "วา ณปจฺเจ", ref: "กัจ. ๓๔๔" }, padarupasiddhi: { ref: "ปท. ๓๖๑" } },
             { kaccayana: { pali: "ณายน ณาน วจฺฉาทิโต", ref: "กัจ. ๓๔๕" }, padarupasiddhi: { ref: "ปท. ๓๖๖" } },
@@ -2320,7 +2320,7 @@ const taddhitaTable5Data = [
 
 const kittaTable7Data = [
     {
-        topic: "ตารางที่ ๗ — ๗. กิพฺพิธานกปฺโป (ปฐโม กณฺโฑ)",
+        topic: "ตารางที่ ๗. กิพฺพิธานกปฺโป",
         formulas: [
             { kaccayana: { pali: "ธาตุยา กมฺมาทิมฺหิ โณ", ref: "กัจ. ๕๒๔" }, padarupasiddhi: { ref: "ปท. ๕๖๑" } },
             { kaccayana: { pali: "สญฺญายมนุ", ref: "กัจ. ๕๒๕" }, padarupasiddhi: { ref: "ปท. ๕๖๕" } },
@@ -2348,12 +2348,7 @@ const kittaTable7Data = [
             { kaccayana: { pali: "นนฺทาทีหิ ยุ", ref: "กัจ. ๕๔๗" }, padarupasiddhi: { ref: "ปท. ๕๙๖" } },
             { kaccayana: { pali: "กตฺตุกรณปเทเสสุ จ", ref: "กัจ. ๕๔๘" }, padarupasiddhi: { ref: "ปท. ๕๙๗" } },
             { kaccayana: { pali: "รหาทิโต ณ", ref: "กัจ. ๕๔๙" }, padarupasiddhi: { ref: "ปท. ๕๕๐" } },
-            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ปฐโม กณฺโฑ" } }
-        ]
-    },
-    {
-        topic: "ตารางที่ ๗ — ๗. กิพฺพิธานกปฺโป (ทุติโย กณฺโฑ)",
-        formulas: [
+            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ปฐโม กณฺโฑ" } },
             { kaccayana: { pali: "ณาทโย เตกาลิกา", ref: "กัจ. ๕๕๐" }, padarupasiddhi: { ref: "ปท. ๕๔๖" } },
             { kaccayana: { pali: "สญฺญายํ ทาธาโต อิ", ref: "กัจ. ๕๕๑" }, padarupasiddhi: { ref: "ปท. ๕๙๘" } },
             { kaccayana: { pali: "ติ กิจฺจาสิฏฺเฐ", ref: "กัจ. ๕๕๒" }, padarupasiddhi: { ref: "ปท. ๖๐๙" } },
@@ -2375,12 +2370,7 @@ const kittaTable7Data = [
             { kaccayana: { pali: "มานาทีหิ ราตุ", ref: "กัจ. ๕๖๘" }, padarupasiddhi: { ref: "ปท. ๕๗๖" } },
             { kaccayana: { pali: "อาคมา ตุโก", ref: "กัจ. ๕๖๙" }, padarupasiddhi: { ref: "ปท. ๖๑๐" } },
             { kaccayana: { pali: "ภพฺเพ อิก", ref: "กัจ. ๕๗๐" }, padarupasiddhi: { ref: "ปท. ๖๑๑" } },
-            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ทุติโย กณฺโฑ" } }
-        ]
-    },
-    {
-        topic: "ตารางที่ ๗ — ๗. กิพฺพิธานกปฺโป (ตติโย กณฺโฑ)",
-        formulas: [
+            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ทุติโย กณฺโฑ" } },
             { kaccayana: { pali: "ปจฺจยาทนิฏฺฐา นิปาตนา สิชฺฌนฺติ", ref: "กัจ. ๕๗๑" }, padarupasiddhi: { ref: "ปท. ๖๒๔" } },
             { kaccayana: { pali: "สาสทิสโต ตสฺส ริฏฺโฐ จ", ref: "กัจ. ๕๗๒" }, padarupasiddhi: { ref: "ปท. ๖๒๕" } },
             { kaccayana: { pali: "สาทิ สนฺต ปุจฺฉ ภนฺช หํสาทีหิ ฏฺโฐ", ref: "กัจ. ๕๗๓" }, padarupasiddhi: { ref: "ปท. ๖๒๖" } },
@@ -2400,12 +2390,7 @@ const kittaTable7Data = [
             { kaccayana: { pali: "รกาโร จ", ref: "กัจ. ๕๘๗" }, padarupasiddhi: { ref: "ปท. ๖๓๒" } },
             { kaccayana: { pali: "ฐาปานมิอี จ", ref: "กัจ. ๕๘๘" }, padarupasiddhi: { ref: "ปท. ๖๒๐" } },
             { kaccayana: { pali: "หนฺเตหิ โห หสฺส โฬ วา อทหนหานํ", ref: "กัจ. ๕๘๙" }, padarupasiddhi: { ref: "ปท. ๖๒๑" } },
-            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ตติโย กณฺโฑ" } }
-        ]
-    },
-    {
-        topic: "ตารางที่ ๗ — ๗. กิพฺพิธานกปฺโป (จตุตฺโถ กณฺโฑ)",
-        formulas: [
+            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป ตติโย กณฺโฑ" } },
             { kaccayana: { pali: "ณมฺหิ รนฺชสฺส โช ภาวกรเณสุ", ref: "กัจ. ๕๙๐" }, padarupasiddhi: { ref: "ปท. ๕๗๙" } },
             { kaccayana: { pali: "หนสฺส ฆาโต", ref: "กัจ. ๕๙๑" }, padarupasiddhi: { ref: "ปท. ๕๔๔" } },
             { kaccayana: { pali: "วโธ วา สพฺพตฺถ", ref: "กัจ. ๕๙๒" }, padarupasiddhi: { ref: "ปท. ๕๐๓" } },
@@ -2423,12 +2408,7 @@ const kittaTable7Data = [
             { kaccayana: { pali: "อกฺขเรหิ การ", ref: "กัจ. ๖๐๔" }, padarupasiddhi: { ref: "ปท. ๖๘๔" } },
             { kaccayana: { pali: "ยถาคมมิกาโร", ref: "กัจ. ๖๐๕" }, padarupasiddhi: { ref: "ปท. ๕๔๗" } },
             { kaccayana: { pali: "ทธนฺตโต โย กฺวจิ", ref: "กัจ. ๖๐๖" }, padarupasiddhi: { ref: "ปท. ๖๔๒" } },
-            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป จตุตฺโถ กณฺโฑ" } }
-        ]
-    },
-    {
-        topic: "ตารางที่ ๗ — ๗. กิพฺพิธานกปฺโป (ปญฺจโม กณฺโฑ)",
-        formulas: [
+            { kaccayana: { pali: "อิติ กิพฺพิธานกปฺเป จตุตฺโถ กณฺโฑ" } },
             { kaccayana: { pali: "นิคฺคหีตํ สํโยคาทิ โน", ref: "กัจ. ๖๐๗" }, padarupasiddhi: { ref: "ปท. ๕๗๘" } },
             { kaccayana: { pali: "สพฺพตฺถ เค คี", ref: "กัจ. ๖๐๘" }, padarupasiddhi: { ref: "ปท. ๖๒๓" } },
             { kaccayana: { pali: "สทสฺส สีทตฺตํ", ref: "กัจ. ๖๐๙" }, padarupasiddhi: { ref: "ปท. ๔๘๔" } },
@@ -2454,7 +2434,7 @@ const kittaTable7Data = [
 
 const unadiTable8Data = [
     {
-        topic: "ตารางที่ ๘ — ๘. อุณาทิกปฺโป",
+        topic: "ตารางที่ ๘. อุณาทิกปฺโป",
         formulas: [
             { kaccayana: { pali: "กตฺตริ กิตฺ.", ref: "กัจ. ๖๒๔" }, padarupasiddhi: { ref: "ปท. ๕๖๓" } },
             { kaccayana: { pali: "ภาวกมฺเมสุ กิจฺจ กฺต ขตฺถา.", ref: "กัจ. ๖๒๕" }, padarupasiddhi: { ref: "ปท. ๖๐๕" } },
