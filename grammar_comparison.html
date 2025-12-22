@@ -434,21 +434,67 @@
             // Let's just combine them. If there are duplicates, they will show up twice.
             // Better strategy: Use a list of unique topic objects.
             
-            const seenTopics = new Set();
-            
-            // Priority: specialized tables first
+            // Priority: main data first (rich descriptions), then specialized tables
             const orderedSources = [
+                grammarComparisonData,
                 sandhiTable1Data, namaTable2Data, karakaTable3Data, 
                 samasaTable4Data, taddhitaTable5Data, akhyataTable6Data, 
-                kittaTable7Data, unadiTable8Data, grammarComparisonData
+                kittaTable7Data, unadiTable8Data
             ];
+
+            const topicMap = new Map();
 
             orderedSources.forEach(source => {
                 if (typeof source !== 'undefined' && Array.isArray(source)) {
                     source.forEach(section => {
-                        if (!seenTopics.has(section.topic)) {
-                            allDataSections.push(section);
-                            seenTopics.add(section.topic);
+                        if (!topicMap.has(section.topic)) {
+                            // New topic: deep clone to avoid reference issues
+                            const newSection = JSON.parse(JSON.stringify(section));
+                            topicMap.set(section.topic, newSection);
+                            allDataSections.push(newSection);
+                        } else {
+                            // Existing topic: Merge formulas
+                            const existingSection = topicMap.get(section.topic);
+                            
+                            section.formulas.forEach(newFormula => {
+                                // Try to find matching formula in existing section
+                                // Match by Kaccayana Ref (e.g. "กัจ. ๑") or Pali text
+                                let matchFound = false;
+                                
+                                // Helper to get ref string
+                                const getRef = (f, type) => f[type] ? f[type].ref : '';
+                                const getPali = (f, type) => f[type] ? f[type].pali : '';
+                                
+                                const newKaccRef = getRef(newFormula, 'kaccayana');
+                                const newPali = getPali(newFormula, 'kaccayana') || getPali(newFormula, 'padarupasiddhi');
+
+                                if (newKaccRef) {
+                                    const existing = existingSection.formulas.find(f => getRef(f, 'kaccayana') === newKaccRef);
+                                    if (existing) {
+                                        // Merge data fields
+                                        ['padarupasiddhi', 'moggallana', 'saddaniti', 'kaccayana'].forEach(scripture => {
+                                            if (newFormula[scripture]) {
+                                                if (!existing[scripture]) {
+                                                    existing[scripture] = newFormula[scripture];
+                                                } else {
+                                                    // Merge fields if missing (prefer existing rich data)
+                                                    Object.keys(newFormula[scripture]).forEach(key => {
+                                                        if (!existing[scripture][key]) {
+                                                            existing[scripture][key] = newFormula[scripture][key];
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                        matchFound = true;
+                                    }
+                                }
+                                
+                                if (!matchFound) {
+                                    // Add as new formula
+                                    existingSection.formulas.push(JSON.parse(JSON.stringify(newFormula)));
+                                }
+                            });
                         }
                     });
                 }

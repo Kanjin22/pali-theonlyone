@@ -86,12 +86,13 @@
 
     <script src="data/grammar_comparison_data.js"></script>
     <script>
-        // Aggregate logic copied from grammar_comparison.html to ensure index matching
+        // Aggregate logic synced with grammar_comparison.html
         let allDataSections = [];
         
         function aggregateData() {
-            const seenTopics = new Set();
+            // Priority: main data first (rich descriptions), then specialized tables
             const orderedSources = [
+                typeof grammarComparisonData !== 'undefined' ? grammarComparisonData : [],
                 typeof sandhiTable1Data !== 'undefined' ? sandhiTable1Data : [],
                 typeof namaTable2Data !== 'undefined' ? namaTable2Data : [],
                 typeof karakaTable3Data !== 'undefined' ? karakaTable3Data : [],
@@ -99,16 +100,49 @@
                 typeof taddhitaTable5Data !== 'undefined' ? taddhitaTable5Data : [],
                 typeof akhyataTable6Data !== 'undefined' ? akhyataTable6Data : [],
                 typeof kittaTable7Data !== 'undefined' ? kittaTable7Data : [],
-                typeof unadiTable8Data !== 'undefined' ? unadiTable8Data : [],
-                typeof grammarComparisonData !== 'undefined' ? grammarComparisonData : []
+                typeof unadiTable8Data !== 'undefined' ? unadiTable8Data : []
             ];
+
+            const topicMap = new Map();
 
             orderedSources.forEach(source => {
                 if (typeof source !== 'undefined' && Array.isArray(source)) {
                     source.forEach(section => {
-                        if (!seenTopics.has(section.topic)) {
-                            allDataSections.push(section);
-                            seenTopics.add(section.topic);
+                        if (!topicMap.has(section.topic)) {
+                            const newSection = JSON.parse(JSON.stringify(section));
+                            topicMap.set(section.topic, newSection);
+                            allDataSections.push(newSection);
+                        } else {
+                            const existingSection = topicMap.get(section.topic);
+                            section.formulas.forEach(newFormula => {
+                                let matchFound = false;
+                                const getRef = (f, type) => f[type] ? f[type].ref : '';
+                                const newKaccRef = getRef(newFormula, 'kaccayana');
+
+                                if (newKaccRef) {
+                                    const existing = existingSection.formulas.find(f => getRef(f, 'kaccayana') === newKaccRef);
+                                    if (existing) {
+                                        ['padarupasiddhi', 'moggallana', 'saddaniti', 'kaccayana'].forEach(scripture => {
+                                            if (newFormula[scripture]) {
+                                                if (!existing[scripture]) {
+                                                    existing[scripture] = newFormula[scripture];
+                                                } else {
+                                                    Object.keys(newFormula[scripture]).forEach(key => {
+                                                        if (!existing[scripture][key]) {
+                                                            existing[scripture][key] = newFormula[scripture][key];
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                        matchFound = true;
+                                    }
+                                }
+
+                                if (!matchFound) {
+                                    existingSection.formulas.push(JSON.parse(JSON.stringify(newFormula)));
+                                }
+                            });
                         }
                     });
                 }

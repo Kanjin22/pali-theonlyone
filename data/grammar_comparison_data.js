@@ -195,196 +195,7 @@ const grammarComparisonData = [
             ref: "กัจ. ๔๑"
         }
     },
-    {
-        padarupasiddhi: {
-            pali: "อตฺโถ อกฺขรสญฺญาโต",
-            thai: "เนื้อความ อันรู้อได้ด้วยอักษร",
-            desc: "เหมือนกัจจายนะ เป็นรากฐานการเรียนบาลี",
-            ref: "ปท. ๑"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อกฺขราปาทโย เอกจตฺตาลีสํ.",
-            thai: "อักษรทั้งหลาย มี อ เป็นต้น มี ๔๑ ตัว",
-            desc: "ตามนัยกัจจายนะ",
-            ref: "ปท. ๒"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ตตฺโถทนฺตา สรา อฏฺฐ.",
-            thai: "ในอักษรเหล่านั้น อักษรสุดที่ โอ ชื่อว่า สระ มี ๘ ตัว",
-            desc: "เหมือนกัจจายนะ",
-            ref: "ปท. ๓"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ลหุมตฺตา ตโย รสฺสา.",
-            thai: "สระมีมาตราเบา ๓ ตัว ชื่อว่า รัสสะ",
-            desc: "เหมือนกัจจายนะ",
-            ref: "ปท. ๔"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อญฺเญ ทีฆา.",
-            thai: "สระเหล่าอื่น ชื่อว่า ทีฆะ",
-            desc: "เหมือนกัจจายนะ",
-            ref: "ปท. ๕"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ทุมฺหิครุ.",
-            ref: "ปท. ๖"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ทีโฆ จ.",
-            ref: "ปท. ๗"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "เสสา พฺยญฺชนา.",
-            ref: "ปท. ๘"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "วคฺคา ปญฺจปญฺจโส มนฺตา.",
-            ref: "ปท. ๙"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อํอิตินิคฺคหีตํ.",
-            ref: "ปท. ๑๐"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ปรสมญฺญา ปโยเค.",
-            ref: "ปท. ๑๑"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ปุพฺพมโธฐิตมสฺสรํสเรน วิโยชเย.",
-            ref: "ปท. ๑๒"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "สรา สเร โลปํ.",
-            ref: "ปท. ๑๓"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "นเย ปรํยุตฺเต.",
-            ref: "ปท. ๑๔"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "วา ปโร อสรูปา.",
-            ref: "ปท. ๑๕"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "กฺวจาสวณฺณํลุตฺเต.",
-            ref: "ปท. ๑๖"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ทีฆํ.",
-            ref: "ปท. ๑๗"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ปุพฺโพ จ.",
-            ref: "ปท. ๑๘"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ยเมทนฺตสฺสาเทโส.",
-            ref: "ปท. ๑๙"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "วโมทุทนฺตานํ.",
-            ref: "ปท. ๒๐"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อิวณฺโณ ยํนวา.",
-            ref: "ปท. ๒๑"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "สพฺโพ จนฺติ.",
-            ref: "ปท. ๒๒"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อติสฺส จนฺตสฺส",
-            ref: "ปท. ๒๓"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อพฺโภ อภิ.",
-            ref: "ปท. ๒๔"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อชฺโฌ อธิ.",
-            ref: "ปท. ๒๕"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "เต น วา อิวณฺเณ.",
-            ref: "ปท. ๒๖"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "โท ธสฺส จ.",
-            ref: "ปท. ๒๗"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "เอวาทิสฺส ริปุพฺโพ จ รสฺโส.",
-            ref: "ปท. ๒๘"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "อิวณฺณุวณฺณา ฌลา.",
-            ref: "ปท. ๒๙"
-        }
-    },
-    {
-        padarupasiddhi: {
-            pali: "ฌลานมิยุวา สเร วา.",
-            ref: "ปท. ๓๐"
-        }
-    },
+
     {
         padarupasiddhi: {
             ref: "ปท. ๓๔"
@@ -1143,35 +954,81 @@ const sandhiTable1Data = [
         formulas: [
             {
                 kaccayana: { pali: "อตฺโถ อกฺขรสญฺญาโต", ref: "กัจ. ๑" },
-                padarupasiddhi: { ref: "ปท. ๑" }
+                padarupasiddhi: {
+                    pali: "อตฺโถ อกฺขรสญฺญาโต",
+                    thai: "เนื้อความ อันรู้อได้ด้วยอักษร",
+                    desc: "เหมือนกัจจายนะ เป็นรากฐานการเรียนบาลี",
+                    ref: "ปท. ๑"
+                }
             },
             {
                 kaccayana: { pali: "อกฺขราปาทโย เอกจตฺตาฬีสํ", ref: "กัจ. ๒" },
-                padarupasiddhi: { ref: "ปท. ๒" }
+                padarupasiddhi: {
+                    pali: "อกฺขราปาทโย เอกจตฺตาลีสํ.",
+                    thai: "อักษรทั้งหลาย มี อ เป็นต้น มี ๔๑ ตัว",
+                    desc: "ตามนัยกัจจายนะ",
+                    ref: "ปท. ๒"
+                }
             },
             {
                 kaccayana: { pali: "ตตฺโถทนฺตา สรา อฏฺฐ", ref: "กัจ. ๓" },
-                padarupasiddhi: { ref: "ปท. ๓" }
+                padarupasiddhi: {
+                    pali: "ตตฺโถทนฺตา สรา อฏฺฐ.",
+                    thai: "ในอักษรเหล่านั้น อักษรสุดที่ โอ ชื่อว่า สระ มี ๘ ตัว",
+                    desc: "เหมือนกัจจายนะ",
+                    ref: "ปท. ๓"
+                }
             },
             {
                 kaccayana: { pali: "ลหุมตฺตา ตโย รสฺสา", ref: "กัจ. ๔" },
-                padarupasiddhi: { ref: "ปท. ๔" }
+                padarupasiddhi: {
+                    pali: "ลหุมตฺตา ตโย รสฺสา.",
+                    thai: "สระมีมาตราเบา ๓ ตัว ชื่อว่า รัสสะ",
+                    desc: "เหมือนกัจจายนะ",
+                    ref: "ปท. ๔"
+                }
             },
             {
                 kaccayana: { pali: "อญฺเญ ทีฆา", ref: "กัจ. ๕" },
-                padarupasiddhi: { ref: "ปท. ๕" }
+                padarupasiddhi: {
+                    pali: "อญฺเญ ทีฆา.",
+                    thai: "สระเหล่าอื่น ชื่อว่า ทีฆะ",
+                    desc: "เหมือนกัจจายนะ",
+                    ref: "ปท. ๕"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "ทุมฺหิครุ.",
+                    ref: "ปท. ๖"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "ทีโฆ จ.",
+                    ref: "ปท. ๗"
+                }
             },
             {
                 kaccayana: { pali: "เสสา พฺยญฺชนา", ref: "กัจ. ๖" },
-                padarupasiddhi: { ref: "ปท. ๘" }
+                padarupasiddhi: {
+                    pali: "เสสา พฺยญฺชนา.",
+                    ref: "ปท. ๘"
+                }
             },
             {
                 kaccayana: { pali: "วคฺคา ปญฺจปญฺจโส มนฺตา", ref: "กัจ. ๗" },
-                padarupasiddhi: { ref: "ปท. ๙" }
+                padarupasiddhi: {
+                    pali: "วคฺคา ปญฺจปญฺจโส มนฺตา.",
+                    ref: "ปท. ๙"
+                }
             },
             {
                 kaccayana: { pali: "อํอิติ นิคฺคหีตํ", ref: "กัจ. ๘" },
-                padarupasiddhi: { ref: "ปท. ๑๐" }
+                padarupasiddhi: {
+                    pali: "อํอิตินิคฺคหีตํ.",
+                    ref: "ปท. ๑๐"
+                }
             },
             {
                 kaccayana: { pali: "ปรสมญฺญา ปโยเค", ref: "กัจ. ๙" },
@@ -1183,7 +1040,10 @@ const sandhiTable1Data = [
             },
             {
                 kaccayana: { pali: "นเย ปรํ ยุตฺเต", ref: "กัจ. ๑๑" },
-                padarupasiddhi: { ref: "ปท. ๑๔" }
+                padarupasiddhi: {
+                    pali: "นเย ปรํยุตฺเต.",
+                    ref: "ปท. ๑๔"
+                }
             },
             {
                 kaccayana: { pali: "อิติ สนฺธิกปฺเป ปฐโม กณฺโฑ" },
@@ -1197,43 +1057,109 @@ const sandhiTable1Data = [
             },
             {
                 kaccayana: { pali: "วา ปโร อสรูปา", ref: "กัจ. ๑๓" },
-                padarupasiddhi: { ref: "ปท. ๑๕" }
+                padarupasiddhi: {
+                    pali: "วา ปโร อสรูปา.",
+                    ref: "ปท. ๑๕"
+                }
             },
             {
                 kaccayana: { pali: "กฺวจาสวณฺณํ ลุตฺเต", ref: "กัจ. ๑๔" },
-                padarupasiddhi: { ref: "ปท. ๑๖" }
+                padarupasiddhi: {
+                    pali: "กฺวจาสวณฺณํลุตฺเต.",
+                    ref: "ปท. ๑๖"
+                }
             },
             {
                 kaccayana: { pali: "ทีฆํ", ref: "กัจ. ๑๕" },
-                padarupasiddhi: { ref: "ปท. ๑๗" }
+                padarupasiddhi: {
+                    pali: "ทีฆํ.",
+                    ref: "ปท. ๑๗"
+                }
             },
             {
                 kaccayana: { pali: "ปุพฺโบ จ", ref: "กัจ. ๑๖" },
-                padarupasiddhi: { ref: "ปท. ๑๘" }
+                padarupasiddhi: {
+                    pali: "ปุพฺโพ จ.",
+                    ref: "ปท. ๑๘"
+                }
             },
             {
                 kaccayana: { pali: "ยเมทนฺตสฺสาเดโส", ref: "กัจ. ๑๗" },
-                padarupasiddhi: { ref: "ปท. ๑๙" }
+                padarupasiddhi: {
+                    pali: "ยเมทนฺตสฺสาเทโส.",
+                    ref: "ปท. ๑๙"
+                }
             },
             {
                 kaccayana: { pali: "วโมดุทนฺตานํ", ref: "กัจ. ๑๘" },
-                padarupasiddhi: { ref: "ปท. ๒๐" }
+                padarupasiddhi: {
+                    pali: "วโมทุทนฺตานํ.",
+                    ref: "ปท. ๒๐"
+                }
             },
             {
                 kaccayana: { pali: "สพฺโบ จํ ติ", ref: "กัจ. ๑๙" },
-                padarupasiddhi: { ref: "ปท. ๒๒" }
+                padarupasiddhi: {
+                    pali: "สพฺโพ จนฺติ.",
+                    ref: "ปท. ๒๒"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "อติสฺส จนฺตสฺส",
+                    ref: "ปท. ๒๓"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "อพฺโภ อภิ.",
+                    ref: "ปท. ๒๔"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "อชฺโฌ อธิ.",
+                    ref: "ปท. ๒๕"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "เต น วา อิวณฺเณ.",
+                    ref: "ปท. ๒๖"
+                }
             },
             {
                 kaccayana: { pali: "โท ธสฺส จ", ref: "กัจ. ๒๐" },
-                padarupasiddhi: { ref: "ปท. ๒๗" }
+                padarupasiddhi: {
+                    pali: "โท ธสฺส จ.",
+                    ref: "ปท. ๒๗"
+                }
             },
             {
                 kaccayana: { pali: "อิวณฺโณ ยํ นวา", ref: "กัจ. ๒๑" },
-                padarupasiddhi: { ref: "ปท. ๒๑" }
+                padarupasiddhi: {
+                    pali: "อิวณฺโณ ยํนวา.",
+                    ref: "ปท. ๒๑"
+                }
             },
             {
                 kaccayana: { pali: "เอวาทิสฺส ริ ปุพฺโบ จ รสฺโส", ref: "กัจ. ๒๒" },
-                padarupasiddhi: { ref: "ปท. ๒๘" }
+                padarupasiddhi: {
+                    pali: "เอวาทิสฺส ริปุพฺโพ จ รสฺโส.",
+                    ref: "ปท. ๒๘"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "อิวณฺณุวณฺณา ฌลา.",
+                    ref: "ปท. ๒๙"
+                }
+            },
+            {
+                padarupasiddhi: {
+                    pali: "ฌลานมิยุวา สเร วา.",
+                    ref: "ปท. ๓๐"
+                }
             },
             {
                 kaccayana: { pali: "อิติ สนฺธิกปฺเป ทุติโย กณฺโฑ" },
