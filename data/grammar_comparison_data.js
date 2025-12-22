@@ -199,54 +199,180 @@ const grammarComparisonData = [
             },
             {
                 kaccayana: {
-                    pali: "โลปญฺจ ตตฺรากาโร",
-                    thai: "ลบสระหน้าบ้าง และลบสระ อ ที่ตามหลัง...",
-                    desc: "สูตรลบสระในเงื่อนไขต่างๆ",
+                    pali: "สรา สเร โลปํ",
                     ref: "กัจ. ๑๒"
                 },
                 padarupasiddhi: {
-                    pali: "สรา สเร โลปํ",
-                    thai: "เพราะสระหลัง ลบสระหน้า",
-                    desc: "สูตรแม่บทของการลบสระหน้า",
-                    ref: "ปท. ๖"
+                    ref: "ปท. ๑๓"
                 },
                 moggallana: {
                     pali: "สรา ลุตฺตา",
-                    thai: "สระหน้า ลบได้บ้าง",
-                    desc: "...",
                     ref: "โมค. ๒/๑"
                 },
                 saddaniti: {
                     pali: "สรโลโป",
-                    thai: "การลบสระ",
-                    desc: "...",
                     ref: "สัท. สนฺธิ"
                 }
             },
             {
                 kaccayana: {
-                    pali: "วา ปโร อสรุปา",
-                    thai: "เพราะสระหลังที่มีรูปไม่เสมอกัน ลบสระหน้าได้บ้าง",
-                    desc: "เช่น จ + เอว = เจว (ลบ อ หน้า)",
+                    pali: "วา ปโร อสรูปา",
                     ref: "กัจ. ๑๓"
                 },
                 padarupasiddhi: {
-                    pali: "วา ปโร อสรุปา",
-                    thai: "เพราะสระหลังที่มีรูปไม่เสมอกัน ลบสระหน้าได้บ้าง",
-                    desc: "เหมือนกัจจายนะ",
-                    ref: "ปท. ๗"
+                    ref: "ปท. ๑๕"
                 },
                 moggallana: {
                     pali: "น เย ปรํ",
-                    thai: "นำพยัญชนะไปประกอบกับสระหลัง",
-                    desc: "สูตรการประกอบอักษร (เหมือน นเย ปรํ ยุตฺเต ของกัจจายนะ)",
                     ref: "โมค. ๑/๑๑"
                 },
                 saddaniti: {
                     pali: "วาสรุปา",
-                    thai: "ลบได้บ้าง ในเพราะสระไม่เสมอกัน",
-                    desc: "...",
                     ref: "สัท. สนฺธิ"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "กฺวจาสวณฺณํ ลุตฺเต",
+                    ref: "กัจ. ๑๔"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๖"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ทีฆํ",
+                    ref: "กัจ. ๑๕"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๗"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ปุพฺโบ จ",
+                    ref: "กัจ. ๑๖"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๘"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ยเมทนฺตสฺสาเดโส",
+                    ref: "กัจ. ๑๗"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๙"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "วโมดุทนฺตานํ",
+                    ref: "กัจ. ๑๘"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๒๐"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "สพฺโบ จํ ติ",
+                    ref: "กัจ. ๑๙"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๒๒"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "โท ธสฺส จ",
+                    ref: "กัจ. ๒๐"
+                },
+                    padarupasiddhi: {
+                    ref: "ปท. ๒๗"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "อิวณฺโณ ยํ นวา",
+                    ref: "กัจ. ๒๑"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๒๑"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "เอวาทิสฺส ริ ปุพฺโบ จ รสฺโส",
+                    ref: "กัจ. ๒๒"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๒๘"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "สรา ปกติ พฺยญฺชเน",
+                    ref: "กัจ. ๒๓"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๖"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "สเร กฺวจิ",
+                    ref: "กัจ. ๒๔"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๕"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ทีฆํ",
+                    ref: "กัจ. ๒๕"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๗"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "รสฺสํ",
+                    ref: "กัจ. ๒๖"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๘"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "โลปญฺจ ตตฺรากาโร",
+                    ref: "กัจ. ๒๗"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๙"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ปรเทฺวภาโว ฐาเน",
+                    ref: "กัจ. ๒๘"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๔๐"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "วคฺเค โฆสาโฆสานํ ตติยปฐมา",
+                    ref: "กัจ. ๒๙"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๔๒"
                 }
             },
             {
