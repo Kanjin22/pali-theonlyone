@@ -33,6 +33,114 @@ const grammarComparisonData = [
             },
             {
                 kaccayana: {
+                    pali: "อํ พฺยญฺชเน นิคฺคหีตํ",
+                    ref: "กัจ. ๓๐"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๘"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "วคฺคนฺตํ วา วคฺเค",
+                    ref: "กัจ. ๓๑"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๔๙"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "เอเห ญํ",
+                    ref: "กัจ. ๓๒"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๐"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ส เย จ",
+                    ref: "กัจ. ๓๓"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๑"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "มทา สเร",
+                    ref: "กัจ. ๓๔"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๒"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ย ว ม ท น ต ร ลา จาคมา",
+                    ref: "กัจ. ๓๕"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๓๔"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "กฺวจิ โอ พฺยญฺชเน",
+                    ref: "กัจ. ๓๖"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๔๗"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "นิคฺคหีตญฺจ",
+                    ref: "กัจ. ๓๗"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๗"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "กฺวจิ โลปํ",
+                    ref: "กัจ. ๓๘"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๓"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "พฺยญฺชเน จ",
+                    ref: "กัจ. ๓๙"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๔"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ปโร วา สโร",
+                    ref: "กัจ. ๔๐"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๕"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "พฺยญฺชโน จ วิสญฺโญโค",
+                    ref: "กัจ. ๔๑"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๕๖"
+                }
+            },
+            {
+                kaccayana: {
                     pali: "อกฺขราปาทโย เอกจตฺตาลีสํ",
                     thai: "อักษรทั้งหลาย มี อ เป็นต้น มี ๔๑ ตัว",
                     desc: "กำหนดจำนวนอักษรบาลีสากล ๔๑ ตัว (สระ ๘ พยัญชนะ ๓๓)",
@@ -400,6 +508,13 @@ const grammarComparisonData = [
                     desc: "...",
                     ref: "สัท. สนฺธิ"
                 }
+            }
+            ,
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" }
             }
         ]
     },
