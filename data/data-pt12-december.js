@@ -785,7 +785,7 @@ var dataDecember = [
             linkYoutube: [
                 "https://youtu.be/Xu4jDfKrswE?si=au0ELAhaSjH5z2PH&t=50",
             ],
-            slideId: "d04_v06_s07_kana_mother",
+            slideId: "d04_v07_s02_mahakassapa",
             fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y52-53.pdf",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_07.pdf"
         },
