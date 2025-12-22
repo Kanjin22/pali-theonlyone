@@ -134,6 +134,33 @@ const grammarComparisonData = [
                     desc: "มีเสียงยาว ๒ มาตราขึ้นไป",
                     ref: "สัท. ปท."
                 }
+            },
+            {
+                kaccayana: {
+                    pali: "เสสา พฺยญฺชนา",
+                    ref: "กัจ. ๖"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๘"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "วคฺคา ปญฺจปญฺจโส มนฺตา",
+                    ref: "กัจ. ๗"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๙"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "อํอิติ นิคฺคหีตํ",
+                    ref: "กัจ. ๘"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๐"
+                }
             }
         ]
     },
@@ -143,6 +170,33 @@ const grammarComparisonData = [
     {
         topic: "๒. สนธิ (การต่อศัพท์)",
         formulas: [
+            {
+                kaccayana: {
+                    pali: "ปรสมญฺญา ปโยเค",
+                    ref: "กัจ. ๙"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๑"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "ปุพฺบมโธฐิตมสฺสรํ สเรน วิโยชเย",
+                    ref: "กัจ. ๑๐"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๒"
+                }
+            },
+            {
+                kaccayana: {
+                    pali: "นเย ปรํ ยุตฺเต",
+                    ref: "กัจ. ๑๑"
+                },
+                padarupasiddhi: {
+                    ref: "ปท. ๑๔"
+                }
+            },
             {
                 kaccayana: {
                     pali: "โลปญฺจ ตตฺรากาโร",
