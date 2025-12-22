@@ -323,8 +323,12 @@
                 
                 <div class="detail-label">คำอธิบาย:</div>
                 <div class="detail-desc" id="modal-desc">...</div>
-                
                 <div class="detail-ref" id="modal-ref">...</div>
+                <div style="margin-top: 16px; text-align: right;">
+                    <button id="modal-detail-btn" class="control-input" style="background:#3498db; color:#fff; cursor:pointer; border: none;" onclick="goToDetail()">
+                        ดูรายละเอียด
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -464,13 +468,14 @@
                     `;
 
                     // Formula Rows
-                    filteredFormulas.forEach(row => {
+                    const modeValue = (document.getElementById('mode-select') && document.getElementById('mode-select').value) || 'combined';
+                    filteredFormulas.forEach((row, rowIdx) => {
                         html += `
                             <tr>
-                                ${renderCell(row.kaccayana, 'kaccayana')}
-                                ${renderCell(row.padarupasiddhi, 'padarupasiddhi')}
-                                ${renderCell(row.moggallana, 'moggallana')}
-                                ${renderCell(row.saddaniti, 'saddaniti')}
+                                ${renderCell(row.kaccayana, 'kaccayana', modeValue, index, rowIdx)}
+                                ${renderCell(row.padarupasiddhi, 'padarupasiddhi', modeValue, index, rowIdx)}
+                                ${renderCell(row.moggallana, 'moggallana', modeValue, index, rowIdx)}
+                                ${renderCell(row.saddaniti, 'saddaniti', modeValue, index, rowIdx)}
                             </tr>
                         `;
                     });
@@ -489,14 +494,14 @@
             }
         }
 
-        function renderCell(data, type) {
+        function renderCell(data, type, modeValue, topicIdx, formulaIdx) {
             if (!data) return '<td>-</td>';
             // Encode data to be passed to onclick
             // We'll store data index or object in a global map or just pass encoded JSON (simple for now)
             // Better: stick data on the element dataset
             const safeData = JSON.stringify(data).replace(/"/g, '&quot;');
             return `
-                <td onclick="openModal('${type}', this)" data-content="${safeData}">
+                <td onclick="openModal('${type}', this)" data-content="${safeData}" data-mode="${modeValue}" data-topic="${topicIdx}" data-formula="${formulaIdx}">
                     <div class="pali-text">${data.pali || '-'}</div>
                     <span class="ref-text">${data.ref || ''}</span>
                 </td>
@@ -514,12 +519,16 @@
             'saddaniti': { name: 'คัมภีร์สัททนีติ', color: '#8e44ad' }
         };
 
+        let currentModalInfo = null;
         function openModal(type, element) {
             const dataStr = element.getAttribute('data-content');
             if (!dataStr) return;
             
             const data = JSON.parse(dataStr);
             const config = scriptureConfig[type];
+            const modeValue = element.getAttribute('data-mode') || 'combined';
+            const topicIdx = element.getAttribute('data-topic');
+            const formulaIdx = element.getAttribute('data-formula');
 
             // Set Content
             document.getElementById('modal-scripture-name').innerText = config.name;
@@ -531,6 +540,8 @@
             // Set Color
             modalHeader.style.backgroundColor = config.color;
 
+            currentModalInfo = { type, mode: modeValue, topicIdx, formulaIdx };
+
             // Show Modal
             modal.style.display = 'flex';
         }
@@ -539,6 +550,17 @@
             if (force || event.target.id === 'detail-modal') {
                 modal.style.display = 'none';
             }
+        }
+
+        function goToDetail() {
+            if (!currentModalInfo) return;
+            const params = new URLSearchParams({
+                mode: currentModalInfo.mode || 'combined',
+                type: currentModalInfo.type || '',
+                topic: currentModalInfo.topicIdx || '0',
+                formula: currentModalInfo.formulaIdx || '0'
+            });
+            window.location.href = `formula_detail.html?${params.toString()}`;
         }
 
         // Init
