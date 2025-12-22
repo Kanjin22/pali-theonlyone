@@ -765,7 +765,7 @@ var dataDecember = [
                 "https://youtu.be/3Z6oMheqr7o?si=ZAoAKBXCeTQpQWJ-&t=752",
                 "https://youtu.be/NmvLWSoofog?si=mWuZf-sCTzBGZqY4",
             ],
-            slideId: "d04_v06_s06_lakuntaka",
+            slideId: "d04_v06_s05_pandita",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_06.pdf"
         },
         evening: {
