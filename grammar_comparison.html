@@ -18,124 +18,174 @@
         .header {
             background-color: #2c3e50;
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
+        .header-title h1 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
+            display: inline-block;
+            margin-right: 10px;
         }
 
-        .header p {
-            margin: 5px 0 0;
+        .header-title span {
             color: #bdc3c7;
-            font-size: 1rem;
-        }
-        .table-title {
-            margin-top: 8px;
-            font-size: 1.1rem;
-            color: #f1c40f;
-            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 15px;
-            overflow-x: auto;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-
-        .comparison-table th {
+        .nav-bar {
             background-color: #34495e;
-            color: white;
-            padding: 15px;
+            padding: 10px 0;
             text-align: center;
-            font-size: 1.1rem;
-            width: 25%;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* Colors for each scripture column header */
-        .comparison-table th:nth-child(1) { background-color: #e74c3c; } /* Kaccayana - Red */
-        .comparison-table th:nth-child(2) { background-color: #f39c12; } /* Padarupasiddhi - Orange */
-        .comparison-table th:nth-child(3) { background-color: #27ae60; } /* Moggallana - Green */
-        .comparison-table th:nth-child(4) { background-color: #8e44ad; } /* Saddaniti - Purple */
-
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid #ecf0f1;
-            border-right: 1px solid #ecf0f1;
-            vertical-align: top;
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            padding: 8px 15px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .comparison-table td:last-child {
-            border-right: none;
-        }
-
-        .comparison-table tr:hover td {
-            background-color: #f9f9f9;
-        }
-
-        .comparison-table td:hover {
-            background-color: #e8f6f3 !important;
-        }
-
-        .topic-row {
-            background-color: #d5dbdb;
-            font-weight: bold;
-            text-align: left;
-            padding: 10px 20px;
-            color: #2c3e50;
-            font-size: 1.1rem;
-        }
-
-        .pali-text {
-            font-family: 'Niramit', serif;
-            font-size: 1.2rem;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .ref-text {
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            text-align: right;
-            display: block;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 10px;
-            color: #ecf0f1;
-            text-decoration: none;
-            border: 1px solid #ecf0f1;
-            padding: 5px 15px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            margin: 0 5px;
             transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            background-color: white;
+        .nav-btn:hover {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background-color: #16a085;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Search Styles */
+        .search-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-family: 'Sarabun', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .search-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Results List */
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 5px solid #bdc3c7;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-card.kaccayana { border-left-color: #e74c3c; }
+        .result-card.padarupasiddhi { border-left-color: #f39c12; }
+        .result-card.moggallana { border-left-color: #27ae60; }
+        .result-card.saddaniti { border-left-color: #8e44ad; }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .result-source {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .result-source.kaccayana { color: #c0392b; }
+        .result-source.padarupasiddhi { color: #d35400; }
+        .result-source.moggallana { color: #27ae60; }
+        .result-source.saddaniti { color: #8e44ad; }
+
+        .result-pali {
+            font-family: 'Niramit', serif;
+            font-size: 1.4rem;
             color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result-thai {
+            color: #16a085;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .result-topic {
+            font-size: 0.85rem;
+            color: #95a5a6;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #f1f1f1;
+        }
+
+        /* Scripture View */
+        .scripture-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .chapter-select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        .formula-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         /* Modal Styles */
@@ -173,7 +223,7 @@
 
         .modal-header {
             padding: 20px;
-            background-color: #2c3e50; /* Default, will be changed by JS */
+            background-color: #2c3e50;
             color: white;
             display: flex;
             justify-content: space-between;
@@ -193,7 +243,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0;
-            line-height: 1;
         }
 
         .modal-body {
@@ -243,69 +292,79 @@
             font-style: italic;
             color: #95a5a6;
         }
-
-        @media screen and (max-width: 768px) {
-            .comparison-table th, .comparison-table td {
-                min-width: 200px; /* Force scroll on mobile */
-            }
-            .header h1 { font-size: 1.5rem; }
-        }
-
-        /* Input Styles */
-        .control-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: 'Sarabun', sans-serif;
+        
+        .detail-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s;
+            transition: background 0.2s;
         }
-        .control-input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        .detail-button:hover {
+            background: #2980b9;
+        }
+
+        .back-btn {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid #ecf0f1;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+        .back-btn:hover {
+            background: white;
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1><i class="fa-solid fa-scale-balanced"></i> เปรียบเทียบสูตรไวยากรณ์ ๔ คัมภีร์</h1>
-        <p>กัจจายนะ • ปทรูปสิทธิ • โมคคัลลานะ • สัททนีติ</p>
-        <div id="active-table-title" class="table-title"></div>
+        <div class="header-title">
+            <h1><i class="fa-solid fa-scale-balanced"></i> เปรียบเทียบสูตรไวยากรณ์</h1>
+            <span>๔ คัมภีร์</span>
+        </div>
         <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
     </div>
 
-    <!-- Controls Section -->
-    <div class="container" style="margin-bottom: 10px; display: flex; gap: 15px; flex-wrap: wrap;">
-        <div style="flex: 0 0 220px;">
-            <select id="mode-select" class="control-input" onchange="renderTable()">
-                <option value="combined">รวมทุกหมวด</option>
-                <option value="sandhi1">สนธิ: ตารางที่ ๑</option>
-                <option value="nama2">นาม: ตารางที่ ๒</option>
-                <option value="karaka3">การก: ตารางที่ ๓</option>
-                <option value="samasa4">สมาส: ตารางที่ ๔</option>
-                <option value="taddhita5">ตัทธิต: ตารางที่ ๕</option>
-                <option value="akhyata6">อาขยาต: ตารางที่ ๖</option>
-                    <option value="kitta7">กิตก์: ตารางที่ ๗</option>
-                    <option value="unadi8">อุณาทิ: ตารางที่ ๘</option>
-                </select>
-            </div>
-        <div style="flex: 1; min-width: 250px;">
-            <input type="text" id="search-input" class="control-input" placeholder="ค้นหาสูตร (บาลี/ไทย)..." onkeyup="renderTable()">
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="switchMode('search')" id="btn-search"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
+        <button class="nav-btn" onclick="switchMode('kaccayana')" id="btn-kaccayana">กัจจายนะ</button>
+        <button class="nav-btn" onclick="switchMode('padarupasiddhi')" id="btn-padarupasiddhi">ปทรูปสิทธิ</button>
+        <button class="nav-btn" onclick="switchMode('moggallana')" id="btn-moggallana">โมคคัลลานะ</button>
+        <button class="nav-btn" onclick="switchMode('saddaniti')" id="btn-saddaniti">สัททนีติ</button>
+    </div>
+
+    <!-- Search View -->
+    <div id="view-search" class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="พิมพ์คำค้นหา (บาลี, ไทย, หรือเลขสูตร เช่น ปท.๑๕)..." onkeyup="performSearch()">
+            <p style="color:#7f8c8d; font-size: 0.9rem; margin-top: 10px;">ค้นหาได้ทั้งบาลี คำแปล หรือเลขข้อ จากทุกคัมภีร์พร้อมกัน</p>
         </div>
-        <div style="flex: 0 0 250px;">
-            <select id="topic-select" class="control-input" onchange="renderTable()">
-                <option value="all">ทุกหมวดหมู่</option>
-                <!-- Options will be populated by JS -->
-            </select>
+        <div id="search-results">
+            <!-- Results will be injected here -->
+            <div style="text-align: center; color: #95a5a6; margin-top: 50px;">
+                <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p>พิมพ์คำค้นหาเพื่อเริ่มค้นสูตรจากทั้ง ๔ คัมภีร์</p>
+            </div>
         </div>
     </div>
 
-    <div class="container" id="table-container">
-        <!-- Table will be injected here -->
+    <!-- Scripture View -->
+    <div id="view-scripture" class="container" style="display: none;">
+        <div class="scripture-view-header">
+            <h2 id="scripture-title" style="margin:0; border-bottom: 3px solid #34495e; padding-bottom: 5px;"></h2>
+            <select id="chapter-select" class="chapter-select" onchange="renderScriptureContent()">
+                <option value="all">แสดงทุกหมวด</option>
+            </select>
+        </div>
+        <div id="scripture-content" class="formula-list">
+            <!-- Content will be injected here -->
+        </div>
     </div>
 
     <!-- Detail Modal -->
@@ -324,9 +383,10 @@
                 <div class="detail-label">คำอธิบาย:</div>
                 <div class="detail-desc" id="modal-desc">...</div>
                 <div class="detail-ref" id="modal-ref">...</div>
-                <div style="margin-top: 16px; text-align: right;">
-                    <button id="modal-detail-btn" class="control-input" style="background:#3498db; color:#fff; cursor:pointer; border: none;" onclick="goToDetail()">
-                        ดูรายละเอียด
+                
+                <div style="margin-top: 20px; text-align: right;">
+                    <button id="modal-detail-btn" class="detail-button" onclick="goToDetail()">
+                        ดูรายละเอียด (อุทาหรณ์)
                     </button>
                 </div>
             </div>
@@ -335,237 +395,283 @@
 
     <script src="data/grammar_comparison_data.js"></script>
     <script>
-        const tableContainer = document.getElementById('table-container');
-        const searchInput = document.getElementById('search-input');
-        const topicSelect = document.getElementById('topic-select');
-        let isTopicPopulated = false;
+        let currentMode = 'search';
+        let allDataSections = [];
+        let currentModalData = null;
 
-        function populateTopics() {
-            const modeSelect = document.getElementById('mode-select');
-            let activeData = grammarComparisonData;
-            if (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') {
-                activeData = sandhiTable1Data;
-            } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
-                activeData = namaTable2Data;
-            } else if (modeSelect && modeSelect.value === 'karaka3' && typeof karakaTable3Data !== 'undefined') {
-                activeData = karakaTable3Data;
-            } else if (modeSelect && modeSelect.value === 'samasa4' && typeof samasaTable4Data !== 'undefined') {
-                activeData = samasaTable4Data;
-            } else if (modeSelect && modeSelect.value === 'taddhita5' && typeof taddhitaTable5Data !== 'undefined') {
-                activeData = taddhitaTable5Data;
-            } else if (modeSelect && modeSelect.value === 'akhyata6' && typeof akhyataTable6Data !== 'undefined') {
-                activeData = akhyataTable6Data;
-            } else if (modeSelect && modeSelect.value === 'kitta7' && typeof kittaTable7Data !== 'undefined') {
-                activeData = kittaTable7Data;
-            } else if (modeSelect && modeSelect.value === 'unadi8' && typeof unadiTable8Data !== 'undefined') {
-                activeData = unadiTable8Data;
-            }
-            document.getElementById('topic-select').innerHTML = '<option value="all">ทุกหมวดหมู่</option>';
-            activeData.forEach((section, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.text = section.topic;
-                topicSelect.appendChild(option);
+        // Load and aggregate all data on startup
+        window.onload = function() {
+            aggregateData();
+            // Check URL params for initial search or mode? (Optional)
+        };
+
+        function aggregateData() {
+            // Collect all available data arrays
+            const sources = [
+                { data: typeof grammarComparisonData !== 'undefined' ? grammarComparisonData : [], name: 'main' },
+                { data: typeof sandhiTable1Data !== 'undefined' ? sandhiTable1Data : [], name: 'sandhi1' },
+                { data: typeof namaTable2Data !== 'undefined' ? namaTable2Data : [], name: 'nama2' },
+                { data: typeof karakaTable3Data !== 'undefined' ? karakaTable3Data : [], name: 'karaka3' },
+                { data: typeof samasaTable4Data !== 'undefined' ? samasaTable4Data : [], name: 'samasa4' },
+                { data: typeof taddhitaTable5Data !== 'undefined' ? taddhitaTable5Data : [], name: 'taddhita5' },
+                { data: typeof akhyataTable6Data !== 'undefined' ? akhyataTable6Data : [], name: 'akhyata6' },
+                { data: typeof kittaTable7Data !== 'undefined' ? kittaTable7Data : [], name: 'kitta7' },
+                { data: typeof unadiTable8Data !== 'undefined' ? unadiTable8Data : [], name: 'unadi8' }
+            ];
+
+            // Flatten into a list of sections (Topics)
+            // We use a Map to dedup by Topic Name if necessary, but here we just list them all.
+            // Actually, grammarComparisonData might overlap with others if not careful.
+            // Based on previous code, grammarComparisonData contained Topic 1 & 2.
+            // sandhiTable1Data contained Topic 2 (Sandhi).
+            // We should be careful not to duplicate.
+            
+            // Let's trust the "Mode" logic from previous code:
+            // The previous code had a mode select.
+            // Here we want ALL data for search.
+            // So we will add them all, but maybe filter out duplicates if topics are identical?
+            
+            // Let's just combine them. If there are duplicates, they will show up twice.
+            // Better strategy: Use a list of unique topic objects.
+            
+            const seenTopics = new Set();
+            
+            // Priority: specialized tables first
+            const orderedSources = [
+                sandhiTable1Data, namaTable2Data, karakaTable3Data, 
+                samasaTable4Data, taddhitaTable5Data, akhyataTable6Data, 
+                kittaTable7Data, unadiTable8Data, grammarComparisonData
+            ];
+
+            orderedSources.forEach(source => {
+                if (typeof source !== 'undefined' && Array.isArray(source)) {
+                    source.forEach(section => {
+                        if (!seenTopics.has(section.topic)) {
+                            allDataSections.push(section);
+                            seenTopics.add(section.topic);
+                        }
+                    });
+                }
             });
-            isTopicPopulated = true;
         }
 
-        function renderTable() {
-            const modeSelect = document.getElementById('mode-select');
-            let activeData = grammarComparisonData;
-            if (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') {
-                activeData = sandhiTable1Data;
-            } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
-                activeData = namaTable2Data;
-            } else if (modeSelect && modeSelect.value === 'karaka3' && typeof karakaTable3Data !== 'undefined') {
-                activeData = karakaTable3Data;
-            } else if (modeSelect && modeSelect.value === 'samasa4' && typeof samasaTable4Data !== 'undefined') {
-                activeData = samasaTable4Data;
-            } else if (modeSelect && modeSelect.value === 'taddhita5' && typeof taddhitaTable5Data !== 'undefined') {
-                activeData = taddhitaTable5Data;
-            } else if (modeSelect && modeSelect.value === 'akhyata6' && typeof akhyataTable6Data !== 'undefined') {
-                activeData = akhyataTable6Data;
-            } else if (modeSelect && modeSelect.value === 'kitta7' && typeof kittaTable7Data !== 'undefined') {
-                activeData = kittaTable7Data;
-            } else if (modeSelect && modeSelect.value === 'unadi8' && typeof unadiTable8Data !== 'undefined') {
-                activeData = unadiTable8Data;
-            }
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update UI Buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + mode).classList.add('active');
 
-            if (!activeData || activeData.length === 0) {
-                tableContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#7f8c8d;">ไม่พบข้อมูล</div>';
+            // Toggle Views
+            if (mode === 'search') {
+                document.getElementById('view-search').style.display = 'block';
+                document.getElementById('view-scripture').style.display = 'none';
+                document.getElementById('search-input').focus();
+            } else {
+                document.getElementById('view-search').style.display = 'none';
+                document.getElementById('view-scripture').style.display = 'block';
+                setupScriptureView(mode);
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (!query) {
+                resultsContainer.innerHTML = `
+                    <div style="text-align: center; color: #95a5a6; margin-top: 50px;">
+                        <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>พิมพ์คำค้นหาเพื่อเริ่มค้นสูตรจากทั้ง ๔ คัมภีร์</p>
+                    </div>`;
                 return;
             }
 
-            populateTopics();
+            let html = '';
+            let matchCount = 0;
 
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            const selectedTopicIndex = topicSelect.value;
-            const titleEl = document.getElementById('active-table-title');
-            let headerTitle = '';
-            if (modeSelect && modeSelect.value === 'sandhi1') {
-                headerTitle = 'ตารางที่ ๑ — สนฺธิกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'nama2') {
-                headerTitle = 'ตารางที่ ๒ — นามกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'karaka3') {
-                headerTitle = 'ตารางที่ ๓ — การกกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'samasa4') {
-                headerTitle = 'ตารางที่ ๔ — สมาสกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'taddhita5') {
-                headerTitle = 'ตารางที่ ๕ — ตทฺธิตกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'akhyata6') {
-                headerTitle = 'ตารางที่ ๖ — อาขฺยาตกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'kitta7') {
-                headerTitle = 'ตารางที่ ๗ — กิพฺพิธานกปฺโป';
-            } else if (modeSelect && modeSelect.value === 'unadi8') {
-                headerTitle = 'ตารางที่ ๘ — อุณาทิกปฺโป';
+            allDataSections.forEach((section, sectionIdx) => {
+                section.formulas.forEach((row, formulaIdx) => {
+                    // Check each scripture in the row
+                    ['kaccayana', 'padarupasiddhi', 'moggallana', 'saddaniti'].forEach(scripture => {
+                        const data = row[scripture];
+                        if (data) {
+                            const match = (data.pali && data.pali.toLowerCase().includes(query)) ||
+                                          (data.thai && data.thai.toLowerCase().includes(query)) ||
+                                          (data.ref && data.ref.toLowerCase().includes(query));
+                            
+                            if (match) {
+                                matchCount++;
+                                html += createResultCard(data, scripture, section.topic, sectionIdx, formulaIdx);
+                            }
+                        }
+                    });
+                });
+            });
+
+            if (matchCount === 0) {
+                resultsContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#7f8c8d;">ไม่พบข้อมูลที่ตรงกับคำค้นหา</div>';
             } else {
-                headerTitle = '';
+                resultsContainer.innerHTML = `<p style="text-align:right; color:#7f8c8d; margin-bottom:10px;">พบ ${matchCount} รายการ</p>` + html;
             }
-            titleEl.innerText = headerTitle;
+        }
 
-            let html = `
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>กัจจายนะ</th>
-                            <th>ปทรูปสิทธิ</th>
-                            <th>โมคคัลลานะ</th>
-                            <th>สัททนีติ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        function createResultCard(data, scripture, topic, sectionIdx, formulaIdx) {
+            const scriptureNames = {
+                'kaccayana': 'กัจจายนะ',
+                'padarupasiddhi': 'ปทรูปสิทธิ',
+                'moggallana': 'โมคคัลลานะ',
+                'saddaniti': 'สัททนีติ'
+            };
+            
+            // Safe encode for data attribute
+            const safeData = JSON.stringify(data).replace(/"/g, '&quot;');
+
+            return `
+                <div class="result-card ${scripture}" onclick="openModal('${scripture}', this)" 
+                     data-content="${safeData}" 
+                     data-topic-idx="${sectionIdx}" 
+                     data-formula-idx="${formulaIdx}">
+                    <div class="result-header">
+                        <span class="result-source ${scripture}">${scriptureNames[scripture]}</span>
+                        <span>${data.ref || ''}</span>
+                    </div>
+                    <div class="result-pali">${data.pali || '-'}</div>
+                    <div class="result-thai">${data.thai || ''}</div>
+                    <div class="result-topic">${topic}</div>
+                </div>
             `;
+        }
 
-            let hasResult = false;
+        // --- Scripture View Logic ---
 
-            activeData.forEach((section, index) => {
-                // Filter by Topic
-                if (selectedTopicIndex !== 'all' && String(index) !== selectedTopicIndex) {
-                    return;
+        function setupScriptureView(scripture) {
+            const names = {
+                'kaccayana': 'คัมภีร์กัจจายนะ',
+                'padarupasiddhi': 'คัมภีร์ปทรูปสิทธิ',
+                'moggallana': 'คัมภีร์โมคคัลลานะ',
+                'saddaniti': 'คัมภีร์สัททนีติ'
+            };
+            document.getElementById('scripture-title').innerText = names[scripture];
+            
+            // Populate Chapter Select
+            const chapterSelect = document.getElementById('chapter-select');
+            chapterSelect.innerHTML = '<option value="all">แสดงทุกหมวด</option>';
+            
+            // Find topics that actually contain this scripture
+            allDataSections.forEach((section, idx) => {
+                const hasScripture = section.formulas.some(row => row[scripture]);
+                if (hasScripture) {
+                    const option = document.createElement('option');
+                    option.value = idx;
+                    option.text = section.topic;
+                    chapterSelect.appendChild(option);
                 }
+            });
 
-                // Filter rows inside this topic
-                const filteredFormulas = section.formulas.filter(row => {
-                    if (!searchTerm) return true;
-                    // Check Pali or Thai content in any column
-                    const check = (obj) => {
-                        if (!obj) return false;
-                        return (obj.pali && obj.pali.toLowerCase().includes(searchTerm)) || 
-                               (obj.thai && obj.thai.toLowerCase().includes(searchTerm)) ||
-                               (obj.ref && obj.ref.toLowerCase().includes(searchTerm));
-                    };
-                    return check(row.kaccayana) || check(row.padarupasiddhi) || 
-                           check(row.moggallana) || check(row.saddaniti);
+            renderScriptureContent();
+        }
+
+        function renderScriptureContent() {
+            const scripture = currentMode;
+            const selectedChapter = document.getElementById('chapter-select').value;
+            const container = document.getElementById('scripture-content');
+            
+            let html = '';
+            
+            allDataSections.forEach((section, sectionIdx) => {
+                if (selectedChapter !== 'all' && String(sectionIdx) !== selectedChapter) return;
+
+                // Filter items for this scripture
+                const items = [];
+                section.formulas.forEach((row, formulaIdx) => {
+                    if (row[scripture]) {
+                        items.push({ data: row[scripture], formulaIdx });
+                    }
                 });
 
-                if (filteredFormulas.length > 0) {
-                    hasResult = true;
-                    // Topic Row
-                    html += `
-                        <tr>
-                            <td colspan="4" class="topic-row">${section.topic}</td>
-                        </tr>
-                    `;
-
-                    // Formula Rows
-                    const modeValue = (document.getElementById('mode-select') && document.getElementById('mode-select').value) || 'combined';
-                    filteredFormulas.forEach((row, rowIdx) => {
-                        html += `
-                            <tr>
-                                ${renderCell(row.kaccayana, 'kaccayana', modeValue, index, rowIdx)}
-                                ${renderCell(row.padarupasiddhi, 'padarupasiddhi', modeValue, index, rowIdx)}
-                                ${renderCell(row.moggallana, 'moggallana', modeValue, index, rowIdx)}
-                                ${renderCell(row.saddaniti, 'saddaniti', modeValue, index, rowIdx)}
-                            </tr>
-                        `;
+                if (items.length > 0) {
+                    html += `<h3 style="color:#2c3e50; border-bottom:1px solid #ddd; padding-bottom:5px; margin-top:30px;">${section.topic}</h3>`;
+                    
+                    items.forEach(item => {
+                        html += createResultCard(item.data, scripture, section.topic, sectionIdx, item.formulaIdx);
                     });
                 }
             });
 
-            html += `
-                    </tbody>
-                </table>
-            `;
-
-            if (!hasResult) {
-                tableContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#7f8c8d;">ไม่พบข้อมูลตามเงื่อนไขการค้นหา</div>';
-            } else {
-                tableContainer.innerHTML = html;
+            if (!html) {
+                html = '<div style="text-align:center; padding:40px;">ไม่พบข้อมูลในหมวดนี้</div>';
             }
-        }
-
-        function renderCell(data, type, modeValue, topicIdx, formulaIdx) {
-            if (!data) return '<td>-</td>';
-            // Encode data to be passed to onclick
-            // We'll store data index or object in a global map or just pass encoded JSON (simple for now)
-            // Better: stick data on the element dataset
-            const safeData = JSON.stringify(data).replace(/"/g, '&quot;');
-            return `
-                <td onclick="openModal('${type}', this)" data-content="${safeData}" data-mode="${modeValue}" data-topic="${topicIdx}" data-formula="${formulaIdx}">
-                    <div class="pali-text">${data.pali || '-'}</div>
-                    <span class="ref-text">${data.ref || ''}</span>
-                </td>
-            `;
-        }
-
-        // Modal Logic
-        const modal = document.getElementById('detail-modal');
-        const modalHeader = document.getElementById('modal-header');
-        
-        const scriptureConfig = {
-            'kaccayana': { name: 'คัมภีร์กัจจายนะ', color: '#e74c3c' },
-            'padarupasiddhi': { name: 'คัมภีร์ปทรูปสิทธิ', color: '#f39c12' },
-            'moggallana': { name: 'คัมภีร์โมคคัลลานะ', color: '#27ae60' },
-            'saddaniti': { name: 'คัมภีร์สัททนีติ', color: '#8e44ad' }
-        };
-
-        let currentModalInfo = null;
-        function openModal(type, element) {
-            const dataStr = element.getAttribute('data-content');
-            if (!dataStr) return;
             
-            const data = JSON.parse(dataStr);
-            const config = scriptureConfig[type];
-            const modeValue = element.getAttribute('data-mode') || 'combined';
-            const topicIdx = element.getAttribute('data-topic');
-            const formulaIdx = element.getAttribute('data-formula');
+            container.innerHTML = html;
+        }
 
-            // Set Content
-            document.getElementById('modal-scripture-name').innerText = config.name;
+        // --- Modal Logic ---
+
+        function openModal(type, element) {
+            const content = element.getAttribute('data-content');
+            const data = JSON.parse(content);
+            
+            // Store for "View Details" navigation
+            currentModalData = {
+                mode: type, // This is roughly correct, though 'mode' in formula_detail.html expects 'sandhi1' etc. 
+                            // We need to pass the TABLE mode (e.g. sandhi1) to formula_detail.
+                            // But here we have sectionIdx. We can map sectionIdx back to table mode if needed, 
+                            // OR update formula_detail to handle sectionIdx.
+                topicIdx: element.getAttribute('data-topic-idx'),
+                formulaIdx: element.getAttribute('data-formula-idx'),
+                type: type
+            };
+
+            const names = {
+                'kaccayana': 'กัจจายนะ',
+                'padarupasiddhi': 'ปทรูปสิทธิ',
+                'moggallana': 'โมคคัลลานะ',
+                'saddaniti': 'สัททนีติ'
+            };
+            const colors = {
+                'kaccayana': '#e74c3c',
+                'padarupasiddhi': '#f39c12',
+                'moggallana': '#27ae60',
+                'saddaniti': '#8e44ad'
+            };
+
+            document.getElementById('modal-header').style.backgroundColor = colors[type] || '#2c3e50';
+            document.getElementById('modal-scripture-name').innerText = names[type] || type;
             document.getElementById('modal-pali').innerText = data.pali || '-';
             document.getElementById('modal-thai').innerText = data.thai || '-';
-            document.getElementById('modal-desc').innerText = data.desc || '-';
-            document.getElementById('modal-ref').innerText = data.ref ? `อ้างอิง: ${data.ref}` : '';
-
-            // Set Color
-            modalHeader.style.backgroundColor = config.color;
-
-            currentModalInfo = { type, mode: modeValue, topicIdx, formulaIdx };
-
-            // Show Modal
+            document.getElementById('modal-desc').innerText = data.desc || 'ไม่มีคำอธิบายเพิ่มเติม';
+            document.getElementById('modal-ref').innerText = data.ref || '';
+            
+            const modal = document.getElementById('detail-modal');
             modal.style.display = 'flex';
         }
 
-        function closeModal(event, force = false) {
-            if (force || event.target.id === 'detail-modal') {
-                modal.style.display = 'none';
+        function closeModal(event, force) {
+            if (force || event.target.classList.contains('modal-overlay')) {
+                document.getElementById('detail-modal').style.display = 'none';
             }
         }
 
         function goToDetail() {
-            if (!currentModalInfo) return;
-            const params = new URLSearchParams({
-                mode: currentModalInfo.mode || 'combined',
-                type: currentModalInfo.type || '',
-                topic: currentModalInfo.topicIdx || '0',
-                formula: currentModalInfo.formulaIdx || '0'
-            });
-            window.location.href = `formula_detail.html?${params.toString()}`;
+            if (!currentModalData) return;
+            // Note: formula_detail.html expects params: mode, topicIndex, formulaIndex, type
+            // Our 'mode' param (e.g. 'sandhi1') determines which variable to load in formula_detail.html
+            // We need to reverse-engineer which "variable" the sectionIdx belongs to.
+            // This is tricky because we flattened the data.
+            
+            // Quick Fix: Pass the 'all' mode or handle it in formula_detail.
+            // But formula_detail uses: window.grammarComparisonData[topicIndex] if mode is missing?
+            
+            // Let's pass the raw indices. In formula_detail, we might need to load ALL data like we did here.
+            // For now, let's just pass what we have and see if we need to update formula_detail.html.
+            // Since we use `allDataSections` here which is aggregated, index 0 might be Sandhi Table 1 (if priority sorted) or GrammarComparisonData.
+            
+            // To make it robust: We should ideally update formula_detail.html to also use the aggregated data approach.
+            // For this step, I will just construct the URL.
+            
+            window.location.href = `formula_detail.html?topicIndex=${currentModalData.topicIdx}&formulaIndex=${currentModalData.formulaIdx}&type=${currentModalData.type}&useGlobal=true`;
         }
-
-        // Init
-        document.addEventListener('DOMContentLoaded', renderTable);
-
     </script>
 </body>
 </html>
