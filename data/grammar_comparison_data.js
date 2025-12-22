@@ -205,7 +205,7 @@ const grammarComparisonData = [
     },
     {
         padarupasiddhi: {
-            pali: "อกฺขราปาทโย เอกจตฺตาลีสํ",
+            pali: "อกฺขราปาทโย เอกจตฺตาลีสํ.",
             thai: "อักษรทั้งหลาย มี อ เป็นต้น มี ๔๑ ตัว",
             desc: "ตามนัยกัจจายนะ",
             ref: "ปท. ๒"
@@ -213,7 +213,7 @@ const grammarComparisonData = [
     },
     {
         padarupasiddhi: {
-            pali: "ตตฺโถทนฺตา สรา อฏฺฐ",
+            pali: "ตตฺโถทนฺตา สรา อฏฺฐ.",
             thai: "ในอักษรเหล่านั้น อักษรสุดที่ โอ ชื่อว่า สระ มี ๘ ตัว",
             desc: "เหมือนกัจจายนะ",
             ref: "ปท. ๓"
@@ -221,7 +221,7 @@ const grammarComparisonData = [
     },
     {
         padarupasiddhi: {
-            pali: "ลหุมตฺตา ตโย รสฺสา",
+            pali: "ลหุมตฺตา ตโย รสฺสา.",
             thai: "สระมีมาตราเบา ๓ ตัว ชื่อว่า รัสสะ",
             desc: "เหมือนกัจจายนะ",
             ref: "ปท. ๔"
@@ -229,7 +229,7 @@ const grammarComparisonData = [
     },
     {
         padarupasiddhi: {
-            pali: "อญฺเญ ทีฆา",
+            pali: "อญฺเญ ทีฆา.",
             thai: "สระเหล่าอื่น ชื่อว่า ทีฆะ",
             desc: "เหมือนกัจจายนะ",
             ref: "ปท. ๕"
@@ -345,7 +345,7 @@ const grammarComparisonData = [
     },
     {
         padarupasiddhi: {
-            pali: "อพฺโภ อธิ.",
+            pali: "อพฺโภ อภิ.",
             ref: "ปท. ๒๔"
         }
     },
