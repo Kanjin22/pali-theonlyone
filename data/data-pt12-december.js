@@ -795,7 +795,7 @@ var dataDecember = [
             linkYoutube: [
                 "https://youtu.be/CThqovQ9af8?si=LsTbMkrB4cEmDl_X&t=44",
             ],
-            slideId: "d04_v06_s08_500_monks",
+            slideId: "d04_v07_s06_sariputta",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_08.pdf",
             isExam: true,
             examStartTime: "14:00:00",
