@@ -311,18 +311,24 @@
                 return;
             }
 
-            container.innerHTML = displayResults.map(item => `
+            container.innerHTML = displayResults.map(item => {
+                const translation = (item.details || [])
+                    .filter(d => d.indexOf('แปลว่า:') === 0)
+                    .map(d => d.replace(/^แปลว่า:\s*/,'').trim())
+                    .join(', ');
+                return `
                 <div class="vocab-card type-${item.type}">
                     <div class="word-title">
-                        ${item.word}
+                        ${item.word}${translation ? ` : ${translation}` : ``}
                         <span class="word-type-badge">${item.label}</span>
                     </div>
                     <div class="word-split">${item.split}</div>
                     <ul class="word-details">
-                        ${item.details.map(d => `<li>${d}</li>`).join('')}
+                        ${(item.details || []).map(d => `<li>${d}</li>`).join('')}
                     </ul>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // Initialize on load
