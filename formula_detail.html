@@ -86,6 +86,35 @@
 
     <script src="data/grammar_comparison_data.js"></script>
     <script>
+        // Aggregate logic copied from grammar_comparison.html to ensure index matching
+        let allDataSections = [];
+        
+        function aggregateData() {
+            const seenTopics = new Set();
+            const orderedSources = [
+                typeof sandhiTable1Data !== 'undefined' ? sandhiTable1Data : [],
+                typeof namaTable2Data !== 'undefined' ? namaTable2Data : [],
+                typeof karakaTable3Data !== 'undefined' ? karakaTable3Data : [],
+                typeof samasaTable4Data !== 'undefined' ? samasaTable4Data : [],
+                typeof taddhitaTable5Data !== 'undefined' ? taddhitaTable5Data : [],
+                typeof akhyataTable6Data !== 'undefined' ? akhyataTable6Data : [],
+                typeof kittaTable7Data !== 'undefined' ? kittaTable7Data : [],
+                typeof unadiTable8Data !== 'undefined' ? unadiTable8Data : [],
+                typeof grammarComparisonData !== 'undefined' ? grammarComparisonData : []
+            ];
+
+            orderedSources.forEach(source => {
+                if (typeof source !== 'undefined' && Array.isArray(source)) {
+                    source.forEach(section => {
+                        if (!seenTopics.has(section.topic)) {
+                            allDataSections.push(section);
+                            seenTopics.add(section.topic);
+                        }
+                    });
+                }
+            });
+        }
+
         function getParams() {
             const url = new URL(window.location.href);
             const p = Object.fromEntries(url.searchParams.entries());
@@ -105,15 +134,30 @@
         }
 
         function render() {
+            // Ensure data is aggregated
+            aggregateData();
+
             const params = getParams();
             const mode = params.mode || 'combined';
             const type = params.type || '';
-            const topicIdx = parseInt(params.topic || '0', 10);
-            const formulaIdx = parseInt(params.formula || '0', 10);
+            const useGlobal = params.useGlobal === 'true';
+            
+            // Handle param aliases
+            const topicIdx = parseInt(params.topic || params.topicIndex || '0', 10);
+            const formulaIdx = parseInt(params.formula || params.formulaIndex || '0', 10);
 
-            const dataset = getDatasetByMode(mode);
-            const section = dataset[topicIdx];
-            const row = section && section.formulas ? section.formulas[formulaIdx] : null;
+            let section, row;
+
+            if (useGlobal) {
+                // Use aggregated data
+                section = allDataSections[topicIdx];
+                row = section && section.formulas ? section.formulas[formulaIdx] : null;
+            } else {
+                // Use legacy mode-based data
+                const dataset = getDatasetByMode(mode);
+                section = dataset[topicIdx];
+                row = section && section.formulas ? section.formulas[formulaIdx] : null;
+            }
 
             const modeNameMap = {
                 'combined': 'รวมทุกหมวด',
@@ -128,16 +172,54 @@
             };
 
             const back = document.getElementById('back-link');
-            back.href = `grammar_comparison.html?mode=${encodeURIComponent(mode)}`;
+            // If we came from search (useGlobal), go back to search
+            if (useGlobal) {
+                back.href = 'grammar_comparison.html';
+                back.innerText = 'กลับหน้าค้นหา';
+            } else {
+                back.href = `grammar_comparison.html?mode=${encodeURIComponent(mode)}`;
+                back.innerText = 'กลับหน้าตาราง';
+            }
 
             document.getElementById('detail-title').innerText = section ? section.topic : 'สูตร';
-            document.getElementById('detail-meta').innerText = `ตาราง: ${modeNameMap[mode] || mode}, หมวด: ${topicIdx + 1}, ลำดับสูตร: ${formulaIdx + 1}`;
+            document.getElementById('detail-meta').innerText = `ตาราง: ${useGlobal ? 'ผลการค้นหา' : (modeNameMap[mode] || mode)}, หมวด: ${topicIdx + 1}, ลำดับสูตร: ${formulaIdx + 1}`;
 
             function setCol(prefix, obj) {
-                document.getElementById(`${prefix}-pali`).innerText = (obj && obj.pali) ? obj.pali : '-';
-                document.getElementById(`${prefix}-thai`).innerText = (obj && obj.thai) ? obj.thai : '-';
-                document.getElementById(`${prefix}-desc`).innerText = (obj && obj.desc) ? obj.desc : '-';
-                document.getElementById(`${prefix}-ref`).innerText = (obj && obj.ref) ? `อ้างอิง: ${obj.ref}` : '';
+                const elPali = document.getElementById(`${prefix}-pali`);
+                const elThai = document.getElementById(`${prefix}-thai`);
+                const elDesc = document.getElementById(`${prefix}-desc`);
+                const elRef = document.getElementById(`${prefix}-ref`);
+
+                if (elPali) elPali.innerText = (obj && obj.pali) ? obj.pali : '-';
+                if (elThai) elThai.innerText = (obj && obj.thai) ? obj.thai : '-';
+                if (elDesc) elDesc.innerText = (obj && obj.desc) ? obj.desc : '-';
+                if (elRef) elRef.innerText = (obj && obj.ref) ? `อ้างอิง: ${obj.ref}` : '';
+                
+                // Highlight the specific scripture we came from if 'type' matches
+                if (type && type === prefix) {
+                    const col = elPali.closest('.col');
+                    if (col) {
+                        const bgColors = {
+                            'kaccayana': '#fadbd8',
+                            'padarupasiddhi': '#fdebd0',
+                            'moggallana': '#d5f5e3',
+                            'saddaniti': '#ebdef0'
+                        };
+                        const borderColors = {
+                            'kaccayana': '#e74c3c',
+                            'padarupasiddhi': '#f39c12',
+                            'moggallana': '#27ae60',
+                            'saddaniti': '#8e44ad'
+                        };
+                        
+                        col.style.backgroundColor = bgColors[type] || '#fef9e7';
+                        col.style.border = `2px solid ${borderColors[type] || '#f1c40f'}`;
+                        col.style.borderRadius = '8px';
+                        col.style.transform = 'scale(1.02)';
+                        col.style.transition = 'all 0.3s';
+                        col.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+                    }
+                }
             }
 
             if (row) {
@@ -145,6 +227,8 @@
                 setCol('padarupasiddhi', row.padarupasiddhi);
                 setCol('moggallana', row.moggallana);
                 setCol('saddaniti', row.saddaniti);
+            } else {
+                document.getElementById('detail-title').innerText = 'ไม่พบข้อมูลสูตร';
             }
         }
 
