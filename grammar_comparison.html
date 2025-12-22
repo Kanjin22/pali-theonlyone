@@ -285,8 +285,14 @@
                 <option value="combined">รวมทุกหมวด</option>
                 <option value="sandhi1">สนธิ: ตารางที่ ๑</option>
                 <option value="nama2">นาม: ตารางที่ ๒</option>
-            </select>
-        </div>
+                <option value="karaka3">การก: ตารางที่ ๓</option>
+                <option value="samasa4">สมาส: ตารางที่ ๔</option>
+                <option value="taddhita5">ตัทธิต: ตารางที่ ๕</option>
+                <option value="akhyata6">อาขยาต: ตารางที่ ๖</option>
+                    <option value="kitta7">กิตก์: ตารางที่ ๗</option>
+                    <option value="unadi8">อุณาทิ: ตารางที่ ๘</option>
+                </select>
+            </div>
         <div style="flex: 1; min-width: 250px;">
             <input type="text" id="search-input" class="control-input" placeholder="ค้นหาสูตร (บาลี/ไทย)..." onkeyup="renderTable()">
         </div>
@@ -337,6 +343,18 @@
                 activeData = sandhiTable1Data;
             } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
                 activeData = namaTable2Data;
+            } else if (modeSelect && modeSelect.value === 'karaka3' && typeof karakaTable3Data !== 'undefined') {
+                activeData = karakaTable3Data;
+            } else if (modeSelect && modeSelect.value === 'samasa4' && typeof samasaTable4Data !== 'undefined') {
+                activeData = samasaTable4Data;
+            } else if (modeSelect && modeSelect.value === 'taddhita5' && typeof taddhitaTable5Data !== 'undefined') {
+                activeData = taddhitaTable5Data;
+            } else if (modeSelect && modeSelect.value === 'akhyata6' && typeof akhyataTable6Data !== 'undefined') {
+                activeData = akhyataTable6Data;
+            } else if (modeSelect && modeSelect.value === 'kitta7' && typeof kittaTable7Data !== 'undefined') {
+                activeData = kittaTable7Data;
+            } else if (modeSelect && modeSelect.value === 'unadi8' && typeof unadiTable8Data !== 'undefined') {
+                activeData = unadiTable8Data;
             }
             document.getElementById('topic-select').innerHTML = '<option value="all">ทุกหมวดหมู่</option>';
             activeData.forEach((section, index) => {
@@ -355,6 +373,18 @@
                 activeData = sandhiTable1Data;
             } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
                 activeData = namaTable2Data;
+            } else if (modeSelect && modeSelect.value === 'karaka3' && typeof karakaTable3Data !== 'undefined') {
+                activeData = karakaTable3Data;
+            } else if (modeSelect && modeSelect.value === 'samasa4' && typeof samasaTable4Data !== 'undefined') {
+                activeData = samasaTable4Data;
+            } else if (modeSelect && modeSelect.value === 'taddhita5' && typeof taddhitaTable5Data !== 'undefined') {
+                activeData = taddhitaTable5Data;
+            } else if (modeSelect && modeSelect.value === 'akhyata6' && typeof akhyataTable6Data !== 'undefined') {
+                activeData = akhyataTable6Data;
+            } else if (modeSelect && modeSelect.value === 'kitta7' && typeof kittaTable7Data !== 'undefined') {
+                activeData = kittaTable7Data;
+            } else if (modeSelect && modeSelect.value === 'unadi8' && typeof unadiTable8Data !== 'undefined') {
+                activeData = unadiTable8Data;
             }
 
             if (!activeData || activeData.length === 0) {
@@ -372,6 +402,18 @@
                 headerTitle = 'ตารางที่ ๑ — สนฺธิกปฺโป';
             } else if (modeSelect && modeSelect.value === 'nama2') {
                 headerTitle = 'ตารางที่ ๒ — นามกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'karaka3') {
+                headerTitle = 'ตารางที่ ๓ — การกกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'samasa4') {
+                headerTitle = 'ตารางที่ ๔ — สมาสกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'taddhita5') {
+                headerTitle = 'ตารางที่ ๕ — ตทฺธิตกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'akhyata6') {
+                headerTitle = 'ตารางที่ ๖ — อาขฺยาตกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'kitta7') {
+                headerTitle = 'ตารางที่ ๗ — กิพฺพิธานกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'unadi8') {
+                headerTitle = 'ตารางที่ ๘ — อุณาทิกปฺโป';
             } else {
                 headerTitle = '';
             }
