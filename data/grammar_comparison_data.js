@@ -827,3 +827,251 @@ const grammarComparisonData = [
         ]
     }
 ];
+
+const sandhiTable1Data = [
+    {
+        topic: "ตารางที่ ๑ — ๑. สนฺธิกปฺโป",
+        formulas: [
+            {
+                kaccayana: { pali: "อตฺโถ อกฺขรสญฺญาโต", ref: "กัจ. ๑" },
+                padarupasiddhi: { ref: "ปท. ๑" }
+            },
+            {
+                kaccayana: { pali: "อกฺขราปาทโย เอกจตฺตาฬีสํ", ref: "กัจ. ๒" },
+                padarupasiddhi: { ref: "ปท. ๒" }
+            },
+            {
+                kaccayana: { pali: "ตตฺโถทนฺตา สรา อฏฺฐ", ref: "กัจ. ๓" },
+                padarupasiddhi: { ref: "ปท. ๓" }
+            },
+            {
+                kaccayana: { pali: "ลหุมตฺตา ตโย รสฺสา", ref: "กัจ. ๔" },
+                padarupasiddhi: { ref: "ปท. ๔" }
+            },
+            {
+                kaccayana: { pali: "อญฺเญ ทีฆา", ref: "กัจ. ๕" },
+                padarupasiddhi: { ref: "ปท. ๕" }
+            },
+            {
+                kaccayana: { pali: "เสสา พฺยญฺชนา", ref: "กัจ. ๖" },
+                padarupasiddhi: { ref: "ปท. ๘" }
+            },
+            {
+                kaccayana: { pali: "วคฺคา ปญฺจปญฺจโส มนฺตา", ref: "กัจ. ๗" },
+                padarupasiddhi: { ref: "ปท. ๙" }
+            },
+            {
+                kaccayana: { pali: "อํอิติ นิคฺคหีตํ", ref: "กัจ. ๘" },
+                padarupasiddhi: { ref: "ปท. ๑๐" }
+            },
+            {
+                kaccayana: { pali: "ปรสมญฺญา ปโยเค", ref: "กัจ. ๙" },
+                padarupasiddhi: { ref: "ปท. ๑๑" }
+            },
+            {
+                kaccayana: { pali: "ปุพฺบมโธฐิตมสฺสรํ สเรน วิโยชเย", ref: "กัจ. ๑๐" },
+                padarupasiddhi: { ref: "ปท. ๑๒" }
+            },
+            {
+                kaccayana: { pali: "นเย ปรํ ยุตฺเต", ref: "กัจ. ๑๑" },
+                padarupasiddhi: { ref: "ปท. ๑๔" }
+            },
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป ปฐโม กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป ปฐโม กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป ปฐโม กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป ปฐโม กณฺโฑ" }
+            },
+            {
+                kaccayana: { pali: "สรา สเร โลปํ", ref: "กัจ. ๑๒" },
+                padarupasiddhi: { ref: "ปท. ๑๓" }
+            },
+            {
+                kaccayana: { pali: "วา ปโร อสรูปา", ref: "กัจ. ๑๓" },
+                padarupasiddhi: { ref: "ปท. ๑๕" }
+            },
+            {
+                kaccayana: { pali: "กฺวจาสวณฺณํ ลุตฺเต", ref: "กัจ. ๑๔" },
+                padarupasiddhi: { ref: "ปท. ๑๖" }
+            },
+            {
+                kaccayana: { pali: "ทีฆํ", ref: "กัจ. ๑๕" },
+                padarupasiddhi: { ref: "ปท. ๑๗" }
+            },
+            {
+                kaccayana: { pali: "ปุพฺโบ จ", ref: "กัจ. ๑๖" },
+                padarupasiddhi: { ref: "ปท. ๑๘" }
+            },
+            {
+                kaccayana: { pali: "ยเมทนฺตสฺสาเดโส", ref: "กัจ. ๑๗" },
+                padarupasiddhi: { ref: "ปท. ๑๙" }
+            },
+            {
+                kaccayana: { pali: "วโมดุทนฺตานํ", ref: "กัจ. ๑๘" },
+                padarupasiddhi: { ref: "ปท. ๒๐" }
+            },
+            {
+                kaccayana: { pali: "สพฺโบ จํ ติ", ref: "กัจ. ๑๙" },
+                padarupasiddhi: { ref: "ปท. ๒๒" }
+            },
+            {
+                kaccayana: { pali: "โท ธสฺส จ", ref: "กัจ. ๒๐" },
+                padarupasiddhi: { ref: "ปท. ๒๗" }
+            },
+            {
+                kaccayana: { pali: "อิวณฺโณ ยํ นวา", ref: "กัจ. ๒๑" },
+                padarupasiddhi: { ref: "ปท. ๒๑" }
+            },
+            {
+                kaccayana: { pali: "เอวาทิสฺส ริ ปุพฺโบ จ รสฺโส", ref: "กัจ. ๒๒" },
+                padarupasiddhi: { ref: "ปท. ๒๘" }
+            },
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป ทุติโย กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป ทุติโย กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป ทุติโย กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป ทุติโย กณฺโฑ" }
+            },
+            {
+                kaccayana: { pali: "สรา ปกติ พฺยญฺชเน", ref: "กัจ. ๒๓" },
+                padarupasiddhi: { ref: "ปท. ๓๖" }
+            },
+            {
+                kaccayana: { pali: "สเร กฺวจิ", ref: "กัจ. ๒๔" },
+                padarupasiddhi: { ref: "ปท. ๓๕" }
+            },
+            {
+                kaccayana: { pali: "ทีฆํ", ref: "กัจ. ๒๕" },
+                padarupasiddhi: { ref: "ปท. ๓๗" }
+            },
+            {
+                kaccayana: { pali: "รสฺสํ", ref: "กัจ. ๒๖" },
+                padarupasiddhi: { ref: "ปท. ๓๘" }
+            },
+            {
+                kaccayana: { pali: "โลปญฺจ ตตฺรากาโร", ref: "กัจ. ๒๗" },
+                padarupasiddhi: { ref: "ปท. ๓๙" }
+            },
+            {
+                kaccayana: { pali: "ปรเทฺวภาโว ฐาเน", ref: "กัจ. ๒๘" },
+                padarupasiddhi: { ref: "ปท. ๔๐" }
+            },
+            {
+                kaccayana: { pali: "วคฺเค โฆสาโฆสานํ ตติยปฐมา", ref: "กัจ. ๒๙" },
+                padarupasiddhi: { ref: "ปท. ๔๒" }
+            },
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป ตติโย กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป ตติโย กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป ตติโย กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป ตติโย กณฺโฑ" }
+            },
+            {
+                kaccayana: { pali: "อํ พฺยญฺชเน นิคฺคหีตํ", ref: "กัจ. ๓๐" },
+                padarupasiddhi: { ref: "ปท. ๕๘" }
+            },
+            {
+                kaccayana: { pali: "วคฺคนฺตํ วา วคฺเก", ref: "กัจ. ๓๑" },
+                padarupasiddhi: { ref: "ปท. ๔๙" }
+            },
+            {
+                kaccayana: { pali: "เอเห ญํ", ref: "กัจ. ๓๒" },
+                padarupasiddhi: { ref: "ปท. ๕๐" }
+            },
+            {
+                kaccayana: { pali: "ส เย จ", ref: "กัจ. ๓๓" },
+                padarupasiddhi: { ref: "ปท. ๕๑" }
+            },
+            {
+                kaccayana: { pali: "มทา สเร", ref: "กัจ. ๓๔" },
+                padarupasiddhi: { ref: "ปท. ๕๒" }
+            },
+            {
+                kaccayana: { pali: "ย ว ม ท น ต ร ลา จาคมา", ref: "กัจ. ๓๕" },
+                padarupasiddhi: { ref: "ปท. ๓๔" }
+            },
+            {
+                kaccayana: { pali: "กฺวจิ โอ พฺยญฺชเน", ref: "กัจ. ๓๖" },
+                padarupasiddhi: { ref: "ปท. ๔๗" }
+            },
+            {
+                kaccayana: { pali: "นิคฺคหีตญฺจ", ref: "กัจ. ๓๗" },
+                padarupasiddhi: { ref: "ปท. ๕๗" }
+            },
+            {
+                kaccayana: { pali: "กฺวจิ โลปํ", ref: "กัจ. ๓๘" },
+                padarupasiddhi: { ref: "ปท. ๕๓" }
+            },
+            {
+                kaccayana: { pali: "พฺยญฺชเน จ", ref: "กัจ. ๓๙" },
+                padarupasiddhi: { ref: "ปท. ๕๔" }
+            },
+            {
+                kaccayana: { pali: "ปโร วา สโร", ref: "กัจ. ๔๐" },
+                padarupasiddhi: { ref: "ปท. ๕๕" }
+            },
+            {
+                kaccayana: { pali: "พฺยญฺชโน จ วิสญฺโญโค", ref: "กัจ. ๔๑" },
+                padarupasiddhi: { ref: "ปท. ๕๖" }
+            },
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป จตุตฺโถ กณฺโฑ" }
+            },
+            {
+                kaccayana: { pali: "โค สเร ปุถสฺสาคโม กฺวจิ", ref: "กัจ. ๔๒" },
+                padarupasiddhi: { ref: "ปท. ๓๒" }
+            },
+            {
+                kaccayana: { pali: "ปาสฺส จนฺโต รสฺโส", ref: "กัจ. ๔๓" },
+                padarupasiddhi: { ref: "ปท. ๓๓" }
+            },
+            {
+                kaccayana: { pali: "อบฺโภ อภิ", ref: "กัจ. ๔๔" },
+                padarupasiddhi: { ref: "ปท. ๒๔" }
+            },
+            {
+                kaccayana: { pali: "อชฺโฌ อธิ", ref: "กัจ. ๔๕" },
+                padarupasiddhi: { ref: "ปท. ๒๕" }
+            },
+            {
+                kaccayana: { pali: "เต น วา อิวณฺเณ", ref: "กัจ. ๔๖" },
+                padarupasiddhi: { ref: "ปท. ๒๖" }
+            },
+            {
+                kaccayana: { pali: "อติสฺส จนฺตสฺส", ref: "กัจ. ๔๗" },
+                padarupasiddhi: { ref: "ปท. ๒๓" }
+            },
+            {
+                kaccayana: { pali: "กฺวจิ ปฏิ ปติสฺส", ref: "กัจ. ๔๘" },
+                padarupasiddhi: { ref: "ปท. ๔๓" }
+            },
+            {
+                kaccayana: { pali: "ปุถสฺสุ พฺยญฺชเน", ref: "กัจ. ๔๙" },
+                padarupasiddhi: { ref: "ปท. ๔๔" }
+            },
+            {
+                kaccayana: { pali: "โอ อวสฺส", ref: "กัจ. ๕๐" },
+                padarupasiddhi: { ref: "ปท. ๔๕" }
+            },
+            {
+                kaccayana: { pali: "อนุปทิฏฺฐานํ วุตฺตโยคโต", ref: "กัจ. ๕๑" },
+                padarupasiddhi: { ref: "ปท. ๕๙" }
+            },
+            {
+                kaccayana: { pali: "อิติ สนฺธิกปฺเป ปญฺจโม กณฺโฑ" },
+                padarupasiddhi: { pali: "อิติ สนฺธิกปฺเป ปญฺจโม กณฺโฑ" },
+                moggallana: { pali: "อิติ สนฺธิกปฺเป ปญฺจโม กณฺโฑ" },
+                saddaniti: { pali: "อิติ สนฺธิกปฺเป ปญฺจโม กณฺโฑ" }
+            },
+            {
+                kaccayana: { pali: "สนฺธิสุตฺตํ นิฏฺฐิตํ" },
+                padarupasiddhi: { pali: "สนฺธิสุตฺตํ นิฏฺฐิตํ" },
+                moggallana: { pali: "สนฺธิสุตฺตํ นิฏฺฐิตํ" },
+                saddaniti: { pali: "สนฺธิสุตฺตํ นิฏฺฐิตํ" }
+            }
+        ]
+    }
+];

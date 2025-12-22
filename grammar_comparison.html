@@ -273,6 +273,12 @@
 
     <!-- Controls Section -->
     <div class="container" style="margin-bottom: 10px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <div style="flex: 0 0 220px;">
+            <select id="mode-select" class="control-input" onchange="renderTable()">
+                <option value="combined">รวมทุกหมวด</option>
+                <option value="sandhi1">สนธิ: ตารางที่ ๑</option>
+            </select>
+        </div>
         <div style="flex: 1; min-width: 250px;">
             <input type="text" id="search-input" class="control-input" placeholder="ค้นหาสูตร (บาลี/ไทย)..." onkeyup="renderTable()">
         </div>
@@ -317,11 +323,13 @@
         let isTopicPopulated = false;
 
         function populateTopics() {
-            if (isTopicPopulated || typeof grammarComparisonData === 'undefined') return;
-            
-            grammarComparisonData.forEach((section, index) => {
+            if (isTopicPopulated) return;
+            const modeSelect = document.getElementById('mode-select');
+            const activeData = (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') ? sandhiTable1Data : grammarComparisonData;
+            document.getElementById('topic-select').innerHTML = '<option value="all">ทุกหมวดหมู่</option>';
+            activeData.forEach((section, index) => {
                 const option = document.createElement('option');
-                option.value = index; // Use index as ID
+                option.value = index;
                 option.text = section.topic;
                 topicSelect.appendChild(option);
             });
@@ -329,7 +337,10 @@
         }
 
         function renderTable() {
-            if (typeof grammarComparisonData === 'undefined' || grammarComparisonData.length === 0) {
+            const modeSelect = document.getElementById('mode-select');
+            const activeData = (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') ? sandhiTable1Data : grammarComparisonData;
+
+            if (!activeData || activeData.length === 0) {
                 tableContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#7f8c8d;">ไม่พบข้อมูล</div>';
                 return;
             }
@@ -354,7 +365,7 @@
 
             let hasResult = false;
 
-            grammarComparisonData.forEach((section, index) => {
+            activeData.forEach((section, index) => {
                 // Filter by Topic
                 if (selectedTopicIndex !== 'all' && String(index) !== selectedTopicIndex) {
                     return;
