@@ -33,6 +33,12 @@
             color: #bdc3c7;
             font-size: 1rem;
         }
+        .table-title {
+            margin-top: 8px;
+            font-size: 1.1rem;
+            color: #f1c40f;
+            font-weight: 600;
+        }
 
         .container {
             max-width: 1400px;
@@ -268,6 +274,7 @@
     <div class="header">
         <h1><i class="fa-solid fa-scale-balanced"></i> เปรียบเทียบสูตรไวยากรณ์ ๔ คัมภีร์</h1>
         <p>กัจจายนะ • ปทรูปสิทธิ • โมคคัลลานะ • สัททนีติ</p>
+        <div id="active-table-title" class="table-title"></div>
         <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
     </div>
 
@@ -277,6 +284,7 @@
             <select id="mode-select" class="control-input" onchange="renderTable()">
                 <option value="combined">รวมทุกหมวด</option>
                 <option value="sandhi1">สนธิ: ตารางที่ ๑</option>
+                <option value="nama2">นาม: ตารางที่ ๒</option>
             </select>
         </div>
         <div style="flex: 1; min-width: 250px;">
@@ -323,9 +331,13 @@
         let isTopicPopulated = false;
 
         function populateTopics() {
-            if (isTopicPopulated) return;
             const modeSelect = document.getElementById('mode-select');
-            const activeData = (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') ? sandhiTable1Data : grammarComparisonData;
+            let activeData = grammarComparisonData;
+            if (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') {
+                activeData = sandhiTable1Data;
+            } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
+                activeData = namaTable2Data;
+            }
             document.getElementById('topic-select').innerHTML = '<option value="all">ทุกหมวดหมู่</option>';
             activeData.forEach((section, index) => {
                 const option = document.createElement('option');
@@ -338,7 +350,12 @@
 
         function renderTable() {
             const modeSelect = document.getElementById('mode-select');
-            const activeData = (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') ? sandhiTable1Data : grammarComparisonData;
+            let activeData = grammarComparisonData;
+            if (modeSelect && modeSelect.value === 'sandhi1' && typeof sandhiTable1Data !== 'undefined') {
+                activeData = sandhiTable1Data;
+            } else if (modeSelect && modeSelect.value === 'nama2' && typeof namaTable2Data !== 'undefined') {
+                activeData = namaTable2Data;
+            }
 
             if (!activeData || activeData.length === 0) {
                 tableContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#7f8c8d;">ไม่พบข้อมูล</div>';
@@ -349,6 +366,16 @@
 
             const searchTerm = searchInput.value.toLowerCase().trim();
             const selectedTopicIndex = topicSelect.value;
+            const titleEl = document.getElementById('active-table-title');
+            let headerTitle = '';
+            if (modeSelect && modeSelect.value === 'sandhi1') {
+                headerTitle = 'ตารางที่ ๑ — สนฺธิกปฺโป';
+            } else if (modeSelect && modeSelect.value === 'nama2') {
+                headerTitle = 'ตารางที่ ๒ — นามกปฺโป';
+            } else {
+                headerTitle = '';
+            }
+            titleEl.innerText = headerTitle;
 
             let html = `
                 <table class="comparison-table">
