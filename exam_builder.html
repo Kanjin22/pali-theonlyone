@@ -24,7 +24,9 @@
         .preview h3 { color:#2c3e50; margin-top:0; }
         .badge { display:inline-block; background:#eceff1; padding:6px 10px; border-radius:8px; color:#607d8b; margin-right:8px; }
         .list { margin-top:16px; border-top:1px dashed #e0e0e0; padding-top:16px; }
-        .item { margin-bottom:12px; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 8px; }
+        .item { margin-bottom:12px; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; }
+        .item-content { flex: 1; display: flex; align-items: flex-start; gap: 10px; }
+        .item-controls { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
         .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         /* Paper (A4-like) */
@@ -464,8 +466,27 @@
         // เก็บสถานะการเลือกประโยค
         const selectedLiteral = new Set();
         const selectedSense = new Set();
+        const deselectedLiteral = new Set();
+        const deselectedSense = new Set();
         const literalTextMap = new Map(); // key -> sentence
         const senseTextMap = new Map();
+        
+        // Cache for stable indexing
+        const partSlidesCache = new Map();
+        function getPartSlides(part) {
+            if (partSlidesCache.has(part)) return partSlidesCache.get(part);
+            const obj = partsMap[part] || {};
+            let slides = [];
+            // Iterate keys in stable order if possible, but object keys are unordered.
+            // We assume the file structure defines order by key insertion, usually works.
+            Object.keys(obj).forEach(k => {
+                const arr = obj[k];
+                if (Array.isArray(arr)) slides = slides.concat(arr);
+            });
+            partSlidesCache.set(part, slides);
+            return slides;
+        }
+
         function splitPaliSentences(text) {
             if (!text) return [];
             const clean = String(text).replace(/<[^>]+>/g, '').trim();
@@ -474,24 +495,26 @@
             return matches && matches.length ? matches.map(s => s.trim()) : [clean];
         }
         function collectSlides(part, startPage, endPage, vagga, story) {
-            const obj = partsMap[part] || {};
-            let slides = [];
-            Object.keys(obj).forEach(k => {
-                const arr = obj[k];
-                if (Array.isArray(arr)) slides = slides.concat(arr);
-            });
-            slides = slides.filter(s => typeof s.page !== 'undefined');
-            // Filter by vagga/story first to ensure we only get the selected story content
+            // We use the cached full list to ensure we have the original objects
+            const allSlides = getPartSlides(part);
+            
+            // Filter
+            let slides = allSlides.filter(s => typeof s.page !== 'undefined');
+            
+            // Filter by vagga/story
             slides = slides.filter(s => {
                 const okV = vagga ? (s.vagga === vagga) : true;
                 const okS = story ? (((s.story || s.section) === story)) : true;
                 return okV && okS;
             });
+            
+            // Sort by page (though usually already sorted)
             slides.sort((a,b) => {
                 const pa = parsePageNumber(a.page);
                 const pb = parsePageNumber(b.page);
                 return pa - pb;
             });
+            
             const sNum = parseInt(startPage) || 0;
             const eNum = parseInt(endPage) || 0;
             return slides.filter(s => {
@@ -511,9 +534,12 @@
                 return;
             }
 
+            const allSlides = getPartSlides(part); // For global index lookup
+
             let idx = 1;
-            items.forEach((s, slideIdx) => {
+            items.forEach((s) => {
                 const pageVal = parsePageNumber(s.page);
+                const globalSlideIdx = allSlides.indexOf(s); // Stable Index!
                 
                 let textToUse = s.pali;
                 if (mode === 'thai_source') {
@@ -522,13 +548,19 @@
                 
                 const sentences = splitPaliSentences(textToUse);
                 sentences.forEach((sent, sentIdx) => {
-                    const key = `${part}-${pageVal}-${slideIdx}-${sentIdx}`;
-                    // For Thai Source mode, we use literal set as the "Source" set
+                    // Stable Key: Part - GlobalSlideIndex - SentenceIndex
+                    const key = `${part}-${globalSlideIdx}-${sentIdx}`;
+                    
                     const isSense = (mode === 'sense');
                     const setRef = isSense ? selectedSense : selectedLiteral;
+                    const deselectRef = isSense ? deselectedSense : deselectedLiteral;
                     const mapRef = isSense ? senseTextMap : literalTextMap;
-                    // ตั้งค่าเริ่มต้น: เลือกไว้ก่อน
-                    if (!setRef.has(key)) setRef.add(key);
+                    
+                    // Logic: Select by default UNLESS explicitly deselected
+                    if (!deselectRef.has(key) && !setRef.has(key)) {
+                        setRef.add(key);
+                    }
+                    
                     mapRef.set(key, sent);
                     const selected = setRef.has(key);
                     const num = toThaiDigits(idx++);
@@ -536,13 +568,15 @@
                         const div = document.createElement('div');
                         div.className = 'item';
                         div.innerHTML = `
-                            <span class="badge">${num}</span>
-                            <span class="pali-text" style="display:inline-block; max-width:70%;">${sent}</span>
-                            ${pageVal > 0 ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
-                            <span style="margin-left:10px;">
+                            <div class="item-content">
+                                <span class="badge" style="margin:0;">${num}</span>
+                                <span class="pali-text" style="line-height:1.6;">${sent}</span>
+                            </div>
+                            <div class="item-controls">
+                                ${pageVal > 0 ? `<span class="badge" style="margin:0;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
                                 <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
                                 <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
-                            </span>
+                            </div>
                         `;
                         box.appendChild(div);
                     }
@@ -555,11 +589,20 @@
                         const key = this.getAttribute('data-key');
                         const mode = this.getAttribute('data-mode');
                         const sel = this.getAttribute('data-select') === 'yes';
-                        // Map thai_source to literal set
-                        const effectiveMode = (mode === 'thai_source') ? 'literal' : mode;
-                        const setRef = (effectiveMode === 'sense') ? selectedSense : selectedLiteral;
                         
-                        if (sel) setRef.add(key); else setRef.delete(key);
+                        const effectiveMode = (mode === 'thai_source') ? 'literal' : mode;
+                        const isSense = (effectiveMode === 'sense');
+                        const setRef = isSense ? selectedSense : selectedLiteral;
+                        const deselectRef = isSense ? deselectedSense : deselectedLiteral;
+                        
+                        if (sel) {
+                            setRef.add(key);
+                            deselectRef.delete(key);
+                        } else {
+                            setRef.delete(key);
+                            deselectRef.add(key);
+                        }
+                        
                         // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
                         const parent = this.parentElement;
                         const yesBtn = parent.querySelector('button[data-select="yes"][data-key="'+key+'"]');
@@ -585,43 +628,34 @@
             const minutes = document.getElementById('minutesInput').value || 0;
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
-            // Assemble selected sentences sorted by key (part, page, slideIdx, sentIdx)
+            // Assemble selected sentences sorted by stable key
             function sortKeys(a,b) {
                 const partsA = a.split('-');
                 const partsB = b.split('-');
-                // part might be 'dhamma-1' (string) or '1' (string)
-                // We should rely on array index comparison if part string differs? 
-                // Or just string compare for part, then number compare for page/idx
-                if (partsA[0] !== partsB[0] && partsA[1] !== partsB[1]) {
-                     // If part name differs, just string compare
-                     return partsA[0].localeCompare(partsB[0]);
-                }
-                // If part is same or we just want to sort by page/slide/sent
-                // format: part-page-slideIdx-sentIdx
-                // But part can be 'dhamma-1'. So partsA length is 4 if part has no hyphen?
-                // Wait, part key 'dhamma-1' has a hyphen!
-                // So split('-') will result in ['dhamma', '1', 'page', 'slide', 'sent']
-                // This complicates things.
-                // Better to use the full key string for simple sort if complicated?
-                // No, we need page order.
-                
-                // Let's re-parse carefully.
-                // The key was constructed as `${part}-${pageVal}-${slideIdx}-${sentIdx}`
-                // If part is 'dhamma-1', key is 'dhamma-1-PAGE-SLIDE-SENT'
-                // We can split by '-' and take the last 3 as numbers.
+                // Key: Part - GlobalSlideIndex - SentIndex
+                // Part name might contain hyphens? E.g. "dhamma-1"
+                // So we split and take from end.
                 
                 const lenA = partsA.length;
                 const lenB = partsB.length;
-                const pA = parseInt(partsA[lenA-3]) || 0; // page
-                const pB = parseInt(partsB[lenB-3]) || 0;
-                if (pA !== pB) return pA - pB;
                 
-                const sA = parseInt(partsA[lenA-2]) || 0; // slide
-                const sB = parseInt(partsB[lenB-2]) || 0;
-                if (sA !== sB) return sA - sB;
-                
-                const sentA = parseInt(partsA[lenA-1]) || 0; // sent
+                // Last is sentIdx
+                const sentA = parseInt(partsA[lenA-1]) || 0;
                 const sentB = parseInt(partsB[lenB-1]) || 0;
+                
+                // Second to last is GlobalSlideIndex
+                const slideA = parseInt(partsA[lenA-2]) || 0;
+                const slideB = parseInt(partsB[lenB-2]) || 0;
+                
+                // Before that is Part. 
+                // Since we usually view one part at a time, part sorting might not matter much,
+                // but if we mix, we can sort by part name.
+                // Reconstruct part name
+                const partNameA = partsA.slice(0, lenA-2).join('-');
+                const partNameB = partsB.slice(0, lenB-2).join('-');
+                
+                if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
+                if (slideA !== slideB) return slideA - slideB;
                 return sentA - sentB;
             }
             const litKeys = [...selectedLiteral].sort(sortKeys);
@@ -749,8 +783,16 @@
             buildExamPreview();
         }
         function resetSelection(mode) {
-            if (mode === 'literal') { selectedLiteral.clear(); literalTextMap.clear(); }
-            if (mode === 'sense') { selectedSense.clear(); senseTextMap.clear(); }
+            if (mode === 'literal') { 
+                selectedLiteral.clear(); 
+                deselectedLiteral.clear();
+                literalTextMap.clear(); 
+            }
+            if (mode === 'sense') { 
+                selectedSense.clear(); 
+                deselectedSense.clear();
+                senseTextMap.clear(); 
+            }
         }
         function resetForm() {
             document.getElementById('attemptInput').value = '';
