@@ -818,6 +818,9 @@ var dataDecember = [
         morning: {
             activityGrammar: "(อ่าน) ข้อ ๖-๗ (สมาส-ตัทธิต) ปี' ๕๔-๕๕",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๙ น.๖๙-๗๑ เถโร ปน ปุถุชฺชโน - วตฺวา อิมํ คาถมาห ฯ",
+            linkYoutube: [
+                "https://youtu.be/mXo7aNe-CZE?si=Vq4eTVtdrGlu41QX&t=531",
+            ],
             slideId: "d04_v07_s07_kosambivasitissa",
             fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_09.pdf"
@@ -825,7 +828,10 @@ var dataDecember = [
         afternoon: {
             activityGrammar: "(สอบ) บาลีไวยากรณ์ ครั้งที่ ๓๐",
             activityTranslate: "(อ่าน) ภาคที่ ๔ เก็งที่ ๑๐ น.๗๔-๗๖ อายสฺมา หิ สารีปุตฺโต - คุมฺพาภิมุโข อโหสิ ฯ",
-            slideId: "d04_v07_s09_khadiravaniya",
+            linkYoutube: [
+                "https://youtu.be/paHQ8RdiPP0?si=amAwxm9d4VMW4xHm&t=899",
+            ],
+            slideId: "d04_v07_s08_sariputta",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_10.pdf",
             isExam: true,
             examStartTime: "14:00:00",
