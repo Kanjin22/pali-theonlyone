@@ -220,16 +220,21 @@
                     <div>
                         <div class="row">
                             <label>ชั้น</label>
-                            <select id="levelSelect">
-                                <option value="p12">ประโยค ๑–๒</option>
-                                <option value="p3">ประโยค ป.ธ. ๓</option>
-                                <option value="p4">ประโยค ป.ธ. ๔</option>
-                                <option value="p5">ประโยค ป.ธ. ๕</option>
-                                <option value="p6">ประโยค ป.ธ. ๖</option>
-                                <option value="p7">ประโยค ป.ธ. ๗</option>
-                                <option value="p8">ประโยค ป.ธ. ๘</option>
-                                <option value="p9">ประโยค ป.ธ. ๙</option>
-                            </select>
+                            <div style="display:flex; align-items:center; gap:10px; flex:1;">
+                                <select id="levelSelect" style="flex:1;">
+                                    <option value="p12">ประโยค ๑–๒</option>
+                                    <option value="p3">ประโยค ป.ธ. ๓</option>
+                                    <option value="p4">ประโยค ป.ธ. ๔</option>
+                                    <option value="p5">ประโยค ป.ธ. ๕</option>
+                                    <option value="p6">ประโยค ป.ธ. ๖</option>
+                                    <option value="p7">ประโยค ป.ธ. ๗</option>
+                                    <option value="p8">ประโยค ป.ธ. ๘</option>
+                                    <option value="p9">ประโยค ป.ธ. ๙</option>
+                                </select>
+                                <label style="min-width:auto; display:flex; align-items:center; gap:5px; font-size:0.9rem; cursor:pointer;">
+                                    <input type="checkbox" id="bsMode" onchange="generatePreview()"> บ.ศ.
+                                </label>
+                            </div>
                         </div>
                         <div class="row">
                             <label>วิชา</label>
@@ -891,39 +896,6 @@
             const minutes = document.getElementById('minutesInput').value || 0;
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
-            // Assemble selected sentences sorted by stable key
-            function sortKeys(a,b) {
-                const partsA = a.split('-');
-                const partsB = b.split('-');
-                // Key: Part - GlobalSlideIndex - SentIndex
-                // Part name might contain hyphens? E.g. "dhamma-1"
-                // So we split and take from end.
-                
-                const lenA = partsA.length;
-                const lenB = partsB.length;
-                
-                // Last is sentIdx
-                const sentA = parseInt(partsA[lenA-1]) || 0;
-                const sentB = parseInt(partsB[lenB-1]) || 0;
-                
-                // Second to last is GlobalSlideIndex
-                const slideA = parseInt(partsA[lenA-2]) || 0;
-                const slideB = parseInt(partsB[lenB-2]) || 0;
-                
-                // Before that is Part. 
-                // Since we usually view one part at a time, part sorting might not matter much,
-                // but if we mix, we can sort by part name.
-                // Reconstruct part name
-                const partNameA = partsA.slice(0, lenA-2).join('-');
-                const partNameB = partsB.slice(0, lenB-2).join('-');
-                
-                if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
-                if (slideA !== slideB) return slideA - slideB;
-                return sentA - sentB;
-            }
-            const litKeys = [...selectedLiteral].sort(sortKeys);
-            const senKeys = [...selectedSense].sort(sortKeys);
-            
             // Helper for 2-space between words
             // Using a mix of NBSP and regular space to ensure Word treats it as 2 spaces
             // while still allowing some flexibility for justification.
@@ -936,25 +908,134 @@
                 // Then replace single space with "NBSP + Space"
                 return normalized.replace(/ /g, '\u00A0 '); 
             };
+            
+            // Re-sort keys function (was removed in previous edit)
+            function sortKeys(a,b) {
+                const partsA = a.split('-');
+                const partsB = b.split('-');
+                const lenA = partsA.length;
+                const lenB = partsB.length;
+                const sentA = parseInt(partsA[lenA-1]) || 0;
+                const sentB = parseInt(partsB[lenB-1]) || 0;
+                const slideA = parseInt(partsA[lenA-2]) || 0;
+                const slideB = parseInt(partsB[lenB-2]) || 0;
+                const partNameA = partsA.slice(0, lenA-2).join('-');
+                const partNameB = partsB.slice(0, lenB-2).join('-');
+                if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
+                if (slideA !== slideB) return slideA - slideB;
+                return sentA - sentB;
+            }
+            const litKeys = [...selectedLiteral].sort(sortKeys);
+            const senKeys = [...selectedSense].sort(sortKeys);
 
-        let litContent = '';
-        litKeys.forEach(k => {
-            const txt = literalTextMap.get(k) || '';
-            if (txt) litContent += (litContent ? '  ' : '') + addDoubleSpacing(txt);
-        });
+            // Determine context based on Subject
+            // Translate Pali -> Thai (Subject: แปล มคธเป็นไทย) => Content is Pali => Use 2 spaces, Pali Font
+            // Translate Thai -> Pali (Subject: แปล ไทยเป็นมคธ) => Content is Thai => Use 1 space, Thai Font
+            // Relation (Subject: สัมพันธ์ไทย) => Content is Pali => Use 2 spaces, Pali Font
+            
+            // Logic:
+            // If subject contains "มคธเป็นไทย" or "สัมพันธ์" => Pali Content
+            // If subject contains "ไทยเป็นมคธ" => Thai Content
+            
+            let isPaliContent = false;
+            if (subjectLabel.includes('มคธเป็นไทย') || subjectLabel.includes('สัมพันธ์')) {
+                isPaliContent = true;
+            } else if (subjectLabel.includes('ไทยเป็นมคธ')) {
+                isPaliContent = false;
+            } else {
+                // Default fallback
+                isPaliContent = false; 
+            }
 
-        let senContent = '';
-        senKeys.forEach(k => {
-            const txt = senseTextMap.get(k) || '';
-            if (txt) senContent += (senContent ? '  ' : '') + addDoubleSpacing(txt);
-        });
+            // Function to clean punctuation for P.T.3-9
+            const cleanPunctuation = (text) => {
+                if (!text) return '';
+                // Strategy: Keep Thai chars, Pali chars, Numbers, Space, ฯ, ฯลฯ
+                // Remove other punctuation marks
+                
+                // First replace ฯลฯ to temporary placeholder to protect it
+                let processed = text.replace(/ฯลฯ/g, '###P2###');
+                // Replace ฯ to temporary placeholder
+                processed = processed.replace(/ฯ/g, '###P1###');
+                
+                // Remove punctuation:
+                // Matches: ! " # $ % & ' * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+                // Also standard keyboard symbols that are not text (Excluding ( ) as requested)
+                processed = processed.replace(/[!"#$%&'*+,\-./:;<=>?@[\]^_`{|}~]/g, '');
+                
+                // Restore placeholders
+                processed = processed.replace(/###P1###/g, 'ฯ');
+                processed = processed.replace(/###P2###/g, 'ฯลฯ');
+                
+                return processed;
+            };
+            
+            // Check if we need to clean punctuation (Level P.T.3-9)
+            // Level codes: p3 to p9
+            const levelCode = document.getElementById('levelSelect').value;
+            const needsCleaning = ['p3','p4','p5','p6','p7','p8','p9'].includes(levelCode);
+
+            // Determine Header Label (Convert to B.S. if checked)
+            const isBSMode = document.getElementById('bsMode').checked;
+            let displayLevelLabel = levelLabel;
+            
+            if (isBSMode) {
+                if (levelLabel.includes('ประโยค ๑–๒')) {
+                    displayLevelLabel = 'ประโยค บ.ศ. ๑–๒';
+                } else if (levelLabel.includes('ประโยค ป.ธ.')) {
+                    // Replace ป.ธ. with บ.ศ.
+                    displayLevelLabel = levelLabel.replace('ป.ธ.', 'บ.ศ.');
+                }
+            }
+
+            // Helper for spacing
+            const formatSpacing = (text) => {
+                if (!text) return '';
+                let processed = String(text);
+                
+                if (needsCleaning) {
+                    processed = cleanPunctuation(processed);
+                }
+                
+                // Normalize spaces
+                const normalized = processed.replace(/\s+/g, ' ').trim();
+                
+                if (isPaliContent) {
+                    // Pali: 2 spaces (NBSP + Space)
+                    return normalized.replace(/ /g, '\u00A0 ');
+                } else {
+                    // Thai: 1 space (Standard)
+                    return normalized;
+                }
+            };
+
+            // Prepare Content Blocks with specific fonts
+            const paliFont = '"DilleniaUPC_4Balee", "DilleniaUPC", sans-serif';
+            const thaiFont = '"DilleniaUPC", sans-serif'; // Or inherit from paper
+            
+            const contentStyle = isPaliContent ? `font-family: ${paliFont};` : '';
+
+            let litContent = '';
+            litKeys.forEach(k => {
+                const txt = literalTextMap.get(k) || '';
+                // Add spacing between sentences based on mode
+                const sep = isPaliContent ? '\u00A0 ' : ' ';
+                if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
+            });
+
+            let senContent = '';
+            senKeys.forEach(k => {
+                const txt = senseTextMap.get(k) || '';
+                const sep = isPaliContent ? '\u00A0 ' : ' ';
+                if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
+            });
 
             const rawTimeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
                 : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
             const timeLine = addDoubleSpacing(rawTimeLine);
 
-            const headerLevel = addDoubleSpacing(levelLabel);
+            const headerLevel = addDoubleSpacing(displayLevelLabel);
             const headerSubject = addDoubleSpacing(subjectLabel);
             
             let dateText = '';
@@ -970,7 +1051,7 @@
                 contentHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">${headerSubject}</div>
-                    <div class="paper-content-text">
+                    <div class="paper-content-text" style="${contentStyle}">
                         <span>๑. </span>${litContent || '...'}
                     </div>
                 </div>`;
@@ -978,13 +1059,13 @@
                 contentHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
-                    <div class="paper-content-text">
+                    <div class="paper-content-text" style="${contentStyle}">
                         <span>๑. </span>${litContent || '...'}
                     </div>
                 </div>
                 <div class="paper-section">
                     <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
-                    <div class="paper-content-text">
+                    <div class="paper-content-text" style="${contentStyle}">
                         <span>๒. </span>${senContent || '...'}
                     </div>
                 </div>`;
