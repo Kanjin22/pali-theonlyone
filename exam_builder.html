@@ -1133,6 +1133,67 @@
             updateDuration();
             generatePreview();
         }
+        function updateToolbarState() {
+            const paper = document.getElementById('paperContent');
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            
+            // Ensure selection is inside paper
+            let node = selection.anchorNode;
+            let isInside = false;
+            while(node) {
+                if (node === paper) {
+                    isInside = true;
+                    break;
+                }
+                node = node.parentNode;
+            }
+            if (!isInside) return;
+
+            // Detect Font Family
+            // Use document.queryCommandValue if possible, or computed style
+            // Note: queryCommandValue('fontName') returns the font name string
+            let currentFont = document.queryCommandValue('fontName');
+            
+            // Sometimes queryCommandValue returns empty or weird values in some browsers/contexts
+            // Fallback to computed style of the parent element of the selection
+            if (!currentFont) {
+                const parent = selection.anchorNode.nodeType === 3 ? selection.anchorNode.parentNode : selection.anchorNode;
+                const computed = window.getComputedStyle(parent);
+                currentFont = computed.fontFamily;
+            }
+
+            // Clean up font string (remove quotes)
+            currentFont = currentFont.replace(/['"]/g, '');
+            
+            // Match with dropdown options
+            // Our options values: DilleniaUPC, DilleniaUPC_4Balee, etc.
+            // The computed font might be "DilleniaUPC, sans-serif" or just "DilleniaUPC"
+            const fontSelect = document.getElementById('fontFamilySelect');
+            const options = Array.from(fontSelect.options);
+            
+            // Try exact match first
+            let matched = false;
+            for (let opt of options) {
+                if (currentFont.includes(opt.value)) {
+                    fontSelect.value = opt.value;
+                    matched = true;
+                    break;
+                }
+            }
+            
+            // If not matched (e.g. global style), check paper style
+            if (!matched) {
+                 const paperStyle = window.getComputedStyle(document.querySelector('.paper')).fontFamily.replace(/['"]/g, '');
+                 for (let opt of options) {
+                    if (paperStyle.includes(opt.value)) {
+                        fontSelect.value = opt.value;
+                        break;
+                    }
+                }
+            }
+        }
+
         document.getElementById('levelSelect').addEventListener('change', () => { populateSubjectSelect(); populatePartSelects(); generatePreview(); });
         document.getElementById('subjectSelect').addEventListener('change', () => { resetSelection('literal'); resetSelection('sense'); populatePartSelects(); generatePreview(); });
         document.getElementById('hoursInput').addEventListener('input', updateDuration);
@@ -1144,6 +1205,11 @@
         document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
         document.getElementById('wordBtn').addEventListener('click', exportToWord);
         document.getElementById('printBtn').addEventListener('click', () => window.print());
+        
+        // Toolbar state listeners
+        document.getElementById('paperContent').addEventListener('mouseup', updateToolbarState);
+        document.getElementById('paperContent').addEventListener('keyup', updateToolbarState);
+        document.getElementById('paperContent').addEventListener('click', updateToolbarState);
         
         // Hierarchical Select Listeners
         document.getElementById('literalPart').addEventListener('change', () => { updateVaggaSelect('literal'); generatePreview(); });
