@@ -30,15 +30,27 @@
         .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         /* Paper (A4-like) */
-        .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        @font-face {
+            font-family: 'DilleniaUPC';
+            src: local('DilleniaUPC'), local('Dillenia UPC');
+        }
+        .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); font-family: "DilleniaUPC", "Cordia New", "TH Sarabun New", sans-serif; font-size: 22px; }
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
-        .paper-sep { text-align:center; letter-spacing: 2px; color:#607d8b; margin: 8px 0 16px 0; }
-        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1.15rem; }
-        .paper-line { margin: 4px 0; font-weight: bold; color: #000; }
+        .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
+        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1.3rem; }
+        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1.4rem; }
         .paper-list .paper-item { margin: 6px 0; }
-        .paper-content-text { text-align: justify; line-height: 1.8; font-size: 1rem; color: #000; }
-        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; }
+        .paper-content-text { text-align: justify; line-height: 1.6; font-size: 1.2rem; color: #000; }
+        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1.2rem; }
+        
+        @media print {
+            body { background: #fff; margin: 0; padding: 0; }
+            .header, .content, .actions, .container > .header, .container > .content, .container > .actions { display: none !important; }
+            .container { box-shadow: none; margin: 0; max-width: none; width: 100%; border: none; }
+            .paper { width: 100%; max-width: none; margin: 0; border: none; box-shadow: none; page-break-after: always; }
+            .paper-inner { padding: 0.5cm 1cm; } /* Adjust margins for print */
+        }
     </style>
 </head>
 <body>
@@ -143,10 +155,11 @@
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
             <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
+            <button class="btn secondary" id="printBtn"><i class="fa-solid fa-print"></i> พิมพ์</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
         <div class="paper">
-            <div class="paper-inner" id="paperContent">
+            <div class="paper-inner" id="paperContent" contenteditable="true">
                 <!-- Assembled exam document will be injected here -->
             </div>
         </div>
@@ -830,6 +843,7 @@
         document.getElementById('resetBtn').addEventListener('click', resetForm);
         document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
         document.getElementById('wordBtn').addEventListener('click', exportToWord);
+        document.getElementById('printBtn').addEventListener('click', () => window.print());
         
         // Hierarchical Select Listeners
         document.getElementById('literalPart').addEventListener('change', () => { updateVaggaSelect('literal'); generatePreview(); });
