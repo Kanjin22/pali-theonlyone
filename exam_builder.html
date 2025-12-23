@@ -1165,7 +1165,8 @@
                  return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, ' \u200B ');
             };
             const formatThai = (text) => {
-                 return String(text).replace(/\s+/g, ' ').trim();
+                 // Replace _ with space, then normalize spaces
+                 return String(text).replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
             };
             
             // Resolve Content
@@ -1205,7 +1206,7 @@
                 const { pali, thai } = resolveContent(k, 'literal');
                 if (pali || thai) {
                     litContent += `
-                    <div style="margin-bottom: 15px; page-break-inside: avoid;">
+                    <div style="margin-bottom: 0px; page-break-inside: avoid;">
                         <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
                         <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
                     </div>`;
@@ -1217,7 +1218,7 @@
                 const { pali, thai } = resolveContent(k, 'sense');
                 if (pali || thai) {
                     senContent += `
-                    <div style="margin-bottom: 15px; page-break-inside: avoid;">
+                    <div style="margin-bottom: 0px; page-break-inside: avoid;">
                         <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
                         <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
                     </div>`;
