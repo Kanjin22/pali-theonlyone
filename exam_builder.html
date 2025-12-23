@@ -1280,8 +1280,8 @@
             const paperContainer = document.querySelector('.paper');
             let content = paper.innerHTML;
             
-            // Formula: Replace double spaces with Space + ZWS + Space to prevent Word collapsing
-            content = content.replace(/  /g, ' &#8203; ');
+            // Revert to original content (no special replacement for spaces)
+            // Word will handle standard spaces naturally
             
             // Get current computed styles
             const currentFont = paperContainer.style.fontFamily || '"DilleniaUPC", sans-serif';
@@ -1308,7 +1308,7 @@
                             line-height: 1.6; 
                             font-size: 1em; 
                             color: #000;
-                            /* REMOVED white-space: pre-wrap; to allow Word to reflow text */
+                            white-space: pre-wrap; /* Revert: Use pre-wrap to respect HTML spacing */
                             text-indent: 1.27cm;
                         }
                         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
