@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ระบบออกข้อสอบ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        body { font-family: "Niramit", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: #f4f6f8; margin: 0; }
+        .container { max-width: 1100px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; }
+        .header { padding: 18px 24px; border-bottom: 1px solid #e0e0e0; display:flex; align-items:center; justify-content:space-between; }
+        .header h1 { font-size: 1.4rem; color: #2c3e50; margin:0; }
+        .content { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .section { border: 1px solid #eaeaea; border-radius: 10px; padding: 16px; background:#fafafa; }
+        .section h2 { font-size: 1.1rem; color: #37474f; margin: 0 0 10px 0; }
+        .row { display:flex; gap:12px; margin:10px 0; align-items:center; }
+        label { min-width: 120px; color:#607d8b; }
+        select, input[type="text"], input[type="number"], input[type="date"] { padding:8px 10px; border:1px solid #cfd8dc; border-radius:8px; font-size:1rem; width:100%; box-sizing:border-box; }
+        .actions { padding: 16px 24px; border-top: 1px solid #e0e0e0; display:flex; gap:12px; justify-content:flex-end; background:#fcfcfc; }
+        .btn { padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+        .primary { background:#1976D2; color:#fff; }
+        .secondary { background:#eceff1; color:#37474f; }
+        .preview { padding: 24px; }
+        .preview h3 { color:#2c3e50; margin-top:0; }
+        .badge { display:inline-block; background:#eceff1; padding:6px 10px; border-radius:8px; color:#607d8b; margin-right:8px; }
+        .list { margin-top:10px; border-top:1px dashed #e0e0e0; padding-top:10px; }
+        .item { margin-bottom:8px; }
+        .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fa-solid fa-file-lines"></i> ระบบออกข้อสอบ</h1>
+            <div>
+                <span class="badge" id="durationDisplay">เวลา: ๐ ชั่วโมง ๐ นาที</span>
+                <span class="badge" id="dateDisplay">วันที่: -</span>
+            </div>
+        </div>
+        <div class="content">
+            <div class="section">
+                <h2>ตั้งค่าข้อสอบ</h2>
+                <div class="row">
+                    <label>ชั้น</label>
+                    <select id="levelSelect">
+                        <option value="p12">ประโยค ๑–๒</option>
+                        <option value="p3">ป.ธ. ๓</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>ครั้งที่สอบ</label>
+                    <input type="text" id="attemptInput" placeholder="เช่น ๑" />
+                </div>
+                <div class="row">
+                    <label>วันที่</label>
+                    <input type="date" id="dateInput" />
+                </div>
+                <div class="row grid-2">
+                    <div class="row">
+                        <label>ชั่วโมง</label>
+                        <input type="number" id="hoursInput" min="0" value="4" />
+                    </div>
+                    <div class="row">
+                        <label>นาที</label>
+                        <input type="number" id="minutesInput" min="0" value="15" />
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>เลือกช่วงเนื้อหา</h2>
+                <div class="row">
+                    <label>โดยพยัญชนะ</label>
+                    <div class="grid-2" style="width:100%;">
+                        <select id="literalPart"></select>
+                        <div class="row">
+                            <input type="number" id="literalStartPage" placeholder="หน้าเริ่ม" />
+                            <input type="number" id="literalEndPage" placeholder="หน้าจบ" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>โดยอรรถ</label>
+                    <div class="grid-2" style="width:100%;">
+                        <select id="sensePart"></select>
+                        <div class="row">
+                            <input type="number" id="senseStartPage" placeholder="หน้าเริ่ม" />
+                            <input type="number" id="senseEndPage" placeholder="หน้าจบ" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
+            <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
+        </div>
+        <div class="preview" id="previewBox">
+            <h3>ตัวอย่างข้อสอบ</h3>
+            <div id="metaInfo"></div>
+            <h4>ส่วนที่ ๑: แปลโดยพยัญชนะ</h4>
+            <div class="list" id="literalList"></div>
+            <h4>ส่วนที่ ๒: แปลโดยอรรถ</h4>
+            <div class="list" id="senseList"></div>
+        </div>
+    </div>
+
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+
+    <script>
+        const partsMap = {
+            1: (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+            2: (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+            3: (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+            4: (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+            5: (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+            6: (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+            7: (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+            8: (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {})
+        };
+        function toThaiDigits(str) {
+            const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
+            return String(str).replace(/[0-9]/g, d => m[d]);
+        }
+        function formatThaiDate(iso) {
+            if (!iso) return '-';
+            const d = new Date(iso);
+            const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+            const day = toThaiDigits(d.getDate());
+            const month = months[d.getMonth()];
+            const year = toThaiDigits(d.getFullYear() + 543);
+            return `วันที่ ${day} ${month} ${year}`;
+        }
+        function updateDuration() {
+            const h = document.getElementById('hoursInput').value || 0;
+            const m = document.getElementById('minutesInput').value || 0;
+            document.getElementById('durationDisplay').innerText = `เวลา: ${toThaiDigits(h)} ชั่วโมง ${toThaiDigits(m)} นาที`;
+        }
+        function updateDateDisplay() {
+            const iso = document.getElementById('dateInput').value;
+            document.getElementById('dateDisplay').innerText = formatThaiDate(iso);
+        }
+        function normalizeThaiNumerals(input) {
+            const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
+            input.value = String(input.value).replace(/[0-9]/g, d => m[d]).replace(/\s+/g,'').trim();
+        }
+        function allowedPartsForLevel(level) {
+            if (level === 'p12') return [1,2,3,4];
+            if (level === 'p3') return [5,6,7,8];
+            return [1,2,3,4];
+        }
+        function populatePartSelects() {
+            const level = document.getElementById('levelSelect').value;
+            const allowed = allowedPartsForLevel(level);
+            const literalSel = document.getElementById('literalPart');
+            const senseSel = document.getElementById('sensePart');
+            literalSel.innerHTML = '';
+            senseSel.innerHTML = '';
+            allowed.forEach(p => {
+                const o1 = document.createElement('option'); o1.value = p; o1.text = `ภาคที่ ${toThaiDigits(p)}`; literalSel.appendChild(o1);
+                const o2 = document.createElement('option'); o2.value = p; o2.text = `ภาคที่ ${toThaiDigits(p)}`; senseSel.appendChild(o2);
+            });
+        }
+        function collectSlides(part, startPage, endPage) {
+            const obj = partsMap[part] || {};
+            let slides = [];
+            Object.keys(obj).forEach(k => {
+                const arr = obj[k];
+                if (Array.isArray(arr)) slides = slides.concat(arr);
+            });
+            slides = slides.filter(s => typeof s.page !== 'undefined');
+            slides.sort((a,b) => {
+                const pa = typeof a.page === 'number' ? a.page : parseInt(String(a.page).replace(/\D/g,'')) || 0;
+                const pb = typeof b.page === 'number' ? b.page : parseInt(String(b.page).replace(/\D/g,'')) || 0;
+                return pa - pb;
+            });
+            const sNum = parseInt(startPage) || 0;
+            const eNum = parseInt(endPage) || 0;
+            return slides.filter(s => {
+                const p = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || 0;
+                if (sNum && eNum) return p >= sNum && p <= eNum;
+                if (sNum && !eNum) return p >= sNum;
+                if (!sNum && eNum) return p <= eNum;
+                return true;
+            });
+        }
+        function renderList(containerId, items, mode) {
+            const box = document.getElementById(containerId);
+            box.innerHTML = '';
+            let idx = 1;
+            items.forEach(s => {
+                let text = '';
+                if (mode === 'literal') text = s.thai || '';
+                if (mode === 'sense') text = s.thai_desana || s.thai_sense || s.thai || '';
+                const num = toThaiDigits(idx++);
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<span class="badge">${num}</span> <span>${text || '...'}</span>`;
+                box.appendChild(div);
+            });
+        }
+        function generatePreview() {
+            const level = document.getElementById('levelSelect').value;
+            const attempt = document.getElementById('attemptInput').value;
+            const iso = document.getElementById('dateInput').value;
+            const literalPart = parseInt(document.getElementById('literalPart').value);
+            const literalStart = document.getElementById('literalStartPage').value;
+            const literalEnd = document.getElementById('literalEndPage').value;
+            const sensePart = parseInt(document.getElementById('sensePart').value);
+            const senseStart = document.getElementById('senseStartPage').value;
+            const senseEnd = document.getElementById('senseEndPage').value;
+            const meta = document.getElementById('metaInfo');
+            const levelLabel = level === 'p12' ? 'ประโยค ๑–๒' : (level === 'p3' ? 'ป.ธ. ๓' : level);
+            const attemptLabel = attempt ? `ครั้งที่ ${attempt}` : '';
+            const dateLabel = formatThaiDate(iso);
+            meta.innerHTML = `<span class="badge">${levelLabel}</span><span class="badge">${attemptLabel}</span><span class="badge">${dateLabel}</span>`;
+            const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
+            const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
+            renderList('literalList', literalSlides, 'literal');
+            renderList('senseList', senseSlides, 'sense');
+        }
+        function resetForm() {
+            document.getElementById('attemptInput').value = '';
+            document.getElementById('dateInput').value = '';
+            document.getElementById('literalStartPage').value = '';
+            document.getElementById('literalEndPage').value = '';
+            document.getElementById('senseStartPage').value = '';
+            document.getElementById('senseEndPage').value = '';
+            updateDateDisplay();
+            updateDuration();
+            generatePreview();
+        }
+        document.getElementById('levelSelect').addEventListener('change', () => { populatePartSelects(); generatePreview(); });
+        document.getElementById('hoursInput').addEventListener('input', updateDuration);
+        document.getElementById('minutesInput').addEventListener('input', updateDuration);
+        document.getElementById('dateInput').addEventListener('change', updateDateDisplay);
+        document.getElementById('attemptInput').addEventListener('input', function() { normalizeThaiNumerals(this); });
+        document.getElementById('generateBtn').addEventListener('click', generatePreview);
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        populatePartSelects();
+        updateDuration();
+        updateDateDisplay();
+        generatePreview();
+    </script>
+</body>
+</html>
