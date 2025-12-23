@@ -10,31 +10,33 @@
         .container { max-width: 1100px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; }
         .header { padding: 18px 24px; border-bottom: 1px solid #e0e0e0; display:flex; align-items:center; justify-content:space-between; }
         .header h1 { font-size: 1.4rem; color: #2c3e50; margin:0; }
-        .content { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .section { border: 1px solid #eaeaea; border-radius: 10px; padding: 16px; background:#fafafa; }
-        .section h2 { font-size: 1.1rem; color: #37474f; margin: 0 0 10px 0; }
-        .row { display:flex; gap:12px; margin:10px 0; align-items:center; }
-        label { min-width: 120px; color:#607d8b; }
-        select, input[type="text"], input[type="number"], input[type="date"] { padding:8px 10px; border:1px solid #cfd8dc; border-radius:8px; font-size:1rem; width:100%; box-sizing:border-box; }
+        .content { padding: 24px; display: block; }
+        .section { border: 1px solid #eaeaea; border-radius: 10px; padding: 24px; background:#fafafa; margin-bottom: 24px; }
+        .section h2 { font-size: 1.1rem; color: #37474f; margin: 0 0 16px 0; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .row { display:flex; gap:16px; margin:12px 0; align-items:center; }
+        label { min-width: 100px; color:#607d8b; font-weight: 500; }
+        select, input[type="text"], input[type="number"], input[type="date"] { padding:8px 12px; border:1px solid #cfd8dc; border-radius:8px; font-size:1rem; width:100%; box-sizing:border-box; }
         .actions { padding: 16px 24px; border-top: 1px solid #e0e0e0; display:flex; gap:12px; justify-content:flex-end; background:#fcfcfc; }
-        .btn { padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+        .btn { padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size: 0.95rem; }
         .primary { background:#1976D2; color:#fff; }
         .secondary { background:#eceff1; color:#37474f; }
         .preview { padding: 24px; }
         .preview h3 { color:#2c3e50; margin-top:0; }
         .badge { display:inline-block; background:#eceff1; padding:6px 10px; border-radius:8px; color:#607d8b; margin-right:8px; }
-        .list { margin-top:10px; border-top:1px dashed #e0e0e0; padding-top:10px; }
-        .item { margin-bottom:8px; }
-        .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .list { margin-top:16px; border-top:1px dashed #e0e0e0; padding-top:16px; }
+        .item { margin-bottom:12px; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 8px; }
+        .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         /* Paper (A4-like) */
         .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
         .paper-sep { text-align:center; letter-spacing: 2px; color:#607d8b; margin: 8px 0 16px 0; }
-        .paper-section-title { font-weight:700; color:#2c3e50; margin: 16px 0 12px 0; }
-        .paper-line { margin: 4px 0; }
+        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1.15rem; }
+        .paper-line { margin: 4px 0; font-weight: bold; color: #000; }
         .paper-list .paper-item { margin: 6px 0; }
-        .paper-foot { margin-top: 20px; }
+        .paper-content-text { text-align: justify; line-height: 1.8; font-size: 1rem; color: #000; }
+        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; }
     </style>
 </head>
 <body>
@@ -54,74 +56,91 @@
         <div class="content">
             <div class="section">
                 <h2>ตั้งค่าข้อสอบ</h2>
-                <div class="row">
-                    <label>ชั้น</label>
-                    <select id="levelSelect">
-                        <option value="p12">ประโยค ๑–๒</option>
-                        <option value="p3">ประโยค ป.ธ. ๓</option>
-                        <option value="p4">ประโยค ป.ธ. ๔</option>
-                        <option value="p5">ประโยค ป.ธ. ๕</option>
-                        <option value="p6">ประโยค ป.ธ. ๖</option>
-                        <option value="p7">ประโยค ป.ธ. ๗</option>
-                        <option value="p8">ประโยค ป.ธ. ๘</option>
-                        <option value="p9">ประโยค ป.ธ. ๙</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label>วิชา</label>
-                    <select id="subjectSelect"></select>
-                </div>
-                <div class="row">
-                    <label>ครั้งที่สอบ</label>
-                    <input type="text" id="attemptInput" placeholder="เช่น ๑" />
-                </div>
-                <div class="row">
-                    <label>วันที่</label>
-                    <input type="date" id="dateInput" />
-                </div>
-                <div class="row grid-2">
-                    <div class="row">
-                        <label>ชั่วโมง</label>
-                        <input type="number" id="hoursInput" min="0" value="4" />
+                <div class="grid-2">
+                    <div>
+                        <div class="row">
+                            <label>ชั้น</label>
+                            <select id="levelSelect">
+                                <option value="p12">ประโยค ๑–๒</option>
+                                <option value="p3">ประโยค ป.ธ. ๓</option>
+                                <option value="p4">ประโยค ป.ธ. ๔</option>
+                                <option value="p5">ประโยค ป.ธ. ๕</option>
+                                <option value="p6">ประโยค ป.ธ. ๖</option>
+                                <option value="p7">ประโยค ป.ธ. ๗</option>
+                                <option value="p8">ประโยค ป.ธ. ๘</option>
+                                <option value="p9">ประโยค ป.ธ. ๙</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label>วิชา</label>
+                            <select id="subjectSelect"></select>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label>นาที</label>
-                        <input type="number" id="minutesInput" min="0" value="15" />
+                    <div>
+                         <div class="row">
+                            <label>ครั้งที่สอบ</label>
+                            <input type="text" id="attemptInput" placeholder="เช่น ๑" />
+                        </div>
+                        <div class="row">
+                            <label>วันที่</label>
+                            <input type="date" id="dateInput" />
+                        </div>
+                        <div class="row grid-2" style="gap:10px;">
+                            <div class="row" style="margin:0;">
+                                <label style="min-width:60px;">ชั่วโมง</label>
+                                <input type="number" id="hoursInput" min="0" value="4" />
+                            </div>
+                            <div class="row" style="margin:0;">
+                                <label style="min-width:60px;">นาที</label>
+                                <input type="number" id="minutesInput" min="0" value="15" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="section">
                 <h2>เลือกช่วงเนื้อหา</h2>
-                <div class="row">
-                    <label>โดยพยัญชนะ</label>
-                    <div class="grid-2" style="width:100%;">
-                        <select id="literalPart"></select>
-                        <select id="literalVagga"><option value="">(เลือกวรรค)</option></select>
-                        <select id="literalStory"><option value="">(เลือกเรื่อง)</option></select>
-                        <div class="row">
-                            <input type="number" id="literalStartPage" placeholder="หน้าเริ่ม" />
-                            <input type="number" id="literalEndPage" placeholder="หน้าจบ" />
+                <div class="row" style="align-items:flex-start;">
+                    <label style="padding-top:10px;">โดยพยัญชนะ</label>
+                    <div style="width:100%;">
+                        <div class="grid-3" style="margin-bottom:10px;">
+                            <select id="literalPart"></select>
+                            <select id="literalVagga"><option value="">(เลือกวรรค)</option></select>
+                            <select id="literalStory"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
+                        <div class="row" style="margin-top:0;">
+                            <label style="min-width:auto; margin-right:10px;">หน้า</label>
+                            <input type="number" id="literalStartPage" placeholder="เริ่มต้น" style="width:100px;" />
+                            <span style="margin:0 10px;">ถึง</span>
+                            <input type="number" id="literalEndPage" placeholder="สิ้นสุด" style="width:100px;" />
+                        </div>
+                        <div id="literalList" class="list"></div>
                     </div>
                 </div>
-                <div id="literalList" class="list"></div>
-                <div class="row">
-                    <label>โดยอรรถ</label>
-                    <div class="grid-2" style="width:100%;">
-                        <select id="sensePart"></select>
-                        <select id="senseVagga"><option value="">(เลือกวรรค)</option></select>
-                        <select id="senseStory"><option value="">(เลือกเรื่อง)</option></select>
-                        <div class="row">
-                            <input type="number" id="senseStartPage" placeholder="หน้าเริ่ม" />
-                            <input type="number" id="senseEndPage" placeholder="หน้าจบ" />
+                
+                <div class="row" style="align-items:flex-start; border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
+                    <label style="padding-top:10px;">โดยอรรถ</label>
+                    <div style="width:100%;">
+                        <div class="grid-3" style="margin-bottom:10px;">
+                            <select id="sensePart"></select>
+                            <select id="senseVagga"><option value="">(เลือกวรรค)</option></select>
+                            <select id="senseStory"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
+                        <div class="row" style="margin-top:0;">
+                            <label style="min-width:auto; margin-right:10px;">หน้า</label>
+                            <input type="number" id="senseStartPage" placeholder="เริ่มต้น" style="width:100px;" />
+                            <span style="margin:0 10px;">ถึง</span>
+                            <input type="number" id="senseEndPage" placeholder="สิ้นสุด" style="width:100px;" />
+                        </div>
+                        <div id="senseList" class="list"></div>
                     </div>
                 </div>
-                <div id="senseList" class="list"></div>
             </div>
         </div>
         <div class="actions">
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
+            <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
+            <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
         <div class="paper">
@@ -607,19 +626,19 @@
             }
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
-            let litItems = '';
-            let senItems = '';
-            let counter = 1;
+            
+            let litContent = '';
             litKeys.forEach(k => {
-                const txt = literalTextMap.get(k) || '...';
-                litItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
+                const txt = literalTextMap.get(k) || '';
+                if (txt) litContent += (litContent ? '&nbsp;&nbsp;' : '') + txt;
             });
-            // Reset counter for Sense section? Usually yes.
-            counter = 1; 
+
+            let senContent = '';
             senKeys.forEach(k => {
-                const txt = senseTextMap.get(k) || '...';
-                senItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
+                const txt = senseTextMap.get(k) || '';
+                if (txt) senContent += (senContent ? '&nbsp;&nbsp;' : '') + txt;
             });
+
             const timeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
                 : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
@@ -629,17 +648,23 @@
                 contentHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">${subjectLabel}</div>
-                    <div class="paper-list">${litItems || '<div class="paper-item">…</div>'}</div>
+                    <div class="paper-content-text">
+                        <span style="font-weight:bold;">๑. </span>${litContent || '...'}
+                    </div>
                 </div>`;
             } else {
                 contentHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">แปล โดยพยัญชนะ</div>
-                    <div class="paper-list">${litItems || '<div class="paper-item">…</div>'}</div>
+                    <div class="paper-content-text">
+                        <span style="font-weight:bold;">๑. </span>${litContent || '...'}
+                    </div>
                 </div>
                 <div class="paper-section">
                     <div class="paper-section-title">แปล โดยอรรถ</div>
-                    <div class="paper-list">${senItems || '<div class="paper-item">…</div>'}</div>
+                    <div class="paper-content-text">
+                        <span style="font-weight:bold;">๒. </span>${senContent || '...'}
+                    </div>
                 </div>`;
             }
             
@@ -654,6 +679,30 @@
                 <div class="paper-sep">------------</div>
                 <div class="paper-foot paper-center">${timeLine}</div>
             `;
+        }
+        function copyToClipboard() {
+            const range = document.createRange();
+            range.selectNode(document.getElementById('paperContent'));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            alert('คัดลอกเนื้อหาเรียบร้อยแล้ว');
+        }
+        function exportToWord() {
+            const content = document.getElementById('paperContent').innerHTML;
+            const html = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Exam</title></head>
+                <body>${content}</body></html>`;
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'exam_paper.doc';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
         function generatePreview() {
             const level = document.getElementById('levelSelect').value;
@@ -718,6 +767,8 @@
         document.getElementById('attemptInput').addEventListener('input', function() { normalizeThaiNumerals(this); });
         document.getElementById('generateBtn').addEventListener('click', generatePreview);
         document.getElementById('resetBtn').addEventListener('click', resetForm);
+        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        document.getElementById('wordBtn').addEventListener('click', exportToWord);
         
         // Hierarchical Select Listeners
         document.getElementById('literalPart').addEventListener('change', () => { resetSelection('literal'); updateVaggaSelect('literal'); generatePreview(); });
