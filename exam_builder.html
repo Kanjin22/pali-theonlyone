@@ -301,6 +301,7 @@
         </div>
         <div class="actions">
             <button class="btn secondary" id="bsToggleBtn" onclick="toggleBsMode()" title="สลับโหมด บาลีศึกษา (บ.ศ.)"><i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.</button>
+            <button class="btn secondary" id="solutionBtn" onclick="generateSolution()" title="สร้างเฉลย"><i class="fa-solid fa-wand-magic-sparkles"></i> เฉลย</button>
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
             <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
@@ -1093,6 +1094,172 @@
                 <div class="paper-foot paper-center">${timeLine}</div>
             `;
         }
+        function generateSolution() {
+            const paper = document.getElementById('paperContent');
+            if (!paper) return;
+
+            const levelLabel = getSelectedLevelLabel();
+            const subjectLabel = document.getElementById('subjectSelect').value || 'แปล  มคธเป็นไทย';
+            const attempt = document.getElementById('attemptInput').value;
+            const iso = document.getElementById('dateInput').value;
+            const dateLabel = formatThaiDate(iso);
+            const hours = document.getElementById('hoursInput').value || 0;
+            const minutes = document.getElementById('minutesInput').value || 0;
+            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+
+            // Reuse Spacing Helper
+            const addDoubleSpacing = (text) => {
+                if (!text) return '';
+                const normalized = String(text).replace(/\s+/g, ' ').trim();
+                return normalized.replace(/ /g, ' \u00A0'); 
+            };
+            
+            // Header Logic (Similar to Exam)
+            let displayLevelLabel = levelLabel;
+            if (isBsMode) {
+                if (levelLabel.includes('ประโยค ๑–๒')) {
+                    displayLevelLabel = 'ประโยค บ.ศ. ๑–๒';
+                } else if (levelLabel.includes('ประโยค ป.ธ.')) {
+                    displayLevelLabel = levelLabel.replace('ป.ธ.', 'บ.ศ.');
+                }
+            }
+            
+            const headerLevel = addDoubleSpacing(displayLevelLabel);
+            const headerSubject = addDoubleSpacing(subjectLabel + ' (เฉลย)'); // Add (Solution)
+            
+            let dateText = '';
+            if (attempt && attempt.trim() !== '') {
+                dateText = `สอบ ครั้งที่ ${attempt} ${dateLabel}`;
+            } else {
+                dateText = `สอบ ${dateLabel}`;
+            }
+            const headerDate = addDoubleSpacing(dateText);
+            
+             const rawTimeLine = minutes && parseInt(minutes) > 0
+                ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
+                : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
+            const timeLine = addDoubleSpacing(rawTimeLine);
+
+            // Sorting Logic
+            function sortKeys(a,b) {
+                const partsA = a.split('-');
+                const partsB = b.split('-');
+                const lenA = partsA.length;
+                const lenB = partsB.length;
+                const sentA = parseInt(partsA[lenA-1]) || 0;
+                const sentB = parseInt(partsB[lenB-1]) || 0;
+                const slideA = parseInt(partsA[lenA-2]) || 0;
+                const slideB = parseInt(partsB[lenB-2]) || 0;
+                const partNameA = partsA.slice(0, lenA-2).join('-');
+                const partNameB = partsB.slice(0, lenB-2).join('-');
+                if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
+                if (slideA !== slideB) return slideA - slideB;
+                return sentA - sentB;
+            }
+            const litKeys = [...selectedLiteral].sort(sortKeys);
+            const senKeys = [...selectedSense].sort(sortKeys);
+
+            // Formatting Helpers
+            const formatPali = (text) => {
+                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, ' \u00A0');
+            };
+            const formatThai = (text) => {
+                 return String(text).replace(/\s+/g, ' ').trim();
+            };
+            
+            // Resolve Content
+            const resolveContent = (key, type) => {
+                const parts = key.split('-');
+                const sentIdx = parseInt(parts.pop());
+                const slideIdx = parseInt(parts.pop());
+                const partId = parts.join('-');
+                
+                const slides = getPartSlides(partId);
+                if (!slides || !slides[slideIdx]) return { pali: '', thai: '' };
+                const slide = slides[slideIdx];
+                
+                // Get Pali
+                const paliSentences = splitPaliSentences(slide.pali);
+                const pali = paliSentences[sentIdx] || '';
+                
+                // Get Thai
+                let rawThai = '';
+                if (type === 'literal') rawThai = slide.thai || '';
+                else rawThai = slide.thai_sense || slide.thai_desana || slide.thai || '';
+                
+                const thaiSentences = splitPaliSentences(rawThai);
+                let thai = thaiSentences[sentIdx] || '';
+                
+                // Fallback for Thai: if mismatched sentences
+                if (!thai && thaiSentences.length === 1 && sentIdx === 0) {
+                    thai = thaiSentences[0];
+                }
+                
+                return { pali, thai };
+            };
+
+            // Generate HTML Blocks
+            let litContent = '';
+            litKeys.forEach((k, i) => {
+                const { pali, thai } = resolveContent(k, 'literal');
+                if (pali || thai) {
+                    litContent += `
+                    <div style="margin-bottom: 15px; page-break-inside: avoid;">
+                        <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
+                        <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
+                    </div>`;
+                }
+            });
+
+            let senContent = '';
+            senKeys.forEach((k, i) => {
+                const { pali, thai } = resolveContent(k, 'sense');
+                if (pali || thai) {
+                    senContent += `
+                    <div style="margin-bottom: 15px; page-break-inside: avoid;">
+                        <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
+                        <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
+                    </div>`;
+                }
+            });
+
+            // Build Paper
+            let bodyHTML = '';
+             if (isThaiSource) {
+                // For Thai -> Pali, we still show Pali top / Thai bottom as requested?
+                // Or maybe header needs to be "Thai -> Pali Solution"?
+                // The user said "use same form... Pali top, Thai bottom".
+                // I will stick to that.
+                bodyHTML = `
+                <div class="paper-section">
+                    <div class="paper-section-title">${headerSubject}</div>
+                    <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                </div>`;
+            } else {
+                bodyHTML = `
+                <div class="paper-section">
+                    <div class="paper-section-title">${addDoubleSpacing('เฉลย โดยพยัญชนะ')}</div>
+                    <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                </div>
+                <div class="paper-section">
+                    <div class="paper-section-title">${addDoubleSpacing('เฉลย โดยอรรถ')}</div>
+                    <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
+                </div>`;
+            }
+
+            paper.innerHTML = `
+                <div class="paper-center">
+                    <div class="paper-line">${headerLevel}</div>
+                    <div class="paper-line">${headerSubject}</div>
+                    <div class="paper-line">${headerDate}</div>
+                </div>
+                <div class="paper-sep">------------</div>
+                ${bodyHTML}
+                <div class="paper-sep">------------</div>
+                <div class="paper-foot paper-center">${timeLine}</div>
+            `;
+        }
+
         function copyToClipboard() {
             const paper = document.getElementById('paperContent');
             if (!paper) return;
