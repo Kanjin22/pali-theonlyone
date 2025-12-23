@@ -35,6 +35,10 @@
             font-family: 'DilleniaUPC';
             src: local('DilleniaUPC'), local('Dillenia UPC');
         }
+        @font-face {
+            font-family: 'DilleniaUPC_4Balee';
+            src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee.ttf') format('truetype');
+        }
         .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); font-family: "DilleniaUPC", "Cordia New", "TH Sarabun New", sans-serif; font-size: 22px; }
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
@@ -200,6 +204,7 @@
             <div class="toolbar-group">
                 <select class="tool-select" id="fontFamilySelect" onchange="changeFontFamily(this.value)" title="แบบอักษร">
                     <option value="DilleniaUPC" selected>DilleniaUPC</option>
+                    <option value="DilleniaUPC_4Balee">DilleniaUPC (บาลี)</option>
                     <option value="TH Sarabun New, Sarabun">TH Sarabun New</option>
                     <option value="Cordia New">Cordia New</option>
                     <option value="Niramit">Niramit</option>
