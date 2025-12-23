@@ -231,9 +231,6 @@
                                     <option value="p8">ประโยค ป.ธ. ๘</option>
                                     <option value="p9">ประโยค ป.ธ. ๙</option>
                                 </select>
-                                <label style="min-width:auto; display:flex; align-items:center; gap:5px; font-size:0.9rem; cursor:pointer;">
-                                    <input type="checkbox" id="bsMode" onchange="generatePreview()"> บ.ศ.
-                                </label>
                             </div>
                         </div>
                         <div class="row">
@@ -303,6 +300,7 @@
             </div>
         </div>
         <div class="actions">
+            <button class="btn secondary" id="bsToggleBtn" onclick="toggleBsMode()" title="สลับโหมด บาลีศึกษา (บ.ศ.)"><i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.</button>
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
             <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
@@ -386,6 +384,26 @@
     <script src="data/content-abhidhamma01.js"></script>
 
     <script>
+        let isBsMode = false;
+        function toggleBsMode() {
+            isBsMode = !isBsMode;
+            const btn = document.getElementById('bsToggleBtn');
+            if (isBsMode) {
+                // Active State (B.S.)
+                btn.style.background = '#e0f7fa'; // Light Cyan
+                btn.style.color = '#006064'; // Dark Cyan
+                btn.style.borderColor = '#006064';
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> โหมด: บ.ศ.';
+            } else {
+                // Inactive State (P.T.)
+                btn.style.background = ''; // Reset to default secondary
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                btn.innerHTML = '<i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.';
+            }
+            generatePreview();
+        }
+
         function execCmd(command) {
             document.execCommand(command, false, null);
             document.getElementById('paperContent').focus();
@@ -973,10 +991,11 @@
             const needsCleaning = ['p3','p4','p5','p6','p7','p8','p9'].includes(levelCode);
 
             // Determine Header Label (Convert to B.S. if checked)
-            const isBSMode = document.getElementById('bsMode').checked;
+            // const isBSMode = document.getElementById('bsMode').checked; // Removed checkbox
+            // Use global variable isBsMode
             let displayLevelLabel = levelLabel;
             
-            if (isBSMode) {
+            if (isBsMode) {
                 if (levelLabel.includes('ประโยค ๑–๒')) {
                     displayLevelLabel = 'ประโยค บ.ศ. ๑–๒';
                 } else if (levelLabel.includes('ประโยค ป.ธ.')) {
