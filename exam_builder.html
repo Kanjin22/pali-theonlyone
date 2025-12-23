@@ -916,13 +916,14 @@
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
             // Helper for 2-space between words
-            // User requested: Regular Space ( ) + NBSP (\u00A0)
+            // User requested: Regular 2 Spaces (Use ZWS to prevent Word collapse)
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
                 // First normalize to single spaces
                 const normalized = String(text).replace(/\s+/g, ' ').trim();
-                // Then replace single space with Space + NBSP
-                return normalized.replace(/ /g, ' \u00A0'); 
+                // Replace single space with Space + ZWS + Space
+                // This looks like 2 spaces, allows line break, and prevents Word from collapsing
+                return normalized.replace(/ /g, ' \u200B '); 
             };
             
             // Re-sort keys function (was removed in previous edit)
@@ -1018,8 +1019,8 @@
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
                 if (isPaliContent) {
-                    // Pali: 2 spaces (Space + NBSP)
-                    return normalized.replace(/ /g, ' \u00A0');
+                    // Pali: 2 spaces (Space + ZWS + Space)
+                    return normalized.replace(/ /g, ' \u200B ');
                 } else {
                     // Thai: 1 space (Standard)
                     return normalized;
@@ -1036,14 +1037,14 @@
             litKeys.forEach(k => {
                 const txt = literalTextMap.get(k) || '';
                 // Add spacing between sentences based on mode
-                const sep = isPaliContent ? ' \u00A0' : ' ';
+                const sep = isPaliContent ? ' \u200B ' : ' ';
                 if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
             });
 
             let senContent = '';
             senKeys.forEach(k => {
                 const txt = senseTextMap.get(k) || '';
-                const sep = isPaliContent ? ' \u00A0' : ' ';
+                const sep = isPaliContent ? ' \u200B ' : ' ';
                 if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
             });
 
@@ -1111,7 +1112,7 @@
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
                 const normalized = String(text).replace(/\s+/g, ' ').trim();
-                return normalized.replace(/ /g, ' \u00A0'); 
+                return normalized.replace(/ /g, ' \u200B '); 
             };
             
             // Header Logic (Similar to Exam)
@@ -1161,7 +1162,7 @@
 
             // Formatting Helpers
             const formatPali = (text) => {
-                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, ' \u00A0');
+                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, ' \u200B ');
             };
             const formatThai = (text) => {
                  return String(text).replace(/\s+/g, ' ').trim();
