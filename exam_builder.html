@@ -899,9 +899,7 @@
             // Helper for 2-space between words (using NBSP + Space to keep spacing attached to previous word)
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
-                // Use a non-breaking space followed by a normal space.
-                // This attaches the extra space to the word before it, ensuring the break happens AFTER the spacing.
-                return String(text).trim().split(/\s+/).join('\u00A0 ');
+                return String(text).trim().split(/\s+/).join('&nbsp;&nbsp;');
             };
 
             let litContent = '';
