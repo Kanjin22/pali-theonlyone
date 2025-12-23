@@ -385,7 +385,34 @@
             document.getElementById('paperContent').focus();
         }
         function changeFontFamily(font) {
-            document.querySelector('.paper').style.fontFamily = `"${font.split(',')[0]}", ${font}, sans-serif`;
+            const selection = window.getSelection();
+            const paper = document.getElementById('paperContent');
+            
+            // Check if selection is within paper
+            let isInside = false;
+            if (selection.rangeCount > 0) {
+                const node = selection.anchorNode;
+                // Traverse up to check if inside paperContent
+                let curr = node;
+                while(curr) {
+                    if (curr === paper) {
+                        isInside = true;
+                        break;
+                    }
+                    curr = curr.parentNode;
+                }
+            }
+
+            const fontStack = `"${font.split(',')[0]}", ${font}, sans-serif`;
+
+            if (isInside && !selection.isCollapsed) {
+                // Apply to selection
+                document.execCommand('styleWithCSS', false, true);
+                document.execCommand('fontName', false, fontStack);
+            } else {
+                // Apply globally
+                document.querySelector('.paper').style.fontFamily = fontStack;
+            }
         }
         function changeFontSize(size) {
             document.querySelector('.paper').style.fontSize = size;
@@ -921,7 +948,14 @@
 
             const headerLevel = addDoubleSpacing(levelLabel);
             const headerSubject = addDoubleSpacing(subjectLabel);
-            const headerDate = addDoubleSpacing(`สอบ ครั้งที่ ${attempt || ''} ${dateLabel}`);
+            
+            let dateText = '';
+            if (attempt && attempt.trim() !== '') {
+                dateText = `สอบ ครั้งที่ ${attempt} ${dateLabel}`;
+            } else {
+                dateText = `สอบ ${dateLabel}`;
+            }
+            const headerDate = addDoubleSpacing(dateText);
             
             let contentHTML = '';
             if (isThaiSource) {
