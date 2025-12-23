@@ -39,8 +39,8 @@
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
         .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
-        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1.3em; }
-        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1.4em; }
+        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; }
+        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; }
         .paper-list .paper-item { margin: 6px 0; }
         .paper-content-text { 
             text-align: justify; 
@@ -772,12 +772,12 @@
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
             
-            // Helper for 2-space between words (using Space + NBSP to allow line breaking)
+            // Helper for 2-space between words (using NBSP + Space to keep spacing attached to previous word)
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
-                // Use a normal space followed by a non-breaking space.
-                // This visually creates a 2-space gap but allows the browser to break at the normal space.
-                return String(text).trim().split(/\s+/).join(' \u00A0');
+                // Use a non-breaking space followed by a normal space.
+                // This attaches the extra space to the word before it, ensuring the break happens AFTER the spacing.
+                return String(text).trim().split(/\s+/).join('\u00A0 ');
             };
 
             let litContent = '';
