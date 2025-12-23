@@ -929,7 +929,7 @@
                 <div class="paper-section">
                     <div class="paper-section-title">${headerSubject}</div>
                     <div class="paper-content-text">
-                        <span style="font-weight:bold;">๑. </span>${litContent || '...'}
+                        <span>๑. </span>${litContent || '...'}
                     </div>
                 </div>`;
             } else {
@@ -937,13 +937,13 @@
                 <div class="paper-section">
                     <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
                     <div class="paper-content-text">
-                        <span style="font-weight:bold;">๑. </span>${litContent || '...'}
+                        <span>๑. </span>${litContent || '...'}
                     </div>
                 </div>
                 <div class="paper-section">
                     <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
                     <div class="paper-content-text">
-                        <span style="font-weight:bold;">๒. </span>${senContent || '...'}
+                        <span>๒. </span>${senContent || '...'}
                     </div>
                 </div>`;
             }
@@ -961,20 +961,64 @@
             `;
         }
         function copyToClipboard() {
+            const paper = document.getElementById('paperContent');
+            if (!paper) return;
             const range = document.createRange();
-            range.selectNode(document.getElementById('paperContent'));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            alert('คัดลอกเนื้อหาเรียบร้อยแล้ว');
+            range.selectNodeContents(paper);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('คัดลอกเนื้อหาเรียบร้อยแล้ว');
+                    selection.removeAllRanges();
+                } else {
+                    alert('ไม่สามารถคัดลอกได้โดยอัตโนมัติ กรุณากด Ctrl+C เพื่อคัดลอก');
+                }
+            } catch (err) {
+                console.error('Copy failed', err);
+                alert('เกิดข้อผิดพลาดในการคัดลอก กรุณากด Ctrl+C เพื่อคัดลอก');
+            }
         }
         function exportToWord() {
-            const content = document.getElementById('paperContent').innerHTML;
+            const paper = document.getElementById('paperContent');
+            const paperContainer = document.querySelector('.paper');
+            const content = paper.innerHTML;
+            
+            // Get current computed styles
+            const currentFont = paperContainer.style.fontFamily || '"DilleniaUPC", sans-serif';
+            const currentSize = paperContainer.style.fontSize || '22px';
+
             const html = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head><meta charset='utf-8'><title>Exam</title></head>
-                <body>${content}</body></html>`;
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Exam Paper</title>
+                    <style>
+                        body { 
+                            font-family: ${currentFont.replace(/"/g, "'")}; 
+                            font-size: ${currentSize};
+                        }
+                        .paper-center { text-align: center; }
+                        .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
+                        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; }
+                        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; }
+                        .paper-content-text { 
+                            text-align: justify; 
+                            text-align-last: left; 
+                            line-height: 1.6; 
+                            font-size: 1em; 
+                            color: #000;
+                        }
+                        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
+                    </style>
+                </head>
+                <body>
+                    ${content}
+                </body>
+                </html>`;
             const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
