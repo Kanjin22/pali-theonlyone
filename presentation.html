@@ -1425,13 +1425,13 @@
                     if (hasDesana) {
                         const opt = document.createElement('option');
                         opt.value = 'desana';
-                        opt.text = 'แปลโดยอรรถ';
+                        opt.text = 'เผด็จ มมร.';
                         select.appendChild(opt);
                     }
                     if (hasSense) {
                         const opt = document.createElement('option');
                         opt.value = 'sense';
-                        opt.text = 'แปลเอาความ';
+                        opt.text = 'เอาความ';
                         select.appendChild(opt);
                     }
                     if (!((thaiSenseVariant === 'desana' && hasDesana) || (thaiSenseVariant === 'sense' && hasSense))) {
@@ -1555,18 +1555,20 @@
             if (isThaiHidden) { thaiElem.classList.add('hidden'); btnIcon.classList.remove('fa-eye'); btnIcon.classList.add('fa-eye-slash'); }
             else { thaiElem.classList.remove('hidden'); btnIcon.classList.remove('fa-eye-slash'); btnIcon.classList.add('fa-eye'); }
         }
-        function toggleThaiMode() { isThaiSense = !isThaiSense; updateSlide(); }
+        function toggleThaiMode() {
+            isThaiSense = !isThaiSense;
+            if (isThaiSense) {
+                const s = slides[currentIndex] || {};
+                const hasDesana = !!s.thai_desana;
+                const hasSense = !!s.thai_sense;
+                thaiSenseVariant = hasDesana ? 'desana' : (hasSense ? 'sense' : 'desana');
+            }
+            updateSlide();
+        }
         function applyThaiModeLabel() {
             const label = document.getElementById('thaiLabel');
             const btn = document.getElementById('btn-toggle-thai-mode');
-            if (label) {
-                if (isThaiSense) {
-                    const variantText = thaiSenseVariant === 'desana' ? 'เผด็จ' : 'เอาความ';
-                    label.innerText = `ไทย (โดยอรรถ · ${variantText})`;
-                } else {
-                    label.innerText = 'ไทย (โดยพยัญชนะ)';
-                }
-            }
+            if (label) label.innerText = isThaiSense ? 'ไทย (โดยอรรถ)' : 'ไทย (โดยพยัญชนะ)';
             if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
         }
         function setThaiSenseVariant(val) { thaiSenseVariant = val; updateSlide(); }
