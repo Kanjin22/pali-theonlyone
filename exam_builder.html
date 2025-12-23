@@ -750,7 +750,19 @@
             document.body.removeChild(link);
         }
         function generatePreview() {
-            oonst literalPart = document.getElementById('literalPart').value;
+            // Clear current selection buffers to ensure we only show active range content
+            selectedLiteral.clear();
+            literalTextMap.clear();
+            selectedSense.clear();
+            senseTextMap.clear();
+
+            const level = document.getElementById('levelSelect').value;
+            const attempt = document.getElementById('attemptInput').value;
+            const iso = document.getElementById('dateInput').value;
+            const subjectLabel = document.getElementById('subjectSelect').value || '';
+            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+            
+            const literalPart = document.getElementById('literalPart').value;
             const literalVagga = document.getElementById('literalVagga').value;
             const literalStory = document.getElementById('literalStory').value;
             const literalStart = document.getElementById('literalStartPage').value;
@@ -820,17 +832,17 @@
         document.getElementById('wordBtn').addEventListener('click', exportToWord);
         
         // Hierarchical Select Listeners
-        document.getElementById('literalPart').addEventListener('change', () => { resetSelection('literal'); updateVaggaSelect('literal'); generatePreview(); });
-        document.getElementById('literalVagga').addEventListener('change', () => { resetSelection('literal'); updateStorySelect('literal'); });
-        document.getElementById('literalStory').addEventListener('change', () => { resetSelection('literal'); updatePageRange('literal'); });
+        document.getElementById('literalPart').addEventListener('change', () => { updateVaggaSelect('literal'); generatePreview(); });
+        document.getElementById('literalVagga').addEventListener('change', () => { updateStorySelect('literal'); });
+        document.getElementById('literalStory').addEventListener('change', () => { updatePageRange('literal'); });
         
-        document.getElementById('sensePart').addEventListener('change', () => { rateVaggaSelect('sense'); generatePreview(); });
-        document.getElementById('senseVagga').addEventListener('change', () => { reteStorySelect('sense'); });
-        document.getElementById('senseStory').addEventListener('change', () => { retePageRange('sense'); });
+        document.getElementById('sensePart').addEventListener('change', () => { updateVaggaSelect('sense'); generatePreview(); });
+        document.getElementById('senseVagga').addEventListener('change', () => { updateStorySelect('sense'); });
+        document.getElementById('senseStory').addEventListener('change', () => { updatePageRange('sense'); });
 
         // Direct page input updates
-        document.getElementById('literalStartPage').addEventListener('input', gen
-        document.getElementById('literalEndPage').addEventListener('input', gene
+        document.getElementById('literalStartPage').addEventListener('input', generatePreview);
+        document.getElementById('literalEndPage').addEventListener('input', generatePreview);
         document.getElementById('senseStartPage').addEventListener('input', generatePreview);
         document.getElementById('senseEndPage').addEventListener('input', generatePreview);
         
