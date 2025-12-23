@@ -13,6 +13,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        @font-face {
+            font-family: 'DilleniaUPC_4Balee';
+            src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'DilleniaUPC';
+            src: local('DilleniaUPC'), local('Dillenia UPC');
+        }
+
         /* --- CSS พื้นฐาน (Full Screen Theme) --- */
         body {
             margin: 0;
@@ -125,15 +134,15 @@
 
         /* --- CSS ข้อความ (เริ่มต้น) --- */
         .pali-text {
-            font-family: 'Niramit', serif;
-            font-size: 1.8rem;
+            font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', 'Niramit', serif;
+            font-size: 2.2rem;
             color: #263238;
             font-weight: 600;
-            line-height: 2;
+            line-height: 1.8;
             margin-bottom: 0;
             text-align: left;
             text-indent: 50px;
-            word-spacing: 0.5em;
+            word-spacing: 0.2em;
             letter-spacing: 0;
             word-break: normal;
             overflow-wrap: break-word;
@@ -256,9 +265,10 @@
         }
 
         .pali-word {
-            font-family: 'Niramit', serif;
+            font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', 'Niramit', serif;
             color: #0277bd;
             font-weight: 600;
+            font-size: 1.3rem;
         }
 
         .clickable-analysis {
@@ -586,8 +596,8 @@
         }
 
         .analysis-word {
-            font-family: 'Niramit', serif;
-            font-size: 2.2rem;
+            font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', 'Niramit', serif;
+            font-size: 2.8rem;
             margin: 0;
             font-weight: 500;
         }
