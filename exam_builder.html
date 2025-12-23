@@ -1017,13 +1017,8 @@
                 // Normalize spaces
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
-                if (isPaliContent) {
-                    // Pali: 2 spaces
-                    return normalized.replace(/ /g, '  ');
-                } else {
-                    // Thai: 1 space (Standard)
-                    return normalized;
-                }
+                // Always use 2 spaces for Exam Paper (User Request: "เว้น 2 เคาะทั้งหมด")
+                return normalized.replace(/ /g, '  ');
             };
 
             // Prepare Content Blocks with specific fonts
@@ -1164,8 +1159,8 @@
                  return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
-                 // Replace _ with space, then normalize spaces
-                 return String(text).replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+                 // Replace _ with space, then normalize spaces, then use 2 spaces (Consistent with Exam Paper)
+                 return String(text).replace(/_/g, ' ').replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             
             // Resolve Content
