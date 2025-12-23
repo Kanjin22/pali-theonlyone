@@ -261,11 +261,11 @@
         }
 
         .thai-text {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1.4rem;
+            font-family: 'DilleniaUPC', 'Sarabun', sans-serif;
+            font-size: 2.2rem;
             color: #546e7a;
             font-weight: 300;
-            line-height: 2;
+            line-height: 1.8;
             text-align: left;
             text-indent: 50px;
             word-break: normal;
@@ -1368,20 +1368,46 @@
         }
 
         function changeFontFamily(font) {
-            const family = `"${font.split(',')[0]}", ${font}, sans-serif`;
-            document.querySelectorAll('.pali-text, .pali-word, .analysis-word, .thai-text').forEach(el => {
-                el.style.fontFamily = family;
+            let paliFont = font;
+            let thaiFont = font;
+
+            // Smart mapping for Pali variants
+            if (font === 'DilleniaUPC_4Balee') {
+                thaiFont = 'DilleniaUPC';
+            } else if (font === 'BuddhadhamPali') {
+                thaiFont = 'Buddhadham';
+            } else if (font === 'BuddhawajanaPali') {
+                thaiFont = 'Buddhawajana';
+            } else if (font === 'DilleniaUPC') {
+                paliFont = 'DilleniaUPC_4Balee';
+            } else if (font === 'Buddhadham') {
+                paliFont = 'BuddhadhamPali';
+            } else if (font === 'Buddhawajana') {
+                paliFont = 'BuddhawajanaPali';
+            }
+            
+            // Apply to Pali elements (Left pane + Footer Pali words + Modal Pali)
+            const paliFamily = `"${paliFont.split(',')[0]}", ${paliFont}, sans-serif`;
+            document.querySelectorAll('.pali-text, .pali-word, .analysis-word').forEach(el => {
+                el.style.fontFamily = paliFamily;
+            });
+
+            // Apply to Thai elements (Right pane + Context + TOC)
+            const thaiFamily = `"${thaiFont.split(',')[0]}", ${thaiFont}, sans-serif`;
+            document.querySelectorAll('.thai-text, .sec-content:not(.pali-word), .toc-content-label').forEach(el => {
+                el.style.fontFamily = thaiFamily;
             });
         }
 
-        function changeFontSize(change) {
-            currentFontSizePali += (change * 0.2);
-            currentFontSizeThai += (change * 0.2);
-            if (currentFontSizePali < 1.0) currentFontSizePali = 1.0;
-            if (currentFontSizeThai < 1.0) currentFontSizeThai = 1.0;
+        let currentFontSize = 2.2;
 
-            document.querySelector('.pali-text').style.fontSize = `${currentFontSizePali}rem`;
-            document.querySelector('.thai-text').style.fontSize = `${currentFontSizeThai}rem`;
+        function changeFontSize(change) {
+            currentFontSize += (change * 0.2);
+            if (currentFontSize < 1.0) currentFontSize = 1.0;
+
+            document.querySelectorAll('.pali-text, .thai-text').forEach(el => {
+                el.style.fontSize = `${currentFontSize}rem`;
+            });
         }
 
         function setTextAlign(align) {
