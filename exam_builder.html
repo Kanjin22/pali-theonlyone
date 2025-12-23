@@ -196,12 +196,26 @@
             let idx = 1;
             items.forEach(s => {
                 let text = '';
-                if (mode === 'literal') text = s.thai || '';
-                if (mode === 'sense') text = s.thai_desana || s.thai_sense || s.thai || '';
+                // ดึงเนื้อหาบาลีสำหรับโจทย์
+                if (s.pali) {
+                    text = String(s.pali).replace(/<[^>]+>/g, '').trim();
+                } else {
+                    text = '...';
+                }
+                // ทำให้กระชับในตัวอย่าง หากยาวมาก
+                if (text.length > 300) {
+                    text = text.substring(0, 180) + ' … ' + text.substring(text.length - 80);
+                }
+                // ป้ายหน้าที่ (ถ้ามี)
+                let pageNum = '';
+                if (typeof s.page !== 'undefined') {
+                    const p = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
+                    if (p !== '') pageNum = `หน้า ${toThaiDigits(p)}`;
+                }
                 const num = toThaiDigits(idx++);
                 const div = document.createElement('div');
                 div.className = 'item';
-                div.innerHTML = `<span class="badge">${num}</span> <span>${text || '...'}</span>`;
+                div.innerHTML = `<span class="badge">${num}</span> <span class="pali-text">${text}</span> ${pageNum ? `<span class="badge" style="margin-left:8px;">${pageNum}</span>` : ''}`;
                 box.appendChild(div);
             });
         }
