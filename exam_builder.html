@@ -60,14 +60,6 @@
                         <option value="p7">ประโยค ป.ธ. ๗</option>
                         <option value="p8">ประโยค ป.ธ. ๘</option>
                         <option value="p9">ประโยค ป.ธ. ๙</option>
-                        <option value="p10">ประโยค บ.ศ. ๑–๒</option>
-                        <option value="p11">ประโยค บ.ศ. ๓</option>
-                        <option value="p12">ประโยค บ.ศ. ๔</option>
-                        <option value="p13">ประโยค บ.ศ. ๕</option>
-                        <option value="p14">ประโยค บ.ศ. ๖</option>
-                        <option value="p15">ประโยค บ.ศ. ๗</option>
-                        <option value="p16">ประโยค บ.ศ. ๘</option>
-                        <option value="p17">ประโยค บ.ศ. ๙</option>
                     </select>
                 </div>
                 <div class="row">
@@ -105,6 +97,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="literalList" class="list"></div>
                 <div class="row">
                     <label>โดยอรรถ</label>
                     <div class="grid-2" style="width:100%;">
@@ -115,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="senseList" class="list"></div>
             </div>
         </div>
         <div class="actions">
@@ -136,17 +130,35 @@
     <script src="data/content-dhamma06.js"></script>
     <script src="data/content-dhamma07.js"></script>
     <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
 
     <script>
         const partsMap = {
-            1: (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
-            2: (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
-            3: (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
-            4: (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
-            5: (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
-            6: (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
-            7: (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
-            8: (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {})
+            'dhamma-1': (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+            'dhamma-2': (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+            'dhamma-3': (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+            'dhamma-4': (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+            'dhamma-5': (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+            'dhamma-6': (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+            'dhamma-7': (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+            'dhamma-8': (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {}),
+            'mangala-1': (typeof contentMangala01 !== 'undefined' ? contentMangala01 : {}),
+            'mangala-2': (typeof contentMangala02 !== 'undefined' ? contentMangala02 : {}),
+            'samanta-1': (typeof contentSamanta01 !== 'undefined' ? contentSamanta01 : {}),
+            'samanta-2': (typeof contentSamanta02 !== 'undefined' ? contentSamanta02 : {}),
+            'samanta-3': (typeof contentSamanta03 !== 'undefined' ? contentSamanta03 : {}),
+            'visuddhi-1': (typeof contentVisuddhi01 !== 'undefined' ? contentVisuddhi01 : {}),
+            'visuddhi-2': (typeof contentVisuddhi02 !== 'undefined' ? contentVisuddhi02 : {}),
+            'visuddhi-3': (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
+            'abhidhamma-1': (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
         };
         function toThaiDigits(str) {
             const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
@@ -202,21 +214,131 @@
             input.value = String(input.value).replace(/[0-9]/g, d => m[d]).replace(/\s+/g,'').trim();
         }
         function allowedPartsForLevel() {
-            const label = getSelectedLevelLabel();
-            if (label.includes('๑–๒')) return [1,2,3,4];
-            if (label.includes('ป.ธ. ๓')) return [5,6,7,8];
-            return [1,2,3,4];
+            // Deprecated by CONTENT_MAPPING logic, keeping for safety if called elsewhere, but we will replace usages.
+            return [];
         }
+        
+        const CONTENT_MAPPING = {
+            'ประโยค ๑–๒': {
+                'แปล  มคธเป็นไทย': [
+                    { id: 'dhamma-1', label: 'ธรรมบท ภาคที่ ๑' },
+                    { id: 'dhamma-2', label: 'ธรรมบท ภาคที่ ๒' },
+                    { id: 'dhamma-3', label: 'ธรรมบท ภาคที่ ๓' },
+                    { id: 'dhamma-4', label: 'ธรรมบท ภาคที่ ๔' }
+                ]
+            },
+            'ประโยค ป.ธ. ๓': {
+                'แปล  มคธเป็นไทย': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘' }
+                ],
+                'สัมพันธ์ไทย': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘' }
+                ]
+            },
+            'ประโยค ป.ธ. ๔': {
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'dhamma-1', label: 'ธรรมบท ภาคที่ ๑ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'mangala-1', label: 'มังคลัตถทีปนี ภาคที่ ๑' }
+                ]
+            },
+            'ประโยค ป.ธ. ๕': {
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'dhamma-2', label: 'ธรรมบท ภาคที่ ๒ (ภาษาไทย)' },
+                    { id: 'dhamma-3', label: 'ธรรมบท ภาคที่ ๓ (ภาษาไทย)' },
+                    { id: 'dhamma-4', label: 'ธรรมบท ภาคที่ ๔ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'mangala-2', label: 'มังคลัตถทีปนี ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๖': {
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕ (ภาษาไทย)' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖ (ภาษาไทย)' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗ (ภาษาไทย)' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'samanta-3', label: 'สมันตปาสาทิกา ภาคที่ ๓' }
+                ]
+            },
+            'ประโยค ป.ธ. ๗': {
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'mangala-1', label: 'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'samanta-1', label: 'สมันตปาสาทิกา ภาคที่ ๑' },
+                    { id: 'samanta-2', label: 'สมันตปาสาทิกา ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๘': {
+                'แต่งฉันท์ภาษามคธ': [
+                    { id: 'waiting', label: 'รอเนื้อหา' }
+                ],
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'samanta-1', label: 'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)' },
+                    { id: 'samanta-2', label: 'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'visuddhi-1', label: 'วิสุทธิมรรค ภาคที่ ๑' },
+                    { id: 'visuddhi-2', label: 'วิสุทธิมรรค ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๙': {
+                'แต่ง  ไทยเป็นมคธ': [
+                     { id: 'waiting', label: 'รอเนื้อหา' }
+                ],
+                'แปล  ไทยเป็นมคธ': [
+                    { id: 'visuddhi-1', label: 'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)' },
+                    { id: 'visuddhi-2', label: 'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)' }
+                ],
+                'แปล  มคธเป็นไทย': [
+                    { id: 'abhidhamma-1', label: 'อภิธรรมฯ' }
+                ]
+            }
+        };
+
         function populatePartSelects() {
-            const allowed = allowedPartsForLevel();
+            const levelLabel = getSelectedLevelLabel();
+            const subjectLabel = document.getElementById('subjectSelect').value;
+            const levelConfig = CONTENT_MAPPING[levelLabel] || {};
+            const parts = levelConfig[subjectLabel] || [];
+            
+            // Fallback for unspecified levels
+            if (parts.length === 0 && !levelLabel.includes('ป.ธ.')) {
+                 parts.push({id:'dhamma-1', label:'ธรรมบท ภาคที่ ๑'}, {id:'dhamma-2', label:'ธรรมบท ภาคที่ ๒'}, {id:'dhamma-3', label:'ธรรมบท ภาคที่ ๓'}, {id:'dhamma-4', label:'ธรรมบท ภาคที่ ๔'});
+            }
+
             const literalSel = document.getElementById('literalPart');
             const senseSel = document.getElementById('sensePart');
             literalSel.innerHTML = '';
             senseSel.innerHTML = '';
-            allowed.forEach(p => {
-                const o1 = document.createElement('option'); o1.value = p; o1.text = `ภาคที่ ${toThaiDigits(p)}`; literalSel.appendChild(o1);
-                const o2 = document.createElement('option'); o2.value = p; o2.text = `ภาคที่ ${toThaiDigits(p)}`; senseSel.appendChild(o2);
+            
+            parts.forEach(p => {
+                const o1 = document.createElement('option'); o1.value = p.id; o1.text = p.label; literalSel.appendChild(o1);
+                const o2 = document.createElement('option'); o2.value = p.id; o2.text = p.label; senseSel.appendChild(o2);
             });
+            
+            // UI Adjustments for Thai Source
+            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+            const senseRow = document.getElementById('sensePart').closest('.row').parentElement;
+            if (isThaiSource) {
+                 if(senseRow) senseRow.style.display = 'none';
+                 const litLabel = document.getElementById('literalPart').closest('.row').parentElement.querySelector('label');
+                 if(litLabel) litLabel.innerText = 'เลือกเนื้อหา (ภาษาไทย)';
+            } else {
+                 if(senseRow) senseRow.style.display = 'block';
+                 const litLabel = document.getElementById('literalPart').closest('.row').parentElement.querySelector('label');
+                 if(litLabel) litLabel.innerText = 'โดยพยัญชนะ';
+            }
         }
         // Hierarchy selectors (vagga, story, page) derived from slides
         function unique(arr) { return [...new Set(arr.filter(Boolean))]; }
@@ -281,12 +403,25 @@
         function renderList(containerId, items, mode, part, startPage, endPage) {
             const box = document.getElementById(containerId);
             if (box) box.innerHTML = '';
+
+            if (part === 'waiting') {
+                if (box) box.innerHTML = '<div style="padding:20px; text-align:center; color:#888;">กำลังรอเนื้อหา...</div>';
+                return;
+            }
+
             let idx = 1;
             items.forEach((s, slideIdx) => {
                 const pageVal = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
-                const sentences = splitPaliSentences(s.pali);
+                
+                let textToUse = s.pali;
+                if (mode === 'thai_source') {
+                    textToUse = s.thai_desana || s.thai_sense || s.thai || '';
+                }
+                
+                const sentences = splitPaliSentences(textToUse);
                 sentences.forEach((sent, sentIdx) => {
                     const key = `${part}-${pageVal}-${slideIdx}-${sentIdx}`;
+                    // For Thai Source mode, we use literal set as the "Source" set
                     const isSense = (mode === 'sense');
                     const setRef = isSense ? selectedSense : selectedLiteral;
                     const mapRef = isSense ? senseTextMap : literalTextMap;
@@ -318,7 +453,10 @@
                         const key = this.getAttribute('data-key');
                         const mode = this.getAttribute('data-mode');
                         const sel = this.getAttribute('data-select') === 'yes';
-                        const setRef = (mode === 'sense') ? selectedSense : selectedLiteral;
+                        // Map thai_source to literal set
+                        const effectiveMode = (mode === 'thai_source') ? 'literal' : mode;
+                        const setRef = (effectiveMode === 'sense') ? selectedSense : selectedLiteral;
+                        
                         if (sel) setRef.add(key); else setRef.delete(key);
                         // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
                         const parent = this.parentElement;
@@ -343,15 +481,46 @@
             const dateLabel = formatThaiDate(iso);
             const hours = document.getElementById('hoursInput').value || 0;
             const minutes = document.getElementById('minutesInput').value || 0;
+            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+            
             // Assemble selected sentences sorted by key (part, page, slideIdx, sentIdx)
             function sortKeys(a,b) {
-                const pa = a.split('-').map(x => parseInt(x));
-                const pb = b.split('-').map(x => parseInt(x));
-                for (let i=0;i<4;i++) {
-                    const da = pa[i] || 0; const db = pb[i] || 0;
-                    if (da !== db) return da - db;
+                const partsA = a.split('-');
+                const partsB = b.split('-');
+                // part might be 'dhamma-1' (string) or '1' (string)
+                // We should rely on array index comparison if part string differs? 
+                // Or just string compare for part, then number compare for page/idx
+                if (partsA[0] !== partsB[0] && partsA[1] !== partsB[1]) {
+                     // If part name differs, just string compare
+                     return partsA[0].localeCompare(partsB[0]);
                 }
-                return 0;
+                // If part is same or we just want to sort by page/slide/sent
+                // format: part-page-slideIdx-sentIdx
+                // But part can be 'dhamma-1'. So partsA length is 4 if part has no hyphen?
+                // Wait, part key 'dhamma-1' has a hyphen!
+                // So split('-') will result in ['dhamma', '1', 'page', 'slide', 'sent']
+                // This complicates things.
+                // Better to use the full key string for simple sort if complicated?
+                // No, we need page order.
+                
+                // Let's re-parse carefully.
+                // The key was constructed as `${part}-${pageVal}-${slideIdx}-${sentIdx}`
+                // If part is 'dhamma-1', key is 'dhamma-1-PAGE-SLIDE-SENT'
+                // We can split by '-' and take the last 3 as numbers.
+                
+                const lenA = partsA.length;
+                const lenB = partsB.length;
+                const pA = parseInt(partsA[lenA-3]) || 0; // page
+                const pB = parseInt(partsB[lenB-3]) || 0;
+                if (pA !== pB) return pA - pB;
+                
+                const sA = parseInt(partsA[lenA-2]) || 0; // slide
+                const sB = parseInt(partsB[lenB-2]) || 0;
+                if (sA !== sB) return sA - sB;
+                
+                const sentA = parseInt(partsA[lenA-1]) || 0; // sent
+                const sentB = parseInt(partsB[lenB-1]) || 0;
+                return sentA - sentB;
             }
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
@@ -362,6 +531,8 @@
                 const txt = literalTextMap.get(k) || '...';
                 litItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
             });
+            // Reset counter for Sense section? Usually yes.
+            counter = 1; 
             senKeys.forEach(k => {
                 const txt = senseTextMap.get(k) || '...';
                 senItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
@@ -369,13 +540,16 @@
             const timeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
                 : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
-            paper.innerHTML = `
-                <div class="paper-center">
-                    <div class="paper-line">${levelLabel}</div>
-                    <div class="paper-line">${subjectLabel}</div>
-                    <div class="paper-line">สอบ ครั้งที่ ${attempt || ''} ${dateLabel}</div>
-                </div>
-                <div class="paper-sep">------------</div>
+            
+            let contentHTML = '';
+            if (isThaiSource) {
+                contentHTML = `
+                <div class="paper-section">
+                    <div class="paper-section-title">${subjectLabel}</div>
+                    <div class="paper-list">${litItems || '<div class="paper-item">…</div>'}</div>
+                </div>`;
+            } else {
+                contentHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">แปล โดยพยัญชนะ</div>
                     <div class="paper-list">${litItems || '<div class="paper-item">…</div>'}</div>
@@ -383,7 +557,17 @@
                 <div class="paper-section">
                     <div class="paper-section-title">แปล โดยอรรถ</div>
                     <div class="paper-list">${senItems || '<div class="paper-item">…</div>'}</div>
+                </div>`;
+            }
+            
+            paper.innerHTML = `
+                <div class="paper-center">
+                    <div class="paper-line">${levelLabel}</div>
+                    <div class="paper-line">${subjectLabel}</div>
+                    <div class="paper-line">สอบ ครั้งที่ ${attempt || ''} ${dateLabel}</div>
                 </div>
+                <div class="paper-sep">------------</div>
+                ${contentHTML}
                 <div class="paper-sep">------------</div>
                 <div class="paper-foot paper-center">${timeLine}</div>
             `;
@@ -392,16 +576,29 @@
             const level = document.getElementById('levelSelect').value;
             const attempt = document.getElementById('attemptInput').value;
             const iso = document.getElementById('dateInput').value;
-            const literalPart = parseInt(document.getElementById('literalPart').value);
+            const subjectLabel = document.getElementById('subjectSelect').value || '';
+            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+            
+            const literalPart = document.getElementById('literalPart').value;
             const literalStart = document.getElementById('literalStartPage').value;
             const literalEnd = document.getElementById('literalEndPage').value;
-            const sensePart = parseInt(document.getElementById('sensePart').value);
+            
+            const sensePart = document.getElementById('sensePart').value;
             const senseStart = document.getElementById('senseStartPage').value;
             const senseEnd = document.getElementById('senseEndPage').value;
-            const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
-            const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
-            renderList(null, literalSlides, 'literal', literalPart, literalStart, literalEnd);
-            renderList(null, senseSlides, 'sense', sensePart, senseStart, senseEnd);
+            
+            if (isThaiSource) {
+                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
+                 renderList('literalList', literalSlides, 'thai_source', literalPart, literalStart, literalEnd);
+                 // Clear sense list UI
+                 const senseBox = document.getElementById('senseList');
+                 if(senseBox) senseBox.innerHTML = '';
+            } else {
+                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
+                 const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
+                 renderList('literalList', literalSlides, 'literal', literalPart, literalStart, literalEnd);
+                 renderList('senseList', senseSlides, 'sense', sensePart, senseStart, senseEnd);
+            }
             buildExamPreview();
         }
         function resetForm() {
