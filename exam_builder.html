@@ -173,6 +173,18 @@
             const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
             return String(str).replace(/[0-9]/g, d => m[d]);
         }
+        function thaiToArabic(str) {
+            const m = { '๐':'0','๑':'1','๒':'2','๓':'3','๔':'4','๕':'5','๖':'6','๗':'7','๘':'8','๙':'9' };
+            return String(str).replace(/[๐-๙]/g, d => m[d]);
+        }
+        function parsePageNumber(page) {
+            if (typeof page === 'number') return page;
+            if (!page) return 0;
+            const str = thaiToArabic(String(page));
+            // Extract first sequence of digits
+            const match = str.match(/\d+/);
+            return match ? parseInt(match[0], 10) : 0;
+        }
         function getSelectedLevelLabel() {
             const sel = document.getElementById('levelSelect');
             const opt = sel && sel.selectedOptions && sel.selectedOptions[0] ? sel.selectedOptions[0] : null;
@@ -427,8 +439,8 @@
                 const okV = vagga ? s.vagga === vagga : true;
                 const okS = story ? ((s.story || s.section) === story) : true;
                 return okV && okS;
-            }).map(s => (typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || null));
-            return unique(nums).filter(n => n !== null).sort((a,b) => a-b);
+            }).map(s => parsePageNumber(s.page));
+            return unique(nums).filter(n => n > 0).sort((a,b) => a-b);
         }
         // เก็บสถานะการเลือกประโยค
         const selectedLiteral = new Set();
@@ -457,14 +469,14 @@
                 return okV && okS;
             });
             slides.sort((a,b) => {
-                const pa = typeof a.page === 'number' ? a.page : parseInt(String(a.page).replace(/\D/g,'')) || 0;
-                const pb = typeof b.page === 'number' ? b.page : parseInt(String(b.page).replace(/\D/g,'')) || 0;
+                const pa = parsePageNumber(a.page);
+                const pb = parsePageNumber(b.page);
                 return pa - pb;
             });
             const sNum = parseInt(startPage) || 0;
             const eNum = parseInt(endPage) || 0;
             return slides.filter(s => {
-                const p = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || 0;
+                const p = parsePageNumber(s.page);
                 if (sNum && eNum) return p >= sNum && p <= eNum;
                 if (sNum && !eNum) return p >= sNum;
                 if (!sNum && eNum) return p <= eNum;
@@ -482,7 +494,7 @@
 
             let idx = 1;
             items.forEach((s, slideIdx) => {
-                const pageVal = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
+                const pageVal = parsePageNumber(s.page);
                 
                 let textToUse = s.pali;
                 if (mode === 'thai_source') {
@@ -507,7 +519,7 @@
                         div.innerHTML = `
                             <span class="badge">${num}</span>
                             <span class="pali-text" style="display:inline-block; max-width:70%;">${sent}</span>
-                            ${pageVal !== '' ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
+                            ${pageVal > 0 ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
                             <span style="margin-left:10px;">
                                 <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
                                 <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
