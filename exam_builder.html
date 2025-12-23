@@ -168,6 +168,7 @@
             color: #000;
             word-break: break-word; /* Prevent overflow */
             overflow-wrap: break-word;
+            white-space: pre-wrap; /* Preserve spaces but allow wrapping */
         }
         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
         
@@ -923,23 +924,27 @@
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
             
-            // Helper for 2-space between words (using NBSP + Space to keep spacing attached to previous word)
-            const addDoubleSpacing = (text) => {
-                if (!text) return '';
-                return String(text).trim().split(/\s+/).join('&nbsp;&nbsp;');
-            };
+            // Helper for 2-space between words (using standard spaces)
+        // Note: CSS white-space: pre-wrap is needed to preserve multiple spaces
+        const addDoubleSpacing = (text) => {
+            if (!text) return '';
+            // Replace single spaces with double spaces
+            // But first, normalize any existing multiple spaces to single to avoid triple spacing
+            const normalized = String(text).replace(/\s+/g, ' ').trim();
+            return normalized.replace(/ /g, '  ');
+        };
 
-            let litContent = '';
-            litKeys.forEach(k => {
-                const txt = literalTextMap.get(k) || '';
-                if (txt) litContent += (litContent ? '&nbsp;&nbsp;' : '') + addDoubleSpacing(txt);
-            });
+        let litContent = '';
+        litKeys.forEach(k => {
+            const txt = literalTextMap.get(k) || '';
+            if (txt) litContent += (litContent ? '  ' : '') + addDoubleSpacing(txt);
+        });
 
-            let senContent = '';
-            senKeys.forEach(k => {
-                const txt = senseTextMap.get(k) || '';
-                if (txt) senContent += (senContent ? '&nbsp;&nbsp;' : '') + addDoubleSpacing(txt);
-            });
+        let senContent = '';
+        senKeys.forEach(k => {
+            const txt = senseTextMap.get(k) || '';
+            if (txt) senContent += (senContent ? '  ' : '') + addDoubleSpacing(txt);
+        });
 
             const rawTimeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
@@ -1045,6 +1050,7 @@
                             line-height: 1.6; 
                             font-size: 1em; 
                             color: #000;
+                            white-space: pre-wrap;
                         }
                         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
                     </style>
