@@ -26,6 +26,15 @@
         .list { margin-top:10px; border-top:1px dashed #e0e0e0; padding-top:10px; }
         .item { margin-bottom:8px; }
         .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        /* Paper (A4-like) */
+        .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        .paper-inner { padding: 28px 40px; }
+        .paper-center { text-align: center; }
+        .paper-sep { text-align:center; letter-spacing: 2px; color:#607d8b; margin: 8px 0 16px 0; }
+        .paper-section-title { font-weight:700; color:#2c3e50; margin: 16px 0 12px 0; }
+        .paper-line { margin: 4px 0; }
+        .paper-list .paper-item { margin: 6px 0; }
+        .paper-foot { margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -94,13 +103,10 @@
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
-        <div class="preview" id="previewBox">
-            <h3>ตัวอย่างข้อสอบ</h3>
-            <div id="metaInfo"></div>
-            <h4>ส่วนที่ ๑: แปลโดยพยัญชนะ</h4>
-            <div class="list" id="literalList"></div>
-            <h4>ส่วนที่ ๒: แปลโดยอรรถ</h4>
-            <div class="list" id="senseList"></div>
+        <div class="paper">
+            <div class="paper-inner" id="paperContent">
+                <!-- Assembled exam document will be injected here -->
+            </div>
         </div>
     </div>
 
@@ -167,9 +173,36 @@
                 const o2 = document.createElement('option'); o2.value = p; o2.text = `ภาคที่ ${toThaiDigits(p)}`; senseSel.appendChild(o2);
             });
         }
+        // Hierarchy selectors (vagga, story, page) derived from slides
+        function unique(arr) { return [...new Set(arr.filter(Boolean))]; }
+        function deriveVaggas(part) {
+            const obj = partsMap[part] || {};
+            let slides = [];
+            Object.keys(obj).forEach(k => { const a = obj[k]; if (Array.isArray(a)) slides = slides.concat(a); });
+            return unique(slides.map(s => s.vagga));
+        }
+        function deriveStories(part, vagga) {
+            const obj = partsMap[part] || {};
+            let slides = [];
+            Object.keys(obj).forEach(k => { const a = obj[k]; if (Array.isArray(a)) slides = slides.concat(a); });
+            return unique(slides.filter(s => (vagga ? s.vagga === vagga : true)).map(s => s.story || s.section));
+        }
+        function derivePages(part, vagga, story) {
+            const obj = partsMap[part] || {};
+            let slides = [];
+            Object.keys(obj).forEach(k => { const a = obj[k]; if (Array.isArray(a)) slides = slides.concat(a); });
+            const nums = slides.filter(s => {
+                const okV = vagga ? s.vagga === vagga : true;
+                const okS = story ? ((s.story || s.section) === story) : true;
+                return okV && okS;
+            }).map(s => (typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || null));
+            return unique(nums).filter(n => n !== null).sort((a,b) => a-b);
+        }
         // เก็บสถานะการเลือกประโยค
         const selectedLiteral = new Set();
         const selectedSense = new Set();
+        const literalTextMap = new Map(); // key -> sentence
+        const senseTextMap = new Map();
         function splitPaliSentences(text) {
             if (!text) return [];
             const clean = String(text).replace(/<[^>]+>/g, '').trim();
@@ -202,7 +235,7 @@
         }
         function renderList(containerId, items, mode, part, startPage, endPage) {
             const box = document.getElementById(containerId);
-            box.innerHTML = '';
+            if (box) box.innerHTML = '';
             let idx = 1;
             items.forEach((s, slideIdx) => {
                 const pageVal = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
@@ -211,42 +244,104 @@
                     const key = `${part}-${pageVal}-${slideIdx}-${sentIdx}`;
                     const isSense = (mode === 'sense');
                     const setRef = isSense ? selectedSense : selectedLiteral;
+                    const mapRef = isSense ? senseTextMap : literalTextMap;
                     // ตั้งค่าเริ่มต้น: เลือกไว้ก่อน
                     if (!setRef.has(key)) setRef.add(key);
+                    mapRef.set(key, sent);
                     const selected = setRef.has(key);
                     const num = toThaiDigits(idx++);
-                    const div = document.createElement('div');
-                    div.className = 'item';
-                    div.innerHTML = `
-                        <span class="badge">${num}</span>
-                        <span class="pali-text" style="display:inline-block; max-width:70%;">${sent}</span>
-                        ${pageVal !== '' ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
-                        <span style="margin-left:10px;">
-                            <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
-                            <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
-                        </span>
-                    `;
-                    box.appendChild(div);
+                    if (box) {
+                        const div = document.createElement('div');
+                        div.className = 'item';
+                        div.innerHTML = `
+                            <span class="badge">${num}</span>
+                            <span class="pali-text" style="display:inline-block; max-width:70%;">${sent}</span>
+                            ${pageVal !== '' ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
+                            <span style="margin-left:10px;">
+                                <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
+                                <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
+                            </span>
+                        `;
+                        box.appendChild(div);
+                    }
                 });
             });
             // ติดตั้งตัวจัดการคลิกสำหรับปุ่มเลือก/ตัด
-            box.querySelectorAll('button[data-key]').forEach(btn => {
-                btn.onclick = function() {
-                    const key = this.getAttribute('data-key');
-                    const mode = this.getAttribute('data-mode');
-                    const sel = this.getAttribute('data-select') === 'yes';
-                    const setRef = (mode === 'sense') ? selectedSense : selectedLiteral;
-                    if (sel) setRef.add(key); else setRef.delete(key);
-                    // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
-                    const parent = this.parentElement;
-                    const yesBtn = parent.querySelector('button[data-select="yes"][data-key="'+key+'"]');
-                    const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
-                    if (yesBtn && noBtn) {
-                        if (sel) { yesBtn.classList.add('primary'); yesBtn.classList.remove('secondary'); noBtn.classList.add('secondary'); noBtn.classList.remove('primary'); }
-                        else { noBtn.classList.add('primary'); noBtn.classList.remove('secondary'); yesBtn.classList.add('secondary'); yesBtn.classList.remove('primary'); }
-                    }
-                };
+            if (box) {
+                box.querySelectorAll('button[data-key]').forEach(btn => {
+                    btn.onclick = function() {
+                        const key = this.getAttribute('data-key');
+                        const mode = this.getAttribute('data-mode');
+                        const sel = this.getAttribute('data-select') === 'yes';
+                        const setRef = (mode === 'sense') ? selectedSense : selectedLiteral;
+                        if (sel) setRef.add(key); else setRef.delete(key);
+                        // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
+                        const parent = this.parentElement;
+                        const yesBtn = parent.querySelector('button[data-select="yes"][data-key="'+key+'"]');
+                        const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
+                        if (yesBtn && noBtn) {
+                            if (sel) { yesBtn.classList.add('primary'); yesBtn.classList.remove('secondary'); noBtn.classList.add('secondary'); noBtn.classList.remove('primary'); }
+                            else { noBtn.classList.add('primary'); noBtn.classList.remove('secondary'); yesBtn.classList.add('secondary'); yesBtn.classList.remove('primary'); }
+                        }
+                        buildExamPreview(); // update paper immediately
+                    };
+                });
+            }
+        }
+        function buildExamPreview() {
+            const paper = document.getElementById('paperContent');
+            if (!paper) return;
+            const level = document.getElementById('levelSelect').value;
+            const levelLabel = level === 'p12' ? 'ประโยค ๑–๒' : (level === 'p3' ? 'ป.ธ. ๓' : level);
+            const attempt = document.getElementById('attemptInput').value;
+            const iso = document.getElementById('dateInput').value;
+            const dateLabel = formatThaiDate(iso);
+            const hours = document.getElementById('hoursInput').value || 0;
+            const minutes = document.getElementById('minutesInput').value || 0;
+            // Assemble selected sentences sorted by key (part, page, slideIdx, sentIdx)
+            function sortKeys(a,b) {
+                const pa = a.split('-').map(x => parseInt(x));
+                const pb = b.split('-').map(x => parseInt(x));
+                for (let i=0;i<4;i++) {
+                    const da = pa[i] || 0; const db = pb[i] || 0;
+                    if (da !== db) return da - db;
+                }
+                return 0;
+            }
+            const litKeys = [...selectedLiteral].sort(sortKeys);
+            const senKeys = [...selectedSense].sort(sortKeys);
+            let litItems = '';
+            let senItems = '';
+            let counter = 1;
+            litKeys.forEach(k => {
+                const txt = literalTextMap.get(k) || '...';
+                litItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
             });
+            senKeys.forEach(k => {
+                const txt = senseTextMap.get(k) || '...';
+                senItems += `<div class="paper-item">${toThaiDigits(counter++)}. ${txt}</div>`;
+            });
+            const timeLine = minutes && parseInt(minutes) > 0
+                ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
+                : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
+            paper.innerHTML = `
+                <div class="paper-center">
+                    <div class="paper-line">${levelLabel}</div>
+                    <div class="paper-line">วิชา แปลมคธเป็นไทย</div>
+                    <div class="paper-line">สอบ ครั้งที่ ${attempt || ''} ${dateLabel}</div>
+                </div>
+                <div class="paper-sep">------------</div>
+                <div class="paper-section">
+                    <div class="paper-section-title">แปล โดยพยัญชนะ</div>
+                    <div class="paper-list">${litItems || '<div class="paper-item">…</div>'}</div>
+                </div>
+                <div class="paper-section">
+                    <div class="paper-section-title">แปล โดยอรรถ</div>
+                    <div class="paper-list">${senItems || '<div class="paper-item">…</div>'}</div>
+                </div>
+                <div class="paper-sep">------------</div>
+                <div class="paper-foot paper-center">${timeLine}</div>
+            `;
         }
         function generatePreview() {
             const level = document.getElementById('levelSelect').value;
@@ -258,15 +353,11 @@
             const sensePart = parseInt(document.getElementById('sensePart').value);
             const senseStart = document.getElementById('senseStartPage').value;
             const senseEnd = document.getElementById('senseEndPage').value;
-            const meta = document.getElementById('metaInfo');
-            const levelLabel = level === 'p12' ? 'ประโยค ๑–๒' : (level === 'p3' ? 'ป.ธ. ๓' : level);
-            const attemptLabel = attempt ? `ครั้งที่ ${attempt}` : '';
-            const dateLabel = formatThaiDate(iso);
-            meta.innerHTML = `<span class="badge">${levelLabel}</span><span class="badge">${attemptLabel}</span><span class="badge">${dateLabel}</span>`;
             const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
             const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
-            renderList('literalList', literalSlides, 'literal', literalPart, literalStart, literalEnd);
-            renderList('senseList', senseSlides, 'sense', sensePart, senseStart, senseEnd);
+            renderList(null, literalSlides, 'literal', literalPart, literalStart, literalEnd);
+            renderList(null, senseSlides, 'sense', sensePart, senseStart, senseEnd);
+            buildExamPreview();
         }
         function resetForm() {
             document.getElementById('attemptInput').value = '';
