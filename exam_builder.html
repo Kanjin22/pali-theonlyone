@@ -442,7 +442,7 @@
             const matches = clean.match(/.+?(?:ฯ+|[.!?]+)(?=\s|$)/g);
             return matches && matches.length ? matches.map(s => s.trim()) : [clean];
         }
-        function collectSlides(part, startPage, endPage) {
+        function collectSlides(part, startPage, endPage, vagga, story) {
             const obj = partsMap[part] || {};
             let slides = [];
             Object.keys(obj).forEach(k => {
@@ -450,6 +450,12 @@
                 if (Array.isArray(arr)) slides = slides.concat(arr);
             });
             slides = slides.filter(s => typeof s.page !== 'undefined');
+            // Filter by vagga/story first to ensure we only get the selected story content
+            slides = slides.filter(s => {
+                const okV = vagga ? (s.vagga === vagga) : true;
+                const okS = story ? (((s.story || s.section) === story)) : true;
+                return okV && okS;
+            });
             slides.sort((a,b) => {
                 const pa = typeof a.page === 'number' ? a.page : parseInt(String(a.page).replace(/\D/g,'')) || 0;
                 const pb = typeof b.page === 'number' ? b.page : parseInt(String(b.page).replace(/\D/g,'')) || 0;
@@ -645,26 +651,34 @@
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
             const literalPart = document.getElementById('literalPart').value;
+            const literalVagga = document.getElementById('literalVagga').value;
+            const literalStory = document.getElementById('literalStory').value;
             const literalStart = document.getElementById('literalStartPage').value;
             const literalEnd = document.getElementById('literalEndPage').value;
             
             const sensePart = document.getElementById('sensePart').value;
+            const senseVagga = document.getElementById('senseVagga').value;
+            const senseStory = document.getElementById('senseStory').value;
             const senseStart = document.getElementById('senseStartPage').value;
             const senseEnd = document.getElementById('senseEndPage').value;
             
             if (isThaiSource) {
-                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
+                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd, literalVagga, literalStory);
                  renderList('literalList', literalSlides, 'thai_source', literalPart, literalStart, literalEnd);
                  // Clear sense list UI
                  const senseBox = document.getElementById('senseList');
                  if(senseBox) senseBox.innerHTML = '';
             } else {
-                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
-                 const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
+                 const literalSlides = collectSlides(literalPart, literalStart, literalEnd, literalVagga, literalStory);
+                 const senseSlides = collectSlides(sensePart, senseStart, senseEnd, senseVagga, senseStory);
                  renderList('literalList', literalSlides, 'literal', literalPart, literalStart, literalEnd);
                  renderList('senseList', senseSlides, 'sense', sensePart, senseStart, senseEnd);
             }
             buildExamPreview();
+        }
+        function resetSelection(mode) {
+            if (mode === 'literal') { selectedLiteral.clear(); literalTextMap.clear(); }
+            if (mode === 'sense') { selectedSense.clear(); senseTextMap.clear(); }
         }
         function resetForm() {
             document.getElementById('attemptInput').value = '';
@@ -685,7 +699,7 @@
             generatePreview();
         }
         document.getElementById('levelSelect').addEventListener('change', () => { populateSubjectSelect(); populatePartSelects(); generatePreview(); });
-        document.getElementById('subjectSelect').addEventListener('change', buildExamPreview);
+        document.getElementById('subjectSelect').addEventListener('change', () => { resetSelection('literal'); resetSelection('sense'); populatePartSelects(); generatePreview(); });
         document.getElementById('hoursInput').addEventListener('input', updateDuration);
         document.getElementById('minutesInput').addEventListener('input', updateDuration);
         document.getElementById('dateInput').addEventListener('change', updateDateDisplay);
@@ -694,13 +708,13 @@
         document.getElementById('resetBtn').addEventListener('click', resetForm);
         
         // Hierarchical Select Listeners
-        document.getElementById('literalPart').addEventListener('change', () => { updateVaggaSelect('literal'); generatePreview(); });
-        document.getElementById('literalVagga').addEventListener('change', () => { updateStorySelect('literal'); });
-        document.getElementById('literalStory').addEventListener('change', () => { updatePageRange('literal'); });
+        document.getElementById('literalPart').addEventListener('change', () => { resetSelection('literal'); updateVaggaSelect('literal'); generatePreview(); });
+        document.getElementById('literalVagga').addEventListener('change', () => { resetSelection('literal'); updateStorySelect('literal'); });
+        document.getElementById('literalStory').addEventListener('change', () => { resetSelection('literal'); updatePageRange('literal'); });
         
-        document.getElementById('sensePart').addEventListener('change', () => { updateVaggaSelect('sense'); generatePreview(); });
-        document.getElementById('senseVagga').addEventListener('change', () => { updateStorySelect('sense'); });
-        document.getElementById('senseStory').addEventListener('change', () => { updatePageRange('sense'); });
+        document.getElementById('sensePart').addEventListener('change', () => { resetSelection('sense'); updateVaggaSelect('sense'); generatePreview(); });
+        document.getElementById('senseVagga').addEventListener('change', () => { resetSelection('sense'); updateStorySelect('sense'); });
+        document.getElementById('senseStory').addEventListener('change', () => { resetSelection('sense'); updatePageRange('sense'); });
 
         // Direct page input updates
         document.getElementById('literalStartPage').addEventListener('input', generatePreview);
