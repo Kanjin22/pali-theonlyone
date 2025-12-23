@@ -41,7 +41,15 @@
         .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1.3rem; }
         .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1.4rem; }
         .paper-list .paper-item { margin: 6px 0; }
-        .paper-content-text { text-align: justify; line-height: 1.6; font-size: 1.2rem; color: #000; }
+        .paper-content-text { 
+            text-align: justify; 
+            text-align-last: left; /* Ensure last line aligns left */
+            line-height: 1.6; 
+            font-size: 1.2rem; 
+            color: #000;
+            word-break: break-word; /* Prevent overflow */
+            overflow-wrap: break-word;
+        }
         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1.2rem; }
         
         /* Toolbar for Paper */
@@ -752,10 +760,12 @@
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
             
-            // Helper for 2-space between words
+            // Helper for 2-space between words (using Space + NBSP to allow line breaking)
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
-                return String(text).trim().split(/\s+/).join('&nbsp;&nbsp;');
+                // Use a normal space followed by a non-breaking space.
+                // This visually creates a 2-space gap but allows the browser to break at the normal space.
+                return String(text).trim().split(/\s+/).join(' \u00A0');
             };
 
             let litContent = '';
