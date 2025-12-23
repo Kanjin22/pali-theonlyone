@@ -627,27 +627,38 @@
             const litKeys = [...selectedLiteral].sort(sortKeys);
             const senKeys = [...selectedSense].sort(sortKeys);
             
+            // Helper for 2-space between words
+            const addDoubleSpacing = (text) => {
+                if (!text) return '';
+                return String(text).trim().split(/\s+/).join('&nbsp;&nbsp;');
+            };
+
             let litContent = '';
             litKeys.forEach(k => {
                 const txt = literalTextMap.get(k) || '';
-                if (txt) litContent += (litContent ? '&nbsp;&nbsp;' : '') + txt;
+                if (txt) litContent += (litContent ? '&nbsp;&nbsp;' : '') + addDoubleSpacing(txt);
             });
 
             let senContent = '';
             senKeys.forEach(k => {
                 const txt = senseTextMap.get(k) || '';
-                if (txt) senContent += (senContent ? '&nbsp;&nbsp;' : '') + txt;
+                if (txt) senContent += (senContent ? '&nbsp;&nbsp;' : '') + addDoubleSpacing(txt);
             });
 
-            const timeLine = minutes && parseInt(minutes) > 0
+            const rawTimeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
                 : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
+            const timeLine = addDoubleSpacing(rawTimeLine);
+
+            const headerLevel = addDoubleSpacing(levelLabel);
+            const headerSubject = addDoubleSpacing(subjectLabel);
+            const headerDate = addDoubleSpacing(`สอบ ครั้งที่ ${attempt || ''} ${dateLabel}`);
             
             let contentHTML = '';
             if (isThaiSource) {
                 contentHTML = `
                 <div class="paper-section">
-                    <div class="paper-section-title">${subjectLabel}</div>
+                    <div class="paper-section-title">${headerSubject}</div>
                     <div class="paper-content-text">
                         <span style="font-weight:bold;">๑. </span>${litContent || '...'}
                     </div>
@@ -655,13 +666,13 @@
             } else {
                 contentHTML = `
                 <div class="paper-section">
-                    <div class="paper-section-title">แปล โดยพยัญชนะ</div>
+                    <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
                     <div class="paper-content-text">
                         <span style="font-weight:bold;">๑. </span>${litContent || '...'}
                     </div>
                 </div>
                 <div class="paper-section">
-                    <div class="paper-section-title">แปล โดยอรรถ</div>
+                    <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
                     <div class="paper-content-text">
                         <span style="font-weight:bold;">๒. </span>${senContent || '...'}
                     </div>
@@ -670,9 +681,9 @@
             
             paper.innerHTML = `
                 <div class="paper-center">
-                    <div class="paper-line">${levelLabel}</div>
-                    <div class="paper-line">${subjectLabel}</div>
-                    <div class="paper-line">สอบ ครั้งที่ ${attempt || ''} ${dateLabel}</div>
+                    <div class="paper-line">${headerLevel}</div>
+                    <div class="paper-line">${headerSubject}</div>
+                    <div class="paper-line">${headerDate}</div>
                 </div>
                 <div class="paper-sep">------------</div>
                 ${contentHTML}
