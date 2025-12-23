@@ -1278,7 +1278,10 @@
         function exportToWord() {
             const paper = document.getElementById('paperContent');
             const paperContainer = document.querySelector('.paper');
-            const content = paper.innerHTML;
+            let content = paper.innerHTML;
+            
+            // Replace double spaces with mso-spacerun span for Word compatibility
+            content = content.replace(/  /g, "<span style='mso-spacerun:yes'>  </span>");
             
             // Get current computed styles
             const currentFont = paperContainer.style.fontFamily || '"DilleniaUPC", sans-serif';
@@ -1301,6 +1304,7 @@
                         .paper-content-text { 
                             text-align: justify; 
                             text-align-last: left; 
+                            text-justify: distribute-all-lines; /* Thai Justify */
                             line-height: 1.6; 
                             font-size: 1em; 
                             color: #000;
