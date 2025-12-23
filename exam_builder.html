@@ -96,6 +96,8 @@
                     <label>โดยพยัญชนะ</label>
                     <div class="grid-2" style="width:100%;">
                         <select id="literalPart"></select>
+                        <select id="literalVagga"><option value="">(เลือกวรรค)</option></select>
+                        <select id="literalStory"><option value="">(เลือกเรื่อง)</option></select>
                         <div class="row">
                             <input type="number" id="literalStartPage" placeholder="หน้าเริ่ม" />
                             <input type="number" id="literalEndPage" placeholder="หน้าจบ" />
@@ -107,6 +109,8 @@
                     <label>โดยอรรถ</label>
                     <div class="grid-2" style="width:100%;">
                         <select id="sensePart"></select>
+                        <select id="senseVagga"><option value="">(เลือกวรรค)</option></select>
+                        <select id="senseStory"><option value="">(เลือกเรื่อง)</option></select>
                         <div class="row">
                             <input type="number" id="senseStartPage" placeholder="หน้าเริ่ม" />
                             <input type="number" id="senseEndPage" placeholder="หน้าจบ" />
@@ -344,7 +348,63 @@
                  const litLabel = document.getElementById('literalPart').closest('.row').parentElement.querySelector('label');
                  if(litLabel) litLabel.innerText = 'โดยพยัญชนะ';
             }
+            
+            // Trigger Vagga update for both
+            updateVaggaSelect('literal');
+            updateVaggaSelect('sense');
         }
+
+        function updateVaggaSelect(mode) {
+            const partId = document.getElementById(mode + 'Part').value;
+            const vaggas = deriveVaggas(partId);
+            const sel = document.getElementById(mode + 'Vagga');
+            sel.innerHTML = '<option value="">(เลือกวรรค)</option>';
+            vaggas.forEach(v => {
+                const o = document.createElement('option');
+                o.value = v;
+                o.text = v;
+                sel.appendChild(o);
+            });
+            // Reset Story and Pages
+            updateStorySelect(mode);
+        }
+
+        function updateStorySelect(mode) {
+            const partId = document.getElementById(mode + 'Part').value;
+            const vagga = document.getElementById(mode + 'Vagga').value;
+            const stories = deriveStories(partId, vagga);
+            const sel = document.getElementById(mode + 'Story');
+            sel.innerHTML = '<option value="">(เลือกเรื่อง)</option>';
+            stories.forEach(s => {
+                const o = document.createElement('option');
+                o.value = s;
+                o.text = s;
+                sel.appendChild(o);
+            });
+            // Reset Pages
+            updatePageRange(mode);
+        }
+
+        function updatePageRange(mode) {
+            const partId = document.getElementById(mode + 'Part').value;
+            const vagga = document.getElementById(mode + 'Vagga').value;
+            const story = document.getElementById(mode + 'Story').value;
+            
+            if (story) {
+                const pages = derivePages(partId, vagga, story);
+                if (pages.length > 0) {
+                    const min = Math.min(...pages);
+                    const max = Math.max(...pages);
+                    document.getElementById(mode + 'StartPage').value = min;
+                    document.getElementById(mode + 'EndPage').value = max;
+                    generatePreview(); // Auto-generate when story selected
+                } else {
+                    document.getElementById(mode + 'StartPage').value = '';
+                    document.getElementById(mode + 'EndPage').value = '';
+                }
+            }
+        }
+
         // Hierarchy selectors (vagga, story, page) derived from slides
         function unique(arr) { return [...new Set(arr.filter(Boolean))]; }
         function deriveVaggas(part) {
@@ -613,6 +673,13 @@
             document.getElementById('literalEndPage').value = '';
             document.getElementById('senseStartPage').value = '';
             document.getElementById('senseEndPage').value = '';
+            
+            // Reset hierarchical selects
+            document.getElementById('literalVagga').value = '';
+            document.getElementById('literalStory').innerHTML = '<option value="">(เลือกเรื่อง)</option>';
+            document.getElementById('senseVagga').value = '';
+            document.getElementById('senseStory').innerHTML = '<option value="">(เลือกเรื่อง)</option>';
+            
             updateDateDisplay();
             updateDuration();
             generatePreview();
@@ -625,13 +692,22 @@
         document.getElementById('attemptInput').addEventListener('input', function() { normalizeThaiNumerals(this); });
         document.getElementById('generateBtn').addEventListener('click', generatePreview);
         document.getElementById('resetBtn').addEventListener('click', resetForm);
-        // อัปเดตตัวอย่างทันทีเมื่อกรอกภาค/หน้า
-        document.getElementById('literalPart').addEventListener('change', generatePreview);
-        document.getElementById('sensePart').addEventListener('change', generatePreview);
+        
+        // Hierarchical Select Listeners
+        document.getElementById('literalPart').addEventListener('change', () => { updateVaggaSelect('literal'); generatePreview(); });
+        document.getElementById('literalVagga').addEventListener('change', () => { updateStorySelect('literal'); });
+        document.getElementById('literalStory').addEventListener('change', () => { updatePageRange('literal'); });
+        
+        document.getElementById('sensePart').addEventListener('change', () => { updateVaggaSelect('sense'); generatePreview(); });
+        document.getElementById('senseVagga').addEventListener('change', () => { updateStorySelect('sense'); });
+        document.getElementById('senseStory').addEventListener('change', () => { updatePageRange('sense'); });
+
+        // Direct page input updates
         document.getElementById('literalStartPage').addEventListener('input', generatePreview);
         document.getElementById('literalEndPage').addEventListener('input', generatePreview);
         document.getElementById('senseStartPage').addEventListener('input', generatePreview);
         document.getElementById('senseEndPage').addEventListener('input', generatePreview);
+        
         populateSubjectSelect();
         populatePartSelects();
         updateDuration();
