@@ -750,13 +750,7 @@
             document.body.removeChild(link);
         }
         function generatePreview() {
-            const level = document.getElementById('levelSelect').value;
-            const attempt = document.getElementById('attemptInput').value;
-            const iso = document.getElementById('dateInput').value;
-            const subjectLabel = document.getElementById('subjectSelect').value || '';
-            const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
-            
-            const literalPart = document.getElementById('literalPart').value;
+            oonst literalPart = document.getElementById('literalPart').value;
             const literalVagga = document.getElementById('literalVagga').value;
             const literalStory = document.getElementById('literalStory').value;
             const literalStart = document.getElementById('literalStartPage').value;
@@ -795,6 +789,8 @@
             }
         }
         function resetForm() {
+            resetSelection('literal');
+            resetSelection('sense');
             document.getElementById('attemptInput').value = '';
             document.getElementById('dateInput').value = '';
             document.getElementById('literalStartPage').value = '';
@@ -828,13 +824,13 @@
         document.getElementById('literalVagga').addEventListener('change', () => { resetSelection('literal'); updateStorySelect('literal'); });
         document.getElementById('literalStory').addEventListener('change', () => { resetSelection('literal'); updatePageRange('literal'); });
         
-        document.getElementById('sensePart').addEventListener('change', () => { resetSelection('sense'); updateVaggaSelect('sense'); generatePreview(); });
-        document.getElementById('senseVagga').addEventListener('change', () => { resetSelection('sense'); updateStorySelect('sense'); });
-        document.getElementById('senseStory').addEventListener('change', () => { resetSelection('sense'); updatePageRange('sense'); });
+        document.getElementById('sensePart').addEventListener('change', () => { rateVaggaSelect('sense'); generatePreview(); });
+        document.getElementById('senseVagga').addEventListener('change', () => { reteStorySelect('sense'); });
+        document.getElementById('senseStory').addEventListener('change', () => { retePageRange('sense'); });
 
         // Direct page input updates
-        document.getElementById('literalStartPage').addEventListener('input', generatePreview);
-        document.getElementById('literalEndPage').addEventListener('input', generatePreview);
+        document.getElementById('literalStartPage').addEventListener('input', gen
+        document.getElementById('literalEndPage').addEventListener('input', gene
         document.getElementById('senseStartPage').addEventListener('input', generatePreview);
         document.getElementById('senseEndPage').addEventListener('input', generatePreview);
         
