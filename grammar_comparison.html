@@ -623,31 +623,64 @@
             const selectedChapter = document.getElementById('chapter-select').value;
             const container = document.getElementById('scripture-content');
             
-            let html = '';
+            let allItems = [];
             
+            // 1. Collect all items
             allDataSections.forEach((section, sectionIdx) => {
                 if (selectedChapter !== 'all' && String(sectionIdx) !== selectedChapter) return;
 
-                // Filter items for this scripture
-                const items = [];
                 section.formulas.forEach((row, formulaIdx) => {
                     if (row[scripture]) {
-                        items.push({ data: row[scripture], formulaIdx });
+                        allItems.push({
+                            data: row[scripture],
+                            topic: section.topic,
+                            sectionIdx: sectionIdx,
+                            formulaIdx: formulaIdx
+                        });
                     }
                 });
-
-                if (items.length > 0) {
-                    html += `<h3 style="color:#2c3e50; border-bottom:1px solid #ddd; padding-bottom:5px; margin-top:30px;">${section.topic}</h3>`;
-                    
-                    items.forEach(item => {
-                        html += createResultCard(item.data, scripture, section.topic, sectionIdx, item.formulaIdx);
-                    });
-                }
             });
 
-            if (!html) {
-                html = '<div style="text-align:center; padding:40px;">ไม่พบข้อมูลในหมวดนี้</div>';
+            // 2. Sort items by Reference Number
+            allItems.sort((a, b) => {
+                const getRefNums = (str) => {
+                    if (!str) return [999999]; // No ref goes to end
+                    // Extract Thai digits
+                    const matches = str.match(/[๐-๙]+/g);
+                    if (!matches) return [999999];
+                    return matches.map(s => {
+                        // Convert Thai to Arabic
+                        return parseInt(s.replace(/[๐-๙]/g, c => "๐๑๒๓๔๕๖๗๘๙".indexOf(c)));
+                    });
+                };
+
+                const numsA = getRefNums(a.data.ref);
+                const numsB = getRefNums(b.data.ref);
+
+                // Compare first number
+                if (numsA[0] !== numsB[0]) return numsA[0] - numsB[0];
+                // Compare second number (if exists, e.g. Moggallana 1/1 vs 1/2)
+                if (numsA.length > 1 && numsB.length > 1) {
+                    return numsA[1] - numsB[1];
+                }
+                return 0;
+            });
+
+            // 3. Render
+            if (allItems.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px;">ไม่พบข้อมูลในหมวดนี้</div>';
+                return;
             }
+
+            let html = '';
+            // If "All", we might want to show headers? 
+            // But if sorted by Formula, headers (Topics) might be interleaved.
+            // User requested "ordered by formula", so a flat list is best.
+            // We show the topic in the card anyway.
+
+            allItems.forEach(item => {
+                html += createResultCard(item.data, scripture, item.topic, item.sectionIdx, item.formulaIdx);
+            });
             
             container.innerHTML = html;
         }
