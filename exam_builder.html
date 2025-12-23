@@ -71,6 +71,10 @@
                     </select>
                 </div>
                 <div class="row">
+                    <label>วิชา</label>
+                    <select id="subjectSelect"></select>
+                </div>
+                <div class="row">
                     <label>ครั้งที่สอบ</label>
                     <input type="text" id="attemptInput" placeholder="เช่น ๑" />
                 </div>
@@ -148,6 +152,33 @@
             const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
             return String(str).replace(/[0-9]/g, d => m[d]);
         }
+        function getSelectedLevelLabel() {
+            const sel = document.getElementById('levelSelect');
+            const opt = sel && sel.selectedOptions && sel.selectedOptions[0] ? sel.selectedOptions[0] : null;
+            return opt ? opt.textContent.trim() : '';
+        }
+        const SUBJECTS_BY_LEVEL = {
+            'ประโยค ๑–๒': ['แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๓': ['แปล  มคธเป็นไทย','สัมพันธ์ไทย'],
+            'ประโยค ป.ธ. ๔': ['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๕': ['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๖': ['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๗': ['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๘': ['แต่งฉันท์ภาษามคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๙': ['แต่ง  ไทยเป็นมคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย']
+        };
+        function populateSubjectSelect() {
+            const label = getSelectedLevelLabel();
+            const subjects = SUBJECTS_BY_LEVEL[label] || ['แปล  มคธเป็นไทย'];
+            const sel = document.getElementById('subjectSelect');
+            sel.innerHTML = '';
+            subjects.forEach(s => {
+                const o = document.createElement('option');
+                o.value = s;
+                o.text = s;
+                sel.appendChild(o);
+            });
+        }
         function formatThaiDate(iso) {
             if (!iso) return '-';
             const d = new Date(iso);
@@ -170,14 +201,14 @@
             const m = { '0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙' };
             input.value = String(input.value).replace(/[0-9]/g, d => m[d]).replace(/\s+/g,'').trim();
         }
-        function allowedPartsForLevel(level) {
-            if (level === 'p12') return [1,2,3,4];
-            if (level === 'p3') return [5,6,7,8];
+        function allowedPartsForLevel() {
+            const label = getSelectedLevelLabel();
+            if (label.includes('๑–๒')) return [1,2,3,4];
+            if (label.includes('ป.ธ. ๓')) return [5,6,7,8];
             return [1,2,3,4];
         }
         function populatePartSelects() {
-            const level = document.getElementById('levelSelect').value;
-            const allowed = allowedPartsForLevel(level);
+            const allowed = allowedPartsForLevel();
             const literalSel = document.getElementById('literalPart');
             const senseSel = document.getElementById('sensePart');
             literalSel.innerHTML = '';
@@ -305,8 +336,8 @@
         function buildExamPreview() {
             const paper = document.getElementById('paperContent');
             if (!paper) return;
-            const level = document.getElementById('levelSelect').value;
-            const levelLabel = level === 'p12' ? 'ประโยค ๑–๒' : (level === 'p3' ? 'ป.ธ. ๓' : level);
+            const levelLabel = getSelectedLevelLabel();
+            const subjectLabel = document.getElementById('subjectSelect').value || 'แปล  มคธเป็นไทย';
             const attempt = document.getElementById('attemptInput').value;
             const iso = document.getElementById('dateInput').value;
             const dateLabel = formatThaiDate(iso);
@@ -341,7 +372,7 @@
             paper.innerHTML = `
                 <div class="paper-center">
                     <div class="paper-line">${levelLabel}</div>
-                    <div class="paper-line">แปล  มคธเป็นไทย</div>
+                    <div class="paper-line">${subjectLabel}</div>
                     <div class="paper-line">สอบ ครั้งที่ ${attempt || ''} ${dateLabel}</div>
                 </div>
                 <div class="paper-sep">------------</div>
@@ -384,7 +415,8 @@
             updateDuration();
             generatePreview();
         }
-        document.getElementById('levelSelect').addEventListener('change', () => { populatePartSelects(); generatePreview(); });
+        document.getElementById('levelSelect').addEventListener('change', () => { populateSubjectSelect(); populatePartSelects(); generatePreview(); });
+        document.getElementById('subjectSelect').addEventListener('change', buildExamPreview);
         document.getElementById('hoursInput').addEventListener('input', updateDuration);
         document.getElementById('minutesInput').addEventListener('input', updateDuration);
         document.getElementById('dateInput').addEventListener('change', updateDateDisplay);
@@ -398,6 +430,7 @@
         document.getElementById('literalEndPage').addEventListener('input', generatePreview);
         document.getElementById('senseStartPage').addEventListener('input', generatePreview);
         document.getElementById('senseEndPage').addEventListener('input', generatePreview);
+        populateSubjectSelect();
         populatePartSelects();
         updateDuration();
         updateDateDisplay();
