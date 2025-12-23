@@ -832,6 +832,10 @@
             </div>
             <div class="split-pane" style="flex: 1;">
                 <span class="pane-label" id="thaiLabel">ไทย</span>
+                <select id="thaiVariantSelect" style="margin-left:10px; padding:4px 8px; font-size:0.9rem; display:none;">
+                    <option value="desana">แปลโดยอรรถ</option>
+                    <option value="sense">แปลเอาความ</option>
+                </select>
                 <div class="thai-text" id="thaiContent">...</div>
             </div>
         </div>
@@ -1215,6 +1219,7 @@
         let currentFontSizePali = 1.8;
         let currentFontSizeThai = 1.8;
         let isThaiSense = false;
+        let thaiSenseVariant = 'desana';
 
         function toggleSettings() {
             const panel = document.getElementById('settings-panel');
@@ -1391,20 +1396,53 @@
 
             paliBox.innerHTML = wrapWords(s.pali, s);
             
-            // Auto-detect translation mode:
-            // If literal translation (thai) is missing but sense translation (thai_sense) exists,
-            // we force display of thai_sense.
             let displayThai = "";
-            if (!s.thai && s.thai_sense) {
-                 displayThai = s.thai_sense;
-                 // Optionally update global state to reflect this, but for now just display it
-                 // We don't change isThaiSense globally to avoid flipping back and forth unexpectedly
-                 // when navigating between mixed slides.
+            if (!s.thai && (s.thai_desana || s.thai_sense)) {
+                 displayThai = s.thai_desana || s.thai_sense;
             } else {
-                 displayThai = (isThaiSense && s.thai_sense) ? s.thai_sense : s.thai;
+                 if (isThaiSense) {
+                     if (thaiSenseVariant === 'desana' && s.thai_desana) {
+                         displayThai = s.thai_desana;
+                     } else if (thaiSenseVariant === 'sense' && s.thai_sense) {
+                         displayThai = s.thai_sense;
+                     } else {
+                         displayThai = s.thai_sense || s.thai_desana || s.thai;
+                     }
+                 } else {
+                     displayThai = s.thai;
+                 }
             }
             
             thaiBox.innerHTML = wrapWords(displayThai, null);
+
+            const select = document.getElementById('thaiVariantSelect');
+            if (select) {
+                const hasDesana = !!s.thai_desana;
+                const hasSense = !!s.thai_sense;
+                if (isThaiSense && (hasDesana || hasSense)) {
+                    select.style.display = 'inline-block';
+                    select.innerHTML = '';
+                    if (hasDesana) {
+                        const opt = document.createElement('option');
+                        opt.value = 'desana';
+                        opt.text = 'แปลโดยอรรถ';
+                        select.appendChild(opt);
+                    }
+                    if (hasSense) {
+                        const opt = document.createElement('option');
+                        opt.value = 'sense';
+                        opt.text = 'แปลเอาความ';
+                        select.appendChild(opt);
+                    }
+                    if (!((thaiSenseVariant === 'desana' && hasDesana) || (thaiSenseVariant === 'sense' && hasSense))) {
+                        thaiSenseVariant = hasDesana ? 'desana' : 'sense';
+                    }
+                    select.value = thaiSenseVariant;
+                    select.onchange = function() { setThaiSenseVariant(this.value); };
+                } else {
+                    select.style.display = 'none';
+                }
+            }
 
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
@@ -1521,9 +1559,17 @@
         function applyThaiModeLabel() {
             const label = document.getElementById('thaiLabel');
             const btn = document.getElementById('btn-toggle-thai-mode');
-            if (label) label.innerText = isThaiSense ? 'ไทย (โดยอรรถ)' : 'ไทย (โดยพยัญชนะ)';
+            if (label) {
+                if (isThaiSense) {
+                    const variantText = thaiSenseVariant === 'desana' ? 'เผด็จ' : 'เอาความ';
+                    label.innerText = `ไทย (โดยอรรถ · ${variantText})`;
+                } else {
+                    label.innerText = 'ไทย (โดยพยัญชนะ)';
+                }
+            }
             if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
         }
+        function setThaiSenseVariant(val) { thaiSenseVariant = val; updateSlide(); }
         function addNote() {
             const card = document.getElementById('cardContainer');
             const note = document.createElement('div');
