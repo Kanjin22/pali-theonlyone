@@ -31,14 +31,128 @@
         .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         /* Paper (A4-like) */
+        /* DilleniaUPC (Standard) */
         @font-face {
             font-family: 'DilleniaUPC';
-            src: local('DilleniaUPC'), local('Dillenia UPC');
+            src: local('DilleniaUPC'), url('fonts/DilleniaUPC-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'DilleniaUPC';
+            src: local('DilleniaUPC Bold'), url('fonts/DilleniaUPC-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'DilleniaUPC';
+            src: local('DilleniaUPC Italic'), url('fonts/DilleniaUPC-Italic.ttf') format('truetype');
+            font-weight: normal;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'DilleniaUPC';
+            src: local('DilleniaUPC Bold Italic'), url('fonts/DilleniaUPC-BoldItalic.ttf') format('truetype');
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* DilleniaUPC_4Balee (Custom Pali) */
+        @font-face {
+            font-family: 'DilleniaUPC_4Balee';
+            src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
         @font-face {
             font-family: 'DilleniaUPC_4Balee';
-            src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee.ttf') format('truetype');
+            src: local('DilleniaUPC_4Balee Bold'), url('fonts/DilleniaUPC_4Balee-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
         }
+        @font-face {
+            font-family: 'DilleniaUPC_4Balee';
+            src: local('DilleniaUPC_4Balee Italic'), url('fonts/DilleniaUPC_4Balee-Italic.ttf') format('truetype');
+            font-weight: normal;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'DilleniaUPC_4Balee';
+            src: local('DilleniaUPC_4Balee Bold Italic'), url('fonts/DilleniaUPC_4Balee-BoldItalic.ttf') format('truetype');
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* Buddhadham */
+        @font-face {
+            font-family: 'Buddhadham';
+            src: url('fonts/Buddhadham.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Buddhadham';
+            src: url('fonts/Buddhadham-Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* BuddhadhamPali */
+        @font-face {
+            font-family: 'BuddhadhamPali';
+            src: url('fonts/BuddhadhamPali.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'BuddhadhamPali';
+            src: url('fonts/BuddhadhamPali-Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Buddhawajana */
+        @font-face {
+            font-family: 'Buddhawajana';
+            src: url('fonts/Buddhawajana.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Buddhawajana';
+            src: url('fonts/Buddhawajana-Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* BuddhawajanaPali */
+        @font-face {
+            font-family: 'BuddhawajanaPali';
+            src: url('fonts/BuddhawajanaPali.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'BuddhawajanaPali';
+            src: url('fonts/BuddhawajanaPali-Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Burapa */
+        @font-face {
+            font-family: 'Burapa';
+            src: url('fonts/Burapa.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Burapa';
+            src: url('fonts/BurapaBold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
         .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); font-family: "DilleniaUPC", "Cordia New", "TH Sarabun New", sans-serif; font-size: 22px; }
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
@@ -205,6 +319,11 @@
                 <select class="tool-select" id="fontFamilySelect" onchange="changeFontFamily(this.value)" title="แบบอักษร">
                     <option value="DilleniaUPC" selected>DilleniaUPC</option>
                     <option value="DilleniaUPC_4Balee">DilleniaUPC (บาลี)</option>
+                    <option value="Buddhadham">Buddhadham</option>
+                    <option value="BuddhadhamPali">Buddhadham (บาลี)</option>
+                    <option value="Buddhawajana">Buddhawajana</option>
+                    <option value="BuddhawajanaPali">Buddhawajana (บาลี)</option>
+                    <option value="Burapa">Burapa</option>
                     <option value="TH Sarabun New, Sarabun">TH Sarabun New</option>
                     <option value="Cordia New">Cordia New</option>
                     <option value="Niramit">Niramit</option>
