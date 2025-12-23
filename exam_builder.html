@@ -975,10 +975,15 @@
                 processed = processed.replace(/ฯ/g, '###P1###');
                 
                 // Remove punctuation:
-                // Matches: ! " # $ % & ' * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-                // Also standard keyboard symbols that are not text (Excluding ( ) as requested)
+                // Standard ASCII Punctuation: ! " # $ % & ' * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+                // Exclude ( ) from removal as requested
                 processed = processed.replace(/[!"#$%&'*+,\-./:;<=>?@[\]^_`{|}~]/g, '');
                 
+                // Remove Special Punctuation (Smart Quotes, Dashes, Ellipsis, etc.)
+                // \u2010-\u201F (Dashes, Quotes)
+                // \u2026 (Ellipsis)
+                processed = processed.replace(/[\u2010-\u201F\u2026]/g, '');
+
                 // Restore placeholders
                 processed = processed.replace(/###P1###/g, 'ฯ');
                 processed = processed.replace(/###P2###/g, 'ฯลฯ');
@@ -1006,6 +1011,18 @@
             }
 
             // Helper for spacing
+            const addDoubleSpacing = (text) => {
+                if (!text) return '';
+                let processed = String(text);
+                
+                // Normalization
+                const normalized = processed.replace(/\s+/g, ' ').trim();
+                
+                // Use 2 spaces
+                return normalized.replace(/ /g, '  '); 
+            };
+
+            // Helper for spacing
             const formatSpacing = (text) => {
                 if (!text) return '';
                 let processed = String(text);
@@ -1017,20 +1034,30 @@
                 // Normalize spaces
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
-                // Always use 2 spaces for Exam Paper (User Request: "เว้น 2 เคาะทั้งหมด")
-                return normalized.replace(/ /g, '  ');
+                // Determine Spacing based on Content Type
+                if (isPaliContent) {
+                    // Pali Content: 2 Spaces
+                    return normalized.replace(/ /g, '  ');
+                } else {
+                    // Thai Content: 1 Space
+                    return normalized.replace(/ /g, ' ');
+                }
             };
 
             // Prepare Content Blocks with specific fonts
             const paliFont = '"DilleniaUPC_4Balee", "DilleniaUPC", sans-serif';
             const thaiFont = '"DilleniaUPC", sans-serif'; // Or inherit from paper
             
-            const contentStyle = isPaliContent ? `font-family: ${paliFont};` : '';
+            // Set Content Font
+            const contentStyle = isPaliContent 
+                ? `font-family: ${paliFont};` 
+                : `font-family: ${thaiFont};`;
 
             let litContent = '';
             litKeys.forEach(k => {
                 const txt = literalTextMap.get(k) || '';
                 // Add spacing between sentences based on mode
+                // If Pali content (2 spaces), separator should also be 2 spaces
                 const sep = isPaliContent ? '  ' : ' ';
                 if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
             });
@@ -1101,11 +1128,51 @@
             const hours = document.getElementById('hoursInput').value || 0;
             const minutes = document.getElementById('minutesInput').value || 0;
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
+            
+            // Check if we need to clean punctuation (Level P.T.3-9)
+            // Level codes: p3 to p9
+            const levelCode = document.getElementById('levelSelect').value;
+            const needsCleaning = ['p3','p4','p5','p6','p7','p8','p9'].includes(levelCode);
+
+            // Function to clean punctuation for P.T.3-9
+            const cleanPunctuation = (text) => {
+                if (!text) return '';
+                // Strategy: Keep Thai chars, Pali chars, Numbers, Space, ฯ, ฯลฯ
+                // Remove other punctuation marks
+                
+                // First replace ฯลฯ to temporary placeholder to protect it
+                let processed = text.replace(/ฯลฯ/g, '###P2###');
+                // Replace ฯ to temporary placeholder
+                processed = processed.replace(/ฯ/g, '###P1###');
+                
+                // Remove punctuation:
+                // Standard ASCII Punctuation: ! " # $ % & ' * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+                // Exclude ( ) from removal as requested
+                processed = processed.replace(/[!"#$%&'*+,\-./:;<=>?@[\]^_`{|}~]/g, '');
+                
+                // Remove Special Punctuation (Smart Quotes, Dashes, Ellipsis, etc.)
+                // \u2010-\u201F (Dashes, Quotes)
+                // \u2026 (Ellipsis)
+                processed = processed.replace(/[\u2010-\u201F\u2026]/g, '');
+
+                // Restore placeholders
+                processed = processed.replace(/###P1###/g, 'ฯ');
+                processed = processed.replace(/###P2###/g, 'ฯลฯ');
+                
+                return processed;
+            };
 
             // Reuse Spacing Helper
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
-                const normalized = String(text).replace(/\s+/g, ' ').trim();
+                let processed = String(text);
+                
+                if (needsCleaning) {
+                    processed = cleanPunctuation(processed);
+                }
+
+                const normalized = processed.replace(/\s+/g, ' ').trim();
+                // Headers/Footers: Always 2 spaces
                 return normalized.replace(/ /g, '  '); 
             };
             
@@ -1156,11 +1223,17 @@
 
             // Formatting Helpers
             const formatPali = (text) => {
-                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
+                 let processed = String(text);
+                 if (needsCleaning) processed = cleanPunctuation(processed);
+                 // Pali: Always 2 spaces
+                 return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
-                 // Replace _ with space, then normalize spaces, then use 2 spaces (Consistent with Exam Paper)
-                 return String(text).replace(/_/g, ' ').replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
+                 // Thai in Solution: Always 2 spaces (as requested)
+                 let processed = String(text).replace(/_/g, ' ');
+                 if (needsCleaning) processed = cleanPunctuation(processed);
+                 // Thai: Always 2 spaces
+                 return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             
             // Resolve Content
