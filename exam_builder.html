@@ -1280,8 +1280,8 @@
             const paperContainer = document.querySelector('.paper');
             let content = paper.innerHTML;
             
-            // Replace double spaces with mso-spacerun span for Word compatibility
-            content = content.replace(/  /g, "<span style='mso-spacerun:yes'>  </span>");
+            // Formula: Replace double spaces with Space + ZWS + Space to prevent Word collapsing
+            content = content.replace(/  /g, ' &#8203; ');
             
             // Get current computed styles
             const currentFont = paperContainer.style.fontFamily || '"DilleniaUPC", sans-serif';
@@ -1304,11 +1304,11 @@
                         .paper-content-text { 
                             text-align: justify; 
                             text-align-last: left; 
-                            text-justify: distribute-all-lines; /* Thai Justify */
+                            text-justify: distribute-all-lines;
                             line-height: 1.6; 
                             font-size: 1em; 
                             color: #000;
-                            white-space: pre-wrap;
+                            /* REMOVED white-space: pre-wrap; to allow Word to reflow text */
                             text-indent: 1.27cm;
                         }
                         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
