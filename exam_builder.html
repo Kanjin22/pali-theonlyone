@@ -157,8 +157,8 @@
         .paper-inner { padding: 28px 40px; }
         .paper-center { text-align: center; }
         .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
-        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; }
-        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; }
+        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; white-space: pre-wrap; }
+        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
         .paper-list .paper-item { margin: 6px 0; }
         .paper-content-text { 
             text-align: justify; 
@@ -171,7 +171,7 @@
             white-space: pre-wrap; /* Preserve spaces but allow wrapping */
             text-indent: 1.27cm; /* First line indent for question number */
         }
-        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
+        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
         
         /* Toolbar for Paper */
         .toolbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; background: #eceff1; padding: 10px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #cfd8dc; }
@@ -1306,7 +1306,7 @@
                             white-space: pre-wrap; /* Revert: Use pre-wrap to respect HTML spacing */
                             text-indent: 1.27cm;
                         }
-                        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; }
+                        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
                     </style>
                 </head>
                 <body>
