@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ระบบออกข้อสอบ</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -915,15 +916,7 @@
             const minutes = document.getElementById('minutesInput').value || 0;
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
-            // Helper for 2-space between words
-            // User requested: Regular 2 Spaces
-            const addDoubleSpacing = (text) => {
-                if (!text) return '';
-                // First normalize to single spaces
-                const normalized = String(text).replace(/\s+/g, ' ').trim();
-                // Replace single space with 2 spaces
-                return normalized.replace(/ /g, '  '); 
-            };
+
             
             // Re-sort keys function (was removed in previous edit)
             function sortKeys(a,b) {
