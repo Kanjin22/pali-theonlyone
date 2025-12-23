@@ -897,16 +897,14 @@
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
             // Helper for 2-space between words
-            // Using a mix of NBSP and regular space to ensure Word treats it as 2 spaces
-            // while still allowing some flexibility for justification.
-            // Using "&nbsp; " (NBSP + Space) forces at least one visible space that isn't collapsed,
-            // plus a regular space that allows expansion.
+            // Using regular spaces (2 spaces) as requested for better Word compatibility
+            // Requires white-space: pre-wrap in CSS to preserve them.
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
                 // First normalize to single spaces
                 const normalized = String(text).replace(/\s+/g, ' ').trim();
-                // Then replace single space with "NBSP + Space"
-                return normalized.replace(/ /g, '\u00A0 '); 
+                // Then replace single space with 2 spaces
+                return normalized.replace(/ /g, '  '); 
             };
             
             // Re-sort keys function (was removed in previous edit)
@@ -1001,8 +999,8 @@
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
                 if (isPaliContent) {
-                    // Pali: 2 spaces (NBSP + Space)
-                    return normalized.replace(/ /g, '\u00A0 ');
+                    // Pali: 2 spaces
+                    return normalized.replace(/ /g, '  ');
                 } else {
                     // Thai: 1 space (Standard)
                     return normalized;
@@ -1019,14 +1017,14 @@
             litKeys.forEach(k => {
                 const txt = literalTextMap.get(k) || '';
                 // Add spacing between sentences based on mode
-                const sep = isPaliContent ? '\u00A0 ' : ' ';
+                const sep = isPaliContent ? '  ' : ' ';
                 if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
             });
 
             let senContent = '';
             senKeys.forEach(k => {
                 const txt = senseTextMap.get(k) || '';
-                const sep = isPaliContent ? '\u00A0 ' : ' ';
+                const sep = isPaliContent ? '  ' : ' ';
                 if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
             });
 
@@ -1120,8 +1118,8 @@
                         }
                         .paper-center { text-align: center; }
                         .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
-                        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; }
-                        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; }
+                        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; white-space: pre-wrap; }
+                        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
                         .paper-content-text { 
                             text-align: justify; 
                             text-align-last: left; 
