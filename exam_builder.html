@@ -167,6 +167,16 @@
                 const o2 = document.createElement('option'); o2.value = p; o2.text = `ภาคที่ ${toThaiDigits(p)}`; senseSel.appendChild(o2);
             });
         }
+        // เก็บสถานะการเลือกประโยค
+        const selectedLiteral = new Set();
+        const selectedSense = new Set();
+        function splitPaliSentences(text) {
+            if (!text) return [];
+            const clean = String(text).replace(/<[^>]+>/g, '').trim();
+            // จับประโยคโดยรวมตัวคั่น ฯ . ? !
+            const matches = clean.match(/.+?(?:ฯ+|[.!?]+)(?=\s|$)/g);
+            return matches && matches.length ? matches.map(s => s.trim()) : [clean];
+        }
         function collectSlides(part, startPage, endPage) {
             const obj = partsMap[part] || {};
             let slides = [];
@@ -190,33 +200,52 @@
                 return true;
             });
         }
-        function renderList(containerId, items, mode) {
+        function renderList(containerId, items, mode, part, startPage, endPage) {
             const box = document.getElementById(containerId);
             box.innerHTML = '';
             let idx = 1;
-            items.forEach(s => {
-                let text = '';
-                // ดึงเนื้อหาบาลีสำหรับโจทย์
-                if (s.pali) {
-                    text = String(s.pali).replace(/<[^>]+>/g, '').trim();
-                } else {
-                    text = '...';
-                }
-                // ทำให้กระชับในตัวอย่าง หากยาวมาก
-                if (text.length > 300) {
-                    text = text.substring(0, 180) + ' … ' + text.substring(text.length - 80);
-                }
-                // ป้ายหน้าที่ (ถ้ามี)
-                let pageNum = '';
-                if (typeof s.page !== 'undefined') {
-                    const p = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
-                    if (p !== '') pageNum = `หน้า ${toThaiDigits(p)}`;
-                }
-                const num = toThaiDigits(idx++);
-                const div = document.createElement('div');
-                div.className = 'item';
-                div.innerHTML = `<span class="badge">${num}</span> <span class="pali-text">${text}</span> ${pageNum ? `<span class="badge" style="margin-left:8px;">${pageNum}</span>` : ''}`;
-                box.appendChild(div);
+            items.forEach((s, slideIdx) => {
+                const pageVal = typeof s.page === 'number' ? s.page : parseInt(String(s.page).replace(/\D/g,'')) || '';
+                const sentences = splitPaliSentences(s.pali);
+                sentences.forEach((sent, sentIdx) => {
+                    const key = `${part}-${pageVal}-${slideIdx}-${sentIdx}`;
+                    const isSense = (mode === 'sense');
+                    const setRef = isSense ? selectedSense : selectedLiteral;
+                    // ตั้งค่าเริ่มต้น: เลือกไว้ก่อน
+                    if (!setRef.has(key)) setRef.add(key);
+                    const selected = setRef.has(key);
+                    const num = toThaiDigits(idx++);
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    div.innerHTML = `
+                        <span class="badge">${num}</span>
+                        <span class="pali-text" style="display:inline-block; max-width:70%;">${sent}</span>
+                        ${pageVal !== '' ? `<span class="badge" style="margin-left:8px;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
+                        <span style="margin-left:10px;">
+                            <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
+                            <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
+                        </span>
+                    `;
+                    box.appendChild(div);
+                });
+            });
+            // ติดตั้งตัวจัดการคลิกสำหรับปุ่มเลือก/ตัด
+            box.querySelectorAll('button[data-key]').forEach(btn => {
+                btn.onclick = function() {
+                    const key = this.getAttribute('data-key');
+                    const mode = this.getAttribute('data-mode');
+                    const sel = this.getAttribute('data-select') === 'yes';
+                    const setRef = (mode === 'sense') ? selectedSense : selectedLiteral;
+                    if (sel) setRef.add(key); else setRef.delete(key);
+                    // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
+                    const parent = this.parentElement;
+                    const yesBtn = parent.querySelector('button[data-select="yes"][data-key="'+key+'"]');
+                    const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
+                    if (yesBtn && noBtn) {
+                        if (sel) { yesBtn.classList.add('primary'); yesBtn.classList.remove('secondary'); noBtn.classList.add('secondary'); noBtn.classList.remove('primary'); }
+                        else { noBtn.classList.add('primary'); noBtn.classList.remove('secondary'); yesBtn.classList.add('secondary'); yesBtn.classList.remove('primary'); }
+                    }
+                };
             });
         }
         function generatePreview() {
@@ -236,8 +265,8 @@
             meta.innerHTML = `<span class="badge">${levelLabel}</span><span class="badge">${attemptLabel}</span><span class="badge">${dateLabel}</span>`;
             const literalSlides = collectSlides(literalPart, literalStart, literalEnd);
             const senseSlides = collectSlides(sensePart, senseStart, senseEnd);
-            renderList('literalList', literalSlides, 'literal');
-            renderList('senseList', senseSlides, 'sense');
+            renderList('literalList', literalSlides, 'literal', literalPart, literalStart, literalEnd);
+            renderList('senseList', senseSlides, 'sense', sensePart, senseStart, senseEnd);
         }
         function resetForm() {
             document.getElementById('attemptInput').value = '';
@@ -257,6 +286,13 @@
         document.getElementById('attemptInput').addEventListener('input', function() { normalizeThaiNumerals(this); });
         document.getElementById('generateBtn').addEventListener('click', generatePreview);
         document.getElementById('resetBtn').addEventListener('click', resetForm);
+        // อัปเดตตัวอย่างทันทีเมื่อกรอกภาค/หน้า
+        document.getElementById('literalPart').addEventListener('change', generatePreview);
+        document.getElementById('sensePart').addEventListener('change', generatePreview);
+        document.getElementById('literalStartPage').addEventListener('input', generatePreview);
+        document.getElementById('literalEndPage').addEventListener('input', generatePreview);
+        document.getElementById('senseStartPage').addEventListener('input', generatePreview);
+        document.getElementById('senseEndPage').addEventListener('input', generatePreview);
         populatePartSelects();
         updateDuration();
         updateDateDisplay();
