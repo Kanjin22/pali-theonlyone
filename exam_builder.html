@@ -916,14 +916,13 @@
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
             
             // Helper for 2-space between words
-            // User requested: Regular 2 Spaces (Use ZWS to prevent Word collapse)
+            // User requested: Regular 2 Spaces
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
                 // First normalize to single spaces
                 const normalized = String(text).replace(/\s+/g, ' ').trim();
-                // Replace single space with Space + ZWS + Space
-                // This looks like 2 spaces, allows line break, and prevents Word from collapsing
-                return normalized.replace(/ /g, ' \u200B '); 
+                // Replace single space with 2 spaces
+                return normalized.replace(/ /g, '  '); 
             };
             
             // Re-sort keys function (was removed in previous edit)
@@ -1019,8 +1018,8 @@
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
                 if (isPaliContent) {
-                    // Pali: 2 spaces (Space + ZWS + Space)
-                    return normalized.replace(/ /g, ' \u200B ');
+                    // Pali: 2 spaces
+                    return normalized.replace(/ /g, '  ');
                 } else {
                     // Thai: 1 space (Standard)
                     return normalized;
@@ -1037,14 +1036,14 @@
             litKeys.forEach(k => {
                 const txt = literalTextMap.get(k) || '';
                 // Add spacing between sentences based on mode
-                const sep = isPaliContent ? ' \u200B ' : ' ';
+                const sep = isPaliContent ? '  ' : ' ';
                 if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
             });
 
             let senContent = '';
             senKeys.forEach(k => {
                 const txt = senseTextMap.get(k) || '';
-                const sep = isPaliContent ? ' \u200B ' : ' ';
+                const sep = isPaliContent ? '  ' : ' ';
                 if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
             });
 
@@ -1112,7 +1111,7 @@
             const addDoubleSpacing = (text) => {
                 if (!text) return '';
                 const normalized = String(text).replace(/\s+/g, ' ').trim();
-                return normalized.replace(/ /g, ' \u200B '); 
+                return normalized.replace(/ /g, '  '); 
             };
             
             // Header Logic (Similar to Exam)
@@ -1162,7 +1161,7 @@
 
             // Formatting Helpers
             const formatPali = (text) => {
-                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, ' \u200B ');
+                 return String(text).replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
                  // Replace _ with space, then normalize spaces
@@ -1205,11 +1204,7 @@
             litKeys.forEach((k, i) => {
                 const { pali, thai } = resolveContent(k, 'literal');
                 if (pali || thai) {
-                    litContent += `
-                    <div style="margin-bottom: 0px; page-break-inside: avoid;">
-                        <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
-                        <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
-                    </div>`;
+                    litContent += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
                 }
             });
 
@@ -1217,11 +1212,7 @@
             senKeys.forEach((k, i) => {
                 const { pali, thai } = resolveContent(k, 'sense');
                 if (pali || thai) {
-                    senContent += `
-                    <div style="margin-bottom: 0px; page-break-inside: avoid;">
-                        <div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:4px;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div>
-                        <div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px;">${formatThai(thai)}</div>
-                    </div>`;
+                    senContent += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
                 }
             });
 
