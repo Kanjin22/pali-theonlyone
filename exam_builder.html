@@ -813,7 +813,8 @@
             if (!text) return [];
             const clean = String(text).replace(/<[^>]+>/g, '').trim();
             // จับประโยคโดยรวมตัวคั่น ฯ . ? !
-            const matches = clean.match(/.+?(?:ฯ+|[.!?]+)(?=\s|$)/g);
+            // Improved regex to capture trailing text that might not have punctuation
+            const matches = clean.match(/.+?(?:ฯ+|[.!?]+)(?=\s|$)|.+$/g);
             return matches && matches.length ? matches.map(s => s.trim()) : [clean];
         }
         function collectSlides(part, startPage, endPage, vagga, story) {
@@ -868,7 +869,7 @@
                     textToUse = s.thai_desana || s.thai_sense || s.thai || '';
                 }
                 
-                const sentences = splitPaliSentences(textToUse);
+                const sentences = [textToUse]; // Treat as single sentence (1 Slide = 1 Sentence)
                 sentences.forEach((sent, sentIdx) => {
                     // Stable Key: Part - GlobalSlideIndex - SentenceIndex
                     const key = `${part}-${globalSlideIdx}-${sentIdx}`;
@@ -1229,26 +1230,9 @@
                 : `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง.`;
             const timeLine = addDoubleSpacing(rawTimeLine);
 
-            // Sorting Logic
-            function sortKeys(a,b) {
-                const partsA = a.split('-');
-                const partsB = b.split('-');
-                const lenA = partsA.length;
-                const lenB = partsB.length;
-                const sentA = parseInt(partsA[lenA-1]) || 0;
-                const sentB = parseInt(partsB[lenB-1]) || 0;
-                const slideA = parseInt(partsA[lenA-2]) || 0;
-                const slideB = parseInt(partsB[lenB-2]) || 0;
-                const partNameA = partsA.slice(0, lenA-2).join('-');
-                const partNameB = partsB.slice(0, lenB-2).join('-');
-                if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
-                if (slideA !== slideB) return slideA - slideB;
-                return sentA - sentB;
-            }
-            const litKeys = [...selectedLiteral].sort(sortKeys);
-            const senKeys = [...selectedSense].sort(sortKeys);
-
-            // Formatting Helpers
+            // Generate Full Solution Content (All text, no filtering)
+            
+            // 1. Formatting Helpers
             const formatPali = (text) => {
                  let processed = String(text);
                  if (needsCleaning) processed = cleanPunctuation(processed);
@@ -1262,62 +1246,73 @@
                  // Thai: Always 2 spaces
                  return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
-            
-            // Resolve Content
-            const resolveContent = (key, type) => {
-                const parts = key.split('-');
-                const sentIdx = parseInt(parts.pop());
-                const slideIdx = parseInt(parts.pop());
-                const partId = parts.join('-');
+
+            // 2. Helper to process keys (Modified to use selected keys directly)
+            const processKeysToHTML = (keys, type) => {
+                let html = '';
+                let globalIndex = 0;
                 
-                const slides = getPartSlides(partId);
-                if (!slides || !slides[slideIdx]) return { pali: '', thai: '' };
-                const slide = slides[slideIdx];
+                // Helper to sort keys (Same as in buildExamPreview)
+                const sortKeys = (a,b) => {
+                    const partsA = a.split('-');
+                    const partsB = b.split('-');
+                    const lenA = partsA.length;
+                    const lenB = partsB.length;
+                    const sentA = parseInt(partsA[lenA-1]) || 0;
+                    const sentB = parseInt(partsB[lenB-1]) || 0;
+                    const slideA = parseInt(partsA[lenA-2]) || 0;
+                    const slideB = parseInt(partsB[lenB-2]) || 0;
+                    const partNameA = partsA.slice(0, lenA-2).join('-');
+                    const partNameB = partsB.slice(0, lenB-2).join('-');
+                    if (partNameA !== partNameB) return partNameA.localeCompare(partNameB);
+                    if (slideA !== slideB) return slideA - slideB;
+                    return sentA - sentB;
+                };
                 
-                // Get Pali
-                const paliSentences = splitPaliSentences(slide.pali);
-                const pali = paliSentences[sentIdx] || '';
+                const sortedKeys = [...keys].sort(sortKeys);
                 
-                // Get Thai
-                let rawThai = '';
-                if (type === 'literal') rawThai = slide.thai || '';
-                else rawThai = slide.thai_sense || slide.thai_desana || slide.thai || '';
-                
-                const thaiSentences = splitPaliSentences(rawThai);
-                let thai = thaiSentences[sentIdx] || '';
-                
-                // Fallback for Thai: if mismatched sentences
-                if (!thai && thaiSentences.length === 1 && sentIdx === 0) {
-                    thai = thaiSentences[0];
-                }
-                
-                return { pali, thai };
+                sortedKeys.forEach((key) => {
+                    const parts = key.split('-');
+                    // Key format: part-slideIdx-sentIdx
+                    const sentIdx = parseInt(parts.pop());
+                    const slideIdx = parseInt(parts.pop());
+                    const part = parts.join('-');
+                    
+                    const slides = getPartSlides(part);
+                    const slide = slides[slideIdx];
+                    
+                    if (!slide) return;
+                    
+                    // Get Pali (No splitting)
+                    const pali = slide.pali || '';
+                    
+                    // Get Thai (No splitting)
+                    let thai = '';
+                    if (type === 'literal') thai = slide.thai || '';
+                    else thai = slide.thai_sense || slide.thai_desana || slide.thai || '';
+                    
+                    if (pali || thai) {
+                         globalIndex++;
+                         html += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(globalIndex)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
+                    }
+                });
+                return html;
             };
 
-            // Generate HTML Blocks
+            // 3. Collect content from Selected Sets
             let litContent = '';
-            litKeys.forEach((k, i) => {
-                const { pali, thai } = resolveContent(k, 'literal');
-                if (pali || thai) {
-                    litContent += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
-                }
-            });
-
             let senContent = '';
-            senKeys.forEach((k, i) => {
-                const { pali, thai } = resolveContent(k, 'sense');
-                if (pali || thai) {
-                    senContent += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(i+1)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
-                }
-            });
+            
+            if (isThaiSource) {
+                 litContent = processKeysToHTML([...selectedLiteral], 'literal');
+            } else {
+                 litContent = processKeysToHTML([...selectedLiteral], 'literal');
+                 senContent = processKeysToHTML([...selectedSense], 'sense');
+            }
 
             // Build Paper
             let bodyHTML = '';
              if (isThaiSource) {
-                // For Thai -> Pali, we still show Pali top / Thai bottom as requested?
-                // Or maybe header needs to be "Thai -> Pali Solution"?
-                // The user said "use same form... Pali top, Thai bottom".
-                // I will stick to that.
                 bodyHTML = `
                 <div class="paper-section">
                     <div class="paper-section-title">${headerSubject}</div>
@@ -1363,11 +1358,11 @@
                     alert('คัดลอกเนื้อหาเรียบร้อยแล้ว');
                     selection.removeAllRanges();
                 } else {
-                    alert('ไม่สามารถคัดลอกได้โดยอัตโนมัติ กรุณากด Ctrl+C เพื่อคัดลอก');
+                    alert('ไม่สามารถคัดลอกได้โดยอัตโนมัติ กรุณาเลือกเนื้อหาที่ต้องการแล้วกด Ctrl+C เพื่อคัดลอก');
                 }
             } catch (err) {
                 console.error('Copy failed', err);
-                alert('เกิดข้อผิดพลาดในการคัดลอก กรุณากด Ctrl+C เพื่อคัดลอก');
+                alert('เกิดข้อผิดพลาดในการคัดลอก กรุณาเลือกเนื้อหาที่ต้องการแล้วกด Ctrl+C เพื่อคัดลอก');
             }
         }
         function getExportFilename(extension) {
