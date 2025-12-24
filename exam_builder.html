@@ -9,6 +9,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: "Niramit", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: #f4f6f8; margin: 0; }
+        /* Workflow State Styles */
+        .step-required {
+            background-color: #fffde7 !important; /* Yellow-ish */
+            border: 2px solid #d32f2f !important; /* Red border */
+            box-shadow: 0 0 5px rgba(211, 47, 47, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .step-completed {
+            background-color: #f1f8e9 !important; /* Green-ish */
+            border: 2px solid #388e3c !important; /* Green border */
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .step-locked {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
         .container { max-width: 1100px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; }
         .header { padding: 18px 24px; border-bottom: 1px solid #e0e0e0; display:flex; align-items:center; justify-content:space-between; }
         .header h1 { font-size: 1.4rem; color: #2c3e50; margin:0; }
@@ -219,7 +241,7 @@
                 <h2>ตั้งค่าข้อสอบ</h2>
                 <div class="grid-2">
                     <div>
-                        <div class="row">
+                        <div class="row" id="levelRow">
                             <label>ชั้น</label>
                             <div style="display:flex; align-items:center; gap:10px; flex:1;">
                                 <select id="levelSelect" style="flex:1;">
@@ -247,7 +269,7 @@
                             <label>ครั้งที่สอบ</label>
                             <input type="text" id="attemptInput" placeholder="เช่น ๑" />
                         </div>
-                        <div class="row">
+                        <div class="row" id="dateRow">
                             <label>วันที่</label>
                             <input type="date" id="dateInput" />
                         </div>
@@ -265,7 +287,14 @@
                 </div>
             </div>
             <div class="section" id="contentSection" style="opacity: 0.5; pointer-events: none;">
-                <h2>เลือกช่วงเนื้อหา</h2>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>เลือกช่วงเนื้อหา</h2>
+                    <div style="font-size: 0.9em; color: #666; background: #fff3e0; padding: 5px 10px; border-radius: 4px; border: 1px solid #ffe0b2;">
+                        <i class="fa-solid fa-circle-info"></i> 
+                        <span style="color: #2e7d32;"><i class="fa-solid fa-check"></i> นำออกข้อสอบ</span> | 
+                        <span style="color: #c62828;"><i class="fa-solid fa-xmark"></i> ตัดส่วนนี้ทิ้ง</span>
+                    </div>
+                </div>
                 <div class="row" style="align-items:flex-start;">
                     <label style="padding-top:10px;">โดยพยัญชนะ</label>
                     <div style="width:100%;">
@@ -309,6 +338,7 @@
             <a href="font_download.html" class="btn secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="หน้าดาวน์โหลดและวิธีติดตั้งฟอนต์"><i class="fa-solid fa-font"></i> ดาวน์โหลดฟอนต์</a>
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
+            <button class="btn secondary" id="notepadBtn" onclick="exportToNotepad()"><i class="fa-solid fa-file-lines"></i> Note</button>
             <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
@@ -1340,6 +1370,27 @@
                 alert('เกิดข้อผิดพลาดในการคัดลอก กรุณากด Ctrl+C เพื่อคัดลอก');
             }
         }
+        function getExportFilename(extension) {
+            const levelLabel = getSelectedLevelLabel();
+            const subjectLabel = document.getElementById('subjectSelect').value || '';
+            const attempt = document.getElementById('attemptInput').value;
+            const iso = document.getElementById('dateInput').value;
+            
+            // Safe filename parts
+            const safeLevel = levelLabel.replace(/[.\\/]/g, '').replace(/\s+/g, '_');
+            const safeSubject = subjectLabel.replace(/\s+/g, '_');
+            const safeDate = iso ? iso : 'no_date';
+            
+            let filename = `${safeLevel}_${safeSubject}`;
+            if (attempt) filename += `_ครั้งที่${attempt}`;
+            if (iso) filename += `_${iso}`;
+            
+            // Clean up any double underscores
+            filename = filename.replace(/_+/g, '_');
+            
+            return `${filename}.${extension}`;
+        }
+
         function exportToWord() {
             const paper = document.getElementById('paperContent');
             const paperContainer = document.querySelector('.paper');
@@ -1387,7 +1438,28 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'exam_paper.doc';
+            link.download = getExportFilename('doc');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        function exportToNotepad() {
+            const paper = document.getElementById('paperContent');
+            if (!paper) return;
+            
+            // Get text content while preserving line breaks
+            // Use innerText which usually preserves visible formatting
+            let content = paper.innerText;
+            
+            // Cleanup: Ensure consistent newlines
+            content = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            
+            // Add BOM for UTF-8 compatibility
+            const blob = new Blob(['\ufeff', content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = getExportFilename('txt');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -1524,14 +1596,117 @@
             }
         }
 
-        document.getElementById('levelSelect').addEventListener('change', () => { populateSubjectSelect(); populatePartSelects(); generatePreview(); });
-        document.getElementById('subjectSelect').addEventListener('change', () => { resetSelection('literal'); resetSelection('sense'); populatePartSelects(); generatePreview(); });
+        function updateWorkflowState() {
+            const levelSelect = document.getElementById('levelSelect');
+            const levelRow = document.getElementById('levelRow');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const subjectRow = document.getElementById('subjectRow');
+            const dateInput = document.getElementById('dateInput');
+            const dateRow = document.getElementById('dateRow');
+            const contentSection = document.getElementById('contentSection');
+
+            // Step 1: Level
+            const isLevelSelected = levelSelect.value && levelSelect.value !== "";
+            if (isLevelSelected) {
+                levelRow.classList.remove('step-required');
+                levelRow.classList.add('step-completed');
+                
+                // Unlock Step 2
+                subjectRow.style.opacity = '1';
+                subjectRow.style.pointerEvents = 'auto';
+                subjectRow.classList.remove('step-locked');
+            } else {
+                levelRow.classList.add('step-required');
+                levelRow.classList.remove('step-completed');
+                
+                // Lock Step 2 & 3 & Content
+                subjectRow.style.opacity = '0.5';
+                subjectRow.style.pointerEvents = 'none';
+                subjectRow.classList.add('step-locked');
+                subjectSelect.value = ""; 
+                
+                // Cascade lock
+                dateRow.style.opacity = '0.5';
+                dateRow.style.pointerEvents = 'none';
+                dateRow.classList.add('step-locked');
+                
+                contentSection.style.opacity = '0.5';
+                contentSection.style.pointerEvents = 'none';
+                contentSection.classList.add('step-locked');
+                return; // Stop processing
+            }
+
+            // Step 2: Subject
+            const isSubjectSelected = subjectSelect.value && subjectSelect.value !== "";
+            if (isSubjectSelected) {
+                subjectRow.classList.remove('step-required');
+                subjectRow.classList.add('step-completed');
+                
+                // Unlock Step 3
+                dateRow.style.opacity = '1';
+                dateRow.style.pointerEvents = 'auto';
+                dateRow.classList.remove('step-locked');
+            } else {
+                subjectRow.classList.add('step-required');
+                subjectRow.classList.remove('step-completed');
+                
+                // Lock Step 3 & Content
+                dateRow.style.opacity = '0.5';
+                dateRow.style.pointerEvents = 'none';
+                dateRow.classList.add('step-locked');
+                
+                contentSection.style.opacity = '0.5';
+                contentSection.style.pointerEvents = 'none';
+                contentSection.classList.add('step-locked');
+                return; // Stop processing
+            }
+
+            // Step 3: Date
+            const isDateSelected = dateInput.value && dateInput.value !== "";
+            if (isDateSelected) {
+                dateRow.classList.remove('step-required');
+                dateRow.classList.add('step-completed');
+                
+                // Unlock Content
+                contentSection.style.opacity = '1';
+                contentSection.style.pointerEvents = 'auto';
+                contentSection.classList.remove('step-locked');
+            } else {
+                dateRow.classList.add('step-required');
+                dateRow.classList.remove('step-completed');
+                
+                // Lock Content
+                contentSection.style.opacity = '0.5';
+                contentSection.style.pointerEvents = 'none';
+                contentSection.classList.add('step-locked');
+            }
+        }
+
+        document.getElementById('levelSelect').addEventListener('change', () => { 
+            populateSubjectSelect(); 
+            populatePartSelects(); 
+            generatePreview(); 
+            updateWorkflowState();
+        });
+        document.getElementById('subjectSelect').addEventListener('change', () => { 
+            resetSelection('literal'); 
+            resetSelection('sense'); 
+            populatePartSelects(); 
+            generatePreview(); 
+            updateWorkflowState();
+        });
         document.getElementById('hoursInput').addEventListener('input', updateDuration);
         document.getElementById('minutesInput').addEventListener('input', updateDuration);
-        document.getElementById('dateInput').addEventListener('change', updateDateDisplay);
+        document.getElementById('dateInput').addEventListener('change', () => {
+            updateDateDisplay();
+            updateWorkflowState();
+        });
         document.getElementById('attemptInput').addEventListener('input', function() { normalizeThaiNumerals(this); });
         document.getElementById('generateBtn').addEventListener('click', generatePreview);
-        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            resetForm();
+            updateWorkflowState();
+        });
         document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
         document.getElementById('wordBtn').addEventListener('click', exportToWord);
         // document.getElementById('printBtn').addEventListener('click', () => window.print());
@@ -1561,6 +1736,7 @@
         updateDuration();
         updateDateDisplay();
         generatePreview();
+        updateWorkflowState();
     </script>
 </body>
 </html>
