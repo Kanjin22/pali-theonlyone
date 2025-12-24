@@ -79,16 +79,18 @@ function renderRoomContent(room) {
     if (scheduleContainer) {
         // Standard Months (can be dynamic later)
         const months = [
-            { name: "พฤศจิกายน ๒๕๖๘", file: "november" },
-            { name: "ธันวาคม ๒๕๖๘", file: "december" },
-            { name: "มกราคม ๒๕๖๙", file: "january" },
-            { name: "กุมภาพันธ์ ๒๕๖๙", file: "february" }
+            { name: "พฤศจิกายน ๒๕๖๘", month: "November", year: "2025" },
+            { name: "ธันวาคม ๒๕๖๘", month: "December", year: "2025" },
+            { name: "มกราคม ๒๕๖๙", month: "January", year: "2026" },
+            { name: "กุมภาพันธ์ ๒๕๖๙", month: "February", year: "2026" }
         ];
 
         let html = '';
         months.forEach(m => {
-             // Link to schedule file with room param
-             html += `<a href="../schedules/${room.level}/schedule-${room.level}-${m.file}.html?room=${room.id}" class="menu-button">${m.name}</a>`;
+             // Link to NEW dynamic schedule viewer
+             // ID Format: roomId_Month_Year (e.g. pt12_1_November_2025)
+             const scheduleId = `${room.id}_${m.month}_${m.year}`;
+             html += `<a href="../schedule_view.html?id=${scheduleId}&room=${room.id}" class="menu-button">${m.name}</a>`;
         });
         
         // Add Create Schedule Button (Hidden by default, shown for Admin/Teacher only)
