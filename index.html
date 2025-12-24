@@ -695,13 +695,14 @@
                 if (existingEnroll) existingEnroll.remove();
             
             } else if (role === 'student') {
-                // Show Only Open Levels
+                // Show Only Open Levels (Open Access Concept: นักเรียนเห็นทุกห้องที่ Admin เปิด)
                 let hasVisible = false;
                 classroomLinks.forEach(a => {
                     // Extract level from href (e.g. classroom_select.html?level=pt12)
                     const urlParams = new URLSearchParams(a.href.split('?')[1]);
                     const level = urlParams.get('level');
                     
+                    // Logic: ถ้า Level นั้นอยู่ในรายการ OPEN_LEVELS ให้แสดงทันที
                     if (OPEN_LEVELS.includes(level)) {
                         a.style.display = 'flex';
                         hasVisible = true;
