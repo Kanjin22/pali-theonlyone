@@ -9,9 +9,179 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">    // --- File Manager Functions ---
+    async function loadDynamicFiles() {
+        try {
+            const snap = await db.collection('files').orderBy('uploadedAt', 'desc').get();
+            DYNAMIC_FILES = [];
+            snap.forEach(doc => {
+                DYNAMIC_FILES.push({ id: doc.id, ...doc.data() });
+            });
+            console.log("Loaded dynamic files:", DYNAMIC_FILES.length);
+        } catch (e) {
+            console.error("Error loading files:", e);
+        }
+    }
+
+    function openFileManager() {
+        document.getElementById('file-modal').style.display = 'flex';
+        renderFileList();
+        
+        // Populate Levels in Upload Form
+        const levelSelect = document.getElementById('upload-level');
+        levelSelect.innerHTML = '';
+        
+        // Get all levels from systemConfig or hardcoded
+        const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
+        levels.forEach(lvl => {
+            const opt = document.createElement('option');
+            opt.value = lvl;
+            opt.textContent = lvl.toUpperCase();
+            levelSelect.appendChild(opt);
+        });
+
+        // Set default based on current room
+        if (roomSelect.value) {
+            const selectedOpt = roomSelect.options[roomSelect.selectedIndex];
+            if (selectedOpt && selectedOpt.dataset.level) {
+                levelSelect.value = selectedOpt.dataset.level;
+            }
+        }
+    }
+
+    function closeFileManager() {
+        document.getElementById('file-modal').style.display = 'none';
+    }
+
+    function renderFileList() {
+        const tbody = document.getElementById('file-list-body');
+        tbody.innerHTML = '';
+        
+        DYNAMIC_FILES.forEach(file => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #eee';
+            
+            const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
+            
+            tr.innerHTML = `
+                <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
+                <td style="padding:10px;">${file.type}</td>
+                <td style="padding:10px;">${file.level}</td>
+                <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
+                <td style="padding:10px; text-align:center;">
+                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('upload-file');
+        const typeSelect = document.getElementById('upload-type');
+        const levelSelect = document.getElementById('upload-level');
+        const btn = document.getElementById('btn-upload');
+        const progressDiv = document.getElementById('upload-progress');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        const file = fileInput.files[0];
+        if (!file) return alert("กรุณาเลือกไฟล์ PDF");
+        if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
+
+        const type = typeSelect.value;
+        const level = levelSelect.value;
+        
+        // Create Path: files/{level}/{type}/{filename}
+        const storagePath = `files/${level}/${type}/${Date.now()}_${file.name}`;
+        const ref = storage.ref(storagePath);
+
+        btn.disabled = true;
+        progressDiv.style.display = 'block';
+
+        const task = ref.put(file);
+
+        task.on('state_changed', 
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.innerText = `${Math.round(progress)}%`;
+            }, 
+            (error) => {
+                console.error("Upload error:", error);
+                alert("Upload failed: " + error.message);
+                btn.disabled = false;
+                progressDiv.style.display = 'none';
+            }, 
+            async () => {
+                // Complete
+                try {
+                    const downloadURL = await task.snapshot.ref.getDownloadURL();
+                    
+                    // Save to Firestore
+                    const docRef = await db.collection('files').add({
+                        name: file.name,
+                        type: type,
+                        level: level,
+                        url: downloadURL,
+                        fullPath: storagePath,
+                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        size: file.size
+                    });
+
+                    // Update Local List
+                    DYNAMIC_FILES.unshift({
+                        id: docRef.id,
+                        name: file.name,
+                        type: type,
+                        level: level,
+                        url: downloadURL,
+                        fullPath: storagePath,
+                        uploadedAt: { seconds: Date.now() / 1000 } // approx
+                    });
+
+                    renderFileList();
+                    
+                    alert("อัปโหลดสำเร็จ!");
+                    fileInput.value = ''; // Clear input
+                    progressDiv.style.display = 'none';
+                } catch (e) {
+                    console.error("Error saving file metadata:", e);
+                    alert("Upload successful but failed to save metadata.");
+                } finally {
+                    btn.disabled = false;
+                }
+            }
+        );
+    }
+
+    async function deleteFile(id, fullPath) {
+        if (!confirm("คุณต้องการลบไฟล์นี้ใช่หรือไม่?")) return;
+
+        try {
+            // Delete from Storage
+            if (fullPath) {
+                await storage.ref(fullPath).delete().catch(e => console.warn("Storage delete error (might be missing):", e));
+            }
+
+            // Delete from Firestore
+            await db.collection('files').doc(id).delete();
+
+            // Update Local
+            DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
+            renderFileList();
+
+        } catch (e) {
+            console.error("Delete error:", e);
+            alert("ลบไม่สำเร็จ: " + e.message);
+        }
+    }
+</script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script src="../js/firebase_config.js"></script>
 
     <style>
@@ -147,6 +317,69 @@
         <button class="btn" onclick="openImportModal()" style="background:#f39c12; flex:0 0 200px;">
             <i class="fas fa-file-import"></i> Import Old JSON
         </button>
+        <button class="btn" onclick="openFileManager()" style="background:#8e44ad; flex:0 0 200px;">
+            <i class="fas fa-cloud-upload-alt"></i> จัดการไฟล์ (Upload)
+        </button>
+    </div>
+
+    <!-- File Manager Modal -->
+    <div id="file-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="width: 80%; max-width: 900px; height: 80vh; display:flex; flex-direction:column;">
+            <span class="modal-close" onclick="closeFileManager()">&times;</span>
+            <h2><i class="fas fa-folder-open"></i> จัดการไฟล์ (File Manager)</h2>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                <h3><i class="fas fa-upload"></i> อัปโหลดไฟล์ใหม่</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
+                    <div>
+                        <label>ประเภท (Type)</label>
+                        <select id="upload-type">
+                            <option value="materials">เอกสารเรียน (Materials)</option>
+                            <option value="exams">ข้อสอบ (Exams)</option>
+                            <option value="answers">เฉลย (Answers)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>ชั้นเรียน (Level)</label>
+                        <select id="upload-level">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label>เลือกไฟล์ (PDF Only)</label>
+                        <input type="file" id="upload-file" accept=".pdf">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="uploadFile()" id="btn-upload">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload
+                        </button>
+                    </div>
+                </div>
+                <div id="upload-progress" style="display:none; margin-top:10px;">
+                    <div style="background:#e9ecef; height:10px; border-radius:5px; overflow:hidden;">
+                        <div id="progress-bar" style="background:#27ae60; width:0%; height:100%; transition: width 0.3s;"></div>
+                    </div>
+                    <small id="progress-text" style="color:#666;">0%</small>
+                </div>
+            </div>
+
+            <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead style="background:#f1f2f6; position:sticky; top:0;">
+                        <tr>
+                            <th style="padding:10px; text-align:left;">ชื่อไฟล์</th>
+                            <th style="padding:10px; text-align:left;">ประเภท</th>
+                            <th style="padding:10px; text-align:left;">ชั้นเรียน</th>
+                            <th style="padding:10px; text-align:left;">วันที่อัปโหลด</th>
+                            <th style="padding:10px; text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="file-list-body">
+                        <!-- Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- Import Modal -->
@@ -169,10 +402,12 @@
 <script>
     // --- Global Variables & Initialization ---
     const db = firebase.firestore();
+    const storage = firebase.storage();
     const roomSelect = document.getElementById('room-select');
     const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
     let currentScheduleId = null; // Track if we are editing an existing doc
+    let DYNAMIC_FILES = []; // Files loaded from Firestore
 
     // Configuration for Subjects
     const SUBJECT_CONFIG = {
@@ -244,7 +479,7 @@
             }
         });
 
-        await loadClassrooms();
+        await Promise.all([loadClassrooms(), loadDynamicFiles()]);
         
         // Check URL params
         const urlParams = new URLSearchParams(window.location.search);
@@ -556,11 +791,11 @@
         const exams = getFiles(level, 'exams');
         const answers = getFiles(level, 'answers');
         
-        const createOptions = (files, selected = []) => {
+        const createOptions = (fileObjs, selected = []) => {
              let opts = '<option value="">-- เลือกไฟล์ --</option>';
-             files.forEach(f => {
-                 const isSel = selected.includes(f) ? 'selected' : '';
-                 opts += `<option value="${f}" ${isSel}>${f}</option>`;
+             fileObjs.forEach(f => {
+                 const isSel = selected.includes(f.value) ? 'selected' : '';
+                 opts += `<option value="${f.value}" ${isSel}>${f.name}</option>`;
              });
              return opts;
         };
@@ -709,10 +944,24 @@
 
     // Helper to get files for a level
     function getFiles(level, type) {
+        let files = [];
+        
+        // 1. Static Files (Legacy)
         if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
-            return FILE_INDEX[level][type];
+            files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
         }
-        return [];
+        
+        // 2. Dynamic Files (Firestore)
+        // Filter by level and type
+        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type);
+        dyn.forEach(f => {
+            files.push({ name: `[CLOUD] ${f.name}`, value: f.url });
+        });
+        
+        // Sort by name
+        files.sort((a, b) => a.name.localeCompare(b.name));
+        
+        return files;
     }
 
     function handleDateChange(input) {
@@ -811,6 +1060,175 @@
         }
     }
 
+    // --- File Manager Functions ---
+    async function loadDynamicFiles() {
+        try {
+            const snap = await db.collection('files').orderBy('uploadedAt', 'desc').get();
+            DYNAMIC_FILES = [];
+            snap.forEach(doc => {
+                DYNAMIC_FILES.push({ id: doc.id, ...doc.data() });
+            });
+            console.log("Loaded dynamic files:", DYNAMIC_FILES.length);
+        } catch (e) {
+            console.error("Error loading files:", e);
+        }
+    }
+
+    function openFileManager() {
+        document.getElementById('file-modal').style.display = 'flex';
+        renderFileList();
+        
+        // Populate Levels in Upload Form
+        const levelSelect = document.getElementById('upload-level');
+        levelSelect.innerHTML = '';
+        
+        // Get all levels from systemConfig or hardcoded
+        const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
+        levels.forEach(lvl => {
+            const opt = document.createElement('option');
+            opt.value = lvl;
+            opt.textContent = lvl.toUpperCase();
+            levelSelect.appendChild(opt);
+        });
+
+        // Set default based on current room
+        if (roomSelect.value) {
+            const selectedOpt = roomSelect.options[roomSelect.selectedIndex];
+            if (selectedOpt && selectedOpt.dataset.level) {
+                levelSelect.value = selectedOpt.dataset.level;
+            }
+        }
+    }
+
+    function closeFileManager() {
+        document.getElementById('file-modal').style.display = 'none';
+    }
+
+    function renderFileList() {
+        const tbody = document.getElementById('file-list-body');
+        tbody.innerHTML = '';
+        
+        DYNAMIC_FILES.forEach(file => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #eee';
+            
+            const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
+            
+            tr.innerHTML = `
+                <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
+                <td style="padding:10px;">${file.type}</td>
+                <td style="padding:10px;">${file.level}</td>
+                <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
+                <td style="padding:10px; text-align:center;">
+                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('upload-file');
+        const typeSelect = document.getElementById('upload-type');
+        const levelSelect = document.getElementById('upload-level');
+        const btn = document.getElementById('btn-upload');
+        const progressDiv = document.getElementById('upload-progress');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        const file = fileInput.files[0];
+        if (!file) return alert("กรุณาเลือกไฟล์ PDF");
+        if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
+
+        const type = typeSelect.value;
+        const level = levelSelect.value;
+        
+        // Create Path: files/{level}/{type}/{filename}
+        const storagePath = `files/${level}/${type}/${Date.now()}_${file.name}`;
+        const ref = storage.ref(storagePath);
+
+        btn.disabled = true;
+        progressDiv.style.display = 'block';
+
+        const task = ref.put(file);
+
+        task.on('state_changed', 
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.innerText = `${Math.round(progress)}%`;
+            }, 
+            (error) => {
+                console.error("Upload error:", error);
+                alert("Upload failed: " + error.message);
+                btn.disabled = false;
+                progressDiv.style.display = 'none';
+            }, 
+            async () => {
+                // Complete
+                try {
+                    const downloadURL = await task.snapshot.ref.getDownloadURL();
+                    
+                    // Save to Firestore
+                    const docRef = await db.collection('files').add({
+                        name: file.name,
+                        type: type,
+                        level: level,
+                        url: downloadURL,
+                        fullPath: storagePath,
+                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        size: file.size
+                    });
+
+                    // Update Local List
+                    DYNAMIC_FILES.unshift({
+                        id: docRef.id,
+                        name: file.name,
+                        type: type,
+                        level: level,
+                        url: downloadURL,
+                        fullPath: storagePath,
+                        uploadedAt: { seconds: Date.now() / 1000 } // approx
+                    });
+
+                    renderFileList();
+                    
+                    alert("อัปโหลดสำเร็จ!");
+                    fileInput.value = ''; // Clear input
+                    progressDiv.style.display = 'none';
+                } catch (e) {
+                    console.error("Error saving file metadata:", e);
+                    alert("Upload successful but failed to save metadata.");
+                } finally {
+                    btn.disabled = false;
+                }
+            }
+        );
+    }
+
+    async function deleteFile(id, fullPath) {
+        if (!confirm("คุณต้องการลบไฟล์นี้ใช่หรือไม่?")) return;
+
+        try {
+            // Delete from Storage
+            if (fullPath) {
+                await storage.ref(fullPath).delete().catch(e => console.warn("Storage delete error (might be missing):", e));
+            }
+
+            // Delete from Firestore
+            await db.collection('files').doc(id).delete();
+
+            // Update Local
+            DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
+            renderFileList();
+
+        } catch (e) {
+            console.error("Delete error:", e);
+            alert("ลบไม่สำเร็จ: " + e.message);
+        }
+    }
 </script>
 
 </body>
