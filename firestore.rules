@@ -46,6 +46,12 @@ service cloud.firestore {
       allow write: if isAdmin() || (request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'teacher');
     }
     
+    // Collection: files
+    match /files/{fileId} {
+      allow read: if true;
+      allow write: if isAdmin() || (request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'teacher');
+    }
+    
     // Collection: exam_sets
     match /exam_sets/{setId} {
       allow read: if true;
