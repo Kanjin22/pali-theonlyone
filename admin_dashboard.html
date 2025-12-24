@@ -409,10 +409,33 @@
             
             try {
                 // Fetch all users and enrollments
-                const [usersSnap, enrollsSnap] = await Promise.all([
-                    db.collection('users').get(),
-                    db.collection('enrollments').get()
-                ]);
+                // Note: If permission denied on 'users' collection (because rule requires isAdmin() check on data field),
+                // we might fail here.
+                // Workaround: If we are admin1234, we might not have role='admin' in DB yet or rules are strict.
+                
+                let usersSnap, enrollsSnap;
+                try {
+                     [usersSnap, enrollsSnap] = await Promise.all([
+                        db.collection('users').get(),
+                        db.collection('enrollments').get()
+                    ]);
+                } catch (readError) {
+                    console.error("Main Read Error:", readError);
+                    if (readError.code === 'permission-denied') {
+                         tbody.innerHTML = `
+                            <tr>
+                                <td colspan="5" style="color:red; text-align:center; padding: 20px;">
+                                    <b>เข้าถึงข้อมูลไม่ได้ (Permission Denied)</b><br>
+                                    <small>กรุณาตรวจสอบว่าบัญชีนี้มีสถานะ 'admin' ใน Firestore หรือยัง</small><br>
+                                    <button class="btn btn-primary" style="margin-top:10px;" onclick="forceSetAdmin()">
+                                        <i class="fa-solid fa-wrench"></i> ลองตั้งค่า Admin ให้ตัวเอง
+                                    </button>
+                                </td>
+                            </tr>`;
+                         return;
+                    }
+                    throw readError;
+                }
 
                 const enrollMap = {};
                 enrollsSnap.forEach(doc => {
@@ -682,6 +705,24 @@
             }
         }
 
+    </script>
+    <script>
+        // Force Admin Function
+        async function forceSetAdmin() {
+            const user = auth.currentUser;
+            if (!user) return alert('ไม่พบผู้ใช้งาน');
+            
+            try {
+                await db.collection('users').doc(user.uid).set({
+                    role: 'admin',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                alert('ตั้งค่า Admin เรียบร้อย! กรุณารีเฟรชหน้าเว็บ');
+                location.reload();
+            } catch (e) {
+                alert('ไม่สามารถตั้งค่าได้: ' + e.message + '\n\nสาเหตุ: Security Rules ไม่อนุญาตให้แก้ไขข้อมูล\nทางแก้: ต้องแก้ที่ Firebase Console เท่านั้น');
+            }
+        }
     </script>
 </body>
 </html>
