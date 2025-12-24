@@ -292,7 +292,14 @@
                 }
                 await auth.createUserWithEmailAndPassword(email, pass);
             } catch (err) {
-                if (emailStatus) emailStatus.textContent = 'สมัครสมาชิกไม่สำเร็จ (' + (err && err.code || 'unknown') + ')';
+                if (err && err.code === 'auth/email-already-in-use') {
+                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้สมัครแล้ว กรุณากดเข้าสู่ระบบ';
+                    if (modalPassword) modalPassword.style.display = 'block';
+                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'inline-block';
+                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
+                } else {
+                    if (emailStatus) emailStatus.textContent = 'สมัครสมาชิกไม่สำเร็จ (' + (err && err.code || 'unknown') + ')';
+                }
             }
         };
         if (modalForgotPassword) modalForgotPassword.onclick = async () => {
