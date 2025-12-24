@@ -122,6 +122,26 @@
         .status-pending { color: #d35400; background: #fae5d3; border: 1px solid #f5cba7; }
         .status-approved { color: #27ae60; background: #e8f8f5; border: 1px solid #a9dfbf; }
 
+        .date-picker-container {
+            display: flex;
+            gap: 10px;
+        }
+        .date-picker-container select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--input-border);
+            background: #fff;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+        }
+        .date-picker-container select:focus {
+            outline: none;
+            border-color: var(--input-focus);
+        }
+        .date-d { flex: 0 0 70px; }
+        .date-m { flex: 1; }
+        .date-y { flex: 0 0 90px; }
+
         @media (max-width: 768px) {
             .form-grid.three-col { grid-template-columns: 1fr; }
             .status-grid { grid-template-columns: 1fr; gap: 10px; }
@@ -213,7 +233,8 @@
                         
                         <div class="form-group">
                             <label>วัน/เดือน/ปีเกิด</label>
-                            <input id="birthDateInput" type="date">
+                            <input type="hidden" id="birthDateInput">
+                            <div class="date-picker-container" id="birthDateContainer"></div>
                         </div>
                         
                         <div class="form-group">
@@ -224,7 +245,8 @@
                          <!-- วันอุปสมบท (เฉพาะพระ) -->
                         <div class="form-group hidden" id="group-ordination">
                             <label>วัน/เดือน/ปีอุปสมบท</label>
-                            <input id="ordinationDateInput" type="date">
+                            <input type="hidden" id="ordinationDateInput">
+                            <div class="date-picker-container" id="ordinationDateContainer"></div>
                         </div>
                     </div>
 
@@ -299,6 +321,100 @@
         const groupEpithet = document.getElementById('group-epithet');
         const groupOrdination = document.getElementById('group-ordination');
         const rowBirthEpithet = document.getElementById('row-birth-epithet');
+
+        // --- Thai Date Picker Logic ---
+        const thaiMonths = [
+            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+        ];
+
+        function initThaiDatePicker(containerId, inputId) {
+            const container = document.getElementById(containerId);
+            const hiddenInput = document.getElementById(inputId);
+            if (!container || !hiddenInput) return;
+
+            container.innerHTML = ''; // Clear
+
+            // Create Selects
+            const daySelect = document.createElement('select');
+            daySelect.className = 'date-d';
+            const monthSelect = document.createElement('select');
+            monthSelect.className = 'date-m';
+            const yearSelect = document.createElement('select');
+            yearSelect.className = 'date-y';
+
+            // Helper to add option
+            const addOpt = (sel, txt, val) => {
+                const o = document.createElement('option');
+                o.text = txt; o.value = val; sel.add(o);
+            };
+
+            // Populate Day (1-31)
+            addOpt(daySelect, 'วัน', '');
+            for (let i = 1; i <= 31; i++) addOpt(daySelect, i, i);
+
+            // Populate Month
+            addOpt(monthSelect, 'เดือน', '');
+            thaiMonths.forEach((m, i) => addOpt(monthSelect, m, i + 1));
+
+            // Populate Year (Current+543 down to -100 years)
+            const currentYear = new Date().getFullYear();
+            const startYearBE = currentYear + 543;
+            addOpt(yearSelect, 'ปี', '');
+            for (let i = 0; i < 100; i++) {
+                const yBE = startYearBE - i;
+                const yAD = yBE - 543;
+                addOpt(yearSelect, yBE, yAD); // Value is Gregorian Year
+            }
+
+            // Append
+            container.appendChild(daySelect);
+            container.appendChild(monthSelect);
+            container.appendChild(yearSelect);
+
+            // Events
+            const updateVal = () => {
+                const d = daySelect.value;
+                const m = monthSelect.value;
+                const y = yearSelect.value;
+                if (d && m && y) {
+                    // Check days in month
+                    const daysInMonth = new Date(y, m, 0).getDate();
+                    if (parseInt(d) > daysInMonth) {
+                        daySelect.value = daysInMonth; 
+                    }
+                    const mm = String(monthSelect.value).padStart(2, '0');
+                    const dd = String(daySelect.value).padStart(2, '0');
+                    hiddenInput.value = `${y}-${mm}-${dd}`;
+                } else {
+                    hiddenInput.value = '';
+                }
+            };
+
+            daySelect.addEventListener('change', updateVal);
+            monthSelect.addEventListener('change', updateVal);
+            yearSelect.addEventListener('change', updateVal);
+            
+            // Expose setter
+            hiddenInput.setThaiDate = (isoDate) => {
+                if (!isoDate) {
+                    daySelect.value = '';
+                    monthSelect.value = '';
+                    yearSelect.value = '';
+                    hiddenInput.value = '';
+                    return;
+                }
+                const [y, m, d] = isoDate.split('-');
+                yearSelect.value = parseInt(y); 
+                monthSelect.value = parseInt(m);
+                daySelect.value = parseInt(d);
+                hiddenInput.value = isoDate;
+            };
+        }
+
+        // Initialize
+        initThaiDatePicker('birthDateContainer', 'birthDateInput');
+        initThaiDatePicker('ordinationDateContainer', 'ordinationDateInput');
 
         // Status Logic
         function selectUserType(type) {
@@ -396,13 +512,15 @@
                         titleInput.value = data.title || '';
                         firstNameInput.value = data.firstName || '';
                         lastNameInput.value = data.lastName || '';
-                        birthDateInput.value = data.birthDate || '';
+                        if (birthDateInput.setThaiDate) birthDateInput.setThaiDate(data.birthDate || '');
+                        else birthDateInput.value = data.birthDate || '';
                         phoneInput.value = data.phone || '';
                         levelSelect.value = data.levelRequested || '';
                         
                         if(data.userType === 'monk') {
                             epithetInput.value = data.epithet || '';
-                            ordinationDateInput.value = data.ordinationDate || '';
+                            if (ordinationDateInput.setThaiDate) ordinationDateInput.setThaiDate(data.ordinationDate || '');
+                            else ordinationDateInput.value = data.ordinationDate || '';
                         }
 
                         // Disable Controls
