@@ -6,6 +6,14 @@
     <link rel="icon" href="data:,">
     <title>ระบบสร้างตารางเรียน (Schedule Builder)</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase_config.js"></script>
+
     <style>
         body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -14,7 +22,7 @@
         
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9em; }
-        select, input[type="text"], input[type="date"], input[type="time"], textarea { 
+        select, input[type="text"], input[type="date"], input[type="time"], textarea, input[type="number"] { 
             width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; 
             font-family: 'Sarabun', sans-serif; font-size: 0.9em; box-sizing: border-box;
             transition: border-color 0.2s;
@@ -32,7 +40,9 @@
             grid-template-columns: 200px 1fr 1fr 1fr 40px; 
             gap: 15px; 
             align-items: start; 
+            animation: fadeIn 0.3s;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .col-group { display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
         .col-group > div { width: 100%; }
@@ -56,8 +66,11 @@
         .btn-primary { background: #3498db; }
         .btn-primary:hover { background: #2980b9; }
 
-        #output-area { margin-top: 30px; background: #2c3e50; padding: 20px; border-radius: 8px; color: white; }
-        textarea#json-output { height: 400px; font-family: 'Consolas', monospace; background: #1e272e; color: #a5d6a7; border: none; font-size: 14px; }
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8);
+            display: none; justify-content: center; align-items: center; z-index: 9999;
+            font-size: 1.5em; color: #34495e; flex-direction: column;
+        }
 
         /* Responsive */
         @media (max-width: 1200px) {
@@ -69,34 +82,51 @@
 </head>
 <body>
 
+<div id="loadingOverlay" class="loading-overlay">
+    <i class="fas fa-spinner fa-spin fa-3x"></i>
+    <div style="margin-top:20px;">กำลังดำเนินการ...</div>
+</div>
+
 <div class="container">
-    <h1>ระบบสร้างโค้ดตารางเรียน</h1>
-    <p>เครื่องมือสำหรับสร้างโค้ด JSON เพื่อนำไปวางในไฟล์ข้อมูล (data-*.js)</p>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h1>ระบบจัดการตารางเรียน (Schedule Manager)</h1>
+        <a href="../admin_dashboard.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่ Dashboard</a>
+    </div>
+    <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
 
-    <div class="form-group">
-        <label>เลือกห้องเรียน (Room)</label>
-        <select id="room-select" onchange="updateFileOptions()">
-            <option value="">-- กรุณาเลือกห้อง --</option>
-        </select>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <div class="form-group" style="margin-bottom:0;">
+            <label>เลือกห้องเรียน (Room)</label>
+            <select id="room-select" onchange="checkAndLoadSchedule()">
+                <option value="">-- กำลังโหลดห้องเรียน... --</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+            <label>เดือน (Month)</label>
+            <select id="month-select" onchange="checkAndLoadSchedule()">
+                <option value="November">พฤศจิกายน (November)</option>
+                <option value="December">ธันวาคม (December)</option>
+                <option value="January">มกราคม (January)</option>
+                <option value="February">กุมภาพันธ์ (February)</option>
+                <option value="March">มีนาคม (March)</option>
+                <option value="April">เมษายน (April)</option>
+                <option value="May">พฤษภาคม (May)</option>
+                <option value="June">มิถุนายน (June)</option>
+                <option value="July">กรกฎาคม (July)</option>
+                <option value="August">สิงหาคม (August)</option>
+                <option value="September">กันยายน (September)</option>
+                <option value="October">ตุลาคม (October)</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+            <label>ปีการศึกษา (Year)</label>
+            <input type="number" id="year-select" value="2025" onchange="checkAndLoadSchedule()">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>เลือกเดือน (สำหรับตั้งชื่อตัวแปร)</label>
-        <select id="month-select">
-            <option value="January">มกราคม (January)</option>
-            <option value="February">กุมภาพันธ์ (February)</option>
-            <option value="March">มีนาคม (March)</option>
-            <option value="April">เมษายน (April)</option>
-            <option value="May">พฤษภาคม (May)</option>
-            <option value="June">มิถุนายน (June)</option>
-            <option value="July">กรกฎาคม (July)</option>
-            <option value="August">สิงหาคม (August)</option>
-            <option value="September">กันยายน (September)</option>
-            <option value="October">ตุลาคม (October)</option>
-            <option value="November">พฤศจิกายน (November)</option>
-            <option value="December">ธันวาคม (December)</option>
-        </select>
-    </div>
+    <div id="status-msg" style="margin-bottom: 20px; padding: 10px; border-radius: 6px; display: none;"></div>
 
     <hr>
 
@@ -106,23 +136,27 @@
 
     <button class="btn btn-primary" onclick="addRow()">+ เพิ่มวันเรียน</button>
     <br><br>
-    <button class="btn" onclick="generateCode()">สร้างโค้ด (Generate Code)</button>
-
-    <div id="output-area" style="display:none;">
-        <h2>ผลลัพธ์ (Copy ไปวางในไฟล์ .js)</h2>
-        <textarea id="json-output"></textarea>
+    
+    <div style="display:flex; gap:10px;">
+        <button class="btn" onclick="saveSchedule()" style="flex:1; padding:15px; font-size:1.1em;">
+            <i class="fas fa-save"></i> บันทึกตารางเรียน (Save to Database)
+        </button>
+        <!-- <button class="btn" onclick="generateCode()" style="background:#7f8c8d;">Generate JSON (Old)</button> -->
     </div>
+
 </div>
 
 <script src="../js/system_config.js"></script>
 <script src="../js/file_index.js"></script>
 <script>
     // --- Global Variables & Initialization ---
+    const db = firebase.firestore();
     const roomSelect = document.getElementById('room-select');
     const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+    let currentScheduleId = null; // Track if we are editing an existing doc
 
-    // Configuration for Subjects per Level (Copied from tool_schedule_builder.html)
+    // Configuration for Subjects
     const SUBJECT_CONFIG = {
         "pt12": [
             { id: 'Grammar', label: 'กิจกรรม (ไวยากรณ์)', defaultAct: 'บาลีไวยากรณ์' },
@@ -148,36 +182,406 @@
         "pt9": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ]
     };
 
-    // 1. Load Rooms into Dropdown
-    if (typeof systemConfig !== 'undefined') {
-        for (let key in systemConfig.classrooms) {
-            let room = systemConfig.classrooms[key];
-            let option = document.createElement('option');
-            option.value = room.id; // pt12_1, pt12_2
-            option.dataset.level = room.level; // pt12
-            option.textContent = `${room.name} (${room.id})`;
-            roomSelect.appendChild(option);
-        }
-    } else {
-        alert('Error: system_config.js not found');
-    }
-
-    // 2. Pre-select Room from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const preRoom = urlParams.get('room');
-    if (preRoom) {
-        roomSelect.value = preRoom;
-        // Disable selection as per user request
-        roomSelect.disabled = true;
+    // Initialize
+    (async function init() {
+        await loadClassrooms();
         
-        // Add a visual hint (optional)
-        const roomLabel = roomSelect.previousElementSibling;
-        if (roomLabel) {
-            roomLabel.innerHTML += ` <span style="color:red; font-size:0.8em;">(Locked by URL)</span>`;
+        // Check URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const preRoom = urlParams.get('room');
+        if (preRoom) {
+            roomSelect.value = preRoom;
+            checkAndLoadSchedule();
+        }
+    })();
+
+    async function loadClassrooms() {
+        roomSelect.innerHTML = '<option value="">-- กรุณาเลือกห้อง --</option>';
+        try {
+            const snap = await db.collection('classrooms').orderBy('level').get();
+            snap.forEach(doc => {
+                const room = doc.data();
+                const option = document.createElement('option');
+                option.value = room.id;
+                option.dataset.level = room.level;
+                option.textContent = `${room.name} (${room.id})`;
+                roomSelect.appendChild(option);
+            });
+        } catch (e) {
+            console.error("Error loading classrooms:", e);
+            // Fallback to systemConfig if available
+            if (typeof systemConfig !== 'undefined') {
+                for (let key in systemConfig.classrooms) {
+                    let room = systemConfig.classrooms[key];
+                    let option = document.createElement('option');
+                    option.value = room.id; 
+                    option.dataset.level = room.level; 
+                    option.textContent = `${room.name} (${room.id})`;
+                    roomSelect.appendChild(option);
+                }
+            }
         }
     }
 
-    // --- Helper Functions ---
+    async function checkAndLoadSchedule() {
+        const roomId = roomSelect.value;
+        const month = document.getElementById('month-select').value;
+        const year = document.getElementById('year-select').value;
+        const container = document.getElementById('schedule-rows');
+        const statusMsg = document.getElementById('status-msg');
+
+        if (!roomId || !month || !year) return;
+
+        showLoading(true);
+        container.innerHTML = '';
+        currentScheduleId = `${roomId}_${month}_${year}`; // Deterministic ID
+
+        try {
+            const doc = await db.collection('schedules').doc(currentScheduleId).get();
+            
+            if (doc.exists) {
+                const data = doc.data();
+                statusMsg.style.display = 'block';
+                statusMsg.style.backgroundColor = '#d4edda';
+                statusMsg.style.color = '#155724';
+                statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> พบข้อมูลตารางเรียนเดิม (แก้ไขล่าสุด: ${data.updatedAt ? new Date(data.updatedAt.seconds * 1000).toLocaleString() : '-'})`;
+                
+                // Populate Form
+                if (data.days && Array.isArray(data.days)) {
+                    data.days.forEach(day => addRow(day));
+                }
+            } else {
+                statusMsg.style.display = 'block';
+                statusMsg.style.backgroundColor = '#fff3cd';
+                statusMsg.style.color = '#856404';
+                statusMsg.innerHTML = `<i class="fas fa-info-circle"></i> ยังไม่มีตารางเรียนของเดือนนี้ (สร้างใหม่)`;
+            }
+        } catch (e) {
+            console.error("Load error:", e);
+            alert("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    async function saveSchedule() {
+        const roomId = roomSelect.value;
+        const month = document.getElementById('month-select').value;
+        const year = document.getElementById('year-select').value;
+        
+        if (!roomId) return alert("กรุณาเลือกห้องเรียน");
+        
+        const rows = document.querySelectorAll('.row-entry');
+        if (rows.length === 0) return alert("กรุณาเพิ่มวันเรียนอย่างน้อย 1 วัน");
+
+        showLoading(true);
+
+        try {
+            const scheduleData = collectData();
+            const id = `${roomId}_${month}_${year}`;
+            
+            await db.collection('schedules').doc(id).set({
+                roomId: roomId,
+                level: roomSelect.options[roomSelect.selectedIndex].dataset.level,
+                month: month,
+                year: year,
+                days: scheduleData,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            alert("บันทึกข้อมูลเรียบร้อย!");
+        } catch (e) {
+            console.error("Save error:", e);
+            alert("บันทึกไม่สำเร็จ: " + e.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function collectData() {
+        const rows = document.querySelectorAll('.row-entry');
+        const data = [];
+        
+        rows.forEach(row => {
+            const date = row.querySelector('.input-date').value;
+            const displayDate = row.querySelector('.input-display-date').value;
+            const remarksText = row.querySelector('.input-remarks').value;
+
+            let obj = {
+                date: date,
+                displayDate: displayDate,
+                isWeekend: false,
+                remarks: {}
+            };
+            
+            if (remarksText) obj.remarks.general = remarksText;
+
+            ['morning', 'afternoon', 'evening'].forEach(period => {
+                const container = row.querySelector(`.slot-container[data-period="${period}"]`);
+                if (!container) return;
+
+                const isExam = container.classList.contains('is-exam');
+                const periodObj = {};
+                
+                if (isExam) {
+                    // Exam Mode
+                    // Collect inputs
+                    const start = container.querySelector('.input-exam-start').value;
+                    const end = container.querySelector('.input-exam-end').value;
+                    // Note: Start/End not used in current viewer structure explicitly but good to store
+                    periodObj.timeStart = start;
+                    periodObj.timeEnd = end;
+                    
+                    // Collect exam acts
+                    container.querySelectorAll('.input-exam-act').forEach(inp => {
+                        const subjId = inp.dataset.subjId;
+                        if(inp.value) {
+                            if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
+                            else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
+                            else periodObj.activity = inp.value;
+                        }
+                    });
+                    
+                    // Collect files
+                    container.querySelectorAll('.input-exam').forEach(sel => {
+                        if(sel.value) {
+                            if(!periodObj.exams) periodObj.exams = [];
+                            periodObj.exams.push(sel.value);
+                        }
+                    });
+                     container.querySelectorAll('.input-ans').forEach(sel => {
+                        if(sel.value) {
+                            if(!periodObj.answers) periodObj.answers = [];
+                            periodObj.answers.push(sel.value);
+                        }
+                    });
+
+                } else {
+                    // Normal Mode
+                     container.querySelectorAll('.input-act').forEach(inp => {
+                        const subjId = inp.dataset.subjId;
+                        if(inp.value) {
+                            if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
+                            else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
+                            else periodObj.activity = inp.value;
+                        }
+                    });
+                    
+                    // Files
+                    container.querySelectorAll('.input-file').forEach(sel => {
+                        if(sel.value) {
+                            if(!periodObj.materials) periodObj.materials = [];
+                            periodObj.materials.push(sel.value);
+                        }
+                    });
+                    
+                    // Youtube
+                    const yt = container.querySelector('.input-youtube').value;
+                    if(yt) periodObj.linkYoutube = yt;
+                    
+                    // Zoom
+                    const zoom = container.querySelector('.input-zoom').value;
+                    if(zoom) periodObj.linkZoom = zoom;
+                }
+                
+                // Add to day obj if has content
+                if (Object.keys(periodObj).length > 0) {
+                    obj[period] = periodObj;
+                }
+            });
+            
+            data.push(obj);
+        });
+        
+        return data;
+    }
+
+    // Helper to populate row from existing data
+    function addRow(data = null) {
+        const roomVal = roomSelect.value;
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
+
+        const div = document.createElement('div');
+        div.className = 'row-entry';
+
+        // Column 1: Date Info
+        let col1 = document.createElement('div');
+        col1.className = 'col-group';
+        col1.style.minWidth = '200px';
+        col1.innerHTML = `
+            <div>
+                <label>วันที่</label>
+                <input type="date" class="input-date" onchange="handleDateChange(this)" value="${data ? data.date : ''}">
+            </div>
+            <div>
+                <label>ข้อความวันที่</label>
+                <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘" value="${data ? data.displayDate : ''}">
+            </div>
+            <div>
+                <label>หมายเหตุ (Remarks)</label>
+                <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป...">${data && data.remarks && data.remarks.general ? data.remarks.general : ''}</textarea>
+            </div>
+        `;
+        
+        // Slots
+        let colMorning = document.createElement('div');
+        colMorning.className = 'col-group';
+        colMorning.innerHTML = createSlotHTML('morning', 'เช้า (Morning)', level, data ? data.morning : null);
+
+        let colAfternoon = document.createElement('div');
+        colAfternoon.className = 'col-group';
+        colAfternoon.innerHTML = createSlotHTML('afternoon', 'บ่าย (Afternoon)', level, data ? data.afternoon : null);
+
+        let colEvening = document.createElement('div');
+        colEvening.className = 'col-group';
+        colEvening.innerHTML = createSlotHTML('evening', 'ค่ำ (Evening)', level, data ? data.evening : null);
+
+        // Column Delete
+        let colDel = document.createElement('div');
+        colDel.style.height = '100%';
+        colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
+
+        div.appendChild(col1);
+        div.appendChild(colMorning);
+        div.appendChild(colAfternoon);
+        div.appendChild(colEvening);
+        div.appendChild(colDel);
+
+        document.getElementById('schedule-rows').appendChild(div);
+    }
+
+    function createSlotHTML(periodId, label, level, data = null) {
+        // Files helpers
+        const materials = getFiles(level, 'materials');
+        const exams = getFiles(level, 'exams');
+        const answers = getFiles(level, 'answers');
+        
+        const createOptions = (files, selected = []) => {
+             let opts = '<option value="">-- เลือกไฟล์ --</option>';
+             files.forEach(f => {
+                 const isSel = selected.includes(f) ? 'selected' : '';
+                 opts += `<option value="${f}" ${isSel}>${f}</option>`;
+             });
+             return opts;
+        };
+
+        const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
+
+        let normalInputs = '';
+        let examInputs = '';
+        
+        // Determine Mode
+        // Heuristic: if data has exams or answers, or explicit flag (not stored currently), or activities look like exams?
+        // Let's assume Normal by default unless data has 'exams' array or activity text indicates exam?
+        // For now, default to Normal, user can switch.
+        // If data exists, try to populate both, but show one.
+        
+        const isExamMode = data && (data.exams || data.answers || (data.activity && data.activity.includes('สอบ')));
+        
+        // 1. Generate Normal Mode Inputs
+        subjects.forEach(subj => {
+            let val = '';
+            if (data) {
+                if (subj.id === 'Grammar') val = data.activityGrammar || '';
+                else if (subj.id === 'Translate') val = data.activityTranslate || '';
+                else val = data.activity || ''; // Fallback
+            }
+            normalInputs += `
+                <div class="field-group">
+                    <label>${subj.label}</label>
+                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${val}">
+                </div>
+            `;
+        });
+        
+        // Shared
+        normalInputs += `
+            <div class="field-group">
+                <label>YouTube (คั่นด้วย comma ,)</label>
+                <input type="text" class="input-youtube" placeholder="id1, id2, ..." value="${data ? (data.linkYoutube || '') : ''}">
+            </div>
+            <div class="field-group">
+                <label>Zoom Link</label>
+                <input type="text" class="input-zoom" placeholder="https://zoom.us/..." value="${data ? (data.linkZoom || '') : ''}">
+            </div>
+        `;
+
+        // File Inputs
+        subjects.forEach(subj => {
+             // We only support 1 file per subject in UI for simplicity, but data is array
+             // Let's just use the first matching one or empty
+             // Actually original UI had 1 select per subject.
+             // If data.materials is ['f1', 'f2'], how to map?
+             // We don't track which subject a material belongs to in the data array 'materials'.
+             // So just show first? Or leave empty?
+             // Simplification: Select the first material if available.
+             const selVal = (data && data.materials && data.materials.length > 0) ? [data.materials[0]] : [];
+             normalInputs += `
+                <div class="field-group">
+                    <label>เอกสาร (${subj.id})</label>
+                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, selVal)}</select>
+                </div>
+            `;
+        });
+
+        // 2. Generate Exam Mode Inputs
+        examInputs += `
+            <div class="field-group">
+                <label>เวลาเริ่ม - สิ้นสุด</label>
+                <div style="display:flex; gap:5px;">
+                    <input type="time" class="input-exam-start" value="${data ? (data.timeStart || '13:00') : '13:00'}">
+                    <input type="time" class="input-exam-end" value="${data ? (data.timeEnd || '16:00') : '16:00'}">
+                </div>
+            </div>
+        `;
+        
+        subjects.forEach(subj => {
+            let val = '';
+            if (data) {
+                if (subj.id === 'Grammar') val = data.activityGrammar || '';
+                else if (subj.id === 'Translate') val = data.activityTranslate || '';
+            }
+            examInputs += `
+                <div class="field-group">
+                    <label>ข้อความกิจกรรม (${subj.id})</label>
+                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}" value="${val}">
+                </div>
+            `;
+        });
+        
+        subjects.forEach(subj => {
+            examInputs += `
+                <div class="field-group">
+                    <label>ข้อสอบ (${subj.id})</label>
+                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams, data ? data.exams : [])}</select>
+                </div>
+                <div class="field-group">
+                    <label>เฉลย (${subj.id})</label>
+                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers, data ? data.answers : [])}</select>
+                </div>
+            `;
+        });
+
+        return `
+            <div class="slot-container ${isExamMode ? 'is-exam' : ''}" data-period="${periodId}">
+                <div class="slot-header">
+                    <strong>${label}</strong>
+                    <label style="font-size:0.9em; cursor:pointer;">
+                        <input type="checkbox" onchange="toggleExamMode(this)" ${isExamMode ? 'checked' : ''}> สอบ (Exam)
+                    </label>
+                </div>
+                
+                <div class="mode-normal" style="display:${isExamMode ? 'none' : 'block'};">
+                    ${normalInputs}
+                </div>
+
+                <div class="mode-exam" style="display:${isExamMode ? 'block' : 'none'};">
+                    ${examInputs}
+                </div>
+            </div>
+        `;
+    }
 
     // Helper to get files for a level
     function getFiles(level, type) {
@@ -185,12 +589,6 @@
             return FILE_INDEX[level][type];
         }
         return [];
-    }
-
-    // Update file options (optional, currently does nothing but placeholder)
-    function updateFileOptions() {
-        // We could clear rows here if we want to enforce consistency
-        // document.getElementById('schedule-rows').innerHTML = '';
     }
 
     function handleDateChange(input) {
@@ -201,24 +599,16 @@
         const day = thaiDaysShort[dateObj.getDay()];
         const dateNum = dateObj.getDate();
         const month = thaiMonthsShort[dateObj.getMonth()];
-        const year = (dateObj.getFullYear() + 543).toString().slice(2); // YY
-        
-        // Format: จ. ๑-ม.ค.-๖๘
-        // Convert dateNum to Thai digits? User example: "จ. ๑-ม.ค.-๖๘"
-        // Let's use standard digits for now unless requested, but user said "Like current code".
-        // Current code example: "จ. ๐๑-ม.ค.-๖๘" (from tool_schedule_builder logic I saw: `dateStr` was 0 padded).
-        // Let's stick to Arabic numerals for simplicity unless strictly required, or I can add a helper.
-        // Wait, the placeholder says "จ. ๑-ม.ค.-๖๘". That uses Thai digits.
+        const year = (dateObj.getFullYear() + 543).toString().slice(2);
         
         const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
         const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
         
-        const dateThai = toThaiNum(dateNum); // 1 -> ๑
+        const dateThai = toThaiNum(dateNum);
         const yearThai = toThaiNum(year);
         
         const displayStr = `${day} ${dateThai}-${month}-${yearThai}`;
         
-        // Find the display date input in the same row
         const row = input.closest('.row-entry');
         const displayInput = row.querySelector('.input-display-date');
         if (displayInput) {
@@ -241,261 +631,9 @@
             slotContainer.classList.remove('is-exam');
         }
     }
-
-    function createSlotHTML(periodId, label, level) {
-        // Files helpers
-        const materials = getFiles(level, 'materials');
-        const exams = getFiles(level, 'exams');
-        const answers = getFiles(level, 'answers');
-        
-        const createOptions = (files) => {
-             let opts = '<option value="">-- เลือกไฟล์ --</option>';
-             files.forEach(f => opts += `<option value="${f}">${f}</option>`);
-             return opts;
-        };
-
-        const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
-
-        let normalInputs = '';
-        let examInputs = '';
-        
-        // 1. Generate Normal Mode Inputs
-        subjects.forEach(subj => {
-            normalInputs += `
-                <div class="field-group">
-                    <label>${subj.label}</label>
-                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}">
-                </div>
-            `;
-        });
-        
-        // Add Youtube, Zoom (Shared)
-        normalInputs += `
-            <div class="field-group">
-                <label>YouTube (คั่นด้วย comma ,)</label>
-                <input type="text" class="input-youtube" placeholder="id1, id2, ...">
-            </div>
-            <div class="field-group">
-                <label>Zoom Link</label>
-                <input type="text" class="input-zoom" placeholder="https://zoom.us/...">
-            </div>
-        `;
-
-        // Add File Inputs (Dynamic)
-        subjects.forEach(subj => {
-             normalInputs += `
-                <div class="field-group">
-                    <label>เอกสาร (${subj.id})</label>
-                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials)}</select>
-                </div>
-            `;
-        });
-
-        // 2. Generate Exam Mode Inputs
-        examInputs += `
-            <div class="field-group">
-                <label>เวลาเริ่ม - สิ้นสุด</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="time" class="input-exam-start" value="13:00">
-                    <input type="time" class="input-exam-end" value="16:00">
-                </div>
-            </div>
-        `;
-        
-        subjects.forEach(subj => {
-            examInputs += `
-                <div class="field-group">
-                    <label>ข้อความกิจกรรม (${subj.id})</label>
-                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}">
-                </div>
-            `;
-        });
-        
-        subjects.forEach(subj => {
-            examInputs += `
-                <div class="field-group">
-                    <label>ข้อสอบ (${subj.id})</label>
-                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams)}</select>
-                </div>
-                <div class="field-group">
-                    <label>เฉลย (${subj.id})</label>
-                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers)}</select>
-                </div>
-            `;
-        });
-
-        return `
-            <div class="slot-container" data-period="${periodId}">
-                <div class="slot-header">
-                    <strong>${label}</strong>
-                    <label style="font-size:0.9em; cursor:pointer;">
-                        <input type="checkbox" onchange="toggleExamMode(this)"> สอบ (Exam)
-                    </label>
-                </div>
-                
-                <!-- Normal Mode -->
-                <div class="mode-normal">
-                    ${normalInputs}
-                </div>
-
-                <!-- Exam Mode -->
-                <div class="mode-exam" style="display:none;">
-                    ${examInputs}
-                </div>
-            </div>
-        `;
-    }
-
-    function addRow() {
-        const roomVal = roomSelect.value;
-        if (!roomVal) {
-            alert("กรุณาเลือกห้องเรียนก่อนครับ");
-            return;
-        }
-        // Safely access level, fallback if not set
-        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
-        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
-
-        const div = document.createElement('div');
-        div.className = 'row-entry';
-
-        // Column 1: Date Info
-        let col1 = document.createElement('div');
-        col1.className = 'col-group';
-        col1.style.minWidth = '200px';
-        col1.innerHTML = `
-            <div>
-                <label>วันที่</label>
-                <input type="date" class="input-date" onchange="handleDateChange(this)">
-            </div>
-            <div>
-                <label>ข้อความวันที่</label>
-                <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘">
-            </div>
-            <div>
-                <label>หมายเหตุ (Remarks)</label>
-                <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป..."></textarea>
-            </div>
-        `;
-        
-        // Slots
-        let colMorning = document.createElement('div');
-        colMorning.className = 'col-group';
-        colMorning.innerHTML = createSlotHTML('morning', 'เช้า (Morning)', level);
-
-        let colAfternoon = document.createElement('div');
-        colAfternoon.className = 'col-group';
-        colAfternoon.innerHTML = createSlotHTML('afternoon', 'บ่าย (Afternoon)', level);
-
-        let colEvening = document.createElement('div');
-        colEvening.className = 'col-group';
-        colEvening.innerHTML = createSlotHTML('evening', 'ค่ำ (Evening)', level);
-
-        // Column Delete
-        let colDel = document.createElement('div');
-        colDel.style.height = '100%';
-        colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
-
-        div.appendChild(col1);
-        div.appendChild(colMorning);
-        div.appendChild(colAfternoon);
-        div.appendChild(colEvening);
-        div.appendChild(colDel);
-
-        document.getElementById('schedule-rows').appendChild(div);
-    }
-
-    function generateCode() {
-        const month = document.getElementById('month-select').value;
-        const rows = document.querySelectorAll('.row-entry');
-        const data = [];
-        
-        const level = roomSelect.options[roomSelect.selectedIndex]?.dataset.level || 'pt12';
-        const resolve = (type, file) => file ? `${type}/${level}/${file}` : "";
-
-        rows.forEach(row => {
-            const date = row.querySelector('.input-date').value;
-            const displayDate = row.querySelector('.input-display-date').value;
-            const remarksText = row.querySelector('.input-remarks').value;
-
-            let obj = {
-                date: date,
-                displayDate: displayDate,
-                isWeekend: false,
-                remarks: {}
-            };
-            
-            if (remarksText) obj.remarks.general = remarksText;
-
-            ['morning', 'afternoon', 'evening'].forEach(period => {
-                const container = row.querySelector(`.slot-container[data-period="${period}"]`);
-                if (!container) return;
-
-                const isExam = container.querySelector('input[type="checkbox"]').checked;
-                let periodObj = {};
-
-                if (isExam) {
-                    periodObj.isExam = true;
-                    periodObj.examStartTime = container.querySelector('.input-exam-start').value;
-                    periodObj.examEndTime = container.querySelector('.input-exam-end').value;
-                    
-                    // Dynamic Exam Inputs
-                    const examActInputs = container.querySelectorAll('.input-exam-act');
-                    examActInputs.forEach(inp => {
-                        if(inp.value) periodObj[`activity${inp.dataset.subjId}`] = inp.value;
-                    });
-                    
-                    const examInputs = container.querySelectorAll('.input-exam');
-                    examInputs.forEach(inp => {
-                        if(inp.value) periodObj[`fileExam${inp.dataset.subjId}`] = resolve('exams', inp.value);
-                    });
-                    
-                    const ansInputs = container.querySelectorAll('.input-ans');
-                    ansInputs.forEach(inp => {
-                        if(inp.value) periodObj[`fileAnswer${inp.dataset.subjId}`] = resolve('answers', inp.value);
-                    });
-
-                    if (Object.keys(periodObj).length > 1) {
-                        obj[period] = periodObj;
-                    }
-                } else {
-                    // Dynamic Normal Inputs
-                    const actInputs = container.querySelectorAll('.input-act');
-                    actInputs.forEach(inp => {
-                        if(inp.value) periodObj[`activity${inp.dataset.subjId}`] = inp.value;
-                    });
-                    
-                    const yt = container.querySelector('.input-youtube').value;
-                    const zoom = container.querySelector('.input-zoom').value;
-                    
-                    const fileInputs = container.querySelectorAll('.input-file');
-                    fileInputs.forEach(inp => {
-                         if(inp.value) periodObj[`fileNote${inp.dataset.subjId}`] = resolve('materials', inp.value);
-                    });
-
-                    if (yt) {
-                        const links = yt.split(',').map(s => s.trim()).filter(s => s);
-                        if (links.length > 1) periodObj.linkYoutube = links;
-                        else if (links.length === 1) periodObj.linkYoutube = links[0];
-                    }
-                    
-                    if (zoom) periodObj.linkZoom = zoom;
-
-                    if (Object.keys(periodObj).length > 0) {
-                        obj[period] = periodObj;
-                    }
-                }
-            });
-
-            data.push(obj);
-        });
-
-        const varName = `data${month}`;
-        const json = JSON.stringify(data, null, 4);
-        const code = `var ${varName} = ${json};`;
-
-        document.getElementById('json-output').value = code;
-        document.getElementById('output-area').style.display = 'block';
+    
+    function showLoading(show) {
+        document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
     }
 </script>
 
