@@ -1133,7 +1133,6 @@
                 if (subjectLabel.includes('สัมพันธ์ไทย')) {
                     contentHTML = `
                     <div class="paper-section">
-                        <div class="paper-section-title">${headerSubject}</div>
                         <div class="paper-content-text" style="${contentStyle}">${litContent || '...'}</div>
                     </div>`;
                 } else {
@@ -1261,14 +1260,12 @@
             // 1. Formatting Helpers
             const formatPali = (text) => {
                  let processed = String(text);
-                 if (needsCleaning) processed = cleanPunctuation(processed);
                  // Pali: Always 2 spaces
                  return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
                  // Thai in Solution: Always 2 spaces (as requested)
                  let processed = String(text).replace(/_/g, ' ');
-                 if (needsCleaning) processed = cleanPunctuation(processed);
                  // Thai: Always 2 spaces
                  return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
@@ -1358,7 +1355,6 @@
                 if (subjectLabel.includes('สัมพันธ์ไทย')) {
                     bodyHTML = `
                     <div class="paper-section">
-                        <div class="paper-section-title">${headerSubject}</div>
                         <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
                     </div>`;
                 } else {
