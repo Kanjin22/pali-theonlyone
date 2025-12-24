@@ -666,8 +666,35 @@
             if (!period) return '';
             let items = [];
             
+            // Exam Time
+            if (period.isExam || (period.timeStart && period.timeEnd)) {
+                const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
+                const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
+                const formatTime = (t) => {
+                     if(!t) return '';
+                     const [h, m] = t.split(':');
+                     return `${toThaiNum(h)}.${toThaiNum(m)} น.`;
+                };
+                if (period.timeStart && period.timeEnd) {
+                    items.push(`<span style="font-weight:bold; color:#c0392b;">${formatTime(period.timeStart)} - ${formatTime(period.timeEnd)}</span>`);
+                }
+            }
+            
+            // Helper to extract time from text
+            const processText = (text) => {
+                if (!text || typeof text !== 'string') return text ? [text] : [];
+                const regex = /^\s*(\d{1,2}[.:]\d{2}(?:\s*[-–]\s*\d{1,2}[.:]\d{2})?(?:\s*น\.?)?)\s*(.*)$/;
+                const match = text.match(regex);
+                if (match) {
+                    const res = [`<span style="font-weight:bold;">${match[1]}</span>`];
+                    if (match[2]) res.push(match[2]);
+                    return res;
+                }
+                return [text];
+            };
+
             // Collect text
-            if (period.activity) items.push(period.activity);
+            if (period.activity) items.push(...processText(period.activity));
             if (period.activityGrammar) {
                 if(Array.isArray(period.activityGrammar)) items.push(...period.activityGrammar);
                 else items.push(period.activityGrammar);
@@ -696,7 +723,12 @@
             
             if (items.length === 0) return '';
 
-            return items.map(t => `<div class="period-item">${t}</div>`).join('');
+            // Check for single item (excluding time? No, count all)
+            // If just 1 item, use single-item class
+            const isSingle = items.length === 1;
+            const cls = isSingle ? 'period-item single-item' : 'period-item';
+
+            return items.map(t => `<div class="${cls}">${t}</div>`).join('');
         }
 
         // Get ID from URL
