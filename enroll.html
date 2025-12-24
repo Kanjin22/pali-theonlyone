@@ -44,8 +44,24 @@
             <div id="formBlock">
                 <div class="row">
                     <div class="col">
-                        <label>ชื่อ-ฉายา-นามสกุล</label>
-                        <input id="fullNameInput" type="text" placeholder="ตัวอย่าง: สามเณร ปรีชา (ฉายา) ใจดี">
+                        <label>คำนำหน้า</label>
+                        <input id="titleInput" type="text" placeholder="เช่น พระ, สามเณร, นาย, นาง, นางสาว">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col">
+                        <label>ชื่อ</label>
+                        <input id="firstNameInput" type="text" placeholder="กรอกชื่อ">
+                    </div>
+                    <div class="col">
+                        <label>นามสกุล</label>
+                        <input id="lastNameInput" type="text" placeholder="กรอกนามสกุล">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col">
+                        <label>ฉายา</label>
+                        <input id="epithetInput" type="text" placeholder="กรณีเป็นพระภิกษุ กรุณากรอกฉายา">
                     </div>
                 </div>
                 <div class="row" style="margin-top:10px;">
@@ -57,7 +73,8 @@
                         <label style="display:flex; align-items:center; gap:10px;">
                             <input id="isMonkCheckbox" type="checkbox"> เป็นพระภิกษุ
                         </label>
-                        <input id="ordinationDateInput" type="date" class="hidden" placeholder="วันอุปสมบท">
+                        <label>วันอุปสมบท</label>
+                        <input id="ordinationDateInput" type="date" class="hidden">
                     </div>
                 </div>
                 <div class="row" style="margin-top:10px;">
@@ -96,7 +113,10 @@
         const roleBadge = document.getElementById('roleBadge');
         const statusBlock = document.getElementById('statusBlock');
         const statusBadge = document.getElementById('statusBadge');
-        const fullNameInput = document.getElementById('fullNameInput');
+        const titleInput = document.getElementById('titleInput');
+        const firstNameInput = document.getElementById('firstNameInput');
+        const lastNameInput = document.getElementById('lastNameInput');
+        const epithetInput = document.getElementById('epithetInput');
         const birthDateInput = document.getElementById('birthDateInput');
         const isMonkCheckbox = document.getElementById('isMonkCheckbox');
         const ordinationDateInput = document.getElementById('ordinationDateInput');
@@ -138,13 +158,16 @@
             } catch (e) {}
         });
         function validate() {
-            const name = (fullNameInput.value || '').trim();
+            const title = (titleInput.value || '').trim();
+            const first = (firstNameInput.value || '').trim();
+            const last = (lastNameInput.value || '').trim();
+            const epithet = (epithetInput.value || '').trim();
             const birth = (birthDateInput.value || '').trim();
             const monk = isMonkCheckbox.checked;
             const ord = (ordinationDateInput.value || '').trim();
             const level = levelSelect.value || '';
-            if (!name || !birth || !level) return false;
-            if (monk && !ord) return false;
+            if (!title || !first || !last || !birth || !level) return false;
+            if (monk && (!ord || !epithet)) return false;
             return true;
         }
         if (submitEnroll) submitEnroll.onclick = async () => {
@@ -153,7 +176,10 @@
             if (!validate()) { alert('กรุณากรอกข้อมูลให้ครบถ้วน'); return; }
             const payload = {
                 uid: u.uid,
-                fullName: (fullNameInput.value || '').trim(),
+                title: (titleInput.value || '').trim(),
+                firstName: (firstNameInput.value || '').trim(),
+                lastName: (lastNameInput.value || '').trim(),
+                epithet: (epithetInput.value || '').trim(),
                 birthDate: (birthDateInput.value || '').trim(),
                 isMonk: isMonkCheckbox.checked,
                 ordinationDate: (ordinationDateInput.value || '').trim(),
