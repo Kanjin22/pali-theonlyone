@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตารางเรียน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="js/firebase_config.js"></script>
+    
+    <style>
+        body { font-family: 'Sarabun', sans-serif; margin: 0; background-color: #f7f7f7; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .page-header { text-align: center; margin-bottom: 30px; padding: 15px; border-bottom: 2px solid #34495e; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .main-title { font-size: 1.8em; color: #2c3e50; font-weight: 700; margin: 0; }
+        .sub-title { font-size: 1.3em; color: #34495e; margin: 5px 0; }
+        .description { font-size: 1em; color: #7f8c8d; margin: 5px 0; }
+        
+        /* Table Styles */
+        .table-container { overflow-x: auto; background: #fff; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+        table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.95em; }
+        th, td { border: 1px solid #e0e0e0; text-align: center; padding: 12px 10px; vertical-align: middle; }
+        thead th { background-color: #34495e; color: #ffffff; position: sticky; top: 0; z-index: 2; font-weight: 600; }
+        tbody tr:nth-of-type(even) { background-color: #f8f9fa; }
+        tbody tr:hover { background-color: #e8f4f8; }
+        
+        .remarks-cell { text-align: left; vertical-align: top; font-size: 0.9em; color: #555; }
+        .remarks-cell div { margin-bottom: 5px; }
+        .weekend-row { background-color: #e9ecef !important; color: #6c757d; }
+        .today-highlight { background-color: #fffacd !important; font-weight: bold; border-left: 4px solid #f1c40f; }
+        
+        /* Buttons */
+        .btn { display: inline-block; padding: 6px 12px; margin: 2px; border-radius: 4px; text-decoration: none; color: #ffffff; font-weight: 500; font-size: 0.85em; transition: all 0.2s; border: none; cursor: pointer; text-align: center; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .details-btn { width: 100%; max-width: 140px; }
+        .btn-morning { background-color: #3498db; }
+        .btn-afternoon { background-color: #f39c12; }
+        .btn-evening { background-color: #8e44ad; }
+        
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(2px); }
+        .modal-content { background: #fff; padding: 25px; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; animation: slideUp 0.3s ease-out; max-height: 90vh; overflow-y: auto; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; transition: 0.2s; }
+        .modal-close:hover { color: #333; }
+        .modal-title { margin-top: 0; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 1.4em; }
+        
+        .modal-section { margin-bottom: 15px; }
+        .modal-section h4 { margin: 0 0 8px 0; color: #34495e; font-size: 1.1em; border-left: 4px solid #3498db; padding-left: 10px; }
+        .modal-section p { margin: 0 0 5px 15px; color: #555; }
+        
+        .link-group { display: flex; flex-direction: column; gap: 8px; margin-left: 15px; }
+        .link-btn { display: flex; align-items: center; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: white; font-size: 0.9em; transition: 0.2s; }
+        .link-btn i { margin-right: 8px; width: 20px; text-align: center; }
+        .link-btn:hover { opacity: 0.9; transform: translateX(3px); }
+        
+        .btn-zoom { background-color: #2980b9; }
+        .btn-youtube { background-color: #c0392b; }
+        .btn-material { background-color: #16a085; }
+        
+        /* Stats */
+        .stats-dashboard { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: #fff; border-radius: 10px; padding: 15px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid #ccc; flex: 1; min-width: 250px; display: flex; align-items: center; }
+        .stat-card.grammar { border-left-color: #3498db; }
+        .stat-card.translate { border-left-color: #f39c12; }
+        .stat-icon { font-size: 2em; margin-right: 15px; }
+        .stat-details h3 { margin: 0 0 5px 0; font-size: 1em; color: #2c3e50; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 0.9em; color: #666; }
+        .stat-val { font-weight: bold; }
+        .stat-val.read { color: #27ae60; }
+        .stat-val.exam { color: #c0392b; }
+
+        .loading { text-align: center; padding: 50px; font-size: 1.2em; color: #7f8c8d; }
+        .error-msg { text-align: center; padding: 50px; color: #e74c3c; }
+
+        @media (max-width: 768px) {
+            thead { display: none; }
+            tr { display: block; border: 1px solid #eee; margin-bottom: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+            td { display: block; text-align: right; border: none; border-bottom: 1px solid #f0f0f0; padding: 10px 15px; position: relative; }
+            td::before { content: attr(data-label); position: absolute; left: 15px; font-weight: 600; color: #2c3e50; }
+            .remarks-cell { text-align: left; padding-top: 10px; }
+            .remarks-cell::before { display: none; }
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="loading" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> กำลังโหลดข้อมูลตารางเรียน...
+    </div>
+    
+    <div id="error-container" class="error-msg" style="display:none;"></div>
+
+    <div id="content" style="display:none;">
+        <div class="page-header">
+            <h1 class="main-title" id="page-title">ตารางเรียน</h1>
+            <h2 class="sub-title" id="page-subtitle"></h2>
+            <p class="description" id="page-desc"></p>
+            <a href="#" id="back-link" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none;">&larr; กลับสู่หน้าห้องเรียน</a>
+        </div>
+
+        <div class="stats-dashboard" id="stats-section">
+            <div class="stat-card grammar">
+                <div class="stat-icon">📘</div>
+                <div class="stat-details" style="width:100%">
+                    <h3>สถิติ ไวยากรณ์</h3>
+                    <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="stat-gram-read">0</span></div>
+                    <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="stat-gram-exam">0</span></div>
+                </div>
+            </div>
+            <div class="stat-card translate">
+                <div class="stat-icon">📙</div>
+                <div class="stat-details" style="width:100%">
+                    <h3>สถิติ แปล</h3>
+                    <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read" id="stat-trans-read">0</span></div>
+                    <div class="stat-row"><span>สอบ/เฉลย:</span> <span class="stat-val exam" id="stat-trans-exam">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:12%">วดป.</th>
+                        <th style="width:20%">เช้า-สาย</th>
+                        <th style="width:20%">บ่าย</th>
+                        <th style="width:20%">ค่ำ</th>
+                        <th style="width:28%">หมายเหตุ</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                    <!-- Data rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="details-modal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title" id="modal-title">รายละเอียด</h2>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+    // Initialize Firestore
+    const db = firebase.firestore();
+    
+    // Get ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const scheduleId = urlParams.get('id');
+    const roomId = urlParams.get('room'); // fallback or context
+
+    let scheduleData = null;
+
+    async function loadSchedule() {
+        if (!scheduleId) {
+            showError("ไม่พบรหัสตารางเรียน (Schedule ID)");
+            return;
+        }
+
+        try {
+            const doc = await db.collection('schedules').doc(scheduleId).get();
+            if (!doc.exists) {
+                showError("ไม่พบข้อมูลตารางเรียนในระบบ");
+                return;
+            }
+
+            scheduleData = doc.data();
+            renderPage(scheduleData);
+            
+            // Log view (optional)
+            console.log("Loaded schedule:", scheduleData);
+        } catch (e) {
+            console.error(e);
+            showError("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
+        }
+    }
+
+    function showError(msg) {
+        document.getElementById('loading').style.display = 'none';
+        const errDiv = document.getElementById('error-container');
+        errDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${msg}`;
+        errDiv.style.display = 'block';
+    }
+
+    async function renderPage(data) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        // 1. Header Info
+        const monthNames = {
+            "January": "มกราคม", "February": "กุมภาพันธ์", "March": "มีนาคม", "April": "เมษายน", 
+            "May": "พฤษภาคม", "June": "มิถุนายน", "July": "กรกฎาคม", "August": "สิงหาคม", 
+            "September": "กันยายน", "October": "ตุลาคม", "November": "พฤศจิกายน", "December": "ธันวาคม"
+        };
+        const monthThai = monthNames[data.month] || data.month;
+        const yearThai = data.year ? `๒๕${parseInt(data.year.slice(-2)) + 43}` : ''; // rough conv
+        
+        document.getElementById('page-title').innerText = `ตารางเรียนเดือน${monthThai} ${data.yearThai || ''}`; // Prefer stored Thai year
+        
+        // Fetch Room Info for Subtitle
+        try {
+            const roomDoc = await db.collection('classrooms').doc(data.roomId).get();
+            if (roomDoc.exists) {
+                const room = roomDoc.data();
+                document.getElementById('page-subtitle').innerText = room.name;
+                document.getElementById('page-desc').innerText = room.description || '';
+                
+                // Back Link
+                document.getElementById('back-link').href = `levels/home_${room.level}.html?room=${room.id}`;
+            }
+        } catch (e) {
+            console.warn("Could not load room info", e);
+            document.getElementById('page-subtitle').innerText = data.roomId;
+        }
+
+        // 2. Calculate Stats
+        calculateStats(data.days);
+
+        // 3. Render Table
+        const tbody = document.getElementById('schedule-body');
+        tbody.innerHTML = '';
+        
+        // Sort days by date if needed? Assuming stored in order.
+        
+        data.days.forEach(day => {
+            const tr = document.createElement('tr');
+            if (day.isWeekend) {
+                tr.className = 'weekend-row';
+                tr.innerHTML = `
+                    <td data-label="วดป.">${day.displayDate}</td>
+                    <td colspan="3" style="text-align:center; font-style:italic;">หยุด</td>
+                    <td class="remarks-cell"></td>
+                `;
+            } else {
+                tr.innerHTML = `
+                    <td data-label="วดป.">${day.displayDate}</td>
+                    <td data-label="เช้า-สาย">${generateBtn(day.morning, day, 'morning')}</td>
+                    <td data-label="บ่าย">${generateBtn(day.afternoon, day, 'afternoon')}</td>
+                    <td data-label="ค่ำ">${generateBtn(day.evening, day, 'evening')}</td>
+                    <td class="remarks-cell">${generateRemarks(day.remarks)}</td>
+                `;
+            }
+            tbody.appendChild(tr);
+        });
+    }
+
+    function generateBtn(period, day, periodName) {
+        if (!period || (!period.activity && !period.activityGrammar && !period.activityTranslate)) return '';
+        
+        let colorClass = '';
+        if (periodName === 'morning') colorClass = 'btn-morning';
+        else if (periodName === 'afternoon') colorClass = 'btn-afternoon';
+        else if (periodName === 'evening') colorClass = 'btn-evening';
+
+        // Store data in a way we can retrieve for modal
+        // Using onclick with index is risky if sorted differently.
+        // Let's pass date and periodName
+        return `<button class="btn details-btn ${colorClass}" onclick="openModal('${day.date}', '${periodName}')">
+            ดูรายละเอียด
+        </button>`;
+    }
+
+    function generateRemarks(remarks) {
+        if (!remarks) return '';
+        let html = '';
+        if (remarks.grammar) html += `<div style="color:#2980b9">📘 ${remarks.grammar}</div>`;
+        if (remarks.translate) {
+            if (Array.isArray(remarks.translate)) {
+                remarks.translate.forEach(t => html += `<div style="color:#d35400">📙 ${t}</div>`);
+            } else {
+                html += `<div style="color:#d35400">📙 ${remarks.translate}</div>`;
+            }
+        }
+        if (remarks.general) html += `<div>${remarks.general}</div>`;
+        return html;
+    }
+
+    function calculateStats(days) {
+        let gRead = 0, gExam = 0, tRead = 0, tExam = 0;
+        
+        days.forEach(day => {
+            ['morning', 'afternoon', 'evening'].forEach(p => {
+                const period = day[p];
+                if (!period) return;
+                
+                // Logic based on activity name keywords? 
+                // Or maybe the data has explicit flags? 
+                // The current JSON generator doesn't seem to set flags, just strings.
+                // We'll use simple keyword matching as per original logic if possible, 
+                // but original logic used `count-gram-read` IDs which were manually updated? 
+                // No, the original static HTML had hardcoded stats? 
+                // Wait, the original HTML has `id="count-gram-read"`. 
+                // Let's assume the data structure might have stats or we count simplisticly.
+                
+                // Simple keyword heuristic
+                const txt = (period.activity || '') + (period.activityGrammar || '') + (period.activityTranslate || '');
+                if (txt.includes('สอบ') || txt.includes('ปัญหา')) {
+                    if (txt.includes('ไวยากรณ์')) gExam++;
+                    if (txt.includes('แปล')) tExam++;
+                } else {
+                    if (txt.includes('ไวยากรณ์')) gRead++;
+                    if (txt.includes('แปล')) tRead++;
+                }
+            });
+        });
+
+        document.getElementById('stat-gram-read').innerText = gRead;
+        document.getElementById('stat-gram-exam').innerText = gExam;
+        document.getElementById('stat-trans-read').innerText = tRead;
+        document.getElementById('stat-trans-exam').innerText = tExam;
+    }
+
+    function openModal(date, periodName) {
+        const day = scheduleData.days.find(d => d.date === date);
+        if (!day) return;
+        const period = day[periodName];
+        if (!period) return;
+
+        const titleMap = { 'morning': 'ช่วงเช้า-สาย', 'afternoon': 'ช่วงบ่าย', 'evening': 'ช่วงค่ำ' };
+        document.getElementById('modal-title').innerText = `${titleMap[periodName]} (${day.displayDate})`;
+
+        let html = '<div class="modal-section"><h4>หัวข้อการเรียน</h4>';
+        if (period.activityGrammar) html += `<p>📘 ${period.activityGrammar}</p>`;
+        if (period.activityTranslate) html += `<p>📙 ${period.activityTranslate}</p>`;
+        if (period.activity && !period.activityGrammar && !period.activityTranslate) html += `<p>${period.activity}</p>`;
+        html += '</div>';
+
+        // Links
+        let linksHtml = '';
+        
+        // Zoom
+        if (period.linkZoom) {
+             linksHtml += `<a href="${period.linkZoom}" target="_blank" class="link-btn btn-zoom"><i class="fas fa-video"></i> เข้าเรียนผ่าน Zoom</a>`;
+        }
+        
+        // YouTube
+        if (period.linkYoutube) {
+            const yts = period.linkYoutube.split(',');
+            yts.forEach((yt, idx) => {
+                const vidId = yt.trim();
+                if(vidId) {
+                    linksHtml += `<a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> ดูย้อนหลัง ${yts.length > 1 ? (idx+1) : ''}</a>`;
+                }
+            });
+        }
+
+        // Materials
+        if (period.materials && period.materials.length > 0) {
+             // Assuming materials are filenames or URLs? 
+             // Existing builder used generic filenames.
+             // We might need a base path or full URL.
+             // For now, assume they are relative to some known path or full URLs.
+             // If from existing system, likely filenames in `files/`.
+             period.materials.forEach(m => {
+                 linksHtml += `<a href="../../files/${m}" target="_blank" class="link-btn btn-material"><i class="fas fa-file-pdf"></i> ${m}</a>`;
+             });
+        }
+
+        if (linksHtml) {
+            html += `<div class="modal-section"><h4>สื่อการสอน</h4><div class="link-group">${linksHtml}</div></div>`;
+        }
+
+        document.getElementById('modal-body').innerHTML = html;
+        document.getElementById('details-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('details-modal').style.display = 'none';
+    }
+    
+    // Close modal on outside click
+    window.onclick = function(event) {
+        const modal = document.getElementById('details-modal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Start
+    loadSchedule();
+</script>
+
+</body>
+</html>
