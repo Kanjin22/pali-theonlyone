@@ -9,181 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">    // --- File Manager Functions ---
-    async function loadDynamicFiles() {
-        try {
-            const snap = await db.collection('files').orderBy('uploadedAt', 'desc').get();
-            DYNAMIC_FILES = [];
-            snap.forEach(doc => {
-                DYNAMIC_FILES.push({ id: doc.id, ...doc.data() });
-            });
-            console.log("Loaded dynamic files:", DYNAMIC_FILES.length);
-        } catch (e) {
-            console.error("Error loading files:", e);
-        }
-    }
-
-    function openFileManager() {
-        document.getElementById('file-modal').style.display = 'flex';
-        renderFileList();
-        
-        // Populate Levels in Upload Form
-        const levelSelect = document.getElementById('upload-level');
-        levelSelect.innerHTML = '';
-        
-        // Get all levels from systemConfig or hardcoded
-        const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
-        levels.forEach(lvl => {
-            const opt = document.createElement('option');
-            opt.value = lvl;
-            opt.textContent = lvl.toUpperCase();
-            levelSelect.appendChild(opt);
-        });
-
-        // Set default based on current room
-        if (roomSelect.value) {
-            const selectedOpt = roomSelect.options[roomSelect.selectedIndex];
-            if (selectedOpt && selectedOpt.dataset.level) {
-                levelSelect.value = selectedOpt.dataset.level;
-            }
-        }
-    }
-
-    function closeFileManager() {
-        document.getElementById('file-modal').style.display = 'none';
-    }
-
-    function renderFileList() {
-        const tbody = document.getElementById('file-list-body');
-        tbody.innerHTML = '';
-        
-        DYNAMIC_FILES.forEach(file => {
-            const tr = document.createElement('tr');
-            tr.style.borderBottom = '1px solid #eee';
-            
-            const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
-            
-            tr.innerHTML = `
-                <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
-                <td style="padding:10px;">${file.type}</td>
-                <td style="padding:10px;">${file.level}</td>
-                <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
-                <td style="padding:10px; text-align:center;">
-                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    async function uploadFile() {
-        const fileInput = document.getElementById('upload-file');
-        const typeSelect = document.getElementById('upload-type');
-        const levelSelect = document.getElementById('upload-level');
-        const btn = document.getElementById('btn-upload');
-        const progressDiv = document.getElementById('upload-progress');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-
-        const file = fileInput.files[0];
-        if (!file) return alert("กรุณาเลือกไฟล์ PDF");
-        if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
-
-        const type = typeSelect.value;
-        const level = levelSelect.value;
-        
-        // Create Path: files/{level}/{type}/{filename}
-        const storagePath = `files/${level}/${type}/${Date.now()}_${file.name}`;
-        const ref = storage.ref(storagePath);
-
-        btn.disabled = true;
-        progressDiv.style.display = 'block';
-
-        const task = ref.put(file);
-
-        task.on('state_changed', 
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressText.innerText = `${Math.round(progress)}%`;
-            }, 
-            (error) => {
-                console.error("Upload error:", error);
-                alert("Upload failed: " + error.message);
-                btn.disabled = false;
-                progressDiv.style.display = 'none';
-            }, 
-            async () => {
-                // Complete
-                try {
-                    const downloadURL = await task.snapshot.ref.getDownloadURL();
-                    
-                    // Save to Firestore
-                    const docRef = await db.collection('files').add({
-                        name: file.name,
-                        type: type,
-                        level: level,
-                        url: downloadURL,
-                        fullPath: storagePath,
-                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        size: file.size
-                    });
-
-                    // Update Local List
-                    DYNAMIC_FILES.unshift({
-                        id: docRef.id,
-                        name: file.name,
-                        type: type,
-                        level: level,
-                        url: downloadURL,
-                        fullPath: storagePath,
-                        uploadedAt: { seconds: Date.now() / 1000 } // approx
-                    });
-
-                    renderFileList();
-                    
-                    alert("อัปโหลดสำเร็จ!");
-                    fileInput.value = ''; // Clear input
-                    progressDiv.style.display = 'none';
-                } catch (e) {
-                    console.error("Error saving file metadata:", e);
-                    alert("Upload successful but failed to save metadata.");
-                } finally {
-                    btn.disabled = false;
-                }
-            }
-        );
-    }
-
-    async function deleteFile(id, fullPath) {
-        if (!confirm("คุณต้องการลบไฟล์นี้ใช่หรือไม่?")) return;
-
-        try {
-            // Delete from Storage
-            if (fullPath) {
-                await storage.ref(fullPath).delete().catch(e => console.warn("Storage delete error (might be missing):", e));
-            }
-
-            // Delete from Firestore
-            await db.collection('files').doc(id).delete();
-
-            // Update Local
-            DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
-            renderFileList();
-
-        } catch (e) {
-            console.error("Delete error:", e);
-            alert("ลบไม่สำเร็จ: " + e.message);
-        }
-    }
-</script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script src="../js/firebase_config.js"></script>
-
     <style>
         body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -248,6 +78,20 @@
             .col-group { min-width: auto; }
             .btn-danger { height: 40px; margin-top: 10px; }
         }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+            display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .modal-content {
+            background: #fff; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px;
+            max-height: 90vh; overflow-y: auto; position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa;
+        }
+        .modal-close:hover { color: #000; }
     </style>
 </head>
 <body>
@@ -655,17 +499,29 @@
                         }
                     });
                     
-                    // Collect files
+                    // Collect files (Exams)
                     container.querySelectorAll('.input-exam').forEach(sel => {
                         if(sel.value) {
                             if(!periodObj.exams) periodObj.exams = [];
                             periodObj.exams.push(sel.value);
+
+                            // Specific fields
+                            const subjId = sel.dataset.subjId;
+                            if (subjId === 'Grammar') periodObj.fileExamGrammar = sel.value;
+                            else if (subjId === 'Translate') periodObj.fileExamTranslate = sel.value;
                         }
                     });
+
+                    // Collect files (Answers)
                      container.querySelectorAll('.input-ans').forEach(sel => {
                         if(sel.value) {
                             if(!periodObj.answers) periodObj.answers = [];
                             periodObj.answers.push(sel.value);
+
+                            // Specific fields
+                            const subjId = sel.dataset.subjId;
+                            if (subjId === 'Grammar') periodObj.fileAnswerGrammar = sel.value;
+                            else if (subjId === 'Translate') periodObj.fileAnswerTranslate = sel.value;
                         }
                     });
 
@@ -680,11 +536,16 @@
                         }
                     });
                     
-                    // Files
+                    // Files (Materials)
                     container.querySelectorAll('.input-file').forEach(sel => {
                         if(sel.value) {
                             if(!periodObj.materials) periodObj.materials = [];
                             periodObj.materials.push(sel.value);
+
+                             // Specific fields (Legacy support + precision)
+                            const subjId = sel.dataset.subjId;
+                            if (subjId === 'Grammar') periodObj.fileNoteGrammar = sel.value;
+                            else if (subjId === 'Translate') periodObj.fileNoteTranslate = sel.value;
                         }
                     });
                     
@@ -887,13 +748,20 @@
             `;
         });
         
-        subjects.forEach(subj => {
+        subjects.forEach((subj, idx) => {
             // Exam Files
             let selExams = [];
             if (data) {
                 if (subj.id === 'Grammar' && data.fileExamGrammar) selExams.push(data.fileExamGrammar);
                 else if (subj.id === 'Translate' && data.fileExamTranslate) selExams.push(data.fileExamTranslate);
-                else if (data.exams && data.exams.length > 0) selExams = data.exams;
+                else if (data.exams && data.exams.length > 0) {
+                    // Try to map by index if count matches
+                    if (data.exams.length === subjects.length) {
+                        if (data.exams[idx]) selExams.push(data.exams[idx]);
+                    } else {
+                        selExams = data.exams; // Fallback
+                    }
+                }
             }
 
             // Answer Files
@@ -901,7 +769,14 @@
             if (data) {
                 if (subj.id === 'Grammar' && data.fileAnswerGrammar) selAnswers.push(data.fileAnswerGrammar);
                 else if (subj.id === 'Translate' && data.fileAnswerTranslate) selAnswers.push(data.fileAnswerTranslate);
-                else if (data.answers && data.answers.length > 0) selAnswers = data.answers;
+                else if (data.answers && data.answers.length > 0) {
+                     // Try to map by index
+                    if (data.answers.length === subjects.length) {
+                        if (data.answers[idx]) selAnswers.push(data.answers[idx]);
+                    } else {
+                        selAnswers = data.answers; // Fallback
+                    }
+                }
             }
 
             examInputs += `
@@ -1165,6 +1040,22 @@
         });
     }
 
+    function refreshFileDropdowns() {
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
+        
+        const selects = document.querySelectorAll('.input-file, .input-exam, .input-ans');
+        selects.forEach(sel => {
+            const currentVal = sel.value;
+            let type = 'materials';
+            if (sel.classList.contains('input-exam')) type = 'exams';
+            else if (sel.classList.contains('input-ans')) type = 'answers';
+            
+            const fileObjs = getFiles(level, type);
+            sel.innerHTML = createOptions(fileObjs, [currentVal]);
+        });
+    }
+
     async function uploadFile() {
         const fileInput = document.getElementById('upload-file');
         const typeSelect = document.getElementById('upload-type');
@@ -1230,6 +1121,7 @@
                     });
 
                     renderFileList();
+                    refreshFileDropdowns();
                     
                     alert("อัปโหลดสำเร็จ!");
                     fileInput.value = ''; // Clear input
@@ -1259,6 +1151,7 @@
             // Update Local
             DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
             renderFileList();
+            refreshFileDropdowns();
 
         } catch (e) {
             console.error("Delete error:", e);
