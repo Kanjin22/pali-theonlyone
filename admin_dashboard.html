@@ -184,20 +184,51 @@
 
         <!-- Tab: Classes -->
         <div id="tab-classes" class="hidden">
-            <div class="card">
+            <div class="card" id="classConfigSection">
                 <div class="card-header">
-                    <span><i class="fa-solid fa-school"></i> จัดการเปิด/ปิด ห้องเรียน</span>
-                </div>
-                <p style="color:#7f8c8d; margin-bottom: 20px;">เลือกห้องเรียนที่ต้องการเปิดให้เข้าใช้งาน (สำหรับนักเรียน)</p>
-                
-                <div id="classCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                    <!-- Checkboxes will be injected here -->
+                    <h2><i class="fa-solid fa-school"></i> จัดการห้องเรียน (Classroom Config)</h2>
                 </div>
                 
-                <div style="margin-top: 30px; text-align: right; border-top: 1px solid #eee; padding-top: 20px;">
-                    <button class="btn btn-primary" onclick="saveClassConfig()" id="btnSaveConfig">
-                        <i class="fa-solid fa-save"></i> บันทึกการเปลี่ยนแปลง
+                <!-- 1. Open Levels Control -->
+                <div class="form-group" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <label style="font-size: 1.1em; color: #2c3e50; margin-bottom: 15px; display: block;">
+                        <i class="fa-solid fa-door-open"></i> เปิด/ปิด ระดับชั้นที่เปิดสอน (Open Levels)
+                    </label>
+                    <div id="classCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                        <!-- Checkboxes will be rendered here -->
+                    </div>
+                    <button class="btn btn-primary" onclick="saveClassConfig()" style="margin-top: 15px;">
+                        <i class="fa-solid fa-save"></i> บันทึกการตั้งค่าระดับชั้น
                     </button>
+                </div>
+
+                <!-- 2. Dynamic Classroom Management -->
+                <div class="form-group" style="background: #fff; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <label style="font-size: 1.1em; color: #2c3e50; margin:0;">
+                            <i class="fa-solid fa-chalkboard-user"></i> รายชื่อห้องเรียนทั้งหมด
+                        </label>
+                        <button class="btn btn-success" onclick="openRoomModal()">
+                            <i class="fa-solid fa-plus"></i> เพิ่มห้องเรียนใหม่
+                        </button>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ระดับชั้น</th>
+                                    <th>ชื่อห้องเรียน</th>
+                                    <th>สถานะ</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roomListBody">
+                                <!-- Rooms will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -208,6 +239,70 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/system_config.js"></script>
+    <!-- Room Modal -->
+    <div id="roomModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 id="roomModalTitle">เพิ่ม/แก้ไข ห้องเรียน</h2>
+                <span class="close" onclick="closeRoomModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="roomForm" onsubmit="saveRoom(event)">
+                    <input type="hidden" id="editRoomId">
+                    
+                    <div class="form-group">
+                        <label>รหัสห้องเรียน (ID) *ภาษาอังกฤษเท่านั้น ห้ามซ้ำ</label>
+                        <input type="text" id="roomId" required pattern="[a-zA-Z0-9_]+" title="ภาษาอังกฤษ ตัวเลข หรือ _ เท่านั้น">
+                    </div>
+
+                    <div class="form-group">
+                        <label>ระดับชั้น</label>
+                        <select id="roomLevel" required>
+                            <option value="pt12">ประโยค ๑-๒</option>
+                            <option value="pt3">ป.ธ. ๓</option>
+                            <option value="pt4">ป.ธ. ๔</option>
+                            <option value="pt5">ป.ธ. ๕</option>
+                            <option value="pt6">ป.ธ. ๖</option>
+                            <option value="pt7">ป.ธ. ๗</option>
+                            <option value="pt8">ป.ธ. ๘</option>
+                            <option value="pt9">ป.ธ. ๙</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ชื่อห้องเรียน (แสดงหน้าเว็บ)</label>
+                        <input type="text" id="roomName" required placeholder="เช่น ห้อง ๑ (สามเณรประจำ)">
+                    </div>
+
+                    <div class="form-group">
+                        <label>คำอธิบาย (Optional)</label>
+                        <input type="text" id="roomDesc" placeholder="เช่น สำหรับสามเณรที่สอบผ่านบาลีสนามหลวงแล้ว">
+                    </div>
+
+                    <div class="form-group">
+                        <label>ครูผู้สอน (คั่นด้วย , )</label>
+                        <input type="text" id="roomTeachers" placeholder="เช่น พระอาจารย์ A, พระอาจารย์ B">
+                    </div>
+
+                    <div class="form-group">
+                        <label>สถานะ</label>
+                        <select id="roomStatus">
+                            <option value="active">เปิดการสอน (Active)</option>
+                            <option value="maintenance">ปิดปรับปรุง (Maintenance)</option>
+                            <option value="archived">เก็บเข้ากรุ (Archived)</option>
+                        </select>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button type="button" class="btn-danger" onclick="closeRoomModal()">ยกเลิก</button>
+                        <button type="submit" class="btn-success">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
@@ -251,6 +346,13 @@
                 loadMembers();
                 loadEnrollments();
                 loadClassConfig();
+                loadClassrooms();
+                // Check if system_config.js is loaded and migrate if needed
+                if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
+                    checkAndMigrateClassrooms();
+                } else {
+                    console.warn("system_config.js not loaded, skipping migration check.");
+                }
                 
                 // 3. Verify Role (Client Side Check)
                 db.collection('users').doc(user.uid).get().then(doc => {
@@ -727,6 +829,181 @@
 
     </script>
     <script>
+        // --------------------------------------------------
+        // Dynamic Classroom Management Logic
+        // --------------------------------------------------
+        let allClassrooms = [];
+
+        async function loadClassrooms() {
+            const tbody = document.getElementById('roomListBody');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">กำลังโหลด...</td></tr>';
+
+            try {
+                const snap = await db.collection('classrooms').orderBy('level').get();
+                allClassrooms = [];
+                snap.forEach(doc => allClassrooms.push(doc.data()));
+
+                renderRoomList();
+            } catch (e) {
+                console.error("Load rooms failed:", e);
+                tbody.innerHTML = `<tr><td colspan="5" style="color:red;">โหลดข้อมูลล้มเหลว: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderRoomList() {
+            const tbody = document.getElementById('roomListBody');
+            tbody.innerHTML = '';
+
+            if (allClassrooms.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบห้องเรียน</td></tr>';
+                return;
+            }
+
+            // Sort by Level then ID
+            allClassrooms.sort((a, b) => {
+                if (a.level !== b.level) return a.level.localeCompare(b.level);
+                return a.id.localeCompare(b.id);
+            });
+
+            allClassrooms.forEach(room => {
+                const tr = document.createElement('tr');
+                const statusBadge = room.status === 'active' 
+                    ? '<span class="status-badge status-approved">Active</span>' 
+                    : '<span class="status-badge status-rejected">Maintenance</span>';
+                
+                tr.innerHTML = `
+                    <td>${room.id}</td>
+                    <td>${room.level}</td>
+                    <td>${room.name}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn-warning" onclick="editRoom('${room.id}')" style="padding: 2px 8px; font-size: 0.8em;">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn-danger" onclick="deleteRoom('${room.id}')" style="padding: 2px 8px; font-size: 0.8em;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openRoomModal() {
+            document.getElementById('roomForm').reset();
+            document.getElementById('editRoomId').value = ''; // Empty = New Mode
+            document.getElementById('roomId').disabled = false; // Enable ID for new room
+            document.getElementById('roomModalTitle').innerText = 'เพิ่มห้องเรียนใหม่';
+            document.getElementById('roomModal').style.display = 'block';
+        }
+
+        function closeRoomModal() {
+            document.getElementById('roomModal').style.display = 'none';
+        }
+
+        function editRoom(roomId) {
+            const room = allClassrooms.find(r => r.id === roomId);
+            if (!room) return;
+
+            document.getElementById('editRoomId').value = roomId;
+            document.getElementById('roomId').value = room.id;
+            document.getElementById('roomId').disabled = true; // ID cannot be changed
+            document.getElementById('roomLevel').value = room.level;
+            document.getElementById('roomName').value = room.name;
+            document.getElementById('roomDesc').value = room.description || '';
+            document.getElementById('roomTeachers').value = room.teachers ? room.teachers.join(', ') : '';
+            document.getElementById('roomStatus').value = room.status || 'active';
+            
+            document.getElementById('roomModalTitle').innerText = 'แก้ไขห้องเรียน';
+            document.getElementById('roomModal').style.display = 'block';
+        }
+
+        async function saveRoom(e) {
+            e.preventDefault();
+            const isEdit = document.getElementById('editRoomId').value !== '';
+            
+            const roomId = document.getElementById('roomId').value.trim();
+            const level = document.getElementById('roomLevel').value;
+            const name = document.getElementById('roomName').value.trim();
+            const desc = document.getElementById('roomDesc').value.trim();
+            const teachersStr = document.getElementById('roomTeachers').value.trim();
+            const status = document.getElementById('roomStatus').value;
+
+            const teachers = teachersStr ? teachersStr.split(',').map(t => t.trim()) : [];
+
+            const roomData = {
+                id: roomId,
+                level: level,
+                name: name,
+                description: desc,
+                teachers: teachers,
+                status: status,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (!isEdit) {
+                // Check duplicate ID
+                if (allClassrooms.find(r => r.id === roomId)) {
+                    alert('รหัสห้องเรียนนี้มีอยู่แล้ว กรุณาใช้รหัสอื่น');
+                    return;
+                }
+                roomData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+            }
+
+            try {
+                await db.collection('classrooms').doc(roomId).set(roomData, { merge: true });
+                alert('บันทึกข้อมูลเรียบร้อย');
+                closeRoomModal();
+                loadClassrooms(); // Refresh list
+            } catch (err) {
+                console.error("Save room error:", err);
+                alert('บันทึกไม่สำเร็จ: ' + err.message);
+            }
+        }
+
+        async function deleteRoom(roomId) {
+            if (!confirm(`ยืนยันการลบห้องเรียน ${roomId}? \n(การกระทำนี้ไม่สามารถย้อนกลับได้)`)) return;
+
+            try {
+                await db.collection('classrooms').doc(roomId).delete();
+                alert('ลบห้องเรียนเรียบร้อย');
+                loadClassrooms();
+            } catch (err) {
+                alert('ลบไม่สำเร็จ: ' + err.message);
+            }
+        }
+
+        // --------------------------------------------------
+        // Migration & Other Utils
+        // --------------------------------------------------
+        async function checkAndMigrateClassrooms() {
+            try {
+                const snap = await db.collection('classrooms').limit(1).get();
+                if (snap.empty) {
+                    console.log("Classrooms collection empty. Starting migration...");
+                    const batch = db.batch();
+                    const rooms = Object.values(systemConfig.classrooms);
+                    
+                    rooms.forEach(room => {
+                        const ref = db.collection('classrooms').doc(room.id);
+                        batch.set(ref, {
+                            ...room,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    });
+                    
+                    await batch.commit();
+                    console.log(`Migrated ${rooms.length} classrooms to Firestore.`);
+                    alert(`ระบบได้ทำการย้ายข้อมูลห้องเรียน ${rooms.length} ห้อง เข้าสู่ฐานข้อมูลเรียบร้อยแล้ว`);
+                } else {
+                    console.log("Classrooms already exist in Firestore.");
+                }
+            } catch (e) {
+                console.error("Migration failed:", e);
+            }
+        }
+
         // Force Admin Function
         async function forceSetAdmin() {
             const user = auth.currentUser;
