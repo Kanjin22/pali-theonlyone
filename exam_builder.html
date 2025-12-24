@@ -1032,7 +1032,12 @@
                 const normalized = processed.replace(/\s+/g, ' ').trim();
                 
                 // Determine Spacing based on Content Type
-                // User requested 2 spaces for ALL content types (Pali and Thai)
+                // Exception: Thai into Pali (Thai Content) -> 1 Space
+                if (subjectLabel.includes('ไทยเป็นมคธ')) {
+                    return normalized.replace(/ /g, ' ');
+                }
+
+                // Others: 2 Spaces
                 return normalized.replace(/ /g, '  ');
             };
 
