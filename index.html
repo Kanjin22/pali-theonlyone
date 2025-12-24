@@ -961,6 +961,9 @@
                 closeLogin();
                 // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
                 if (appContent) appContent.style.display = 'block';
+                
+                // Load Pins immediately
+                loadTodayPins();
 
                 const uid = user.uid;
                 // บันทึกข้อมูลลง Firestore (ใช้ merge เพื่อไม่ให้ทับข้อมูลเก่าหาย)
@@ -1040,7 +1043,7 @@
                 }).then(() => {
                     // อัปเดต UI เพิ่มเติม (ถ้าต้องการ)
                     console.log("User data synced");
-                    loadTodayPins();
+                    // loadTodayPins(); // Moved to top
                 }).catch(err => console.error("Firestore Error:", err));
 
             } else {
