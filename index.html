@@ -146,6 +146,10 @@
             <button id="btn-open-login"
                 style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
             <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
+            <a href="admin_dashboard.html" id="btn-admin-dashboard"
+                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px;">
+                <i class="fa-solid fa-user-shield"></i> ผู้ดูแล
+            </a>
             <button id="btn-logout"
                 style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
         </div>
@@ -627,6 +631,8 @@
         function hideUser() {
             if (userInfo) { userInfo.textContent = ''; userInfo.style.display = 'none'; }
             if (btnLogoutTop) btnLogoutTop.style.display = 'none';
+            const btnAdminTop = document.getElementById('btn-admin-dashboard');
+            if (btnAdminTop) btnAdminTop.style.display = 'none';
             if (btnOpenLogin) btnOpenLogin.style.display = 'inline-block'; // โชว์ปุ่ม Login
         }
 
@@ -637,6 +643,12 @@
         };
 
         function applyRoleUI(role) {
+            // 1. Toggle Top Admin Button
+            const btnAdminTop = document.getElementById('btn-admin-dashboard');
+            if (btnAdminTop) {
+                btnAdminTop.style.display = (role === 'admin') ? 'inline-flex' : 'none';
+            }
+
             const classroomLinks = Array.from(document.querySelectorAll('a[href^="classroom_select.html"]'));
             const lastClassroom = document.getElementById('last-classroom-link');
             const enrollCardId = 'enroll-card';
@@ -657,29 +669,6 @@
                 const showTools = (role === 'teacher' || role === 'admin');
                 if (toolsGrid) {
                     toolsGrid.style.display = showTools ? 'grid' : 'none';
-                    
-                    // Admin Link Injection
-                    const adminLinkId = 'admin-dashboard-link';
-                    let adminLink = document.getElementById(adminLinkId);
-                    
-                    if (role === 'admin') {
-                        if (!adminLink) {
-                            adminLink = document.createElement('a');
-                            adminLink.id = adminLinkId;
-                            adminLink.href = 'admin_login.html';
-                            adminLink.className = 'menu-card level-tool';
-                            adminLink.innerHTML = `
-                                <div class="icon-box" style="color:#c0392b;"><i class="fa-solid fa-shield-halved"></i></div>
-                                <div class="card-title">แผงควบคุม</div>
-                                <div class="card-desc">จัดการระบบสมัครเรียน</div>
-                            `;
-                            // Insert as first item or append? Let's insert first for visibility
-                            toolsGrid.insertBefore(adminLink, toolsGrid.firstChild);
-                        }
-                        adminLink.style.display = 'flex';
-                    } else {
-                        if (adminLink) adminLink.style.display = 'none';
-                    }
                 }
                 if (toolsLabel && toolsLabel.classList.contains('section-label')) toolsLabel.style.display = showTools ? 'block' : 'none';
             }
