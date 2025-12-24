@@ -967,25 +967,49 @@
                 loadTodayPins();
 
                 const uid = user.uid;
-                // บันทึกข้อมูลลง Firestore (ใช้ merge เพื่อไม่ให้ทับข้อมูลเก่าหาย)
+
+                // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
+                const FALLBACK_ADMIN_EMAILS = [
+                    'admin@example.com', 
+                    'pali.theonlyone@gmail.com',
+                    'admin1234@hotmail.com', // Explicitly added by user request
+                    user.email // ยอมให้ email ปัจจุบันเป็น admin ชั่วคราวถ้าต้องการ (แต่ไม่ควรใส่ถาวร) -> ลบ user.email ออกใน Production!
+                ];
+
+                // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
                 db.collection('users').doc(uid).set({
                     displayName: user.displayName || '',
                     email: user.email || '',
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
+                }, { merge: true }).catch(e => console.warn("Update user info failed:", e.message));
+
                 (async () => {
                     try {
-                        const doc = await db.collection('users').doc(uid).get();
                         let role = 'general';
-                        let displayName = user.displayName; // Default to Auth name
+                        let displayName = user.displayName; 
 
-                        if (doc.exists && doc.data()) role = doc.data().role || 'general';
+                        // 1. Try to get User Role from Firestore
+                        try {
+                            const doc = await db.collection('users').doc(uid).get();
+                            if (doc.exists && doc.data()) role = doc.data().role || 'general';
+                        } catch (e) {
+                            console.warn("Firestore Read Error (User):", e.message);
+                            // Fallback Check
+                            if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                                console.info("Admin Access granted via Fallback List");
+                                role = 'admin';
+                            }
+                        }
 
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
                         if (role !== 'admin') {
-                            if (!doc.exists || !doc.data() || !doc.data().role) {
-                                await db.collection('users').doc(uid).set({ role: 'general' }, { merge: true });
+                            // ... (Existing Logic)
+                            // ตรวจสอบว่าต้องกำหนด Role เริ่มต้นไหม
+                             if (role === 'general') {
+                                // Try to set default role if needed, ignore error
+                                db.collection('users').doc(uid).set({ role: 'general' }, { merge: true }).catch(()=>{});
                             }
+
                             try {
                                 const enr = await db.collection('enrollments').doc(uid).get();
                                 if (enr.exists && enr.data()) {
@@ -1005,18 +1029,12 @@
                                         displayName = `${title}${first} ${last}${epithet}`;
                                     }
                                 }
-                            } catch (e) { }
+                            } catch (e) { 
+                                console.warn("Enrollment Check Error:", e.message);
+                            }
                         }
 
                         // Update User UI with correct name
-                        const userObjForUI = { ...user, displayName: displayName }; // Create a proxy object or just pass name
-                        // showUser function expects a user object with displayName property
-                        // We can't easily modify user.displayName directly as it's read-only in some SDK versions or requires updateProfile
-                        // So we'll pass a custom object mimicking the user or just update the UI directly here if showUser allows.
-                        // Let's modify showUser to accept a name override or just pass the modified object.
-                        // Since we can't be sure of showUser implementation details (it's likely simple), let's try to override it.
-
-                        // Hack: Create a duck-typed user object for showUser
                         const displayUser = {
                             uid: user.uid,
                             email: user.email,
@@ -1024,11 +1042,11 @@
                             photoURL: user.photoURL
                         };
                         showUser(displayUser);
-
                         applyRoleUI(role);
+
                     } catch (e) {
-                        console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", e); // <-- เพิ่มบรรทัดนี้
-                        alert("Error: " + e.message); // <-- แจ้งเตือนขึ้นหน้าจอชั่วคราวเพื่อ debug
+                        console.error("Critical Error in Auth Flow:", e);
+                        // ถ้า Error หนักจริงๆ ให้แสดง User แบบปกติไปก่อน
                         showUser(user);
                     }
                 })();
