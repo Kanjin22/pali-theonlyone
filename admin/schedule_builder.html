@@ -184,6 +184,29 @@
 
     // Initialize
     (async function init() {
+        // Set default date to current
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const currentMonth = monthNames[now.getMonth()];
+        
+        const yearInput = document.getElementById('year-select');
+        if (yearInput) yearInput.value = currentYear;
+
+        const monthSelect = document.getElementById('month-select');
+        // Add option if not exists? No, keep existing structure but try to select
+        // Check if option exists
+        if (monthSelect) {
+             let found = false;
+             for(let i=0; i<monthSelect.options.length; i++) {
+                 if(monthSelect.options[i].value === currentMonth) {
+                     monthSelect.selectedIndex = i;
+                     found = true;
+                     break;
+                 }
+             }
+        }
+
         await loadClassrooms();
         
         // Check URL params
@@ -197,28 +220,34 @@
 
     async function loadClassrooms() {
         roomSelect.innerHTML = '<option value="">-- กรุณาเลือกห้อง --</option>';
+        let loadedFromDb = false;
         try {
             const snap = await db.collection('classrooms').orderBy('level').get();
-            snap.forEach(doc => {
-                const room = doc.data();
-                const option = document.createElement('option');
-                option.value = room.id;
-                option.dataset.level = room.level;
-                option.textContent = `${room.name} (${room.id})`;
-                roomSelect.appendChild(option);
-            });
-        } catch (e) {
-            console.error("Error loading classrooms:", e);
-            // Fallback to systemConfig if available
-            if (typeof systemConfig !== 'undefined') {
-                for (let key in systemConfig.classrooms) {
-                    let room = systemConfig.classrooms[key];
-                    let option = document.createElement('option');
-                    option.value = room.id; 
-                    option.dataset.level = room.level; 
+            if (!snap.empty) {
+                snap.forEach(doc => {
+                    const room = doc.data();
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.dataset.level = room.level;
                     option.textContent = `${room.name} (${room.id})`;
                     roomSelect.appendChild(option);
-                }
+                });
+                loadedFromDb = true;
+            }
+        } catch (e) {
+            console.error("Error loading classrooms:", e);
+        }
+
+        // Fallback to systemConfig if DB is empty or failed
+        if (!loadedFromDb && typeof systemConfig !== 'undefined') {
+            console.warn("Loading classrooms from systemConfig (Firestore empty or failed)");
+            for (let key in systemConfig.classrooms) {
+                let room = systemConfig.classrooms[key];
+                let option = document.createElement('option');
+                option.value = room.id; 
+                option.dataset.level = room.level; 
+                option.textContent = `${room.name} (${room.id})`;
+                roomSelect.appendChild(option);
             }
         }
     }
