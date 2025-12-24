@@ -222,36 +222,55 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // Fallback Admin List (Sync with other files)
+        const FALLBACK_ADMIN_EMAILS = [
+            'admin@example.com', 
+            'pali.theonlyone@gmail.com',
+            'admin1234@hotmail.com'
+        ];
+
         // Check Admin Auth
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
-                // User ยืนยันตัวตนแล้ว -> ถึงจะเริ่มดึงข้อมูลได้
                 console.log("Admin logged in:", user.email);
                 
-                // Optional: Check if role is admin before loading UI sensitive data
-                // But as per instruction, we load data immediately.
-                // We can keep the role check inside the loading logic or parallel.
-                // For safety, let's just do a quick check but NOT block the initial render flow or cause race condition.
-                // Actually, let's follow the user's snippet exactly which implies trusting the auth state first.
-                
+                // 1. Attempt to Elevate Privileges in Firestore (Auto-Fix for Fallback Admins)
+                if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                    try {
+                        await db.collection('users').doc(user.uid).set({
+                            role: 'admin',
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                        console.log("Auto-promoted to admin in Firestore based on Fallback List");
+                    } catch (e) {
+                        console.warn("Could not auto-promote to admin (Permission Denied?):", e.message);
+                    }
+                }
+
+                // 2. Load Data
                 loadMembers();
                 loadEnrollments();
                 loadClassConfig();
                 
-                // We can do an async check for role in background to kick out non-admins if needed
+                // 3. Verify Role (Client Side Check)
                 db.collection('users').doc(user.uid).get().then(doc => {
                      if (!doc.exists || doc.data().role !== 'admin') {
+                         // Check Fallback
+                         if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                             console.log("Allowed via Fallback List");
+                             return;
+                         }
                          console.warn("User is not admin, but logged in. Redirecting...");
                          alert('คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
                          location.href = 'admin_login.html';
                      }
                 }).catch(e => {
                      console.error("Error checking role:", e);
-                     // location.href = 'admin_login.html'; // Optional: Be strict or lenient on error
+                     // If permission denied, but we are in fallback list, ignore
+                     if (FALLBACK_ADMIN_EMAILS.includes(user.email)) return;
                 });
 
             } else {
-                // ถ้ายังไม่ Login ให้ดีดกลับไปหน้า Login
                 window.location.href = "admin_login.html";
             }
         });
