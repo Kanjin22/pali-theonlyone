@@ -195,10 +195,12 @@
                 <div style="border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
                     <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">อีเมลและรหัสผ่าน</div>
                     <input id="modal-email" type="email" placeholder="อีเมล" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
-                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <div id="email-status" style="margin-bottom:10px; font-size:0.95rem; color:#607d8b;"></div>
+                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px; display:none;">
                     <div style="display:flex; gap:8px;">
-                        <button id="modal-email-signin" style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer;">เข้าสู่ระบบ</button>
-                        <button id="modal-email-signup" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer;">สมัครสมาชิก</button>
+                        <button id="modal-email-next" style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดำเนินการต่อ</button>
+                        <button id="modal-email-signin" style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer; display:none;">เข้าสู่ระบบ</button>
+                        <button id="modal-email-signup" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">สมัครสมาชิก</button>
                     </div>
                 </div>
             </div>
@@ -233,6 +235,8 @@
         const btnEmailSignUp = document.getElementById('btn-email-signup');
         const modalEmail = document.getElementById('modal-email');
         const modalPassword = document.getElementById('modal-password');
+        const emailStatus = document.getElementById('email-status');
+        const modalEmailNext = document.getElementById('modal-email-next');
         const modalEmailSignIn = document.getElementById('modal-email-signin');
         const modalEmailSignUp = document.getElementById('modal-email-signup');
         const userInfo = document.getElementById('user-info');
@@ -269,6 +273,30 @@
             if (!email || !pass) return;
             await auth.createUserWithEmailAndPassword(email, pass);
         };
+        async function checkEmailFlow(email) {
+            if (!emailStatus || !modalPassword || !modalEmailSignIn || !modalEmailSignUp) return;
+            emailStatus.textContent = '';
+            modalPassword.style.display = 'none';
+            modalEmailSignIn.style.display = 'none';
+            modalEmailSignUp.style.display = 'none';
+            const e = (email || '').trim();
+            if (!e) { emailStatus.textContent = 'กรุณากรอกอีเมล'; return; }
+            try {
+                const methods = await auth.fetchSignInMethodsForEmail(e);
+                if (methods && methods.includes('password')) {
+                    emailStatus.textContent = 'คุณเป็นสมาชิกแล้ว กรุณาใส่พาสเวิร์ดที่สมัครไว้กับเว็บ';
+                    modalPassword.style.display = 'block';
+                    modalEmailSignIn.style.display = 'inline-block';
+                } else {
+                    emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาสมัครสมาชิก';
+                    modalEmailSignUp.style.display = 'inline-block';
+                }
+            } catch (err) {
+                emailStatus.textContent = 'รูปแบบอีเมลไม่ถูกต้อง หรือเกิดข้อผิดพลาด';
+            }
+        }
+        if (modalEmailNext) modalEmailNext.onclick = () => checkEmailFlow(modalEmail && modalEmail.value);
+        if (modalEmail) modalEmail.addEventListener('blur', () => checkEmailFlow(modalEmail.value));
         function showUser(u) {
             if (userInfo) { const name = u.displayName || u.phoneNumber || (u.email || 'ผู้ใช้'); userInfo.textContent = 'เข้าสู่ระบบ: ' + name; userInfo.style.display = 'inline-block'; }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
