@@ -212,6 +212,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script>
+        // --- ส่วน Config เดิม (คงไว้) ---
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
             authDomain: "palitest-generator.firebaseapp.com",
@@ -225,184 +226,270 @@
         const auth = firebase.auth();
         auth.useDeviceLanguage();
         const db = firebase.firestore();
+
+        // --- ตัวแปร DOM Elements ---
         const appContent = document.getElementById('app-content');
         const loginModal = document.getElementById('login-modal');
         const btnOpenLogin = document.getElementById('btn-open-login');
         const btnCloseLogin = document.getElementById('btn-close-login');
+        
+        // Buttons
         const loginGoogle = document.getElementById('login-google');
         const loginFacebook = document.getElementById('login-facebook');
-        const emailInput = document.getElementById('email-input');
-        const passwordInput = document.getElementById('password-input');
-        const btnEmailSignIn = document.getElementById('btn-email-signin');
-        const btnEmailSignUp = document.getElementById('btn-email-signup');
+        
+        // Modal Inputs & Buttons
         const modalEmail = document.getElementById('modal-email');
         const modalPassword = document.getElementById('modal-password');
         const emailStatus = document.getElementById('email-status');
         const modalEmailNext = document.getElementById('modal-email-next');
         const modalEmailSignIn = document.getElementById('modal-email-signin');
         const modalEmailSignUp = document.getElementById('modal-email-signup');
+        const modalForgotPassword = document.getElementById('modal-forgot-password');
+        
+        // User Info Elements
         const userInfo = document.getElementById('user-info');
         const btnLogoutTop = document.getElementById('btn-logout');
-        const authStatusInline = document.getElementById('auth-status');
-        const btnLogoutInline = document.querySelector('#auth-card #btn-logout');
+
+        // --- Helper Functions ---
+
+        // ฟังก์ชันช่วยแสดงข้อความ Error เป็นภาษาไทย
+        function getErrorMessage(code) {
+            switch (code) {
+                case 'auth/email-already-in-use': return 'อีเมลนี้มีผู้ใช้งานแล้ว กรุณาเข้าสู่ระบบ';
+                case 'auth/invalid-email': return 'รูปแบบอีเมลไม่ถูกต้อง';
+                case 'auth/weak-password': return 'รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
+                case 'auth/wrong-password': return 'รหัสผ่านไม่ถูกต้อง';
+                case 'auth/user-not-found': return 'ไม่พบผู้ใช้งานนี้ในระบบ';
+                case 'auth/popup-closed-by-user': return 'คุณปิดหน้าต่างล็อกอินก่อนทำรายการสำเร็จ';
+                case 'auth/too-many-requests': return 'ทำรายการเกินกำหนด กรุณารอสักครู่แล้วลองใหม่';
+                default: return 'เกิดข้อผิดพลาด (' + code + ')';
+            }
+        }
+
+        // ฟังก์ชันล็อกปุ่มขณะโหลด
+        function setLoading(isLoading, btnElement) {
+            if (isLoading) {
+                if(btnElement) {
+                    btnElement.dataset.originalText = btnElement.innerText;
+                    btnElement.innerText = 'กำลังโหลด...';
+                    btnElement.disabled = true;
+                }
+            } else {
+                if(btnElement) {
+                    btnElement.innerText = btnElement.dataset.originalText || 'ตกลง';
+                    btnElement.disabled = false;
+                }
+            }
+        }
+
         function enforceAsciiEmail(el) {
             if (!el) return;
             el.addEventListener('input', () => {
                 const v = el.value || '';
+                // อนุญาตตัวอักษรภาษาอังกฤษ ตัวเลข และสัญลักษณ์อีเมล
                 const s = v.replace(/[^A-Za-z0-9@._%+\-]/g, '');
                 if (s !== v) el.value = s;
             });
         }
         enforceAsciiEmail(modalEmail);
-        enforceAsciiEmail(emailInput);
+
+        // --- Event Listeners ---
+
         function openLogin() { 
-            if (loginModal) loginModal.style.display = 'block'; 
-            if (emailStatus) emailStatus.textContent = '';
-            if (modalPassword) modalPassword.style.display = 'none';
+            if (loginModal) loginModal.style.display = 'flex'; // ใช้ flex เพื่อจัดกึ่งกลาง
+            if (emailStatus) {
+                emailStatus.textContent = '';
+                emailStatus.style.color = '#607d8b';
+            }
+            if (modalEmail) modalEmail.value = '';
+            if (modalPassword) {
+                modalPassword.value = '';
+                modalPassword.style.display = 'none';
+            }
+            if (modalEmailNext) modalEmailNext.style.display = 'inline-block';
             if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
             if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
-            if (typeof modalForgotPassword !== 'undefined' && modalForgotPassword) modalForgotPassword.style.display = 'none';
-        }
-        function closeLogin() { if (auth && auth.currentUser && loginModal) loginModal.style.display = 'none'; }
-        if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
-        if (btnCloseLogin) btnCloseLogin.onclick = () => { if (auth && auth.currentUser) closeLogin(); };
-        if (loginGoogle) loginGoogle.onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        if (loginFacebook) loginFacebook.onclick = () => auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-        if (btnEmailSignIn) btnEmailSignIn.onclick = async () => {
-            const email = (emailInput && emailInput.value || '').trim();
-            const pass = (passwordInput && passwordInput.value || '').trim();
-            if (!email || !pass) return;
-            await auth.signInWithEmailAndPassword(email, pass);
-        };
-        if (btnEmailSignUp) btnEmailSignUp.onclick = async () => {
-            const email = (emailInput && emailInput.value || '').trim();
-            const pass = (passwordInput && passwordInput.value || '').trim();
-            if (!email || !pass) return;
-            await auth.createUserWithEmailAndPassword(email, pass);
-        };
-        if (modalEmailSignIn) modalEmailSignIn.onclick = async () => {
-            const email = (modalEmail && modalEmail.value || '').trim();
-            const pass = (modalPassword && modalPassword.value || '').trim();
-            if (!email || !pass) return;
-            await auth.signInWithEmailAndPassword(email, pass);
-        };
-        if (modalEmailSignUp) modalEmailSignUp.onclick = async () => {
-            const email = (modalEmail && modalEmail.value || '').trim();
-            const pass = (modalPassword && modalPassword.value || '').trim();
-            if (!email || !pass) { if (emailStatus) emailStatus.textContent = 'กรุณากรอกอีเมลและรหัสผ่าน'; return; }
-            try {
-                const methods = await auth.fetchSignInMethodsForEmail(email);
-                if (methods && methods.includes('password')) {
-                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้สมัครแล้ว กรุณากดเข้าสู่ระบบ';
-                    if (modalPassword) modalPassword.style.display = 'block';
-                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'inline-block';
-                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
-                    return;
-                } else if (methods && methods.length > 0) {
-                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
-                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้มีบัญชีอยู่แล้วผ่าน ' + providerNames + ' กรุณากดปุ่มเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
-                    if (modalPassword) modalPassword.style.display = 'none';
-                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
-                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
-                    return;
-                }
-                await auth.createUserWithEmailAndPassword(email, pass);
-            } catch (err) {
-                if (err && err.code === 'auth/email-already-in-use') {
-                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้สมัครแล้ว กรุณากดเข้าสู่ระบบ';
-                    if (modalPassword) modalPassword.style.display = 'block';
-                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'inline-block';
-                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
-                } else {
-                    if (emailStatus) emailStatus.textContent = 'สมัครสมาชิกไม่สำเร็จ (' + (err && err.code || 'unknown') + ')';
-                }
-            }
-        };
-        if (modalForgotPassword) modalForgotPassword.onclick = async () => {
-            const email = (modalEmail && modalEmail.value || '').trim();
-            if (!email) { if (emailStatus) emailStatus.textContent = 'กรุณากรอกอีเมล'; return; }
-            try {
-                const methods = await auth.fetchSignInMethodsForEmail(email);
-                if (methods && methods.includes('password')) {
-                    await auth.sendPasswordResetEmail(email);
-                    if (emailStatus) emailStatus.textContent = 'ส่งอีเมลรีเซ็ตรหัสผ่านแล้ว กรุณาตรวจสอบกล่องอีเมล';
-                } else if (methods && methods.length > 0) {
-                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
-                    if (emailStatus) emailStatus.textContent = 'บัญชีนี้เชื่อมต่อผ่าน ' + providerNames + ' กรุณาเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
-                } else {
-                    if (emailStatus) emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาสมัครสมาชิกก่อน';
-                }
-            } catch (err) {
-                if (emailStatus) emailStatus.textContent = 'ไม่สามารถส่งอีเมลรีเซ็ตได้ (' + (err && err.code || 'unknown') + ')';
-            }
-        };
-        async function checkEmailFlow(email) {
-            if (!emailStatus || !modalPassword || !modalEmailSignIn || !modalEmailSignUp) return;
-            emailStatus.textContent = '';
-            modalPassword.style.display = 'none';
-            modalEmailSignIn.style.display = 'none';
-            modalEmailSignUp.style.display = 'none';
             if (modalForgotPassword) modalForgotPassword.style.display = 'none';
-            const e = (email || '').trim();
-            if (!e) { emailStatus.textContent = 'กรุณากรอกอีเมล'; return; }
+        }
+
+        function closeLogin() { 
+            if (loginModal) loginModal.style.display = 'none'; 
+        }
+
+        if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
+        if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
+
+        // --- Social Login ---
+        if (loginGoogle) {
+            loginGoogle.onclick = () => {
+                auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+                .catch(error => alert(getErrorMessage(error.code)));
+            };
+        }
+
+        if (loginFacebook) {
+            loginFacebook.onclick = () => {
+                auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+                .catch(error => alert(getErrorMessage(error.code)));
+            };
+        }
+
+        // --- Email Flow Logic ---
+
+        // 1. กดปุ่ม "ดำเนินการต่อ" (Check Email)
+        if (modalEmailNext) modalEmailNext.onclick = async () => {
+            const email = (modalEmail && modalEmail.value || '').trim();
+            if (!email) { 
+                emailStatus.textContent = 'กรุณากรอกอีเมล'; 
+                emailStatus.style.color = 'red';
+                return; 
+            }
+
+            setLoading(true, modalEmailNext);
+            emailStatus.textContent = 'กำลังตรวจสอบ...';
+            
             try {
-                const methods = await auth.fetchSignInMethodsForEmail(e);
-                if (methods && methods.includes('password')) {
-                    emailStatus.textContent = 'คุณเป็นสมาชิกแล้ว กรุณาใส่พาสเวิร์ดที่สมัครไว้กับเว็บ';
-                    modalPassword.style.display = 'block';
-                    modalEmailSignIn.style.display = 'inline-block';
-                    if (modalForgotPassword) modalForgotPassword.style.display = 'inline-block';
-                } else if (methods && methods.length > 0) {
-                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
-                    emailStatus.textContent = 'อีเมลนี้มีบัญชีอยู่แล้วผ่าน ' + providerNames + ' กรุณากดปุ่มเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
-                    modalPassword.style.display = 'none';
-                    modalEmailSignIn.style.display = 'none';
-                    modalEmailSignUp.style.display = 'none';
-                    if (modalForgotPassword) modalForgotPassword.style.display = 'none';
+                // หมายเหตุ: fetchSignInMethodsForEmail อาจคืนค่าว่างใน Project ใหม่ที่มีการเปิด Email Enumeration Protection
+                const methods = await auth.fetchSignInMethodsForEmail(email);
+                
+                modalEmailNext.style.display = 'none'; // ซ่อนปุ่ม Next
+                modalPassword.style.display = 'block'; // โชว์ช่องรหัสผ่าน
+
+                if (methods && methods.length > 0) {
+                    // มีอีเมลนี้ในระบบแล้ว
+                    if (methods.includes('password')) {
+                        emailStatus.textContent = 'อีเมลนี้เป็นสมาชิกแล้ว กรุณาใส่รหัสผ่าน';
+                        emailStatus.style.color = '#2c3e50';
+                        modalEmailSignIn.style.display = 'inline-block';
+                        modalForgotPassword.style.display = 'inline-block';
+                    } else {
+                        // สมัครด้วย Social Login ไว้
+                        const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
+                        emailStatus.textContent = `คุณเคยล็อกอินด้วย ${providerNames} กรุณาใช้ปุ่มด้านบน`;
+                        emailStatus.style.color = '#e67e22';
+                        // ซ่อนช่องรหัสผ่านเพราะไม่ต้องใช้
+                        modalPassword.style.display = 'none';
+                    }
                 } else {
-                    emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาใส่พาสเวิร์ดแล้วกดสมัครสมาชิก';
-                    modalPassword.style.display = 'block';
+                    // ไม่พบอีเมล (หรือโดน Protect ไว้) ให้สมมติว่าเป็น User ใหม่
+                    emailStatus.textContent = 'ยังไม่พบอีเมลนี้ในระบบ กรุณาตั้งรหัสผ่านเพื่อสมัครสมาชิก';
+                    emailStatus.style.color = '#27ae60';
                     modalEmailSignUp.style.display = 'inline-block';
-                    if (modalForgotPassword) modalForgotPassword.style.display = 'none';
                 }
             } catch (err) {
-                emailStatus.textContent = 'รูปแบบอีเมลไม่ถูกต้อง หรือเกิดข้อผิดพลาด';
+                console.error(err);
+                emailStatus.textContent = 'เกิดข้อผิดพลาดในการตรวจสอบ: ' + getErrorMessage(err.code);
+                emailStatus.style.color = 'red';
+                modalEmailNext.style.display = 'inline-block'; // โชว์ปุ่มเดิมกลับมา
+            } finally {
+                setLoading(false, modalEmailNext);
             }
-        }
-        if (modalEmailNext) modalEmailNext.onclick = () => checkEmailFlow(modalEmail && modalEmail.value);
-        if (modalEmail) {
-            modalEmail.addEventListener('blur', () => checkEmailFlow(modalEmail.value));
-            modalEmail.addEventListener('input', () => checkEmailFlow(modalEmail.value));
-        }
+        };
+
+        // 2. กดปุ่ม "เข้าสู่ระบบ" (Sign In)
+        if (modalEmailSignIn) modalEmailSignIn.onclick = async () => {
+            const email = modalEmail.value.trim();
+            const pass = modalPassword.value.trim();
+            if (!pass) { emailStatus.textContent = 'กรุณากรอกรหัสผ่าน'; return; }
+
+            setLoading(true, modalEmailSignIn);
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+                // ถ้าสำเร็จ onAuthStateChanged จะทำงานเอง
+            } catch (err) {
+                emailStatus.textContent = getErrorMessage(err.code);
+                emailStatus.style.color = 'red';
+                setLoading(false, modalEmailSignIn);
+            }
+        };
+
+        // 3. กดปุ่ม "สมัครสมาชิก" (Sign Up)
+        if (modalEmailSignUp) modalEmailSignUp.onclick = async () => {
+            const email = modalEmail.value.trim();
+            const pass = modalPassword.value.trim();
+            if (!pass) { emailStatus.textContent = 'กรุณาตั้งรหัสผ่าน'; return; }
+
+            setLoading(true, modalEmailSignUp);
+            try {
+                await auth.createUserWithEmailAndPassword(email, pass);
+                // ถ้าสำเร็จ onAuthStateChanged จะทำงานเอง
+            } catch (err) {
+                setLoading(false, modalEmailSignUp);
+                if (err.code === 'auth/email-already-in-use') {
+                    // กรณีนี้เกิดขึ้นเมื่อ fetchSignInMethodsForEmail ไม่เจอ (เพราะ Protection) แต่จริงๆ มี User อยู่แล้ว
+                    emailStatus.textContent = 'อีเมลนี้มีผู้ใช้งานแล้ว กรุณาเข้าสู่ระบบแทน';
+                    emailStatus.style.color = 'red';
+                    
+                    // สลับปุ่มให้เป็นล็อกอินอัตโนมัติ
+                    modalEmailSignUp.style.display = 'none';
+                    modalEmailSignIn.style.display = 'inline-block';
+                    modalForgotPassword.style.display = 'inline-block';
+                } else {
+                    emailStatus.textContent = getErrorMessage(err.code);
+                    emailStatus.style.color = 'red';
+                }
+            }
+        };
+
+        // 4. ลืมรหัสผ่าน
+        if (modalForgotPassword) modalForgotPassword.onclick = async () => {
+            const email = modalEmail.value.trim();
+            if(!email) return;
+
+            setLoading(true, modalForgotPassword);
+            try {
+                await auth.sendPasswordResetEmail(email);
+                alert('ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมล ' + email + ' แล้วครับ');
+                setLoading(false, modalForgotPassword);
+            } catch (err) {
+                alert('ไม่สามารถส่งอีเมลได้: ' + getErrorMessage(err.code));
+                setLoading(false, modalForgotPassword);
+            }
+        };
+
+        // --- Auth State & Firestore Sync ---
+
         function showUser(u) {
-            if (userInfo) { const name = u.displayName || u.phoneNumber || (u.email || 'ผู้ใช้'); userInfo.textContent = 'เข้าสู่ระบบ: ' + name; userInfo.style.display = 'inline-block'; }
+            if (userInfo) { 
+                const name = u.displayName || u.email || 'ผู้ใช้งาน'; 
+                userInfo.textContent = name; 
+                userInfo.style.display = 'inline-block'; 
+            }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
-            if (authStatusInline) authStatusInline.textContent = userInfo && userInfo.textContent || 'เข้าสู่ระบบ';
-            if (btnLogoutInline) btnLogoutInline.style.display = 'inline-block';
+            if (btnOpenLogin) btnOpenLogin.style.display = 'none'; // ซ่อนปุ่ม Login
         }
+
         function hideUser() {
             if (userInfo) { userInfo.textContent = ''; userInfo.style.display = 'none'; }
             if (btnLogoutTop) btnLogoutTop.style.display = 'none';
-            if (authStatusInline) authStatusInline.textContent = 'ยังไม่เข้าสู่ระบบ';
-            if (btnLogoutInline) btnLogoutInline.style.display = 'none';
+            if (btnOpenLogin) btnOpenLogin.style.display = 'inline-block'; // โชว์ปุ่ม Login
         }
-        if (btnLogoutTop) btnLogoutTop.onclick = () => auth.signOut();
-        if (btnLogoutInline) btnLogoutInline.onclick = () => auth.signOut();
+
+        if (btnLogoutTop) btnLogoutTop.onclick = () => {
+            auth.signOut().then(() => {
+                location.reload(); // รีโหลดหน้าเว็บเพื่อให้เคลียร์ค่าต่างๆ
+            });
+        };
+
+        // ตรวจสอบสถานะล็อกอิน
         auth.onAuthStateChanged((user) => {
             if (user) {
+                closeLogin();
                 showUser(user);
                 if (appContent) appContent.style.display = 'block';
-                closeLogin();
+
                 const uid = user.uid;
+                // บันทึกข้อมูลลง Firestore (ใช้ merge เพื่อไม่ให้ทับข้อมูลเก่าหาย)
                 db.collection('users').doc(uid).set({
                     displayName: user.displayName || '',
                     email: user.email || '',
-                    phoneNumber: user.phoneNumber || '',
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
+
+                // โค้ดสร้าง Exam Sets (คงเดิม)
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
                     if (s.empty) {
-                        db.collection('exam_sets').add({
+                        return db.collection('exam_sets').add({
                             title: 'ชุดสอบแรก',
                             level: 'pt3',
                             createdBy: uid,
@@ -410,153 +497,15 @@
                         });
                     }
                 }).then(() => {
-                    return db.collection('exam_sets').where('createdBy', '==', uid).get();
-                }).then(s => {
-                    const n = s.size;
-                    if (userInfo) userInfo.textContent = (userInfo.textContent || 'เข้าสู่ระบบ') + ' | ชุดสอบ: ' + n;
-                    if (authStatusInline) authStatusInline.textContent = (userInfo && userInfo.textContent ? userInfo.textContent : 'เข้าสู่ระบบ');
-                });
+                    // อัปเดต UI เพิ่มเติม (ถ้าต้องการ)
+                    console.log("User data synced");
+                }).catch(err => console.error("Firestore Error:", err));
+
             } else {
                 hideUser();
                 if (appContent) appContent.style.display = 'none';
                 openLogin();
             }
-        });
-    </script>
-    <script src="data/data-pt12-november.js"></script>
-    <script src="data/data-pt12-december.js"></script>
-    <script src="data/data-pt12-january.js"></script>
-    <script src="data/data-pt12-february.js"></script>
-    <script src="data/data-pt12_novice-november.js"></script>
-    <script src="data/data-pt12_novice-december.js"></script>
-    <script src="data/data-pt12_novice-january.js"></script>
-    <script src="data/data-pt12_novice-february.js"></script>
-    <script>
-
-        function labelWithLevel(prefix, slot, day) {
-            const level = (slot && (slot.level || slot.classLevel || slot.grade)) || (day && day.level);
-            return level ? `${prefix} (${level})` : prefix;
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            let allData = [];
-            
-            // Helper to add metadata safely
-            const addMeta = (data, meta) => (data || []).map(d => ({...d, ...meta}));
-
-            // 1. Load Public Room Data
-            let publicData = [];
-            if (typeof dataNovember !== 'undefined') publicData = publicData.concat(dataNovember);
-            if (typeof dataDecember !== 'undefined') publicData = publicData.concat(dataDecember);
-            if (typeof dataJanuary !== 'undefined') publicData = publicData.concat(dataJanuary);
-            if (typeof dataFebruary !== 'undefined') publicData = publicData.concat(dataFebruary);
-            allData = allData.concat(addMeta(publicData, { level: 'ประโยค ๑-๒ (สาธุชนทั่วไป)' }));
-
-            // 2. Load Novice Room Data
-            let noviceData = [];
-            
-            // Helper function to find novice data with multiple naming conventions
-            function getNoviceData(month, year) {
-                // Check legacy name e.g. dataNovember_Novice
-                const legacyName = `data${month}_Novice`;
-                if (window[legacyName]) return window[legacyName];
-                
-                // Check generated name e.g. data_pt12_novice_november_2025
-                const genName = `data_pt12_novice_${month.toLowerCase()}_${year}`;
-                if (window[genName]) return window[genName];
-                
-                return [];
-            }
-
-            noviceData = noviceData.concat(getNoviceData('November', 2025));
-            noviceData = noviceData.concat(getNoviceData('December', 2025));
-            noviceData = noviceData.concat(getNoviceData('January', 2026));
-            noviceData = noviceData.concat(getNoviceData('February', 2026));
-            
-            allData = allData.concat(addMeta(noviceData, { level: 'ประโยค ๑-๒ (สามเณรนวกะ)' }));
-
-            if (allData.length > 0) {
-                allData.sort((a,b) => new Date(a.date) - new Date(b.date));
-                
-                const today = new Date();
-                const y = today.getFullYear();
-                const m = String(today.getMonth()+1).padStart(2,'0');
-                const d = String(today.getDate()).padStart(2,'0');
-                const todayStr = `${y}-${m}-${d}`;
-                const dayEntries = allData.filter(x => x.date === todayStr);
-                const container = document.getElementById('today-schedule-container');
-                
-                if (dayEntries.length === 0) {
-                     container.innerHTML = '<div style="padding:20px; text-align:center; color:#777;">ไม่มีตารางเรียนสำหรับวันนี้</div>';
-                } else {
-                    container.innerHTML = ''; 
-                    const groups = {}; 
-                    
-                    dayEntries.forEach(day => {
-                        const slots = [
-                           { key: 'morning', label: 'เช้า', colorBg: '#fff3cd', colorText: '#856404' },
-                           { key: 'afternoon', label: 'บ่าย', colorBg: '#d1ecf1', colorText: '#0c5460' },
-                           { key: 'evening', label: 'ค่ำ', colorBg: '#d4edda', colorText: '#155724' }
-                        ];
-                        
-                        slots.forEach(slotType => {
-                            const s = day[slotType.key];
-                            if (s && (s.activity || s.activityGrammar || s.activityTranslate)) {
-                                const act = s.activityTranslate || s.activityGrammar || s.activity;
-                                let lvl = s.level || s.classLevel || s.grade || day.level || 'ชั้นเรียนทั่วไป';
-                                
-                                if (!groups[lvl]) groups[lvl] = [];
-                                groups[lvl].push({
-                                    time: slotType.label,
-                                    act: act,
-                                    bg: slotType.colorBg,
-                                    text: slotType.colorText
-                                });
-                            }
-                        });
-                    });
-                    
-                    if (Object.keys(groups).length === 0) {
-                         container.innerHTML = '<div style="padding:20px; text-align:center; color:#777;">ไม่มีกิจกรรมการเรียนการสอนวันนี้</div>';
-                    } else {
-                        Object.keys(groups).sort().forEach((lvl, index) => {
-                             const wrapper = document.createElement('div');
-                             wrapper.style.padding = '20px';
-                             if (index > 0) wrapper.style.borderTop = '1px solid #eee';
-                             
-                             const title = document.createElement('div');
-                             title.style.fontWeight = 'bold';
-                             title.style.color = '#2c3e50';
-                             title.style.marginBottom = '12px';
-                             title.style.fontSize = '1.15rem';
-                             title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:8px; color:#3498db;"></i>${lvl}`;
-                             wrapper.appendChild(title);
-                             
-                             const list = document.createElement('div');
-                             list.style.display = 'flex';
-                             list.style.flexDirection = 'column';
-                             list.style.gap = '8px';
-                             
-                             groups[lvl].forEach(item => {
-                                 const itemDiv = document.createElement('div');
-                                 itemDiv.style.background = item.bg;
-                                 itemDiv.style.color = item.text;
-                                 itemDiv.style.padding = '10px 14px';
-                                 itemDiv.style.borderRadius = '8px';
-                                 itemDiv.style.fontSize = '0.95rem';
-                                 itemDiv.style.display = 'flex';
-                                 itemDiv.style.alignItems = 'flex-start'; 
-                                 
-                                 itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
-                                 list.appendChild(itemDiv);
-                             });
-                             
-                             wrapper.appendChild(list);
-                             container.appendChild(wrapper);
-                        });
-                    }
-                }
-            }
-
         });
     </script>
 </body>
