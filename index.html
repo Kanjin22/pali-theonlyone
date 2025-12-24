@@ -512,6 +512,89 @@
             } catch (e) {}
         }
 
+        // --- Today Pins ---
+        async function loadTodayPins() {
+            const container = document.getElementById('today-schedule-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const header = document.createElement('div');
+            header.style.padding = '14px 16px';
+            header.style.borderBottom = '1px solid #eee';
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+            header.innerHTML = '<div style="font-weight:700; color:#2c3e50;"><i class="fa-regular fa-calendar-check" style="color:#27ae60;"></i> ปักหมุดวันนี้</div><div id="today-date" style="color:#7f8c8d; font-size:0.9rem;"></div>';
+            container.appendChild(header);
+            const body = document.createElement('div');
+            body.style.padding = '12px 16px';
+            container.appendChild(body);
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = String(today.getMonth() + 1).padStart(2, '0');
+            const d = String(today.getDate()).padStart(2, '0');
+            const iso = `${y}-${m}-${d}`;
+            const todayLabel = `วันที่ ${d}/${m}/${y + 543}`;
+            const todayDateEl = header.querySelector('#today-date');
+            if (todayDateEl) todayDateEl.textContent = todayLabel;
+            try {
+                const doc = await db.collection('config').doc('today_pins').get();
+                if (doc.exists && doc.data() && Array.isArray(doc.data().items)) {
+                    const pins = doc.data().items;
+                    if (doc.data().date && doc.data().date !== iso) {
+                        const warn = document.createElement('div');
+                        warn.style.color = '#e67e22';
+                        warn.style.marginBottom = '8px';
+                        warn.style.fontSize = '0.9rem';
+                        warn.textContent = 'หมายเหตุ: ข้อมูลปักหมุดยังไม่อัปเดตเป็นวันนี้';
+                        body.appendChild(warn);
+                    }
+                    if (pins.length === 0) {
+                        body.innerHTML += '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                        return;
+                    }
+                    const groups = {};
+                    pins.forEach(p => {
+                        const level = (p.level || 'ทั่วไป');
+                        if (!groups[level]) groups[level] = [];
+                        groups[level].push({ time: p.time || '-', act: p.act || '-' });
+                    });
+                    Object.keys(groups).forEach(lvl => {
+                        const wrapper = document.createElement('div');
+                        wrapper.style.border = '1px solid #eee';
+                        wrapper.style.borderRadius = '8px';
+                        wrapper.style.padding = '10px 12px';
+                        wrapper.style.marginBottom = '10px';
+                        const title = document.createElement('div');
+                        title.style.fontWeight = 'bold';
+                        title.style.color = '#2c3e50';
+                        title.style.marginBottom = '8px';
+                        title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:6px; color:#3498db;"></i>${lvl}`;
+                        wrapper.appendChild(title);
+                        const list = document.createElement('div');
+                        list.style.display = 'flex';
+                        list.style.flexDirection = 'column';
+                        list.style.gap = '6px';
+                        groups[lvl].forEach(item => {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.style.background = '#fafafa';
+                            itemDiv.style.color = '#2c3e50';
+                            itemDiv.style.padding = '8px 10px';
+                            itemDiv.style.borderRadius = '6px';
+                            itemDiv.style.fontSize = '0.95rem';
+                            itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
+                            list.appendChild(itemDiv);
+                        });
+                        wrapper.appendChild(list);
+                        body.appendChild(wrapper);
+                    });
+                } else {
+                    body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                }
+            } catch (e) {
+                body.innerHTML = '<div style="color:#e74c3c;">ไม่สามารถโหลดข้อมูลปักหมุดได้</div>';
+            }
+        }
+
         // ตรวจสอบสถานะล็อกอิน
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -558,6 +641,7 @@
                 }).then(() => {
                     // อัปเดต UI เพิ่มเติม (ถ้าต้องการ)
                     console.log("User data synced");
+                    loadTodayPins();
                 }).catch(err => console.error("Firestore Error:", err));
 
             } else {
