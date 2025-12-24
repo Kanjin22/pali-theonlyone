@@ -557,7 +557,16 @@
                 if (uDoc.exists) currentRole = uDoc.data().role || 'general';
 
                 if (currentRole === 'general') {
-                    await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
+                    // Only update role if current role is 'general'
+                    // This prevents accidental downgrade of admins/teachers
+                    await db.collection('users').doc(uid).update({ 
+                        role: 'student',
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } else if (currentRole === 'student') {
+                    // Already student, do nothing
+                } else {
+                    console.warn(`User ${uid} is ${currentRole}, skipping role update to student.`);
                 }
 
                 alert('อนุมัติเรียบร้อย');
