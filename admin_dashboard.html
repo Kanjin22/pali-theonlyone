@@ -277,13 +277,12 @@
             tbody.innerHTML = '<tr><td colspan="6" class="loading">กำลังโหลด...</td></tr>';
             
             try {
+                // Modified: Removed .orderBy('createdAt', 'desc') to avoid composite index error
                 const snapshot = await db.collection('enrollments')
                     .where('status', '==', 'pending')
-                    .orderBy('createdAt', 'desc')
                     .get();
 
-                // Count stats (simple query separate or accumulate)
-                // For stats we might want separate listener or just snapshot size
+                // Count stats
                 document.getElementById('count-pending').textContent = snapshot.size;
 
                 if (snapshot.empty) {
@@ -291,8 +290,18 @@
                     return;
                 }
 
+                // Client-side Sort (Newest First)
+                let docs = [];
+                snapshot.forEach(doc => docs.push(doc));
+                
+                docs.sort((a, b) => {
+                    const tA = a.data().createdAt ? a.data().createdAt.toMillis() : 0;
+                    const tB = b.data().createdAt ? b.data().createdAt.toMillis() : 0;
+                    return tB - tA; // Descending
+                });
+
                 tbody.innerHTML = '';
-                snapshot.forEach(doc => {
+                docs.forEach(doc => {
                     const data = doc.data();
                     const tr = document.createElement('tr');
                     
