@@ -236,6 +236,7 @@
     </div>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script>
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "YOUR_API_KEY",
@@ -247,6 +248,7 @@
         firebase.initializeApp(window.firebaseConfig);
         const auth = firebase.auth();
         auth.useDeviceLanguage();
+        const db = firebase.firestore();
         let confirmationResultRef = null;
         let recaptchaVerifier = null;
         const appContent = document.getElementById('app-content');
@@ -296,6 +298,28 @@
                 showUser(user);
                 if (appContent) appContent.style.display = 'block';
                 closeLogin();
+                const uid = user.uid;
+                db.collection('users').doc(uid).set({
+                    displayName: user.displayName || '',
+                    email: user.email || '',
+                    phoneNumber: user.phoneNumber || '',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
+                    if (s.empty) {
+                        db.collection('exam_sets').add({
+                            title: 'ชุดสอบแรก',
+                            level: 'pt3',
+                            createdBy: uid,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    }
+                }).then(() => {
+                    return db.collection('exam_sets').where('createdBy', '==', uid).get();
+                }).then(s => {
+                    const n = s.size;
+                    if (authStatusInline) authStatusInline.textContent = (userInfo && userInfo.textContent ? userInfo.textContent : 'เข้าสู่ระบบ') + ' | ชุดสอบ: ' + n;
+                });
             } else {
                 hideUser();
                 if (appContent) appContent.style.display = 'none';
