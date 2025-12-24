@@ -568,74 +568,194 @@
             } catch (e) {}
             // 2) Fallback to local data files if not loaded
             if (!pinsLoaded) {
-                const dataSets = []
-                    .concat((typeof dataNovember !== 'undefined') ? dataNovember : [])
-                    .concat((typeof dataDecember !== 'undefined') ? dataDecember : [])
-                    .concat((typeof dataJanuary !== 'undefined') ? dataJanuary : [])
-                    .concat((typeof dataFebruary !== 'undefined') ? dataFebruary : []);
-                const todayEntry = (dataSets || []).find(d => d && d.date === iso);
-                if (todayEntry) {
-                    const pins = [];
-                    if (todayEntry.morning) {
-                        if (todayEntry.morning.activityGrammar) pins.push({ time: 'เช้า', act: todayEntry.morning.activityGrammar, level: 'ประโยค ๑-๒' });
-                        if (todayEntry.morning.activityTranslate) pins.push({ time: 'เช้า', act: todayEntry.morning.activityTranslate, level: 'ประโยค ๑-๒' });
+                const iso = new Date().toISOString().split('T')[0]; // Ensure iso is available in this scope if needed, though it is likely defined above
+
+                // Define helper to safely get array
+                const getArr = (v) => (typeof v !== 'undefined' && Array.isArray(v)) ? v : [];
+
+                const standardSets = [
+                    ...getArr(typeof dataNovember !== 'undefined' ? dataNovember : undefined),
+                    ...getArr(typeof dataDecember !== 'undefined' ? dataDecember : undefined),
+                    ...getArr(typeof dataJanuary !== 'undefined' ? dataJanuary : undefined),
+                    ...getArr(typeof dataFebruary !== 'undefined' ? dataFebruary : undefined)
+                ];
+
+                const noviceSets = [
+                    ...getArr(typeof data_pt12_novice_november_2025 !== 'undefined' ? data_pt12_novice_november_2025 : undefined),
+                    ...getArr(typeof data_pt12_novice_december_2025 !== 'undefined' ? data_pt12_novice_december_2025 : undefined),
+                    ...getArr(typeof dataJanuary_Novice !== 'undefined' ? dataJanuary_Novice : undefined),
+                    ...getArr(typeof dataFebruary_Novice !== 'undefined' ? dataFebruary_Novice : undefined)
+                ];
+
+                const allPins = [];
+
+                const extractPins = (entry, defaultLevel) => {
+                    if (!entry) return;
+                    // Morning
+                    if (entry.morning) {
+                        if (entry.morning.activityGrammar) 
+                            allPins.push({ time: 'เช้า', act: entry.morning.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
+                        if (entry.morning.activityTranslate) 
+                            allPins.push({ time: 'เช้า', act: entry.morning.activityTranslate, level: defaultLevel, subject: 'แปล' });
                     }
-                    if (todayEntry.afternoon) {
-                        const prefix = todayEntry.afternoon.isExam ? 'สอบ ' : '';
-                        if (todayEntry.afternoon.activityGrammar) pins.push({ time: 'บ่าย', act: prefix + todayEntry.afternoon.activityGrammar, level: 'ประโยค ๑-๒' });
-                        if (todayEntry.afternoon.activityTranslate) pins.push({ time: 'บ่าย', act: prefix + todayEntry.afternoon.activityTranslate, level: 'ประโยค ๑-๒' });
+                    // Afternoon
+                    if (entry.afternoon) {
+                        const prefix = entry.afternoon.isExam ? 'สอบ ' : '';
+                        if (entry.afternoon.activityGrammar) 
+                            allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
+                        if (entry.afternoon.activityTranslate) 
+                            allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityTranslate, level: defaultLevel, subject: 'แปล' });
                     }
-                    if (todayEntry.evening && todayEntry.evening.activity) {
-                        pins.push({ time: 'ค่ำ', act: todayEntry.evening.activity, level: 'ประโยค ๑-๒' });
+                    // Evening
+                    if (entry.evening) {
+                        if (entry.evening.activity) { 
+                             allPins.push({ time: 'ค่ำ', act: entry.evening.activity, level: defaultLevel, subject: 'กิจกรรม' });
+                        }
+                        if (entry.evening.activityGrammar) {
+                             let act = Array.isArray(entry.evening.activityGrammar) ? entry.evening.activityGrammar.join(', ') : entry.evening.activityGrammar;
+                             allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'ไวยากรณ์' });
+                        }
+                        if (entry.evening.activityTranslate) {
+                             let act = Array.isArray(entry.evening.activityTranslate) ? entry.evening.activityTranslate.join(', ') : entry.evening.activityTranslate;
+                             allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'แปล' });
+                        }
                     }
-                    if (pins.length > 0) {
-                        renderPins(body, pins);
-                        pinsLoaded = true;
-                    }
+                };
+
+                const stdEntry = standardSets.find(d => d && d.date === iso);
+                extractPins(stdEntry, 'ประโยค ๑-๒');
+
+                const novEntry = noviceSets.find(d => d && d.date === iso);
+                extractPins(novEntry, 'สามเณรนวกะ');
+
+                if (allPins.length > 0) {
+                    renderPins(body, allPins);
+                    pinsLoaded = true;
                 }
             }
             if (!pinsLoaded) {
-                body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                body.innerHTML = '<div style="color:#95a5a6; text-align:center; padding:20px;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
             }
         }
 
         function renderPins(body, pins) {
+            body.innerHTML = ''; // Clear previous content
             if (!pins || pins.length === 0) {
-                body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                body.innerHTML = '<div style="color:#95a5a6; text-align:center; padding:20px;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
                 return;
             }
             const groups = {};
             pins.forEach(p => {
                 const level = (p.level || 'ทั่วไป');
                 if (!groups[level]) groups[level] = [];
-                groups[level].push({ time: p.time || '-', act: p.act || '-' });
+                groups[level].push(p);
             });
+
             Object.keys(groups).forEach(lvl => {
+                // Card Container
                 const wrapper = document.createElement('div');
-                wrapper.style.border = '1px solid #eee';
-                wrapper.style.borderRadius = '8px';
-                wrapper.style.padding = '10px 12px';
-                wrapper.style.marginBottom = '10px';
+                wrapper.className = 'pin-card';
+                wrapper.style.border = 'none';
+                wrapper.style.borderRadius = '12px';
+                wrapper.style.marginBottom = '15px';
+                wrapper.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                wrapper.style.overflow = 'hidden';
+                wrapper.style.backgroundColor = '#fff';
+
+                // Header
                 const title = document.createElement('div');
+                title.style.background = 'linear-gradient(135deg, #d35400, #e67e22)';
+                title.style.color = 'white';
+                title.style.padding = '10px 15px';
+                title.style.fontSize = '1.1rem';
                 title.style.fontWeight = 'bold';
-                title.style.color = '#2c3e50';
-                title.style.marginBottom = '8px';
-                title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:6px; color:#3498db;"></i>${lvl}`;
+                title.style.display = 'flex';
+                title.style.alignItems = 'center';
+                title.innerHTML = `<i class="fa-solid fa-layer-group" style="margin-right:10px;"></i>${lvl}`;
                 wrapper.appendChild(title);
+
+                // Content List
                 const list = document.createElement('div');
+                list.style.padding = '15px';
                 list.style.display = 'flex';
                 list.style.flexDirection = 'column';
-                list.style.gap = '6px';
+                list.style.gap = '10px';
+
                 groups[lvl].forEach(item => {
                     const itemDiv = document.createElement('div');
-                    itemDiv.style.background = '#fafafa';
-                    itemDiv.style.color = '#2c3e50';
-                    itemDiv.style.padding = '8px 10px';
-                    itemDiv.style.borderRadius = '6px';
-                    itemDiv.style.fontSize = '0.95rem';
-                    itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
+                    itemDiv.style.display = 'flex';
+                    itemDiv.style.alignItems = 'flex-start';
+                    itemDiv.style.background = '#f8f9fa';
+                    itemDiv.style.padding = '10px';
+                    itemDiv.style.borderRadius = '8px';
+                    itemDiv.style.borderLeft = '4px solid #f39c12'; // Default accent
+
+                    // Time Badge
+                    let timeColor = '#7f8c8d';
+                    let timeIcon = 'fa-clock';
+                    if (item.time === 'เช้า') { timeColor = '#3498db'; timeIcon = 'fa-sun'; }
+                    else if (item.time === 'บ่าย') { timeColor = '#e67e22'; timeIcon = 'fa-cloud-sun'; }
+                    else if (item.time === 'ค่ำ') { timeColor = '#8e44ad'; timeIcon = 'fa-moon'; }
+
+                    const timeBadge = document.createElement('div');
+                    timeBadge.style.minWidth = '70px';
+                    timeBadge.style.backgroundColor = timeColor;
+                    timeBadge.style.color = 'white';
+                    timeBadge.style.padding = '4px 8px';
+                    timeBadge.style.borderRadius = '15px';
+                    timeBadge.style.fontSize = '0.85rem';
+                    timeBadge.style.fontWeight = 'bold';
+                    timeBadge.style.textAlign = 'center';
+                    timeBadge.style.marginRight = '12px';
+                    timeBadge.style.display = 'flex';
+                    timeBadge.style.alignItems = 'center';
+                    timeBadge.style.justifyContent = 'center';
+                    timeBadge.style.gap = '5px';
+                    timeBadge.innerHTML = `<i class="fa-solid ${timeIcon}"></i> ${item.time}`;
+
+                    // Content
+                    const contentDiv = document.createElement('div');
+                    contentDiv.style.flex = '1';
+
+                    // Subject Badge
+                    const subjectBadge = document.createElement('span');
+                    subjectBadge.style.display = 'inline-block';
+                    subjectBadge.style.fontSize = '0.8rem';
+                    subjectBadge.style.padding = '2px 8px';
+                    subjectBadge.style.borderRadius = '4px';
+                    subjectBadge.style.marginRight = '8px';
+                    subjectBadge.style.fontWeight = '600';
+                    
+                    if (item.subject === 'ไวยากรณ์') {
+                        subjectBadge.style.backgroundColor = '#e8f6f3';
+                        subjectBadge.style.color = '#1abc9c';
+                        subjectBadge.innerText = 'ไวยากรณ์';
+                        itemDiv.style.borderLeftColor = '#1abc9c';
+                    } else if (item.subject === 'แปล') {
+                        subjectBadge.style.backgroundColor = '#fef5e7';
+                        subjectBadge.style.color = '#f39c12';
+                        subjectBadge.innerText = 'แปล';
+                        itemDiv.style.borderLeftColor = '#f39c12';
+                    } else {
+                         subjectBadge.style.backgroundColor = '#ececec';
+                         subjectBadge.style.color = '#7f8c8d';
+                         subjectBadge.innerText = item.subject || 'กิจกรรม';
+                         itemDiv.style.borderLeftColor = '#7f8c8d';
+                    }
+
+                    const actText = document.createElement('span');
+                    actText.style.fontSize = '1rem';
+                    actText.style.color = '#34495e';
+                    actText.innerText = item.act;
+
+                    contentDiv.appendChild(subjectBadge);
+                    contentDiv.appendChild(actText);
+
+                    itemDiv.appendChild(timeBadge);
+                    itemDiv.appendChild(contentDiv);
                     list.appendChild(itemDiv);
                 });
+
                 wrapper.appendChild(list);
                 body.appendChild(wrapper);
             });
