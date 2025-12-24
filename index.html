@@ -280,6 +280,13 @@
                     if (modalEmailSignIn) modalEmailSignIn.style.display = 'inline-block';
                     if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
                     return;
+                } else if (methods && methods.length > 0) {
+                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
+                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้มีบัญชีอยู่แล้วผ่าน ' + providerNames + ' กรุณากดปุ่มเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
+                    if (modalPassword) modalPassword.style.display = 'none';
+                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
+                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
+                    return;
                 }
                 await auth.createUserWithEmailAndPassword(email, pass);
             } catch (err) {
@@ -300,6 +307,12 @@
                     emailStatus.textContent = 'คุณเป็นสมาชิกแล้ว กรุณาใส่พาสเวิร์ดที่สมัครไว้กับเว็บ';
                     modalPassword.style.display = 'block';
                     modalEmailSignIn.style.display = 'inline-block';
+                } else if (methods && methods.length > 0) {
+                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
+                    emailStatus.textContent = 'อีเมลนี้มีบัญชีอยู่แล้วผ่าน ' + providerNames + ' กรุณากดปุ่มเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
+                    modalPassword.style.display = 'none';
+                    modalEmailSignIn.style.display = 'none';
+                    modalEmailSignUp.style.display = 'none';
                 } else {
                     emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาใส่พาสเวิร์ดแล้วกดสมัครสมาชิก';
                     modalPassword.style.display = 'block';
