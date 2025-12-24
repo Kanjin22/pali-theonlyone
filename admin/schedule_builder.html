@@ -794,15 +794,6 @@
         const exams = getFiles(level, 'exams');
         const answers = getFiles(level, 'answers');
         
-        const createOptions = (fileObjs, selected = []) => {
-             let opts = '<option value="">-- เลือกไฟล์ --</option>';
-             fileObjs.forEach(f => {
-                 const isSel = selected.includes(f.value) ? 'selected' : '';
-                 opts += `<option value="${f.value}" ${isSel}>${f.name}</option>`;
-             });
-             return opts;
-        };
-
         const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
 
         let normalInputs = '';
@@ -949,16 +940,18 @@
     function getFiles(level, type) {
         let files = [];
         
-        // 1. Static Files (Legacy)
+        // 1. Static Files (Legacy) - Filter by type strictly to avoid clutter
         if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
             files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
         }
         
-        // 2. Dynamic Files (Firestore)
-        // Filter by level and type
-        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type);
+        // 2. Dynamic Files (Firestore) - Include ALL types for this level to prevent "missing file" confusion
+        // We filter only by level.
+        const dyn = DYNAMIC_FILES.filter(f => f.level === level);
         dyn.forEach(f => {
-            files.push({ name: `[CLOUD] ${f.name}`, value: f.url });
+            // Add type indicator if it doesn't match the requested type
+            const typeLabel = f.type === type ? '[CLOUD]' : `[${f.type.toUpperCase()}]`;
+            files.push({ name: `${typeLabel} ${f.name}`, value: f.url });
         });
         
         // Sort by name
@@ -966,6 +959,35 @@
         
         return files;
     }
+
+    function createOptions(fileObjs, selected = []) {
+         let opts = '<option value="">-- เลือกไฟล์ --</option>';
+         
+         // 1. Add existing files from list
+         fileObjs.forEach(f => {
+             const isSel = selected.includes(f.value) ? 'selected' : '';
+             opts += `<option value="${f.value}" ${isSel}>${f.name}</option>`;
+         });
+
+         // 2. Preserve selected values that are NOT in the list (Legacy or Missing)
+         selected.forEach(val => {
+             if (!val) return;
+             const exists = fileObjs.some(f => f.value === val);
+             if (!exists) {
+                 // Try to make a readable name
+                 let name = val;
+                 if (val.startsWith('http')) {
+                     try { name = decodeURIComponent(val.split('/').pop().split('?')[0]); } catch(e){}
+                     name = `[SAVED] ${name}`;
+                 } else {
+                     name = `[LEGACY] ${val}`;
+                 }
+                 opts += `<option value="${val}" selected>${name}</option>`;
+             }
+         });
+
+         return opts;
+    };
 
     function handleDateChange(input) {
         const dateVal = input.value;
