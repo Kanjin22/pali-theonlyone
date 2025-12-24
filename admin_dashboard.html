@@ -463,26 +463,37 @@
                 members.forEach(m => {
                     const tr = document.createElement('tr');
                     
-                    // Create Select Element for Role
+                    // Create Select for Role
                     const select = document.createElement('select');
                     select.className = 'role-select';
-                    select.innerHTML = `
-                        <option value="admin" ${m.role === 'admin' ? 'selected' : ''}>ผู้ดูแลระบบ (Admin)</option>
-                        <option value="teacher" ${m.role === 'teacher' ? 'selected' : ''}>อาจารย์</option>
-                        <option value="student" ${m.role === 'student' ? 'selected' : ''}>นักเรียน</option>
-                        <option value="general" ${m.role === 'general' ? 'selected' : ''}>ทั่วไป</option>
-                    `;
                     
-                    // Style coloring based on value
-                    const colorMap = {
-                        'admin': '#2c3e50', 'teacher': '#8e44ad', 'student': '#27ae60', 'general': '#7f8c8d'
-                    };
-                    select.style.color = colorMap[m.role] || '#2c3e50';
-                    select.style.fontWeight = '600';
+                    const roles = [
+                        { val: 'admin', label: 'ผู้ดูแลระบบ (Admin)', color: '#2c3e50' },
+                        { val: 'teacher', label: 'อาจารย์', color: '#8e44ad' },
+                        { val: 'student', label: 'นักเรียน', color: '#27ae60' },
+                        { val: 'general', label: 'ทั่วไป', color: '#7f8c8d' }
+                    ];
 
+                    roles.forEach(r => {
+                        const opt = document.createElement('option');
+                        opt.value = r.val;
+                        opt.textContent = r.label;
+                        if (m.role === r.val) opt.selected = true;
+                        select.appendChild(opt);
+                    });
+
+                    // Set initial color
+                    const currentColor = roles.find(r => r.val === m.role)?.color || '#2c3e50';
+                    select.style.color = currentColor;
+                    select.style.borderColor = currentColor;
+
+                    // On Change Event
                     select.onchange = function() {
                         const newVal = this.value;
-                        const newText = this.options[this.selectedIndex].text;
+                        const newColor = roles.find(r => r.val === newVal)?.color || '#2c3e50';
+                        this.style.color = newColor;
+                        this.style.borderColor = newColor;
+                        
                         changeRole(m.uid, newVal, m.role, m.name, this);
                     };
 
@@ -491,13 +502,13 @@
                             <div style="font-weight:600;">${m.name}</div>
                             ${m.role === 'general' ? '<div style="font-size:0.75rem; color:#ccc;">(ผู้ใช้งานทั่วไป)</div>' : ''}
                         </td>
-                        <td></td> <!-- Will append select here -->
+                        <td></td>
                         <td>${m.level !== '-' ? 'ประโยค ' + m.level : '-'}</td>
                         <td>${m.phone}</td>
                         <td>${m.dateStr}</td>
                     `;
                     
-                    // Append Select
+                    // Append select to the second column
                     tr.children[1].appendChild(select);
                     
                     tbody.appendChild(tr);
@@ -508,36 +519,55 @@
                 tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
         }
-        
-        async function changeRole(uid, newRole, oldRole, name, selectElement) {
-             const roleNames = {
-                 'admin': 'ผู้ดูแลระบบ (Admin)',
-                 'teacher': 'อาจารย์',
-                 'student': 'นักเรียน',
-                 'general': 'ทั่วไป'
-             };
-             
-             if (!confirm(`ต้องการเปลี่ยนบทบาทของ "${name}" \nจาก "${roleNames[oldRole]}" เป็น "${roleNames[newRole]}" ใช่หรือไม่?`)) {
-                 selectElement.value = oldRole;
-                 selectElement.style.color = {
-                    'admin': '#2c3e50', 'teacher': '#8e44ad', 'student': '#27ae60', 'general': '#7f8c8d'
-                 }[oldRole];
-                 return;
-             }
-             
-             selectElement.disabled = true;
-             
-             try {
-                 await db.collection('users').doc(uid).update({
-                     role: newRole
-                 });
-                 alert('เปลี่ยนบทบาทเรียบร้อยแล้ว');
-                 loadMembers(); // Reload to re-sort
-             } catch (e) {
-                 alert('Error: ' + e.message);
-                 selectElement.value = oldRole;
-                 selectElement.disabled = false;
-             }
+
+        async function changeRole(uid, newRole, oldRole, name, selectEl) {
+            const roleNames = {
+                'admin': 'ผู้ดูแลระบบ (Admin)',
+                'teacher': 'อาจารย์',
+                'student': 'นักเรียน',
+                'general': 'ทั่วไป'
+            };
+
+            if (!confirm(`ยืนยันการเปลี่ยนบทบาทของ "${name}"\nจาก "${roleNames[oldRole]}" เป็น "${roleNames[newRole]}"?`)) {
+                // Revert selection
+                selectEl.value = oldRole;
+                // Revert color
+                const roles = [
+                    { val: 'admin', color: '#2c3e50' },
+                    { val: 'teacher', color: '#8e44ad' },
+                    { val: 'student', color: '#27ae60' },
+                    { val: 'general', color: '#7f8c8d' }
+                ];
+                const oldColor = roles.find(r => r.val === oldRole)?.color || '#2c3e50';
+                selectEl.style.color = oldColor;
+                selectEl.style.borderColor = oldColor;
+                return;
+            }
+
+            // Disable while updating
+            selectEl.disabled = true;
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+
+            try {
+                await db.collection('users').doc(uid).update({
+                    role: newRole,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert(`อัปเดตบทบาทสำเร็จ: ${name} เป็น ${roleNames[newRole]}`);
+                // Reload to update sort order
+                loadMembers();
+
+            } catch (e) {
+                console.error(e);
+                alert('เกิดข้อผิดพลาด: ' + e.message);
+                // Revert
+                selectEl.value = oldRole;
+                selectEl.disabled = false;
+            } finally {
+                document.body.style.cursor = originalCursor;
+            }
         }
         
         // Search listener
