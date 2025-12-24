@@ -92,6 +92,28 @@
             position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa;
         }
         .modal-close:hover { color: #000; }
+
+        /* Weekend/Holiday Style */
+        .row-weekend-disabled {
+            background-color: #e9ecef !important; /* Gray background */
+            border-color: #adb5bd !important;
+        }
+        
+        .row-weekend-disabled .col-group {
+            background-color: #e9ecef !important;
+            border-color: #ced4da !important;
+            opacity: 0.6;
+        }
+
+        .row-weekend-disabled .slot-container,
+        .row-weekend-disabled input:not(.input-weekend):not(.input-date):not(.input-display-date),
+        .row-weekend-disabled select,
+        .row-weekend-disabled textarea:not(.input-remarks),
+        .row-weekend-disabled button:not(.btn-danger) {
+            pointer-events: none; /* Disable interaction */
+            opacity: 0.6;
+            background-color: #e9ecef;
+        }
     </style>
 </head>
 <body>
@@ -613,7 +635,7 @@
             </div>
             <div style="margin-top: 10px; margin-bottom: 5px;">
                 <label style="cursor:pointer; color:#e74c3c; font-weight:bold;">
-                    <input type="checkbox" class="input-weekend" ${data && data.isWeekend ? 'checked' : ''}> วันหยุด (Holiday)
+                    <input type="checkbox" class="input-weekend" onchange="toggleWeekendMode(this)" ${data && data.isWeekend ? 'checked' : ''}> วันหยุด (Holiday)
                 </label>
             </div>
             <div>
@@ -647,6 +669,12 @@
         div.appendChild(colDel);
 
         document.getElementById('schedule-rows').appendChild(div);
+
+        // Initial check for weekend
+        const weekendCheckbox = div.querySelector('.input-weekend');
+        if (weekendCheckbox.checked) {
+            toggleWeekendMode(weekendCheckbox);
+        }
     }
 
     function createSlotHTML(periodId, label, level, data = null) {
@@ -902,6 +930,15 @@
             normalMode.style.display = 'block';
             examMode.style.display = 'none';
             slotContainer.classList.remove('is-exam');
+        }
+    }
+
+    function toggleWeekendMode(checkbox) {
+        const row = checkbox.closest('.row-entry');
+        if (checkbox.checked) {
+            row.classList.add('row-weekend-disabled');
+        } else {
+            row.classList.remove('row-weekend-disabled');
         }
     }
     
