@@ -457,6 +457,25 @@
         let col1 = document.createElement('div');
         col1.className = 'col-group';
         col1.style.minWidth = '200px';
+
+        // Helper to extract remarks string safely
+        let remarksStr = '';
+        if (data && data.remarks) {
+            if (typeof data.remarks === 'string') {
+                remarksStr = data.remarks;
+            } else {
+                // Combine all fields
+                let parts = [];
+                if (data.remarks.general) parts.push(data.remarks.general);
+                if (data.remarks.grammar) parts.push(`[ไวยากรณ์] ${data.remarks.grammar}`);
+                if (data.remarks.translate) {
+                     if(Array.isArray(data.remarks.translate)) parts.push(`[แปล] ${data.remarks.translate.join(', ')}`);
+                     else parts.push(`[แปล] ${data.remarks.translate}`);
+                }
+                remarksStr = parts.join('\n');
+            }
+        }
+
         col1.innerHTML = `
             <div>
                 <label>วันที่</label>
@@ -468,7 +487,7 @@
             </div>
             <div>
                 <label>หมายเหตุ (Remarks)</label>
-                <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป...">${data && data.remarks && data.remarks.general ? data.remarks.general : ''}</textarea>
+                <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป...">${remarksStr.trim()}</textarea>
             </div>
         `;
         
@@ -525,7 +544,7 @@
         // For now, default to Normal, user can switch.
         // If data exists, try to populate both, but show one.
         
-        const isExamMode = data && (data.exams || data.answers || (data.activity && data.activity.includes('สอบ')));
+        const isExamMode = data && (data.isExam || data.exams || data.answers || (data.activity && data.activity.includes('สอบ')));
         
         // 1. Generate Normal Mode Inputs
         subjects.forEach(subj => {
@@ -557,18 +576,27 @@
 
         // File Inputs
         subjects.forEach(subj => {
-             // We only support 1 file per subject in UI for simplicity, but data is array
-             // Let's just use the first matching one or empty
-             // Actually original UI had 1 select per subject.
-             // If data.materials is ['f1', 'f2'], how to map?
-             // We don't track which subject a material belongs to in the data array 'materials'.
-             // So just show first? Or leave empty?
-             // Simplification: Select the first material if available.
-             const selVal = (data && data.materials && data.materials.length > 0) ? [data.materials[0]] : [];
+             // Determine selected file from legacy fields or materials array
+             let selectedFiles = [];
+             if (data) {
+                 if (subj.id === 'Grammar' && data.fileNoteGrammar) selectedFiles.push(data.fileNoteGrammar);
+                 else if (subj.id === 'Translate' && data.fileNoteTranslate) {
+                     if (Array.isArray(data.fileNoteTranslate)) selectedFiles.push(...data.fileNoteTranslate);
+                     else selectedFiles.push(data.fileNoteTranslate);
+                 }
+                 // Fallback to materials array if no specific field found, or if just generic materials
+                 if (selectedFiles.length === 0 && data.materials && data.materials.length > 0) {
+                     // Only pick first if we can't distinguish? 
+                     // Or maybe we shouldn't fallback blindly to avoid duplicating file on all subjects.
+                     // But for now, let's keep it safe.
+                     selectedFiles = [data.materials[0]];
+                 }
+             }
+
              normalInputs += `
                 <div class="field-group">
                     <label>เอกสาร (${subj.id})</label>
-                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, selVal)}</select>
+                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, selectedFiles)}</select>
                 </div>
             `;
         });
@@ -578,8 +606,8 @@
             <div class="field-group">
                 <label>เวลาเริ่ม - สิ้นสุด</label>
                 <div style="display:flex; gap:5px;">
-                    <input type="time" class="input-exam-start" value="${data ? (data.timeStart || '13:00') : '13:00'}">
-                    <input type="time" class="input-exam-end" value="${data ? (data.timeEnd || '16:00') : '16:00'}">
+                    <input type="time" class="input-exam-start" value="${data ? (data.timeStart || (data.examStartTime ? data.examStartTime.substring(0,5) : '13:00')) : '13:00'}">
+                    <input type="time" class="input-exam-end" value="${data ? (data.timeEnd || (data.examEndTime ? data.examEndTime.substring(0,5) : '16:00')) : '16:00'}">
                 </div>
             </div>
         `;
@@ -599,14 +627,30 @@
         });
         
         subjects.forEach(subj => {
+            // Exam Files
+            let selExams = [];
+            if (data) {
+                if (subj.id === 'Grammar' && data.fileExamGrammar) selExams.push(data.fileExamGrammar);
+                else if (subj.id === 'Translate' && data.fileExamTranslate) selExams.push(data.fileExamTranslate);
+                else if (data.exams && data.exams.length > 0) selExams = data.exams;
+            }
+
+            // Answer Files
+            let selAnswers = [];
+            if (data) {
+                if (subj.id === 'Grammar' && data.fileAnswerGrammar) selAnswers.push(data.fileAnswerGrammar);
+                else if (subj.id === 'Translate' && data.fileAnswerTranslate) selAnswers.push(data.fileAnswerTranslate);
+                else if (data.answers && data.answers.length > 0) selAnswers = data.answers;
+            }
+
             examInputs += `
                 <div class="field-group">
                     <label>ข้อสอบ (${subj.id})</label>
-                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams, data ? data.exams : [])}</select>
+                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams, selExams)}</select>
                 </div>
                 <div class="field-group">
                     <label>เฉลย (${subj.id})</label>
-                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers, data ? data.answers : [])}</select>
+                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers, selAnswers)}</select>
                 </div>
             `;
         });
@@ -702,8 +746,10 @@
             // We need to extract the array part.
             let cleanText = text.trim();
             // Remove "var name = " if present
-            if (cleanText.includes('=')) {
-                cleanText = cleanText.substring(cleanText.indexOf('=') + 1);
+            // Improved: match "var/let/const name =" pattern to avoid cutting strings with '='
+            const varDeclMatch = cleanText.match(/(?:var|let|const)\s+[\w$]+\s*=/);
+            if (varDeclMatch) {
+                cleanText = cleanText.substring(varDeclMatch.index + varDeclMatch[0].length);
             }
             // Remove trailing semicolon
             if (cleanText.endsWith(';')) {
