@@ -76,6 +76,20 @@
         .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         .stat-info div:first-child { font-size: 0.9rem; color: #7f8c8d; }
         .stat-info div:last-child { font-size: 1.4rem; font-weight: 700; color: var(--secondary-color); }
+
+        .role-select {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #dfe6e9;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            background-color: #fff;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        .role-select:hover { border-color: #bdc3c7; }
+        .role-select:focus { outline: none; border-color: var(--primary-color); }
     </style>
 </head>
 <body>
@@ -106,9 +120,9 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background:#d4edda; color:#27ae60;"><i class="fa-solid fa-check"></i></div>
+                    <div class="stat-icon" style="background:#d4edda; color:#27ae60;"><i class="fa-solid fa-users"></i></div>
                     <div class="stat-info">
-                        <div>อนุมัติแล้ว</div>
+                        <div>สมาชิกทั้งหมด</div>
                         <div id="count-approved">0</div>
                     </div>
                 </div>
@@ -143,7 +157,7 @@
         <div id="tab-members" class="hidden">
             <div class="card">
                 <div class="card-header">
-                    <span><i class="fa-solid fa-users"></i> รายชื่อสมาชิกทั้งหมด (ที่ได้รับการอนุมัติแล้ว)</span>
+                    <span><i class="fa-solid fa-users"></i> รายชื่อสมาชิกทั้งหมด</span>
                     <div style="display:flex; gap:10px;">
                          <input type="text" id="memberSearch" placeholder="ค้นหาชื่อ..." style="padding:8px; border:1px solid #ddd; border-radius:6px;">
                          <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
@@ -351,47 +365,126 @@
             tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
             
             try {
-                // Get approved enrollments
-                const snapshot = await db.collection('enrollments')
-                    .where('status', '==', 'approved')
-                    .orderBy('approvedAt', 'desc')
-                    .limit(50) // Limit for performance
-                    .get();
+                // Fetch all users and enrollments
+                const [usersSnap, enrollsSnap] = await Promise.all([
+                    db.collection('users').get(),
+                    db.collection('enrollments').get()
+                ]);
 
-                document.getElementById('count-approved').textContent = snapshot.size; // Update stats based on fetch or separate query
+                const enrollMap = {};
+                enrollsSnap.forEach(doc => {
+                    enrollMap[doc.id] = doc.data();
+                });
 
-                if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">ยังไม่มีสมาชิกที่อนุมัติแล้ว</td></tr>';
+                let members = [];
+                usersSnap.forEach(doc => {
+                    const u = doc.data();
+                    const uid = doc.id;
+                    const enr = enrollMap[uid];
+
+                    // Determine Role
+                    let role = u.role || 'general';
+                    
+                    // Determine Name & Details
+                    let name = u.displayName || u.email || '-';
+                    let phone = '-';
+                    let level = '-';
+                    let dateStr = '-';
+                    let rawDate = null;
+
+                    if (enr) {
+                        // Prefer Thai name if available
+                        if (enr.firstName) {
+                             name = `${enr.title || ''}${enr.firstName} ${enr.lastName || ''} ${enr.epithet ? '('+enr.epithet+')' : ''}`;
+                        }
+                        if (enr.phone) phone = enr.phone;
+                        if (enr.levelRequested) level = enr.levelRequested;
+                        
+                        if (enr.approvedAt) {
+                            rawDate = enr.approvedAt;
+                            const d = enr.approvedAt.toDate();
+                            dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;
+                        }
+                    }
+                    
+                    if (!rawDate && u.createdAt) rawDate = u.createdAt;
+
+                    members.push({
+                        uid,
+                        role,
+                        name,
+                        phone,
+                        level,
+                        dateStr,
+                        rawDate
+                    });
+                });
+
+                // Sort: Admin > Teacher > Student > General
+                const roleOrder = { 'admin': 0, 'teacher': 1, 'student': 2, 'general': 3 };
+                
+                members.sort((a, b) => {
+                    const rA = roleOrder[a.role] ?? 3;
+                    const rB = roleOrder[b.role] ?? 3;
+                    if (rA !== rB) return rA - rB;
+                    return a.name.localeCompare(b.name, 'th');
+                });
+                
+                // Update Total Count
+                document.getElementById('count-approved').textContent = members.length;
+
+                // Filter by Search
+                const searchTerm = (document.getElementById('memberSearch').value || '').toLowerCase();
+                if (searchTerm) {
+                    members = members.filter(m => m.name.toLowerCase().includes(searchTerm));
+                }
+
+                if (members.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">ไม่พบข้อมูลสมาชิก</td></tr>';
                     return;
                 }
 
                 tbody.innerHTML = '';
-                const searchTerm = (document.getElementById('memberSearch').value || '').toLowerCase();
-
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const name = `${data.title || ''}${data.firstName || ''} ${data.lastName || ''} ${data.epithet ? '('+data.epithet+')' : ''}`;
-                    
-                    // Simple client-side search filter
-                    if (searchTerm && !name.toLowerCase().includes(searchTerm)) return;
-
-                    const type = data.userType === 'monk' ? '<span class="badge" style="background:#fff3e0; color:#e67e22;">พระภิกษุ</span>' : 
-                                 (data.userType === 'novice' ? '<span class="badge" style="background:#e0f7fa; color:#006064;">สามเณร</span>' : '<span class="badge" style="background:#f3e5f5; color:#4a148c;">ฆราวาส</span>');
-                    
-                    let dateStr = '-';
-                    if (data.approvedAt) {
-                        const d = data.approvedAt.toDate();
-                        dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;
-                    }
-
+                members.forEach(m => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><div style="font-weight:600;">${name}</div></td>
-                        <td>${type}</td>
-                        <td>ประโยค ${data.levelRequested || '-'}</td>
-                        <td>${data.phone || '-'}</td>
-                        <td>${dateStr}</td>
+                    
+                    // Create Select Element for Role
+                    const select = document.createElement('select');
+                    select.className = 'role-select';
+                    select.innerHTML = `
+                        <option value="admin" ${m.role === 'admin' ? 'selected' : ''}>ผู้ดูแลระบบ (Admin)</option>
+                        <option value="teacher" ${m.role === 'teacher' ? 'selected' : ''}>อาจารย์</option>
+                        <option value="student" ${m.role === 'student' ? 'selected' : ''}>นักเรียน</option>
+                        <option value="general" ${m.role === 'general' ? 'selected' : ''}>ทั่วไป</option>
                     `;
+                    
+                    // Style coloring based on value
+                    const colorMap = {
+                        'admin': '#2c3e50', 'teacher': '#8e44ad', 'student': '#27ae60', 'general': '#7f8c8d'
+                    };
+                    select.style.color = colorMap[m.role] || '#2c3e50';
+                    select.style.fontWeight = '600';
+
+                    select.onchange = function() {
+                        const newVal = this.value;
+                        const newText = this.options[this.selectedIndex].text;
+                        changeRole(m.uid, newVal, m.role, m.name, this);
+                    };
+
+                    tr.innerHTML = `
+                        <td>
+                            <div style="font-weight:600;">${m.name}</div>
+                            ${m.role === 'general' ? '<div style="font-size:0.75rem; color:#ccc;">(ผู้ใช้งานทั่วไป)</div>' : ''}
+                        </td>
+                        <td></td> <!-- Will append select here -->
+                        <td>${m.level !== '-' ? 'ประโยค ' + m.level : '-'}</td>
+                        <td>${m.phone}</td>
+                        <td>${m.dateStr}</td>
+                    `;
+                    
+                    // Append Select
+                    tr.children[1].appendChild(select);
+                    
                     tbody.appendChild(tr);
                 });
 
@@ -399,6 +492,37 @@
                 console.error(e);
                 tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
+        }
+        
+        async function changeRole(uid, newRole, oldRole, name, selectElement) {
+             const roleNames = {
+                 'admin': 'ผู้ดูแลระบบ (Admin)',
+                 'teacher': 'อาจารย์',
+                 'student': 'นักเรียน',
+                 'general': 'ทั่วไป'
+             };
+             
+             if (!confirm(`ต้องการเปลี่ยนบทบาทของ "${name}" \nจาก "${roleNames[oldRole]}" เป็น "${roleNames[newRole]}" ใช่หรือไม่?`)) {
+                 selectElement.value = oldRole;
+                 selectElement.style.color = {
+                    'admin': '#2c3e50', 'teacher': '#8e44ad', 'student': '#27ae60', 'general': '#7f8c8d'
+                 }[oldRole];
+                 return;
+             }
+             
+             selectElement.disabled = true;
+             
+             try {
+                 await db.collection('users').doc(uid).update({
+                     role: newRole
+                 });
+                 alert('เปลี่ยนบทบาทเรียบร้อยแล้ว');
+                 loadMembers(); // Reload to re-sort
+             } catch (e) {
+                 alert('Error: ' + e.message);
+                 selectElement.value = oldRole;
+                 selectElement.disabled = false;
+             }
         }
         
         // Search listener
