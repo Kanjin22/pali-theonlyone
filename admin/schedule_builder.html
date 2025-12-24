@@ -499,7 +499,12 @@
                 const container = row.querySelector(`.slot-container[data-period="${period}"]`);
                 if (!container) return;
 
+                const timeStartInp = container.querySelector('.input-time-start');
+                const timeEndInp = container.querySelector('.input-time-end');
+
                 const periodObj = {
+                    timeStart: timeStartInp ? timeStartInp.value : '',
+                    timeEnd: timeEndInp ? timeEndInp.value : '',
                     activities: {},
                     youtube: {},
                     slides: {},
@@ -706,11 +711,26 @@
         
         const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
         
+        // Default times based on period
+        let defaultStart = '';
+        let defaultEnd = '';
+        if (periodId === 'morning') { defaultStart = '09:00'; defaultEnd = '11:15'; }
+        else if (periodId === 'afternoon') { defaultStart = '13:00'; defaultEnd = '16:00'; }
+        else if (periodId === 'evening') { defaultStart = '18:30'; defaultEnd = '20:30'; }
+
+        const timeStart = (data && data.timeStart) ? data.timeStart : '';
+        const timeEnd = (data && data.timeEnd) ? data.timeEnd : '';
+
         let html = `<div class="slot-container" data-period="${periodId}">`;
         
-        // Header
-        html += `<div class="slot-header" style="background:#f8f9fa; padding:5px; border-radius:4px; margin-bottom:10px;">
+        // Header with Time Inputs
+        html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
                     <strong>${label}</strong>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <input type="text" class="input-time-start" placeholder="${defaultStart}" value="${timeStart}" style="width:60px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                        <span>-</span>
+                        <input type="text" class="input-time-end" placeholder="${defaultEnd}" value="${timeEnd}" style="width:60px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                    </div>
                  </div>`;
 
         subjects.forEach((subj, idx) => {
