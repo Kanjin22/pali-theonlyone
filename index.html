@@ -775,6 +775,9 @@
                     if (!entry) return;
                     // Morning
                     if (entry.morning) {
+                        if (entry.evening.activity) {
+                            allPins.push({ time: 'เช้า', act: entry.morning.activity, level: defaultLevel, subject: 'กิจกรรม' });
+                        }
                         if (entry.morning.activityGrammar)
                             allPins.push({ time: 'เช้า', act: entry.morning.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
                         if (entry.morning.activityTranslate)
@@ -782,11 +785,13 @@
                     }
                     // Afternoon
                     if (entry.afternoon) {
-                        const prefix = entry.afternoon.isExam ? 'สอบ ' : '';
+                        if (entry.evening.activity) {
+                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activity, level: defaultLevel, subject: 'กิจกรรม' });
+                        }
                         if (entry.afternoon.activityGrammar)
-                            allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
+                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
                         if (entry.afternoon.activityTranslate)
-                            allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityTranslate, level: defaultLevel, subject: 'แปล' });
+                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activityTranslate, level: defaultLevel, subject: 'แปล' });
                     }
                     // Evening
                     if (entry.evening) {
