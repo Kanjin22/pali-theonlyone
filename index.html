@@ -42,37 +42,7 @@
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
         </div>
 
-        <div class="section-label" style="margin-top: 20px;">🔐 เข้าสู่ระบบ</div>
-        <div class="grid-menu" style="margin-bottom:20px;">
-            <div id="auth-card" class="menu-card level-tool" style="text-align:center; display:block; width:100%; padding:20px;">
-                <div id="auth-status" style="margin-bottom:12px; color:#2c3e50;">ยังไม่เข้าสู่ระบบ</div>
-                <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:12px;">
-                    <button id="btn-google" class="menu-card" style="padding:10px 14px;">
-                        <div class="icon-box"><i class="fa-brands fa-google"></i></div>
-                        <div class="card-title">Google</div>
-                    </button>
-                    <button id="btn-facebook" class="menu-card" style="padding:10px 14px;">
-                        <div class="icon-box"><i class="fa-brands fa-facebook"></i></div>
-                        <div class="card-title">Facebook</div>
-                    </button>
-                </div>
-                <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:10px;">
-                    <input id="email-input" type="email" placeholder="อีเมล" style="padding:10px; border:1px solid #ddd; border-radius:8px; width:240px;">
-                    <input id="password-input" type="password" placeholder="รหัสผ่าน" style="padding:10px; border:1px solid #ddd; border-radius:8px; width:200px;">
-                </div>
-                <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:10px;">
-                    <button id="btn-email-signin" class="menu-card" style="padding:10px 14px;">
-                        <div class="card-title">เข้าสู่ระบบด้วยอีเมล</div>
-                    </button>
-                    <button id="btn-email-signup" class="menu-card" style="padding:10px 14px;">
-                        <div class="card-title">สมัครด้วยอีเมล</div>
-                    </button>
-                </div>
-                <button id="btn-logout" class="menu-card" style="padding:10px 14px; display:none; margin-top:10px;">
-                    <div class="card-title">ออกจากระบบ</div>
-                </button>
-            </div>
-        </div>
+        
 
         <div id="app-content" style="display:none;">
         <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
@@ -338,7 +308,8 @@
                     return db.collection('exam_sets').where('createdBy', '==', uid).get();
                 }).then(s => {
                     const n = s.size;
-                    if (authStatusInline) authStatusInline.textContent = (userInfo && userInfo.textContent ? userInfo.textContent : 'เข้าสู่ระบบ') + ' | ชุดสอบ: ' + n;
+                    if (userInfo) userInfo.textContent = (userInfo.textContent || 'เข้าสู่ระบบ') + ' | ชุดสอบ: ' + n;
+                    if (authStatusInline) authStatusInline.textContent = (userInfo && userInfo.textContent ? userInfo.textContent : 'เข้าสู่ระบบ');
                 });
             } else {
                 hideUser();
