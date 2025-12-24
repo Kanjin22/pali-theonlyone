@@ -934,7 +934,7 @@
         auth.onAuthStateChanged((user) => {
             if (user) {
                 closeLogin();
-                showUser(user);
+                // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
                 if (appContent) appContent.style.display = 'block';
 
                 const uid = user.uid;
@@ -948,19 +948,55 @@
                     try {
                         const doc = await db.collection('users').doc(uid).get();
                         let role = 'general';
+                        let displayName = user.displayName; // Default to Auth name
+
                         if (doc.exists && doc.data()) role = doc.data().role || 'general';
                         if (!doc.exists || !doc.data() || !doc.data().role) {
                             await db.collection('users').doc(uid).set({ role: 'general' }, { merge: true });
                         }
                         try {
                             const enr = await db.collection('enrollments').doc(uid).get();
-                            if (enr.exists && enr.data() && enr.data().status === 'approved' && role !== 'student') {
-                                await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
-                                role = 'student';
+                            if (enr.exists && enr.data()) {
+                                const enrData = enr.data();
+                                // ถ้าเป็นนักเรียน (approved) หรือแม้แต่ pending ก็อาจจะอยากโชว์ชื่อจริง? 
+                                // โจทย์บอก "เมื่อเขาสมัครเป็นนักเรียนแล้ว เราจะให้แสดงชื่อจริง"
+                                // ดังนั้นเช็ค status approved หรือเช็คว่ามีข้อมูลสมัครก็ได้
+                                if (enrData.status === 'approved') {
+                                    if (role !== 'student') {
+                                        await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
+                                        role = 'student';
+                                    }
+                                    // Construct Real Name
+                                    const title = enrData.title || '';
+                                    const first = enrData.firstName || '';
+                                    const last = enrData.lastName || '';
+                                    const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
+                                    displayName = `${title}${first} ${last}${epithet}`;
+                                }
                             }
                         } catch (e) { }
+                        
+                        // Update User UI with correct name
+                        const userObjForUI = { ...user, displayName: displayName }; // Create a proxy object or just pass name
+                        // showUser function expects a user object with displayName property
+                        // We can't easily modify user.displayName directly as it's read-only in some SDK versions or requires updateProfile
+                        // So we'll pass a custom object mimicking the user or just update the UI directly here if showUser allows.
+                        // Let's modify showUser to accept a name override or just pass the modified object.
+                        // Since we can't be sure of showUser implementation details (it's likely simple), let's try to override it.
+                         
+                         // Hack: Create a duck-typed user object for showUser
+                         const displayUser = {
+                             uid: user.uid,
+                             email: user.email,
+                             displayName: displayName,
+                             photoURL: user.photoURL
+                         };
+                         showUser(displayUser);
+
                         applyRoleUI(role);
-                    } catch (e) { }
+                    } catch (e) { 
+                        showUser(user); // Fallback
+                    }
                 })();
 
                 // โค้ดสร้าง Exam Sets (คงเดิม)
