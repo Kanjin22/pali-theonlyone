@@ -465,6 +465,18 @@
             selectElement.add(opt);
         }
 
+        // Level Names Mapping
+        const LEVEL_NAMES = {
+            'pt12': 'ประโยค ๑-๒',
+            'pt3': 'ป.ธ. ๓',
+            'pt4': 'ป.ธ. ๔',
+            'pt5': 'ป.ธ. ๕',
+            'pt6': 'ป.ธ. ๖',
+            'pt7': 'ป.ธ. ๗',
+            'pt8': 'ป.ธ. ๘',
+            'pt9': 'ป.ธ. ๙'
+        };
+
         // Auth & Data Loading
         auth.onAuthStateChanged(async (u) => {
             if (!u) { location.href = 'index.html'; return; }
@@ -490,7 +502,7 @@
                 levels.forEach(l => {
                     const opt = document.createElement('option');
                     opt.value = l;
-                    opt.textContent = 'ชั้นประโยค ' + l.toUpperCase();
+                    opt.textContent = LEVEL_NAMES[l] || ('ชั้นประโยค ' + l.toUpperCase());
                     levelSelect.appendChild(opt);
                 });
             } catch (e) {}
