@@ -333,6 +333,14 @@
             background-color: #16a085;
         }
 
+        .btn-exam {
+            background-color: #d35400;
+        }
+
+        .btn-answer {
+            background-color: #8e44ad;
+        }
+
         /* Stats */
         .stats-dashboard {
             display: flex;
@@ -1106,8 +1114,10 @@
                              name = filename;
                          } catch(e) { name = "ดาวน์โหลดไฟล์"; }
                      } else if (!f.isExplicitLabel) {
-                         // Local file
-                         href = `../../files/${f.url}`;
+                         // Local file (Legacy fallback, but we should have resolved it already)
+                         // If finalUrl logic worked, we shouldn't be here for cloud files.
+                         // But if it's really a local file reference that slipped through:
+                         href = f.url.startsWith('http') ? f.url : `../../files/${f.url}`;
                          name = f.url;
                      }
                      // If explicit label was provided, we use it directly (e.g. "ข้อสอบไวยากรณ์")
