@@ -501,13 +501,15 @@
 
                 const timeStartInp = container.querySelector('.input-time-start');
                 const timeEndInp = container.querySelector('.input-time-end');
+                const zoomInp = container.querySelector('.input-zoom');
 
                 const periodObj = {
                     timeStart: timeStartInp ? timeStartInp.value : '',
                     timeEnd: timeEndInp ? timeEndInp.value : '',
+                    linkZoom: zoomInp && zoomInp.value.trim() ? zoomInp.value.trim() : null, // Shared Zoom
                     activities: {},
                     youtube: {},
-                    slides: {},
+                    slides: {}, 
                     noteFiles: {},
                     isExam: {},
                     examFiles: {},
@@ -533,7 +535,7 @@
                         periodObj.youtube[subjId] = ytInp.value.trim();
                     }
 
-                    // 3. Slide
+                    // 3. Slide (Presentation ID)
                     const slideInp = block.querySelector('.input-slide');
                     if (slideInp && slideInp.value.trim()) {
                         periodObj.slides[subjId] = slideInp.value.trim();
@@ -733,12 +735,22 @@
                     </div>
                  </div>`;
 
+        let sharedSlideVal = '';
+        if (data) {
+             if (data.linkZoom) sharedSlideVal = data.linkZoom;
+             else if (data.slides) {
+                 // Fallback: take first slide val found
+                 const vals = Object.values(data.slides);
+                 if (vals.length > 0) sharedSlideVal = vals[0];
+             }
+        }
+
         subjects.forEach((subj, idx) => {
             // Determine if this subject has data
             let hasData = false;
             let actVal = '';
             let ytVal = '';
-            let slideVal = ''; // Zoom/Slide
+            let slideVal = ''; 
             let noteVal = [];
             let isExam = false;
             let examFileVal = [];
@@ -764,11 +776,9 @@
                     ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
                 }
 
-                // Slide (Zoom)
+                // Slide (Presentation ID)
                 if (data.slides && data.slides[subj.id]) {
                     slideVal = data.slides[subj.id];
-                } else if (idx === 0 && data.linkZoom) {
-                    slideVal = data.linkZoom;
                 }
 
                 // Materials (Note Files)
@@ -837,10 +847,10 @@
                             <textarea class="input-youtube" data-subj-id="${subj.id}" rows="3" placeholder="https://youtube.com/watch?v=...">${ytVal}</textarea>
                         </div>
 
-                        <!-- 3. Slide -->
+                        <!-- 3. Slide (Presentation ID) -->
                         <div class="field-group">
                             <label>รหัสสื่อการสอน (Presentation ID)</label>
-                            <input type="text" class="input-slide" data-subj-id="${subj.id}" placeholder="เช่น mangala_01_01 หรือ Link Zoom" value="${slideVal}">
+                            <input type="text" class="input-slide" data-subj-id="${subj.id}" placeholder="เช่น mangala_01_01" value="${slideVal}">
                         </div>
 
                         <!-- 4. Materials -->
@@ -872,6 +882,14 @@
                 </div>
             `;
         });
+
+        // Shared Slide/Zoom Input at the bottom
+        html += `<div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
+                    <div class="field-group">
+                        <label>ลิงค์ Zoom (เข้าเรียนออนไลน์) - ใช้ร่วมกันทุกวิชา</label>
+                        <input type="text" class="input-zoom" placeholder="วางลิงค์ Zoom ที่นี่" value="${sharedSlideVal}">
+                    </div>
+                 </div>`;
 
         html += `</div>`;
         return html;

@@ -988,7 +988,9 @@
                  Object.keys(period.slides).forEach(subjId => {
                      linksHtml += renderSlideBtn(period.slides[subjId], getSubjLabel(subjId));
                  });
-            } else if (period.linkZoom) {
+            }
+            
+            if (period.linkZoom) {
                  linksHtml += renderSlideBtn(period.linkZoom);
             }
 
