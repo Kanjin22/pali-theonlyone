@@ -1039,6 +1039,7 @@
                 ];
 
                 // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
+                // Remove set operation for role here to avoid overwrite. Only update lastLogin.
                 db.collection('users').doc(uid).set({
                     displayName: user.displayName || '',
                     email: user.email || '',
@@ -1050,17 +1051,13 @@
                         await loadSystemConfig(); // Load open levels first
                         let role = 'general';
                         let displayName = user.displayName;
-                        let shouldSetDefaultRole = false;
+                        // REMOVED: shouldSetDefaultRole logic to prevent auto-downgrade
 
                         // 1. Try to get User Role from Firestore
                         try {
                             const doc = await db.collection('users').doc(uid).get();
                             if (doc.exists && doc.data()) {
                                 role = doc.data().role || 'general';
-                                if (!doc.data().role) shouldSetDefaultRole = true;
-                            } else {
-                                // Doc does not exist
-                                shouldSetDefaultRole = true;
                             }
                         } catch (e) {
                             console.warn("Firestore Read Error (User):", e.message);
@@ -1073,21 +1070,16 @@
 
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
                         if (role !== 'admin') {
-                            // ... (Existing Logic)
-                            // ตรวจสอบว่าต้องกำหนด Role เริ่มต้นไหม
-                            if (shouldSetDefaultRole && role === 'general') {
-                                // Try to set default role if needed, ignore error
-                                db.collection('users').doc(uid).set({ role: 'general' }, { merge: true }).catch(() => { });
-                            }
-
+                            
                             try {
                                 const enr = await db.collection('enrollments').doc(uid).get();
                                 if (enr.exists && enr.data()) {
                                     const enrData = enr.data();
                                     // Upgrade role if general and approved
                                     if (enrData.status === 'approved' && role === 'general') {
-                                        await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
-                                        role = 'student';
+                                        // Update to student only if confirmed
+                                        // db.collection('users').doc(uid).set({ role: 'student' }, { merge: true }); // Commented out auto-upgrade for safety
+                                        role = 'student'; // Just display as student
                                     }
 
                                     // Construct Real Name if approved
@@ -1099,7 +1091,7 @@
                                         displayName = `${title}${first} ${last}${epithet}`;
                                     }
                                 }
-                            } catch (e) {
+                            } catch (e) { 
                                 console.warn("Enrollment Check Error:", e.message);
                             }
                         }
