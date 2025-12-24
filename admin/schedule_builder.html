@@ -499,13 +499,11 @@
                 const container = row.querySelector(`.slot-container[data-period="${period}"]`);
                 if (!container) return;
 
-                const timeStartInp = container.querySelector('.input-time-start');
-                const timeEndInp = container.querySelector('.input-time-end');
                 const zoomInp = container.querySelector('.input-zoom');
 
                 const periodObj = {
-                    timeStart: timeStartInp ? timeStartInp.value : '',
-                    timeEnd: timeEndInp ? timeEndInp.value : '',
+                    timeStart: '', // Defaults, will be filled if exam enabled
+                    timeEnd: '',
                     linkZoom: zoomInp && zoomInp.value.trim() ? zoomInp.value.trim() : null, // Shared Zoom
                     activities: {},
                     youtube: {},
@@ -561,6 +559,12 @@
                         if (ansFileInp && ansFileInp.value) {
                             periodObj.answerFiles[subjId] = ansFileInp.value;
                         }
+
+                        // Exam Time (Global for period) - capture from active exam subject
+                        const tStart = block.querySelector('.input-time-start');
+                        const tEnd = block.querySelector('.input-time-end');
+                        if (tStart && tStart.value) periodObj.timeStart = tStart.value;
+                        if (tEnd && tEnd.value) periodObj.timeEnd = tEnd.value;
                     }
                 });
 
@@ -725,14 +729,9 @@
 
         let html = `<div class="slot-container" data-period="${periodId}">`;
         
-        // Header with Time Inputs
-        html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        // Header (Simplified)
+        html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px;">
                     <strong>${label}</strong>
-                    <div style="display:flex; align-items:center; gap:5px;">
-                        <input type="text" class="input-time-start" placeholder="${defaultStart}" value="${timeStart}" style="width:60px; text-align:center; border:1px solid #ddd; border-radius:3px;">
-                        <span>-</span>
-                        <input type="text" class="input-time-end" placeholder="${defaultEnd}" value="${timeEnd}" style="width:60px; text-align:center; border:1px solid #ddd; border-radius:3px;">
-                    </div>
                  </div>`;
 
         let sharedSlideVal = '';
@@ -867,6 +866,13 @@
                             </label>
                             
                             <div class="exam-files" style="display:${isExam ? 'block' : 'none'}; margin-top:10px;">
+                                <div class="field-group" style="margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                                    <label style="margin:0;">เวลาสอบ (Exam Time):</label>
+                                    <input type="text" class="input-time-start" placeholder="${defaultStart}" value="${timeStart}" style="width:70px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                                    <span>-</span>
+                                    <input type="text" class="input-time-end" placeholder="${defaultEnd}" value="${timeEnd}" style="width:70px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                                </div>
+
                                 <div class="field-group">
                                     <label>ไฟล์ข้อสอบ (Exam Paper)</label>
                                     <select class="input-exam-file" data-subj-id="${subj.id}">${createOptions(exams, examFileVal)}</select>
