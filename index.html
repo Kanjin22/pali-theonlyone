@@ -55,18 +55,19 @@
                         <div class="icon-box"><i class="fa-brands fa-facebook"></i></div>
                         <div class="card-title">Facebook</div>
                     </button>
-                    <button id="btn-line" class="menu-card" style="padding:10px 14px;">
-                        <div class="icon-box"><i class="fa-brands fa-line"></i></div>
-                        <div class="card-title">LINE</div>
-                    </button>
                 </div>
                 <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:10px;">
-                    <input id="phone-input" type="tel" placeholder="เบอร์โทรศัพท์ เช่น +6691xxxxxxx" style="padding:10px; border:1px solid #ddd; border-radius:8px; width:280px;">
-                    <button id="btn-phone" class="menu-card" style="padding:10px 14px;">
-                        <div class="card-title">รับรหัส OTP</div>
+                    <input id="email-input" type="email" placeholder="อีเมล" style="padding:10px; border:1px solid #ddd; border-radius:8px; width:240px;">
+                    <input id="password-input" type="password" placeholder="รหัสผ่าน" style="padding:10px; border:1px solid #ddd; border-radius:8px; width:200px;">
+                </div>
+                <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:10px;">
+                    <button id="btn-email-signin" class="menu-card" style="padding:10px 14px;">
+                        <div class="card-title">เข้าสู่ระบบด้วยอีเมล</div>
+                    </button>
+                    <button id="btn-email-signup" class="menu-card" style="padding:10px 14px;">
+                        <div class="card-title">สมัครด้วยอีเมล</div>
                     </button>
                 </div>
-                <div id="recaptcha-container"></div>
                 <button id="btn-logout" class="menu-card" style="padding:10px 14px; display:none; margin-top:10px;">
                     <div class="card-title">ออกจากระบบ</div>
                 </button>
@@ -220,16 +221,15 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:16px;">
                     <button id="login-google" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-brands fa-google" style="color:#db4437;"></i><span>Google</span></button>
                     <button id="login-facebook" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#1877f2; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></button>
-                    <button id="login-line" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#06C755; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-brands fa-line"></i><span>LINE</span></button>
-                    <button id="toggle-phone" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-solid fa-phone"></i><span>เบอร์โทรศัพท์</span></button>
                 </div>
-                <div id="phone-box" style="display:none; border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
-                    <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">เข้าสู่ระบบด้วยเบอร์โทรศัพท์</div>
-                    <input id="phone-input" type="tel" placeholder="+66XXXXXXXXX" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
-                    <div id="recaptcha-container" style="margin-bottom:10px;"></div>
-                    <button id="send-otp" style="width:100%; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer;">ส่งรหัสยืนยัน</button>
-                    <input id="otp-input" type="text" placeholder="กรอกรหัส 6 หลัก" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin:10px 0;">
-                    <button id="confirm-otp" style="width:100%; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer;">ยืนยันเข้าสู่ระบบ</button>
+                <div style="border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
+                    <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">อีเมลและรหัสผ่าน</div>
+                    <input id="modal-email" type="email" placeholder="อีเมล" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <div style="display:flex; gap:8px;">
+                        <button id="modal-email-signin" style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer;">เข้าสู่ระบบ</button>
+                        <button id="modal-email-signup" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer;">สมัครสมาชิก</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -251,21 +251,20 @@
         const auth = firebase.auth();
         auth.useDeviceLanguage();
         const db = firebase.firestore();
-        let confirmationResultRef = null;
-        let recaptchaVerifier = null;
         const appContent = document.getElementById('app-content');
         const loginModal = document.getElementById('login-modal');
         const btnOpenLogin = document.getElementById('btn-open-login');
         const btnCloseLogin = document.getElementById('btn-close-login');
         const loginGoogle = document.getElementById('login-google');
         const loginFacebook = document.getElementById('login-facebook');
-        const loginLine = document.getElementById('login-line');
-        const togglePhone = document.getElementById('toggle-phone');
-        const phoneBox = document.getElementById('phone-box');
-        const phoneInput = document.getElementById('phone-input');
-        const sendOtp = document.getElementById('send-otp');
-        const otpInput = document.getElementById('otp-input');
-        const confirmOtp = document.getElementById('confirm-otp');
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+        const btnEmailSignIn = document.getElementById('btn-email-signin');
+        const btnEmailSignUp = document.getElementById('btn-email-signup');
+        const modalEmail = document.getElementById('modal-email');
+        const modalPassword = document.getElementById('modal-password');
+        const modalEmailSignIn = document.getElementById('modal-email-signin');
+        const modalEmailSignUp = document.getElementById('modal-email-signup');
         const userInfo = document.getElementById('user-info');
         const btnLogoutTop = document.getElementById('btn-logout');
         const authStatusInline = document.getElementById('auth-status');
@@ -276,11 +275,30 @@
         if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
         if (loginGoogle) loginGoogle.onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
         if (loginFacebook) loginFacebook.onclick = () => auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-        if (loginLine) loginLine.onclick = () => auth.signInWithPopup(new firebase.auth.OAuthProvider('oidc.line'));
-        if (togglePhone && phoneBox) togglePhone.onclick = () => { phoneBox.style.display = phoneBox.style.display === 'none' ? 'block' : 'none'; };
-        function initRecaptcha() { if (!recaptchaVerifier) recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' }); }
-        if (sendOtp) sendOtp.onclick = async () => { initRecaptcha(); const phone = (phoneInput && phoneInput.value || '').trim(); if (!phone) return; confirmationResultRef = await auth.signInWithPhoneNumber(phone, recaptchaVerifier); };
-        if (confirmOtp) confirmOtp.onclick = async () => { const code = (otpInput && otpInput.value || '').trim(); if (!code || !confirmationResultRef) return; await confirmationResultRef.confirm(code); };
+        if (btnEmailSignIn) btnEmailSignIn.onclick = async () => {
+            const email = (emailInput && emailInput.value || '').trim();
+            const pass = (passwordInput && passwordInput.value || '').trim();
+            if (!email || !pass) return;
+            await auth.signInWithEmailAndPassword(email, pass);
+        };
+        if (btnEmailSignUp) btnEmailSignUp.onclick = async () => {
+            const email = (emailInput && emailInput.value || '').trim();
+            const pass = (passwordInput && passwordInput.value || '').trim();
+            if (!email || !pass) return;
+            await auth.createUserWithEmailAndPassword(email, pass);
+        };
+        if (modalEmailSignIn) modalEmailSignIn.onclick = async () => {
+            const email = (modalEmail && modalEmail.value || '').trim();
+            const pass = (modalPassword && modalPassword.value || '').trim();
+            if (!email || !pass) return;
+            await auth.signInWithEmailAndPassword(email, pass);
+        };
+        if (modalEmailSignUp) modalEmailSignUp.onclick = async () => {
+            const email = (modalEmail && modalEmail.value || '').trim();
+            const pass = (modalPassword && modalPassword.value || '').trim();
+            if (!email || !pass) return;
+            await auth.createUserWithEmailAndPassword(email, pass);
+        };
         function showUser(u) {
             if (userInfo) { const name = u.displayName || u.phoneNumber || (u.email || 'ผู้ใช้'); userInfo.textContent = 'เข้าสู่ระบบ: ' + name; userInfo.style.display = 'inline-block'; }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
