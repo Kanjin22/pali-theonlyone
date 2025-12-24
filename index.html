@@ -507,8 +507,12 @@
                 a.href = 'enroll.html';
                 a.className = 'menu-card level-tool';
                 a.style.display = 'flex';
-                a.innerHTML = '<div class="icon-box"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title">สมัครเรียน</div><div class="card-desc">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
-                container.appendChild(a);
+                a.style.background = '#fffbe6';
+                a.style.border = '2px solid #f1c40f';
+                a.style.boxShadow = '0 10px 25px rgba(241,196,15,0.25)';
+                a.style.position = 'relative';
+                a.innerHTML = '<span style="position:absolute; top:10px; right:10px; background:#e67e22; color:#fff; font-size:0.8rem; padding:4px 10px; border-radius:999px;">สำคัญ</span><div class="icon-box" style="color:#e67e22;"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title" style="color:#c0392b;">สมัครเรียน</div><div class="card-desc" style="color:#7f8c8d;">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
+                container.insertBefore(a, container.firstChild);
             } catch (e) {}
         }
 
