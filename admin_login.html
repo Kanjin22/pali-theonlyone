@@ -141,6 +141,13 @@
             }
         });
 
+        // รายชื่ออีเมลผู้ดูแลระบบ (สำหรับกรณีที่ยังไม่ได้ตั้งค่า Firestore Rules หรือเกิดข้อผิดพลาด)
+        const FALLBACK_ADMIN_EMAILS = [
+            'admin@example.com', 
+            'pali.theonlyone@gmail.com', // เดาว่าเป็นอีเมลผู้พัฒนา
+            // เพิ่มอีเมลของคุณที่นี่
+        ];
+
         async function checkAdminRole(user, isInteractive) {
             try {
                 const doc = await db.collection('users').doc(user.uid).get();
@@ -148,19 +155,41 @@
                     // Success
                     window.location.href = 'admin_dashboard.html';
                 } else {
-                    if (isInteractive) {
-                        showError('บัญชีนี้ไม่มีสิทธิ์เข้าถึงส่วนผู้ดูแล');
-                        auth.signOut();
-                    }
-                    // If silent check fails (e.g. user logged in index.html but not admin), do nothing or sign out?
-                    // Better to just stay on login page if it's silent check and not admin.
-                    if (isInteractive) {
-                         btnLogin.disabled = false;
-                         btnLogin.textContent = 'เข้าสู่ระบบ';
-                    }
+                    // Not admin in Firestore
+                    handleLoginFailure(isInteractive, 'บัญชีนี้ไม่มีสิทธิ์เข้าถึงส่วนผู้ดูแล');
                 }
             } catch (e) {
-                if (isInteractive) showError('เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์: ' + e.message);
+                console.error("Role check error:", e);
+                
+                // Fallback: Check if email is in allowlist
+                if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                    console.warn("Allowed via Fallback Email List");
+                    window.location.href = 'admin_dashboard.html';
+                    return;
+                }
+
+                if (e.code === 'permission-denied') {
+                    // Specific error handling for rules
+                    if (isInteractive) {
+                        showError('เกิดข้อผิดพลาดสิทธิ์การเข้าถึง (Permission Denied)<br>กรุณาตรวจสอบว่าได้ Deploy <b>firestore.rules</b> ไปยัง Firebase Console แล้ว');
+                    }
+                } else {
+                    if (isInteractive) showError('เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์: ' + e.message);
+                }
+                
+                // Don't sign out immediately if it's just a permission error on the 'role' field check,
+                // but if we can't verify, we shouldn't let them in (unless fallback passed).
+                if (isInteractive) {
+                    btnLogin.disabled = false;
+                    btnLogin.textContent = 'เข้าสู่ระบบ';
+                }
+            }
+        }
+
+        function handleLoginFailure(isInteractive, msg) {
+             if (isInteractive) {
+                showError(msg);
+                auth.signOut();
                 btnLogin.disabled = false;
                 btnLogin.textContent = 'เข้าสู่ระบบ';
             }
