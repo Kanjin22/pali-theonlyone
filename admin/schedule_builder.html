@@ -512,9 +512,14 @@
                     periodObj.timeEnd = end;
                     
                     // Collect exam acts
+                    periodObj.activities = {}; // New structured storage
+                    
                     container.querySelectorAll('.input-exam-act').forEach(inp => {
                         const subjId = inp.dataset.subjId;
                         if(inp.value) {
+                            periodObj.activities[subjId] = inp.value;
+                            
+                            // Legacy fallback (optional, can remove if fully migrated)
                             if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
                             else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
                             else periodObj.activity = inp.value;
@@ -522,26 +527,28 @@
                     });
                     
                     // Collect files (Exams)
+                    periodObj.examFiles = {}; // New structured storage
+                    
                     container.querySelectorAll('.input-exam').forEach(sel => {
                         if(sel.value) {
-                            if(!periodObj.exams) periodObj.exams = [];
-                            periodObj.exams.push(sel.value);
-
-                            // Specific fields
                             const subjId = sel.dataset.subjId;
+                            periodObj.examFiles[subjId] = sel.value;
+
+                            // Legacy fields (Keep for safety for now)
                             if (subjId === 'Grammar') periodObj.fileExamGrammar = sel.value;
                             else if (subjId === 'Translate') periodObj.fileExamTranslate = sel.value;
                         }
                     });
 
                     // Collect files (Answers)
+                    periodObj.answerFiles = {}; // New structured storage
+                    
                      container.querySelectorAll('.input-ans').forEach(sel => {
                         if(sel.value) {
-                            if(!periodObj.answers) periodObj.answers = [];
-                            periodObj.answers.push(sel.value);
-
-                            // Specific fields
                             const subjId = sel.dataset.subjId;
+                            periodObj.answerFiles[subjId] = sel.value;
+
+                            // Legacy fields
                             if (subjId === 'Grammar') periodObj.fileAnswerGrammar = sel.value;
                             else if (subjId === 'Translate') periodObj.fileAnswerTranslate = sel.value;
                         }
@@ -549,9 +556,14 @@
 
                 } else {
                     // Normal Mode
+                    periodObj.activities = {};
+                    
                      container.querySelectorAll('.input-act').forEach(inp => {
                         const subjId = inp.dataset.subjId;
                         if(inp.value) {
+                            periodObj.activities[subjId] = inp.value;
+                            
+                            // Legacy
                             if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
                             else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
                             else periodObj.activity = inp.value;
@@ -559,13 +571,18 @@
                     });
                     
                     // Files (Materials)
+                    periodObj.noteFiles = {};
+                    
                     container.querySelectorAll('.input-file').forEach(sel => {
                         if(sel.value) {
+                            const subjId = sel.dataset.subjId;
+                            periodObj.noteFiles[subjId] = sel.value;
+                            
+                            // Legacy array for generic
                             if(!periodObj.materials) periodObj.materials = [];
                             periodObj.materials.push(sel.value);
 
-                             // Specific fields (Legacy support + precision)
-                            const subjId = sel.dataset.subjId;
+                             // Legacy specific
                             if (subjId === 'Grammar') periodObj.fileNoteGrammar = sel.value;
                             else if (subjId === 'Translate') periodObj.fileNoteTranslate = sel.value;
                         }
@@ -700,9 +717,14 @@
         subjects.forEach(subj => {
             let val = '';
             if (data) {
-                if (subj.id === 'Grammar') val = data.activityGrammar || '';
-                else if (subj.id === 'Translate') val = data.activityTranslate || '';
-                else val = data.activity || ''; // Fallback
+                if (data.activities && data.activities[subj.id]) {
+                    val = data.activities[subj.id];
+                } else {
+                    // Legacy Fallback
+                    if (subj.id === 'Grammar') val = data.activityGrammar || '';
+                    else if (subj.id === 'Translate') val = data.activityTranslate || '';
+                    else val = data.activity || '';
+                }
             }
             normalInputs += `
                 <div class="field-group">
@@ -729,17 +751,19 @@
              // Determine selected file from legacy fields or materials array
              let selectedFiles = [];
              if (data) {
-                 if (subj.id === 'Grammar' && data.fileNoteGrammar) selectedFiles.push(data.fileNoteGrammar);
-                 else if (subj.id === 'Translate' && data.fileNoteTranslate) {
-                     if (Array.isArray(data.fileNoteTranslate)) selectedFiles.push(...data.fileNoteTranslate);
-                     else selectedFiles.push(data.fileNoteTranslate);
-                 }
-                 // Fallback to materials array if no specific field found, or if just generic materials
-                 if (selectedFiles.length === 0 && data.materials && data.materials.length > 0) {
-                     // Only pick first if we can't distinguish? 
-                     // Or maybe we shouldn't fallback blindly to avoid duplicating file on all subjects.
-                     // But for now, let's keep it safe.
-                     selectedFiles = [data.materials[0]];
+                 if (data.noteFiles && data.noteFiles[subj.id]) {
+                     selectedFiles.push(data.noteFiles[subj.id]);
+                 } else {
+                     // Legacy Fallback
+                     if (subj.id === 'Grammar' && data.fileNoteGrammar) selectedFiles.push(data.fileNoteGrammar);
+                     else if (subj.id === 'Translate' && data.fileNoteTranslate) {
+                         if (Array.isArray(data.fileNoteTranslate)) selectedFiles.push(...data.fileNoteTranslate);
+                         else selectedFiles.push(data.fileNoteTranslate);
+                     }
+                     // Fallback to materials array if no specific field found, or if just generic materials
+                     if (selectedFiles.length === 0 && data.materials && data.materials.length > 0) {
+                         selectedFiles = [data.materials[0]];
+                     }
                  }
              }
 
@@ -765,8 +789,13 @@
         subjects.forEach(subj => {
             let val = '';
             if (data) {
-                if (subj.id === 'Grammar') val = data.activityGrammar || '';
-                else if (subj.id === 'Translate') val = data.activityTranslate || '';
+                if (data.activities && data.activities[subj.id]) {
+                    val = data.activities[subj.id];
+                } else {
+                    // Legacy
+                    if (subj.id === 'Grammar') val = data.activityGrammar || '';
+                    else if (subj.id === 'Translate') val = data.activityTranslate || '';
+                }
             }
             examInputs += `
                 <div class="field-group">
@@ -780,14 +809,19 @@
             // Exam Files
             let selExams = [];
             if (data) {
-                if (subj.id === 'Grammar' && data.fileExamGrammar) selExams.push(data.fileExamGrammar);
-                else if (subj.id === 'Translate' && data.fileExamTranslate) selExams.push(data.fileExamTranslate);
-                else if (data.exams && data.exams.length > 0) {
-                    // Try to map by index if count matches
-                    if (data.exams.length === subjects.length) {
-                        if (data.exams[idx]) selExams.push(data.exams[idx]);
-                    } else {
-                        selExams = data.exams; // Fallback
+                if (data.examFiles && data.examFiles[subj.id]) {
+                    selExams.push(data.examFiles[subj.id]);
+                } else {
+                    // Legacy
+                    if (subj.id === 'Grammar' && data.fileExamGrammar) selExams.push(data.fileExamGrammar);
+                    else if (subj.id === 'Translate' && data.fileExamTranslate) selExams.push(data.fileExamTranslate);
+                    else if (data.exams && data.exams.length > 0 && !data.examFiles && !data.fileExamGrammar && !data.fileExamTranslate) {
+                         // Only use generic array if NO specific info exists at all
+                        if (data.exams.length === subjects.length) {
+                            if (data.exams[idx]) selExams.push(data.exams[idx]);
+                        } else {
+                            selExams = data.exams; // Fallback
+                        }
                     }
                 }
             }
@@ -795,14 +829,19 @@
             // Answer Files
             let selAnswers = [];
             if (data) {
-                if (subj.id === 'Grammar' && data.fileAnswerGrammar) selAnswers.push(data.fileAnswerGrammar);
-                else if (subj.id === 'Translate' && data.fileAnswerTranslate) selAnswers.push(data.fileAnswerTranslate);
-                else if (data.answers && data.answers.length > 0) {
-                     // Try to map by index
-                    if (data.answers.length === subjects.length) {
-                        if (data.answers[idx]) selAnswers.push(data.answers[idx]);
-                    } else {
-                        selAnswers = data.answers; // Fallback
+                if (data.answerFiles && data.answerFiles[subj.id]) {
+                    selAnswers.push(data.answerFiles[subj.id]);
+                } else {
+                    // Legacy
+                    if (subj.id === 'Grammar' && data.fileAnswerGrammar) selAnswers.push(data.fileAnswerGrammar);
+                    else if (subj.id === 'Translate' && data.fileAnswerTranslate) selAnswers.push(data.fileAnswerTranslate);
+                    else if (data.answers && data.answers.length > 0 && !data.answerFiles && !data.fileAnswerGrammar && !data.fileAnswerTranslate) {
+                         // Only use generic array if NO specific info exists at all
+                        if (data.answers.length === subjects.length) {
+                            if (data.answers[idx]) selAnswers.push(data.answers[idx]);
+                        } else {
+                            selAnswers = data.answers; // Fallback
+                        }
                     }
                 }
             }

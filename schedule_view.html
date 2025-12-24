@@ -649,6 +649,19 @@
             if (period.activityGrammar) html += `<p>📘 ${period.activityGrammar}</p>`;
             if (period.activityTranslate) html += `<p>📙 ${period.activityTranslate}</p>`;
             if (period.activity && !period.activityGrammar && !period.activityTranslate) html += `<p>${period.activity}</p>`;
+            
+            // Handle multiple activities from structured data
+            if (period.activities) {
+                // If we have structured activities, we might want to display them instead or in addition?
+                // For now, let's assume legacy fields cover the display needs or they are synced.
+                // If you want to be precise:
+                /*
+                Object.keys(period.activities).forEach(k => {
+                     // Check if not already displayed via legacy fields
+                });
+                */
+            }
+            
             html += '</div>';
 
             // Links
@@ -674,67 +687,114 @@
             const allFiles = [];
             
             // Helper to add files
-            const addFiles = (files, label, icon, cls) => {
+            // Fixed: Now uses categoryLabel if provided
+            const addFiles = (files, categoryLabel, icon, cls) => {
                 if (!files) return;
                 if (Array.isArray(files)) {
-                    files.forEach(f => allFiles.push({ url: f, label: f, icon, cls })); // Use name as label if no other info
+                    files.forEach((f, i) => {
+                        // If array, append index to label if it's a generic label, or just use filename if no label
+                        let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
+                        // If it's a legacy specific field (string), we usually pass a specific label.
+                        // If it's a generic array, we might pass "Exams".
+                        allFiles.push({ url: f, label: label, icon, cls, isExplicitLabel: !!categoryLabel }); 
+                    }); 
                 } else {
-                    allFiles.push({ url: files, label: files, icon, cls });
+                    allFiles.push({ url: files, label: categoryLabel || files, icon, cls, isExplicitLabel: !!categoryLabel });
                 }
             };
 
-            addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material');
-            
-            // Exams & Answers (Grammar)
-            addFiles(period.fileExamGrammar, 'ข้อสอบไวยากรณ์', 'fa-file-alt', 'btn-exam');
-            addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer');
-            
-            // Exams & Answers (Translate)
-            addFiles(period.fileExamTranslate, 'ข้อสอบแปล', 'fa-file-alt', 'btn-exam');
-            addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer');
+            // Mapping for subject labels
+            const subjMap = {
+                'Grammar': 'ไวยากรณ์',
+                'Translate': 'แปล',
+                'Return': 'กลับ',
+                'Chan': 'ฉันท์',
+                'Samphan': 'สัมพันธ์'
+            };
+            const getSubjLabel = (id) => subjMap[id] || id;
 
-            // Generic Exams/Answers arrays
-            addFiles(period.exams, 'ข้อสอบ', 'fa-file-alt', 'btn-exam');
-            addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer');
+            // 1. New Structured Data (Prioritized)
+            // We check if structured data exists (even if empty object) to decide whether to skip legacy
+            // But we only display if keys exist.
+            
+            if (period.noteFiles) {
+                Object.keys(period.noteFiles).forEach(subjId => {
+                    addFiles(period.noteFiles[subjId], `เอกสารประกอบ (${getSubjLabel(subjId)})`, 'fa-file-pdf', 'btn-material');
+                });
+            }
+            if (period.examFiles) {
+                Object.keys(period.examFiles).forEach(subjId => {
+                    addFiles(period.examFiles[subjId], `ข้อสอบ${getSubjLabel(subjId)}`, 'fa-file-alt', 'btn-exam');
+                });
+            }
+            if (period.answerFiles) {
+                Object.keys(period.answerFiles).forEach(subjId => {
+                    addFiles(period.answerFiles[subjId], `เฉลย${getSubjLabel(subjId)}`, 'fa-key', 'btn-answer');
+                });
+            }
+
+            // 2. Legacy Specific Fields (Fallback)
+            // If we have structured objects (even empty), we assume data is managed by new builder 
+            // and we shouldn't fallback to legacy fields to avoid duplication.
+            const hasStructured = !!(period.examFiles || period.answerFiles || period.noteFiles);
+
+            if (!hasStructured) {
+                 addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material');
+                 
+                 // Exams & Answers (Grammar)
+                 addFiles(period.fileExamGrammar, 'ข้อสอบไวยากรณ์', 'fa-file-alt', 'btn-exam');
+                 addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer');
+                 
+                 // Exams & Answers (Translate)
+                 addFiles(period.fileExamTranslate, 'ข้อสอบแปล', 'fa-file-alt', 'btn-exam');
+                 addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer');
+     
+                 // Generic Exams/Answers arrays (Last resort)
+                 if (!period.fileExamGrammar && !period.fileExamTranslate) {
+                    addFiles(period.exams, 'ข้อสอบ', 'fa-file-alt', 'btn-exam');
+                 }
+                 if (!period.fileAnswerGrammar && !period.fileAnswerTranslate) {
+                    addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer');
+                 }
+            } else {
+                // Special case: If structured data exists, but user might have manually added "materials" (legacy array) 
+                // in the new builder (it pushes to periodObj.materials too).
+                // In schedule_builder.html:
+                // if(sel.value) { ... periodObj.materials.push(sel.value); ... }
+                // So materials are duplicated in `noteFiles` and `materials`.
+                // We used `noteFiles` above, so we don't need `materials`.
+            }
+            
+            if (linksHtml) {
+                 html += `<div class="modal-section"><h4>สื่อการสอน</h4><div class="link-group">${linksHtml}</div></div>`;
+            }
 
             if (allFiles.length > 0) {
                  let filesHtml = '';
                  allFiles.forEach(f => {
-                     // Check if URL is absolute (http/https) or relative
-                     // Cloud files are full URLs. Legacy files are filenames.
                      let href = f.url;
                      let name = f.label;
                      
-                     if (f.url.startsWith('http')) {
-                         // Cloud file: Extract name from URL or use stored name?
-                         // For now, if label is URL, try to make it prettier or just show "File"
-                         // But typically builder saves the URL as the value.
-                         // Ideally we should save {name, url} but builder saves string.
-                         // Let's decode URI component to see filename if possible
+                     // If label is basically the URL (no explicit label), try to beautify filename
+                     if (!f.isExplicitLabel && f.url.startsWith('http')) {
                          try {
-                             name = decodeURIComponent(f.url.split('/').pop().split('?')[0]);
-                             // Remove timestamp prefix if present (1234567890_name.pdf)
-                             const parts = name.split('_');
+                             let filename = decodeURIComponent(f.url.split('/').pop().split('?')[0]);
+                             const parts = filename.split('_');
                              if (parts.length > 1 && !isNaN(parts[0])) {
-                                 name = parts.slice(1).join('_');
+                                 filename = parts.slice(1).join('_');
                              }
+                             name = filename;
                          } catch(e) { name = "ดาวน์โหลดไฟล์"; }
-                     } else {
-                         // Legacy file
-                         href = `../../files/${f.url}`; // Adjust path as needed
+                     } else if (!f.isExplicitLabel) {
+                         // Local file
+                         href = `../../files/${f.url}`;
+                         name = f.url;
                      }
+                     // If explicit label was provided, we use it directly (e.g. "ข้อสอบไวยากรณ์")
 
                      filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
                  });
                  html += `<div class="modal-section"><h4>ไฟล์ประกอบ</h4><div class="link-group">${filesHtml}</div></div>`;
-            }
-
-            if (linksHtml || allFiles.length > 0) {
-                 // Combine sections if needed, but I separated them above.
-                 // Actually I should append linksHtml (Zoom/Youtube) first.
-                 if (linksHtml) {
-                     html += `<div class="modal-section"><h4>สื่อการสอน</h4><div class="link-group">${linksHtml}</div></div>`;
-                 }
             }
 
             document.getElementById('modal-body').innerHTML = html;
