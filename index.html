@@ -635,7 +635,7 @@
             const lastClassroom = document.getElementById('last-classroom-link');
             const enrollCardId = 'enroll-card';
             const existingEnroll = document.getElementById(enrollCardId);
-            if (role === 'student' || role === 'teacher') {
+            if (role === 'student' || role === 'teacher' || role === 'admin') {
                 classroomLinks.forEach(a => a.style.display = 'flex');
                 if (lastClassroom) lastClassroom.style.display = 'block';
                 if (existingEnroll) existingEnroll.remove();
@@ -962,7 +962,7 @@
                                 // โจทย์บอก "เมื่อเขาสมัครเป็นนักเรียนแล้ว เราจะให้แสดงชื่อจริง"
                                 // ดังนั้นเช็ค status approved หรือเช็คว่ามีข้อมูลสมัครก็ได้
                                 if (enrData.status === 'approved') {
-                                    if (role !== 'student') {
+                                    if (role !== 'student' && role !== 'teacher' && role !== 'admin') {
                                         await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
                                         role = 'student';
                                     }
