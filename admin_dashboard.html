@@ -180,18 +180,18 @@
 
         // Check Admin Auth
         auth.onAuthStateChanged(async (u) => {
-            if (!u) { location.href = 'index.html'; return; }
+            if (!u) { location.href = 'admin_login.html'; return; }
             try {
                 const doc = await db.collection('users').doc(u.uid).get();
                 if (!doc.exists || doc.data().role !== 'admin') {
                     alert('คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
-                    location.href = 'index.html';
+                    location.href = 'admin_login.html';
                 } else {
                     initDashboard();
                 }
             } catch (e) {
                 console.error(e);
-                location.href = 'index.html';
+                location.href = 'admin_login.html';
             }
         });
 
