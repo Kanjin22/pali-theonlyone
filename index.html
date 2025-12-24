@@ -211,6 +211,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="data/data-pt12-november.js"></script>
+    <script src="data/data-pt12-december.js"></script>
+    <script src="data/data-pt12-january.js"></script>
+    <script src="data/data-pt12-february.js"></script>
+    <script src="data/data-pt12_novice-november.js"></script>
+    <script src="data/data-pt12_novice-december.js"></script>
+    <script src="data/data-pt12_novice-january.js"></script>
+    <script src="data/data-pt12_novice-february.js"></script>
     <script>
         // --- ส่วน Config เดิม (คงไว้) ---
         window.firebaseConfig = window.firebaseConfig || {
@@ -540,6 +548,8 @@
             const todayLabel = `วันที่ ${d}/${m}/${y + 543}`;
             const todayDateEl = header.querySelector('#today-date');
             if (todayDateEl) todayDateEl.textContent = todayLabel;
+            // 1) Try Firestore config/today_pins
+            let pinsLoaded = false;
             try {
                 const doc = await db.collection('config').doc('today_pins').get();
                 if (doc.exists && doc.data() && Array.isArray(doc.data().items)) {
@@ -552,53 +562,84 @@
                         warn.textContent = 'หมายเหตุ: ข้อมูลปักหมุดยังไม่อัปเดตเป็นวันนี้';
                         body.appendChild(warn);
                     }
-                    if (pins.length === 0) {
-                        body.innerHTML += '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
-                        return;
-                    }
-                    const groups = {};
-                    pins.forEach(p => {
-                        const level = (p.level || 'ทั่วไป');
-                        if (!groups[level]) groups[level] = [];
-                        groups[level].push({ time: p.time || '-', act: p.act || '-' });
-                    });
-                    Object.keys(groups).forEach(lvl => {
-                        const wrapper = document.createElement('div');
-                        wrapper.style.border = '1px solid #eee';
-                        wrapper.style.borderRadius = '8px';
-                        wrapper.style.padding = '10px 12px';
-                        wrapper.style.marginBottom = '10px';
-                        const title = document.createElement('div');
-                        title.style.fontWeight = 'bold';
-                        title.style.color = '#2c3e50';
-                        title.style.marginBottom = '8px';
-                        title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:6px; color:#3498db;"></i>${lvl}`;
-                        wrapper.appendChild(title);
-                        const list = document.createElement('div');
-                        list.style.display = 'flex';
-                        list.style.flexDirection = 'column';
-                        list.style.gap = '6px';
-                        groups[lvl].forEach(item => {
-                            const itemDiv = document.createElement('div');
-                            itemDiv.style.background = '#fafafa';
-                            itemDiv.style.color = '#2c3e50';
-                            itemDiv.style.padding = '8px 10px';
-                            itemDiv.style.borderRadius = '6px';
-                            itemDiv.style.fontSize = '0.95rem';
-                            itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
-                            list.appendChild(itemDiv);
-                        });
-                        wrapper.appendChild(list);
-                        body.appendChild(wrapper);
-                    });
-                } else {
-                    body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                    renderPins(body, pins);
+                    pinsLoaded = true;
                 }
-            } catch (e) {
+            } catch (e) {}
+            // 2) Fallback to local data files if not loaded
+            if (!pinsLoaded) {
+                const dataSets = []
+                    .concat((typeof dataNovember !== 'undefined') ? dataNovember : [])
+                    .concat((typeof dataDecember !== 'undefined') ? dataDecember : [])
+                    .concat((typeof dataJanuary !== 'undefined') ? dataJanuary : [])
+                    .concat((typeof dataFebruary !== 'undefined') ? dataFebruary : []);
+                const todayEntry = (dataSets || []).find(d => d && d.date === iso);
+                if (todayEntry) {
+                    const pins = [];
+                    if (todayEntry.morning) {
+                        if (todayEntry.morning.activityGrammar) pins.push({ time: 'เช้า', act: todayEntry.morning.activityGrammar, level: 'ประโยค ๑-๒' });
+                        if (todayEntry.morning.activityTranslate) pins.push({ time: 'เช้า', act: todayEntry.morning.activityTranslate, level: 'ประโยค ๑-๒' });
+                    }
+                    if (todayEntry.afternoon) {
+                        const prefix = todayEntry.afternoon.isExam ? 'สอบ ' : '';
+                        if (todayEntry.afternoon.activityGrammar) pins.push({ time: 'บ่าย', act: prefix + todayEntry.afternoon.activityGrammar, level: 'ประโยค ๑-๒' });
+                        if (todayEntry.afternoon.activityTranslate) pins.push({ time: 'บ่าย', act: prefix + todayEntry.afternoon.activityTranslate, level: 'ประโยค ๑-๒' });
+                    }
+                    if (todayEntry.evening && todayEntry.evening.activity) {
+                        pins.push({ time: 'ค่ำ', act: todayEntry.evening.activity, level: 'ประโยค ๑-๒' });
+                    }
+                    if (pins.length > 0) {
+                        renderPins(body, pins);
+                        pinsLoaded = true;
+                    }
+                }
+            }
+            if (!pinsLoaded) {
                 body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
             }
         }
 
+        function renderPins(body, pins) {
+            if (!pins || pins.length === 0) {
+                body.innerHTML = '<div style="color:#95a5a6;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
+                return;
+            }
+            const groups = {};
+            pins.forEach(p => {
+                const level = (p.level || 'ทั่วไป');
+                if (!groups[level]) groups[level] = [];
+                groups[level].push({ time: p.time || '-', act: p.act || '-' });
+            });
+            Object.keys(groups).forEach(lvl => {
+                const wrapper = document.createElement('div');
+                wrapper.style.border = '1px solid #eee';
+                wrapper.style.borderRadius = '8px';
+                wrapper.style.padding = '10px 12px';
+                wrapper.style.marginBottom = '10px';
+                const title = document.createElement('div');
+                title.style.fontWeight = 'bold';
+                title.style.color = '#2c3e50';
+                title.style.marginBottom = '8px';
+                title.innerHTML = `<i class="fa-solid fa-graduation-cap" style="margin-right:6px; color:#3498db;"></i>${lvl}`;
+                wrapper.appendChild(title);
+                const list = document.createElement('div');
+                list.style.display = 'flex';
+                list.style.flexDirection = 'column';
+                list.style.gap = '6px';
+                groups[lvl].forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.style.background = '#fafafa';
+                    itemDiv.style.color = '#2c3e50';
+                    itemDiv.style.padding = '8px 10px';
+                    itemDiv.style.borderRadius = '6px';
+                    itemDiv.style.fontSize = '0.95rem';
+                    itemDiv.innerHTML = `<strong style="min-width:40px; margin-right:8px;">${item.time}:</strong> <span>${item.act}</span>`;
+                    list.appendChild(itemDiv);
+                });
+                wrapper.appendChild(list);
+                body.appendChild(wrapper);
+            });
+        }
         // ตรวจสอบสถานะล็อกอิน
         auth.onAuthStateChanged((user) => {
             if (user) {
