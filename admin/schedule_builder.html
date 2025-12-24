@@ -597,6 +597,12 @@
                     if(zoom) periodObj.linkZoom = zoom;
                 }
                 
+                // Cleanup empty objects
+                if (periodObj.activities && Object.keys(periodObj.activities).length === 0) delete periodObj.activities;
+                if (periodObj.examFiles && Object.keys(periodObj.examFiles).length === 0) delete periodObj.examFiles;
+                if (periodObj.answerFiles && Object.keys(periodObj.answerFiles).length === 0) delete periodObj.answerFiles;
+                if (periodObj.noteFiles && Object.keys(periodObj.noteFiles).length === 0) delete periodObj.noteFiles;
+
                 // Add to day obj if has content
                 if (Object.keys(periodObj).length > 0) {
                     obj[period] = periodObj;
@@ -747,7 +753,7 @@
         `;
 
         // File Inputs
-        subjects.forEach(subj => {
+        subjects.forEach((subj, idx) => {
              // Determine selected file from legacy fields or materials array
              let selectedFiles = [];
              if (data) {

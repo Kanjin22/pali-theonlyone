@@ -997,7 +997,9 @@
             // 2. Legacy Specific Fields (Fallback)
             // If we have structured objects (even empty), we assume data is managed by new builder 
             // and we shouldn't fallback to legacy fields to avoid duplication.
-            const hasStructured = !!(period.examFiles || period.answerFiles || period.noteFiles);
+            // FIX: Only consider it "Structured" if it actually has keys/data. Empty objects should fall back to legacy.
+            const hasData = (obj) => obj && typeof obj === 'object' && Object.keys(obj).length > 0;
+            const hasStructured = hasData(period.examFiles) || hasData(period.answerFiles) || hasData(period.noteFiles);
 
             if (!hasStructured) {
                  addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material');
