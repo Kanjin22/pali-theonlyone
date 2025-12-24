@@ -33,6 +33,12 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    // Collection: classrooms (ข้อมูลห้องเรียน Dynamic)
+    match /classrooms/{roomId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
     
     // Collection: exam_sets
     match /exam_sets/{setId} {
