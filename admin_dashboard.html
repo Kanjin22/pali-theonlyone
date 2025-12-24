@@ -186,15 +186,15 @@
         <div id="tab-classes" class="hidden">
             <div class="card">
                 <div class="card-header">
-                    <span><i class="fa-solid fa-school"></i> จัดการชั้นเรียนที่เปิดรับสมัคร</span>
+                    <span><i class="fa-solid fa-school"></i> จัดการเปิด/ปิด ห้องเรียน</span>
                 </div>
-                <p style="color:#7f8c8d; margin-bottom: 20px;">พิมพ์ชื่อชั้นเรียนแล้วกด Enter เพื่อเพิ่ม (เช่น 1-2, 3, 4)</p>
+                <p style="color:#7f8c8d; margin-bottom: 20px;">เลือกห้องเรียนที่ต้องการเปิดให้เข้าใช้งาน (สำหรับนักเรียน)</p>
                 
-                <div class="tags-input" id="classTagsInput">
-                    <input type="text" class="tag-input-field" placeholder="พิมพ์ชื่อชั้นเรียน..." id="newClassInput">
+                <div id="classCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    <!-- Checkboxes will be injected here -->
                 </div>
                 
-                <div style="margin-top: 20px; text-align: right;">
+                <div style="margin-top: 30px; text-align: right; border-top: 1px solid #eee; padding-top: 20px;">
                     <button class="btn btn-primary" onclick="saveClassConfig()" id="btnSaveConfig">
                         <i class="fa-solid fa-save"></i> บันทึกการเปลี่ยนแปลง
                     </button>
@@ -632,58 +632,78 @@
 
         // --- Class Config Logic ---
         let currentClasses = [];
+        const ALL_LEVELS = [
+            { id: 'pt12', label: 'ประโยค ๑-๒' },
+            { id: 'pt3', label: 'ป.ธ. ๓' },
+            { id: 'pt4', label: 'ป.ธ. ๔' },
+            { id: 'pt5', label: 'ป.ธ. ๕' },
+            { id: 'pt6', label: 'ป.ธ. ๖' },
+            { id: 'pt7', label: 'ป.ธ. ๗' },
+            { id: 'pt8', label: 'ป.ธ. ๘' },
+            { id: 'pt9', label: 'ป.ธ. ๙' }
+        ];
 
         async function loadClassConfig() {
-            const container = document.getElementById('classTagsInput');
-            // Clear existing tags (keep input)
-            const oldTags = container.querySelectorAll('.tag');
-            oldTags.forEach(t => t.remove());
+            const container = document.getElementById('classCheckboxes');
+            container.innerHTML = '<div class="loading">กำลังโหลด...</div>';
 
             try {
                 const doc = await db.collection('config').doc('open_levels').get();
                 if (doc.exists && doc.data().levels) {
                     currentClasses = doc.data().levels;
                 } else {
-                    currentClasses = ['1-2']; // Default
+                    currentClasses = []; // Default none open
                 }
-                renderTags();
+                renderCheckboxes();
             } catch (e) {
                 console.error(e);
+                container.innerHTML = `<div style="color:red">Error: ${e.message}</div>`;
             }
         }
 
-        function renderTags() {
-            const container = document.getElementById('classTagsInput');
-            const input = document.getElementById('newClassInput');
-            
-            // Remove old tags
-            container.querySelectorAll('.tag').forEach(t => t.remove());
+        function renderCheckboxes() {
+            const container = document.getElementById('classCheckboxes');
+            container.innerHTML = '';
 
-            // Add tags before input
-            currentClasses.forEach(cls => {
-                const tag = document.createElement('div');
-                tag.className = 'tag';
-                tag.innerHTML = `<span>${cls}</span> <i class="fa-solid fa-xmark" onclick="removeClass('${cls}')"></i>`;
-                container.insertBefore(tag, input);
+            ALL_LEVELS.forEach(level => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.border = '1px solid #eee';
+                div.style.borderRadius = '8px';
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.backgroundColor = currentClasses.includes(level.id) ? '#e8f6f3' : '#fff';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `cb-${level.id}`;
+                checkbox.value = level.id;
+                checkbox.checked = currentClasses.includes(level.id);
+                checkbox.style.marginRight = '10px';
+                checkbox.style.transform = 'scale(1.2)';
+                
+                checkbox.onchange = (e) => {
+                    if (e.target.checked) {
+                        if (!currentClasses.includes(level.id)) currentClasses.push(level.id);
+                        div.style.backgroundColor = '#e8f6f3';
+                    } else {
+                        currentClasses = currentClasses.filter(c => c !== level.id);
+                        div.style.backgroundColor = '#fff';
+                    }
+                };
+
+                const label = document.createElement('label');
+                label.htmlFor = `cb-${level.id}`;
+                label.innerText = level.label;
+                label.style.cursor = 'pointer';
+                label.style.fontWeight = '500';
+                label.style.flex = '1';
+
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                container.appendChild(div);
             });
         }
-
-        function removeClass(cls) {
-            currentClasses = currentClasses.filter(c => c !== cls);
-            renderTags();
-        }
-
-        document.getElementById('newClassInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const val = e.target.value.trim();
-                if (val && !currentClasses.includes(val)) {
-                    currentClasses.push(val);
-                    renderTags();
-                    e.target.value = '';
-                }
-            }
-        });
 
         async function saveClassConfig() {
             const btn = document.getElementById('btnSaveConfig');
