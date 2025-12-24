@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,202 +9,329 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
-        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
-        .hero-section { margin-bottom: 50px; animation: fadeInDown 0.8s ease; }
-        .hero-title { font-size: 2.8rem; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
-        .hero-subtitle { font-size: 1.3rem; color: #7f8c8d; font-weight: 300; }
-        .section-label { text-align: left; font-size: 1.2rem; font-weight: bold; color: #34495e; margin: 30px 0 15px 0; border-left: 5px solid #3498db; padding-left: 10px; }
-        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; animation: fadeInUp 0.8s ease; }
-        .menu-card { background: white; border-radius: 12px; padding: 30px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; border: 1px solid #eee; }
-        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: transparent; }
-        .icon-box { font-size: 2.5rem; margin-bottom: 15px; }
-        .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; color: #2c3e50; }
-        .card-desc { font-size: 0.9rem; color: #999; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-section {
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .section-label {
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
+        .icon-box {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #999;
+        }
 
         /* Color Coding */
-        .level-basic .icon-box { color: #27ae60; } 
-        .level-inter .icon-box { color: #f39c12; } 
-        .level-adv .icon-box { color: #e74c3c; }   
-        .level-tool .icon-box { color: #8e44ad; }
+        .level-basic .icon-box {
+            color: #27ae60;
+        }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .level-inter .icon-box {
+            color: #f39c12;
+        }
+
+        .level-adv .icon-box {
+            color: #e74c3c;
+        }
+
+        .level-tool .icon-box {
+            color: #8e44ad;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-bottom:10px;">
-            <button id="btn-open-login" style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
+            <button id="btn-open-login"
+                style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
             <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
-            <button id="btn-logout" style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
+            <button id="btn-logout"
+                style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
         </div>
         <div class="hero-section">
             <div class="hero-title">ระบบการเรียนบาลีออนไลน์</div>
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
         </div>
 
-        
+
 
         <div id="app-content" style="display:none;">
-        <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
-        <div class="grid-menu" style="margin-bottom:40px;">
-            <div id="today-schedule-container" class="menu-card level-tool" style="text-align:left; display:block; width:100%; padding:0; overflow:hidden;">
-                <div style="padding:20px; text-align:center; color:#999;">กำลังโหลดข้อมูล...</div>
+            <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
+            <div class="grid-menu" style="margin-bottom:40px;">
+                <div id="today-schedule-container" class="menu-card level-tool"
+                    style="text-align:left; display:block; width:100%; padding:0; overflow:hidden;">
+                    <div style="padding:20px; text-align:center; color:#999;">กำลังโหลดข้อมูล...</div>
+                </div>
             </div>
-        </div>
 
-        <div class="section-label">🎓 ชั้นเรียนบาลี</div>
-        <div class="grid-menu">
-            
-            <!-- ชั้นต้น (สีเขียว) -->
-            <a href="classroom_select.html?level=pt12" class="menu-card level-basic">
-                <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
-                <div class="card-title">ประโยค ๑-๒</div>
-                <div class="card-desc">ไวย., แปล. (ธ.๑-๔)</div>
-            </a>
-            <a href="classroom_select.html?level=pt3" class="menu-card level-basic">
-                <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
-                <div class="card-title">ป.ธ. ๓</div>
-                <div class="card-desc">ไวย., สัม., แปล. (ธ.๕-๘)</div>
-            </a>
+            <div class="section-label">🎓 ชั้นเรียนบาลี</div>
+            <div class="grid-menu">
 
-            <!-- ชั้นกลาง (สีส้ม) -->
-            <a href="classroom_select.html?level=pt4" class="menu-card level-inter">
-                <div class="icon-box"><i class="fa-solid fa-tree"></i></div>
-                <div class="card-title">ป.ธ. ๔</div>
-                <div class="card-desc">กลับ. (ธ.๑), แปล. (มงฺ.๑)</div>
-            </a>
-            <a href="classroom_select.html?level=pt5" class="menu-card level-inter">
-                <div class="icon-box"><i class="fa-solid fa-book-open-reader"></i></div>
-                <div class="card-title">ป.ธ. ๕</div>
-                <div class="card-desc">กลับ. (ธ.๒-๔), แปล. (มงฺ.๒)</div>
-            </a>
-            <a href="classroom_select.html?level=pt6" class="menu-card level-inter">
-                <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
-                <div class="card-title">ป.ธ. ๖</div>
-                <div class="card-desc">กลับ. (ธ.๕-๘), แปล. (สมันต.๓)</div>
-            </a>
+                <!-- ชั้นต้น (สีเขียว) -->
+                <a href="classroom_select.html?level=pt12" class="menu-card level-basic">
+                    <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="card-title">ประโยค ๑-๒</div>
+                    <div class="card-desc">ไวย., แปล. (ธ.๑-๔)</div>
+                </a>
+                <a href="classroom_select.html?level=pt3" class="menu-card level-basic">
+                    <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="card-title">ป.ธ. ๓</div>
+                    <div class="card-desc">ไวย., สัม., แปล. (ธ.๕-๘)</div>
+                </a>
 
-            <!-- ชั้นสูง (สีแดง) -->
-            <a href="classroom_select.html?level=pt7" class="menu-card level-adv">
-                <div class="icon-box"><i class="fa-solid fa-chess-knight"></i></div>
-                <div class="card-title">ป.ธ. ๗</div>
-                <div class="card-desc">กลับ. (มงฺ.๑), แปล. (สมันต.๑-๒)</div>
-            </a>
-            <a href="classroom_select.html?level=pt8" class="menu-card level-adv">
-                <div class="icon-box"><i class="fa-solid fa-chess-queen"></i></div>
-                <div class="card-title">ป.ธ. ๘</div>
-                <div class="card-desc">ฉันท์., กลับ. (สมันต.๑), แปล. (วิสุทธิ.)</div>
-            </a>
-            <a href="classroom_select.html?level=pt9" class="menu-card level-adv">
-                <div class="icon-box"><i class="fa-solid fa-crown"></i></div>
-                <div class="card-title">ป.ธ. ๙</div>
-                <div class="card-desc">แต่ง., กลับ. (วิสุทธิ.), แปล. (อภิ.)</div>
-            </a>
-        </div>
+                <!-- ชั้นกลาง (สีส้ม) -->
+                <a href="classroom_select.html?level=pt4" class="menu-card level-inter">
+                    <div class="icon-box"><i class="fa-solid fa-tree"></i></div>
+                    <div class="card-title">ป.ธ. ๔</div>
+                    <div class="card-desc">กลับ. (ธ.๑), แปล. (มงฺ.๑)</div>
+                </a>
+                <a href="classroom_select.html?level=pt5" class="menu-card level-inter">
+                    <div class="icon-box"><i class="fa-solid fa-book-open-reader"></i></div>
+                    <div class="card-title">ป.ธ. ๕</div>
+                    <div class="card-desc">กลับ. (ธ.๒-๔), แปล. (มงฺ.๒)</div>
+                </a>
+                <a href="classroom_select.html?level=pt6" class="menu-card level-inter">
+                    <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
+                    <div class="card-title">ป.ธ. ๖</div>
+                    <div class="card-desc">กลับ. (ธ.๕-๘), แปล. (สมันต.๓)</div>
+                </a>
 
-        <div class="section-label" style="margin-top: 50px;">🛠️ คลังความรู้บาลี</div>
-        <div class="grid-menu">
-            <a href="grammar_comparison.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
-                <div class="card-title">เปรียบเทียบ ๔ คัมภีร์</div>
-                <div class="card-desc">กัจจายนะ • ปทรูปสิทธิ • โมคคัลลานะ • สัททนีติ</div>
-            </a>
-            <a href="dictionary.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
-                <div class="card-title">พจนานุกรมภายในเว็บ</div>
-                <div class="card-desc">ค้นหาศัพท์บาลี-ไทย</div>
-            </a>
-            <a href="tipitaka_index.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-book-open"></i></div>
-                <div class="card-title">แหล่งความรู้พระไตรปิฎก</div>
-                <div class="card-desc">รวมลิงค์พระไตรปิฎก (ไทย/บาลี)</div>
-            </a>
-            <a href="grammar_links.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-link"></i></div>
-                <div class="card-title">ลิงค์เรียนไวยากรณ์</div>
-                <div class="card-desc">รวมเว็บไซต์เรียนบาลี</div>
-            </a>
-            <a href="grammar_tools.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
-                <div class="card-title">คู่มือหลักการแปล</div>
-                <div class="card-desc">กฎไวยากรณ์และหลักการแปล</div>
-            </a>
-            <a href="dictionary_links.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
-                <div class="card-title">รวมลิงค์พจนานุกรม</div>
-                <div class="card-desc">พจนานุกรมบาลี-ไทย/อังกฤษ</div>
-            </a>
-        </div>
+                <!-- ชั้นสูง (สีแดง) -->
+                <a href="classroom_select.html?level=pt7" class="menu-card level-adv">
+                    <div class="icon-box"><i class="fa-solid fa-chess-knight"></i></div>
+                    <div class="card-title">ป.ธ. ๗</div>
+                    <div class="card-desc">กลับ. (มงฺ.๑), แปล. (สมันต.๑-๒)</div>
+                </a>
+                <a href="classroom_select.html?level=pt8" class="menu-card level-adv">
+                    <div class="icon-box"><i class="fa-solid fa-chess-queen"></i></div>
+                    <div class="card-title">ป.ธ. ๘</div>
+                    <div class="card-desc">ฉันท์., กลับ. (สมันต.๑), แปล. (วิสุทธิ.)</div>
+                </a>
+                <a href="classroom_select.html?level=pt9" class="menu-card level-adv">
+                    <div class="icon-box"><i class="fa-solid fa-crown"></i></div>
+                    <div class="card-title">ป.ธ. ๙</div>
+                    <div class="card-desc">แต่ง., กลับ. (วิสุทธิ.), แปล. (อภิ.)</div>
+                </a>
+            </div>
 
-        <div class="section-label" style="margin-top: 40px;">👨‍🏫 เครื่องมือสำหรับอาจารย์</div>
-        <div class="grid-menu">
-            <a href="exam_builder.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-file-pen"></i></div>
-                <div class="card-title">ออกข้อสอบ</div>
-                <div class="card-desc">สร้างชุดข้อสอบตามชั้น/ช่วงเนื้อหา</div>
-            </a>
-            <a href="tools/tool_schedule_builder.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-calendar-plus"></i></div>
-                <div class="card-title">สร้างตารางเรียน</div>
-                <div class="card-desc">เครื่องมือสร้างตาราง (ครู)</div>
-            </a>
-            <a href="tools/tool_classroom_manager.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-school-flag"></i></div>
-                <div class="card-title">เพิ่มห้องเรียน</div>
-                <div class="card-desc">จัดการข้อมูลห้องเรียน (ครู)</div>
-            </a>
-        </div>
+            <div class="section-label" style="margin-top: 50px;">🛠️ คลังความรู้บาลี</div>
+            <div class="grid-menu">
+                <a href="grammar_comparison.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="card-title">เปรียบเทียบ ๔ คัมภีร์</div>
+                    <div class="card-desc">กัจจายนะ • ปทรูปสิทธิ • โมคคัลลานะ • สัททนีติ</div>
+                </a>
+                <a href="dictionary.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <div class="card-title">พจนานุกรมภายในเว็บ</div>
+                    <div class="card-desc">ค้นหาศัพท์บาลี-ไทย</div>
+                </a>
+                <a href="tipitaka_index.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="card-title">แหล่งความรู้พระไตรปิฎก</div>
+                    <div class="card-desc">รวมลิงค์พระไตรปิฎก (ไทย/บาลี)</div>
+                </a>
+                <a href="grammar_links.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-link"></i></div>
+                    <div class="card-title">ลิงค์เรียนไวยากรณ์</div>
+                    <div class="card-desc">รวมเว็บไซต์เรียนบาลี</div>
+                </a>
+                <a href="grammar_tools.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="card-title">คู่มือหลักการแปล</div>
+                    <div class="card-desc">กฎไวยากรณ์และหลักการแปล</div>
+                </a>
+                <a href="dictionary_links.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
+                    <div class="card-title">รวมลิงค์พจนานุกรม</div>
+                    <div class="card-desc">พจนานุกรมบาลี-ไทย/อังกฤษ</div>
+                </a>
+            </div>
 
-        <div class="section-label" style="margin-top: 40px;">🎯 การสอบบาลีสนามหลวง</div>
-        <div class="grid-menu">
-            <a href="exam_schedules.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-calendar-days"></i></div>
-                <div class="card-title">ตารางสอบ</div>
-                <div class="card-desc">กำหนดการสอบสนามหลวง</div>
-            </a>
-            <a href="https://www.infopali.net/index.php?option=com_content&view=section&layout=blog&id=1&Itemid=148" target="_blank" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-list-check"></i></div>
-                <div class="card-title">ประกาศผลสอบ</div>
-                <div class="card-desc">ตรวจผลสอบบาลี</div>
-            </a>
-            <a href="downloads.html" class="menu-card level-tool">
-                <div class="icon-box"><i class="fa-solid fa-download"></i></div>
-                <div class="card-title">ดาวน์โหลด</div>
-                <div class="card-desc">แบบฟอร์มและเอกสาร</div>
-            </a>
-            <a id="last-classroom-link" href="#" class="menu-card level-tool" style="display:none;">
-                <div class="icon-box"><i class="fa-solid fa-door-open"></i></div>
-                <div class="card-title" id="last-classroom-title">ห้องเรียนล่าสุด</div>
-                <div class="card-desc">กลับไปหน้าห้องเรียนเดิม</div>
-            </a>
-        </div>
+            <div class="section-label" style="margin-top: 40px;">👨‍🏫 เครื่องมือสำหรับอาจารย์</div>
+            <div class="grid-menu">
+                <a href="exam_builder.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-file-pen"></i></div>
+                    <div class="card-title">ออกข้อสอบ</div>
+                    <div class="card-desc">สร้างชุดข้อสอบตามชั้น/ช่วงเนื้อหา</div>
+                </a>
+                <a href="tools/tool_schedule_builder.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-calendar-plus"></i></div>
+                    <div class="card-title">สร้างตารางเรียน</div>
+                    <div class="card-desc">เครื่องมือสร้างตาราง (ครู)</div>
+                </a>
+                <a href="tools/tool_classroom_manager.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-school-flag"></i></div>
+                    <div class="card-title">เพิ่มห้องเรียน</div>
+                    <div class="card-desc">จัดการข้อมูลห้องเรียน (ครู)</div>
+                </a>
+            </div>
+
+            <div class="section-label" style="margin-top: 40px;">🎯 การสอบบาลีสนามหลวง</div>
+            <div class="grid-menu">
+                <a href="exam_schedules.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-calendar-days"></i></div>
+                    <div class="card-title">ตารางสอบ</div>
+                    <div class="card-desc">กำหนดการสอบสนามหลวง</div>
+                </a>
+                <a href="https://www.infopali.net/index.php?option=com_content&view=section&layout=blog&id=1&Itemid=148"
+                    target="_blank" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-list-check"></i></div>
+                    <div class="card-title">ประกาศผลสอบ</div>
+                    <div class="card-desc">ตรวจผลสอบบาลี</div>
+                </a>
+                <a href="downloads.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-download"></i></div>
+                    <div class="card-title">ดาวน์โหลด</div>
+                    <div class="card-desc">แบบฟอร์มและเอกสาร</div>
+                </a>
+                <a id="last-classroom-link" href="#" class="menu-card level-tool" style="display:none;">
+                    <div class="icon-box"><i class="fa-solid fa-door-open"></i></div>
+                    <div class="card-title" id="last-classroom-title">ห้องเรียนล่าสุด</div>
+                    <div class="card-desc">กลับไปหน้าห้องเรียนเดิม</div>
+                </a>
+            </div>
         </div>
 
     </div>
-    <div id="login-modal" style="display:none; position:static; background:transparent; align-items:center; justify-content:center;">
-        <div style="background:#fff; width:95%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden; margin:40px auto;">
-            <div style="padding:16px 18px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+    <div id="login-modal"
+        style="display:none; position:static; background:transparent; align-items:center; justify-content:center;">
+        <div
+            style="background:#fff; width:95%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden; margin:40px auto;">
+            <div
+                style="padding:16px 18px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-weight:700; color:#2c3e50;">เข้าสู่ระบบ</div>
-                <button id="btn-close-login" style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
+                <button id="btn-close-login"
+                    style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
             </div>
             <div style="padding:18px;">
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:16px;">
-                    <button id="login-google" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-brands fa-google" style="color:#db4437;"></i><span>Google</span></button>
-                    <button id="login-facebook" style="padding:10px; border:1px solid #eee; border-radius:8px; background:#1877f2; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></button>
+                    <button id="login-google"
+                        style="padding:10px; border:1px solid #eee; border-radius:8px; background:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i
+                            class="fa-brands fa-google" style="color:#db4437;"></i><span>Google</span></button>
+                    <button id="login-facebook"
+                        style="padding:10px; border:1px solid #eee; border-radius:8px; background:#1877f2; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i
+                            class="fa-brands fa-facebook-f"></i><span>Facebook</span></button>
                 </div>
                 <div style="border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
                     <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">อีเมลและรหัสผ่าน</div>
-                    <input id="modal-email" type="email" inputmode="email" autocomplete="email" placeholder="อีเมล (ตัวอักษรอังกฤษเท่านั้น)" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <input id="modal-email" type="email" inputmode="email" autocomplete="email"
+                        placeholder="อีเมล (ตัวอักษรอังกฤษเท่านั้น)"
+                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
                     <div id="email-status" style="margin-bottom:10px; font-size:0.95rem; color:#607d8b;"></div>
-                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px; display:none;">
+                    <input id="modal-password" type="password" placeholder="รหัสผ่าน"
+                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px; display:none;">
                     <div style="display:flex; gap:8px;">
-                        <button id="modal-email-next" style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดำเนินการต่อ</button>
-                        <button id="modal-email-signin" style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer; display:none;">เข้าสู่ระบบ</button>
-                        <button id="modal-email-signup" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">สมัครสมาชิก</button>
+                        <button id="modal-email-next"
+                            style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดำเนินการต่อ</button>
+                        <button id="modal-email-signin"
+                            style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer; display:none;">เข้าสู่ระบบ</button>
+                        <button id="modal-email-signup"
+                            style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">สมัครสมาชิก</button>
                     </div>
-                    <button id="modal-forgot-password" style="margin-top:8px; padding:10px; border:1px solid #e67e22; background:#ffffff; color:#e67e22; border-radius:8px; cursor:pointer; display:none; width:100%;">ลืมรหัสผ่าน</button>
+                    <button id="modal-forgot-password"
+                        style="margin-top:8px; padding:10px; border:1px solid #e67e22; background:#ffffff; color:#e67e22; border-radius:8px; cursor:pointer; display:none; width:100%;">ลืมรหัสผ่าน</button>
                 </div>
             </div>
         </div>
@@ -219,7 +347,31 @@
     <script src="data/data-pt12_novice-december.js"></script>
     <script src="data/data-pt12_novice-january.js"></script>
     <script src="data/data-pt12_novice-february.js"></script>
+
+
+
     <script>
+        // ตรวจสอบว่าเป็น LINE หรือ Facebook In-App Browser หรือไม่
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isLine = (ua.indexOf("Line") > -1) || (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
+
+        if (isLine) {
+            // ถ้าเปิดใน LINE ให้แจ้งเตือน หรือพยายามบังคับเปิด Browser
+            if (confirm("การล็อกอินผ่าน LINE/Facebook Browser อาจเกิดข้อผิดพลาด\n\nกรุณากดปุ่ม 3 จุด แล้วเลือก 'เปิดในเบราว์เซอร์'(Open in Browser) เพื่อใช้งานได้เต็มรูปแบบ")) {
+                // บางครั้งการสั่ง window.open อาจช่วยได้ในบาง OS
+                // window.open(window.location.href, '_system');
+            }
+
+            // หรือคุณอาจจะสร้าง Div แจ้งเตือนสีแดงเด่นๆ บนหน้าเว็บเฉพาะคนกลุ่มนี้
+            document.addEventListener('DOMContentLoaded', function () {
+                var warningDiv = document.createElement('div');
+                warningDiv.style.cssText = "background: #ff4444; color: white; padding: 20px; text-align: center; position: fixed;
+                top: 0; left: 0; width: 100 %; z - index: 9999; ";
+                warningDiv.innerHTML = "⚠️ <strong>คำแนะนำ:</strong> การล็อกอิน Google อาจใช้งานไม่ได้ในหน้านี้ <br>กรุณากดปุ่มเมนู
+                และเลือก < strong > 'เปิดในเบราว์เซอร์'(Open in Browser)</strong > ";
+                document.body.prepend(warningDiv);
+            });
+        }
         // --- ส่วน Config เดิม (คงไว้) ---
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
@@ -240,11 +392,11 @@
         const loginModal = document.getElementById('login-modal');
         const btnOpenLogin = document.getElementById('btn-open-login');
         const btnCloseLogin = document.getElementById('btn-close-login');
-        
+
         // Buttons
         const loginGoogle = document.getElementById('login-google');
         const loginFacebook = document.getElementById('login-facebook');
-        
+
         // Modal Inputs & Buttons
         const modalEmail = document.getElementById('modal-email');
         const modalPassword = document.getElementById('modal-password');
@@ -253,7 +405,7 @@
         const modalEmailSignIn = document.getElementById('modal-email-signin');
         const modalEmailSignUp = document.getElementById('modal-email-signup');
         const modalForgotPassword = document.getElementById('modal-forgot-password');
-        
+
         // User Info Elements
         const userInfo = document.getElementById('user-info');
         const btnLogoutTop = document.getElementById('btn-logout');
@@ -277,13 +429,13 @@
         // ฟังก์ชันล็อกปุ่มขณะโหลด
         function setLoading(isLoading, btnElement) {
             if (isLoading) {
-                if(btnElement) {
+                if (btnElement) {
                     btnElement.dataset.originalText = btnElement.innerText;
                     btnElement.innerText = 'กำลังโหลด...';
                     btnElement.disabled = true;
                 }
             } else {
-                if(btnElement) {
+                if (btnElement) {
                     btnElement.innerText = btnElement.dataset.originalText || 'ตกลง';
                     btnElement.disabled = false;
                 }
@@ -303,7 +455,7 @@
 
         // --- Event Listeners ---
 
-        function openLogin() { 
+        function openLogin() {
             if (loginModal) loginModal.style.display = 'flex'; // ใช้ flex เพื่อจัดกึ่งกลาง
             if (emailStatus) {
                 emailStatus.textContent = '';
@@ -320,8 +472,8 @@
             if (modalForgotPassword) modalForgotPassword.style.display = 'none';
         }
 
-        function closeLogin() { 
-            if (loginModal) loginModal.style.display = 'none'; 
+        function closeLogin() {
+            if (loginModal) loginModal.style.display = 'none';
         }
 
         if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
@@ -331,14 +483,14 @@
         if (loginGoogle) {
             loginGoogle.onclick = () => {
                 auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-                .catch(error => alert(getErrorMessage(error.code)));
+                    .catch(error => alert(getErrorMessage(error.code)));
             };
         }
 
         if (loginFacebook) {
             loginFacebook.onclick = () => {
                 auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-                .catch(error => alert(getErrorMessage(error.code)));
+                    .catch(error => alert(getErrorMessage(error.code)));
             };
         }
 
@@ -347,19 +499,19 @@
         // 1. กดปุ่ม "ดำเนินการต่อ" (Check Email)
         if (modalEmailNext) modalEmailNext.onclick = async () => {
             const email = (modalEmail && modalEmail.value || '').trim();
-            if (!email) { 
-                emailStatus.textContent = 'กรุณากรอกอีเมล'; 
+            if (!email) {
+                emailStatus.textContent = 'กรุณากรอกอีเมล';
                 emailStatus.style.color = 'red';
-                return; 
+                return;
             }
 
             setLoading(true, modalEmailNext);
             emailStatus.textContent = 'กำลังตรวจสอบ...';
-            
+
             try {
                 // หมายเหตุ: fetchSignInMethodsForEmail อาจคืนค่าว่างใน Project ใหม่ที่มีการเปิด Email Enumeration Protection
                 const methods = await auth.fetchSignInMethodsForEmail(email);
-                
+
                 modalEmailNext.style.display = 'none'; // ซ่อนปุ่ม Next
                 modalPassword.style.display = 'block'; // โชว์ช่องรหัสผ่าน
 
@@ -427,7 +579,7 @@
                     // กรณีนี้เกิดขึ้นเมื่อ fetchSignInMethodsForEmail ไม่เจอ (เพราะ Protection) แต่จริงๆ มี User อยู่แล้ว
                     emailStatus.textContent = 'อีเมลนี้มีผู้ใช้งานแล้ว กรุณาเข้าสู่ระบบแทน';
                     emailStatus.style.color = 'red';
-                    
+
                     // สลับปุ่มให้เป็นล็อกอินอัตโนมัติ
                     modalEmailSignUp.style.display = 'none';
                     modalEmailSignIn.style.display = 'inline-block';
@@ -442,7 +594,7 @@
         // 4. ลืมรหัสผ่าน
         if (modalForgotPassword) modalForgotPassword.onclick = async () => {
             const email = modalEmail.value.trim();
-            if(!email) return;
+            if (!email) return;
 
             setLoading(true, modalForgotPassword);
             try {
@@ -458,10 +610,10 @@
         // --- Auth State & Firestore Sync ---
 
         function showUser(u) {
-            if (userInfo) { 
-                const name = u.displayName || u.email || 'ผู้ใช้งาน'; 
-                userInfo.textContent = name; 
-                userInfo.style.display = 'inline-block'; 
+            if (userInfo) {
+                const name = u.displayName || u.email || 'ผู้ใช้งาน';
+                userInfo.textContent = name;
+                userInfo.style.display = 'inline-block';
             }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
             if (btnOpenLogin) btnOpenLogin.style.display = 'none'; // ซ่อนปุ่ม Login
@@ -521,7 +673,7 @@
                 a.style.position = 'relative';
                 a.innerHTML = '<span style="position:absolute; top:10px; right:10px; background:#e67e22; color:#fff; font-size:0.8rem; padding:4px 10px; border-radius:999px;">สำคัญ</span><div class="icon-box" style="color:#e67e22;"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title" style="color:#c0392b;">สมัครเรียน</div><div class="card-desc" style="color:#7f8c8d;">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
                 container.insertBefore(a, container.firstChild);
-            } catch (e) {}
+            } catch (e) { }
         }
 
         // --- Today Pins ---
@@ -565,7 +717,7 @@
                     renderPins(body, pins);
                     pinsLoaded = true;
                 }
-            } catch (e) {}
+            } catch (e) { }
             // 2) Fallback to local data files if not loaded
             if (!pinsLoaded) {
                 const iso = new Date().toISOString().split('T')[0]; // Ensure iso is available in this scope if needed, though it is likely defined above
@@ -593,31 +745,31 @@
                     if (!entry) return;
                     // Morning
                     if (entry.morning) {
-                        if (entry.morning.activityGrammar) 
+                        if (entry.morning.activityGrammar)
                             allPins.push({ time: 'เช้า', act: entry.morning.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
-                        if (entry.morning.activityTranslate) 
+                        if (entry.morning.activityTranslate)
                             allPins.push({ time: 'เช้า', act: entry.morning.activityTranslate, level: defaultLevel, subject: 'แปล' });
                     }
                     // Afternoon
                     if (entry.afternoon) {
                         const prefix = entry.afternoon.isExam ? 'สอบ ' : '';
-                        if (entry.afternoon.activityGrammar) 
+                        if (entry.afternoon.activityGrammar)
                             allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
-                        if (entry.afternoon.activityTranslate) 
+                        if (entry.afternoon.activityTranslate)
                             allPins.push({ time: 'บ่าย', act: prefix + entry.afternoon.activityTranslate, level: defaultLevel, subject: 'แปล' });
                     }
                     // Evening
                     if (entry.evening) {
-                        if (entry.evening.activity) { 
-                             allPins.push({ time: 'ค่ำ', act: entry.evening.activity, level: defaultLevel, subject: 'กิจกรรม' });
+                        if (entry.evening.activity) {
+                            allPins.push({ time: 'ค่ำ', act: entry.evening.activity, level: defaultLevel, subject: 'กิจกรรม' });
                         }
                         if (entry.evening.activityGrammar) {
-                             let act = Array.isArray(entry.evening.activityGrammar) ? entry.evening.activityGrammar.join(', ') : entry.evening.activityGrammar;
-                             allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'ไวยากรณ์' });
+                            let act = Array.isArray(entry.evening.activityGrammar) ? entry.evening.activityGrammar.join(', ') : entry.evening.activityGrammar;
+                            allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'ไวยากรณ์' });
                         }
                         if (entry.evening.activityTranslate) {
-                             let act = Array.isArray(entry.evening.activityTranslate) ? entry.evening.activityTranslate.join(', ') : entry.evening.activityTranslate;
-                             allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'แปล' });
+                            let act = Array.isArray(entry.evening.activityTranslate) ? entry.evening.activityTranslate.join(', ') : entry.evening.activityTranslate;
+                            allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'แปล' });
                         }
                     }
                 };
@@ -673,14 +825,14 @@
                 title.style.alignItems = 'center';
                 title.style.justifyContent = 'space-between';
                 title.style.cursor = 'pointer'; // Make clickable
-                
+
                 const titleText = document.createElement('div');
                 titleText.innerHTML = `<i class="fa-solid fa-layer-group" style="margin-right:10px;"></i>${lvl}`;
-                
+
                 const toggleIcon = document.createElement('i');
                 toggleIcon.className = 'fa-solid fa-chevron-down';
                 toggleIcon.style.transition = 'transform 0.3s ease';
-                
+
                 title.appendChild(titleText);
                 title.appendChild(toggleIcon);
                 wrapper.appendChild(title);
@@ -744,7 +896,7 @@
                     subjectBadge.style.borderRadius = '4px';
                     subjectBadge.style.marginRight = '8px';
                     subjectBadge.style.fontWeight = '600';
-                    
+
                     if (item.subject === 'ไวยากรณ์') {
                         subjectBadge.style.backgroundColor = '#e8f6f3';
                         subjectBadge.style.color = '#1abc9c';
@@ -756,10 +908,10 @@
                         subjectBadge.innerText = 'แปล';
                         itemDiv.style.borderLeftColor = '#f39c12';
                     } else {
-                         subjectBadge.style.backgroundColor = '#ececec';
-                         subjectBadge.style.color = '#7f8c8d';
-                         subjectBadge.innerText = item.subject || 'กิจกรรม';
-                         itemDiv.style.borderLeftColor = '#7f8c8d';
+                        subjectBadge.style.backgroundColor = '#ececec';
+                        subjectBadge.style.color = '#7f8c8d';
+                        subjectBadge.innerText = item.subject || 'กิจกรรม';
+                        itemDiv.style.borderLeftColor = '#7f8c8d';
                     }
 
                     const actText = document.createElement('span');
@@ -807,9 +959,9 @@
                                 await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
                                 role = 'student';
                             }
-                        } catch (e) {}
+                        } catch (e) { }
                         applyRoleUI(role);
-                    } catch (e) {}
+                    } catch (e) { }
                 })();
 
                 // โค้ดสร้าง Exam Sets (คงเดิม)
@@ -836,4 +988,5 @@
         });
     </script>
 </body>
+
 </html>
