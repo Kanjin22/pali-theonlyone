@@ -281,27 +281,27 @@
     // Configuration for Subjects
     const SUBJECT_CONFIG = {
         "pt12": [
-            { id: 'Grammar', label: 'กิจกรรม (ไวยากรณ์)', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' }
+            { id: 'Grammar', label: 'ไวยากรณ์', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' }
         ],
         "pt3": [
-            { id: 'Grammar', label: 'กิจกรรม (ไวยากรณ์)', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Samphan', label: 'กิจกรรม (สัมพันธ์)', defaultAct: 'สัมพันธ์ไทย' }
+            { id: 'Grammar', label: 'ไวยากรณ์', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Samphan', label: 'สัมพันธ์', defaultAct: 'สัมพันธ์ไทย' }
         ],
         "pt4": [
-            { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' },
-            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' }
+            { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' },
+            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' }
         ],
-        "pt5": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt6": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt7": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt5": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt6": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt7": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
         "pt8": [
-            { id: 'Chan', label: 'กิจกรรม (วิชาฉันท์)', defaultAct: 'แต่งฉันท์มคธ' },
-            { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แปลไทยเป็นมคธ' }
+            { id: 'Chan', label: 'วิชาฉันท์', defaultAct: 'แต่งฉันท์มคธ' },
+            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }
         ],
-        "pt9": [ { id: 'Return', label: 'กิจกรรม (วิชากลับ)', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'กิจกรรม (แปล)', defaultAct: 'แปลมคธเป็นไทย' } ]
+        "pt9": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ]
     };
 
     // Initialize
@@ -499,111 +499,109 @@
                 const container = row.querySelector(`.slot-container[data-period="${period}"]`);
                 if (!container) return;
 
-                const isExam = container.classList.contains('is-exam');
-                const periodObj = {};
+                const periodObj = {
+                    activities: {},
+                    youtube: {},
+                    slides: {},
+                    noteFiles: {},
+                    isExam: {},
+                    examFiles: {},
+                    answerFiles: {}
+                };
+
+                // Iterate over subject blocks
+                container.querySelectorAll('.subject-block').forEach(block => {
+                    const checkbox = block.querySelector('.subj-enable');
+                    if (!checkbox || !checkbox.checked) return;
+
+                    const subjId = checkbox.dataset.subjId;
+                    
+                    // 1. Activity
+                    const actInp = block.querySelector('.input-act');
+                    if (actInp && actInp.value.trim()) {
+                        periodObj.activities[subjId] = actInp.value.trim();
+                    }
+
+                    // 2. YouTube
+                    const ytInp = block.querySelector('.input-youtube');
+                    if (ytInp && ytInp.value.trim()) {
+                        periodObj.youtube[subjId] = ytInp.value.trim();
+                    }
+
+                    // 3. Slide
+                    const slideInp = block.querySelector('.input-slide');
+                    if (slideInp && slideInp.value.trim()) {
+                        periodObj.slides[subjId] = slideInp.value.trim();
+                    }
+
+                    // 4. Material
+                    const fileInp = block.querySelector('.input-file');
+                    if (fileInp && fileInp.value) {
+                        periodObj.noteFiles[subjId] = fileInp.value;
+                    }
+
+                    // 5. Exam
+                    const examCheck = block.querySelector('.input-is-exam');
+                    if (examCheck && examCheck.checked) {
+                        periodObj.isExam[subjId] = true;
+                        
+                        const examFileInp = block.querySelector('.input-exam-file');
+                        if (examFileInp && examFileInp.value) {
+                            periodObj.examFiles[subjId] = examFileInp.value;
+                        }
+                        
+                        const ansFileInp = block.querySelector('.input-ans-file');
+                        if (ansFileInp && ansFileInp.value) {
+                            periodObj.answerFiles[subjId] = ansFileInp.value;
+                        }
+                    }
+                });
+
+                // --- Legacy / Flat Data Generation for Compatibility ---
                 
-                if (isExam) {
-                    // Exam Mode
-                    // Collect inputs
-                    const start = container.querySelector('.input-exam-start').value;
-                    const end = container.querySelector('.input-exam-end').value;
-                    // Note: Start/End not used in current viewer structure explicitly but good to store
-                    periodObj.timeStart = start;
-                    periodObj.timeEnd = end;
-                    
-                    // Collect exam acts
-                    periodObj.activities = {}; // New structured storage
-                    
-                    container.querySelectorAll('.input-exam-act').forEach(inp => {
-                        const subjId = inp.dataset.subjId;
-                        if(inp.value) {
-                            periodObj.activities[subjId] = inp.value;
-                            
-                            // Legacy fallback (optional, can remove if fully migrated)
-                            if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
-                            else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
-                            else periodObj.activity = inp.value;
-                        }
-                    });
-                    
-                    // Collect files (Exams)
-                    periodObj.examFiles = {}; // New structured storage
-                    
-                    container.querySelectorAll('.input-exam').forEach(sel => {
-                        if(sel.value) {
-                            const subjId = sel.dataset.subjId;
-                            periodObj.examFiles[subjId] = sel.value;
-
-                            // Legacy fields (Keep for safety for now)
-                            if (subjId === 'Grammar') periodObj.fileExamGrammar = sel.value;
-                            else if (subjId === 'Translate') periodObj.fileExamTranslate = sel.value;
-                        }
-                    });
-
-                    // Collect files (Answers)
-                    periodObj.answerFiles = {}; // New structured storage
-                    
-                     container.querySelectorAll('.input-ans').forEach(sel => {
-                        if(sel.value) {
-                            const subjId = sel.dataset.subjId;
-                            periodObj.answerFiles[subjId] = sel.value;
-
-                            // Legacy fields
-                            if (subjId === 'Grammar') periodObj.fileAnswerGrammar = sel.value;
-                            else if (subjId === 'Translate') periodObj.fileAnswerTranslate = sel.value;
-                        }
-                    });
-
-                } else {
-                    // Normal Mode
-                    periodObj.activities = {};
-                    
-                     container.querySelectorAll('.input-act').forEach(inp => {
-                        const subjId = inp.dataset.subjId;
-                        if(inp.value) {
-                            periodObj.activities[subjId] = inp.value;
-                            
-                            // Legacy
-                            if (subjId === 'Grammar') periodObj.activityGrammar = inp.value;
-                            else if (subjId === 'Translate') periodObj.activityTranslate = inp.value;
-                            else periodObj.activity = inp.value;
-                        }
-                    });
-                    
-                    // Files (Materials)
-                    periodObj.noteFiles = {};
-                    
-                    container.querySelectorAll('.input-file').forEach(sel => {
-                        if(sel.value) {
-                            const subjId = sel.dataset.subjId;
-                            periodObj.noteFiles[subjId] = sel.value;
-                            
-                            // Legacy array for generic
-                            if(!periodObj.materials) periodObj.materials = [];
-                            periodObj.materials.push(sel.value);
-
-                             // Legacy specific
-                            if (subjId === 'Grammar') periodObj.fileNoteGrammar = sel.value;
-                            else if (subjId === 'Translate') periodObj.fileNoteTranslate = sel.value;
-                        }
-                    });
-                    
-                    // Youtube
-                    const yt = container.querySelector('.input-youtube').value;
-                    if(yt) periodObj.linkYoutube = yt;
-                    
-                    // Zoom
-                    const zoom = container.querySelector('.input-zoom').value;
-                    if(zoom) periodObj.linkZoom = zoom;
-                }
+                // Activities
+                if (periodObj.activities['Grammar']) periodObj.activityGrammar = periodObj.activities['Grammar'];
+                if (periodObj.activities['Translate']) periodObj.activityTranslate = periodObj.activities['Translate'];
                 
-                // Cleanup empty objects
-                if (periodObj.activities && Object.keys(periodObj.activities).length === 0) delete periodObj.activities;
-                if (periodObj.examFiles && Object.keys(periodObj.examFiles).length === 0) delete periodObj.examFiles;
-                if (periodObj.answerFiles && Object.keys(periodObj.answerFiles).length === 0) delete periodObj.answerFiles;
-                if (periodObj.noteFiles && Object.keys(periodObj.noteFiles).length === 0) delete periodObj.noteFiles;
+                // Generic Activity
+                const allActs = Object.values(periodObj.activities);
+                if (allActs.length > 0) periodObj.activity = allActs.join(' / ');
 
-                // Add to day obj if has content
+                // YouTube
+                const allYt = Object.values(periodObj.youtube).join('\n'); 
+                if (allYt) periodObj.linkYoutube = allYt.split('\n').map(s=>s.trim()).filter(s=>s).join(',');
+
+                // Slide
+                const allSlides = Object.values(periodObj.slides);
+                if (allSlides.length > 0) periodObj.linkZoom = allSlides[0];
+
+                // Materials
+                const allNotes = Object.values(periodObj.noteFiles);
+                if (allNotes.length > 0) periodObj.materials = allNotes;
+                if (periodObj.noteFiles['Grammar']) periodObj.fileNoteGrammar = periodObj.noteFiles['Grammar'];
+                if (periodObj.noteFiles['Translate']) periodObj.fileNoteTranslate = periodObj.noteFiles['Translate'];
+
+                // Exam Files
+                const allExams = Object.values(periodObj.examFiles);
+                if (allExams.length > 0) periodObj.exams = allExams;
+                if (periodObj.examFiles['Grammar']) periodObj.fileExamGrammar = periodObj.examFiles['Grammar'];
+                if (periodObj.examFiles['Translate']) periodObj.fileExamTranslate = periodObj.examFiles['Translate'];
+
+                // Answer Files
+                const allAnswers = Object.values(periodObj.answerFiles);
+                if (allAnswers.length > 0) periodObj.answers = allAnswers;
+                if (periodObj.answerFiles['Grammar']) periodObj.fileAnswerGrammar = periodObj.answerFiles['Grammar'];
+                if (periodObj.answerFiles['Translate']) periodObj.fileAnswerTranslate = periodObj.answerFiles['Translate'];
+
+                // Cleanup
+                if (Object.keys(periodObj.activities).length === 0) delete periodObj.activities;
+                if (Object.keys(periodObj.youtube).length === 0) delete periodObj.youtube;
+                if (Object.keys(periodObj.slides).length === 0) delete periodObj.slides;
+                if (Object.keys(periodObj.noteFiles).length === 0) delete periodObj.noteFiles;
+                if (Object.keys(periodObj.isExam).length === 0) delete periodObj.isExam;
+                if (Object.keys(periodObj.examFiles).length === 0) delete periodObj.examFiles;
+                if (Object.keys(periodObj.answerFiles).length === 0) delete periodObj.answerFiles;
+
                 if (Object.keys(periodObj).length > 0) {
                     obj[period] = periodObj;
                 }
@@ -707,218 +705,177 @@
         const answers = getFiles(level, 'answers');
         
         const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
+        
+        let html = `<div class="slot-container" data-period="${periodId}">`;
+        
+        // Header
+        html += `<div class="slot-header" style="background:#f8f9fa; padding:5px; border-radius:4px; margin-bottom:10px;">
+                    <strong>${label}</strong>
+                 </div>`;
 
-        let normalInputs = '';
-        let examInputs = '';
-        
-        // Determine Mode
-        // Heuristic: if data has exams or answers, or explicit flag (not stored currently), or activities look like exams?
-        // Let's assume Normal by default unless data has 'exams' array or activity text indicates exam?
-        // For now, default to Normal, user can switch.
-        // If data exists, try to populate both, but show one.
-        
-        const isExamMode = data && (data.isExam || data.exams || data.answers || (data.activity && data.activity.includes('สอบ')));
-        
-        // 1. Generate Normal Mode Inputs
-        subjects.forEach(subj => {
-            let val = '';
+        subjects.forEach((subj, idx) => {
+            // Determine if this subject has data
+            let hasData = false;
+            let actVal = '';
+            let ytVal = '';
+            let slideVal = ''; // Zoom/Slide
+            let noteVal = [];
+            let isExam = false;
+            let examFileVal = [];
+            let ansFileVal = [];
+
             if (data) {
+                // Activity
                 if (data.activities && data.activities[subj.id]) {
-                    val = data.activities[subj.id];
+                    actVal = data.activities[subj.id];
+                    hasData = true;
                 } else {
                     // Legacy Fallback
-                    if (subj.id === 'Grammar') val = data.activityGrammar || '';
-                    else if (subj.id === 'Translate') val = data.activityTranslate || '';
-                    else val = data.activity || '';
+                    if (subj.id === 'Grammar' && data.activityGrammar) { actVal = data.activityGrammar; hasData = true; }
+                    else if (subj.id === 'Translate' && data.activityTranslate) { actVal = data.activityTranslate; hasData = true; }
+                    else if (idx === 0 && data.activity && !data.activities) { actVal = data.activity; hasData = true; } // Generic fallback to first subject
                 }
-            }
-            normalInputs += `
-                <div class="field-group">
-                    <label>${subj.label}</label>
-                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${val}" oninput="checkActivityInput(this)">
-                </div>
-            `;
-        });
-        
-        // Shared
-        normalInputs += `
-            <div class="field-group">
-                <label>YouTube (คั่นด้วย comma ,)</label>
-                <input type="text" class="input-youtube" placeholder="id1, id2, ..." value="${data ? (data.linkYoutube || '') : ''}">
-            </div>
-            <div class="field-group">
-                <label>Zoom Link</label>
-                <input type="text" class="input-zoom" placeholder="https://zoom.us/..." value="${data ? (data.linkZoom || '') : ''}">
-            </div>
-        `;
 
-        // File Inputs
-        subjects.forEach((subj, idx) => {
-             // Determine selected file from legacy fields or materials array
-             let selectedFiles = [];
-             if (data) {
-                 if (data.noteFiles && data.noteFiles[subj.id]) {
-                     selectedFiles.push(data.noteFiles[subj.id]);
-                 } else {
-                     // Legacy Fallback
-                     if (subj.id === 'Grammar' && data.fileNoteGrammar) selectedFiles.push(data.fileNoteGrammar);
+                // YouTube
+                if (data.youtube && data.youtube[subj.id]) {
+                    ytVal = data.youtube[subj.id]; // Expect newline separated
+                } else if (idx === 0 && data.linkYoutube) {
+                    // Legacy: comma separated -> newline
+                    ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                }
+
+                // Slide (Zoom)
+                if (data.slides && data.slides[subj.id]) {
+                    slideVal = data.slides[subj.id];
+                } else if (idx === 0 && data.linkZoom) {
+                    slideVal = data.linkZoom;
+                }
+
+                // Materials (Note Files)
+                if (data.noteFiles && data.noteFiles[subj.id]) {
+                    noteVal.push(data.noteFiles[subj.id]);
+                } else {
+                     // Legacy
+                     if (subj.id === 'Grammar' && data.fileNoteGrammar) noteVal.push(data.fileNoteGrammar);
                      else if (subj.id === 'Translate' && data.fileNoteTranslate) {
-                         if (Array.isArray(data.fileNoteTranslate)) selectedFiles.push(...data.fileNoteTranslate);
-                         else selectedFiles.push(data.fileNoteTranslate);
+                         if(Array.isArray(data.fileNoteTranslate)) noteVal.push(...data.fileNoteTranslate);
+                         else noteVal.push(data.fileNoteTranslate);
                      }
-                     // Fallback to materials array if no specific field found, or if just generic materials
-                     if (selectedFiles.length === 0 && data.materials && data.materials.length > 0) {
-                         // Only use fallback for first subject if generic array exists to avoid duplication across all subjects
-                         // unless we are sure it applies to all. 
-                         // Better logic: Don't auto-assign generic materials to ALL subjects if not specific.
-                         // But legacy data might rely on this. 
-                         // Let's restricting fallback: Only if array length matches subject index? No, too risky.
-                         // Fix: Only use data.materials[0] if this is the FIRST subject (usually Grammar/Main).
-                         // OR: check if it's already assigned.
-                         
-                         // The user issue is: "Grammar file appears in Translate slot too".
-                         // This happens because of: selectedFiles = [data.materials[0]]; being run for EVERY subject loop iteration.
-                         
-                         // Solution: Assign data.materials[0] only to the first subject, or try to distribute if multiple.
-                         if (idx === 0) { 
-                            if (data.materials[0]) selectedFiles.push(data.materials[0]);
-                         } else if (data.materials[idx]) {
-                            selectedFiles.push(data.materials[idx]);
-                         }
+                     // Fallback generic (only for first subject if not specific)
+                     if (noteVal.length === 0 && idx === 0 && data.materials && data.materials.length > 0) {
+                         noteVal.push(data.materials[0]);
                      }
-                 }
-             }
-
-             // Check activity for disabled state
-             let actVal = '';
-             if (data) {
-                if (data.activities && data.activities[subj.id]) actVal = data.activities[subj.id];
-                else if (subj.id === 'Grammar') actVal = data.activityGrammar || '';
-                else if (subj.id === 'Translate') actVal = data.activityTranslate || '';
-             }
-             const isDisabled = !actVal ? 'disabled' : '';
-
-             normalInputs += `
-                <div class="field-group">
-                    <label>เอกสาร (${subj.id})</label>
-                    <select class="input-file" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(materials, selectedFiles)}</select>
-                </div>
-            `;
-        });
-
-        // 2. Generate Exam Mode Inputs
-        examInputs += `
-            <div class="field-group">
-                <label>เวลาเริ่ม - สิ้นสุด</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="time" class="input-exam-start" value="${data ? (data.timeStart || (data.examStartTime ? data.examStartTime.substring(0,5) : '13:00')) : '13:00'}">
-                    <input type="time" class="input-exam-end" value="${data ? (data.timeEnd || (data.examEndTime ? data.examEndTime.substring(0,5) : '16:00')) : '16:00'}">
-                </div>
-            </div>
-        `;
-        
-        subjects.forEach(subj => {
-            let val = '';
-            if (data) {
-                if (data.activities && data.activities[subj.id]) {
-                    val = data.activities[subj.id];
-                } else {
-                    // Legacy
-                    if (subj.id === 'Grammar') val = data.activityGrammar || '';
-                    else if (subj.id === 'Translate') val = data.activityTranslate || '';
                 }
-            }
-            examInputs += `
-                <div class="field-group">
-                    <label>ข้อความกิจกรรม (${subj.id})</label>
-                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}" value="${val}" oninput="checkActivityInput(this)">
-                </div>
-            `;
-        });
-        
-        subjects.forEach((subj, idx) => {
-            // Exam Files
-            let selExams = [];
-            if (data) {
-                if (data.examFiles && data.examFiles[subj.id]) {
-                    selExams.push(data.examFiles[subj.id]);
+
+                // Exam Status
+                if (data.isExam && data.isExam[subj.id]) {
+                    isExam = true;
                 } else {
-                    // Legacy
-                    if (subj.id === 'Grammar' && data.fileExamGrammar) selExams.push(data.fileExamGrammar);
-                    else if (subj.id === 'Translate' && data.fileExamTranslate) selExams.push(data.fileExamTranslate);
-                    else if (data.exams && data.exams.length > 0 && !data.examFiles && !data.fileExamGrammar && !data.fileExamTranslate) {
-                         // Only use generic array if NO specific info exists at all
-                        if (data.exams.length === subjects.length) {
-                            if (data.exams[idx]) selExams.push(data.exams[idx]);
-                        } else {
-                            selExams = data.exams; // Fallback
-                        }
+                    // Legacy Global Exam Mode
+                    if (data.isExam === true || (data.activity && data.activity.includes('สอบ'))) {
+                        // Heuristic: If global exam mode, apply to all? Or just first?
+                        // Let's apply to subjects that have activity content or are exams
+                         if (actVal || (data.exams && data.exams.length > 0)) isExam = true;
                     }
                 }
-            }
-
-            // Answer Files
-            let selAnswers = [];
-            if (data) {
-                if (data.answerFiles && data.answerFiles[subj.id]) {
-                    selAnswers.push(data.answerFiles[subj.id]);
-                } else {
-                    // Legacy
-                    if (subj.id === 'Grammar' && data.fileAnswerGrammar) selAnswers.push(data.fileAnswerGrammar);
-                    else if (subj.id === 'Translate' && data.fileAnswerTranslate) selAnswers.push(data.fileAnswerTranslate);
-                    else if (data.answers && data.answers.length > 0 && !data.answerFiles && !data.fileAnswerGrammar && !data.fileAnswerTranslate) {
-                         // Only use generic array if NO specific info exists at all
-                        if (data.answers.length === subjects.length) {
-                            if (data.answers[idx]) selAnswers.push(data.answers[idx]);
-                        } else {
-                            selAnswers = data.answers; // Fallback
-                        }
-                    }
-                }
-            }
-
-            // Check activity for disabled state (Exam Mode)
-            let actVal = '';
-            if (data) {
-               if (data.activities && data.activities[subj.id]) actVal = data.activities[subj.id];
-               else if (subj.id === 'Grammar') actVal = data.activityGrammar || '';
-               else if (subj.id === 'Translate') actVal = data.activityTranslate || '';
-            }
-            const isDisabled = !actVal ? 'disabled' : '';
-
-            examInputs += `
-                <div class="field-group">
-                    <label>ข้อสอบ (${subj.id})</label>
-                    <select class="input-exam" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(exams, selExams)}</select>
-                </div>
-                <div class="field-group">
-                    <label>เฉลย (${subj.id})</label>
-                    <select class="input-ans" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(answers, selAnswers)}</select>
-                </div>
-            `;
-        });
-
-        return `
-            <div class="slot-container ${isExamMode ? 'is-exam' : ''}" data-period="${periodId}">
-                <div class="slot-header">
-                    <strong>${label}</strong>
-                    <label style="font-size:0.9em; cursor:pointer;">
-                        <input type="checkbox" onchange="toggleExamMode(this)" ${isExamMode ? 'checked' : ''}> สอบ (Exam)
-                    </label>
-                </div>
                 
-                <div class="mode-normal" style="display:${isExamMode ? 'none' : 'block'};">
-                    ${normalInputs}
-                </div>
+                // Exam/Answer Files
+                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(data.examFiles[subj.id]);
+                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(data.fileExamGrammar);
+                else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(data.fileExamTranslate);
+                else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(data.exams[0]);
 
-                <div class="mode-exam" style="display:${isExamMode ? 'block' : 'none'};">
-                    ${examInputs}
+                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(data.answerFiles[subj.id]);
+                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(data.fileAnswerGrammar);
+                else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(data.fileAnswerTranslate);
+                else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(data.answers[0]);
+            }
+
+            const displayStyle = hasData ? 'block' : 'none';
+            const checked = hasData ? 'checked' : '';
+
+            html += `
+                <div class="subject-block" style="border:1px solid #eee; border-radius:4px; padding:10px; margin-bottom:10px; background:#fff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <label style="cursor:pointer; font-weight:bold; color:#2c3e50;">
+                            <input type="checkbox" class="subj-enable" data-subj-id="${subj.id}" onchange="toggleSubject(this)" ${checked}> 
+                            ${subj.label}
+                        </label>
+                    </div>
+                    
+                    <div class="subj-content" style="display:${displayStyle}; margin-top:10px; padding-left:10px; border-left:3px solid #3498db;">
+                        
+                        <!-- 1. Activity -->
+                        <div class="field-group">
+                            <label>กิจกรรม (Activity)</label>
+                            <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${actVal}">
+                        </div>
+
+                        <!-- 2. YouTube -->
+                        <div class="field-group">
+                            <label>YouTube Links (1 ลิงค์ต่อ 1 บรรทัด)</label>
+                            <textarea class="input-youtube" data-subj-id="${subj.id}" rows="3" placeholder="https://youtube.com/watch?v=...">${ytVal}</textarea>
+                        </div>
+
+                        <!-- 3. Slide -->
+                        <div class="field-group">
+                            <label>รหัสสื่อการสอน (Presentation ID)</label>
+                            <input type="text" class="input-slide" data-subj-id="${subj.id}" placeholder="เช่น mangala_01_01 หรือ Link Zoom" value="${slideVal}">
+                        </div>
+
+                        <!-- 4. Materials -->
+                        <div class="field-group">
+                            <label>เอกสารประกอบการเรียน (Material)</label>
+                            <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, noteVal)}</select>
+                        </div>
+
+                        <!-- 5. Exam Checkbox -->
+                        <div class="field-group" style="margin-top:10px; background:#fff0f0; padding:10px; border-radius:4px;">
+                            <label style="color:#c0392b; cursor:pointer;">
+                                <input type="checkbox" class="input-is-exam" data-subj-id="${subj.id}" onchange="toggleSubjectExam(this)" ${isExam ? 'checked' : ''}> 
+                                มีสอบ (Exam)
+                            </label>
+                            
+                            <div class="exam-files" style="display:${isExam ? 'block' : 'none'}; margin-top:10px;">
+                                <div class="field-group">
+                                    <label>ไฟล์ข้อสอบ (Exam Paper)</label>
+                                    <select class="input-exam-file" data-subj-id="${subj.id}">${createOptions(exams, examFileVal)}</select>
+                                </div>
+                                <div class="field-group">
+                                    <label>ไฟล์เฉลย (Answer Key)</label>
+                                    <select class="input-ans-file" data-subj-id="${subj.id}">${createOptions(answers, ansFileVal)}</select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        });
+
+        html += `</div>`;
+        return html;
     }
 
-    // Helper to get files for a level
+    function toggleSubject(checkbox) {
+        const block = checkbox.closest('.subject-block');
+        const content = block.querySelector('.subj-content');
+        if (checkbox.checked) {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    }
+
+    function toggleSubjectExam(checkbox) {
+        const container = checkbox.closest('.field-group');
+        const filesDiv = container.querySelector('.exam-files');
+        if (checkbox.checked) {
+            filesDiv.style.display = 'block';
+        } else {
+            filesDiv.style.display = 'none';
+        }
+    }
     function getFiles(level, type) {
         let files = [];
         

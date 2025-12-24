@@ -965,9 +965,31 @@
             // Links
             let linksHtml = '';
 
-            // Zoom
-            if (period.linkZoom) {
-                linksHtml += `<a href="${period.linkZoom}" target="_blank" class="link-btn btn-zoom"><i class="fas fa-video"></i> เข้าเรียนผ่าน Zoom</a>`;
+            // Slides / Zoom / Presentation
+            const renderSlideBtn = (val, labelSuffix = '') => {
+                 let href = val;
+                 let icon = 'fas fa-video';
+                 let label = 'เข้าเรียนผ่าน Zoom';
+                 let cls = 'btn-zoom';
+                 
+                 // Check if it is a Presentation ID (not a URL)
+                 if (val && !val.trim().startsWith('http')) {
+                     href = `presentation.html?id=${encodeURIComponent(val.trim())}`;
+                     icon = 'fas fa-chalkboard-teacher';
+                     label = 'สื่อการสอน';
+                 }
+                 
+                 if (labelSuffix) label += ` ${labelSuffix}`;
+                 
+                 return `<a href="${href}" target="_blank" class="link-btn ${cls}"><i class="${icon}"></i> ${label}</a>`;
+            };
+
+            if (period.slides && Object.keys(period.slides).length > 0) {
+                 Object.keys(period.slides).forEach(subjId => {
+                     linksHtml += renderSlideBtn(period.slides[subjId], getSubjLabel(subjId));
+                 });
+            } else if (period.linkZoom) {
+                 linksHtml += renderSlideBtn(period.linkZoom);
             }
 
             // YouTube
