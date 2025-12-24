@@ -90,7 +90,10 @@
 <div class="container">
     <div style="display:flex; justify-content:space-between; align-items:center;">
         <h1>ระบบจัดการตารางเรียน (Schedule Manager)</h1>
-        <a href="../index.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่หน้าหลัก</a>
+        <div style="display:flex; gap:10px; align-items:center;">
+             <div id="auth-status" style="font-size:0.9em; color:#7f8c8d;">Checking Auth...</div>
+             <a href="../index.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่หน้าหลัก</a>
+        </div>
     </div>
     <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
 
@@ -222,6 +225,25 @@
              }
         }
 
+        // Check Auth Status
+        firebase.auth().onAuthStateChanged(async user => {
+            const statusDiv = document.getElementById('auth-status');
+            if (user) {
+                // Check Role
+                try {
+                    const doc = await db.collection('users').doc(user.uid).get();
+                    const role = doc.exists ? doc.data().role : 'unknown';
+                    statusDiv.innerHTML = `<i class="fas fa-user"></i> ${user.email} (${role})`;
+                    statusDiv.style.color = (role === 'admin' || role === 'teacher') ? '#27ae60' : '#e74c3c';
+                } catch(e) {
+                     statusDiv.innerText = `${user.email} (Error checking role)`;
+                }
+            } else {
+                statusDiv.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
+                alert("คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน");
+            }
+        });
+
         await loadClassrooms();
         
         // Check URL params
@@ -340,7 +362,11 @@
             alert("บันทึกข้อมูลเรียบร้อย!");
         } catch (e) {
             console.error("Save error:", e);
-            alert("บันทึกไม่สำเร็จ: " + e.message);
+            if (e.code === 'permission-denied') {
+                alert("บันทึกไม่สำเร็จ: สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุที่เป็นไปได้:\n1. คุณยังไม่ได้เข้าสู่ระบบ (กรุณาตรวจสอบสถานะมุมขวาบน)\n2. บัญชีของคุณไม่ใช่ Admin หรือ Teacher\n3. Security Rules บน Server ยังไม่อนุญาต (ถ้าเป็น Admin ให้ลอง Deploy Rules ใหม่)");
+            } else {
+                alert("บันทึกไม่สำเร็จ: " + e.message);
+            }
         } finally {
             showLoading(false);
         }
