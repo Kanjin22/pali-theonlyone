@@ -1035,8 +1035,7 @@
                 const FALLBACK_ADMIN_EMAILS = [
                     'admin@example.com', 
                     'pali.theonlyone@gmail.com',
-                    'admin1234@hotmail.com', // Explicitly added by user request
-                    user.email // ยอมให้ email ปัจจุบันเป็น admin ชั่วคราวถ้าต้องการ (แต่ไม่ควรใส่ถาวร) -> ลบ user.email ออกใน Production!
+                    'admin1234@hotmail.com' // Explicitly added by user request
                 ];
 
                 // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
@@ -1051,11 +1050,18 @@
                         await loadSystemConfig(); // Load open levels first
                         let role = 'general';
                         let displayName = user.displayName; 
+                        let shouldSetDefaultRole = false;
 
                         // 1. Try to get User Role from Firestore
                         try {
                             const doc = await db.collection('users').doc(uid).get();
-                            if (doc.exists && doc.data()) role = doc.data().role || 'general';
+                            if (doc.exists && doc.data()) {
+                                role = doc.data().role || 'general';
+                                if (!doc.data().role) shouldSetDefaultRole = true;
+                            } else {
+                                // Doc does not exist
+                                shouldSetDefaultRole = true;
+                            }
                         } catch (e) {
                             console.warn("Firestore Read Error (User):", e.message);
                             // Fallback Check
@@ -1069,7 +1075,7 @@
                         if (role !== 'admin') {
                             // ... (Existing Logic)
                             // ตรวจสอบว่าต้องกำหนด Role เริ่มต้นไหม
-                             if (role === 'general') {
+                             if (shouldSetDefaultRole && role === 'general') {
                                 // Try to set default role if needed, ignore error
                                 db.collection('users').doc(uid).set({ role: 'general' }, { merge: true }).catch(()=>{});
                             }
