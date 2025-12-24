@@ -182,8 +182,8 @@
         </div>
 
     </div>
-    <div id="login-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:9999; align-items:center; justify-content:center;">
-        <div style="background:#fff; width:95%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden;">
+    <div id="login-modal" style="display:none; position:static; background:transparent; align-items:center; justify-content:center;">
+        <div style="background:#fff; width:95%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden; margin:40px auto;">
             <div style="padding:16px 18px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-weight:700; color:#2c3e50;">เข้าสู่ระบบ</div>
                 <button id="btn-close-login" style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
@@ -256,16 +256,16 @@
         enforceAsciiEmail(modalEmail);
         enforceAsciiEmail(emailInput);
         function openLogin() { 
-            if (loginModal) loginModal.style.display = 'flex'; 
+            if (loginModal) loginModal.style.display = 'block'; 
             if (emailStatus) emailStatus.textContent = '';
             if (modalPassword) modalPassword.style.display = 'none';
             if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
             if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
             if (typeof modalForgotPassword !== 'undefined' && modalForgotPassword) modalForgotPassword.style.display = 'none';
         }
-        function closeLogin() { if (loginModal) loginModal.style.display = 'none'; }
+        function closeLogin() { if (auth && auth.currentUser && loginModal) loginModal.style.display = 'none'; }
         if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
-        if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
+        if (btnCloseLogin) btnCloseLogin.onclick = () => { if (auth && auth.currentUser) closeLogin(); };
         if (loginGoogle) loginGoogle.onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
         if (loginFacebook) loginFacebook.onclick = () => auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
         if (btnEmailSignIn) btnEmailSignIn.onclick = async () => {
