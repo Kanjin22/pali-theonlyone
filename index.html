@@ -471,6 +471,47 @@
             });
         };
 
+        function applyRoleUI(role) {
+            const classroomLinks = Array.from(document.querySelectorAll('a[href^="classroom_select.html"]'));
+            const lastClassroom = document.getElementById('last-classroom-link');
+            const enrollCardId = 'enroll-card';
+            const existingEnroll = document.getElementById(enrollCardId);
+            if (role === 'student' || role === 'teacher') {
+                classroomLinks.forEach(a => a.style.display = 'flex');
+                if (lastClassroom) lastClassroom.style.display = 'block';
+                if (existingEnroll) existingEnroll.remove();
+            } else {
+                classroomLinks.forEach(a => a.style.display = 'none');
+                if (lastClassroom) lastClassroom.style.display = 'none';
+                createEnrollCard(enrollCardId, classroomLinks.length ? classroomLinks[0].parentElement : null);
+            }
+            const teacherToolLink = document.querySelector('a[href="exam_builder.html"]');
+            if (teacherToolLink) {
+                const toolsGrid = teacherToolLink.closest('.grid-menu');
+                const toolsLabel = toolsGrid ? toolsGrid.previousElementSibling : null;
+                const showTools = (role === 'teacher' || role === 'admin');
+                if (toolsGrid) toolsGrid.style.display = showTools ? 'grid' : 'none';
+                if (toolsLabel && toolsLabel.classList.contains('section-label')) toolsLabel.style.display = showTools ? 'block' : 'none';
+            }
+        }
+
+        function createEnrollCard(id, container) {
+            try {
+                if (!container) {
+                    const grids = document.querySelectorAll('.grid-menu');
+                    container = grids[1] || grids[0] || null;
+                }
+                if (!container || document.getElementById(id)) return;
+                const a = document.createElement('a');
+                a.id = id;
+                a.href = 'enroll.html';
+                a.className = 'menu-card level-tool';
+                a.style.display = 'flex';
+                a.innerHTML = '<div class="icon-box"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title">สมัครเรียน</div><div class="card-desc">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
+                container.appendChild(a);
+            } catch (e) {}
+        }
+
         // ตรวจสอบสถานะล็อกอิน
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -485,6 +526,24 @@
                     email: user.email || '',
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
+                (async () => {
+                    try {
+                        const doc = await db.collection('users').doc(uid).get();
+                        let role = 'general';
+                        if (doc.exists && doc.data()) role = doc.data().role || 'general';
+                        if (!doc.exists || !doc.data() || !doc.data().role) {
+                            await db.collection('users').doc(uid).set({ role: 'general' }, { merge: true });
+                        }
+                        try {
+                            const enr = await db.collection('enrollments').doc(uid).get();
+                            if (enr.exists && enr.data() && enr.data().status === 'approved' && role !== 'student') {
+                                await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
+                                role = 'student';
+                            }
+                        } catch (e) {}
+                        applyRoleUI(role);
+                    } catch (e) {}
+                })();
 
                 // โค้ดสร้าง Exam Sets (คงเดิม)
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {

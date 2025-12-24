@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครเรียนบาลี</title>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background:#f8f9fa; margin:0; padding:30px 20px; color:#2c3e50; }
+        .container { max-width: 720px; margin: 0 auto; }
+        .card { background:#fff; border:1px solid #eee; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.06); padding:20px; }
+        h1 { margin:0 0 10px 0; font-size:1.6rem; }
+        .subtitle { color:#7f8c8d; margin-bottom:20px; }
+        .row { display:flex; gap:16px; }
+        .row > .col { flex:1; }
+        label { display:block; font-weight:600; margin-bottom:6px; }
+        input, select { width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; }
+        .actions { display:flex; gap:10px; margin-top:16px; }
+        .btn { padding:10px 14px; border-radius:8px; cursor:pointer; border:1px solid #3498db; background:#3498db; color:#fff; }
+        .btn.secondary { border-color:#7f8c8d; background:#fff; color:#7f8c8d; }
+        .badge { display:inline-block; padding:6px 10px; border-radius:20px; font-size:0.85rem; border:1px solid #ddd; margin-left:8px; }
+        .status-pending { color:#e67e22; border-color:#e67e22; }
+        .status-approved { color:#27ae60; border-color:#27ae60; }
+        .hidden { display:none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom:16px;">
+            <a href="index.html" class="btn secondary" style="text-decoration:none;"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+        </div>
+        <div class="card">
+            <h1><i class="fa-solid fa-user-graduate"></i> สมัครเรียนบาลี</h1>
+            <div class="subtitle">กรอกข้อมูลให้ครบถ้วนเพื่อส่งคำขอสมัครเรียน</div>
+            <div id="userBlock" style="margin-bottom:16px;">
+                <div>ผู้ใช้: <span id="userName">-</span> <span class="badge" id="roleBadge">ทั่วไป</span></div>
+                <div>อีเมล: <span id="userEmail">-</span></div>
+            </div>
+            <div id="statusBlock" style="margin-bottom:12px; display:none;">
+                <span>สถานะคำขอ: </span><span class="badge" id="statusBadge">-</span>
+            </div>
+            <div id="formBlock">
+                <div class="row">
+                    <div class="col">
+                        <label>ชื่อ-ฉายา-นามสกุล</label>
+                        <input id="fullNameInput" type="text" placeholder="ตัวอย่าง: สามเณร ปรีชา (ฉายา) ใจดี">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col">
+                        <label>วันเดือนปีเกิด</label>
+                        <input id="birthDateInput" type="date">
+                    </div>
+                    <div class="col">
+                        <label style="display:flex; align-items:center; gap:10px;">
+                            <input id="isMonkCheckbox" type="checkbox"> เป็นพระภิกษุ
+                        </label>
+                        <input id="ordinationDateInput" type="date" class="hidden" placeholder="วันอุปสมบท">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col">
+                        <label>สมัครเรียนชั้น</label>
+                        <select id="levelSelect">
+                            <option value="" disabled selected>เลือกชั้นเรียนที่เปิดรับ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="submitEnroll" class="btn">ส่งคำขอสมัคร</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const roleBadge = document.getElementById('roleBadge');
+        const statusBlock = document.getElementById('statusBlock');
+        const statusBadge = document.getElementById('statusBadge');
+        const fullNameInput = document.getElementById('fullNameInput');
+        const birthDateInput = document.getElementById('birthDateInput');
+        const isMonkCheckbox = document.getElementById('isMonkCheckbox');
+        const ordinationDateInput = document.getElementById('ordinationDateInput');
+        const levelSelect = document.getElementById('levelSelect');
+        const submitEnroll = document.getElementById('submitEnroll');
+        isMonkCheckbox.addEventListener('change', () => {
+            ordinationDateInput.classList.toggle('hidden', !isMonkCheckbox.checked);
+        });
+        auth.onAuthStateChanged(async (u) => {
+            if (!u) { location.href = 'index.html'; return; }
+            userName.textContent = u.displayName || 'ผู้ใช้งาน';
+            userEmail.textContent = u.email || '-';
+            let role = 'general';
+            try {
+                const userDoc = await db.collection('users').doc(u.uid).get();
+                if (userDoc.exists && userDoc.data().role) role = userDoc.data().role;
+                roleBadge.textContent = role === 'student' ? 'นักเรียน' : (role === 'teacher' ? 'อาจารย์' : 'ทั่วไป');
+            } catch (e) {}
+            try {
+                const cfg = await db.collection('config').doc('open_levels').get();
+                const levels = (cfg.exists && cfg.data().levels) ? cfg.data().levels : [];
+                levelSelect.innerHTML = '<option value="" disabled selected>เลือกชั้นเรียนที่เปิดรับ</option>';
+                (levels || []).forEach(l => {
+                    const opt = document.createElement('option');
+                    opt.value = l;
+                    opt.textContent = l.toUpperCase();
+                    levelSelect.appendChild(opt);
+                });
+            } catch (e) {}
+            try {
+                const enrollDoc = await db.collection('enrollments').doc(u.uid).get();
+                if (enrollDoc.exists) {
+                    const s = enrollDoc.data().status || 'pending';
+                    statusBlock.style.display = 'block';
+                    statusBadge.textContent = s === 'approved' ? 'สมัครสำเร็จ' : 'รออนุมัติ';
+                    statusBadge.className = 'badge ' + (s === 'approved' ? 'status-approved' : 'status-pending');
+                    submitEnroll.disabled = s === 'approved' || s === 'pending';
+                }
+            } catch (e) {}
+        });
+        function validate() {
+            const name = (fullNameInput.value || '').trim();
+            const birth = (birthDateInput.value || '').trim();
+            const monk = isMonkCheckbox.checked;
+            const ord = (ordinationDateInput.value || '').trim();
+            const level = levelSelect.value || '';
+            if (!name || !birth || !level) return false;
+            if (monk && !ord) return false;
+            return true;
+        }
+        if (submitEnroll) submitEnroll.onclick = async () => {
+            const u = auth.currentUser;
+            if (!u) return;
+            if (!validate()) { alert('กรุณากรอกข้อมูลให้ครบถ้วน'); return; }
+            const payload = {
+                uid: u.uid,
+                fullName: (fullNameInput.value || '').trim(),
+                birthDate: (birthDateInput.value || '').trim(),
+                isMonk: isMonkCheckbox.checked,
+                ordinationDate: (ordinationDateInput.value || '').trim(),
+                levelRequested: levelSelect.value || '',
+                status: 'pending',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            try {
+                await db.collection('enrollments').doc(u.uid).set(payload, { merge: true });
+                statusBlock.style.display = 'block';
+                statusBadge.textContent = 'รออนุมัติ';
+                statusBadge.className = 'badge status-pending';
+                submitEnroll.disabled = true;
+                alert('ส่งคำขอสมัครเรียบร้อยแล้ว');
+            } catch (e) {
+                alert('ส่งคำขอไม่สำเร็จ');
+            }
+        };
+    </script>
+</body>
+</html>
