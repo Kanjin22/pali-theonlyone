@@ -976,29 +976,33 @@
                         let displayName = user.displayName; // Default to Auth name
 
                         if (doc.exists && doc.data()) role = doc.data().role || 'general';
-                        if (!doc.exists || !doc.data() || !doc.data().role) {
-                            await db.collection('users').doc(uid).set({ role: 'general' }, { merge: true });
-                        }
-                        try {
-                            const enr = await db.collection('enrollments').doc(uid).get();
-                            if (enr.exists && enr.data()) {
-                                const enrData = enr.data();
-                                // Upgrade role if general and approved
-                                if (enrData.status === 'approved' && role === 'general') {
-                                    await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
-                                    role = 'student';
-                                }
-                                
-                                // Construct Real Name if approved
-                                if (enrData.status === 'approved') {
-                                    const title = enrData.title || '';
-                                    const first = enrData.firstName || '';
-                                    const last = enrData.lastName || '';
-                                    const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
-                                    displayName = `${title}${first} ${last}${epithet}`;
-                                }
+                        
+                        // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
+                        if (role !== 'admin') {
+                            if (!doc.exists || !doc.data() || !doc.data().role) {
+                                await db.collection('users').doc(uid).set({ role: 'general' }, { merge: true });
                             }
-                        } catch (e) { }
+                            try {
+                                const enr = await db.collection('enrollments').doc(uid).get();
+                                if (enr.exists && enr.data()) {
+                                    const enrData = enr.data();
+                                    // Upgrade role if general and approved
+                                    if (enrData.status === 'approved' && role === 'general') {
+                                        await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
+                                        role = 'student';
+                                    }
+                                    
+                                    // Construct Real Name if approved
+                                    if (enrData.status === 'approved') {
+                                        const title = enrData.title || '';
+                                        const first = enrData.firstName || '';
+                                        const last = enrData.lastName || '';
+                                        const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
+                                        displayName = `${title}${first} ${last}${epithet}`;
+                                    }
+                                }
+                            } catch (e) { }
+                        }
                         
                         // Update User UI with correct name
                         const userObjForUI = { ...user, displayName: displayName }; // Create a proxy object or just pass name
