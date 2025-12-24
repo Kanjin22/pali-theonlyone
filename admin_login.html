@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบผู้ดูแล (Admin)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
@@ -12,6 +14,7 @@
             --accent-color: #c0392b;
             --bg-color: #ecf0f1;
         }
+
         body {
             font-family: 'Sarabun', sans-serif;
             background-color: var(--bg-color);
@@ -21,37 +24,92 @@
             height: 100vh;
             margin: 0;
         }
+
         .login-card {
             background: #fff;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
             text-align: center;
             border-top: 5px solid var(--accent-color);
         }
-        .login-header { margin-bottom: 30px; }
-        .login-header i { font-size: 3rem; color: var(--accent-color); margin-bottom: 10px; }
-        .login-header h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); }
-        .login-header p { margin: 5px 0 0; color: #7f8c8d; font-size: 0.9rem; }
 
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary-color); font-size: 0.9rem; }
+        .login-header {
+            margin-bottom: 30px;
+        }
+
+        .login-header i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .login-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .login-header p {
+            margin: 5px 0 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
         .form-group input {
-            width: 100%; padding: 12px; border: 1px solid #dfe6e9; border-radius: 8px;
-            font-family: 'Sarabun'; font-size: 1rem; box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            font-family: 'Sarabun';
+            font-size: 1rem;
+            box-sizing: border-box;
             transition: all 0.3s;
         }
-        .form-group input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1); }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+        }
 
         .btn {
-            width: 100%; padding: 12px; background: var(--primary-color); color: #fff;
-            border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
-            cursor: pointer; transition: 0.2s; font-family: 'Sarabun';
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Sarabun';
         }
-        .btn:hover { background: #34495e; }
-        .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .btn:hover {
+            background: #34495e;
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
         .error-msg {
             color: var(--accent-color);
@@ -63,10 +121,21 @@
             display: none;
             text-align: left;
         }
-        .back-link { display: block; margin-top: 20px; color: #7f8c8d; text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { color: var(--primary-color); }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
     </style>
 </head>
+
 <body>
 
     <div class="login-card">
@@ -165,7 +234,7 @@
                 }
             } catch (e) {
                 console.error("Role check error:", e);
-                
+
                 // Fallback: Check if email is in allowlist
                 if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
                     console.warn("Allowed via Fallback Email List");
@@ -181,7 +250,7 @@
                 } else {
                     if (isInteractive) showError('เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์: ' + e.message);
                 }
-                
+
                 // Don't sign out immediately if it's just a permission error on the 'role' field check,
                 // but if we can't verify, we shouldn't let them in (unless fallback passed).
                 if (isInteractive) {
@@ -192,7 +261,7 @@
         }
 
         function handleLoginFailure(isInteractive, msg) {
-             if (isInteractive) {
+            if (isInteractive) {
                 showError(msg);
                 auth.signOut();
                 btnLogin.disabled = false;
@@ -206,4 +275,5 @@
         }
     </script>
 </body>
+
 </html>

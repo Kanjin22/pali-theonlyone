@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>แผงควบคุมแอดมิน</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
@@ -17,12 +19,19 @@
             --card-bg: #ffffff;
             --border-color: #dfe6e9;
         }
-        body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; color: var(--secondary-color); }
-        
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--secondary-color);
+        }
+
         .navbar {
             background: #fff;
             padding: 15px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,52 +39,245 @@
             top: 0;
             z-index: 100;
         }
-        .navbar-brand { font-size: 1.2rem; font-weight: 700; color: var(--secondary-color); display: flex; align-items: center; gap: 10px; }
-        .navbar-brand i { color: var(--primary-color); }
-        .navbar-menu { display: flex; gap: 15px; }
-        .nav-link { text-decoration: none; color: #7f8c8d; font-weight: 500; transition: 0.2s; cursor: pointer; }
-        .nav-link:hover, .nav-link.active { color: var(--primary-color); }
 
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        
-        .card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); padding: 25px; margin-bottom: 25px; border: 1px solid var(--border-color); }
-        .card-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Sarabun', sans-serif; font-weight: 600; transition: 0.2s; font-size: 0.9rem; }
-        .btn-primary { background: var(--primary-color); color: #fff; }
-        .btn-success { background: var(--success-color); color: #fff; }
-        .btn-danger { background: var(--danger-color); color: #fff; }
-        .btn-secondary { background: #ecf0f1; color: #7f8c8d; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #7f8c8d;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            font-weight: 600;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #7f8c8d;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
         /* Table */
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #f8f9fa; font-weight: 600; color: #7f8c8d; font-size: 0.9rem; }
-        td { font-size: 0.95rem; }
-        tr:hover { background: #fbfbfb; }
+        .table-responsive {
+            overflow-x: auto;
+        }
 
-        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
-        .bg-pending { background: #fff3cd; color: #856404; }
-        .bg-approved { background: #d4edda; color: #155724; }
-        .bg-rejected { background: #f8d7da; color: #721c24; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        td {
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: #fbfbfb;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .bg-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .bg-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .bg-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
 
         /* Tags Input */
-        .tags-input { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; border: 1px solid var(--border-color); border-radius: 8px; min-height: 45px; }
-        .tag { background: #e1f5fe; color: #0288d1; padding: 4px 10px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
-        .tag i { cursor: pointer; font-size: 0.8rem; }
-        .tag-input-field { border: none; outline: none; flex: 1; font-family: 'Sarabun'; font-size: 0.95rem; min-width: 100px; }
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            min-height: 45px;
+        }
 
-        .hidden { display: none; }
-        .loading { text-align: center; padding: 40px; color: #bdc3c7; }
-        
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
-        .stat-card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 15px; }
-        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .stat-info div:first-child { font-size: 0.9rem; color: #7f8c8d; }
-        .stat-info div:last-child { font-size: 1.4rem; font-weight: 700; color: var(--secondary-color); }
+        .tag {
+            background: #e1f5fe;
+            color: #0288d1;
+            padding: 4px 10px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .tag i {
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .tag-input-field {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-family: 'Sarabun';
+            font-size: 0.95rem;
+            min-width: 100px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #bdc3c7;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info div:first-child {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .stat-info div:last-child {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
 
         .role-select {
             padding: 4px 8px;
@@ -88,39 +290,61 @@
             color: #2c3e50;
             font-weight: 500;
         }
-        .role-select:hover { border-color: #bdc3c7; }
-        .role-select:focus { outline: none; border-color: var(--primary-color); }
+
+        .role-select:hover {
+            border-color: #bdc3c7;
+        }
+
+        .role-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
 
         /* Modal Styles */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1000;
+            /* Sit on top */
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Black w/ opacity */
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
             background-color: #fefefe;
-            margin: 5% auto; /* 5% from top and centered */
+            margin: 5% auto;
+            /* 5% from top and centered */
             padding: 25px;
             border: 1px solid #888;
             border-radius: 12px;
-            width: 90%; 
+            width: 90%;
             max-width: 600px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
             position: relative;
             animation: slideDown 0.3s ease-out;
         }
 
         @keyframes slideDown {
-            from { top: -50px; opacity: 0; }
-            to { top: 0; opacity: 1; }
+            from {
+                top: -50px;
+                opacity: 0;
+            }
+
+            to {
+                top: 0;
+                opacity: 1;
+            }
         }
 
         .close {
@@ -139,9 +363,20 @@
             cursor: pointer;
         }
 
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--secondary-color); }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
@@ -150,13 +385,16 @@
             font-size: 0.95rem;
             box-sizing: border-box;
         }
-        .form-group input:focus, .form-group select:focus {
+
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -173,19 +411,21 @@
     </nav>
 
     <div class="container">
-        
+
         <!-- Tab: Enrollments -->
         <div id="tab-enrollments">
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-icon" style="background:#fff3cd; color:#f39c12;"><i class="fa-solid fa-clock"></i></div>
+                    <div class="stat-icon" style="background:#fff3cd; color:#f39c12;"><i class="fa-solid fa-clock"></i>
+                    </div>
                     <div class="stat-info">
                         <div>รอตรวจสอบ</div>
                         <div id="count-pending">0</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background:#d4edda; color:#27ae60;"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-icon" style="background:#d4edda; color:#27ae60;"><i class="fa-solid fa-users"></i>
+                    </div>
                     <div class="stat-info">
                         <div>สมาชิกทั้งหมด</div>
                         <div id="count-approved">0</div>
@@ -196,7 +436,8 @@
             <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-user-plus"></i> รายการคำขอสมัครเรียน (รอตรวจสอบ)</span>
-                    <button class="btn btn-secondary" onclick="loadEnrollments()"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+                    <button class="btn btn-secondary" onclick="loadEnrollments()"><i class="fa-solid fa-rotate"></i>
+                        รีเฟรช</button>
                 </div>
                 <div class="table-responsive">
                     <table id="enrollTable">
@@ -211,7 +452,9 @@
                             </tr>
                         </thead>
                         <tbody id="enrollList">
-                            <tr><td colspan="6" class="loading">กำลังโหลดข้อมูล...</td></tr>
+                            <tr>
+                                <td colspan="6" class="loading">กำลังโหลดข้อมูล...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -224,8 +467,10 @@
                 <div class="card-header">
                     <span><i class="fa-solid fa-users"></i> รายชื่อสมาชิกทั้งหมด</span>
                     <div style="display:flex; gap:10px;">
-                         <input type="text" id="memberSearch" placeholder="ค้นหาชื่อ..." style="padding:8px; border:1px solid #ddd; border-radius:6px;">
-                         <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+                        <input type="text" id="memberSearch" placeholder="ค้นหาชื่อ..."
+                            style="padding:8px; border:1px solid #ddd; border-radius:6px;">
+                        <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i>
+                            รีเฟรช</button>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -240,7 +485,9 @@
                             </tr>
                         </thead>
                         <tbody id="memberList">
-                            <tr><td colspan="5" class="loading">กำลังโหลดข้อมูล...</td></tr>
+                            <tr>
+                                <td colspan="5" class="loading">กำลังโหลดข้อมูล...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -253,13 +500,15 @@
                 <div class="card-header">
                     <h2><i class="fa-solid fa-school"></i> จัดการห้องเรียน (Classroom Config)</h2>
                 </div>
-                
+
                 <!-- 1. Open Levels Control -->
-                <div class="form-group" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <div class="form-group"
+                    style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                     <label style="font-size: 1.1em; color: #2c3e50; margin-bottom: 15px; display: block;">
                         <i class="fa-solid fa-door-open"></i> เปิด/ปิด ระดับชั้นที่เปิดสอน (Open Levels)
                     </label>
-                    <div id="classCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                    <div id="classCheckboxes"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
                         <!-- Checkboxes will be rendered here -->
                     </div>
                     <button class="btn btn-primary" onclick="saveClassConfig()" style="margin-top: 15px;">
@@ -268,7 +517,8 @@
                 </div>
 
                 <!-- 2. Dynamic Classroom Management -->
-                <div class="form-group" style="background: #fff; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                <div class="form-group"
+                    style="background: #fff; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                         <label style="font-size: 1.1em; color: #2c3e50; margin:0;">
                             <i class="fa-solid fa-chalkboard-user"></i> รายชื่อห้องเรียนทั้งหมด
@@ -315,10 +565,11 @@
             <div class="modal-body">
                 <form id="roomForm" onsubmit="saveRoom(event)">
                     <input type="hidden" id="editRoomId">
-                    
+
                     <div class="form-group">
                         <label>รหัสห้องเรียน (ID) *ภาษาอังกฤษเท่านั้น ห้ามซ้ำ</label>
-                        <input type="text" id="roomId" required pattern="[a-zA-Z0-9_]+" title="ภาษาอังกฤษ ตัวเลข หรือ _ เท่านั้น">
+                        <input type="text" id="roomId" required pattern="[a-zA-Z0-9_]+"
+                            title="ภาษาอังกฤษ ตัวเลข หรือ _ เท่านั้น">
                     </div>
 
                     <div class="form-group">
@@ -396,7 +647,7 @@
 
         // Fallback Admin List (Sync with other files)
         const FALLBACK_ADMIN_EMAILS = [
-            'admin@example.com', 
+            'admin@example.com',
             'pali.theonlyone@gmail.com',
             'admin1234@hotmail.com'
         ];
@@ -405,7 +656,7 @@
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 console.log("Admin logged in:", user.email);
-                
+
                 // 1. Attempt to Elevate Privileges in Firestore (Auto-Fix for Fallback Admins)
                 if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
                     try {
@@ -430,23 +681,23 @@
                 } else {
                     console.warn("system_config.js not loaded, skipping migration check.");
                 }
-                
+
                 // 3. Verify Role (Client Side Check)
                 db.collection('users').doc(user.uid).get().then(doc => {
-                     if (!doc.exists || doc.data().role !== 'admin') {
-                         // Check Fallback
-                         if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                             console.log("Allowed via Fallback List");
-                             return;
-                         }
-                         console.warn("User is not admin, but logged in. Redirecting...");
-                         alert('คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
-                         location.href = 'admin_login.html';
-                     }
+                    if (!doc.exists || doc.data().role !== 'admin') {
+                        // Check Fallback
+                        if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                            console.log("Allowed via Fallback List");
+                            return;
+                        }
+                        console.warn("User is not admin, but logged in. Redirecting...");
+                        alert('คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
+                        location.href = 'admin_login.html';
+                    }
                 }).catch(e => {
-                     console.error("Error checking role:", e);
-                     // If permission denied, but we are in fallback list, ignore
-                     if (FALLBACK_ADMIN_EMAILS.includes(user.email)) return;
+                    console.error("Error checking role:", e);
+                    // If permission denied, but we are in fallback list, ignore
+                    if (FALLBACK_ADMIN_EMAILS.includes(user.email)) return;
                 });
 
             } else {
@@ -461,11 +712,11 @@
         function switchTab(tab) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             document.getElementById('tab-enrollments').classList.add('hidden');
             document.getElementById('tab-members').classList.add('hidden');
             document.getElementById('tab-classes').classList.add('hidden');
-            
+
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
         }
 
@@ -473,7 +724,7 @@
         async function loadEnrollments() {
             const tbody = document.getElementById('enrollList');
             tbody.innerHTML = '<tr><td colspan="6" class="loading">กำลังโหลด...</td></tr>';
-            
+
             try {
                 // Modified: Removed .orderBy('createdAt', 'desc') to avoid composite index error
                 const snapshot = await db.collection('enrollments')
@@ -491,7 +742,7 @@
                 // Client-side Sort (Newest First)
                 let docs = [];
                 snapshot.forEach(doc => docs.push(doc));
-                
+
                 docs.sort((a, b) => {
                     const tA = a.data().createdAt ? a.data().createdAt.toMillis() : 0;
                     const tB = b.data().createdAt ? b.data().createdAt.toMillis() : 0;
@@ -502,18 +753,18 @@
                 docs.forEach(doc => {
                     const data = doc.data();
                     const tr = document.createElement('tr');
-                    
+
                     // Format Date
                     let dateStr = '-';
                     if (data.createdAt) {
                         const d = data.createdAt.toDate();
-                        dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+                        dateStr = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear() + 543} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
                     }
 
                     // Format Name
-                    const name = `${data.title || ''}${data.firstName || ''} ${data.lastName || ''} ${data.epithet ? '('+data.epithet+')' : ''}`;
-                    const type = data.userType === 'monk' ? '<span class="badge" style="background:#fff3e0; color:#e67e22;">พระภิกษุ</span>' : 
-                                 (data.userType === 'novice' ? '<span class="badge" style="background:#e0f7fa; color:#006064;">สามเณร</span>' : '<span class="badge" style="background:#f3e5f5; color:#4a148c;">ฆราวาส</span>');
+                    const name = `${data.title || ''}${data.firstName || ''} ${data.lastName || ''} ${data.epithet ? '(' + data.epithet + ')' : ''}`;
+                    const type = data.userType === 'monk' ? '<span class="badge" style="background:#fff3e0; color:#e67e22;">พระภิกษุ</span>' :
+                        (data.userType === 'novice' ? '<span class="badge" style="background:#e0f7fa; color:#006064;">สามเณร</span>' : '<span class="badge" style="background:#f3e5f5; color:#4a148c;">ฆราวาส</span>');
 
                     tr.innerHTML = `
                         <td>${dateStr}</td>
@@ -540,7 +791,7 @@
 
         async function approveUser(uid, name) {
             if (!confirm(`ยืนยันการอนุมัติ "${name}" เป็นนักเรียน?`)) return;
-            
+
             try {
                 // 1. Update Enrollment
                 await db.collection('enrollments').doc(uid).update({
@@ -559,7 +810,7 @@
                 if (currentRole === 'general') {
                     // Only update role if current role is 'general'
                     // This prevents accidental downgrade of admins/teachers
-                    await db.collection('users').doc(uid).update({ 
+                    await db.collection('users').doc(uid).update({
                         role: 'student',
                         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
@@ -594,23 +845,23 @@
         async function loadMembers() {
             const tbody = document.getElementById('memberList');
             tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
-            
+
             try {
                 // Fetch all users and enrollments
                 // Note: If permission denied on 'users' collection (because rule requires isAdmin() check on data field),
                 // we might fail here.
                 // Workaround: If we are admin1234, we might not have role='admin' in DB yet or rules are strict.
-                
+
                 let usersSnap, enrollsSnap;
                 try {
-                     [usersSnap, enrollsSnap] = await Promise.all([
+                    [usersSnap, enrollsSnap] = await Promise.all([
                         db.collection('users').get(),
                         db.collection('enrollments').get()
                     ]);
                 } catch (readError) {
                     console.error("Main Read Error:", readError);
                     if (readError.code === 'permission-denied') {
-                         tbody.innerHTML = `
+                        tbody.innerHTML = `
                             <tr>
                                 <td colspan="5" style="color:red; text-align:center; padding: 20px;">
                                     <b>เข้าถึงข้อมูลไม่ได้ (Permission Denied)</b><br>
@@ -620,7 +871,7 @@
                                     </button>
                                 </td>
                             </tr>`;
-                         return;
+                        return;
                     }
                     throw readError;
                 }
@@ -638,7 +889,7 @@
 
                     // Determine Role
                     let role = u.role || 'general';
-                    
+
                     // Determine Name & Details
                     let name = u.displayName || u.email || '-';
                     let phone = '-';
@@ -649,18 +900,18 @@
                     if (enr) {
                         // Prefer Thai name if available
                         if (enr.firstName) {
-                             name = `${enr.title || ''}${enr.firstName} ${enr.lastName || ''} ${enr.epithet ? '('+enr.epithet+')' : ''}`;
+                            name = `${enr.title || ''}${enr.firstName} ${enr.lastName || ''} ${enr.epithet ? '(' + enr.epithet + ')' : ''}`;
                         }
                         if (enr.phone) phone = enr.phone;
                         if (enr.levelRequested) level = enr.levelRequested;
-                        
+
                         if (enr.approvedAt) {
                             rawDate = enr.approvedAt;
                             const d = enr.approvedAt.toDate();
-                            dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;
+                            dateStr = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear() + 543}`;
                         }
                     }
-                    
+
                     if (!rawDate && u.createdAt) rawDate = u.createdAt;
 
                     members.push({
@@ -676,14 +927,14 @@
 
                 // Sort: Admin > Teacher > Student > General
                 const roleOrder = { 'admin': 0, 'teacher': 1, 'student': 2, 'general': 3 };
-                
+
                 members.sort((a, b) => {
                     const rA = roleOrder[a.role] ?? 3;
                     const rB = roleOrder[b.role] ?? 3;
                     if (rA !== rB) return rA - rB;
                     return a.name.localeCompare(b.name, 'th');
                 });
-                
+
                 // Update Total Count
                 document.getElementById('count-approved').textContent = members.length;
 
@@ -701,11 +952,11 @@
                 tbody.innerHTML = '';
                 members.forEach(m => {
                     const tr = document.createElement('tr');
-                    
+
                     // Create Select for Role
                     const select = document.createElement('select');
                     select.className = 'role-select';
-                    
+
                     const roles = [
                         { val: 'admin', label: 'ผู้ดูแลระบบ (Admin)', color: '#2c3e50' },
                         { val: 'teacher', label: 'อาจารย์', color: '#8e44ad' },
@@ -727,12 +978,12 @@
                     select.style.borderColor = currentColor;
 
                     // On Change Event
-                    select.onchange = function() {
+                    select.onchange = function () {
                         const newVal = this.value;
                         const newColor = roles.find(r => r.val === newVal)?.color || '#2c3e50';
                         this.style.color = newColor;
                         this.style.borderColor = newColor;
-                        
+
                         changeRole(m.uid, newVal, m.role, m.name, this);
                     };
 
@@ -746,10 +997,10 @@
                         <td>${m.phone}</td>
                         <td>${m.dateStr}</td>
                     `;
-                    
+
                     // Append select to the second column
                     tr.children[1].appendChild(select);
-                    
+
                     tbody.appendChild(tr);
                 });
 
@@ -793,7 +1044,7 @@
                     role: newRole,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                
+
                 alert(`อัปเดตบทบาทสำเร็จ: ${name} เป็น ${roleNames[newRole]}`);
                 // Reload to update sort order
                 loadMembers();
@@ -808,14 +1059,14 @@
                 document.body.style.cursor = originalCursor;
             }
         }
-        
+
         // Search listener
         document.getElementById('memberSearch').addEventListener('input', () => {
-             // Debounce could be added here, but for now simple reload or filter
-             // Since we only fetch 50, client side filter on those 50 is fast.
-             // But if we want real search, we need Firestore query.
-             // For now, let's just re-render fetched data or re-fetch.
-             loadMembers();
+            // Debounce could be added here, but for now simple reload or filter
+            // Since we only fetch 50, client side filter on those 50 is fast.
+            // But if we want real search, we need Firestore query.
+            // For now, let's just re-render fetched data or re-fetch.
+            loadMembers();
         });
 
         // --- Class Config Logic ---
@@ -869,7 +1120,7 @@
                 checkbox.checked = currentClasses.includes(level.id);
                 checkbox.style.marginRight = '10px';
                 checkbox.style.transform = 'scale(1.2)';
-                
+
                 checkbox.onchange = (e) => {
                     if (e.target.checked) {
                         if (!currentClasses.includes(level.id)) currentClasses.push(level.id);
@@ -897,13 +1148,13 @@
             const btn = document.getElementById('btnSaveConfig');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> บันทึก...';
-            
+
             try {
                 await db.collection('config').doc('open_levels').set({
                     levels: currentClasses,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
-                
+
                 alert('บันทึกข้อมูลเรียบร้อยแล้ว');
             } catch (e) {
                 alert('Error: ' + e.message);
@@ -953,10 +1204,10 @@
 
             allClassrooms.forEach(room => {
                 const tr = document.createElement('tr');
-                const statusBadge = room.status === 'active' 
-                    ? '<span class="status-badge status-approved">Active</span>' 
+                const statusBadge = room.status === 'active'
+                    ? '<span class="status-badge status-approved">Active</span>'
                     : '<span class="status-badge status-rejected">Maintenance</span>';
-                
+
                 tr.innerHTML = `
                     <td>${room.id}</td>
                     <td>${LEVEL_NAMES[room.level] || room.level}</td>
@@ -999,7 +1250,7 @@
             document.getElementById('roomDesc').value = room.description || '';
             document.getElementById('roomTeachers').value = room.teachers ? room.teachers.join(', ') : '';
             document.getElementById('roomStatus').value = room.status || 'active';
-            
+
             document.getElementById('roomModalTitle').innerText = 'แก้ไขห้องเรียน';
             document.getElementById('roomModal').style.display = 'block';
         }
@@ -1007,7 +1258,7 @@
         async function saveRoom(e) {
             e.preventDefault();
             const isEdit = document.getElementById('editRoomId').value !== '';
-            
+
             const roomId = document.getElementById('roomId').value.trim();
             const level = document.getElementById('roomLevel').value;
             const name = document.getElementById('roomName').value.trim();
@@ -1069,7 +1320,7 @@
                     console.log("Classrooms collection empty. Starting migration...");
                     const batch = db.batch();
                     const rooms = Object.values(systemConfig.classrooms);
-                    
+
                     rooms.forEach(room => {
                         const ref = db.collection('classrooms').doc(room.id);
                         batch.set(ref, {
@@ -1078,7 +1329,7 @@
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
                     });
-                    
+
                     await batch.commit();
                     console.log(`Migrated ${rooms.length} classrooms to Firestore.`);
                     alert(`ระบบได้ทำการย้ายข้อมูลห้องเรียน ${rooms.length} ห้อง เข้าสู่ฐานข้อมูลเรียบร้อยแล้ว`);
@@ -1094,7 +1345,7 @@
         async function forceSetAdmin() {
             const user = auth.currentUser;
             if (!user) return alert('ไม่พบผู้ใช้งาน');
-            
+
             try {
                 await db.collection('users').doc(user.uid).set({
                     role: 'admin',
@@ -1108,4 +1359,5 @@
         }
     </script>
 </body>
+
 </html>
