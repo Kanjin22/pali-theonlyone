@@ -392,6 +392,77 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
+
+        /* Tag Input Styles */
+        .tags-input-container {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-height: 42px;
+            background: #fff;
+        }
+        
+        .tags-input-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .tag {
+            background-color: #e8f6f3;
+            color: #16a085;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .tag i {
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .tags-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 5px;
+            min-width: 120px;
+            font-family: 'Sarabun';
+            font-size: 0.95rem;
+        }
+
+        .dropdown-list {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 90%; /* Match modal width roughly or parent */
+            z-index: 1001;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 5px;
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 
@@ -596,9 +667,15 @@
                         <input type="text" id="roomDesc" placeholder="เช่น สำหรับสามเณรที่สอบผ่านบาลีสนามหลวงแล้ว">
                     </div>
 
-                    <div class="form-group">
-                        <label>ครูผู้สอน (คั่นด้วย , )</label>
-                        <input type="text" id="roomTeachers" placeholder="เช่น พระอาจารย์ A, พระอาจารย์ B">
+                    <div class="form-group" style="position:relative;">
+                        <label>ครูผู้สอน (เลือกจากรายชื่อ)</label>
+                        <div class="tags-input-container" onclick="document.getElementById('teacherSearchInput').focus()">
+                            <div id="selectedTeacherTags" style="display:flex; flex-wrap:wrap; gap:5px;"></div>
+                            <input type="text" id="teacherSearchInput" class="tags-input" placeholder="พิมพ์ชื่อเพื่อค้นหา..." autocomplete="off">
+                        </div>
+                        <div id="teacherDropdown" class="dropdown-list"></div>
+                        <!-- Hidden input to store value as comma separated string for compatibility -->
+                        <input type="hidden" id="roomTeachers">
                     </div>
 
                     <div class="form-group">
@@ -675,6 +752,7 @@
                 loadEnrollments();
                 loadClassConfig();
                 loadClassrooms();
+                fetchTeachers(); // Fetch teachers for classroom config
                 // Check if system_config.js is loaded and migrate if needed
                 if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
                     checkAndMigrateClassrooms();
@@ -1170,6 +1248,107 @@
         // Dynamic Classroom Management Logic
         // --------------------------------------------------
         let allClassrooms = [];
+        let availableTeachers = [];
+        let selectedTeachers = [];
+
+        // Teacher Selection Logic
+        async function fetchTeachers() {
+            try {
+                // Fetch teachers and admins
+                const snapshot = await db.collection('users')
+                    .where('role', 'in', ['teacher', 'admin'])
+                    .get();
+                
+                availableTeachers = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    // Prefer displayName, fallback to email or uid
+                    // Also check enrollments if needed for real name, but displayName should be synced.
+                    // For simplicity, we use displayName from users collection which index.html tries to set.
+                    // But index.html sets displayName from Auth.
+                    // loadMembers() does complex logic to find real name from Enrollments.
+                    // Ideally we should do the same here or just use what we have.
+                    // Let's use displayName. If empty, use email.
+                    const name = data.displayName || data.email || doc.id;
+                    availableTeachers.push({ uid: doc.id, name: name });
+                });
+                
+                // Sort by name
+                availableTeachers.sort((a, b) => a.name.localeCompare(b.name, 'th'));
+                console.log("Teachers loaded:", availableTeachers.length);
+
+            } catch (e) {
+                console.error("Error fetching teachers:", e);
+            }
+        }
+
+        function renderTeacherTags() {
+            const container = document.getElementById('selectedTeacherTags');
+            const hiddenInput = document.getElementById('roomTeachers');
+            container.innerHTML = '';
+            
+            selectedTeachers.forEach(name => {
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `${name} <i class="fa-solid fa-times" onclick="removeTeacher('${name}')"></i>`;
+                container.appendChild(tag);
+            });
+
+            // Update hidden input
+            hiddenInput.value = selectedTeachers.join(', ');
+        }
+
+        function selectTeacher(name) {
+            if (!selectedTeachers.includes(name)) {
+                selectedTeachers.push(name);
+                renderTeacherTags();
+            }
+            document.getElementById('teacherSearchInput').value = '';
+            document.getElementById('teacherDropdown').style.display = 'none';
+        }
+
+        function removeTeacher(name) {
+            selectedTeachers = selectedTeachers.filter(t => t !== name);
+            renderTeacherTags();
+        }
+
+        // Setup Search Listener
+        document.addEventListener('DOMContentLoaded', () => {
+             const searchInput = document.getElementById('teacherSearchInput');
+             const dropdown = document.getElementById('teacherDropdown');
+
+             searchInput.addEventListener('input', (e) => {
+                 const val = e.target.value.toLowerCase();
+                 dropdown.innerHTML = '';
+                 
+                 if (!val) {
+                     dropdown.style.display = 'none';
+                     return;
+                 }
+
+                 const matches = availableTeachers.filter(t => t.name.toLowerCase().includes(val));
+                 
+                 if (matches.length > 0) {
+                     matches.forEach(t => {
+                         const item = document.createElement('div');
+                         item.className = 'dropdown-item';
+                         item.textContent = t.name;
+                         item.onclick = () => selectTeacher(t.name);
+                         dropdown.appendChild(item);
+                     });
+                     dropdown.style.display = 'block';
+                 } else {
+                     dropdown.style.display = 'none';
+                 }
+             });
+
+             // Close dropdown when clicking outside
+             document.addEventListener('click', (e) => {
+                 if (!e.target.closest('.form-group')) {
+                     dropdown.style.display = 'none';
+                 }
+             });
+        });
 
         async function loadClassrooms() {
             const tbody = document.getElementById('roomListBody');
@@ -1231,6 +1410,12 @@
             document.getElementById('editRoomId').value = ''; // Empty = New Mode
             document.getElementById('roomId').disabled = false; // Enable ID for new room
             document.getElementById('roomModalTitle').innerText = 'เพิ่มห้องเรียนใหม่';
+            
+            // Reset Teachers
+            selectedTeachers = [];
+            renderTeacherTags();
+            document.getElementById('teacherSearchInput').value = '';
+
             document.getElementById('roomModal').style.display = 'block';
         }
 
@@ -1248,7 +1433,11 @@
             document.getElementById('roomLevel').value = room.level;
             document.getElementById('roomName').value = room.name;
             document.getElementById('roomDesc').value = room.description || '';
-            document.getElementById('roomTeachers').value = room.teachers ? room.teachers.join(', ') : '';
+            
+            // Populate Teachers
+            selectedTeachers = room.teachers || [];
+            renderTeacherTags();
+
             document.getElementById('roomStatus').value = room.status || 'active';
 
             document.getElementById('roomModalTitle').innerText = 'แก้ไขห้องเรียน';
