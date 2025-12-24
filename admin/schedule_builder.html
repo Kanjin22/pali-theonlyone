@@ -762,7 +762,23 @@
                      }
                      // Fallback to materials array if no specific field found, or if just generic materials
                      if (selectedFiles.length === 0 && data.materials && data.materials.length > 0) {
-                         selectedFiles = [data.materials[0]];
+                         // Only use fallback for first subject if generic array exists to avoid duplication across all subjects
+                         // unless we are sure it applies to all. 
+                         // Better logic: Don't auto-assign generic materials to ALL subjects if not specific.
+                         // But legacy data might rely on this. 
+                         // Let's restricting fallback: Only if array length matches subject index? No, too risky.
+                         // Fix: Only use data.materials[0] if this is the FIRST subject (usually Grammar/Main).
+                         // OR: check if it's already assigned.
+                         
+                         // The user issue is: "Grammar file appears in Translate slot too".
+                         // This happens because of: selectedFiles = [data.materials[0]]; being run for EVERY subject loop iteration.
+                         
+                         // Solution: Assign data.materials[0] only to the first subject, or try to distribute if multiple.
+                         if (idx === 0) { 
+                            if (data.materials[0]) selectedFiles.push(data.materials[0]);
+                         } else if (data.materials[idx]) {
+                            selectedFiles.push(data.materials[idx]);
+                         }
                      }
                  }
              }
