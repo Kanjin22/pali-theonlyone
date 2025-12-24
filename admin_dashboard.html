@@ -382,6 +382,18 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // Level Names Mapping
+        const LEVEL_NAMES = {
+            'pt12': 'ประโยค ๑-๒',
+            'pt3': 'ป.ธ. ๓',
+            'pt4': 'ป.ธ. ๔',
+            'pt5': 'ป.ธ. ๕',
+            'pt6': 'ป.ธ. ๖',
+            'pt7': 'ป.ธ. ๗',
+            'pt8': 'ป.ธ. ๘',
+            'pt9': 'ป.ธ. ๙'
+        };
+
         // Fallback Admin List (Sync with other files)
         const FALLBACK_ADMIN_EMAILS = [
             'admin@example.com', 
@@ -510,7 +522,7 @@
                             <div style="font-size:0.85rem; margin-top:4px;">${type}</div>
                         </td>
                         <td><span class="badge bg-pending">รอตรวจสอบ</span></td>
-                        <td>ประโยค ${data.levelRequested || '-'}</td>
+                        <td>${LEVEL_NAMES[data.levelRequested] || data.levelRequested || '-'}</td>
                         <td>${data.phone || '-'}</td>
                         <td>
                             <button class="btn btn-success" onclick="approveUser('${doc.id}', '${name}')"><i class="fa-solid fa-check"></i> อนุมัติ</button>
@@ -938,7 +950,7 @@
                 
                 tr.innerHTML = `
                     <td>${room.id}</td>
-                    <td>${room.level}</td>
+                    <td>${LEVEL_NAMES[room.level] || room.level}</td>
                     <td>${room.name}</td>
                     <td>${statusBadge}</td>
                     <td>
