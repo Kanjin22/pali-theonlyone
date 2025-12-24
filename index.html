@@ -627,16 +627,16 @@
         function showUser(u, role) {
             if (userInfo) {
                 const name = u.displayName || u.email || 'ผู้ใช้งาน';
-                
+
                 let statusHtml = '';
                 if (role) {
                     let label = 'ผู้ใช้งานทั่วไป';
                     let color = '#7f8c8d'; // gray
-                    
+
                     if (role === 'admin') { label = 'ผู้ดูแลระบบ'; color = '#c0392b'; } // red
                     else if (role === 'teacher') { label = 'อาจารย์'; color = '#8e44ad'; } // purple
                     else if (role === 'student') { label = 'นักเรียน'; color = '#27ae60'; } // green
-                    
+
                     statusHtml = `<span style="display:inline-block; margin-left:8px; font-size:0.75rem; background:${color}; color:white; padding:2px 8px; border-radius:99px; vertical-align:middle;">${label}</span>`;
                 }
 
@@ -692,13 +692,13 @@
             // - Admin/Teacher: See ALL classrooms
             // - Student: See ONLY Open Levels
             // - General: See NONE (Show Enroll Card instead)
-            
+
             if (role === 'admin' || role === 'teacher') {
                 // Show All
                 classroomLinks.forEach(a => a.style.display = 'flex');
                 if (lastClassroom) lastClassroom.style.display = 'block';
                 if (existingEnroll) existingEnroll.remove();
-            
+
             } else if (role === 'student') {
                 // Show Only Open Levels (Open Access Concept: นักเรียนเห็นทุกห้องที่ Admin เปิด)
                 let hasVisible = false;
@@ -706,7 +706,7 @@
                     // Extract level from href (e.g. classroom_select.html?level=pt12)
                     const urlParams = new URLSearchParams(a.href.split('?')[1]);
                     const level = urlParams.get('level');
-                    
+
                     // Logic: ถ้า Level นั้นอยู่ในรายการ OPEN_LEVELS ให้แสดงทันที
                     if (OPEN_LEVELS.includes(level)) {
                         a.style.display = 'flex';
@@ -715,7 +715,7 @@
                         a.style.display = 'none';
                     }
                 });
-                
+
                 if (lastClassroom) lastClassroom.style.display = hasVisible ? 'block' : 'none';
                 if (existingEnroll) existingEnroll.remove();
 
@@ -1033,7 +1033,7 @@
 
                 // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
                 const FALLBACK_ADMIN_EMAILS = [
-                    'admin@example.com', 
+                    'admin@example.com',
                     'pali.theonlyone@gmail.com',
                     'admin1234@hotmail.com' // Explicitly added by user request
                 ];
@@ -1049,7 +1049,7 @@
                     try {
                         await loadSystemConfig(); // Load open levels first
                         let role = 'general';
-                        let displayName = user.displayName; 
+                        let displayName = user.displayName;
                         let shouldSetDefaultRole = false;
 
                         // 1. Try to get User Role from Firestore
@@ -1075,9 +1075,9 @@
                         if (role !== 'admin') {
                             // ... (Existing Logic)
                             // ตรวจสอบว่าต้องกำหนด Role เริ่มต้นไหม
-                             if (shouldSetDefaultRole && role === 'general') {
+                            if (shouldSetDefaultRole && role === 'general') {
                                 // Try to set default role if needed, ignore error
-                                db.collection('users').doc(uid).set({ role: 'general' }, { merge: true }).catch(()=>{});
+                                db.collection('users').doc(uid).set({ role: 'general' }, { merge: true }).catch(() => { });
                             }
 
                             try {
@@ -1099,7 +1099,7 @@
                                         displayName = `${title}${first} ${last}${epithet}`;
                                     }
                                 }
-                            } catch (e) { 
+                            } catch (e) {
                                 console.warn("Enrollment Check Error:", e.message);
                             }
                         }
