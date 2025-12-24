@@ -958,15 +958,14 @@
                             const enr = await db.collection('enrollments').doc(uid).get();
                             if (enr.exists && enr.data()) {
                                 const enrData = enr.data();
-                                // ถ้าเป็นนักเรียน (approved) หรือแม้แต่ pending ก็อาจจะอยากโชว์ชื่อจริง? 
-                                // โจทย์บอก "เมื่อเขาสมัครเป็นนักเรียนแล้ว เราจะให้แสดงชื่อจริง"
-                                // ดังนั้นเช็ค status approved หรือเช็คว่ามีข้อมูลสมัครก็ได้
+                                // Upgrade role if general and approved
+                                if (enrData.status === 'approved' && role === 'general') {
+                                    await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
+                                    role = 'student';
+                                }
+                                
+                                // Construct Real Name if approved
                                 if (enrData.status === 'approved') {
-                                    if (role !== 'student' && role !== 'teacher' && role !== 'admin') {
-                                        await db.collection('users').doc(uid).set({ role: 'student' }, { merge: true });
-                                        role = 'student';
-                                    }
-                                    // Construct Real Name
                                     const title = enrData.title || '';
                                     const first = enrData.firstName || '';
                                     const last = enrData.lastName || '';
