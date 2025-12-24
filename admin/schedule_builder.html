@@ -354,11 +354,12 @@
             const date = row.querySelector('.input-date').value;
             const displayDate = row.querySelector('.input-display-date').value;
             const remarksText = row.querySelector('.input-remarks').value;
+            const isWeekend = row.querySelector('.input-weekend').checked;
 
             let obj = {
                 date: date,
                 displayDate: displayDate,
-                isWeekend: false,
+                isWeekend: isWeekend,
                 remarks: {}
             };
             
@@ -484,6 +485,11 @@
             <div>
                 <label>ข้อความวันที่</label>
                 <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘" value="${data ? data.displayDate : ''}">
+            </div>
+            <div style="margin-top: 10px; margin-bottom: 5px;">
+                <label style="cursor:pointer; color:#e74c3c; font-weight:bold;">
+                    <input type="checkbox" class="input-weekend" ${data && data.isWeekend ? 'checked' : ''}> วันหยุด (Holiday)
+                </label>
             </div>
             <div>
                 <label>หมายเหตุ (Remarks)</label>
