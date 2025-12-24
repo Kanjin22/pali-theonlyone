@@ -1,42 +1,46 @@
 
-function initLevelPage(levelId) {
-    if (typeof systemConfig === 'undefined') {
-        console.error("system_config.js not loaded");
-        return;
-    }
-
-    // Disable Exam Countdown and Room Selection as per user request
-    // renderExamCountdown(levelId);
-    // renderRoomSelection(levelId);
-    
+async function initLevelPage(levelId) {
     // Check if room is selected
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('room');
     
+    // Ensure Firebase Firestore is available
+    if (typeof db === 'undefined' && typeof firebase !== 'undefined') {
+        window.db = firebase.firestore();
+    }
+
     if (roomId) {
-        const room = systemConfig.getRoom(roomId);
-        if (room && room.level === levelId) {
-            renderRoomContent(room);
-        } else {
-             // Room ID exists but might belong to another level or not exist
-             // Fallback: If room belongs to another level, redirect? 
-             // Or just show content if valid room.
-             if (room) {
+        try {
+            // Try fetching from Firestore first
+            let room = null;
+            if (typeof db !== 'undefined') {
+                 const doc = await db.collection('classrooms').doc(roomId).get();
+                 if (doc.exists) room = doc.data();
+            }
+
+            // Fallback to systemConfig if Firestore fails or not found (and systemConfig exists)
+            if (!room && typeof systemConfig !== 'undefined') {
+                room = systemConfig.getRoom(roomId);
+            }
+
+            if (room) {
                  renderRoomContent(room);
-             } else {
-                 // Invalid room ID, maybe show error or redirect to select
+            } else {
                  console.error("Invalid room ID:", roomId);
+                 document.body.innerHTML = "<h1 style='text-align:center; margin-top:50px;'>ไม่พบห้องเรียนที่ระบุ</h1>";
+            }
+
+        } catch (e) {
+            console.error("Error fetching room:", e);
+             // Fallback
+             if (typeof systemConfig !== 'undefined') {
+                const room = systemConfig.getRoom(roomId);
+                if (room) renderRoomContent(room);
              }
         }
     } else {
-        // If no room selected (direct access), redirect to classroom selection
-        // window.location.href = `../classroom_select.html?level=${levelId}`;
-        
-        // OR fallback to first room (keeping old behavior for safety but it shouldn't happen from flow)
-        const rooms = systemConfig.getRoomsByLevel(levelId).filter(r => r.level === levelId);
-        if (rooms.length > 0) {
-            renderRoomContent(rooms[0]);
-        }
+        // No room selected -> Redirect to selection
+        window.location.href = `../classroom_select.html?level=${levelId}`;
     }
 }
 

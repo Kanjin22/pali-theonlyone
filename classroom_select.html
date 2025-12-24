@@ -61,8 +61,23 @@
         </div>
     </div>
 
-    <script src="js/system_config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Removed system_config.js dependency for rendering list -->
     <script>
+        // Firebase Config
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const db = firebase.firestore();
+
         const grid = document.getElementById('classroomGrid');
         const urlParams = new URLSearchParams(window.location.search);
         const currentLevel = urlParams.get('level') || 'pt12'; // Default to pt12 if not specified
@@ -85,12 +100,23 @@
             headerTitle.textContent = `เลือกห้องเรียน ${levelNames[currentLevel] || currentLevel}`;
         }
 
-        // Render Rooms
-        if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
-            const rooms = Object.values(systemConfig.classrooms).filter(r => r.level === currentLevel);
+        // Render Rooms from Firestore
+        async function loadRooms() {
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">กำลังโหลดห้องเรียน...</div>';
             
-            if (rooms.length > 0) {
-                rooms.forEach(room => {
+            try {
+                const snapshot = await db.collection('classrooms')
+                    .where('level', '==', currentLevel)
+                    .get();
+
+                if (snapshot.empty) {
+                    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#7f8c8d;">ยังไม่มีห้องเรียนในชั้นนี้</div>';
+                    return;
+                }
+
+                grid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const room = doc.data();
                     const card = document.createElement('a');
                     
                     if (room.status === 'active') {
@@ -108,38 +134,22 @@
 
                     card.innerHTML = `
                         <div class="status-badge ${statusClass}">${statusText}</div>
-                        <div class="room-icon">
-                            <i class="fa-solid fa-chalkboard-user"></i>
-                        </div>
+                        <div class="room-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                         <div class="room-name">${room.name}</div>
                         <div class="room-desc">${room.description}</div>
-                        <div class="teacher-list">
-                            <i class="fa-solid fa-user-tie"></i> ${room.teachers.join(', ')}
-                        </div>
+                        <div class="teacher-list"><i class="fa-solid fa-user-tie"></i> ${room.teachers ? room.teachers.join(', ') : '-'}</div>
                     `;
-                    
                     grid.appendChild(card);
                 });
-            } else {
-                grid.innerHTML = `<p style="text-align:center; width:100%; color:#7f8c8d;">ยังไม่มีห้องเรียนในระดับชั้นนี้</p>`;
+
+            } catch (e) {
+                console.error("Error loading rooms:", e);
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:red;">เกิดข้อผิดพลาด: ${e.message}</div>`;
             }
-
-            // Add Create Room Button (Admin)
-            const createBtn = document.createElement('a');
-            createBtn.href = `admin/room_builder.html?level=${currentLevel}`;
-            createBtn.className = 'room-card';
-            createBtn.style.border = '2px dashed #bdc3c7';
-            createBtn.style.background = '#f9f9f9';
-            createBtn.innerHTML = `
-                <div class="room-icon" style="color:#bdc3c7;"><i class="fa-solid fa-plus-circle"></i></div>
-                <div class="room-name" style="color:#7f8c8d;">สร้างห้องเรียนใหม่</div>
-                <div class="room-desc" style="color:#95a5a6;">สำหรับผู้ดูแลระบบ</div>
-            `;
-            grid.appendChild(createBtn);
-
-        } else {
-            grid.innerHTML = '<p style="text-align:center; color:red;">ไม่สามารถโหลดข้อมูลห้องเรียนได้ (system_config.js Error)</p>';
         }
+
+        loadRooms();
+
     </script>
 </body>
 </html>
