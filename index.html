@@ -649,7 +649,32 @@
                 const toolsGrid = teacherToolLink.closest('.grid-menu');
                 const toolsLabel = toolsGrid ? toolsGrid.previousElementSibling : null;
                 const showTools = (role === 'teacher' || role === 'admin');
-                if (toolsGrid) toolsGrid.style.display = showTools ? 'grid' : 'none';
+                if (toolsGrid) {
+                    toolsGrid.style.display = showTools ? 'grid' : 'none';
+                    
+                    // Admin Link Injection
+                    const adminLinkId = 'admin-dashboard-link';
+                    let adminLink = document.getElementById(adminLinkId);
+                    
+                    if (role === 'admin') {
+                        if (!adminLink) {
+                            adminLink = document.createElement('a');
+                            adminLink.id = adminLinkId;
+                            adminLink.href = 'admin_dashboard.html';
+                            adminLink.className = 'menu-card level-tool';
+                            adminLink.innerHTML = `
+                                <div class="icon-box" style="color:#c0392b;"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div class="card-title">แผงควบคุม</div>
+                                <div class="card-desc">จัดการระบบสมัครเรียน</div>
+                            `;
+                            // Insert as first item or append? Let's insert first for visibility
+                            toolsGrid.insertBefore(adminLink, toolsGrid.firstChild);
+                        }
+                        adminLink.style.display = 'flex';
+                    } else {
+                        if (adminLink) adminLink.style.display = 'none';
+                    }
+                }
                 if (toolsLabel && toolsLabel.classList.contains('section-label')) toolsLabel.style.display = showTools ? 'block' : 'none';
             }
         }
