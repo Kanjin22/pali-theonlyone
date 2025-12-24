@@ -287,7 +287,11 @@
             }
         } catch (e) {
             console.error("Load error:", e);
-            alert("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
+            if (e.code === 'permission-denied') {
+                alert("สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุ: Security Rules บน Server ยังไม่อนุญาตให้เข้าถึงตารางเรียน\n\nวิธีแก้ไข: กรุณา Deploy ไฟล์ 'firestore.rules' ขึ้นไปยัง Firebase Console หรือแก้ไข Rules บนเว็บให้ตรงกัน");
+            } else {
+                alert("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
+            }
         } finally {
             showLoading(false);
         }
