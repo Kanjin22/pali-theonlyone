@@ -203,6 +203,7 @@
                         <button id="modal-email-signin" style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer; display:none;">เข้าสู่ระบบ</button>
                         <button id="modal-email-signup" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">สมัครสมาชิก</button>
                     </div>
+                    <button id="modal-forgot-password" style="margin-top:8px; padding:10px; border:1px solid #e67e22; background:#ffffff; color:#e67e22; border-radius:8px; cursor:pointer; display:none; width:100%;">ลืมรหัสผ่าน</button>
                 </div>
             </div>
         </div>
@@ -240,6 +241,7 @@
         const modalEmailNext = document.getElementById('modal-email-next');
         const modalEmailSignIn = document.getElementById('modal-email-signin');
         const modalEmailSignUp = document.getElementById('modal-email-signup');
+        const modalForgotPassword = document.getElementById('modal-forgot-password');
         const userInfo = document.getElementById('user-info');
         const btnLogoutTop = document.getElementById('btn-logout');
         const authStatusInline = document.getElementById('auth-status');
@@ -293,12 +295,31 @@
                 if (emailStatus) emailStatus.textContent = 'สมัครสมาชิกไม่สำเร็จ (' + (err && err.code || 'unknown') + ')';
             }
         };
+        if (modalForgotPassword) modalForgotPassword.onclick = async () => {
+            const email = (modalEmail && modalEmail.value || '').trim();
+            if (!email) { if (emailStatus) emailStatus.textContent = 'กรุณากรอกอีเมล'; return; }
+            try {
+                const methods = await auth.fetchSignInMethodsForEmail(email);
+                if (methods && methods.includes('password')) {
+                    await auth.sendPasswordResetEmail(email);
+                    if (emailStatus) emailStatus.textContent = 'ส่งอีเมลรีเซ็ตรหัสผ่านแล้ว กรุณาตรวจสอบกล่องอีเมล';
+                } else if (methods && methods.length > 0) {
+                    const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
+                    if (emailStatus) emailStatus.textContent = 'บัญชีนี้เชื่อมต่อผ่าน ' + providerNames + ' กรุณาเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
+                } else {
+                    if (emailStatus) emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาสมัครสมาชิกก่อน';
+                }
+            } catch (err) {
+                if (emailStatus) emailStatus.textContent = 'ไม่สามารถส่งอีเมลรีเซ็ตได้ (' + (err && err.code || 'unknown') + ')';
+            }
+        };
         async function checkEmailFlow(email) {
             if (!emailStatus || !modalPassword || !modalEmailSignIn || !modalEmailSignUp) return;
             emailStatus.textContent = '';
             modalPassword.style.display = 'none';
             modalEmailSignIn.style.display = 'none';
             modalEmailSignUp.style.display = 'none';
+            if (modalForgotPassword) modalForgotPassword.style.display = 'none';
             const e = (email || '').trim();
             if (!e) { emailStatus.textContent = 'กรุณากรอกอีเมล'; return; }
             try {
@@ -307,16 +328,19 @@
                     emailStatus.textContent = 'คุณเป็นสมาชิกแล้ว กรุณาใส่พาสเวิร์ดที่สมัครไว้กับเว็บ';
                     modalPassword.style.display = 'block';
                     modalEmailSignIn.style.display = 'inline-block';
+                    if (modalForgotPassword) modalForgotPassword.style.display = 'inline-block';
                 } else if (methods && methods.length > 0) {
                     const providerNames = methods.map(m => (m === 'google.com' ? 'Google' : (m === 'facebook.com' ? 'Facebook' : m))).join(', ');
                     emailStatus.textContent = 'อีเมลนี้มีบัญชีอยู่แล้วผ่าน ' + providerNames + ' กรุณากดปุ่มเข้าสู่ระบบด้วยผู้ให้บริการนั้น';
                     modalPassword.style.display = 'none';
                     modalEmailSignIn.style.display = 'none';
                     modalEmailSignUp.style.display = 'none';
+                    if (modalForgotPassword) modalForgotPassword.style.display = 'none';
                 } else {
                     emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาใส่พาสเวิร์ดแล้วกดสมัครสมาชิก';
                     modalPassword.style.display = 'block';
                     modalEmailSignUp.style.display = 'inline-block';
+                    if (modalForgotPassword) modalForgotPassword.style.display = 'none';
                 }
             } catch (err) {
                 emailStatus.textContent = 'รูปแบบอีเมลไม่ถูกต้อง หรือเกิดข้อผิดพลาด';
