@@ -671,15 +671,34 @@
                 title.style.fontWeight = 'bold';
                 title.style.display = 'flex';
                 title.style.alignItems = 'center';
-                title.innerHTML = `<i class="fa-solid fa-layer-group" style="margin-right:10px;"></i>${lvl}`;
+                title.style.justifyContent = 'space-between';
+                title.style.cursor = 'pointer'; // Make clickable
+                
+                const titleText = document.createElement('div');
+                titleText.innerHTML = `<i class="fa-solid fa-layer-group" style="margin-right:10px;"></i>${lvl}`;
+                
+                const toggleIcon = document.createElement('i');
+                toggleIcon.className = 'fa-solid fa-chevron-down';
+                toggleIcon.style.transition = 'transform 0.3s ease';
+                
+                title.appendChild(titleText);
+                title.appendChild(toggleIcon);
                 wrapper.appendChild(title);
 
                 // Content List
                 const list = document.createElement('div');
                 list.style.padding = '15px';
-                list.style.display = 'flex';
+                list.style.display = 'none'; // Default hidden
                 list.style.flexDirection = 'column';
                 list.style.gap = '10px';
+                list.style.transition = 'all 0.3s ease';
+
+                // Toggle logic
+                title.addEventListener('click', () => {
+                    const isHidden = list.style.display === 'none';
+                    list.style.display = isHidden ? 'flex' : 'none';
+                    toggleIcon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
 
                 groups[lvl].forEach(item => {
                     const itemDiv = document.createElement('div');
