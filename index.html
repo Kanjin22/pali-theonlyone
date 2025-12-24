@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบการเรียนบาลีออนไลน์</title>
+    <link rel="icon" href="data:,">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -270,8 +271,20 @@
         if (modalEmailSignUp) modalEmailSignUp.onclick = async () => {
             const email = (modalEmail && modalEmail.value || '').trim();
             const pass = (modalPassword && modalPassword.value || '').trim();
-            if (!email || !pass) return;
-            await auth.createUserWithEmailAndPassword(email, pass);
+            if (!email || !pass) { if (emailStatus) emailStatus.textContent = 'กรุณากรอกอีเมลและรหัสผ่าน'; return; }
+            try {
+                const methods = await auth.fetchSignInMethodsForEmail(email);
+                if (methods && methods.includes('password')) {
+                    if (emailStatus) emailStatus.textContent = 'อีเมลนี้สมัครแล้ว กรุณากดเข้าสู่ระบบ';
+                    if (modalPassword) modalPassword.style.display = 'block';
+                    if (modalEmailSignIn) modalEmailSignIn.style.display = 'inline-block';
+                    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
+                    return;
+                }
+                await auth.createUserWithEmailAndPassword(email, pass);
+            } catch (err) {
+                if (emailStatus) emailStatus.textContent = 'สมัครสมาชิกไม่สำเร็จ (' + (err && err.code || 'unknown') + ')';
+            }
         };
         async function checkEmailFlow(email) {
             if (!emailStatus || !modalPassword || !modalEmailSignIn || !modalEmailSignUp) return;
