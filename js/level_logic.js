@@ -91,15 +91,46 @@ function renderRoomContent(room) {
              html += `<a href="../schedules/${room.level}/schedule-${room.level}-${m.file}.html?room=${room.id}" class="menu-button">${m.name}</a>`;
         });
         
-        // Add Create Schedule Button
+        // Add Create Schedule Button (Hidden by default, shown for Admin/Teacher only)
         html += `
-            <a href="../admin/schedule_builder.html?level=${room.level}&room=${room.id}" 
-               class="menu-button" style="background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
+            <a id="btn-create-schedule" href="../admin/schedule_builder.html?level=${room.level}&room=${room.id}" 
+               class="menu-button" style="display:none; background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
                + สร้างตารางเรียนใหม่
             </a>
         `;
-
+        
         scheduleContainer.innerHTML = html;
+
+        // Check Permissions
+        if (typeof firebase !== 'undefined') {
+            firebase.auth().onAuthStateChanged(async (user) => {
+                if (user) {
+                    const FALLBACK_ADMINS = ['admin1234@hotmail.com'];
+                    let allow = false;
+
+                    // 1. Check Fallback
+                    if (FALLBACK_ADMINS.includes(user.email)) allow = true;
+
+                    // 2. Check Firestore Role
+                    if (!allow) {
+                        try {
+                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                            if (doc.exists) {
+                                const role = doc.data().role;
+                                if (role === 'admin' || role === 'teacher') allow = true;
+                            }
+                        } catch (e) {
+                            console.error("Role check failed:", e);
+                        }
+                    }
+
+                    if (allow) {
+                        const btn = document.getElementById('btn-create-schedule');
+                        if (btn) btn.style.display = 'flex'; // menu-button usually flex or block
+                    }
+                }
+            });
+        }
     }
 
     // Update Stats Link if exists
