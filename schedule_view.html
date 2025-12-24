@@ -670,19 +670,70 @@
             }
 
             // Materials
-            if (period.materials && period.materials.length > 0) {
-                // Assuming materials are filenames or URLs? 
-                // Existing builder used generic filenames.
-                // We might need a base path or full URL.
-                // For now, assume they are relative to some known path or full URLs.
-                // If from existing system, likely filenames in `files/`.
-                period.materials.forEach(m => {
-                    linksHtml += `<a href="../../files/${m}" target="_blank" class="link-btn btn-material"><i class="fas fa-file-pdf"></i> ${m}</a>`;
-                });
+            const allFiles = [];
+            
+            // Helper to add files
+            const addFiles = (files, label, icon, cls) => {
+                if (!files) return;
+                if (Array.isArray(files)) {
+                    files.forEach(f => allFiles.push({ url: f, label: f, icon, cls })); // Use name as label if no other info
+                } else {
+                    allFiles.push({ url: files, label: files, icon, cls });
+                }
+            };
+
+            addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material');
+            
+            // Exams & Answers (Grammar)
+            addFiles(period.fileExamGrammar, 'ข้อสอบไวยากรณ์', 'fa-file-alt', 'btn-exam');
+            addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer');
+            
+            // Exams & Answers (Translate)
+            addFiles(period.fileExamTranslate, 'ข้อสอบแปล', 'fa-file-alt', 'btn-exam');
+            addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer');
+
+            // Generic Exams/Answers arrays
+            addFiles(period.exams, 'ข้อสอบ', 'fa-file-alt', 'btn-exam');
+            addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer');
+
+            if (allFiles.length > 0) {
+                 let filesHtml = '';
+                 allFiles.forEach(f => {
+                     // Check if URL is absolute (http/https) or relative
+                     // Cloud files are full URLs. Legacy files are filenames.
+                     let href = f.url;
+                     let name = f.label;
+                     
+                     if (f.url.startsWith('http')) {
+                         // Cloud file: Extract name from URL or use stored name?
+                         // For now, if label is URL, try to make it prettier or just show "File"
+                         // But typically builder saves the URL as the value.
+                         // Ideally we should save {name, url} but builder saves string.
+                         // Let's decode URI component to see filename if possible
+                         try {
+                             name = decodeURIComponent(f.url.split('/').pop().split('?')[0]);
+                             // Remove timestamp prefix if present (1234567890_name.pdf)
+                             const parts = name.split('_');
+                             if (parts.length > 1 && !isNaN(parts[0])) {
+                                 name = parts.slice(1).join('_');
+                             }
+                         } catch(e) { name = "ดาวน์โหลดไฟล์"; }
+                     } else {
+                         // Legacy file
+                         href = `../../files/${f.url}`; // Adjust path as needed
+                     }
+
+                     filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
+                 });
+                 html += `<div class="modal-section"><h4>ไฟล์ประกอบ</h4><div class="link-group">${filesHtml}</div></div>`;
             }
 
-            if (linksHtml) {
-                html += `<div class="modal-section"><h4>สื่อการสอน</h4><div class="link-group">${linksHtml}</div></div>`;
+            if (linksHtml || allFiles.length > 0) {
+                 // Combine sections if needed, but I separated them above.
+                 // Actually I should append linksHtml (Zoom/Youtube) first.
+                 if (linksHtml) {
+                     html += `<div class="modal-section"><h4>สื่อการสอน</h4><div class="link-group">${linksHtml}</div></div>`;
+                 }
             }
 
             document.getElementById('modal-body').innerHTML = html;
