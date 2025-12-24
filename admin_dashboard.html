@@ -87,6 +87,7 @@
         </div>
         <div class="navbar-menu">
             <a class="nav-link active" onclick="switchTab('enrollments')">คำขอสมัครเรียน</a>
+            <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
@@ -132,6 +133,35 @@
                         </thead>
                         <tbody id="enrollList">
                             <tr><td colspan="6" class="loading">กำลังโหลดข้อมูล...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Members -->
+        <div id="tab-members" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-users"></i> รายชื่อสมาชิกทั้งหมด (ที่ได้รับการอนุมัติแล้ว)</span>
+                    <div style="display:flex; gap:10px;">
+                         <input type="text" id="memberSearch" placeholder="ค้นหาชื่อ..." style="padding:8px; border:1px solid #ddd; border-radius:6px;">
+                         <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ชื่อ-สกุล</th>
+                                <th>ประเภท</th>
+                                <th>ชั้นเรียน</th>
+                                <th>เบอร์โทร</th>
+                                <th>วันที่อนุมัติ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="memberList">
+                            <tr><td colspan="5" class="loading">กำลังโหลดข้อมูล...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -197,6 +227,7 @@
 
         function initDashboard() {
             loadEnrollments();
+            loadMembers();
             loadClassConfig();
         }
 
@@ -205,6 +236,7 @@
             event.target.classList.add('active');
             
             document.getElementById('tab-enrollments').classList.add('hidden');
+            document.getElementById('tab-members').classList.add('hidden');
             document.getElementById('tab-classes').classList.add('hidden');
             
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
@@ -312,6 +344,71 @@
                 alert('Error: ' + e.message);
             }
         }
+
+        // --- Members Logic ---
+        async function loadMembers() {
+            const tbody = document.getElementById('memberList');
+            tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+            
+            try {
+                // Get approved enrollments
+                const snapshot = await db.collection('enrollments')
+                    .where('status', '==', 'approved')
+                    .orderBy('approvedAt', 'desc')
+                    .limit(50) // Limit for performance
+                    .get();
+
+                document.getElementById('count-approved').textContent = snapshot.size; // Update stats based on fetch or separate query
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">ยังไม่มีสมาชิกที่อนุมัติแล้ว</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                const searchTerm = (document.getElementById('memberSearch').value || '').toLowerCase();
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const name = `${data.title || ''}${data.firstName || ''} ${data.lastName || ''} ${data.epithet ? '('+data.epithet+')' : ''}`;
+                    
+                    // Simple client-side search filter
+                    if (searchTerm && !name.toLowerCase().includes(searchTerm)) return;
+
+                    const type = data.userType === 'monk' ? '<span class="badge" style="background:#fff3e0; color:#e67e22;">พระภิกษุ</span>' : 
+                                 (data.userType === 'novice' ? '<span class="badge" style="background:#e0f7fa; color:#006064;">สามเณร</span>' : '<span class="badge" style="background:#f3e5f5; color:#4a148c;">ฆราวาส</span>');
+                    
+                    let dateStr = '-';
+                    if (data.approvedAt) {
+                        const d = data.approvedAt.toDate();
+                        dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><div style="font-weight:600;">${name}</div></td>
+                        <td>${type}</td>
+                        <td>ประโยค ${data.levelRequested || '-'}</td>
+                        <td>${data.phone || '-'}</td>
+                        <td>${dateStr}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
+            }
+        }
+        
+        // Search listener
+        document.getElementById('memberSearch').addEventListener('input', () => {
+             // Debounce could be added here, but for now simple reload or filter
+             // Since we only fetch 50, client side filter on those 50 is fast.
+             // But if we want real search, we need Firestore query.
+             // For now, let's just re-render fetched data or re-fetch.
+             loadMembers();
+        });
 
         // --- Class Config Logic ---
         let currentClasses = [];
