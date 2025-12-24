@@ -729,7 +729,7 @@
             normalInputs += `
                 <div class="field-group">
                     <label>${subj.label}</label>
-                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${val}">
+                    <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${val}" oninput="checkActivityInput(this)">
                 </div>
             `;
         });
@@ -767,10 +767,19 @@
                  }
              }
 
+             // Check activity for disabled state
+             let actVal = '';
+             if (data) {
+                if (data.activities && data.activities[subj.id]) actVal = data.activities[subj.id];
+                else if (subj.id === 'Grammar') actVal = data.activityGrammar || '';
+                else if (subj.id === 'Translate') actVal = data.activityTranslate || '';
+             }
+             const isDisabled = !actVal ? 'disabled' : '';
+
              normalInputs += `
                 <div class="field-group">
                     <label>เอกสาร (${subj.id})</label>
-                    <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, selectedFiles)}</select>
+                    <select class="input-file" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(materials, selectedFiles)}</select>
                 </div>
             `;
         });
@@ -800,7 +809,7 @@
             examInputs += `
                 <div class="field-group">
                     <label>ข้อความกิจกรรม (${subj.id})</label>
-                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}" value="${val}">
+                    <input type="text" class="input-exam-act" data-subj-id="${subj.id}" placeholder="เช่น (สอบ) ${subj.defaultAct}" value="${val}" oninput="checkActivityInput(this)">
                 </div>
             `;
         });
@@ -846,14 +855,23 @@
                 }
             }
 
+            // Check activity for disabled state (Exam Mode)
+            let actVal = '';
+            if (data) {
+               if (data.activities && data.activities[subj.id]) actVal = data.activities[subj.id];
+               else if (subj.id === 'Grammar') actVal = data.activityGrammar || '';
+               else if (subj.id === 'Translate') actVal = data.activityTranslate || '';
+            }
+            const isDisabled = !actVal ? 'disabled' : '';
+
             examInputs += `
                 <div class="field-group">
                     <label>ข้อสอบ (${subj.id})</label>
-                    <select class="input-exam" data-subj-id="${subj.id}">${createOptions(exams, selExams)}</select>
+                    <select class="input-exam" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(exams, selExams)}</select>
                 </div>
                 <div class="field-group">
                     <label>เฉลย (${subj.id})</label>
-                    <select class="input-ans" data-subj-id="${subj.id}">${createOptions(answers, selAnswers)}</select>
+                    <select class="input-ans" data-subj-id="${subj.id}" ${isDisabled}>${createOptions(answers, selAnswers)}</select>
                 </div>
             `;
         });
@@ -882,18 +900,16 @@
     function getFiles(level, type) {
         let files = [];
         
-        // 1. Static Files (Legacy) - Filter by type strictly to avoid clutter
+        // 1. Static Files (Legacy) - Filter by type strictly
         if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
             files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
         }
         
-        // 2. Dynamic Files (Firestore) - Include ALL types for this level to prevent "missing file" confusion
-        // We filter only by level.
-        const dyn = DYNAMIC_FILES.filter(f => f.level === level);
+        // 2. Dynamic Files (Firestore) - Filter by level AND type strictly
+        // As requested: Split Materials, Exams, and Answers to avoid clutter
+        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type);
         dyn.forEach(f => {
-            // Add type indicator if it doesn't match the requested type
-            const typeLabel = f.type === type ? '[CLOUD]' : `[${f.type.toUpperCase()}]`;
-            files.push({ name: `${typeLabel} ${f.name}`, value: f.url });
+            files.push({ name: `[CLOUD] ${f.name}`, value: f.url });
         });
         
         // Sort by name
@@ -954,6 +970,20 @@
         if (displayInput) {
             displayInput.value = displayStr;
         }
+    }
+
+    function checkActivityInput(input) {
+        const subjId = input.dataset.subjId;
+        const container = input.closest('.mode-normal') || input.closest('.mode-exam');
+        if (!container) return;
+
+        const hasValue = input.value.trim().length > 0;
+        
+        // Find related selects with same subject ID within this mode container
+        const selects = container.querySelectorAll(`select[data-subj-id="${subjId}"]`);
+        selects.forEach(sel => {
+            sel.disabled = !hasValue;
+        });
     }
 
     function toggleExamMode(checkbox) {
