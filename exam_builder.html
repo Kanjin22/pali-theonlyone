@@ -7,6 +7,20 @@
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script>
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            appId: "YOUR_APP_ID",
+            messagingSenderId: "YOUR_SENDER_ID"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const _auth = firebase.auth();
+        _auth.onAuthStateChanged((u) => { if (!u) { location.href = 'index.html'; } });
+    </script>
     <style>
         body { font-family: "Niramit", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; background-color: #f4f6f8; margin: 0; }
         /* Workflow State Styles */
