@@ -619,11 +619,25 @@
 
         // --- Auth State & Firestore Sync ---
 
-        function showUser(u) {
+        function showUser(u, role) {
             if (userInfo) {
                 const name = u.displayName || u.email || 'ผู้ใช้งาน';
-                userInfo.textContent = name;
-                userInfo.style.display = 'inline-block';
+                
+                let statusHtml = '';
+                if (role) {
+                    let label = 'ผู้ใช้งานทั่วไป';
+                    let color = '#7f8c8d'; // gray
+                    
+                    if (role === 'admin') { label = 'ผู้ดูแลระบบ'; color = '#c0392b'; } // red
+                    else if (role === 'teacher') { label = 'อาจารย์'; color = '#8e44ad'; } // purple
+                    else if (role === 'student') { label = 'นักเรียน'; color = '#27ae60'; } // green
+                    
+                    statusHtml = `<span style="display:inline-block; margin-left:8px; font-size:0.75rem; background:${color}; color:white; padding:2px 8px; border-radius:99px; vertical-align:middle;">${label}</span>`;
+                }
+
+                userInfo.innerHTML = `<b>${name}</b> ${statusHtml}`;
+                userInfo.style.display = 'inline-flex'; // Use inline-flex for alignment
+                userInfo.style.alignItems = 'center';
             }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
             if (btnOpenLogin) btnOpenLogin.style.display = 'none'; // ซ่อนปุ่ม Login
@@ -1041,7 +1055,7 @@
                             displayName: displayName,
                             photoURL: user.photoURL
                         };
-                        showUser(displayUser);
+                        showUser(displayUser, role);
                         applyRoleUI(role);
 
                     } catch (e) {
