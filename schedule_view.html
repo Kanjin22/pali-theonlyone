@@ -979,13 +979,29 @@
                     // FILTER: Ignore old GitHub Pages links that are broken
                     if (typeof f === 'string' && f.includes('kanjin22.github.io')) return;
 
-                    // RESOLVE: Check if this filename exists in our cloud files index
+                    // RESOLVE: Check if this filename exists in our cloud files index or construct it
                     let finalUrl = null;
                     if (typeof f === 'string') {
                         if (f.startsWith('http')) {
                             finalUrl = f;
-                        } else if (cloudFilesIndex && cloudFilesIndex[f]) {
-                            finalUrl = cloudFilesIndex[f];
+                        } else {
+                            // 1. Try Firestore Index
+                            if (cloudFilesIndex && cloudFilesIndex[f]) {
+                                finalUrl = cloudFilesIndex[f];
+                            } 
+                            // 2. Fallback: Construct URL from pattern
+                            else if (f.match(/^(pt\d+)_/)) {
+                                const match = f.match(/^(pt\d+)_/);
+                                const level = match[1];
+                                let category = 'materials'; // Default
+                                if (f.includes('_exam')) category = 'exams';
+                                else if (f.includes('_ans')) category = 'answers';
+                                
+                                // Construct Firebase Storage URL
+                                const bucket = 'palitest-generator.firebasestorage.app';
+                                const path = `files/${level}/${category}/${f}`;
+                                finalUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
+                            }
                         }
                     }
 
