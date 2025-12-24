@@ -484,7 +484,8 @@
             // Load Levels
             try {
                 const cfg = await db.collection('config').doc('open_levels').get();
-                const levels = (cfg.exists && cfg.data().levels) ? cfg.data().levels : [];
+                // Default to ['1-2'] if empty for testing
+                const levels = (cfg.exists && cfg.data().levels && cfg.data().levels.length > 0) ? cfg.data().levels : ['1-2'];
                 levelSelect.innerHTML = '<option value="" disabled selected>-- เลือกชั้นเรียนที่เปิดรับ --</option>';
                 levels.forEach(l => {
                     const opt = document.createElement('option');
