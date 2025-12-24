@@ -256,7 +256,14 @@
         }
         enforceAsciiEmail(modalEmail);
         enforceAsciiEmail(emailInput);
-        function openLogin() { if (loginModal) loginModal.style.display = 'flex'; }
+        function openLogin() { 
+            if (loginModal) loginModal.style.display = 'flex'; 
+            if (emailStatus) emailStatus.textContent = '';
+            if (modalPassword) modalPassword.style.display = 'none';
+            if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
+            if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
+            if (typeof modalForgotPassword !== 'undefined' && modalForgotPassword) modalForgotPassword.style.display = 'none';
+        }
         function closeLogin() { if (loginModal) loginModal.style.display = 'none'; }
         if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
         if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
@@ -364,7 +371,10 @@
             }
         }
         if (modalEmailNext) modalEmailNext.onclick = () => checkEmailFlow(modalEmail && modalEmail.value);
-        if (modalEmail) modalEmail.addEventListener('blur', () => checkEmailFlow(modalEmail.value));
+        if (modalEmail) {
+            modalEmail.addEventListener('blur', () => checkEmailFlow(modalEmail.value));
+            modalEmail.addEventListener('input', () => checkEmailFlow(modalEmail.value));
+        }
         function showUser(u) {
             if (userInfo) { const name = u.displayName || u.phoneNumber || (u.email || 'ผู้ใช้'); userInfo.textContent = 'เข้าสู่ระบบ: ' + name; userInfo.style.display = 'inline-block'; }
             if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
