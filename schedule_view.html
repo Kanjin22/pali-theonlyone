@@ -737,6 +737,22 @@
         const roomId = urlParams.get('room'); // fallback or context
 
         let scheduleData = null;
+        let cloudFilesIndex = {}; // Cache for cloud files
+
+        async function loadCloudFiles() {
+            try {
+                const snap = await db.collection('files').get();
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    if(d.name && d.url) {
+                        cloudFilesIndex[d.name] = d.url;
+                    }
+                });
+                console.log("Loaded cloud files index:", Object.keys(cloudFilesIndex).length);
+            } catch(e) {
+                console.warn("Failed to load cloud files:", e);
+            }
+        }
 
         async function loadSchedule() {
             if (!scheduleId) {
@@ -745,7 +761,13 @@
             }
 
             try {
-                const doc = await db.collection('schedules').doc(scheduleId).get();
+                // Load Cloud Files and Schedule in parallel
+                // We await loadCloudFiles but don't let it fail the whole thing
+                const [_, doc] = await Promise.all([
+                    loadCloudFiles().catch(e => console.error("Cloud files error", e)),
+                    db.collection('schedules').doc(scheduleId).get()
+                ]);
+
                 if (!doc.exists) {
                     showError("ไม่พบข้อมูลตารางเรียนในระบบ");
                     return;
@@ -957,9 +979,15 @@
                     // FILTER: Ignore old GitHub Pages links that are broken
                     if (typeof f === 'string' && f.includes('kanjin22.github.io')) return;
 
+                    // RESOLVE: Check if this filename exists in our cloud files index
+                    let finalUrl = f;
+                    if (typeof f === 'string' && !f.startsWith('http') && cloudFilesIndex && cloudFilesIndex[f]) {
+                        finalUrl = cloudFilesIndex[f];
+                    }
+
                     // If array, append index to label if it's a generic label, or just use filename if no label
                     let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
-                    allFiles.push({ url: f, label: label, icon, cls, isExplicitLabel: !!categoryLabel });
+                    allFiles.push({ url: finalUrl, label: label, icon, cls, isExplicitLabel: !!categoryLabel });
                 };
 
                 if (Array.isArray(files)) {
