@@ -623,10 +623,10 @@
                 };
 
                 const stdEntry = standardSets.find(d => d && d.date === iso);
-                extractPins(stdEntry, 'ประโยค ๑-๒');
+                extractPins(stdEntry, 'ประโยค ๑-๒ (สาธุชนทั่วไป)');
 
                 const novEntry = noviceSets.find(d => d && d.date === iso);
-                extractPins(novEntry, 'สามเณรนวกะ');
+                extractPins(novEntry, 'ประโยค ๑-๒ (สามเณรนวกะ)');
 
                 if (allPins.length > 0) {
                     renderPins(body, allPins);
