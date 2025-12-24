@@ -951,16 +951,21 @@
             // Fixed: Now uses categoryLabel if provided
             const addFiles = (files, categoryLabel, icon, cls) => {
                 if (!files) return;
+
+                const processFile = (f, i) => {
+                    if (!f) return;
+                    // FILTER: Ignore old GitHub Pages links that are broken
+                    if (typeof f === 'string' && f.includes('kanjin22.github.io')) return;
+
+                    // If array, append index to label if it's a generic label, or just use filename if no label
+                    let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
+                    allFiles.push({ url: f, label: label, icon, cls, isExplicitLabel: !!categoryLabel });
+                };
+
                 if (Array.isArray(files)) {
-                    files.forEach((f, i) => {
-                        // If array, append index to label if it's a generic label, or just use filename if no label
-                        let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
-                        // If it's a legacy specific field (string), we usually pass a specific label.
-                        // If it's a generic array, we might pass "Exams".
-                        allFiles.push({ url: f, label: label, icon, cls, isExplicitLabel: !!categoryLabel }); 
-                    }); 
+                    files.forEach((f, i) => processFile(f, i));
                 } else {
-                    allFiles.push({ url: files, label: categoryLabel || files, icon, cls, isExplicitLabel: !!categoryLabel });
+                    processFile(files, 0);
                 }
             };
 
