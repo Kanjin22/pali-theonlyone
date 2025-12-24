@@ -73,6 +73,7 @@
             </div>
         </div>
 
+        <div id="app-content" style="display:none;">
         <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
         <div class="grid-menu" style="margin-bottom:40px;">
             <div id="today-schedule-container" class="menu-card level-tool" style="text-align:left; display:block; width:100%; padding:0; overflow:hidden;">
@@ -206,6 +207,7 @@
                 <div class="card-desc">กลับไปหน้าห้องเรียนเดิม</div>
             </a>
         </div>
+        </div>
 
     </div>
     <div id="login-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:9999; align-items:center; justify-content:center;">
@@ -234,6 +236,73 @@
     </div>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script>
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            appId: "YOUR_APP_ID",
+            messagingSenderId: "YOUR_SENDER_ID"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const auth = firebase.auth();
+        auth.useDeviceLanguage();
+        let confirmationResultRef = null;
+        let recaptchaVerifier = null;
+        const appContent = document.getElementById('app-content');
+        const loginModal = document.getElementById('login-modal');
+        const btnOpenLogin = document.getElementById('btn-open-login');
+        const btnCloseLogin = document.getElementById('btn-close-login');
+        const loginGoogle = document.getElementById('login-google');
+        const loginFacebook = document.getElementById('login-facebook');
+        const loginLine = document.getElementById('login-line');
+        const togglePhone = document.getElementById('toggle-phone');
+        const phoneBox = document.getElementById('phone-box');
+        const phoneInput = document.getElementById('phone-input');
+        const sendOtp = document.getElementById('send-otp');
+        const otpInput = document.getElementById('otp-input');
+        const confirmOtp = document.getElementById('confirm-otp');
+        const userInfo = document.getElementById('user-info');
+        const btnLogoutTop = document.getElementById('btn-logout');
+        const authStatusInline = document.getElementById('auth-status');
+        const btnLogoutInline = document.querySelector('#auth-card #btn-logout');
+        function openLogin() { if (loginModal) loginModal.style.display = 'flex'; }
+        function closeLogin() { if (loginModal) loginModal.style.display = 'none'; }
+        if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
+        if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
+        if (loginGoogle) loginGoogle.onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        if (loginFacebook) loginFacebook.onclick = () => auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+        if (loginLine) loginLine.onclick = () => auth.signInWithPopup(new firebase.auth.OAuthProvider('oidc.line'));
+        if (togglePhone && phoneBox) togglePhone.onclick = () => { phoneBox.style.display = phoneBox.style.display === 'none' ? 'block' : 'none'; };
+        function initRecaptcha() { if (!recaptchaVerifier) recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' }); }
+        if (sendOtp) sendOtp.onclick = async () => { initRecaptcha(); const phone = (phoneInput && phoneInput.value || '').trim(); if (!phone) return; confirmationResultRef = await auth.signInWithPhoneNumber(phone, recaptchaVerifier); };
+        if (confirmOtp) confirmOtp.onclick = async () => { const code = (otpInput && otpInput.value || '').trim(); if (!code || !confirmationResultRef) return; await confirmationResultRef.confirm(code); };
+        function showUser(u) {
+            if (userInfo) { const name = u.displayName || u.phoneNumber || (u.email || 'ผู้ใช้'); userInfo.textContent = 'เข้าสู่ระบบ: ' + name; userInfo.style.display = 'inline-block'; }
+            if (btnLogoutTop) btnLogoutTop.style.display = 'inline-block';
+            if (authStatusInline) authStatusInline.textContent = userInfo && userInfo.textContent || 'เข้าสู่ระบบ';
+            if (btnLogoutInline) btnLogoutInline.style.display = 'inline-block';
+        }
+        function hideUser() {
+            if (userInfo) { userInfo.textContent = ''; userInfo.style.display = 'none'; }
+            if (btnLogoutTop) btnLogoutTop.style.display = 'none';
+            if (authStatusInline) authStatusInline.textContent = 'ยังไม่เข้าสู่ระบบ';
+            if (btnLogoutInline) btnLogoutInline.style.display = 'none';
+        }
+        if (btnLogoutTop) btnLogoutTop.onclick = () => auth.signOut();
+        if (btnLogoutInline) btnLogoutInline.onclick = () => auth.signOut();
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                showUser(user);
+                if (appContent) appContent.style.display = 'block';
+                closeLogin();
+            } else {
+                hideUser();
+                if (appContent) appContent.style.display = 'none';
+                openLogin();
+            }
+        });
+    </script>
     <script src="data/data-pt12-november.js"></script>
     <script src="data/data-pt12-december.js"></script>
     <script src="data/data-pt12-january.js"></script>
