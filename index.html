@@ -288,7 +288,8 @@
                     modalPassword.style.display = 'block';
                     modalEmailSignIn.style.display = 'inline-block';
                 } else {
-                    emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาสมัครสมาชิก';
+                    emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาใส่พาสเวิร์ดแล้วกดสมัครสมาชิก';
+                    modalPassword.style.display = 'block';
                     modalEmailSignUp.style.display = 'inline-block';
                 }
             } catch (err) {
