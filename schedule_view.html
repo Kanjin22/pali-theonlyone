@@ -980,10 +980,18 @@
                     if (typeof f === 'string' && f.includes('kanjin22.github.io')) return;
 
                     // RESOLVE: Check if this filename exists in our cloud files index
-                    let finalUrl = f;
-                    if (typeof f === 'string' && !f.startsWith('http') && cloudFilesIndex && cloudFilesIndex[f]) {
-                        finalUrl = cloudFilesIndex[f];
+                    let finalUrl = null;
+                    if (typeof f === 'string') {
+                        if (f.startsWith('http')) {
+                            finalUrl = f;
+                        } else if (cloudFilesIndex && cloudFilesIndex[f]) {
+                            finalUrl = cloudFilesIndex[f];
+                        }
                     }
+
+                    // STRICT MODE: If we don't have a valid URL (either http... or resolved cloud url), skip it.
+                    // This ensures we don't show broken links for old files that aren't in the cloud.
+                    if (!finalUrl) return;
 
                     // If array, append index to label if it's a generic label, or just use filename if no label
                     let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
