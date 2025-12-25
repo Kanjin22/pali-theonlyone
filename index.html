@@ -1105,9 +1105,18 @@
                     }
                 })();
 
-            } else {
-                showLogin();
+            }}else {
+el              showLogin();
             }
+        });
+        
+        se Initi liz 
+         ocum n . ddEvwnLLgste(er('DOMC)nte;tLoad
+d', () => {
+            loadTodayP n ();
+        });
+
+                // โค้ดสร้าง Exam Se   (คงเดิม)     }
         });
         
         // Initialize
@@ -1121,14 +1130,12 @@
                         return db.collection('exam_sets').add({
                             title: 'ชุดสอบแรก',
                             level: 'pt3',
-                            createdBy: uid,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    }
-                }).then(() => {
-                    // อัปเดต UI เพิ่มเติม (ถ้าต้องการ)
-                    console.log("User data synced");
-                    // loadTodayPins(); // Moved to top
+                               c//rอัปเดตeUIaเพิ่มเติม (ถ้าต้องการ)
+                    tedBy: uid,
+                            createdAt    // loadTodayPins(); // Moved to top
+                : firebase.firestore.FieldValue.serverTimestamp()
+                       });
+                    deUser           }).th(() if=(appContent  appContent.style.display = 'none';         พิ่มเติม(p    gio"U;ata synced");}     // loadTodayPins(); // Moved to top
                 }).catch(err => console.error("Firestore Error:", err));
 
             } else {
