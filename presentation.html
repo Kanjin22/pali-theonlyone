@@ -956,6 +956,9 @@
             <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
                 <i class="fa-solid fa-note-sticky"></i>
             </button>
+            <button class="tool-btn" id="btn-edit-content" title="แก้ไขหน้านี้ (Admin)" onclick="editCurrentContent()" style="background-color: #f39c12; color: white; display: none;">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
         </div>
 
         <canvas id="drawing-canvas"></canvas>
@@ -1094,6 +1097,58 @@
 
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id') ? params.get('id').trim() : null;
+
+        // --- Check Admin Role ---
+        const userRole = localStorage.getItem('pali_user_role');
+        if(userRole === 'admin' || userRole === 'teacher') {
+            const editBtn = document.getElementById('btn-edit-content');
+            if(editBtn) editBtn.style.display = 'inline-flex';
+        }
+
+        // --- Find Source File Logic ---
+        function findSourceFile(id) {
+             const knownFiles = [
+                { name: "ธรรมบท ภาค ๑", varName: "contentDhamma01" },
+                { name: "ธรรมบท ภาค ๒", varName: "contentDhamma02" },
+                { name: "ธรรมบท ภาค ๓", varName: "contentDhamma03" },
+                { name: "ธรรมบท ภาค ๔", varName: "contentDhamma04" },
+                { name: "ธรรมบท ภาค ๕", varName: "contentDhamma05" },
+                { name: "ธรรมบท ภาค ๖", varName: "contentDhamma06" },
+                { name: "ธรรมบท ภาค ๗", varName: "contentDhamma07" },
+                { name: "ธรรมบท ภาค ๘", varName: "contentDhamma08" },
+                { name: "มังคลัถทีปนี ภาค ๑", varName: "contentMangala01" },
+                { name: "มังคลัถทีปนี ภาค ๒", varName: "contentMangala02" },
+                { name: "สมันตปาสาทิกา ภาค ๑", varName: "contentSamanta01" },
+                { name: "สมันตปาสาทิกา ภาค ๒", varName: "contentSamanta02" },
+                { name: "สมันตปาสาทิกา ภาค ๓", varName: "contentSamanta03" },
+                { name: "วิสุทธิมรรค ภาค ๑", varName: "contentVisuddhi01" },
+                { name: "วิสุทธิมรรค ภาค ๒", varName: "contentVisuddhi02" },
+                { name: "วิสุทธิมรรค ภาค ๓", varName: "contentVisuddhi03" },
+                { name: "อภิธรรม (สังคหะ)", varName: "contentAbhidhamma01" }
+            ];
+            
+            for (let f of knownFiles) {
+                const data = window[f.varName];
+                if (data && data[id]) {
+                    return f.varName;
+                }
+            }
+            return null;
+        }
+
+        function editCurrentContent() {
+            if(!slideId) {
+                alert("ไม่พบรหัสเนื้อหา (Content ID)");
+                return;
+            }
+            const sourceFile = findSourceFile(slideId);
+            if(!sourceFile) {
+                 alert("ไม่พบไฟล์ต้นฉบับของเนื้อหานี้ (อาจจะเป็นข้อมูลเก่าหรือ ID ผิดพลาด)");
+                 return;
+            }
+            // Open Content Builder with params
+            window.open(`admin/content_builder.html?file=${sourceFile}&id=${slideId}`, '_blank');
+        }
 
         let slides = [];
         if (slideId && slidesDatabase[slideId]) {

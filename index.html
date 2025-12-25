@@ -638,6 +638,9 @@
                     else if (role === 'student') { label = 'นักเรียน'; color = '#27ae60'; } // green
 
                     statusHtml = `<span style="display:inline-block; margin-left:8px; font-size:0.75rem; background:${color}; color:white; padding:2px 8px; border-radius:99px; vertical-align:middle;">${label}</span>`;
+                    
+                    // Save role for other pages (like presentation.html)
+                    localStorage.setItem('pali_user_role', role);
                 }
 
                 userInfo.innerHTML = `<b>${name}</b> ${statusHtml}`;
@@ -654,6 +657,9 @@
             const btnAdminTop = document.getElementById('btn-admin-dashboard');
             if (btnAdminTop) btnAdminTop.style.display = 'none';
             if (btnOpenLogin) btnOpenLogin.style.display = 'inline-block'; // โชว์ปุ่ม Login
+            
+            // Clear role
+            localStorage.removeItem('pali_user_role');
         }
 
         if (btnLogoutTop) btnLogoutTop.onclick = () => {
