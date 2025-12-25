@@ -347,6 +347,12 @@
             opacity: 0.7;
             pointer-events: none;
         }
+        .btn-pending {
+            background: linear-gradient(90deg, #f6b3c8 0%, #f9d5a7 100%);
+            color: #2c3e50;
+            border: 1px dashed #e67e22;
+            pointer-events: none;
+        }
 
         /* Stats */
         .stats-dashboard {
@@ -947,7 +953,7 @@
         };
         const getSubjLabel = (id) => subjMap[id] || id;
 
-        function openModal(date, periodName) {
+        async function openModal(date, periodName) {
             const day = scheduleData.days.find(d => d.date === date);
             if (!day) return;
             const period = day[periodName];
@@ -1099,7 +1105,11 @@
 
                     // STRICT MODE: If we don't have a valid URL (either http... or resolved cloud url), skip it.
                     // This ensures we don't show broken links for old files that aren't in the cloud.
-                    if (!finalUrl) return;
+                    if (!finalUrl) {
+                        let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
+                        allFiles.push({ pending: true, label: label, icon: 'fa-heart', cls: 'btn-pending', isExplicitLabel: !!categoryLabel });
+                        return;
+                    }
 
                     // If array, append index to label if it's a generic label, or just use filename if no label
                     let label = categoryLabel ? `${categoryLabel} ${i + 1}` : f;
@@ -1243,13 +1253,30 @@
             }
 
             if (allFiles.length > 0) {
+                 const checkStorageUrl = async (url) => {
+                     try {
+                         const res = await fetch(url, { method: 'HEAD' });
+                         return res.ok;
+                     } catch (_) { return false; }
+                 };
+                 const verified = [];
+                 for (const f of allFiles) {
+                     if (f.url && f.url.startsWith('https://firebasestorage.googleapis.com')) {
+                         const ok = await checkStorageUrl(f.url);
+                         if (!ok) {
+                             verified.push({ pending: true, label: f.label, icon: 'fa-heart', cls: 'btn-pending', isExplicitLabel: f.isExplicitLabel });
+                             continue;
+                         }
+                     }
+                     verified.push(f);
+                 }
                  let filesHtml = '';
-                 allFiles.forEach(f => {
+                 verified.forEach(f => {
                      let href = f.url;
                      let name = f.label;
                      
                      // If label is basically the URL (no explicit label), try to beautify filename
-                     if (!f.isExplicitLabel && f.url.startsWith('http')) {
+                     if (!f.pending && !f.isExplicitLabel && f.url.startsWith('http')) {
                          try {
                              let filename = decodeURIComponent(f.url.split('/').pop().split('?')[0]);
                              const parts = filename.split('_');
@@ -1258,7 +1285,7 @@
                              }
                              name = filename;
                          } catch(e) { name = "ดาวน์โหลดไฟล์"; }
-                     } else if (!f.isExplicitLabel) {
+                     } else if (!f.pending && !f.isExplicitLabel) {
                          // Local file (Legacy fallback, but we should have resolved it already)
                          // If finalUrl logic worked, we shouldn't be here for cloud files.
                          // But if it's really a local file reference that slipped through:
@@ -1267,7 +1294,11 @@
                      }
                      // If explicit label was provided, we use it directly (e.g. "ข้อสอบไวยากรณ์")
 
-                     filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
+                     if (f.pending) {
+                         filesHtml += `<span class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> รออัปโหลด: ${name}</span>`;
+                     } else {
+                         filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
+                     }
                  });
                  html += `<div class="modal-section"><h4>ไฟล์ประกอบ</h4><div class="link-group">${filesHtml}</div></div>`;
             }
