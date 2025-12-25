@@ -107,6 +107,7 @@
         <button class="btn" onclick="addSegment()"><i class="fas fa-plus-circle"></i> เพิ่มท่อนเนื้อหา (Add Segment)</button>
         <button class="btn" style="background: #9b59b6;" onclick="openMagicModal()"><i class="fas fa-magic"></i> Magic Paste (วางเนื้อหาด่วน)</button>
         <button class="btn btn-primary" onclick="generateJSON()"><i class="fas fa-code"></i> สร้างโค้ด JSON</button>
+        <button class="btn btn-primary" style="background-color: #e67e22;" onclick="saveToServer()"><i class="fas fa-save"></i> บันทึกไฟล์ (Server)</button>
     </div>
 </div>
 
@@ -178,23 +179,23 @@
 <script>
     // --- Data Loading Logic ---
     const knownFiles = [
-        { name: "ธรรมบท ภาค ๑", varName: "contentDhamma01" },
-        { name: "ธรรมบท ภาค ๒", varName: "contentDhamma02" },
-        { name: "ธรรมบท ภาค ๓", varName: "contentDhamma03" },
-        { name: "ธรรมบท ภาค ๔", varName: "contentDhamma04" },
-        { name: "ธรรมบท ภาค ๕", varName: "contentDhamma05" },
-        { name: "ธรรมบท ภาค ๖", varName: "contentDhamma06" },
-        { name: "ธรรมบท ภาค ๗", varName: "contentDhamma07" },
-        { name: "ธรรมบท ภาค ๘", varName: "contentDhamma08" },
-        { name: "มังคลัถทีปนี ภาค ๑", varName: "contentMangala01" },
-        { name: "มังคลัถทีปนี ภาค ๒", varName: "contentMangala02" },
-        { name: "สมันตปาสาทิกา ภาค ๑", varName: "contentSamanta01" },
-        { name: "สมันตปาสาทิกา ภาค ๒", varName: "contentSamanta02" },
-        { name: "สมันตปาสาทิกา ภาค ๓", varName: "contentSamanta03" },
-        { name: "วิสุทธิมรรค ภาค ๑", varName: "contentVisuddhi01" },
-        { name: "วิสุทธิมรรค ภาค ๒", varName: "contentVisuddhi02" },
-        { name: "วิสุทธิมรรค ภาค ๓", varName: "contentVisuddhi03" },
-        { name: "อภิธรรม (สังคหะ)", varName: "contentAbhidhamma01" }
+        { name: "ธรรมบท ภาค ๑", varName: "contentDhamma01", filename: "content-dhamma01.js" },
+        { name: "ธรรมบท ภาค ๒", varName: "contentDhamma02", filename: "content-dhamma02.js" },
+        { name: "ธรรมบท ภาค ๓", varName: "contentDhamma03", filename: "content-dhamma03.js" },
+        { name: "ธรรมบท ภาค ๔", varName: "contentDhamma04", filename: "content-dhamma04.js" },
+        { name: "ธรรมบท ภาค ๕", varName: "contentDhamma05", filename: "content-dhamma05.js" },
+        { name: "ธรรมบท ภาค ๖", varName: "contentDhamma06", filename: "content-dhamma06.js" },
+        { name: "ธรรมบท ภาค ๗", varName: "contentDhamma07", filename: "content-dhamma07.js" },
+        { name: "ธรรมบท ภาค ๘", varName: "contentDhamma08", filename: "content-dhamma08.js" },
+        { name: "มังคลัถทีปนี ภาค ๑", varName: "contentMangala01", filename: "content-mangala01.js" },
+        { name: "มังคลัถทีปนี ภาค ๒", varName: "contentMangala02", filename: "content-mangala02.js" },
+        { name: "สมันตปาสาทิกา ภาค ๑", varName: "contentSamanta01", filename: "content-samanta01.js" },
+        { name: "สมันตปาสาทิกา ภาค ๒", varName: "contentSamanta02", filename: "content-samanta02.js" },
+        { name: "สมันตปาสาทิกา ภาค ๓", varName: "contentSamanta03", filename: "content-samanta03.js" },
+        { name: "วิสุทธิมรรค ภาค ๑", varName: "contentVisuddhi01", filename: "content-visuddhi01.js" },
+        { name: "วิสุทธิมรรค ภาค ๒", varName: "contentVisuddhi02", filename: "content-visuddhi02.js" },
+        { name: "วิสุทธิมรรค ภาค ๓", varName: "contentVisuddhi03", filename: "content-visuddhi03.js" },
+        { name: "อภิธรรม (สังคหะ)", varName: "contentAbhidhamma01", filename: "content-abhidhamma01.js" }
     ];
 
     function initFileSelect() {
@@ -538,6 +539,82 @@
             }
         }
     });
+
+    async function saveToServer() {
+        const fileSelect = document.getElementById('file-select');
+        const varName = fileSelect.value;
+        const key = document.getElementById('content-id').value.trim();
+
+        if (!varName) {
+            alert("กรุณาเลือกไฟล์ข้อมูล (File) ก่อนบันทึก");
+            return;
+        }
+        if (!key) {
+            alert("กรุณาระบุรหัสเนื้อหา (ID)");
+            return;
+        }
+        if (segments.length === 0) {
+            alert("ไม่มีข้อมูลให้บันทึก");
+            return;
+        }
+
+        // Find filename
+        const fileObj = knownFiles.find(f => f.varName === varName);
+        if (!fileObj || !fileObj.filename) {
+            alert("ไม่พบข้อมูลไฟล์เป้าหมาย (filename missing)");
+            return;
+        }
+
+        const payload = {
+            filename: fileObj.filename,
+            key: key,
+            data: segments
+        };
+
+        try {
+            // Find the button that triggered this
+            const btn = document.querySelector('button[onclick="saveToServer()"]');
+            const originalText = btn ? btn.innerHTML : '<i class="fas fa-save"></i> บันทึกไฟล์ (Server)';
+            
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> บันทึก...';
+                btn.disabled = true;
+            }
+
+            const res = await fetch('http://localhost:3000/save-content', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const result = await res.json();
+            
+            if (result.success) {
+                alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
+            } else {
+                alert("เกิดข้อผิดพลาด: " + result.message);
+            }
+            
+            if(btn) {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("ไม่สามารถติดต่อ Server ได้\n\nกรุณาเปิด Terminal แล้วรันคำสั่ง:\nnode server.js\n\n(หรือตรวจสอบว่า Server รันอยู่หรือไม่)");
+            
+            const btn = document.querySelector('button[onclick="saveToServer()"]');
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-save"></i> บันทึกไฟล์ (Server)';
+                btn.disabled = false;
+            }
+        }
+    }
 
 </script>
 
