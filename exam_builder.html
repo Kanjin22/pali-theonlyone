@@ -194,7 +194,7 @@
         }
 
         .paper { width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); font-family: "DilleniaUPC", "Cordia New", "TH Sarabun New", sans-serif; font-size: 22px; }
-        .paper-inner { padding: 28px 40px; }
+        .paper-inner { padding: 2.54cm; }
         .paper-center { text-align: center; }
         .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
         .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; white-space: pre-wrap; }
@@ -220,6 +220,39 @@
         .tool-btn:hover { background: #f5f5f5; color: #000; }
         .tool-btn.active { background: #cfd8dc; font-weight: bold; color: #000; }
         .tool-select { border: none; background: transparent; padding: 6px; font-size: 0.9rem; color: #455a64; outline: none; cursor: pointer; }
+
+        #marginPanel {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 6px;
+            z-index: 1000;
+            width: 280px;
+        }
+        #marginPanel .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        #marginPanel label {
+            font-size: 0.9rem;
+            width: 40px;
+        }
+        #marginPanel input[type="range"] {
+            flex: 1;
+            margin: 0 10px;
+        }
+        #marginPanel span {
+            font-size: 0.8rem;
+            width: 50px;
+            text-align: right;
+        }
         
         /* Paper Sizes */
         .paper.size-a4 { width: 210mm; min-height: 297mm; position: relative; }
@@ -445,19 +478,33 @@
                     <option value="F4">กระดาษ F14 (Legal)</option>
                 </select>
             </div>
-            <div class="toolbar-group">
-                <select class="tool-select" id="marginSelect" onchange="changeMargin(this.value)" title="ขอบกระดาษ">
-                    <option value="28px 40px" selected>ปกติ (เดิม)</option>
-                    <option value="15px 20px">แคบ (เดิม)</option>
-                    <option value="40px 60px">กว้าง (เดิม)</option>
-                    <option disabled>──────────</option>
-                    <option value="10px">10px (แคบมาก)</option>
-                    <option value="20px">20px (แคบ)</option>
-                    <option value="30px">30px (ปานกลาง)</option>
-                    <option value="40px">40px (กว้าง)</option>
-                    <option value="50px">50px (กว้างมาก)</option>
-                    <option value="custom">กำหนดเอง...</option>
-                </select>
+            <div class="toolbar-group" style="position:relative;">
+                <button class="tool-btn" id="marginBtn" onclick="toggleMarginPanel()" title="ตั้งค่าขอบกระดาษ"><i class="fa-solid fa-ruler-combined"></i> ระยะขอบ</button>
+                <div id="marginPanel">
+                    <div class="row">
+                        <label>บน</label>
+                        <input type="range" id="marginTop" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('top', this.value)">
+                        <span id="marginTopVal">2.54 cm</span>
+                    </div>
+                    <div class="row">
+                        <label>ล่าง</label>
+                        <input type="range" id="marginBottom" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('bottom', this.value)">
+                        <span id="marginBottomVal">2.54 cm</span>
+                    </div>
+                    <div class="row">
+                        <label>ซ้าย</label>
+                        <input type="range" id="marginLeft" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('left', this.value)">
+                        <span id="marginLeftVal">2.54 cm</span>
+                    </div>
+                    <div class="row">
+                        <label>ขวา</label>
+                        <input type="range" id="marginRight" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('right', this.value)">
+                        <span id="marginRightVal">2.54 cm</span>
+                    </div>
+                    <div style="text-align:center; margin-top:10px;">
+                        <button class="btn secondary" onclick="resetMargins()" style="font-size:0.8rem; padding:4px 8px;">ค่ามาตรฐาน (2.54)</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -568,16 +615,29 @@
                 style.innerHTML = '@media print { @page { size: 216mm 356mm; margin: 0; } }';
             }
         }
-        function changeMargin(val) {
-            const inner = document.querySelector('.paper-inner');
-            if (val === 'custom') {
-                const current = inner.style.padding || '28px 40px';
-                const input = prompt("กำหนดระยะขอบ (เช่น '20px' หรือ '20px 40px'):", current);
-                if (input) inner.style.padding = input;
-            } else {
-                inner.style.padding = val;
-            }
+        function toggleMarginPanel() {
+            const p = document.getElementById('marginPanel');
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
         }
+        function updateMargin(side, val) {
+            const inner = document.querySelector('.paper-inner');
+            document.getElementById(`margin${side.charAt(0).toUpperCase() + side.slice(1)}Val`).innerText = val + ' cm';
+            inner.style[`padding${side.charAt(0).toUpperCase() + side.slice(1)}`] = val + 'cm';
+        }
+        function resetMargins() {
+            ['Top', 'Bottom', 'Left', 'Right'].forEach(s => {
+                document.getElementById(`margin${s}`).value = 2.54;
+                updateMargin(s.toLowerCase(), 2.54);
+            });
+        }
+        // Close panel when clicking outside
+        document.addEventListener('click', function(e) {
+            const p = document.getElementById('marginPanel');
+            const btn = document.getElementById('marginBtn');
+            if (p.style.display === 'block' && !p.contains(e.target) && !btn.contains(e.target)) {
+                p.style.display = 'none';
+            }
+        });
 
         const partsMap = {
             'dhamma-1': (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
