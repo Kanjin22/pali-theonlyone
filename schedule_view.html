@@ -995,7 +995,20 @@
             }
 
             // YouTube
-            if (period.linkYoutube) {
+            if (period.youtube && Object.keys(period.youtube).length > 0) {
+                 Object.keys(period.youtube).forEach(subjId => {
+                     const val = period.youtube[subjId];
+                     if(val) {
+                         // Split by newline or comma to be safe
+                         const links = val.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
+                         links.forEach((vidId, idx) => {
+                              const label = `วีดีโอประกอบ (${getSubjLabel(subjId)}) ${links.length > 1 ? (idx + 1) : ''}`;
+                              linksHtml += `<a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> ${label}</a>`;
+                         });
+                     }
+                 });
+            } 
+            else if (period.linkYoutube) {
                 const yts = period.linkYoutube.split(',');
                 yts.forEach((yt, idx) => {
                     const vidId = yt.trim();
@@ -1062,7 +1075,7 @@
 
             // Mapping for subject labels
             const subjMap = {
-                'Grammar': 'ไวยากรณ์',
+                'Grammar': 'ไวย.',
                 'Translate': 'แปล',
                 'Return': 'กลับ',
                 'Chan': 'ฉันท์',
