@@ -435,6 +435,8 @@
                     <option value="20px">20px</option>
                     <option value="22px" selected>22px</option>
                     <option value="24px">24px</option>
+                    <option value="26px">26px</option>
+                    <option value="28px">28px</option>
                 </select>
             </div>
             <div class="toolbar-group">
@@ -445,9 +447,16 @@
             </div>
             <div class="toolbar-group">
                 <select class="tool-select" id="marginSelect" onchange="changeMargin(this.value)" title="ขอบกระดาษ">
-                    <option value="normal" selected>ขอบปกติ</option>
-                    <option value="narrow">ขอบแคบ</option>
-                    <option value="wide">ขอบกว้าง</option>
+                    <option value="28px 40px" selected>ปกติ (เดิม)</option>
+                    <option value="15px 20px">แคบ (เดิม)</option>
+                    <option value="40px 60px">กว้าง (เดิม)</option>
+                    <option disabled>──────────</option>
+                    <option value="10px">10px (แคบมาก)</option>
+                    <option value="20px">20px (แคบ)</option>
+                    <option value="30px">30px (ปานกลาง)</option>
+                    <option value="40px">40px (กว้าง)</option>
+                    <option value="50px">50px (กว้างมาก)</option>
+                    <option value="custom">กำหนดเอง...</option>
                 </select>
             </div>
         </div>
@@ -559,11 +568,15 @@
                 style.innerHTML = '@media print { @page { size: 216mm 356mm; margin: 0; } }';
             }
         }
-        function changeMargin(type) {
+        function changeMargin(val) {
             const inner = document.querySelector('.paper-inner');
-            if (type === 'narrow') inner.style.padding = '15px 20px';
-            else if (type === 'wide') inner.style.padding = '40px 60px';
-            else inner.style.padding = '28px 40px'; // normal
+            if (val === 'custom') {
+                const current = inner.style.padding || '28px 40px';
+                const input = prompt("กำหนดระยะขอบ (เช่น '20px' หรือ '20px 40px'):", current);
+                if (input) inner.style.padding = input;
+            } else {
+                inner.style.padding = val;
+            }
         }
 
         const partsMap = {
