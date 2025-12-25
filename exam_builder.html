@@ -367,6 +367,24 @@
                         <div id="senseList" class="list"></div>
                     </div>
                 </div>
+
+                <!-- Statistics Section -->
+                <div id="statsSection" style="margin-top:20px; padding-top:20px; border-top:1px solid #eee; display:none;">
+                    <h3><i class="fa-solid fa-chart-pie"></i> สถิติการออกข้อสอบ (Exam Statistics)</h3>
+                    <div class="grid-2">
+                        <div style="background:#fff3e0; padding:15px; border-radius:8px; border:1px solid #ffe0b2;">
+                            <h4 style="margin-top:0; color:#e65100;"><i class="fa-solid fa-scale-balanced"></i> สถิติสนามหลวง</h4>
+                            <div id="sanluangStatsContent">กำลังโหลด...</div>
+                            <div style="margin-top:10px; font-size:0.9rem;">
+                                <a href="sanluang_stats.html" target="_blank" style="color:#e65100;">ดูข้อมูลทั้งหมด / เพิ่มข้อมูล</a>
+                            </div>
+                        </div>
+                        <div style="background:#e3f2fd; padding:15px; border-radius:8px; border:1px solid #bbdefb;">
+                            <h4 style="margin-top:0; color:#1565c0;"><i class="fa-solid fa-users"></i> สถิติการใช้งานในระบบ</h4>
+                            <div id="systemStatsContent">กำลังโหลด...</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="actions">
@@ -785,6 +803,119 @@
             updatePageRange(mode);
         }
 
+        // --- Stats Logic ---
+        const db = firebase.firestore();
+
+        async function fetchStats() {
+            const statsSection = document.getElementById('statsSection');
+            const slContent = document.getElementById('sanluangStatsContent');
+            const sysContent = document.getElementById('systemStatsContent');
+            
+            // Determine active story/book
+            const litStory = document.getElementById('literalStory').value;
+            const senseStory = document.getElementById('senseStory').value;
+            const story = litStory || senseStory;
+            
+            if (!story) {
+                statsSection.style.display = 'none';
+                return;
+            }
+
+            statsSection.style.display = 'block';
+            slContent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+            sysContent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+
+            // 1. Sanluang Stats
+            try {
+                // Query by story name (Exact match)
+                const slSnap = await db.collection('sanluang_exams')
+                    .where('story', '==', story)
+                    .orderBy('year', 'desc')
+                    .get();
+
+                if (slSnap.empty) {
+                    slContent.innerHTML = '<span style="color:#7f8c8d;">ยังไม่เคยออกข้อสอบสนามหลวง (หรือไม่มีข้อมูล)</span>';
+                } else {
+                    let html = `<div style="font-weight:bold; margin-bottom:5px;">เคยออก ${slSnap.size} ครั้ง:</div>`;
+                    html += '<ul style="margin:0; padding-left:20px;">';
+                    slSnap.forEach(doc => {
+                        const d = doc.data();
+                        html += `<li>พ.ศ. ${d.year} (${d.level})</li>`;
+                    });
+                    html += '</ul>';
+                    slContent.innerHTML = html;
+                }
+            } catch (e) {
+                console.error(e);
+                slContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด</span>';
+            }
+
+            // 2. System Usage Stats
+            try {
+                // Query by story name
+                const sysSnap = await db.collection('exam_logs')
+                    .where('story', '==', story)
+                    .get();
+
+                if (sysSnap.empty) {
+                    sysContent.innerHTML = '<span style="color:#7f8c8d;">ยังไม่เคยมีผู้นำไปออกข้อสอบในระบบนี้</span>';
+                } else {
+                    const count = sysSnap.size;
+                    const users = new Set();
+                    sysSnap.forEach(d => {
+                        const data = d.data();
+                        if (data.teacherName) users.add(data.teacherName);
+                    });
+
+                    sysContent.innerHTML = `
+                        <div style="font-size:1.1rem; font-weight:bold;">ถูกใช้งานแล้ว ${count} ครั้ง</div>
+                        <div style="font-size:0.9rem; color:#555;">โดยอาจารย์: ${Array.from(users).join(', ')}</div>
+                    `;
+                }
+            } catch (e) {
+                console.error(e);
+                sysContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด</span>';
+            }
+        }
+
+        async function saveExamLog() {
+            const user = firebase.auth().currentUser;
+            if (!user) return;
+
+            const litStory = document.getElementById('literalStory').value;
+            const senseStory = document.getElementById('senseStory').value;
+            const story = litStory || senseStory;
+            
+            if (!story) return;
+
+            try {
+                // Check if recently logged (debounce)
+                const lastLog = sessionStorage.getItem('lastExamLog');
+                if (lastLog === story) return; // Prevent double logging for same story in session
+
+                await db.collection('exam_logs').add({
+                    uid: user.uid,
+                    teacherName: user.displayName || user.email,
+                    level: document.getElementById('levelSelect').value,
+                    subject: document.getElementById('subjectSelect').value,
+                    book: document.getElementById('literalPart').value || document.getElementById('sensePart').value, // Approx
+                    story: story,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                sessionStorage.setItem('lastExamLog', story);
+                console.log('Exam log saved');
+                fetchStats(); // Refresh stats to show new count
+            } catch (e) {
+                console.error('Failed to save log', e);
+            }
+        }
+
+        function printExam() {
+            saveExamLog();
+            window.print();
+        }
+
         function updatePageRange(mode) {
             const partId = document.getElementById(mode + 'Part').value;
             const vagga = document.getElementById(mode + 'Vagga').value;
@@ -797,7 +928,12 @@
                     const max = Math.max(...pages);
                     document.getElementById(mode + 'StartPage').value = min;
                     document.getElementById(mode + 'EndPage').value = max;
+                    
                     generatePreview(); // Auto-generate when story selected
+                    
+                    // Fetch Stats
+                    fetchStats();
+
                 } else {
                     document.getElementById(mode + 'StartPage').value = '';
                     document.getElementById(mode + 'EndPage').value = '';
