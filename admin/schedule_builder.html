@@ -772,7 +772,11 @@
                     ytVal = data.youtube[subj.id]; // Expect newline separated
                 } else if (idx === 0 && data.linkYoutube) {
                     // Legacy: comma separated -> newline
-                    ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                    if (Array.isArray(data.linkYoutube)) {
+                        ytVal = data.linkYoutube.join('\n');
+                    } else if (typeof data.linkYoutube === 'string') {
+                        ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                    }
                 }
 
                 // Slide (Presentation ID)
