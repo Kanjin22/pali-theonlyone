@@ -2081,6 +2081,17 @@
                 return;
             }
 
+            const levelMap = {
+                'p12': 'ประโยค ๑–๒',
+                'p3': 'ประโยค ป.ธ. ๓',
+                'p4': 'ประโยค ป.ธ. ๔',
+                'p5': 'ประโยค ป.ธ. ๕',
+                'p6': 'ประโยค ป.ธ. ๖',
+                'p7': 'ประโยค ป.ธ. ๗',
+                'p8': 'ประโยค ป.ธ. ๘',
+                'p9': 'ประโยค ป.ธ. ๙'
+            };
+
             let html = `
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
                     <thead>
@@ -2095,14 +2106,14 @@
             `;
 
             data.forEach(d => {
+                const levelLabel = levelMap[d.level] || d.level;
                 html += `
                     <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:8px; vertical-align:top;">${d.year} ${d.term ? '(ครั้งที่ '+d.term+')' : ''}</td>
-                        <td style="padding:8px; vertical-align:top;">${d.level}</td>
-                        <td style="padding:8px; vertical-align:top;">${d.subject} ${d.question_num ? '(ข้อ '+d.question_num+')' : ''}</td>
+                        <td style="padding:8px; vertical-align:top;">${d.year} ${d.round ? '(ครั้งที่ '+d.round+')' : ''}</td>
+                        <td style="padding:8px; vertical-align:top;">${levelLabel}</td>
+                        <td style="padding:8px; vertical-align:top;">${d.subject} ${d.question ? '(ข้อ '+d.question+')' : ''}</td>
                         <td style="padding:8px; vertical-align:top;">
-                            <div style="font-weight:bold; color:#2980b9;">${d.story}</div>
-                            ${d.content_snippet ? `<div style="font-size:0.85rem; color:#555; margin-top:2px;">${d.content_snippet}</div>` : ''}
+                            <div style="font-weight:bold; color:#2980b9;">${d.contentSnippet || '-'}</div>
                         </td>
                     </tr>
                 `;
