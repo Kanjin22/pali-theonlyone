@@ -2077,7 +2077,8 @@
                         for (const [key, segments] of Object.entries(contentObj)) {
                             // Segments is array
                             if (Array.isArray(segments)) {
-                                segments.forEach((seg, index) => {
+                                for (let index = 0; index < segments.length; index++) {
+                                    const seg = segments[index];
                                     // If only 1 segment, use key as ID. If multiple, use key_index+1
                                     let docId = segments.length === 1 ? key : `${key}_${index + 1}`;
                                     
@@ -2108,7 +2109,7 @@
                                         batch = db.batch();
                                         count = 0;
                                     }
-                                });
+                                }
                             }
                         }
                     }
