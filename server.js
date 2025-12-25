@@ -32,6 +32,7 @@ const server = http.createServer((req, res) => {
     }
 
     if (req.url === '/save-content' && req.method === 'POST') {
+        req.setEncoding('utf8');
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
