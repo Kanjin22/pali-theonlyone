@@ -195,7 +195,7 @@
     <!-- Modal -->
     <div id="addModal" class="modal">
         <div class="modal-content" style="max-width: 600px;">
-            <h2 style="margin-top:0;">เพิ่มข้อมูลสถิติ</h2>
+            <h2 style="margin-top:0;" id="modalTitle">เพิ่มข้อมูลสถิติ</h2>
             <form id="addForm" onsubmit="saveStat(event)">
                 <div class="form-group" style="display:flex; gap:10px;">
                     <div style="flex:1;">
@@ -277,11 +277,12 @@
                         ยังไม่ได้เลือกประโยค
                     </div>
                     <input type="hidden" id="statContentSnippet">
+                    <input type="hidden" id="statDocId">
                 </div>
 
                 <div style="text-align:right; margin-top:20px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">ยกเลิก</button>
-                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">บันทึก</button>
                 </div>
             </form>
         </div>
@@ -451,6 +452,11 @@
 
         // --- Logic ---
         function openModal() {
+            document.getElementById('addForm').reset();
+            document.getElementById('statDocId').value = '';
+            document.getElementById('modalTitle').innerText = 'เพิ่มข้อมูลสถิติ';
+            document.getElementById('submitBtn').innerText = 'บันทึก';
+            clearSentenceSelection();
             document.getElementById('addModal').style.display = 'flex';
         }
         function closeModal() {
@@ -640,7 +646,7 @@
         
         async function saveStat(e) {
             e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
+            const btn = document.getElementById('submitBtn');
             btn.disabled = true;
             btn.innerText = 'กำลังบันทึก...';
 
@@ -654,6 +660,7 @@
                 const round = document.getElementById('statRound').value;
                 const question = document.getElementById('statQuestion').value;
                 const snippet = document.getElementById('statContentSnippet').value;
+                const docId = document.getElementById('statDocId').value;
 
                 const data = {
                     year: parseInt(document.getElementById('statYear').value),
@@ -666,11 +673,20 @@
                     startPage: parseInt(document.getElementById('statStartPage').value) || 0,
                     endPage: parseInt(document.getElementById('statEndPage').value) || 0,
                     contentSnippet: snippet,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
-                await db.collection('sanluang_exams').add(data);
-                alert('บันทึกข้อมูลสำเร็จ');
+                if (docId) {
+                    // Update
+                    await db.collection('sanluang_exams').doc(docId).update(data);
+                    alert('แก้ไขข้อมูลสำเร็จ');
+                } else {
+                    // Create
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('sanluang_exams').add(data);
+                    alert('บันทึกข้อมูลสำเร็จ');
+                }
+
                 closeModal();
                 document.getElementById('addForm').reset();
                 clearSentenceSelection();
@@ -728,7 +744,10 @@
                         <td>${d.startPage} - ${d.endPage}</td>
                         <td style="max-width:200px; font-size:0.85rem; color:#444;">${d.contentSnippet || '-'}</td>
                         <td>
-                            <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${doc.id}')"><i class="fa-solid fa-trash"></i></button>
+                            <div style="display:flex; gap:5px;">
+                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem; background:#f39c12; color:#fff;" onclick="editStat('${doc.id}')"><i class="fa-solid fa-edit"></i></button>
+                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${doc.id}')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -740,6 +759,60 @@
             }
         }
         
+        async function editStat(id) {
+            try {
+                const doc = await db.collection('sanluang_exams').doc(id).get();
+                if (!doc.exists) {
+                    alert('ไม่พบข้อมูล');
+                    return;
+                }
+                const d = doc.data();
+                
+                // 1. Set Basic Fields
+                document.getElementById('statYear').value = d.year;
+                document.getElementById('statRound').value = d.round || 1;
+                document.getElementById('statQuestion').value = d.question || 1;
+                
+                // 2. Set Level & Trigger Updates
+                document.getElementById('statLevel').value = d.level;
+                toggleRoundInput(); // Show/Hide round
+                updateStatSubjects(); // Populate subjects
+                
+                // 3. Set Subject & Trigger Updates
+                document.getElementById('statSubject').value = d.subject;
+                updateStatBooks(); // Populate books
+                
+                // 4. Set Book (Need to find ID from Label)
+                const levelLabel = LEVEL_LABEL_MAP[d.level];
+                const subject = d.subject;
+                const books = (CONTENT_MAPPING[levelLabel] && CONTENT_MAPPING[levelLabel][subject]) || [];
+                const bookObj = books.find(b => b.label === d.book);
+                if (bookObj) {
+                    document.getElementById('statBook').value = bookObj.id;
+                }
+                
+                // 5. Set Content Details
+                document.getElementById('statStartPage').value = d.startPage;
+                document.getElementById('statEndPage').value = d.endPage;
+                document.getElementById('statStory').value = d.story;
+                
+                // 6. Set Snippet
+                document.getElementById('statContentSnippet').value = d.contentSnippet || '';
+                document.getElementById('statSnippetPreview').innerText = d.contentSnippet || 'ยังไม่ได้เลือกประโยค';
+                
+                // 7. Set ID & Modal State
+                document.getElementById('statDocId').value = id;
+                document.getElementById('modalTitle').innerText = 'แก้ไขข้อมูลสถิติ';
+                document.getElementById('submitBtn').innerText = 'บันทึกการแก้ไข';
+                
+                document.getElementById('addModal').style.display = 'flex';
+                
+            } catch (err) {
+                console.error(err);
+                alert('เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message);
+            }
+        }
+
         async function deleteStat(id) {
             if(!confirm('ยืนยันการลบข้อมูลนี้?')) return;
             try {

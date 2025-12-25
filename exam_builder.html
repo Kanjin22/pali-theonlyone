@@ -246,7 +246,7 @@
             .header, .content, .actions, .toolbar, .container > .header, .container > .content, .container > .actions, .container > .toolbar { display: none !important; }
             .container { box-shadow: none; margin: 0; max-width: none; width: 100%; border: none; }
             .paper { margin: 0 !important; border: none !important; box-shadow: none !important; page-break-after: always; }
-            .paper-inner { padding: 28px 40px !important; } 
+            /* .paper-inner padding is controlled by inline style or default CSS, do not override with !important */
             
             /* Print settings from toolbar state */
             @page { size: auto; margin: 0; }
@@ -544,6 +544,20 @@
             
             // Set for print media query hook
             document.body.setAttribute('data-print-size', size);
+
+            // Dynamic @page size for print
+            let style = document.getElementById('page-size-style');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'page-size-style';
+                document.head.appendChild(style);
+            }
+            if (size === 'A4') {
+                style.innerHTML = '@media print { @page { size: A4 portrait; margin: 0; } }';
+            } else if (size === 'F4') {
+                // F4 is 216mm x 356mm (Legal is 216x356)
+                style.innerHTML = '@media print { @page { size: 216mm 356mm; margin: 0; } }';
+            }
         }
         function changeMargin(type) {
             const inner = document.querySelector('.paper-inner');
@@ -1973,6 +1987,8 @@
         updateDateDisplay();
         generatePreview();
         updateWorkflowState();
+        changePaperSize(document.getElementById('paperSizeSelect').value);
+        changeMargin(document.getElementById('marginSelect').value);
     </script>
 </body>
 </html>
