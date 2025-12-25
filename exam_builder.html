@@ -222,9 +222,25 @@
         .tool-select { border: none; background: transparent; padding: 6px; font-size: 0.9rem; color: #455a64; outline: none; cursor: pointer; }
         
         /* Paper Sizes */
-        .paper.size-a4 { width: 210mm; min-height: 297mm; }
-        .paper.size-f4 { width: 216mm; min-height: 356mm; } /* Legal/Folio */
+        .paper.size-a4 { width: 210mm; min-height: 297mm; position: relative; }
+        .paper.size-f4 { width: 216mm; min-height: 356mm; position: relative; } /* Legal/Folio */
         
+        #overflowWarning {
+            display: none;
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: rgba(255, 235, 238, 0.9);
+            padding: 5px 0;
+            border: 1px solid #ffcdd2;
+            border-radius: 4px;
+        }
+
         @media print {
             body { background: #fff; margin: 0; padding: 0; }
             .header, .content, .actions, .toolbar, .container > .header, .container > .content, .container > .actions, .container > .toolbar { display: none !important; }
@@ -361,6 +377,7 @@
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
             <button class="btn secondary" id="notepadBtn" onclick="exportToNotepad()"><i class="fa-solid fa-file-lines"></i> Note</button>
             <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
+            <button class="btn secondary" id="printBtn" onclick="window.print()"><i class="fa-solid fa-print"></i> พิมพ์ / PDF</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
         
@@ -392,12 +409,14 @@
             </div>
             <div class="toolbar-group">
                 <select class="tool-select" id="fontSizeSelect" onchange="changeFontSize(this.value)" title="ขนาดตัวอักษร">
+                    <option value="10px">10px</option>
+                    <option value="12px">12px</option>
+                    <option value="14px">14px</option>
+                    <option value="16px">16px</option>
                     <option value="18px">18px</option>
                     <option value="20px">20px</option>
                     <option value="22px" selected>22px</option>
                     <option value="24px">24px</option>
-                    <option value="26px">26px</option>
-                    <option value="28px">28px</option>
                 </select>
             </div>
             <div class="toolbar-group">
@@ -419,6 +438,7 @@
             <div class="paper-inner" id="paperContent" contenteditable="true">
                 <!-- Assembled exam document will be injected here -->
             </div>
+            <div id="overflowWarning"><i class="fa-solid fa-triangle-exclamation"></i> เนื้อหาเกินขอบกระดาษ (Content Overflow)</div>
         </div>
     </div>
 
