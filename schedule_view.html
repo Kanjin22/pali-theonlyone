@@ -1064,21 +1064,26 @@
                         if (f.startsWith('http')) {
                             finalUrl = f;
                         } else {
-                            // 1. Try Firestore Index
+                            // CLEAN PATH: Support legacy paths like "files/pt12/..."
+                            const cleanName = f.split(/[/\\]/).pop();
+
+                            // 1. Try Firestore Index (Original or Clean)
                             if (cloudFilesIndex && cloudFilesIndex[f]) {
                                 finalUrl = cloudFilesIndex[f];
-                            } 
+                            } else if (cloudFilesIndex && cloudFilesIndex[cleanName]) {
+                                finalUrl = cloudFilesIndex[cleanName];
+                            }
                             // 2. Fallback: Construct URL from pattern
-                            else if (f.match(/^(pt\d+)_/)) {
-                                const match = f.match(/^(pt\d+)_/);
+                            else if (cleanName.match(/^(pt\d+)_/)) {
+                                const match = cleanName.match(/^(pt\d+)_/);
                                 const level = match[1];
                                 let category = 'materials'; // Default
-                                if (f.includes('_exam')) category = 'exams';
-                                else if (f.includes('_ans')) category = 'answers';
+                                if (cleanName.includes('_exam')) category = 'exams';
+                                else if (cleanName.includes('_ans')) category = 'answers';
                                 
                                 // Construct Firebase Storage URL
                                 const bucket = 'palitest-generator.firebasestorage.app';
-                                const path = `files/${level}/${category}/${f}`;
+                                const path = `files/${level}/${category}/${cleanName}`;
                                 finalUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
                             }
                         }
