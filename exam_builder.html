@@ -914,27 +914,35 @@
 
             // 1. Sanluang Stats
             try {
-                // Query by story name (Exact match)
+                // Query by story name (NO ORDER BY to avoid index issues)
                 const slSnap = await db.collection('sanluang_exams')
                     .where('story', '==', story)
-                    .orderBy('year', 'desc')
                     .get();
 
                 if (slSnap.empty) {
                     slContent.innerHTML = '<span style="color:#7f8c8d;">ยังไม่เคยออกข้อสอบสนามหลวง (หรือไม่มีข้อมูล)</span>';
                 } else {
-                    let html = `<div style="font-weight:bold; margin-bottom:5px;">เคยออก ${slSnap.size} ครั้ง:</div>`;
-                    html += '<ul style="margin:0; padding-left:20px;">';
-                    slSnap.forEach(doc => {
-                        const d = doc.data();
-                        html += `<li>พ.ศ. ${d.year} (${d.level})</li>`;
-                    });
-                    html += '</ul>';
+                    // Client-side Sort
+                    const docs = [];
+                    slSnap.forEach(doc => docs.push(doc.data()));
+                    docs.sort((a,b) => b.year - a.year); // Descending
+
+                    let html = `<div style="margin-bottom:5px; color:#c0392b; font-weight:bold;">
+                        <i class="fa-solid fa-bell"></i> เนื้อหานี้เคยออกข้อสอบสนามหลวง ${slSnap.size} ครั้ง
+                    </div>`;
+                    
+                    // Store data globally for modal
+                    window.currentExamStats = docs;
+                    
+                    html += `<button class="btn secondary" onclick="showExamStatsModal(window.currentExamStats)" style="padding:4px 8px; font-size:0.85rem;">
+                        <i class="fa-solid fa-table-list"></i> ดูรายละเอียด
+                    </button>`;
+                    
                     slContent.innerHTML = html;
                 }
             } catch (e) {
                 console.error(e);
-                slContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด</span>';
+                slContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด (โปรดตรวจสอบการเชื่อมต่อ)</span>';
             }
 
             // 2. System Usage Stats
@@ -2063,5 +2071,66 @@
         changePaperSize(document.getElementById('paperSizeSelect').value);
         changeMargin(document.getElementById('marginSelect').value);
     </script>
+
+    <script>
+        // Modal for Exam Stats
+        function showExamStatsModal(data) {
+            const body = document.getElementById('examStatsModalBody');
+            if (!data || data.length === 0) {
+                body.innerHTML = '<div style="text-align:center; padding:20px; color:#7f8c8d;">ไม่พบข้อมูล</div>';
+                return;
+            }
+
+            let html = `
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:#f8f9fa; border-bottom:2px solid #ddd;">
+                            <th style="padding:8px; text-align:left;">พ.ศ.</th>
+                            <th style="padding:8px; text-align:left;">ชั้น</th>
+                            <th style="padding:8px; text-align:left;">วิชา (ข้อ)</th>
+                            <th style="padding:8px; text-align:left;">เนื้อหา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(d => {
+                html += `
+                    <tr style="border-bottom:1px solid #eee;">
+                        <td style="padding:8px; vertical-align:top;">${d.year} ${d.term ? '(ครั้งที่ '+d.term+')' : ''}</td>
+                        <td style="padding:8px; vertical-align:top;">${d.level}</td>
+                        <td style="padding:8px; vertical-align:top;">${d.subject} ${d.question_num ? '(ข้อ '+d.question_num+')' : ''}</td>
+                        <td style="padding:8px; vertical-align:top;">
+                            <div style="font-weight:bold; color:#2980b9;">${d.story}</div>
+                            ${d.content_snippet ? `<div style="font-size:0.85rem; color:#555; margin-top:2px;">${d.content_snippet}</div>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            body.innerHTML = html;
+            
+            // Show Modal
+            const modal = document.getElementById('examStatsModal');
+            modal.style.display = 'flex';
+        }
+    </script>
+    
+    <!-- Modal for Exam Stats -->
+    <div id="examStatsModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; justify-content:center; align-items:center;">
+        <div class="modal-content" style="background:#fff; padding:20px; border-radius:8px; width:90%; max-width:800px; max-height:80vh; overflow-y:auto; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                <h3 style="margin:0; color:#2c3e50;"><i class="fa-solid fa-history"></i> ประวัติการออกข้อสอบสนามหลวง</h3>
+                <button onclick="document.getElementById('examStatsModal').style.display='none'" style="border:none; background:transparent; font-size:1.5rem; cursor:pointer; color:#7f8c8d;">&times;</button>
+            </div>
+            <div id="examStatsModalBody">
+                <!-- Table will go here -->
+            </div>
+            <div style="text-align:right; margin-top:15px;">
+                <button class="btn secondary" onclick="document.getElementById('examStatsModal').style.display='none'">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
