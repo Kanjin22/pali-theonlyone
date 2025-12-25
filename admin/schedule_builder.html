@@ -797,14 +797,16 @@
                     noteVal.push(data.noteFiles[subj.id]);
                 } else {
                      // Legacy
-                     if (subj.id === 'Grammar' && data.fileNoteGrammar) noteVal.push(data.fileNoteGrammar);
+                     const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
+                     
+                     if (subj.id === 'Grammar' && data.fileNoteGrammar) noteVal.push(cleanPath(data.fileNoteGrammar));
                      else if (subj.id === 'Translate' && data.fileNoteTranslate) {
-                         if(Array.isArray(data.fileNoteTranslate)) noteVal.push(...data.fileNoteTranslate);
-                         else noteVal.push(data.fileNoteTranslate);
+                         if(Array.isArray(data.fileNoteTranslate)) noteVal.push(...data.fileNoteTranslate.map(cleanPath));
+                         else noteVal.push(cleanPath(data.fileNoteTranslate));
                      }
                      // Fallback generic (only for first subject if not specific)
                      if (noteVal.length === 0 && idx === 0 && data.materials && data.materials.length > 0) {
-                         noteVal.push(data.materials[0]);
+                         noteVal.push(cleanPath(data.materials[0]));
                      }
                 }
 
@@ -819,15 +821,17 @@
                          if (actVal || (data.exams && data.exams.length > 0)) isExam = true;
                     }
                 }
+                const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
+
                 
-                // Exam/Answer Files
-                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(data.examFiles[subj.id]);
-                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(data.fileExamGrammar);
+                // Exam/Answer Filesh(cleanPat)
+                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(data.examFilecleanPath(s[subj.id]);)
+                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(dh(cleanPatata.fileExamGram)mar);
                 else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(data.fileExamTranslate);
                 else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(data.exams[0]);
-
-                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(data.answerFiles[subj.id]);
-                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(data.fileAnswerGrammar);
+h(cleanPat)
+                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(data.answercleanPath(Files[subj.id]);)
+                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(data.cleanPath(fileAnswerGramm)ar);
                 else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(data.fileAnswerTranslate);
                 else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(data.answers[0]);
             }
