@@ -147,9 +147,8 @@
                 style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
             <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
             <a href="admin_dashboard.html" id="btn-admin-dashboard"
-                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px; position:relative;">
+                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px;">
                 <i class="fa-solid fa-user-shield"></i> ผู้ดูแล
-                <span id="admin-badge-count" style="display:none; position:absolute; top:-8px; right:-10px; background-color:red; color:white; border-radius:999px; padding:2px 6px; font-size:0.75rem; font-weight:bold; min-width:22px; text-align:center;">0</span>
             </a>
             <button id="btn-logout"
                 style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
@@ -342,6 +341,7 @@
                         <a href="admin_login.html"
                     style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px; position: relative;">
                     <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
+                    <span id="admin-badge-count" style="display:none; position:absolute; top:-8px; right:-12px; background-color:red; color:white; border-radius:50%; padding:2px 6px; font-size:0.7rem; font-weight:bold;">0</span>
                 </a>
                     </div>
                 </div>
@@ -670,22 +670,6 @@
             } catch (e) {
                 console.warn("Failed to load config:", e);
             }
-        }
-        
-        async function updateAdminBadge() {
-            try {
-                const snap = await db.collection('enrollments').where('status', '==', 'pending').get();
-                const count = snap.size;
-                const badge = document.getElementById('admin-badge-count');
-                if (badge) {
-                    if (count > 0) {
-                        badge.textContent = count > 99 ? '99+' : count;
-                        badge.style.display = 'inline-block';
-                    } else {
-                        badge.style.display = 'none';
-                    }
-                }
-            } catch (e) {}
         }
 
         function applyRoleUI(role) {
@@ -1032,7 +1016,7 @@
             });
         }
         // ตรวจสอบสถานะล็อกอิน
-        auth.onAuthStateChanged(async (user) => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 closeLogin();
                 // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
@@ -1042,14 +1026,6 @@
                 loadTodayPins();
 
                 const uid = user.uid;
-                
-                // ... (Existing admin badge check logic) ...
-                try {
-                    const idTokenResult = await user.getIdTokenResult();
-                    if (idTokenResult.claims.admin) {
-                        await updateAdminBadge();
-                    }
-                } catch (e) {}
 
                 // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
                 const FALLBACK_ADMIN_EMAILS = [
@@ -1091,29 +1067,47 @@
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
                         if (role !== 'admin') {
                             
-                        // ... rest of user logic
+                            try {
+                                const enr = await db.collection('enrollments').doc(uid).get();
+                                if (enr.exists && enr.data()) {
+                                    const enrData = enr.data();
+                                    // Upgrade role if general and approved
+                                    if (enrData.status === 'approved' && role === 'general') {
+                                        // Update to student only if confirmed
+                                        // db.collection('users').doc(uid).set({ role: 'student' }, { merge: true }); // Commented out auto-upgrade for safety
+                                        role = 'student'; // Just display as student
+                                    }
+
+                                    // Construct Real Name if approved
+                                    if (enrData.status === 'approved') {
+                                        const title = enrData.title || '';
+                                        const first = enrData.firstName || '';
+                                        const last = enrData.lastName || '';
+                                        const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
+                                        displayName = `${title}${first} ${last}${epithet}`;
+                                    }
+                                }
+                            } catch (e) { 
+                                console.warn("Enrollment Check Error:", e.message);
+                            }
                         }
-                        
-                        // Show User Info
-                        showUser({
+
+                        // Update User UI with correct name
+                        const displayUser = {
+                            uid: user.uid,
+                            email: user.email,
                             displayName: displayName,
                             photoURL: user.photoURL
-                        }, role);
+                        };
+                        showUser(displayUser, role);
+                        applyRoleUI(role);
 
-                    } catch(err) {
-                        console.error(err);
+                    } catch (e) {
+                        console.error("Critical Error in Auth Flow:", e);
+                        // ถ้า Error หนักจริงๆ ให้แสดง User แบบปกติไปก่อน
+                        showUser(user);
                     }
                 })();
-
-            } else {
-                showLogin();
-            }
-        });
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTodayPins();
-        });
 
                 // โค้ดสร้าง Exam Sets (คงเดิม)
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
