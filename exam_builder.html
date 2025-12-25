@@ -429,8 +429,6 @@
             <a href="font_download.html" class="btn secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="หน้าดาวน์โหลดและวิธีติดตั้งฟอนต์"><i class="fa-solid fa-font"></i> ดาวน์โหลดฟอนต์</a>
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
-            <button class="btn secondary" id="notepadBtn" onclick="exportToNotepad()"><i class="fa-solid fa-file-lines"></i> Note</button>
-            <button class="btn secondary" id="wordBtn"><i class="fa-solid fa-file-word"></i> Word</button>
             <button class="btn secondary" id="printBtn" onclick="window.print()"><i class="fa-solid fa-print"></i> พิมพ์ / PDF</button>
             <button class="btn primary" id="generateBtn"><i class="fa-solid fa-eye"></i> สร้างตัวอย่างข้อสอบ</button>
         </div>
@@ -1758,100 +1756,6 @@
                 alert('เกิดข้อผิดพลาดในการคัดลอก กรุณาเลือกเนื้อหาที่ต้องการแล้วกด Ctrl+C เพื่อคัดลอก');
             }
         }
-        function getExportFilename(extension) {
-            const levelLabel = getSelectedLevelLabel();
-            const subjectLabel = document.getElementById('subjectSelect').value || '';
-            const attempt = document.getElementById('attemptInput').value;
-            const iso = document.getElementById('dateInput').value;
-            
-            // Safe filename parts
-            const safeLevel = levelLabel.replace(/[.\\/]/g, '').replace(/\s+/g, '_');
-            const safeSubject = subjectLabel.replace(/\s+/g, '_');
-            const safeDate = iso ? iso : 'no_date';
-            
-            let filename = `${safeLevel}_${safeSubject}`;
-            if (attempt) filename += `_ครั้งที่${attempt}`;
-            if (iso) filename += `_${iso}`;
-            
-            // Clean up any double underscores
-            filename = filename.replace(/_+/g, '_');
-            
-            return `${filename}.${extension}`;
-        }
-
-        function exportToWord() {
-            const paper = document.getElementById('paperContent');
-            const paperContainer = document.querySelector('.paper');
-            let content = paper.innerHTML;
-            
-            // Revert to original content (no special replacement for spaces)
-            // Word will handle standard spaces naturally
-            
-            // Get current computed styles
-            const currentFont = paperContainer.style.fontFamily || '"DilleniaUPC", sans-serif';
-            const currentSize = paperContainer.style.fontSize || '22px';
-
-            const html = `
-                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head>
-                    <meta charset='utf-8'>
-                    <title>Exam Paper</title>
-                    <style>
-                        body { 
-                            font-family: ${currentFont.replace(/"/g, "'")}; 
-                            font-size: ${currentSize};
-                        }
-                        .paper-center { text-align: center; }
-                        .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
-                        .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; white-space: pre-wrap; }
-                        .paper-line { margin: 4px 0; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
-                        .paper-content-text { 
-                            text-align: justify; 
-                            text-align-last: left; 
-                            text-justify: distribute-all-lines;
-                            line-height: 1.6; 
-                            font-size: 1em; 
-                            color: #000;
-                            white-space: pre-wrap; /* Revert: Use pre-wrap to respect HTML spacing */
-                            text-indent: 1.27cm;
-                        }
-                        .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
-                    </style>
-                </head>
-                <body>
-                    ${content}
-                </body>
-                </html>`;
-            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = getExportFilename('doc');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        function exportToNotepad() {
-            const paper = document.getElementById('paperContent');
-            if (!paper) return;
-            
-            // Get text content while preserving line breaks
-            // Use innerText which usually preserves visible formatting
-            let content = paper.innerText;
-            
-            // Cleanup: Ensure consistent newlines
-            content = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            
-            // Add BOM for UTF-8 compatibility
-            const blob = new Blob(['\ufeff', content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = getExportFilename('txt');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
         function generatePreview() {
             // Clear current selection buffers to ensure we only show active range content
             selectedLiteral.clear();
@@ -2103,7 +2007,6 @@
             updateWorkflowState();
         });
         document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
-        document.getElementById('wordBtn').addEventListener('click', exportToWord);
         // document.getElementById('printBtn').addEventListener('click', () => window.print());
         
         // Toolbar state listeners
