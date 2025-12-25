@@ -149,7 +149,112 @@
     </div>
 </div>
 
+<script src="../data/content-dhamma01.js"></script>
+<script src="../data/content-dhamma02.js"></script>
+<script src="../data/content-dhamma03.js"></script>
+<script src="../data/content-dhamma04.js"></script>
+<script src="../data/content-dhamma05.js"></script>
+<script src="../data/content-dhamma06.js"></script>
+<script src="../data/content-dhamma07.js"></script>
+<script src="../data/content-dhamma08.js"></script>
+<script src="../data/content-mangala01.js"></script>
+<script src="../data/content-mangala02.js"></script>
+<script src="../data/content-samanta01.js"></script>
+<script src="../data/content-samanta02.js"></script>
+<script src="../data/content-samanta03.js"></script>
+<script src="../data/content-visuddhi01.js"></script>
+<script src="../data/content-visuddhi02.js"></script>
+<script src="../data/content-visuddhi03.js"></script>
+<script src="../data/content-abhidhamma01.js"></script>
+
 <script>
+    // --- Data Loading Logic ---
+    const knownFiles = [
+        { name: "ธรรมบท ภาค ๑", varName: "contentDhamma01" },
+        { name: "ธรรมบท ภาค ๒", varName: "contentDhamma02" },
+        { name: "ธรรมบท ภาค ๓", varName: "contentDhamma03" },
+        { name: "ธรรมบท ภาค ๔", varName: "contentDhamma04" },
+        { name: "ธรรมบท ภาค ๕", varName: "contentDhamma05" },
+        { name: "ธรรมบท ภาค ๖", varName: "contentDhamma06" },
+        { name: "ธรรมบท ภาค ๗", varName: "contentDhamma07" },
+        { name: "ธรรมบท ภาค ๘", varName: "contentDhamma08" },
+        { name: "มังคลัถทีปนี ภาค ๑", varName: "contentMangala01" },
+        { name: "มังคลัถทีปนี ภาค ๒", varName: "contentMangala02" },
+        { name: "สมันตปาสาทิกา ภาค ๑", varName: "contentSamanta01" },
+        { name: "สมันตปาสาทิกา ภาค ๒", varName: "contentSamanta02" },
+        { name: "สมันตปาสาทิกา ภาค ๓", varName: "contentSamanta03" },
+        { name: "วิสุทธิมรรค ภาค ๑", varName: "contentVisuddhi01" },
+        { name: "วิสุทธิมรรค ภาค ๒", varName: "contentVisuddhi02" },
+        { name: "วิสุทธิมรรค ภาค ๓", varName: "contentVisuddhi03" },
+        { name: "อภิธรรม (สังคหะ)", varName: "contentAbhidhamma01" }
+    ];
+
+    function initFileSelect() {
+        const select = document.getElementById('file-select');
+        knownFiles.forEach(f => {
+            if(window[f.varName]) {
+                const opt = document.createElement('option');
+                opt.value = f.varName;
+                opt.textContent = f.name;
+                select.appendChild(opt);
+            }
+        });
+    }
+
+    function onFileSelectChange() {
+        const varName = document.getElementById('file-select').value;
+        const keySelect = document.getElementById('key-select');
+        const btnLoad = document.getElementById('btn-load-data');
+        
+        keySelect.innerHTML = '<option value="">-- เลือกหัวข้อ/ID --</option>';
+        keySelect.disabled = true;
+        btnLoad.disabled = true;
+
+        if(!varName) return;
+
+        const dataObj = window[varName];
+        if(!dataObj) return;
+
+        const keys = Object.keys(dataObj);
+        keys.forEach(k => {
+            const opt = document.createElement('option');
+            opt.value = k;
+            // Try to find a good label (story name)
+            const firstItem = dataObj[k][0];
+            let label = k;
+            if(firstItem) {
+                if(firstItem.story) label = `${k} : ${firstItem.story}`;
+                else if(firstItem.vagga) label = `${k} : ${firstItem.vagga}`;
+            }
+            opt.textContent = label;
+            keySelect.appendChild(opt);
+        });
+        
+        keySelect.disabled = false;
+        btnLoad.disabled = false;
+    }
+
+    function loadSelectedData() {
+        const varName = document.getElementById('file-select').value;
+        const key = document.getElementById('key-select').value;
+        
+        if(!varName || !key) return;
+        
+        if(segments.length > 0 && segments[0].pali) { // Check if not empty default
+            if(!confirm("มีข้อมูลค้างอยู่ ต้องการโหลดทับหรือไม่?")) return;
+        }
+
+        const dataObj = window[varName];
+        const dataArr = dataObj[key];
+        
+        if(dataArr && Array.isArray(dataArr)) {
+            document.getElementById('content-id').value = key;
+            segments = JSON.parse(JSON.stringify(dataArr)); // Deep copy
+            renderSegments();
+            alert(`โหลดข้อมูล ${key} เรียบร้อย (${segments.length} ท่อน)`);
+        }
+    }
+
     let segments = [];
 
     // Template for a new segment
@@ -394,6 +499,9 @@
 
     // Init with one empty segment
     addSegment();
+    
+    // Init File Select
+    window.addEventListener('load', initFileSelect);
 
 </script>
 
