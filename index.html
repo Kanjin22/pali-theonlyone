@@ -147,9 +147,8 @@
                 style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
             <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
             <a href="admin_dashboard.html" id="btn-admin-dashboard"
-                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px; position:relative;">
+                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px;">
                 <i class="fa-solid fa-user-shield"></i> ผู้ดูแล
-                <span id="admin-badge-count" style="display:none; position:absolute; top:-8px; right:-10px; background-color:red; color:white; border-radius:999px; padding:2px 6px; font-size:0.75rem; font-weight:bold; min-width:22px; text-align:center;">0</span>
             </a>
             <button id="btn-logout"
                 style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
@@ -340,9 +339,9 @@
 
                     <div style="margin-top: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
                         <a href="admin_login.html"
-                    style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px; position: relative;">
-                    <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
-                </a>
+                            style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px;">
+                            <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
+                        </a>
                     </div>
                 </div>
             </div>
@@ -679,13 +678,60 @@
                 const badge = document.getElementById('admin-badge-count');
                 if (badge) {
                     if (count > 0) {
-                        badge.textContent = count > 99 ? '99+' : count;
+                        badge.textContent = count > 99 ? '99+' : String(count);
                         badge.style.display = 'inline-block';
                     } else {
                         badge.style.display = 'none';
                     }
                 }
             } catch (e) {}
+        }
+        
+        function ensureLevelBadge(anchor) {
+            if (!anchor) return null;
+            let badge = anchor.querySelector('.level-pending-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'level-pending-badge';
+                badge.style.cssText = 'display:none; position:absolute; top:8px; right:8px; background-color:red; color:white; border-radius:999px; padding:2px 6px; font-size:0.75rem; font-weight:bold; min-width:22px; text-align:center;';
+                badge.textContent = '0';
+                anchor.style.position = 'relative';
+                anchor.appendChild(badge);
+            }
+            return badge;
+        }
+        
+        async function updateLevelPendingBadges() {
+            try {
+                const snap = await db.collection('enrollments').where('status', '==', 'pending').get();
+                const counts = {};
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    const lvl = d.levelRequested || '';
+                    if (!lvl) return;
+                    counts[lvl] = (counts[lvl] || 0) + 1;
+                });
+                
+                const cards = Array.from(document.querySelectorAll('a[href^="classroom_select.html"]'));
+                cards.forEach(a => {
+                    const href = a.getAttribute('href') || '';
+                    const q = href.split('?')[1] || '';
+                    const params = new URLSearchParams(q);
+                    const lvl = params.get('level');
+                    const badge = ensureLevelBadge(a);
+                    const c = counts[lvl] || 0;
+                    if (badge) {
+                        if (c > 0) {
+                            badge.textContent = c > 99 ? '99+' : String(c);
+                            badge.style.display = 'inline-block';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    }
+                });
+            } catch (e) {
+                console.warn('updateLevelPendingBadges failed:', e);
+            }
         }
 
         function applyRoleUI(role) {
@@ -1032,7 +1078,7 @@
             });
         }
         // ตรวจสอบสถานะล็อกอิน
-        auth.onAuthStateChanged(async (user) => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 closeLogin();
                 // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
@@ -1042,14 +1088,6 @@
                 loadTodayPins();
 
                 const uid = user.uid;
-                
-                // ... (Existing admin badge check logic) ...
-                try {
-                    const idTokenResult = await user.getIdTokenResult();
-                    if (idTokenResult.claims.admin) {
-                        await updateAdminBadge();
-                    }
-                } catch (e) {}
 
                 // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
                 const FALLBACK_ADMIN_EMAILS = [
@@ -1091,29 +1129,6 @@
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
                         if (role !== 'admin') {
                             
-                        // ... rest of user logic
-                        }
-                        
-                        // Show User Info
-                        showUser({
-                            displayName: displayName,
-                            photoURL: user.photoURL
-                        }, role);
-
-                    } catch(err) {
-                        console.error(err);
-                    }
-                })();
-
-            } else {
-                showLogin();
-            }
-        });
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTodayPins();
-        });
                             try {
                                 const enr = await db.collection('enrollments').doc(uid).get();
                                 if (enr.exists && enr.data()) {
@@ -1148,7 +1163,10 @@
                         };
                         showUser(displayUser, role);
                         applyRoleUI(role);
-                        if (role === 'admin') { updateAdminBadge(); }
+                        if (role === 'admin') {
+                            updateAdminBadge();
+                            updateLevelPendingBadges();
+                        }
 
                     } catch (e) {
                         console.error("Critical Error in Auth Flow:", e);
