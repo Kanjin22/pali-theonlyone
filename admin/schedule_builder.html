@@ -823,17 +823,16 @@
                 }
                 const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
 
-                
-                // Exam/Answer Filesh(cleanPat)
-                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(data.examFilecleanPath(s[subj.id]);)
-                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(dh(cleanPatata.fileExamGram)mar);
-                else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(data.fileExamTranslate);
-                else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(data.exams[0]);
-h(cleanPat)
-                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(data.answercleanPath(Files[subj.id]);)
-                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(data.cleanPath(fileAnswerGramm)ar);
-                else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(data.fileAnswerTranslate);
-                else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(data.answers[0]);
+                // Exam/Answer Files
+                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(cleanPath(data.examFiles[subj.id]));
+                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(cleanPath(data.fileExamGrammar));
+                else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(cleanPath(data.fileExamTranslate));
+                else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(cleanPath(data.exams[0]));
+
+                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(cleanPath(data.answerFiles[subj.id]));
+                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(cleanPath(data.fileAnswerGrammar));
+                else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(cleanPath(data.fileAnswerTranslate));
+                else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(cleanPath(data.answers[0]));
             }
 
             const displayStyle = hasData ? 'block' : 'none';
