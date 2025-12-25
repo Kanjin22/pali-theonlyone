@@ -1652,12 +1652,16 @@
                     
                     // Get Thai (No splitting)
                     let thai = '';
-                    if (type === 'literal') thai = slide.thai || '';
-                    else thai = slide.thai_sense || slide.thai_desana || slide.thai || '';
+                    if (type === 'literal') {
+                        thai = slide.thai || '';
+                    } else {
+                        // For Sense: Prioritize thai_desana as requested
+                        thai = slide.thai_desana || slide.thai_sense || slide.thai || '';
+                    }
                     
                     if (pali || thai) {
                          globalIndex++;
-                         html += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(globalIndex)}.</b> ${formatPali(pali)}</div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
+                         html += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(globalIndex)}. ${formatPali(pali)}</b></div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
                     }
                 });
                 return html;
@@ -1681,15 +1685,15 @@
                 if (['p4','p5','p6','p7','p8','p9'].includes(levelCode)) {
                     bodyHTML = `
                     <div class="paper-section">
-                        <div class="paper-content-text" style="display:block;"><span>๑. </span>${litContent || '...'}</div>
-                        <div class="paper-content-text" style="display:block;"><span>๒. </span>${senContent || '...'}</div>
+                        <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                        <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
                     </div>`;
                 } else {
                     bodyHTML = `
                     <div class="paper-section">
                         <div class="paper-section-title">${headerSubject}</div>
-                        <div class="paper-content-text" style="display:block;"><span>๑. </span>${litContent || '...'}</div>
-                        <div class="paper-content-text" style="display:block;"><span>๒. </span>${senContent || '...'}</div>
+                        <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                        <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
                     </div>`;
                 }
             } else {
@@ -1703,17 +1707,17 @@
                         bodyHTML = `
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
-                            <div class="paper-content-text" style="display:block;"><span>๑. </span>${litContent || '...'}</div>
+                            <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
                         </div>
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
-                            <div class="paper-content-text" style="display:block;"><span>๒. </span>${senContent || '...'}</div>
+                            <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
                         </div>`;
                     } else {
                         bodyHTML = `
                         <div class="paper-section">
-                            <div class="paper-content-text" style="display:block;"><span>๑. </span>${litContent || '...'}</div>
-                            <div class="paper-content-text" style="display:block;"><span>๒. </span>${senContent || '...'}</div>
+                            <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                            <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
                         </div>`;
                     }
                 }
