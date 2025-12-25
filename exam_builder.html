@@ -890,7 +890,13 @@
                 const globalSlideIdx = allSlides.indexOf(s); // Stable Index!
                 
                 let textToUse = s.pali;
-                if (mode === 'thai_source') {
+                if (mode !== 'thai_source' && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
+                    if (s.gatha.type === 'couplet') {
+                        textToUse = s.gatha.lines.map(l => `${(l.left||'').trim()}    ${(l.right||'').trim()}`).join('\n');
+                    } else if (s.gatha.type === 'quatrain') {
+                        textToUse = s.gatha.lines.map(l => (l||'').trim()).join('\n');
+                    }
+                } else if (mode === 'thai_source') {
                     textToUse = s.thai_desana || s.thai_sense || s.thai || '';
                 }
                 

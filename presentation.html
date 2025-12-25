@@ -1572,8 +1572,26 @@
             const thaiBox = document.getElementById('thaiContent');
             const s = slides[currentIndex];
 
-            paliBox.innerHTML = wrapWords(s.pali, s);
-            
+            let paliHtml = "";
+            if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
+                const type = s.gatha.type;
+                const lines = s.gatha.lines || [];
+                if (type === 'couplet') {
+                    paliHtml = lines.map(line => {
+                        const left = wrapWords(line.left || '', s);
+                        const right = wrapWords(line.right || '', s);
+                        return `<div style="display:flex; gap:24px; align-items:flex-start;"><div style="flex:1;">${left}</div><div style="flex:1; text-align:right;">${right}</div></div>`;
+                    }).join('');
+                } else if (type === 'quatrain') {
+                    paliHtml = lines.map(line => `<div>${wrapWords(line || '', s)}</div>`).join('');
+                } else {
+                    paliHtml = wrapWords(s.pali, s);
+                }
+            } else {
+                paliHtml = wrapWords(s.pali, s);
+            }
+            paliBox.innerHTML = paliHtml;
+
             let displayThai = "";
             if (!s.thai && (s.thai_desana || s.thai_sense)) {
                  displayThai = s.thai_desana || s.thai_sense;

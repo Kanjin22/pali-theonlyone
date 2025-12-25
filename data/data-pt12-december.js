@@ -821,7 +821,7 @@ var dataDecember = [
             linkYoutube: [
                 "https://youtu.be/mXo7aNe-CZE?si=Vq4eTVtdrGlu41QX&t=531",
             ],
-            slideId: "d04_v07_s07_kosambivasitissa",
+            slideId: "d04_v07_s09_khadiravaniya",
             fileNoteGrammar: "materials/pt12/pt12_pali_grammar_notes_y54-55.pdf",
             fileNoteTranslate: "materials/pt12/pt12_pali_translate_notes_tp4_09.pdf"
         },
