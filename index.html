@@ -1105,17 +1105,7 @@
                     }
                 })();
 
-            } else {
-                showLogin();
-            }
-        });
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTodayPins();
-        });
-
-                // โค้ดสร้าง Exam Sets (คงเดิม)
+                // Create default exam set if none exists
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
                     if (s.empty) {
                         return db.collection('exam_sets').add({
@@ -1126,16 +1116,17 @@
                         });
                     }
                 }).then(() => {
-                    // อัปเดต UI เพิ่มเติม (ถ้าต้องการ)
                     console.log("User data synced");
-                    // loadTodayPins(); // Moved to top
                 }).catch(err => console.error("Firestore Error:", err));
-
+ 
             } else {
-                hideUser();
-                if (appContent) appContent.style.display = 'none';
-                openLogin();
+                showLogin();
             }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTodayPins();
         });
     </script>
 </body>
