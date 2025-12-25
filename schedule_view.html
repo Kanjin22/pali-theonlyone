@@ -994,14 +994,23 @@
                  return `<a href="${href}" target="_blank" class="link-btn ${cls}"><i class="${icon}"></i> ${label}</a>`;
             };
 
+            const usedSlides = new Set(); // Track used values to prevent duplicates
+
             if (period.slides && Object.keys(period.slides).length > 0) {
                  Object.keys(period.slides).forEach(subjId => {
-                     linksHtml += renderSlideBtn(period.slides[subjId], getSubjLabel(subjId));
+                     const val = period.slides[subjId];
+                     if(val) {
+                        linksHtml += renderSlideBtn(val, getSubjLabel(subjId));
+                        usedSlides.add(val);
+                     }
                  });
             }
             
             if (period.linkZoom) {
-                 linksHtml += renderSlideBtn(period.linkZoom);
+                 // Only show if not already shown via specific slides
+                 if (!usedSlides.has(period.linkZoom)) {
+                     linksHtml += renderSlideBtn(period.linkZoom);
+                 }
             }
 
             // YouTube
