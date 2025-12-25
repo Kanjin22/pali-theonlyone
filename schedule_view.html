@@ -1013,17 +1013,25 @@
                          const links = val.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
                          links.forEach((vidId, idx) => {
                               const label = `วีดีโอประกอบ (${getSubjLabel(subjId)}) ${links.length > 1 ? (idx + 1) : ''}`;
-                              linksHtml += `<a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> ${label}</a>`;
+                              const href = vidId.startsWith('http') ? vidId : `https://www.youtube.com/watch?v=${vidId}`;
+                              linksHtml += `<a href="${href}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> ${label}</a>`;
                          });
                      }
                  });
             } 
             else if (period.linkYoutube) {
-                const yts = period.linkYoutube.split(',');
+                let yts = [];
+                if (Array.isArray(period.linkYoutube)) {
+                    yts = period.linkYoutube;
+                } else if (typeof period.linkYoutube === 'string') {
+                    yts = period.linkYoutube.split(',');
+                }
+
                 yts.forEach((yt, idx) => {
                     const vidId = yt.trim();
                     if (vidId) {
-                        linksHtml += `<a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> วีดีโอประกอบ ${yts.length > 1 ? (idx + 1) : ''}</a>`;
+                        const href = vidId.startsWith('http') ? vidId : `https://www.youtube.com/watch?v=${vidId}`;
+                        linksHtml += `<a href="${href}" target="_blank" class="link-btn btn-youtube"><i class="fab fa-youtube"></i> วีดีโอประกอบ ${yts.length > 1 ? (idx + 1) : ''}</a>`;
                     }
                 });
             }
