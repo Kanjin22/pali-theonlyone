@@ -770,18 +770,26 @@
                 // YouTube
                 if (data.youtube && data.youtube[subj.id]) {
                     ytVal = data.youtube[subj.id]; // Expect newline separated
-                } else if (idx === 0 && data.linkYoutube) {
-                    // Legacy: comma separated -> newline
-                    if (Array.isArray(data.linkYoutube)) {
-                        ytVal = data.linkYoutube.join('\n');
-                    } else if (typeof data.linkYoutube === 'string') {
-                        ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                } else if (data.linkYoutube) {
+                    // Legacy: Check if this subject is 'Translate' (for pt12 style) or default to first
+                    // The user requested that all legacy YouTube links belong to Translate.
+                    const isTranslate = subj.id === 'Translate';
+                    
+                    if (isTranslate) {
+                         if (Array.isArray(data.linkYoutube)) {
+                             ytVal = data.linkYoutube.join('\n');
+                         } else if (typeof data.linkYoutube === 'string') {
+                             ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                         }
                     }
                 }
 
                 // Slide (Presentation ID)
                 if (data.slides && data.slides[subj.id]) {
                     slideVal = data.slides[subj.id];
+                } else if (data.slideId && subj.id === 'Translate') {
+                    // Legacy: slideId maps to Translate subject
+                    slideVal = data.slideId;
                 }
 
                 // Materials (Note Files)
