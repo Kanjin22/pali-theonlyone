@@ -934,6 +934,16 @@
             document.getElementById('stat-trans-exam').innerText = tExam;
         }
 
+        // Mapping for subject labels
+        const subjMap = {
+            'Grammar': 'ไวย.',
+            'Translate': 'แปล',
+            'Return': 'กลับ',
+            'Chan': 'ฉันท์',
+            'Samphan': 'สัมพันธ์'
+        };
+        const getSubjLabel = (id) => subjMap[id] || id;
+
         function openModal(date, periodName) {
             const day = scheduleData.days.find(d => d.date === date);
             if (!day) return;
@@ -1073,15 +1083,7 @@
                 }
             };
 
-            // Mapping for subject labels
-            const subjMap = {
-                'Grammar': 'ไวย.',
-                'Translate': 'แปล',
-                'Return': 'กลับ',
-                'Chan': 'ฉันท์',
-                'Samphan': 'สัมพันธ์'
-            };
-            const getSubjLabel = (id) => subjMap[id] || id;
+
 
             // 1. New Structured Data (Prioritized)
             // We check if structured data exists (even if empty object) to decide whether to skip legacy
