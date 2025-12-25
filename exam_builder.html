@@ -245,13 +245,13 @@
             body { background: #fff; margin: 0; padding: 0; }
             .header, .content, .actions, .toolbar, .container > .header, .container > .content, .container > .actions, .container > .toolbar { display: none !important; }
             .container { box-shadow: none; margin: 0; max-width: none; width: 100%; border: none; }
-            .paper { width: 100% !important; max-width: none !important; margin: 0 !important; border: none !important; box-shadow: none !important; page-break-after: always; }
-            .paper-inner { padding: 0 !important; } 
+            .paper { margin: 0 !important; border: none !important; box-shadow: none !important; page-break-after: always; }
+            .paper-inner { padding: 28px 40px !important; } 
             
             /* Print settings from toolbar state */
-            @page { size: auto; margin: 15mm 20mm; }
-            body[data-print-size="A4"] .paper { width: 210mm; height: 297mm; }
-            body[data-print-size="F4"] .paper { width: 216mm; height: 356mm; }
+            @page { size: auto; margin: 0; }
+            body[data-print-size="A4"] .paper { width: 210mm; min-height: 297mm; }
+            body[data-print-size="F4"] .paper { width: 216mm; min-height: 356mm; }
         }
     </style>
 </head>
