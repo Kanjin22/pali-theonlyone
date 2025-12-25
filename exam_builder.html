@@ -213,6 +213,9 @@
         }
         .paper-foot { margin-top: 20px; font-weight: bold; color: #000; font-size: 1em; white-space: pre-wrap; }
         
+        .no-split { white-space: nowrap; }
+        .justify-all .paper-content-text { text-align-last: justify; }
+
         /* Toolbar for Paper */
         .toolbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; background: #eceff1; padding: 10px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #cfd8dc; }
         .toolbar-group { display: flex; gap: 2px; background: #fff; padding: 4px; border-radius: 4px; border: 1px solid #e0e0e0; }
@@ -437,12 +440,14 @@
                 <button class="tool-btn" onclick="execCmd('bold')" title="ตัวหนา"><i class="fa-solid fa-bold"></i></button>
                 <button class="tool-btn" onclick="execCmd('italic')" title="ตัวเอียง"><i class="fa-solid fa-italic"></i></button>
                 <button class="tool-btn" onclick="execCmd('underline')" title="ขีดเส้นใต้"><i class="fa-solid fa-underline"></i></button>
+                <button class="tool-btn" onclick="toggleNoSplit()" title="ห้ามตัดคำ (คลุมดำคำที่ถูกฉีกแล้วกด)"><i class="fa-solid fa-link"></i></button>
             </div>
             <div class="toolbar-group">
                 <button class="tool-btn" onclick="execCmd('justifyLeft')" title="จัดชิดซ้าย"><i class="fa-solid fa-align-left"></i></button>
                 <button class="tool-btn" onclick="execCmd('justifyCenter')" title="จัดกึ่งกลาง"><i class="fa-solid fa-align-center"></i></button>
                 <button class="tool-btn" onclick="execCmd('justifyRight')" title="จัดชิดขวา"><i class="fa-solid fa-align-right"></i></button>
                 <button class="tool-btn" onclick="execCmd('justifyFull')" title="จัดเต็มบรรทัด"><i class="fa-solid fa-align-justify"></i></button>
+                <button class="tool-btn" onclick="toggleJustifyAll()" title="กระจายทุกบรรทัด (รวมบรรทัดสุดท้าย/Shift+Enter)"><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
             </div>
             <div class="toolbar-group">
                 <select class="tool-select" id="fontFamilySelect" onchange="changeFontFamily(this.value)" title="แบบอักษร">
@@ -572,6 +577,45 @@
             document.execCommand(command, false, null);
             document.getElementById('paperContent').focus();
         }
+
+        function toggleNoSplit() {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return;
+            
+            const range = sel.getRangeAt(0);
+            if (range.collapsed) {
+                alert('กรุณาคลุมดำข้อความที่ต้องการห้ามตัดคำก่อนครับ');
+                return;
+            }
+
+            // Check if inside .no-split
+            let node = sel.anchorNode;
+            if (node.nodeType === 3) node = node.parentNode; // Text node -> Element
+
+            if (node.classList.contains('no-split')) {
+                // Unwrap: Simple approach - replace outerHTML with innerHTML
+                // But node might be part of selection. 
+                // Better: Just execute remove format or manual unwrap
+                const content = node.innerHTML;
+                node.outerHTML = content;
+            } else {
+                // Wrap
+                try {
+                    const span = document.createElement('span');
+                    span.className = 'no-split';
+                    range.surroundContents(span);
+                } catch (e) {
+                    alert('ไม่สามารถห้ามตัดคำได้ในส่วนนี้ (อาจมีการจัดรูปแบบที่ซับซ้อนเกินไป)');
+                }
+            }
+            document.getElementById('paperContent').focus();
+        }
+
+        function toggleJustifyAll() {
+            const paper = document.querySelector('.paper');
+            paper.classList.toggle('justify-all');
+        }
+
         function changeFontFamily(font) {
             const selection = window.getSelection();
             const paper = document.getElementById('paperContent');
