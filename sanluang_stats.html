@@ -175,11 +175,12 @@
                 <table id="statsTable">
                     <thead>
                         <tr>
-                            <th>พ.ศ.</th>
+                            <th>พ.ศ. (ครั้ง)</th>
                             <th>ชั้น</th>
-                            <th>วิชา</th>
+                            <th>วิชา (ข้อ)</th>
                             <th>เรื่อง/บท</th>
                             <th>หน้า</th>
+                            <th>เนื้อหา</th>
                             <th>จัดการ</th>
                         </tr>
                     </thead>
@@ -196,13 +197,22 @@
         <div class="modal-content" style="max-width: 600px;">
             <h2 style="margin-top:0;">เพิ่มข้อมูลสถิติ</h2>
             <form id="addForm" onsubmit="saveStat(event)">
-                <div class="form-group">
-                    <label>ปี พ.ศ.</label>
-                    <input type="number" id="statYear" required placeholder="เช่น 2567">
+                <div class="form-group" style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <label>ปี พ.ศ.</label>
+                        <input type="number" id="statYear" required placeholder="เช่น 2567">
+                    </div>
+                    <div style="flex:1;" id="roundGroup">
+                        <label>ครั้งที่</label>
+                        <select id="statRound">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>ชั้นประโยค</label>
-                    <select id="statLevel" required onchange="updateStatSubjects()">
+                    <select id="statLevel" required onchange="updateStatSubjects(); toggleRoundInput();">
                         <option value="" disabled selected>เลือกชั้นประโยค</option>
                         <option value="p12">ประโยค ๑-๒</option>
                         <option value="p3">ป.ธ. ๓</option>
@@ -214,11 +224,20 @@
                         <option value="p9">ป.ธ. ๙</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>วิชา</label>
-                    <select id="statSubject" required onchange="updateStatBooks()">
-                        <option value="" disabled selected>กรุณาเลือกชั้นประโยคก่อน</option>
-                    </select>
+                <div class="form-group" style="display:flex; gap:10px;">
+                    <div style="flex:2;">
+                        <label>วิชา</label>
+                        <select id="statSubject" required onchange="updateStatBooks()">
+                            <option value="" disabled selected>กรุณาเลือกชั้นประโยคก่อน</option>
+                        </select>
+                    </div>
+                    <div style="flex:1;">
+                        <label>ข้อที่</label>
+                        <select id="statQuestion">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>หนังสือ/คัมภีร์</label>
@@ -250,6 +269,14 @@
                 <div class="form-group">
                     <label>เรื่อง (Story)</label>
                     <input type="text" id="statStory" required placeholder="จะแสดงอัตโนมัติเมื่อเลือกประโยค" readonly style="background:#eee;">
+                </div>
+
+                <div class="form-group">
+                    <label>ตัวอย่างเนื้อหา (Snippet)</label>
+                    <div id="statSnippetPreview" style="padding:10px; background:#f9f9f9; border:1px solid #ddd; border-radius:6px; min-height:40px; color:#555; font-style:italic;">
+                        ยังไม่ได้เลือกประโยค
+                    </div>
+                    <input type="hidden" id="statContentSnippet">
                 </div>
 
                 <div style="text-align:right; margin-top:20px;">
@@ -466,9 +493,27 @@
             clearSentenceSelection();
         }
 
+        // --- New Logic ---
+        function toggleRoundInput() {
+            const level = document.getElementById('statLevel').value;
+            const roundGroup = document.getElementById('roundGroup');
+            if (['p12', 'p3', 'p4', 'p5'].includes(level)) {
+                roundGroup.style.display = 'block';
+            } else {
+                roundGroup.style.display = 'none';
+                document.getElementById('statRound').value = '1';
+            }
+        }
+
+        let selectedStartSentence = null;
+        let selectedEndSentence = null;
+
         function clearSentenceSelection() {
             document.getElementById('statStory').value = '';
             document.getElementById('sentenceSelectionArea').style.display = 'none';
+            selectedStartSentence = null;
+            selectedEndSentence = null;
+            updateSnippetPreview();
         }
         
         function closeSentenceSelection() {
@@ -544,18 +589,53 @@
         }
 
         function selectSentence(s) {
-            // Auto-fill Story
             document.getElementById('statStory').value = s.story;
             
-            // If we are in 'start' mode, maybe auto-fill end page too if empty?
             if (currentSearchMode === 'start') {
+                selectedStartSentence = s;
                 if (!document.getElementById('statEndPage').value) {
                     document.getElementById('statEndPage').value = parsePageNumber(s.page);
                 }
+            } else {
+                selectedEndSentence = s;
             }
             
-            // Close selection
+            updateSnippetPreview();
             document.getElementById('sentenceSelectionArea').style.display = 'none';
+        }
+
+        function updateSnippetPreview() {
+            let text = "";
+            if (selectedStartSentence) {
+                const p = selectedStartSentence.pali || "";
+                const words = p.split(' ');
+                const start = words.slice(0, 3).join(' ');
+                text += start + " ... ";
+            } 
+            
+            if (selectedStartSentence || selectedEndSentence) {
+                text += "ฯลฯ";
+            }
+            
+            if (selectedEndSentence) {
+                const p = selectedEndSentence.pali || "";
+                const words = p.trim().split(' ');
+                const end = words.slice(-3).join(' ');
+                text += " ... " + end + (p.trim().endsWith('ฯ') ? '' : ' ฯ');
+            } else if (selectedStartSentence) {
+                 text += " ... ฯ";
+            }
+            
+            const previewDiv = document.getElementById('statSnippetPreview');
+            const hiddenInput = document.getElementById('statContentSnippet');
+            
+            if (!text) {
+                previewDiv.innerText = "ยังไม่ได้เลือกประโยค";
+                hiddenInput.value = "";
+            } else {
+                previewDiv.innerText = text;
+                hiddenInput.value = text;
+            }
         }
         
         async function saveStat(e) {
@@ -566,19 +646,26 @@
 
             try {
                 const bookSelect = document.getElementById('statBook');
-                // Ensure a book is selected
                 if (!bookSelect.value) throw new Error("กรุณาเลือกหนังสือ");
                 
                 const bookLabel = bookSelect.options[bookSelect.selectedIndex].text;
+                
+                // New Fields
+                const round = document.getElementById('statRound').value;
+                const question = document.getElementById('statQuestion').value;
+                const snippet = document.getElementById('statContentSnippet').value;
 
                 const data = {
                     year: parseInt(document.getElementById('statYear').value),
+                    round: parseInt(round) || 1, 
                     level: document.getElementById('statLevel').value,
                     subject: document.getElementById('statSubject').value,
+                    question: parseInt(question) || 1,
                     book: bookLabel,
                     story: document.getElementById('statStory').value,
                     startPage: parseInt(document.getElementById('statStartPage').value) || 0,
                     endPage: parseInt(document.getElementById('statEndPage').value) || 0,
+                    contentSnippet: snippet,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
@@ -586,6 +673,7 @@
                 alert('บันทึกข้อมูลสำเร็จ');
                 closeModal();
                 document.getElementById('addForm').reset();
+                clearSentenceSelection();
                 loadStats();
             } catch (err) {
                 console.error(err);
@@ -598,7 +686,7 @@
 
         async function loadStats() {
             const tbody = document.querySelector('#statsTable tbody');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">กำลังโหลด...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">กำลังโหลด...</td></tr>';
             
             try {
                 let query = db.collection('sanluang_exams').orderBy('year', 'desc');
@@ -611,7 +699,7 @@
                 const snapshot = await query.limit(50).get();
                 
                 if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">ไม่พบข้อมูล</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">ไม่พบข้อมูล</td></tr>';
                     return;
                 }
 
@@ -625,17 +713,20 @@
                     }
                     
                     const displayLevel = LEVEL_LABEL_MAP[d.level] || d.level;
+                    const roundDisplay = d.round ? ` (${d.round})` : '';
+                    const questionDisplay = d.question ? ` (ข้อ ${d.question})` : '';
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><span class="badge" style="background:#e3f2fd; color:#1565c0;">${d.year}</span></td>
+                        <td><span class="badge" style="background:#e3f2fd; color:#1565c0;">${d.year}${roundDisplay}</span></td>
                         <td>${displayLevel}</td>
-                        <td>${d.subject}</td>
+                        <td>${d.subject}${questionDisplay}</td>
                         <td>
                             <div style="font-weight:600;">${d.story}</div>
                             <div style="font-size:0.85rem; color:#666;">${d.book}</div>
                         </td>
                         <td>${d.startPage} - ${d.endPage}</td>
+                        <td style="max-width:200px; font-size:0.85rem; color:#444;">${d.contentSnippet || '-'}</td>
                         <td>
                             <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${doc.id}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -645,7 +736,7 @@
 
             } catch (err) {
                 console.error(err);
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
             }
         }
         
