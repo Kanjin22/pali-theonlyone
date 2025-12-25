@@ -949,11 +949,26 @@
             files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
         }
         
-        // 2. Dynamic Files (Firestore) - Filter by level AND type strictly
-        // As requested: Split Materials, Exams, and Answers to avoid clutter
-        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type && (!subjectId || f.subject === subjectId));
+        // 2. Dynamic Files (Firestore)
+        // Filter: Level + Type matches
+        // Subject: If dropdown has subject, show files with (Matching Subject OR No Subject OR 'General')
+        const dyn = DYNAMIC_FILES.filter(f => {
+            if (f.level !== level || f.type !== type) return false;
+            
+            if (subjectId) {
+                // Show specific subject files + General files (legacy files usually have no subject)
+                return !f.subject || f.subject === 'General' || f.subject === subjectId;
+            }
+            return true;
+        });
+
         dyn.forEach(f => {
-            files.push({ name: `[CLOUD] ${f.name}`, value: f.url });
+            // Add [Subject] tag to name if it's general or different (optional, but good for clarity)
+            let name = `[CLOUD] ${f.name}`;
+            if (f.subject && f.subject !== 'General' && f.subject !== subjectId) {
+                name += ` (${f.subject})`;
+            }
+            files.push({ name: name, value: f.url });
         });
         
         // Sort by name
@@ -1220,12 +1235,13 @@
         const selectedOption = roomSelect.options[roomSelect.selectedIndex];
         const level = selectedOption ? selectedOption.dataset.level : 'pt12';
         
-        const selects = document.querySelectorAll('.input-file, .input-exam, .input-ans');
+        // Corrected selectors to match generated HTML
+        const selects = document.querySelectorAll('.input-file, .input-exam-file, .input-ans-file');
         selects.forEach(sel => {
             const currentVal = sel.value;
             let type = 'materials';
-            if (sel.classList.contains('input-exam')) type = 'exams';
-            else if (sel.classList.contains('input-ans')) type = 'answers';
+            if (sel.classList.contains('input-exam-file')) type = 'exams';
+            else if (sel.classList.contains('input-ans-file')) type = 'answers';
             
             const subjId = sel.dataset.subjId || null;
             const fileObjs = getFiles(level, type, subjId);
