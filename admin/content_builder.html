@@ -97,7 +97,29 @@
 
     <div style="margin-top:20px; display:flex; gap:15px; justify-content:center;">
         <button class="btn" onclick="addSegment()"><i class="fas fa-plus-circle"></i> เพิ่มท่อนเนื้อหา (Add Segment)</button>
+        <button class="btn" style="background: #9b59b6;" onclick="openMagicModal()"><i class="fas fa-magic"></i> Magic Paste (วางเนื้อหาด่วน)</button>
         <button class="btn btn-primary" onclick="generateJSON()"><i class="fas fa-code"></i> สร้างโค้ด JSON</button>
+    </div>
+</div>
+
+<!-- Magic Paste Modal -->
+<div id="magic-modal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('magic-modal')">&times;</span>
+        <h2><i class="fas fa-magic"></i> Magic Paste (แยกเนื้อหาอัตโนมัติ)</h2>
+        <p>วางเนื้อหาที่ปนกันทั้งบาลีและไทย ระบบจะพยายามแยกให้อัตโนมัติ (ใช้หลักการวรรณยุกต์)</p>
+        <textarea id="magic-input" style="height:200px; font-family: 'Sarabun', sans-serif;" placeholder="วางเนื้อหาที่นี่...
+เช่น:
+นโม ตสฺส ภควโต อรหโต สมฺมาสมฺพุทฺธสฺส
+ขอนอบน้อมแด่พระผู้มีพระภาคอรหันตสัมมาสัมพุทธเจ้าพระองค์นั้น"></textarea>
+        
+        <div style="margin-top:15px; background:#f0f8ff; padding:10px; border-radius:4px; font-size:0.9em;">
+            <strong>หรือให้ AI ช่วย?</strong> <a href="#" onclick="copyAiPrompt()">คัดลอกคำสั่ง (Prompt)</a> ไปถาม Gemini/ChatGPT แล้วนำ JSON ที่ได้มา Import
+        </div>
+
+        <div style="text-align:right; margin-top:10px;">
+            <button class="btn" style="background: #9b59b6;" onclick="processMagicPaste()">⚡ แยกเนื้อหา</button>
+        </div>
     </div>
 </div>
 
