@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สถิติข้อสอบบาลีสนามหลวง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        auth.onAuthStateChanged((u) => { if (!u) { location.href = 'index.html'; } });
+    </script>
+    <style>
+        :root {
+            --primary-color: #d35400;
+            --secondary-color: #2c3e50;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            font-weight: 600;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary-color); color: #fff; }
+        .btn-secondary { background: #ecf0f1; color: var(--secondary-color); }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #eee;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Sarabun', sans-serif;
+            box-sizing: border-box; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <a href="index.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> กลับหน้าแรก</a>
+                <h1><i class="fa-solid fa-scale-balanced"></i> สถิติข้อสอบบาลีสนามหลวง</h1>
+            </div>
+            <button class="btn btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> เพิ่มข้อมูลสถิติ</button>
+        </div>
+
+        <div class="card">
+            <div style="display:flex; gap:15px; margin-bottom:20px;">
+                <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อเรื่อง, ปี พ.ศ. ..." style="padding:10px; border:1px solid #ddd; border-radius:6px; flex:1;" onkeyup="loadStats()">
+                <select id="levelFilter" onchange="loadStats()" style="padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    <option value="">ทุกชั้นประโยค</option>
+                    <option value="p12">ประโยค ๑-๒</option>
+                    <option value="p3">ป.ธ. ๓</option>
+                    <option value="p4">ป.ธ. ๔</option>
+                    <option value="p5">ป.ธ. ๕</option>
+                    <option value="p6">ป.ธ. ๖</option>
+                    <option value="p7">ป.ธ. ๗</option>
+                    <option value="p8">ป.ธ. ๘</option>
+                    <option value="p9">ป.ธ. ๙</option>
+                </select>
+            </div>
+            <div style="overflow-x:auto;">
+                <table id="statsTable">
+                    <thead>
+                        <tr>
+                            <th>พ.ศ.</th>
+                            <th>ชั้น</th>
+                            <th>วิชา</th>
+                            <th>เรื่อง/บท</th>
+                            <th>หน้า</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="6" style="text-align:center;">กำลังโหลด...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-top:0;">เพิ่มข้อมูลสถิติ</h2>
+            <form id="addForm" onsubmit="saveStat(event)">
+                <div class="form-group">
+                    <label>ปี พ.ศ.</label>
+                    <input type="number" id="statYear" required placeholder="เช่น 2567">
+                </div>
+                <div class="form-group">
+                    <label>ชั้นประโยค</label>
+                    <select id="statLevel" required>
+                        <option value="p12">ประโยค ๑-๒</option>
+                        <option value="p3">ป.ธ. ๓</option>
+                        <option value="p4">ป.ธ. ๔</option>
+                        <option value="p5">ป.ธ. ๕</option>
+                        <option value="p6">ป.ธ. ๖</option>
+                        <option value="p7">ป.ธ. ๗</option>
+                        <option value="p8">ป.ธ. ๘</option>
+                        <option value="p9">ป.ธ. ๙</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>วิชา</label>
+                    <select id="statSubject" required>
+                        <option value="แปล มคธเป็นไทย">แปล มคธเป็นไทย</option>
+                        <option value="แปล ไทยเป็นมคธ">แปล ไทยเป็นมคธ</option>
+                        <option value="สัมพันธ์ไทย">สัมพันธ์ไทย</option>
+                        <option value="แต่งฉันท์ภาษามคธ">แต่งฉันท์ภาษามคธ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>หนังสือ/คัมภีร์</label>
+                    <input type="text" id="statBook" required placeholder="เช่น ธรรมบท ภาค ๑">
+                </div>
+                <div class="form-group">
+                    <label>เรื่อง (Story)</label>
+                    <input type="text" id="statStory" required placeholder="เช่น เรื่องพระจักขุปาลเถระ">
+                </div>
+                <div class="form-group" style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <label>หน้าเริ่มต้น</label>
+                        <input type="number" id="statStartPage" placeholder="0">
+                    </div>
+                    <div style="flex:1;">
+                        <label>หน้าสิ้นสุด</label>
+                        <input type="number" id="statEndPage" placeholder="0">
+                    </div>
+                </div>
+                <div style="text-align:right; margin-top:20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('addModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('addModal').style.display = 'none';
+        }
+        
+        async function saveStat(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerText = 'กำลังบันทึก...';
+
+            try {
+                const data = {
+                    year: parseInt(document.getElementById('statYear').value),
+                    level: document.getElementById('statLevel').value,
+                    subject: document.getElementById('statSubject').value,
+                    book: document.getElementById('statBook').value,
+                    story: document.getElementById('statStory').value,
+                    startPage: parseInt(document.getElementById('statStartPage').value) || 0,
+                    endPage: parseInt(document.getElementById('statEndPage').value) || 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('sanluang_exams').add(data);
+                alert('บันทึกข้อมูลสำเร็จ');
+                closeModal();
+                document.getElementById('addForm').reset();
+                loadStats();
+            } catch (err) {
+                console.error(err);
+                alert('เกิดข้อผิดพลาด: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'บันทึก';
+            }
+        }
+
+        async function loadStats() {
+            const tbody = document.querySelector('#statsTable tbody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">กำลังโหลด...</td></tr>';
+            
+            try {
+                let query = db.collection('sanluang_exams').orderBy('year', 'desc');
+                
+                const level = document.getElementById('levelFilter').value;
+                if (level) {
+                    query = query.where('level', '==', level);
+                }
+
+                const snapshot = await query.limit(50).get();
+                
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">ไม่พบข้อมูล</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                const search = document.getElementById('searchInput').value.toLowerCase();
+
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    if (search && !d.story.toLowerCase().includes(search) && !String(d.year).includes(search)) {
+                        return;
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="badge" style="background:#e3f2fd; color:#1565c0;">${d.year}</span></td>
+                        <td>${d.level}</td>
+                        <td>${d.subject}</td>
+                        <td>
+                            <div style="font-weight:600;">${d.story}</div>
+                            <div style="font-size:0.85rem; color:#666;">${d.book}</div>
+                        </td>
+                        <td>${d.startPage} - ${d.endPage}</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${doc.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
+            }
+        }
+        
+        async function deleteStat(id) {
+            if(!confirm('ยืนยันการลบข้อมูลนี้?')) return;
+            try {
+                await db.collection('sanluang_exams').doc(id).delete();
+                loadStats();
+            } catch(e) {
+                alert(e.message);
+            }
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>
