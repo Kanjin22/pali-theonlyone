@@ -193,7 +193,7 @@
 
     <!-- Modal -->
     <div id="addModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 600px;">
             <h2 style="margin-top:0;">เพิ่มข้อมูลสถิติ</h2>
             <form id="addForm" onsubmit="saveStat(event)">
                 <div class="form-group">
@@ -202,7 +202,8 @@
                 </div>
                 <div class="form-group">
                     <label>ชั้นประโยค</label>
-                    <select id="statLevel" required>
+                    <select id="statLevel" required onchange="updateStatSubjects()">
+                        <option value="" disabled selected>เลือกชั้นประโยค</option>
                         <option value="p12">ประโยค ๑-๒</option>
                         <option value="p3">ป.ธ. ๓</option>
                         <option value="p4">ป.ธ. ๔</option>
@@ -215,31 +216,42 @@
                 </div>
                 <div class="form-group">
                     <label>วิชา</label>
-                    <select id="statSubject" required>
-                        <option value="แปล มคธเป็นไทย">แปล มคธเป็นไทย</option>
-                        <option value="แปล ไทยเป็นมคธ">แปล ไทยเป็นมคธ</option>
-                        <option value="สัมพันธ์ไทย">สัมพันธ์ไทย</option>
-                        <option value="แต่งฉันท์ภาษามคธ">แต่งฉันท์ภาษามคธ</option>
+                    <select id="statSubject" required onchange="updateStatBooks()">
+                        <option value="" disabled selected>กรุณาเลือกชั้นประโยคก่อน</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>หนังสือ/คัมภีร์</label>
-                    <input type="text" id="statBook" required placeholder="เช่น ธรรมบท ภาค ๑">
+                    <select id="statBook" required onchange="clearSentenceSelection()">
+                        <option value="" disabled selected>กรุณาเลือกวิชาก่อน</option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <label>เรื่อง (Story)</label>
-                    <input type="text" id="statStory" required placeholder="เช่น เรื่องพระจักขุปาลเถระ">
-                </div>
+                
                 <div class="form-group" style="display:flex; gap:10px;">
                     <div style="flex:1;">
                         <label>หน้าเริ่มต้น</label>
-                        <input type="number" id="statStartPage" placeholder="0">
+                        <input type="number" id="statStartPage" placeholder="ระบุหน้า" oninput="searchSentences('start')">
                     </div>
                     <div style="flex:1;">
                         <label>หน้าสิ้นสุด</label>
-                        <input type="number" id="statEndPage" placeholder="0">
+                        <input type="number" id="statEndPage" placeholder="ระบุหน้า" oninput="searchSentences('end')">
                     </div>
                 </div>
+
+                <!-- Sentence Selection UI -->
+                <div id="sentenceSelectionArea" style="display:none; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; padding:10px; background:#fafafa;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                        <div style="font-size:0.9rem; font-weight:600; color:#d35400;">เลือกประโยค:</div>
+                        <button type="button" onclick="closeSentenceSelection()" style="border:none; background:none; cursor:pointer; color:#999;"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <div id="sentenceList" style="max-height:200px; overflow-y:auto; font-family:'Sarabun', sans-serif;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>เรื่อง (Story)</label>
+                    <input type="text" id="statStory" required placeholder="จะแสดงอัตโนมัติเมื่อเลือกประโยค" readonly style="background:#eee;">
+                </div>
+
                 <div style="text-align:right; margin-top:20px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">ยกเลิก</button>
                     <button type="submit" class="btn btn-primary">บันทึก</button>
@@ -248,12 +260,302 @@
         </div>
     </div>
 
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
+
     <script>
+        // --- Constants & Helpers ---
+        const LEVEL_LABEL_MAP = {
+            'p12': 'ประโยค ๑–๒',
+            'p3': 'ประโยค ป.ธ. ๓',
+            'p4': 'ประโยค ป.ธ. ๔',
+            'p5': 'ประโยค ป.ธ. ๕',
+            'p6': 'ประโยค ป.ธ. ๖',
+            'p7': 'ประโยค ป.ธ. ๗',
+            'p8': 'ประโยค ป.ธ. ๘',
+            'p9': 'ประโยค ป.ธ. ๙'
+        };
+
+        const SUBJECTS_BY_LEVEL = {
+            'ประโยค ๑–๒': ['แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๓': ['แปล มคธเป็นไทย','สัมพันธ์ไทย'],
+            'ประโยค ป.ธ. ๔': ['แปล ไทยเป็นมคธ','แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๕': ['แปล ไทยเป็นมคธ','แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๖': ['แปล ไทยเป็นมคธ','แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๗': ['แปล ไทยเป็นมคธ','แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๘': ['แต่งฉันท์ภาษามคธ','แปล ไทยเป็นมคธ','แปล มคธเป็นไทย'],
+            'ประโยค ป.ธ. ๙': ['แต่ง ไทยเป็นมคธ','แปล ไทยเป็นมคธ','แปล มคธเป็นไทย']
+        };
+
+        const CONTENT_MAPPING = {
+            'ประโยค ๑–๒': {
+                'แปล มคธเป็นไทย': [
+                    { id: 'dhamma-1', label: 'ธรรมบท ภาคที่ ๑' },
+                    { id: 'dhamma-2', label: 'ธรรมบท ภาคที่ ๒' },
+                    { id: 'dhamma-3', label: 'ธรรมบท ภาคที่ ๓' },
+                    { id: 'dhamma-4', label: 'ธรรมบท ภาคที่ ๔' }
+                ]
+            },
+            'ประโยค ป.ธ. ๓': {
+                'แปล มคธเป็นไทย': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘' }
+                ],
+                'สัมพันธ์ไทย': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘' }
+                ]
+            },
+            'ประโยค ป.ธ. ๔': {
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'dhamma-1', label: 'ธรรมบท ภาคที่ ๑ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'mangala-1', label: 'มังคลัตถทีปนี ภาคที่ ๑' }
+                ]
+            },
+            'ประโยค ป.ธ. ๕': {
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'dhamma-2', label: 'ธรรมบท ภาคที่ ๒ (ภาษาไทย)' },
+                    { id: 'dhamma-3', label: 'ธรรมบท ภาคที่ ๓ (ภาษาไทย)' },
+                    { id: 'dhamma-4', label: 'ธรรมบท ภาคที่ ๔ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'mangala-2', label: 'มังคลัตถทีปนี ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๖': {
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'dhamma-5', label: 'ธรรมบท ภาคที่ ๕ (ภาษาไทย)' },
+                    { id: 'dhamma-6', label: 'ธรรมบท ภาคที่ ๖ (ภาษาไทย)' },
+                    { id: 'dhamma-7', label: 'ธรรมบท ภาคที่ ๗ (ภาษาไทย)' },
+                    { id: 'dhamma-8', label: 'ธรรมบท ภาคที่ ๘ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'samanta-3', label: 'สมันตปาสาทิกา ภาคที่ ๓' }
+                ]
+            },
+            'ประโยค ป.ธ. ๗': {
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'mangala-1', label: 'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'samanta-1', label: 'สมันตปาสาทิกา ภาคที่ ๑' },
+                    { id: 'samanta-2', label: 'สมันตปาสาทิกา ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๘': {
+                'แต่งฉันท์ภาษามคธ': [
+                    { id: 'waiting', label: 'รอเนื้อหา' }
+                ],
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'samanta-1', label: 'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)' },
+                    { id: 'samanta-2', label: 'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'visuddhi-1', label: 'วิสุทธิมรรค ภาคที่ ๑' },
+                    { id: 'visuddhi-2', label: 'วิสุทธิมรรค ภาคที่ ๒' }
+                ]
+            },
+            'ประโยค ป.ธ. ๙': {
+                'แต่ง ไทยเป็นมคธ': [
+                     { id: 'waiting', label: 'รอเนื้อหา' }
+                ],
+                'แปล ไทยเป็นมคธ': [
+                    { id: 'visuddhi-1', label: 'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)' },
+                    { id: 'visuddhi-2', label: 'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)' }
+                ],
+                'แปล มคธเป็นไทย': [
+                    { id: 'abhidhamma-1', label: 'อภิธรรมฯ' }
+                ]
+            }
+        };
+
+        const partsMap = {
+            'dhamma-1': (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+            'dhamma-2': (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+            'dhamma-3': (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+            'dhamma-4': (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+            'dhamma-5': (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+            'dhamma-6': (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+            'dhamma-7': (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+            'dhamma-8': (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {}),
+            'mangala-1': (typeof contentMangala01 !== 'undefined' ? contentMangala01 : {}),
+            'mangala-2': (typeof contentMangala02 !== 'undefined' ? contentMangala02 : {}),
+            'samanta-1': (typeof contentSamanta01 !== 'undefined' ? contentSamanta01 : {}),
+            'samanta-2': (typeof contentSamanta02 !== 'undefined' ? contentSamanta02 : {}),
+            'samanta-3': (typeof contentSamanta03 !== 'undefined' ? contentSamanta03 : {}),
+            'visuddhi-1': (typeof contentVisuddhi01 !== 'undefined' ? contentVisuddhi01 : {}),
+            'visuddhi-2': (typeof contentVisuddhi02 !== 'undefined' ? contentVisuddhi02 : {}),
+            'visuddhi-3': (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
+            'abhidhamma-1': (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
+        };
+
+        function thaiToArabic(str) {
+            const m = { '๐':'0','๑':'1','๒':'2','๓':'3','๔':'4','๕':'5','๖':'6','๗':'7','๘':'8','๙':'9' };
+            return String(str).replace(/[๐-๙]/g, d => m[d]);
+        }
+        function parsePageNumber(page) {
+            if (typeof page === 'number') return page;
+            if (!page) return 0;
+            const str = thaiToArabic(String(page));
+            const match = str.match(/\d+/);
+            return match ? parseInt(match[0], 10) : 0;
+        }
+
+        // --- Logic ---
         function openModal() {
             document.getElementById('addModal').style.display = 'flex';
         }
         function closeModal() {
             document.getElementById('addModal').style.display = 'none';
+        }
+
+        function updateStatSubjects() {
+            const levelCode = document.getElementById('statLevel').value;
+            const levelLabel = LEVEL_LABEL_MAP[levelCode];
+            const subjects = SUBJECTS_BY_LEVEL[levelLabel] || [];
+            
+            const sel = document.getElementById('statSubject');
+            sel.innerHTML = '<option value="" disabled selected>เลือกวิชา</option>';
+            subjects.forEach(s => {
+                const o = document.createElement('option');
+                o.value = s;
+                o.text = s;
+                sel.appendChild(o);
+            });
+            // Reset Book
+            document.getElementById('statBook').innerHTML = '<option value="" disabled selected>กรุณาเลือกวิชาก่อน</option>';
+        }
+
+        function updateStatBooks() {
+            const levelCode = document.getElementById('statLevel').value;
+            const levelLabel = LEVEL_LABEL_MAP[levelCode];
+            const subject = document.getElementById('statSubject').value;
+            
+            const levelConfig = CONTENT_MAPPING[levelLabel] || {};
+            const books = levelConfig[subject] || [];
+            
+            const sel = document.getElementById('statBook');
+            sel.innerHTML = '<option value="" disabled selected>เลือกหนังสือ</option>';
+            books.forEach(b => {
+                const o = document.createElement('option');
+                o.value = b.id; // Use ID for internal logic (partsMap lookup)
+                o.text = b.label; // Use Label for display
+                sel.appendChild(o);
+            });
+            clearSentenceSelection();
+        }
+
+        function clearSentenceSelection() {
+            document.getElementById('statStory').value = '';
+            document.getElementById('sentenceSelectionArea').style.display = 'none';
+        }
+        
+        function closeSentenceSelection() {
+            document.getElementById('sentenceSelectionArea').style.display = 'none';
+        }
+
+        let currentSearchMode = ''; // 'start' or 'end'
+
+        function searchSentences(mode) {
+            currentSearchMode = mode;
+            const bookId = document.getElementById('statBook').value;
+            if (!bookId) return;
+
+            const pageInput = mode === 'start' ? document.getElementById('statStartPage').value : document.getElementById('statEndPage').value;
+            if (!pageInput) {
+                document.getElementById('sentenceSelectionArea').style.display = 'none';
+                return;
+            }
+
+            const pageNum = parseInt(pageInput);
+            if (isNaN(pageNum)) return;
+
+            const content = partsMap[bookId];
+            if (!content) return;
+
+            const matches = [];
+            // Iterate over all keys (sentences)
+            for (const key in content) {
+                const segments = content[key];
+                if (Array.isArray(segments)) {
+                    segments.forEach((seg, idx) => {
+                        const p = parsePageNumber(seg.page);
+                        if (p === pageNum) {
+                            matches.push({ ...seg, id: key, idx: idx });
+                        }
+                    });
+                }
+            }
+
+            renderSentenceList(matches);
+        }
+
+        function renderSentenceList(sentences) {
+            const container = document.getElementById('sentenceSelectionArea');
+            const list = document.getElementById('sentenceList');
+            list.innerHTML = '';
+            
+            if (sentences.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            
+            sentences.forEach(s => {
+                const div = document.createElement('div');
+                div.style.padding = '8px';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.cursor = 'pointer';
+                div.onmouseover = () => div.style.background = '#f0f0f0';
+                div.onmouseout = () => div.style.background = 'transparent';
+                
+                const text = (s.pali || s.thai || '').substring(0, 100);
+                
+                div.innerHTML = `
+                    <div style="font-weight:bold; font-size:0.9rem;">${text}...</div>
+                    <div style="font-size:0.8rem; color:#666;">เรื่อง: ${s.story} (หน้า ${s.page})</div>
+                `;
+                
+                div.onclick = () => selectSentence(s);
+                list.appendChild(div);
+            });
+        }
+
+        function selectSentence(s) {
+            // Auto-fill Story
+            document.getElementById('statStory').value = s.story;
+            
+            // If we are in 'start' mode, maybe auto-fill end page too if empty?
+            if (currentSearchMode === 'start') {
+                if (!document.getElementById('statEndPage').value) {
+                    document.getElementById('statEndPage').value = parsePageNumber(s.page);
+                }
+            }
+            
+            // Close selection
+            document.getElementById('sentenceSelectionArea').style.display = 'none';
         }
         
         async function saveStat(e) {
@@ -263,11 +565,17 @@
             btn.innerText = 'กำลังบันทึก...';
 
             try {
+                const bookSelect = document.getElementById('statBook');
+                // Ensure a book is selected
+                if (!bookSelect.value) throw new Error("กรุณาเลือกหนังสือ");
+                
+                const bookLabel = bookSelect.options[bookSelect.selectedIndex].text;
+
                 const data = {
                     year: parseInt(document.getElementById('statYear').value),
                     level: document.getElementById('statLevel').value,
                     subject: document.getElementById('statSubject').value,
-                    book: document.getElementById('statBook').value,
+                    book: bookLabel,
                     story: document.getElementById('statStory').value,
                     startPage: parseInt(document.getElementById('statStartPage').value) || 0,
                     endPage: parseInt(document.getElementById('statEndPage').value) || 0,
@@ -315,11 +623,13 @@
                     if (search && !d.story.toLowerCase().includes(search) && !String(d.year).includes(search)) {
                         return;
                     }
+                    
+                    const displayLevel = LEVEL_LABEL_MAP[d.level] || d.level;
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td><span class="badge" style="background:#e3f2fd; color:#1565c0;">${d.year}</span></td>
-                        <td>${d.level}</td>
+                        <td>${displayLevel}</td>
                         <td>${d.subject}</td>
                         <td>
                             <div style="font-weight:600;">${d.story}</div>
