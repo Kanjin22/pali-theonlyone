@@ -37,7 +37,16 @@ const server = http.createServer((req, res) => {
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
             try {
-                const { filename, key, data } = JSON.parse(body);
+                // Parse body to get params
+                let parsedBody;
+                try {
+                     parsedBody = JSON.parse(body);
+                } catch(e) {
+                     throw new Error("Invalid JSON body from client: " + e.message);
+                }
+
+                const { filename, key, data } = parsedBody;
+
                 // Security check: only allow files in data/
                 // Allow filename to be just "content-dhamma01.js"
                 if (!filename || filename.includes('..') || !filename.endsWith('.js')) {
@@ -60,6 +69,10 @@ const server = http.createServer((req, res) => {
                 // Escape key for regex
                 const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 // Look for key followed by colon and start bracket
+                // 1. "key" : [
+                // 2. key : [
+                // 3. "key": [
+                // 4. key: [
                 const keyRegex = new RegExp(`(["']?${escapedKey}["']?\\s*:\\s*\\[)`);
                 const match = content.match(keyRegex);
 
@@ -91,6 +104,10 @@ const server = http.createServer((req, res) => {
                 } else {
                     // Insert new
                     // Find the last closing brace '};' of the file (or just '}')
+                    // IMPORTANT: JS files might end with '};' or just '}' or '}; // comments'
+                    // We need to find the last '}' that closes the main object.
+                    
+                    // Simple heuristic: Search from end.
                     const lastBrace = content.lastIndexOf('}');
                     if (lastBrace === -1) throw new Error("Invalid file format: No closing brace found");
 
@@ -100,6 +117,8 @@ const server = http.createServer((req, res) => {
                     let i = lastBrace - 1;
                     while (i >= 0 && /\s/.test(content[i])) i--;
                     // If the last character was not a comma and not the opening brace (empty object), we need a comma
+                    // Also ignore comments if possible, but simple parser might fail.
+                    // Let's assume standard formatting.
                     if (i >= 0 && content[i] !== ',' && content[i] !== '{') {
                         needsComma = true;
                     }
