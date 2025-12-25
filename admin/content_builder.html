@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+    <script>
+        // Security Check
+        const role = localStorage.getItem('pali_user_role');
+        if (role !== 'admin' && role !== 'teacher') {
+            alert('หน้านี้สำหรับอาจารย์ผู้สอนเท่านั้นครับ');
+            window.location.href = '../index.html';
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:,">
@@ -501,7 +509,35 @@
     addSegment();
     
     // Init File Select
-    window.addEventListener('load', initFileSelect);
+    window.addEventListener('load', () => {
+        initFileSelect();
+        
+        // Check URL params for auto-load
+        const params = new URLSearchParams(window.location.search);
+        const fileParam = params.get('file');
+        const idParam = params.get('id');
+        
+        if(fileParam && idParam) {
+            // Auto-select file
+            const fileSelect = document.getElementById('file-select');
+            if(fileSelect.querySelector(`option[value="${fileParam}"]`)) {
+                fileSelect.value = fileParam;
+                onFileSelectChange(); // Trigger load keys
+                
+                // Auto-select key
+                const keySelect = document.getElementById('key-select');
+                // Need to wait for options to be populated? 
+                // onFileSelectChange is synchronous here because data is already loaded via script tags.
+                
+                if(keySelect.querySelector(`option[value="${idParam}"]`)) {
+                    keySelect.value = idParam;
+                    loadSelectedData(); // Trigger load data
+                } else {
+                    alert("ไม่พบ ID: " + idParam + " ในไฟล์ " + fileParam);
+                }
+            }
+        }
+    });
 
 </script>
 
