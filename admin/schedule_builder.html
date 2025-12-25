@@ -1209,7 +1209,9 @@
             });
         };
         populateSubjects();
-        levelSelect.addEventListener('change', populateSubjects, { once: true });
+        // Remove existing listener to avoid duplicates if opened multiple times
+        levelSelect.removeEventListener('change', populateSubjects); 
+        levelSelect.addEventListener('change', populateSubjects);
     }
 
     function closeFileManager() {
