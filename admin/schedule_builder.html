@@ -775,7 +775,7 @@
                     // The user requested that all legacy YouTube links belong to Translate.
                     const isTranslate = subj.id === 'Translate';
                     
-                    if (isTranslate) {
+                    if (isTranslate || idx === 0) {
                          if (Array.isArray(data.linkYoutube)) {
                              ytVal = data.linkYoutube.join('\n');
                          } else if (typeof data.linkYoutube === 'string') {
@@ -787,8 +787,8 @@
                 // Slide (Presentation ID)
                 if (data.slides && data.slides[subj.id]) {
                     slideVal = data.slides[subj.id];
-                } else if (data.slideId && subj.id === 'Translate') {
-                    // Legacy: slideId maps to Translate subject
+                } else if (data.slideId && (subj.id === 'Translate' || idx === 0)) {
+                    // Legacy: slideId maps to Translate subject or first subject
                     slideVal = data.slideId;
                 }
 
