@@ -83,7 +83,21 @@ const FILE_INDEX = {
             "pt12_pali_translate_notes_tp4_01.pdf",
             "pt12_pali_translate_notes_tp4_02.pdf",
             "pt12_pali_translate_notes_tp4_03.pdf",
-            "pt12_pali_translate_notes_tp4_04.pdf"
+            "pt12_pali_translate_notes_tp4_04.pdf",
+            "pt12_pali_translate_notes_tp4_05.pdf",
+            "pt12_pali_translate_notes_tp4_06.pdf",
+            "pt12_pali_translate_notes_tp4_07.pdf",
+            "pt12_pali_translate_notes_tp4_08.pdf",
+            "pt12_pali_translate_notes_tp4_09.pdf",
+            "pt12_pali_translate_notes_tp4_10.pdf",
+            "pt12_pali_translate_notes_tp4_11.pdf",
+            "pt12_pali_translate_notes_tp4_12.pdf",
+            "pt12_pali_translate_notes_tp4_13.pdf",
+            "pt12_pali_translate_notes_tp4_14.pdf",
+            "pt12_pali_translate_notes_tp4_15.pdf",
+            "pt12_pali_translate_notes_tp4_16.pdf",
+            "pt12_pali_translate_notes_tp4_17.pdf",
+            "pt12_pali_translate_notes_tp4_18.pdf"
         ],
         "exams": [
             "pt12_pali_grammar_exam_q1-2_y50-51.pdf",
