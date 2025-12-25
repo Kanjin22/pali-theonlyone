@@ -1257,7 +1257,12 @@
                      try {
                          const res = await fetch(url, { method: 'HEAD' });
                          return res.ok;
-                     } catch (_) { return false; }
+                     } catch (err) { 
+                        // If CORS blocks the request, we can't know if it's 200 or 404.
+                        // Better to show the link (assume true) than to hide a valid file.
+                        console.warn("Cannot verify file (CORS/Network):", url);
+                        return true; 
+                     }
                  };
                  const verified = [];
                  for (const f of allFiles) {
