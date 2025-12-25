@@ -1110,6 +1110,15 @@
 
                 const uid = user.uid;
 
+                let cachedRole = null;
+                try {
+                    const rc = localStorage.getItem('pali_role_cache');
+                    if (rc) {
+                        const obj = JSON.parse(rc);
+                        if (obj && obj[uid]) cachedRole = obj[uid];
+                    }
+                } catch (e) {}
+
                 // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
                 const FALLBACK_ADMIN_EMAILS = [
                     'admin@example.com',
@@ -1124,6 +1133,21 @@
                     email: user.email || '',
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true }).catch(e => console.warn("Update user info failed:", e.message));
+
+                if (cachedRole) {
+                    const displayUserEarly = {
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    };
+                    showUser(displayUserEarly, cachedRole);
+                    applyRoleUI(cachedRole);
+                    if (cachedRole === 'admin') {
+                        updateAdminBadge();
+                        updateLevelPendingBadges();
+                    }
+                }
 
                 (async () => {
                     try {
@@ -1145,6 +1169,11 @@
                                 console.info("Admin Access granted via Fallback List");
                                 role = 'admin';
                             }
+                        }
+
+                        if (cachedRole) {
+                            const order = { general: 0, student: 1, teacher: 2, admin: 3 };
+                            if (order[cachedRole] > order[role]) role = cachedRole;
                         }
 
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
@@ -1189,10 +1218,35 @@
                             updateLevelPendingBadges();
                         }
 
+                        try {
+                            const rc2 = localStorage.getItem('pali_role_cache');
+                            let obj2 = {};
+                            if (rc2) obj2 = JSON.parse(rc2) || {};
+                            obj2[uid] = role;
+                            localStorage.setItem('pali_role_cache', JSON.stringify(obj2));
+                        } catch (e) {}
+
                     } catch (e) {
                         console.error("Critical Error in Auth Flow:", e);
                         // ถ้า Error หนักจริงๆ ให้แสดง User แบบปกติไปก่อน
-                        showUser(user);
+                        let fallbackRole = cachedRole;
+                        if (!fallbackRole && FALLBACK_ADMIN_EMAILS.includes(user.email)) fallbackRole = 'admin';
+                        if (fallbackRole) {
+                            const displayUser2 = {
+                                uid: user.uid,
+                                email: user.email,
+                                displayName: user.displayName,
+                                photoURL: user.photoURL
+                            };
+                            showUser(displayUser2, fallbackRole);
+                            applyRoleUI(fallbackRole);
+                            if (fallbackRole === 'admin') {
+                                updateAdminBadge();
+                                updateLevelPendingBadges();
+                            }
+                        } else {
+                            showUser(user);
+                        }
                     }
                 })();
 
