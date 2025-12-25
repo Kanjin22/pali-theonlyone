@@ -1603,10 +1603,9 @@
                  return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
-                 // Thai in Solution: Always 2 spaces (as requested)
+                 // Thai in Solution: Single space (as requested)
                  let processed = String(text).replace(/_/g, ' ');
-                 // Thai: Always 2 spaces
-                 return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
+                 return processed.replace(/\s+/g, ' ').trim();
             };
 
             // 2. Helper to process keys (Modified to use selected keys directly)
