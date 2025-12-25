@@ -152,13 +152,38 @@
                     const episode = firstSlide.episode || "";
                     
                     // Search logic
+                    let isMatch = false;
+                    let matchReason = "";
+
+                    // 1. Search Metadata
                     const textToSearch = `${book.name} ${storyTitle} ${episode}`.toLowerCase();
                     if (textToSearch.includes(filter)) {
+                        isMatch = true;
+                    }
+
+                    // 2. Deep Search (Content)
+                    // Only if filter is long enough to be meaningful
+                    if (!isMatch && filter.length >= 2) {
+                        const hasContentMatch = slides.some(slide => {
+                             const pali = (slide.pali || "").toLowerCase();
+                             const thai = (slide.thai || "").toLowerCase();
+                             const thaiDesana = (slide.thai_desana || "").toLowerCase();
+                             const thaiSense = (slide.thai_sense || "").toLowerCase();
+                             return pali.includes(filter) || thai.includes(filter) || thaiDesana.includes(filter) || thaiSense.includes(filter);
+                        });
+                        if (hasContentMatch) {
+                            isMatch = true;
+                            matchReason = "พบในเนื้อหา";
+                        }
+                    }
+
+                    if (isMatch) {
                         matchingStories.push({
                             id: storyId,
                             title: storyTitle,
                             episode: episode,
-                            page: firstSlide.page || ""
+                            page: firstSlide.page || "",
+                            reason: matchReason
                         });
                     }
                 });
@@ -203,6 +228,7 @@
                         card.innerHTML = `
                             <div class="story-title">${story.title}</div>
                             <div class="story-episode">${story.episode}</div>
+                            ${story.reason ? `<div style="font-size:0.8rem; color:#e67e22; margin-top:5px;"><i class="fa-solid fa-magnifying-glass"></i> ${story.reason}</div>` : ''}
                             <div class="story-meta"><i class="fa-regular fa-file-lines"></i> ${story.page}</div>
                         `;
                         grid.appendChild(card);

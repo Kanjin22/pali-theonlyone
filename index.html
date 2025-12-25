@@ -170,6 +170,16 @@
             </div>
 
             <div class="section-label">🎓 ชั้นเรียนบาลี</div>
+            <div id="resume-section" style="display:none; margin-bottom: 30px;">
+                <div class="section-label" style="margin-top: 0; color: #f39c12; border-left-color: #f39c12;">⏳ เรียนต่อจากเดิม</div>
+                <a id="resume-btn" href="#" class="menu-card level-tool" style="flex-direction: row; text-align: left; background: #fff8e1; border: 1px solid #ffecb3;">
+                    <div class="icon-box" style="margin-bottom: 0; margin-right: 20px; color: #f39c12; font-size: 2rem;"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div>
+                        <div class="card-title" id="resume-title">หัวข้อล่าสุด</div>
+                        <div class="card-desc" id="resume-desc">คลิกเพื่อเรียนต่อจากที่ค้างไว้</div>
+                    </div>
+                </a>
+            </div>
             <div class="grid-menu">
 
                 <!-- ชั้นต้น (สีเขียว) -->
@@ -250,6 +260,11 @@
                     <div class="icon-box"><i class="fa-solid fa-book-journal-whills"></i></div>
                     <div class="card-title">รวมลิงค์พจนานุกรม</div>
                     <div class="card-desc">พจนานุกรมบาลี-ไทย/อังกฤษ</div>
+                </a>
+                <a href="flashcards.html" class="menu-card level-tool">
+                    <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="card-title">บัตรคำศัพท์</div>
+                    <div class="card-desc">ทบทวนศัพท์ด้วย Flashcards</div>
                 </a>
             </div>
 
@@ -1203,6 +1218,37 @@
                 openLogin();
             }
         });
+        // --- Resume Learning Logic ---
+        function checkResume() {
+            const resumeSection = document.getElementById('resume-section');
+            const resumeBtn = document.getElementById('resume-btn');
+            const resumeTitle = document.getElementById('resume-title');
+            const resumeDesc = document.getElementById('resume-desc');
+
+            try {
+                const saved = localStorage.getItem('pali_last_session');
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    // Validate
+                    if (state.id && typeof state.index !== 'undefined') {
+                        resumeSection.style.display = 'block';
+                        resumeTitle.textContent = state.title || "บทเรียนล่าสุด";
+                        
+                        // Format time
+                        const date = new Date(state.timestamp);
+                        const timeStr = date.toLocaleDateString('th-TH') + ' ' + date.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
+                        resumeDesc.textContent = `เรียนต่อจากที่ค้างไว้ (${timeStr})`;
+                        
+                        resumeBtn.href = `presentation.html?id=${state.id}&index=${state.index}`;
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading resume state", e);
+            }
+        }
+        
+        // Call on load
+        checkResume();
     </script>
 </body>
 
