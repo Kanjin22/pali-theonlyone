@@ -956,9 +956,6 @@
             <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
                 <i class="fa-solid fa-note-sticky"></i>
             </button>
-            <button class="tool-btn" id="btn-edit-content" title="แก้ไขหน้านี้ (Admin)" onclick="editCurrentContent()" style="background-color: #f39c12; color: white; display: none;">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
         </div>
 
         <canvas id="drawing-canvas"></canvas>
@@ -1097,98 +1094,6 @@
 
         const params = new URLSearchParams(window.location.search);
         const slideId = params.get('id') ? params.get('id').trim() : null;
-
-        // --- Check Admin Role ---
-        const userRole = localStorage.getItem('pali_user_role');
-        if(userRole === 'admin' || userRole === 'teacher') {
-            const editBtn = document.getElementById('btn-edit-content');
-            if(editBtn) editBtn.style.display = 'inline-flex';
-        }
-
-        // --- Find Source File Logic ---
-        function findSourceFile(id) {
-             const knownFiles = [
-                { name: "ธรรมบท ภาค ๑", varName: "contentDhamma01" },
-                { name: "ธรรมบท ภาค ๒", varName: "contentDhamma02" },
-                { name: "ธรรมบท ภาค ๓", varName: "contentDhamma03" },
-                { name: "ธรรมบท ภาค ๔", varName: "contentDhamma04" },
-                { name: "ธรรมบท ภาค ๕", varName: "contentDhamma05" },
-                { name: "ธรรมบท ภาค ๖", varName: "contentDhamma06" },
-                { name: "ธรรมบท ภาค ๗", varName: "contentDhamma07" },
-                { name: "ธรรมบท ภาค ๘", varName: "contentDhamma08" },
-                { name: "มังคลัถทีปนี ภาค ๑", varName: "contentMangala01" },
-                { name: "มังคลัถทีปนี ภาค ๒", varName: "contentMangala02" },
-                { name: "สมันตปาสาทิกา ภาค ๑", varName: "contentSamanta01" },
-                { name: "สมันตปาสาทิกา ภาค ๒", varName: "contentSamanta02" },
-                { name: "สมันตปาสาทิกา ภาค ๓", varName: "contentSamanta03" },
-                { name: "วิสุทธิมรรค ภาค ๑", varName: "contentVisuddhi01" },
-                { name: "วิสุทธิมรรค ภาค ๒", varName: "contentVisuddhi02" },
-                { name: "วิสุทธิมรรค ภาค ๓", varName: "contentVisuddhi03" },
-                { name: "อภิธรรม (สังคหะ)", varName: "contentAbhidhamma01" }
-            ];
-            
-            for (let f of knownFiles) {
-                const data = window[f.varName];
-                if (data && data[id]) {
-                    return f.varName;
-                }
-            }
-            return null;
-        }
-
-        function editCurrentContent() {
-            if(!slideId) {
-                alert("ไม่พบรหัสเนื้อหา (Content ID)");
-                return;
-            }
-            let sourceFile = findSourceFile(slideId);
-            
-            // If not found, try to guess from ID pattern
-            if(!sourceFile) {
-                if(slideId.startsWith('d01')) sourceFile = "contentDhamma01";
-                else if(slideId.startsWith('d02')) sourceFile = "contentDhamma02";
-                else if(slideId.startsWith('d03')) sourceFile = "contentDhamma03";
-                else if(slideId.startsWith('d04')) sourceFile = "contentDhamma04";
-                else if(slideId.startsWith('d05')) sourceFile = "contentDhamma05";
-                else if(slideId.startsWith('d06')) sourceFile = "contentDhamma06";
-                else if(slideId.startsWith('d07')) sourceFile = "contentDhamma07";
-                else if(slideId.startsWith('d08')) sourceFile = "contentDhamma08";
-                else if(slideId.startsWith('m01')) sourceFile = "contentMangala01";
-                else if(slideId.startsWith('m02')) sourceFile = "contentMangala02";
-                else if(slideId.startsWith('s01')) sourceFile = "contentSamanta01";
-                else if(slideId.startsWith('s02')) sourceFile = "contentSamanta02";
-                else if(slideId.startsWith('s03')) sourceFile = "contentSamanta03";
-                else if(slideId.startsWith('v01')) sourceFile = "contentVisuddhi01";
-                else if(slideId.startsWith('v02')) sourceFile = "contentVisuddhi02";
-                else if(slideId.startsWith('v03')) sourceFile = "contentVisuddhi03";
-                else if(slideId.startsWith('abh')) sourceFile = "contentAbhidhamma01";
-                
-                // If still not found, check for p{part}_{group}{num} pattern (Pending Files)
-                if(!sourceFile) {
-                    const m = slideId.match(/^p(\d+)_/);
-                    if(m) {
-                        // Guess it's Dhamma by default for pending files? Or try to map part
-                        // Usually pending files are for Dhamma schedule
-                        sourceFile = `contentDhamma0${m[1]}`; 
-                    }
-                }
-
-                if(sourceFile) {
-                    if(!confirm(`ไม่พบข้อมูลเดิม (อาจเป็นเนื้อหาใหม่)\n\nระบบคาดว่าเป็นไฟล์: ${sourceFile}\nต้องการสร้างเนื้อหาใหม่ในไฟล์นี้หรือไม่?`)) {
-                        return;
-                    }
-                } else {
-                    if(!confirm("ไม่พบไฟล์ต้นฉบับและไม่สามารถระบุไฟล์ได้\nต้องการเปิด Content Builder เพื่อสร้างใหม่ (ต้องเลือกไฟล์เอง) หรือไม่?")) {
-                        return;
-                    }
-                }
-            }
-            
-            // Open Content Builder with params
-            let url = `admin/content_builder.html?id=${slideId}`;
-            if(sourceFile) url += `&file=${sourceFile}`;
-            window.open(url, '_blank');
-        }
 
         let slides = [];
         if (slideId && slidesDatabase[slideId]) {
