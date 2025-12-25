@@ -853,12 +853,32 @@
             const tbody = document.getElementById('schedule-body');
             tbody.innerHTML = '';
 
-            // Sort days by date if needed? Assuming stored in order.
+            // Get Today String (YYYY-MM-DD) in Local Time (Thai/Asia/Bangkok)
+            // Using toISOString() uses UTC, which might be wrong if it's late night in Thailand but previous day in UTC.
+            // Safe approach: use local date components
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const todayStr = `${year}-${month}-${d}`;
 
             data.days.forEach(day => {
                 const tr = document.createElement('tr');
+                
+                // Check for Today
+                if (day.date === todayStr) {
+                    tr.classList.add('today-highlight');
+                }
+
                 if (day.isWeekend) {
-                    tr.className = 'weekend-row';
+                    tr.classList.add('weekend-row'); // Use classList.add to preserve today-highlight if needed (though weekend usually implies holiday, but maybe class on weekend?)
+                    // Note: weekend-row has !important background in CSS, so it might override today-highlight yellow.
+                    // We might want today-highlight to take precedence.
+                    // CSS: .today-highlight { ... !important } 
+                    // .weekend-row { ... !important }
+                    // If both !important, last one wins or specificity.
+                    // Let's ensure today-highlight is added AFTER or handled via style.
+                    
                     tr.innerHTML = `
                     <td data-label="วดป.">${day.displayDate}</td>
                     <td colspan="3" style="text-align:center; font-style:italic;">หยุด</td>
@@ -875,6 +895,14 @@
                 }
                 tbody.appendChild(tr);
             });
+
+            // Auto-scroll to today
+            setTimeout(() => {
+                const todayRow = document.querySelector('.today-highlight');
+                if (todayRow) {
+                    todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
         }
 
         function generateBtn(period, day, periodName) {
