@@ -969,12 +969,21 @@
              if (!exists) {
                  // Try to make a readable name
                  let name = val;
-                 if (val.startsWith('http')) {
-                     try { name = decodeURIComponent(val.split('/').pop().split('?')[0]); } catch(e){}
-                     name = `[SAVED] ${name}`;
-                 } else {
-                     name = `[LEGACY] ${val}`;
-                 }
+                 try {
+                     // Remove path if present (both / and \)
+                     const parts = val.split(/[/\\]/);
+                     name = parts.pop();
+                     
+                     // If it was a URL, clean it up
+                     if (val.startsWith('http')) {
+                         name = decodeURIComponent(name.split('?')[0]);
+                         name = `[SAVED] ${name}`;
+                     } else {
+                         // Just the filename for legacy files
+                         // Removed [LEGACY] prefix as requested
+                     }
+                 } catch(e){}
+                 
                  opts += `<option value="${val}" selected>${name}</option>`;
              }
          });
