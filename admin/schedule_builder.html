@@ -199,7 +199,7 @@
             
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
                 <h3><i class="fas fa-upload"></i> อัปโหลดไฟล์ใหม่</h3>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
                     <div>
                         <label>ประเภท (Type)</label>
                         <select id="upload-type">
@@ -211,6 +211,12 @@
                     <div>
                         <label>ชั้นเรียน (Level)</label>
                         <select id="upload-level">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label>วิชา (Subject)</label>
+                        <select id="upload-subject">
                             <!-- Populated by JS -->
                         </select>
                     </div>
@@ -935,7 +941,7 @@
             filesDiv.style.display = 'none';
         }
     }
-    function getFiles(level, type) {
+    function getFiles(level, type, subjectId) {
         let files = [];
         
         // 1. Static Files (Legacy) - Filter by type strictly
@@ -945,7 +951,7 @@
         
         // 2. Dynamic Files (Firestore) - Filter by level AND type strictly
         // As requested: Split Materials, Exams, and Answers to avoid clutter
-        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type);
+        const dyn = DYNAMIC_FILES.filter(f => f.level === level && f.type === type && (!subjectId || f.subject === subjectId));
         dyn.forEach(f => {
             files.push({ name: `[CLOUD] ${f.name}`, value: f.url });
         });
@@ -1144,7 +1150,9 @@
         
         // Populate Levels in Upload Form
         const levelSelect = document.getElementById('upload-level');
+        const subjSelect = document.getElementById('upload-subject');
         levelSelect.innerHTML = '';
+        subjSelect.innerHTML = '';
         
         // Get all levels from systemConfig or hardcoded
         const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
@@ -1162,6 +1170,21 @@
                 levelSelect.value = selectedOpt.dataset.level;
             }
         }
+
+        // Populate Subjects based on selected level
+        const populateSubjects = () => {
+            subjSelect.innerHTML = '';
+            const lvl = levelSelect.value || 'pt12';
+            const subjects = SUBJECT_CONFIG[lvl] || SUBJECT_CONFIG['pt12'];
+            subjects.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = s.label;
+                subjSelect.appendChild(opt);
+            });
+        };
+        populateSubjects();
+        levelSelect.addEventListener('change', populateSubjects, { once: true });
     }
 
     function closeFileManager() {
@@ -1204,7 +1227,8 @@
             if (sel.classList.contains('input-exam')) type = 'exams';
             else if (sel.classList.contains('input-ans')) type = 'answers';
             
-            const fileObjs = getFiles(level, type);
+            const subjId = sel.dataset.subjId || null;
+            const fileObjs = getFiles(level, type, subjId);
             sel.innerHTML = createOptions(fileObjs, [currentVal]);
         });
     }
@@ -1213,6 +1237,7 @@
         const fileInput = document.getElementById('upload-file');
         const typeSelect = document.getElementById('upload-type');
         const levelSelect = document.getElementById('upload-level');
+        const subjSelect = document.getElementById('upload-subject');
         const btn = document.getElementById('btn-upload');
         const progressDiv = document.getElementById('upload-progress');
         const progressBar = document.getElementById('progress-bar');
@@ -1224,9 +1249,11 @@
 
         const type = typeSelect.value;
         const level = levelSelect.value;
+        const subjectId = subjSelect.value || 'General';
+        const subjectFolder = (subjectId || '').toLowerCase();
         
-        // Create Path: files/{level}/{type}/{filename}
-        const storagePath = `files/${level}/${type}/${Date.now()}_${file.name}`;
+        // Create Path: files/{level}/{type}/{subject}/{filename}
+        const storagePath = `files/${level}/${type}/${subjectFolder}/${Date.now()}_${file.name}`;
         const ref = storage.ref(storagePath);
 
         btn.disabled = true;
@@ -1256,6 +1283,7 @@
                         name: file.name,
                         type: type,
                         level: level,
+                        subject: subjectId,
                         url: downloadURL,
                         fullPath: storagePath,
                         uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1268,6 +1296,7 @@
                         name: file.name,
                         type: type,
                         level: level,
+                        subject: subjectId,
                         url: downloadURL,
                         fullPath: storagePath,
                         uploadedAt: { seconds: Date.now() / 1000 } // approx

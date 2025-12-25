@@ -761,6 +761,9 @@
                     const d = doc.data();
                     if(d.name && d.url) {
                         cloudFilesIndex[d.name] = d.url;
+                        if (d.subject) {
+                            cloudFilesIndex[`${d.name}|${d.subject}`] = d.url;
+                        }
                     }
                 });
                 console.log("Loaded cloud files index:", Object.keys(cloudFilesIndex).length);
@@ -1050,7 +1053,7 @@
             
             // Helper to add files
             // Fixed: Now uses categoryLabel if provided
-            const addFiles = (files, categoryLabel, icon, cls) => {
+            const addFiles = (files, categoryLabel, icon, cls, subjId = null) => {
                 if (!files) return;
 
                 const processFile = (f, i) => {
@@ -1066,10 +1069,13 @@
                         } else {
                             // CLEAN PATH: Support legacy paths like "files/pt12/..."
                             const cleanName = f.split(/[/\\]/).pop();
+                            const subjKey = subjId ? `${cleanName}|${subjId}` : null;
 
                             // 1. Try Firestore Index (Original or Clean)
                             if (cloudFilesIndex && cloudFilesIndex[f]) {
                                 finalUrl = cloudFilesIndex[f];
+                            } else if (subjKey && cloudFilesIndex && cloudFilesIndex[subjKey]) {
+                                finalUrl = cloudFilesIndex[subjKey];
                             } else if (cloudFilesIndex && cloudFilesIndex[cleanName]) {
                                 finalUrl = cloudFilesIndex[cleanName];
                             }
@@ -1083,7 +1089,8 @@
                                 
                                 // Construct Firebase Storage URL
                                 const bucket = 'palitest-generator.firebasestorage.app';
-                                const path = `files/${level}/${category}/${cleanName}`;
+                                const subjFolder = subjId ? subjId.toLowerCase() : '';
+                                const path = subjFolder ? `files/${level}/${category}/${subjFolder}/${cleanName}` : `files/${level}/${category}/${cleanName}`;
                                 finalUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
                             }
                         }
@@ -1147,13 +1154,13 @@
 
             if (period.noteFiles) {
                 Object.keys(period.noteFiles).forEach(subjId => {
-                    addFiles(period.noteFiles[subjId], `เอกสารประกอบ (${getSubjLabel(subjId)})`, 'fa-file-pdf', 'btn-material');
+                    addFiles(period.noteFiles[subjId], `เอกสารประกอบ (${getSubjLabel(subjId)})`, 'fa-file-pdf', 'btn-material', subjId);
                 });
             }
             if (period.examFiles) {
                 Object.keys(period.examFiles).forEach(subjId => {
                     if (canShowExam) {
-                        addFiles(period.examFiles[subjId], `ข้อสอบ${getSubjLabel(subjId)}`, 'fa-file-alt', 'btn-exam');
+                        addFiles(period.examFiles[subjId], `ข้อสอบ${getSubjLabel(subjId)}`, 'fa-file-alt', 'btn-exam', subjId);
                     } else {
                         // Add disabled placeholder
                         allFiles.push({ url: '#', label: `ข้อสอบ${getSubjLabel(subjId)} ${examWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
@@ -1163,7 +1170,7 @@
             if (period.answerFiles) {
                 Object.keys(period.answerFiles).forEach(subjId => {
                     if (canShowAnswer) {
-                         addFiles(period.answerFiles[subjId], `เฉลย${getSubjLabel(subjId)}`, 'fa-key', 'btn-answer');
+                         addFiles(period.answerFiles[subjId], `เฉลย${getSubjLabel(subjId)}`, 'fa-key', 'btn-answer', subjId);
                     } else {
                         // Add disabled placeholder (only if exam has started, otherwise we might hide it completely to not clutter? 
                         // User said: "When exam time ends, it's time to open answer link". 
@@ -1183,41 +1190,41 @@
             const hasStructured = hasData(period.examFiles) || hasData(period.answerFiles) || hasData(period.noteFiles);
 
             if (!hasStructured) {
-                 addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material');
+                 addFiles(period.materials, 'เอกสารประกอบ', 'fa-file-pdf', 'btn-material', null);
                  
                  // Exams & Answers (Grammar)
                  // Apply logic to legacy fields too? Yes.
                  if (period.fileExamGrammar) {
-                     if (canShowExam) addFiles(period.fileExamGrammar, 'ข้อสอบไวยากรณ์', 'fa-file-alt', 'btn-exam');
+                     if (canShowExam) addFiles(period.fileExamGrammar, 'ข้อสอบไวยากรณ์', 'fa-file-alt', 'btn-exam', 'Grammar');
                      else allFiles.push({ url: '#', label: `ข้อสอบไวยากรณ์ ${examWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
                  
                  if (period.fileAnswerGrammar) {
-                     if (canShowAnswer) addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer');
+                     if (canShowAnswer) addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer', 'Grammar');
                      else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลยไวยากรณ์ ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
 
                  // Exams & Answers (Translate)
                  if (period.fileExamTranslate) {
-                     if (canShowExam) addFiles(period.fileExamTranslate, 'ข้อสอบแปล', 'fa-file-alt', 'btn-exam');
+                     if (canShowExam) addFiles(period.fileExamTranslate, 'ข้อสอบแปล', 'fa-file-alt', 'btn-exam', 'Translate');
                      else allFiles.push({ url: '#', label: `ข้อสอบแปล ${examWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
                  
                  if (period.fileAnswerTranslate) {
-                    if (canShowAnswer) addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer');
+                    if (canShowAnswer) addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer', 'Translate');
                     else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลยแปล ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
      
                  // Generic Exams/Answers arrays (Last resort)
                  if (!period.fileExamGrammar && !period.fileExamTranslate) {
                     if (period.exams) {
-                        if (canShowExam) addFiles(period.exams, 'ข้อสอบ', 'fa-file-alt', 'btn-exam');
+                        if (canShowExam) addFiles(period.exams, 'ข้อสอบ', 'fa-file-alt', 'btn-exam', null);
                         else allFiles.push({ url: '#', label: `ข้อสอบ ${examWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                     }
                  }
                  if (!period.fileAnswerGrammar && !period.fileAnswerTranslate) {
                     if (period.answers) {
-                        if (canShowAnswer) addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer');
+                        if (canShowAnswer) addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer', null);
                         else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลย ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                     }
                  }
