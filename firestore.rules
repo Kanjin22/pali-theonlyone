@@ -4,9 +4,11 @@ service cloud.firestore {
     
     // ฟังก์ชันตรวจสอบว่าเป็น Admin หรือไม่
     function isAdmin() {
-      return request.auth != null && 
-             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return request.auth != null && (
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
+        request.auth.token.email == 'setthachayo@gmail.com'
+      );
     }
 
     // ฟังก์ชันตรวจสอบว่าเป็นเจ้าของข้อมูลหรือไม่
@@ -56,6 +58,30 @@ service cloud.firestore {
     match /exam_sets/{setId} {
       allow read: if true;
       allow write: if request.auth != null;
+    }
+
+    // Collection: contents (เนื้อหาบทเรียน)
+    match /contents/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Collection: pins (ปักหมุดกิจกรรม)
+    match /pins/{pinId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Collection: sanluang_exams (สถิติข้อสอบสนามหลวง)
+    match /sanluang_exams/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Collection: exam_logs (บันทึกการออกข้อสอบ)
+    match /exam_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null;
     }
 
     // Default deny (ปิดกั้นส่วนอื่นๆ ที่ไม่ได้ระบุ)
