@@ -1114,48 +1114,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadTodayPins();
         });
-                            try {
-                                const enr = await db.collection('enrollments').doc(uid).get();
-                                if (enr.exists && enr.data()) {
-                                    const enrData = enr.data();
-                                    // Upgrade role if general and approved
-                                    if (enrData.status === 'approved' && role === 'general') {
-                                        // Update to student only if confirmed
-                                        // db.collection('users').doc(uid).set({ role: 'student' }, { merge: true }); // Commented out auto-upgrade for safety
-                                        role = 'student'; // Just display as student
-                                    }
-
-                                    // Construct Real Name if approved
-                                    if (enrData.status === 'approved') {
-                                        const title = enrData.title || '';
-                                        const first = enrData.firstName || '';
-                                        const last = enrData.lastName || '';
-                                        const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
-                                        displayName = `${title}${first} ${last}${epithet}`;
-                                    }
-                                }
-                            } catch (e) { 
-                                console.warn("Enrollment Check Error:", e.message);
-                            }
-                        }
-
-                        // Update User UI with correct name
-                        const displayUser = {
-                            uid: user.uid,
-                            email: user.email,
-                            displayName: displayName,
-                            photoURL: user.photoURL
-                        };
-                        showUser(displayUser, role);
-                        applyRoleUI(role);
-                        if (role === 'admin') { updateAdminBadge(); }
-
-                    } catch (e) {
-                        console.error("Critical Error in Auth Flow:", e);
-                        // ถ้า Error หนักจริงๆ ให้แสดง User แบบปกติไปก่อน
-                        showUser(user);
-                    }
-                })();
 
                 // โค้ดสร้าง Exam Sets (คงเดิม)
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
