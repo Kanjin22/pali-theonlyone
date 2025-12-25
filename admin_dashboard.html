@@ -478,6 +478,7 @@
             <a class="nav-link active" onclick="switchTab('enrollments')">คำขอสมัครเรียน</a>
             <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
+            <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
     </nav>
@@ -620,6 +621,122 @@
             </div>
         </div>
 
+        <!-- Tab: Pins -->
+        <div id="tab-pins" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-thumbtack"></i> จัดการปักหมุด (Today's Pins)</h2>
+                </div>
+                <div class="form-group" style="background: #fff; padding: 20px; border-radius: 8px;">
+                    <div style="display:flex; gap:20px; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
+                        <div>
+                            <label>เลือกวันที่:</label>
+                            <input type="date" id="pinDate" class="form-control" style="padding:8px; border-radius:4px; border:1px solid #ddd;">
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadPins()"><i class="fa-solid fa-rotate"></i> โหลดข้อมูล</button>
+                        <button class="btn btn-primary" onclick="savePins()"><i class="fa-solid fa-save"></i> บันทึกข้อมูล</button>
+                    </div>
+
+                    <div style="margin-bottom:20px; padding:15px; background:#f8f9fa; border-radius:8px; border:1px dashed #ccc;">
+                        <h4>เพิ่มรายการใหม่</h4>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; align-items:end;">
+                            <div class="form-group" style="margin:0;">
+                                <label>เวลา</label>
+                                <select id="newPinTime">
+                                    <option value="เช้า">เช้า</option>
+                                    <option value="บ่าย">บ่าย</option>
+                                    <option value="ค่ำ">ค่ำ</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin:0;">
+                                <label>ระดับชั้น</label>
+                                <select id="newPinLevel">
+                                    <option value="ประโยค ๑-๒ (สาธุชนทั่วไป)">ประโยค ๑-๒ (ทั่วไป)</option>
+                                    <option value="ประโยค ๑-๒ (สามเณรนวกะ)">ประโยค ๑-๒ (สามเณร)</option>
+                                    <option value="ป.ธ. ๓">ป.ธ. ๓</option>
+                                    <option value="ป.ธ. ๔">ป.ธ. ๔</option>
+                                    <option value="ป.ธ. ๕">ป.ธ. ๕</option>
+                                    <option value="ป.ธ. ๖">ป.ธ. ๖</option>
+                                    <option value="ป.ธ. ๗">ป.ธ. ๗</option>
+                                    <option value="ป.ธ. ๘">ป.ธ. ๘</option>
+                                    <option value="ป.ธ. ๙">ป.ธ. ๙</option>
+                                    <option value="บาลีศึกษา">บาลีศึกษา</option>
+                                    <option value="ทั่วไป">ทั่วไป (ทุกคนเห็น)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin:0;">
+                                <label>วิชา</label>
+                                <select id="newPinSubject">
+                                    <option value="ไวยากรณ์">ไวยากรณ์</option>
+                                    <option value="แปล">แปล</option>
+                                    <option value="กลับ">กลับ</option>
+                                    <option value="แต่ง">แต่ง</option>
+                                    <option value="สัมพันธ์">สัมพันธ์</option>
+                                    <option value="กิจกรรม">กิจกรรม</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin:0; grid-column: span 2;">
+                                <label>รายละเอียดกิจกรรม</label>
+                                <input type="text" id="newPinAct" placeholder="เช่น แปลมงคลฯ เรื่อง...">
+                            </div>
+                            <button class="btn btn-success" onclick="addPinItem()"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>เวลา</th>
+                                    <th>ระดับชั้น</th>
+                                    <th>วิชา</th>
+                                    <th>กิจกรรม</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pinListBody">
+                                <!-- Pins will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Content -->
+        <div id="tab-content" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-book-open"></i> จัดการเนื้อหาบทเรียน (Content Manager)</span>
+                    <div>
+                        <button class="btn btn-warning" onclick="migrateData()" style="margin-right: 10px;">
+                            <i class="fa-solid fa-file-import"></i> Import Legacy Data
+                        </button>
+                        <button class="btn btn-success" onclick="openContentModal()">
+                            <i class="fa-solid fa-plus"></i> เพิ่มเนื้อหาใหม่
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>หนังสือ</th>
+                                <th>เรื่อง</th>
+                                <th>ตอน</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentListBody">
+                            <tr><td colspan="5" class="loading">คลิกปุ่มโหลดข้อมูล...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-secondary" onclick="loadContents()" style="margin-top:10px;"><i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล</button>
+            </div>
+        </div>
+
     </div>
 
     <!-- Firebase Scripts -->
@@ -627,6 +744,25 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="js/system_config.js"></script>
+
+    <!-- Legacy Data Scripts for Migration -->
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
     <!-- Room Modal -->
     <div id="roomModal" class="modal">
         <div class="modal-content" style="max-width: 600px;">
@@ -691,6 +827,98 @@
                     <div style="text-align: right; margin-top: 20px;">
                         <button type="button" class="btn-danger" onclick="closeRoomModal()">ยกเลิก</button>
                         <button type="submit" class="btn-success">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Modal -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2 id="contentModalTitle">เพิ่ม/แก้ไข เนื้อหา</h2>
+                <span class="close" onclick="closeContentModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="contentForm" onsubmit="saveContent(event)">
+                    <input type="hidden" id="editContentId"> <!-- Firestore Doc ID -->
+
+                    <div class="form-group">
+                        <label>รหัสเนื้อหา (Unique Code) *เช่น d01_v01_s01</label>
+                        <input type="text" id="contentCode" required placeholder="เช่น d01_v01_s01">
+                    </div>
+
+                    <div class="form-group">
+                        <label>หนังสือ (Book Name)</label>
+                        <select id="contentBook" required>
+                            <option value="">-- เลือกหนังสือ --</option>
+                            <option value="ธรรมบท ภาค ๑">ธรรมบท ภาค ๑</option>
+                            <option value="ธรรมบท ภาค ๒">ธรรมบท ภาค ๒</option>
+                            <option value="ธรรมบท ภาค ๓">ธรรมบท ภาค ๓</option>
+                            <option value="ธรรมบท ภาค ๔">ธรรมบท ภาค ๔</option>
+                            <option value="ธรรมบท ภาค ๕">ธรรมบท ภาค ๕</option>
+                            <option value="ธรรมบท ภาค ๖">ธรรมบท ภาค ๖</option>
+                            <option value="ธรรมบท ภาค ๗">ธรรมบท ภาค ๗</option>
+                            <option value="ธรรมบท ภาค ๘">ธรรมบท ภาค ๘</option>
+                            <option value="มังคลัถทีปนี ภาค ๑">มังคลัถทีปนี ภาค ๑</option>
+                            <option value="มังคลัถทีปนี ภาค ๒">มังคลัถทีปนี ภาค ๒</option>
+                            <option value="สมันตปาสาทิกา ภาค ๑">สมันตปาสาทิกา ภาค ๑</option>
+                            <option value="สมันตปาสาทิกา ภาค ๒">สมันตปาสาทิกา ภาค ๒</option>
+                            <option value="สมันตปาสาทิกา ภาค ๓">สมันตปาสาทิกา ภาค ๓</option>
+                            <option value="วิสุทธิมรรค ภาค ๑">วิสุทธิมรรค ภาค ๑</option>
+                            <option value="วิสุทธิมรรค ภาค ๒">วิสุทธิมรรค ภาค ๒</option>
+                            <option value="วิสุทธิมรรค ภาค ๓">วิสุทธิมรรค ภาค ๓</option>
+                            <option value="อภิธรรม ภาค ๑">อภิธรรม ภาค ๑</option>
+                            <option value="อื่น ๆ">อื่น ๆ</option>
+                        </select>
+                    </div>
+
+                    <div class="stat-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 0;">
+                        <div class="form-group">
+                            <label>ภาค/เล่ม (Part)</label>
+                            <input type="text" id="contentPart" placeholder="เช่น ภาคที่ ๑">
+                        </div>
+                        <div class="form-group">
+                            <label>วรรค (Vagga)</label>
+                            <input type="text" id="contentVagga" placeholder="เช่น ๑. ยมกวรรค">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                            <label>ชื่อเรื่อง (Story)</label>
+                            <input type="text" id="contentStory" required placeholder="เช่น ๑. เรื่องพระจักขุปาลเถระ">
+                        </div>
+
+                        <div class="stat-grid" style="grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 0;">
+                             <div class="form-group">
+                                <label>ตอน (Episode)</label>
+                                <input type="text" id="contentEpisode" placeholder="เช่น ตอนที่ ๑">
+                            </div>
+                            <div class="form-group">
+                                <label>หน้า (Page)</label>
+                                <input type="text" id="contentPage" placeholder="เช่น 1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>บาลี (Pali)</label>
+                        <textarea id="contentPali" rows="4" placeholder="วางข้อความภาษาบาลี..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ไทย (Thai)</label>
+                        <textarea id="contentThai" rows="4" placeholder="วางคำแปลภาษาไทย..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ศัพท์น่ารู้ (Vocab List HTML)</label>
+                        <textarea id="contentVocab" rows="3" placeholder="<ul><li>...</li></ul>"></textarea>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button type="button" class="btn-danger" onclick="closeContentModal()">ยกเลิก</button>
+                        <button type="submit" class="btn-success">บันทึกเนื้อหา</button>
                     </div>
                 </form>
             </div>
@@ -795,6 +1023,7 @@
             document.getElementById('tab-enrollments').classList.add('hidden');
             document.getElementById('tab-members').classList.add('hidden');
             document.getElementById('tab-classes').classList.add('hidden');
+            document.getElementById('tab-pins').classList.add('hidden');
 
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
         }
@@ -1547,6 +1776,362 @@
                 alert('ไม่สามารถตั้งค่าได้: ' + e.message + '\n\nสาเหตุ: Security Rules ไม่อนุญาตให้แก้ไขข้อมูล\nทางแก้: ต้องแก้ที่ Firebase Console เท่านั้น');
             }
         }
+
+        // --------------------------------------------------
+        // Pin Manager Logic
+        // --------------------------------------------------
+        let currentPins = [];
+
+        async function loadPins() {
+            const dateInput = document.getElementById('pinDate');
+            if (!dateInput.value) {
+                const now = new Date();
+                const y = now.getFullYear();
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const d = String(now.getDate()).padStart(2, '0');
+                dateInput.value = `${y}-${m}-${d}`;
+            }
+            const dateStr = dateInput.value;
+            
+            const tbody = document.getElementById('pinListBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+
+            try {
+                const doc = await db.collection('config').doc('today_pins').get();
+                if (doc.exists && doc.data().date === dateStr) {
+                    currentPins = doc.data().items || [];
+                } else {
+                    currentPins = []; 
+                    // Try to see if we have stored pins for this specific date in a sub-collection or just overwriting single doc?
+                    // Request says "manage today's pins". Usually means just one set. 
+                    // But if we change date, we might want to load that date's pins if stored.
+                    // For now, let's assume single document 'today_pins' holds the *current active* pins.
+                    // If the user wants to schedule pins for future, we might need a better structure.
+                    // But to keep it simple and compatible with existing student code (which likely reads 'config/today_pins'),
+                    // we will just read/write that doc.
+                    // Wait, if I change date in input, does it mean I want to set pins for THAT date?
+                    // Yes. But if 'config/today_pins' only stores ONE date, then changing date and saving will Overwrite it.
+                    // That is acceptable for "Today's Pins".
+                }
+                renderPinTable();
+            } catch(e) {
+                console.error("Error loading pins:", e);
+                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderPinTable() {
+            const tbody = document.getElementById('pinListBody');
+            tbody.innerHTML = '';
+
+            if (currentPins.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่มีรายการปักหมุดสำหรับวันนี้</td></tr>';
+                return;
+            }
+
+            currentPins.forEach((pin, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${pin.time || '-'}</td>
+                    <td>${pin.level || '-'}</td>
+                    <td>${pin.subject || '-'}</td>
+                    <td>${pin.activity || '-'}</td>
+                    <td>
+                        <button class="btn-danger" onclick="removePin(${index})" style="padding:2px 8px;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addPinItem() {
+            const time = document.getElementById('newPinTime').value;
+            const level = document.getElementById('newPinLevel').value;
+            const subject = document.getElementById('newPinSubject').value;
+            const act = document.getElementById('newPinAct').value.trim();
+
+            if (!act) {
+                alert('กรุณากรอกรายละเอียดกิจกรรม');
+                return;
+            }
+
+            currentPins.push({
+                time, level, subject, activity: act
+            });
+
+            // Clear input
+            document.getElementById('newPinAct').value = '';
+            renderPinTable();
+        }
+
+        function removePin(index) {
+            currentPins.splice(index, 1);
+            renderPinTable();
+        }
+
+        async function savePins() {
+            const dateStr = document.getElementById('pinDate').value;
+            if (!dateStr) return alert('กรุณาเลือกวันที่');
+
+            try {
+                await db.collection('config').doc('today_pins').set({
+                    date: dateStr,
+                    items: currentPins,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert('บันทึกข้อมูลปักหมุดเรียบร้อยแล้ว');
+            } catch (e) {
+                alert('บันทึกไม่สำเร็จ: ' + e.message);
+            }
+        }
+
+        // --------------------------------------------------
+        // Content Manager Logic
+        // --------------------------------------------------
+        let allContents = [];
+
+        async function loadContents() {
+            const tbody = document.getElementById('contentListBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+
+            try {
+                const snap = await db.collection('contents').get();
+                allContents = [];
+                snap.forEach(doc => {
+                    allContents.push({ _id: doc.id, ...doc.data() });
+                });
+
+                // Sort by book then code
+                allContents.sort((a, b) => {
+                     const bookA = a.book || '';
+                     const bookB = b.book || '';
+                     if(bookA !== bookB) return bookA.localeCompare(bookB);
+                     return (a.code || a._id).localeCompare(b.code || b._id);
+                });
+
+                renderContentTable();
+            } catch(e) {
+                console.error("Load contents error:", e);
+                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderContentTable() {
+            const tbody = document.getElementById('contentListBody');
+            tbody.innerHTML = '';
+
+            if (allContents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ยังไม่มีเนื้อหาในระบบ</td></tr>';
+                return;
+            }
+
+            allContents.forEach(c => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div style="font-weight:bold">${c.code || c._id}</div>
+                        <div style="font-size:0.8em; color:#7f8c8d">${c.book || '-'}</div>
+                    </td>
+                    <td>${c.part || '-'} <br> <small style="color:#7f8c8d">${c.vagga || ''}</small></td>
+                    <td>${c.story || '-'}</td>
+                    <td>
+                        <div>${c.episode || '-'}</div>
+                        <small style="color:#7f8c8d">หน้า ${c.page || '-'}</small>
+                    </td>
+                    <td>
+                        <button class="btn-warning" onclick="editContent('${c._id}')" style="padding:2px 8px;">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn-danger" onclick="deleteContent('${c._id}')" style="padding:2px 8px;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openContentModal() {
+            document.getElementById('contentForm').reset();
+            document.getElementById('editContentId').value = '';
+            document.getElementById('contentModalTitle').innerText = 'เพิ่มเนื้อหาใหม่';
+            document.getElementById('contentCode').disabled = false;
+            document.getElementById('contentModal').style.display = 'block';
+        }
+
+        function closeContentModal() {
+            document.getElementById('contentModal').style.display = 'none';
+        }
+
+        function editContent(id) {
+            const c = allContents.find(item => item._id === id);
+            if (!c) return;
+
+            document.getElementById('editContentId').value = id;
+            document.getElementById('contentCode').value = c.code || id;
+            document.getElementById('contentCode').disabled = true; 
+            document.getElementById('contentBook').value = c.book || '';
+            document.getElementById('contentPart').value = c.part || '';
+            document.getElementById('contentVagga').value = c.vagga || '';
+            document.getElementById('contentStory').value = c.story || '';
+            document.getElementById('contentEpisode').value = c.episode || '';
+            document.getElementById('contentPage').value = c.page || '';
+            document.getElementById('contentPali').value = c.pali || '';
+            document.getElementById('contentThai').value = c.thai || '';
+            document.getElementById('contentVocab').value = c.vocab_list || '';
+
+            document.getElementById('contentModalTitle').innerText = 'แก้ไขเนื้อหา';
+            document.getElementById('contentModal').style.display = 'block';
+        }
+
+        async function saveContent(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('editContentId').value;
+            const code = document.getElementById('contentCode').value.trim();
+            const book = document.getElementById('contentBook').value;
+            const part = document.getElementById('contentPart').value.trim();
+            const vagga = document.getElementById('contentVagga').value.trim();
+            const story = document.getElementById('contentStory').value.trim();
+            const episode = document.getElementById('contentEpisode').value.trim();
+            const page = document.getElementById('contentPage').value.trim();
+            const pali = document.getElementById('contentPali').value;
+            const thai = document.getElementById('contentThai').value;
+            const vocab = document.getElementById('contentVocab').value;
+
+            if (!code || !story || !book) return alert('กรุณากรอกรหัส, ชื่อหนังสือ และชื่อเรื่อง');
+
+            const data = {
+                code, book, part, vagga, story, episode, page, pali, thai, vocab_list: vocab,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                if (id) {
+                    await db.collection('contents').doc(id).update(data);
+                } else {
+                    const doc = await db.collection('contents').doc(code).get();
+                    if (doc.exists) return alert('รหัสเนื้อหานี้มีอยู่แล้ว');
+                    
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('contents').doc(code).set(data);
+                }
+                
+                alert('บันทึกเรียบร้อย');
+                closeContentModal();
+                loadContents();
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function deleteContent(id) {
+            if (!confirm('ยืนยันการลบเนื้อหานี้?')) return;
+            try {
+                await db.collection('contents').doc(id).delete();
+                loadContents();
+            } catch(e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        async function migrateData() {
+            if (!confirm('คุณต้องการนำเข้าข้อมูลเก่า (Legacy Data) ทั้งหมดเข้าสู่ระบบหรือไม่?\\nข้อมูลที่มีรหัสซ้ำกันจะถูกเขียนทับ')) return;
+
+            const btn = event.target.closest('button');
+            if(btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังนำเข้า...';
+            }
+
+            const legacySources = [
+                { varName: 'contentDhamma01', book: 'ธรรมบท ภาค ๑' },
+                { varName: 'contentDhamma02', book: 'ธรรมบท ภาค ๒' },
+                { varName: 'contentDhamma03', book: 'ธรรมบท ภาค ๓' },
+                { varName: 'contentDhamma04', book: 'ธรรมบท ภาค ๔' },
+                { varName: 'contentDhamma05', book: 'ธรรมบท ภาค ๕' },
+                { varName: 'contentDhamma06', book: 'ธรรมบท ภาค ๖' },
+                { varName: 'contentDhamma07', book: 'ธรรมบท ภาค ๗' },
+                { varName: 'contentDhamma08', book: 'ธรรมบท ภาค ๘' },
+                { varName: 'contentMangala01', book: 'มังคลัถทีปนี ภาค ๑' },
+                { varName: 'contentMangala02', book: 'มังคลัถทีปนี ภาค ๒' },
+                { varName: 'contentSamanta01', book: 'สมันตปาสาทิกา ภาค ๑' },
+                { varName: 'contentSamanta02', book: 'สมันตปาสาทิกา ภาค ๒' },
+                { varName: 'contentSamanta03', book: 'สมันตปาสาทิกา ภาค ๓' },
+                { varName: 'contentVisuddhi01', book: 'วิสุทธิมรรค ภาค ๑' },
+                { varName: 'contentVisuddhi02', book: 'วิสุทธิมรรค ภาค ๒' },
+                { varName: 'contentVisuddhi03', book: 'วิสุทธิมรรค ภาค ๓' },
+                { varName: 'contentAbhidhamma01', book: 'อภิธรรม ภาค ๑' }
+            ];
+
+            let batch = db.batch();
+            let count = 0;
+            let total = 0;
+
+            try {
+                for (const src of legacySources) {
+                    if (window[src.varName]) {
+                        const contentObj = window[src.varName];
+                        for (const [key, segments] of Object.entries(contentObj)) {
+                            // Segments is array
+                            if (Array.isArray(segments)) {
+                                segments.forEach((seg, index) => {
+                                    // If only 1 segment, use key as ID. If multiple, use key_index+1
+                                    let docId = segments.length === 1 ? key : `${key}_${index + 1}`;
+                                    
+                                    // Create doc ref
+                                    const docRef = db.collection('contents').doc(docId);
+                                    
+                                    const data = {
+                                        code: docId,
+                                        book: src.book,
+                                        part: seg.part || '',
+                                        vagga: seg.vagga || '',
+                                        story: seg.story || '',
+                                        episode: seg.episode || '',
+                                        page: seg.page || '',
+                                        pali: seg.pali || '',
+                                        thai: seg.thai || '',
+                                        vocab_list: seg.vocab_list || '',
+                                        legacy_source: src.varName,
+                                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                                    };
+
+                                    batch.set(docRef, data, { merge: true });
+                                    count++;
+                                    total++;
+
+                                    if (count >= 400) {
+                                        await batch.commit();
+                                        batch = db.batch();
+                                        count = 0;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+
+                if (count > 0) {
+                    await batch.commit();
+                }
+
+                alert(`นำเข้าข้อมูลสำเร็จทั้งหมด ${total} รายการ`);
+                loadContents();
+
+            } catch (e) {
+                console.error(e);
+                alert('เกิดข้อผิดพลาดในการนำเข้า: ' + e.message);
+            } finally {
+                if(btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-file-import"></i> Import Legacy Data';
+                }
+            }
+        }
+
     </script>
 </body>
 
