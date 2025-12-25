@@ -716,10 +716,10 @@
     }
 
     function createSlotHTML(periodId, label, level, data = null) {
-        // Files helpers
-        const materials = getFiles(level, 'materials');
-        const exams = getFiles(level, 'exams');
-        const answers = getFiles(level, 'answers');
+        // Files helpers - We will fetch per subject now
+        // const materials = getFiles(level, 'materials');
+        // const exams = getFiles(level, 'exams');
+        // const answers = getFiles(level, 'answers');
         
         const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
         
@@ -760,6 +760,11 @@
             let isExam = false;
             let examFileVal = [];
             let ansFileVal = [];
+
+            // Fetch files specific to this subject (plus General)
+            const materials = getFiles(level, 'materials', subj.id);
+            const exams = getFiles(level, 'exams', subj.id);
+            const answers = getFiles(level, 'answers', subj.id);
 
             if (data) {
                 // Activity
@@ -993,22 +998,27 @@
              if (!exists) {
                  // Try to make a readable name
                  let name = val;
+                 let cleanVal = val;
                  try {
                      // Remove path if present (both / and \)
                      const parts = val.split(/[/\\]/);
-                     name = parts.pop();
+                     let filename = parts.pop();
+                     filename = filename.replace(/^\[LEGACY\]\s*/,'');
+                     name = filename;
+                     cleanVal = filename;
                      
                      // If it was a URL, clean it up
                      if (val.startsWith('http')) {
                          name = decodeURIComponent(name.split('?')[0]);
                          name = `[SAVED] ${name}`;
+                         cleanVal = val; // keep full URL for value
                      } else {
                          // Just the filename for legacy files
-                         // Removed [LEGACY] prefix as requested
+                         // Prefix [LEGACY] removed from both display and value
                      }
                  } catch(e){}
                  
-                 opts += `<option value="${val}" selected>${name}</option>`;
+                 opts += `<option value="${cleanVal}" selected>${name}</option>`;
              }
          });
 

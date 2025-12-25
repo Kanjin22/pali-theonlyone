@@ -339,9 +339,10 @@
 
                     <div style="margin-top: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
                         <a href="admin_login.html"
-                            style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
-                        </a>
+                    style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px; position: relative;">
+                    <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
+                    <span id="admin-badge-count" style="display:none; position:absolute; top:-8px; right:-12px; background-color:red; color:white; border-radius:50%; padding:2px 6px; font-size:0.7rem; font-weight:bold;">0</span>
+                </a>
                     </div>
                 </div>
             </div>
@@ -1015,7 +1016,7 @@
             });
         }
         // ตรวจสอบสถานะล็อกอิน
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
                 closeLogin();
                 // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
@@ -1025,6 +1026,26 @@
                 loadTodayPins();
 
                 const uid = user.uid;
+                
+                // ... (Existing admin badge check logic) ...
+                try {
+                    // Check Admin Permission for Badge
+                    const idTokenResult = await user.getIdTokenResult();
+                    if (idTokenResult.claims.admin) {
+                        // Count Pending Enrollments
+                        const snap = await db.collection('users')
+                            .where('role', '==', 'pending')
+                            .get();
+                        const count = snap.size;
+                        const badge = document.getElementById('admin-badge-count');
+                        if (badge && count > 0) {
+                            badge.textContent = count > 99 ? '99+' : count;
+                            badge.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error checking admin badge:", e);
+                }
 
                 // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
                 const FALLBACK_ADMIN_EMAILS = [
@@ -1066,6 +1087,29 @@
                         // ถ้าเป็น Admin ให้ข้ามการตรวจสอบสถานะการสมัครเรียน
                         if (role !== 'admin') {
                             
+                        // ... rest of user logic
+                        }
+                        
+                        // Show User Info
+                        showUser({
+                            displayName: displayName,
+                            photoURL: user.photoURL
+                        }, role);
+
+                    } catch(err) {
+                        console.error(err);
+                    }
+                })();
+
+            } else {
+                showLogin();
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTodayPins();
+        });
                             try {
                                 const enr = await db.collection('enrollments').doc(uid).get();
                                 if (enr.exists && enr.data()) {

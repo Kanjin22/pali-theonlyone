@@ -1068,7 +1068,8 @@
                             finalUrl = f;
                         } else {
                             // CLEAN PATH: Support legacy paths like "files/pt12/..."
-                            const cleanName = f.split(/[/\\]/).pop();
+                            let cleanName = f.split(/[/\\]/).pop();
+                            cleanName = cleanName.replace(/^\[LEGACY\]\s*/,'');
                             const subjKey = subjId ? `${cleanName}|${subjId}` : null;
 
                             // 1. Try Firestore Index (Original or Clean)
