@@ -1261,6 +1261,34 @@
                         if (sel) {
                             setRef.add(key);
                             deselectRef.delete(key);
+                            
+                            // Cross-exclusion Logic:
+                            // If selected in current mode, DESELECT (mark as NO) in the other mode
+                            const otherSetRef = isSense ? selectedLiteral : selectedSense;
+                            const otherDeselectRef = isSense ? deselectedLiteral : deselectedSense;
+                            
+                            // If it was selected in the other mode, remove it
+                            if (otherSetRef.has(key)) {
+                                otherSetRef.delete(key);
+                                // Mark as explicitly deselected in the other mode
+                                otherDeselectRef.add(key);
+                                
+                                // Update UI for the other list if visible
+                                const otherListId = isSense ? 'literalList' : 'senseList';
+                                const otherList = document.getElementById(otherListId);
+                                if (otherList) {
+                                    const otherYesBtn = otherList.querySelector('button[data-select="yes"][data-key="'+key+'"]');
+                                    const otherNoBtn = otherList.querySelector('button[data-select="no"][data-key="'+key+'"]');
+                                    if (otherYesBtn && otherNoBtn) {
+                                        // Update to NO selected
+                                        otherNoBtn.classList.add('primary'); 
+                                        otherNoBtn.classList.remove('secondary'); 
+                                        otherYesBtn.classList.add('secondary'); 
+                                        otherYesBtn.classList.remove('primary');
+                                    }
+                                }
+                            }
+
                         } else {
                             setRef.delete(key);
                             deselectRef.add(key);
