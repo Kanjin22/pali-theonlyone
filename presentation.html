@@ -1103,6 +1103,15 @@
         }
 
         let currentIndex = 0;
+        // Check for index in URL
+        const urlIndex = params.get('index');
+        if (urlIndex) {
+            const idx = parseInt(urlIndex);
+            if (!isNaN(idx) && idx >= 0 && idx < slides.length) {
+                currentIndex = idx;
+            }
+        }
+
         function computeMeta(slideId, slideObj) {
             let title = "สื่อการสอน";
             let subtitle = "";
@@ -1627,6 +1636,17 @@
             computeMeta(slideId, s);
             applyThaiState();
             applyThaiModeLabel();
+
+            // Save Progress
+            if (slideId) {
+                const state = {
+                    id: slideId,
+                    index: currentIndex,
+                    title: document.getElementById('slideTitle').innerText,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('pali_last_session', JSON.stringify(state));
+            }
         }
 
         function getAllAnalysisKeys(localAnalysis) {
