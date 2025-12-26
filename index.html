@@ -310,11 +310,7 @@
                     <div class="card-title">ดาวน์โหลด</div>
                     <div class="card-desc">แบบฟอร์มและเอกสาร</div>
                 </a>
-                <a id="last-classroom-link" href="#" class="menu-card level-tool" style="display:none;">
-                    <div class="icon-box"><i class="fa-solid fa-door-open"></i></div>
-                    <div class="card-title" id="last-classroom-title">ห้องเรียนล่าสุด</div>
-                    <div class="card-desc">กลับไปหน้าห้องเรียนเดิม</div>
-                </a>
+
             </div>
         </div>
 
@@ -768,7 +764,7 @@
             }
 
             const classroomLinks = Array.from(document.querySelectorAll('a[href^="classroom_select.html"]'));
-            const lastClassroom = document.getElementById('last-classroom-link');
+
             const enrollCardId = 'enroll-card';
             const existingEnroll = document.getElementById(enrollCardId);
 
@@ -780,7 +776,7 @@
             if (role === 'admin' || role === 'teacher') {
                 // Show All
                 classroomLinks.forEach(a => a.style.display = 'flex');
-                if (lastClassroom) lastClassroom.style.display = 'block';
+
                 if (existingEnroll) existingEnroll.remove();
 
             } else if (role === 'student') {
@@ -803,13 +799,13 @@
                         a.style.display = 'none';
                     }
                 });
-                if (lastClassroom) lastClassroom.style.display = hasVisible ? 'block' : 'none';
+
                 if (existingEnroll) existingEnroll.remove();
 
             } else {
                 // General or others -> Hide All, Show Enroll
                 classroomLinks.forEach(a => a.style.display = 'none');
-                if (lastClassroom) lastClassroom.style.display = 'none';
+
                 createEnrollCard(enrollCardId, classroomLinks.length ? classroomLinks[0].parentElement : null);
             }
 
@@ -895,6 +891,13 @@
                     const currentMonth = monthNames[today.getMonth()];
                     const currentYear = today.getFullYear().toString();
                     
+                    // Fetch classrooms for room names
+                    const roomSnap = await db.collection('classrooms').get();
+                    const roomMap = {};
+                    roomSnap.forEach(doc => {
+                        roomMap[doc.id] = doc.data().name || doc.id;
+                    });
+
                     const snap = await db.collection('schedules')
                         .where('month', '==', currentMonth)
                         .where('year', '==', currentYear)
@@ -919,7 +922,8 @@
                         if (data.days && Array.isArray(data.days)) {
                             const dayEntry = data.days.find(d => d.date === iso);
                             if (dayEntry) {
-                                const lvlLabel = getLevelLabel(data.level);
+                                const roomName = roomMap[data.roomId] || data.roomId;
+                                const lvlLabel = `${getLevelLabel(data.level)} (${roomName})`;
                                 
                                 const extract = (periodData, periodName) => {
                                     if (!periodData) return;
@@ -1007,7 +1011,7 @@
                 groups[level].push(p);
             });
 
-            Object.keys(groups).forEach(lvl => {
+            Object.keys(groups).sort().forEach(lvl => {
                 // Card Container
                 const wrapper = document.createElement('div');
                 wrapper.className = 'pin-card';
