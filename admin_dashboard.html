@@ -592,14 +592,13 @@
                                 <th>ห้องเรียน</th>
                                 <th>อาจารย์ชั้น</th>
                                 <th>สอนห้อง</th>
-                                <th>เบอร์โทร</th>
                                 <th>วันที่อนุมัติ</th>
                                 <th>จัดการ</th>
                             </tr>
                         </thead>
                         <tbody id="memberList">
                             <tr>
-                                <td colspan="9" class="loading">กำลังโหลดข้อมูล...</td>
+                                <td colspan="8" class="loading">กำลังโหลดข้อมูล...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1530,7 +1529,7 @@
 
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="9" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
         }
 
