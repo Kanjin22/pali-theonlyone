@@ -12,8 +12,8 @@ const PaliLookup = {
         // 2. Normalize and check (remove leading/trailing spaces, maybe zero-width spaces)
         // (Already trimmed)
 
-        // 3. Smart Suffix Stripping
-        const candidates = this.generateCandidates(cleanWord);
+        // 3. Smart Suffix Stripping & Dictionary Scanning
+        const candidates = this.generateCandidates(cleanWord, databases);
         for (const candidate of candidates) {
             result = this.checkAll(candidate, databases);
             if (result) {
@@ -115,14 +115,24 @@ const PaliLookup = {
         if (dbs.kitaka && dbs.kitaka[key]) return { ...dbs.kitaka[key], source: 'กิริยากิตก์', word: key };
         if (dbs.samasa && dbs.samasa[key]) return { ...dbs.samasa[key], source: 'สมาส', word: key };
         if (dbs.taddhita && dbs.taddhita[key]) return { ...dbs.taddhita[key], source: 'ตัทธิต', word: key };
+        
+        // Fallback: Check Roman SC (if key is Thai, convert to Roman)
+        if (dbs.sc) {
+             let romanKey = key;
+             if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
+                 romanKey = PaliScript.thaiToRoman(key);
+             }
+             if (dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
+        }
+
         return null;
     },
 
-    generateCandidates: function(word) {
+    generateCandidates: function(word, dbs) {
         let candidates = [];
         
-        // --- 1. Roman-based Vowel Substitution (More Reliable) ---
-        // Convert to Roman -> Manipulate Vowels -> Convert back to Thai
+        // --- 1. Roman-based Scanning & Vowel Substitution (Smart & Incremental) ---
+        // Convert to Roman -> Scan L-to-R -> Check Dictionary -> Convert back to Thai
         if (typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman && PaliScript.romanToThai) {
              const roman = PaliScript.thaiToRoman(word);
              
@@ -132,39 +142,40 @@ const PaliLookup = {
                  if (t !== word && !candidates.includes(t)) candidates.push(t);
              };
 
-             // Case -o (puriso -> purisa, purisā)
-             if (roman.endsWith('o')) {
-                 add(roman.slice(0, -1) + 'a');
-                 add(roman.slice(0, -1) + 'ā');
-             }
-             // Case -e (kule -> kula, kulā)
-             else if (roman.endsWith('e')) {
-                 add(roman.slice(0, -1) + 'a');
-                 add(roman.slice(0, -1) + 'ā');
-             }
-             // Case -ū (bhikkhū -> bhikkhu)
-             else if (roman.endsWith('ū')) {
-                 add(roman.slice(0, -1) + 'u');
-             }
-             // Case -ī (seṭṭhī -> seṭṭhi)
-             else if (roman.endsWith('ī')) {
-                 add(roman.slice(0, -1) + 'i');
-             }
-             // Case -ā (kaññā -> kañña)
-             else if (roman.endsWith('ā')) {
-                 add(roman.slice(0, -1) + 'a');
-             }
-             // Case -u (vatthu -> vatthū?)
-             else if (roman.endsWith('u')) {
-                  add(roman.slice(0, -1) + 'ū');
-             }
-             // Case -i (muni -> munī?)
-             else if (roman.endsWith('i')) {
-                  add(roman.slice(0, -1) + 'ī');
-             }
-             // Case -a (implicit) -> -ā
-             else if (roman.endsWith('a')) {
-                  add(roman.slice(0, -1) + 'ā');
+             // Vowel mappings for substitution
+             const vowelMap = {
+                 'a': ['ā'], 'ā': ['a'],
+                 'i': ['ī'], 'ī': ['i'],
+                 'u': ['ū'], 'ū': ['u'],
+                 'e': ['a', 'ā'],
+                 'o': ['a', 'ā'],
+                 'ṃ': ['m'], 'm': ['ṃ']
+             };
+
+             // Scan Roman string L-to-R (Incremental Check)
+             // Start from length 2 to avoid single-char noise
+             for (let i = 2; i <= roman.length; i++) {
+                 const sub = roman.substring(0, i);
+                 
+                 // 1. Check exact prefix match (if dictionary has it)
+                 // This catches roots hidden inside long words (e.g. bhikkhu inside bhikkhū)
+                 if (dbs && dbs.sc && dbs.sc[sub]) {
+                     add(sub);
+                 }
+                 
+                 // 2. Check Vowel Substitution at the current end
+                 // This handles inflection changes (e.g. puriso -> purisa)
+                 const lastChar = sub.slice(-1);
+                 const base = sub.slice(0, -1);
+                 
+                 if (vowelMap[lastChar]) {
+                     for (const subChar of vowelMap[lastChar]) {
+                         const candidate = base + subChar;
+                         if (dbs && dbs.sc && dbs.sc[candidate]) {
+                             add(candidate);
+                         }
+                     }
+                 }
              }
         }
 
