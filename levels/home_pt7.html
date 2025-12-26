@@ -169,11 +169,9 @@
                     if (role === 'general' && approved) role = 'student';
                     if (role === 'student' && level !== 'pt7') { location.href = '../index.html'; return; }
                 }
-                document.addEventListener('DOMContentLoaded', () => {
-                    initLevelPage('pt7');
-                    localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt7.html', title: 'ห้องเรียน ป.ธ. ๗' }));
-                    document.getElementById('room-content-section').style.display = 'block';
-                });
+                initLevelPage('pt7');
+                localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt7.html', title: 'ห้องเรียน ป.ธ. ๗' }));
+                document.getElementById('room-content-section').style.display = 'block';
             } catch (e) { console.error(e); location.href = '../index.html'; }
         });
     </script>
