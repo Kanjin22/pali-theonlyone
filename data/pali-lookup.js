@@ -192,7 +192,7 @@ const PaliLookup = {
         let results = [];
         
         // 1. Thai Dictionaries (Ordered: Tananunto, E-Tipitaka, New Gen, General)
-        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย (อ.ทานานุนโต)', word: key });
+        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย (ธรรมบทภาค ๑-๘)', word: key });
         if (dbs.etipitaka && dbs.etipitaka[key]) results.push({ details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key });
         if (dbs.newgen && dbs.newgen[key]) results.push({ ...dbs.newgen[key], source: 'Thai New Gen', word: key });
         if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
