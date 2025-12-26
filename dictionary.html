@@ -86,54 +86,71 @@
         .results-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
+        /* Vocab Card Styling */
         .vocab-card {
             background: white;
-            padding: 20px 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 5px solid #bdc3c7;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
             transition: transform 0.2s;
+            border: 1px solid #eee;
         }
         
         .vocab-card:hover {
-            transform: translateX(5px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
-        .vocab-card.type-general { border-left-color: #34495e; } /* ทั่วไป - เทาเข้ม */
-        .vocab-card.type-newgen { border-left-color: #1abc9c; } /* New Gen - เทอร์ควอยซ์ */
+        /* Source Header Colors */
+        .card-header {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Thai Sources */
+        .source-tananunto .card-header { background: linear-gradient(135deg, #2ecc71, #27ae60); } /* Green */
+        .source-etipitaka .card-header { background: linear-gradient(135deg, #1abc9c, #16a085); } /* Teal */
+        .source-newgen .card-header { background: linear-gradient(135deg, #3498db, #2980b9); } /* Blue */
+        .source-general .card-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); } /* Gray */
+
+        /* Roman Sources */
+        .source-sc .card-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; } /* Yellow/Orange */
+        .source-dpd .card-header { background: linear-gradient(135deg, #e74c3c, #c0392b); } /* Red */
+        .source-pts .card-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); } /* Purple */
+        .source-other .card-header { background: linear-gradient(135deg, #34495e, #2c3e50); } /* Dark Blue */
+
+        .card-body {
+            padding: 20px 25px;
+        }
 
         .word-title {
             font-family: 'Niramit', serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #2c3e50;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: baseline;
-        }
-        .word-title .pali-head { color: #2c3e50; }
-        .word-title .thai-head { color: #16a085; }
-        .word-title .colon { color: #95a5a6; padding: 0 6px; }
-
-        .word-type-badge {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: #ecf0f1;
-            color: #7f8c8d;
-            font-weight: normal;
+            gap: 10px;
         }
 
         .word-split {
             color: #e67e22;
             font-weight: 500;
             font-size: 1.1rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            background: #fff3e0;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
         }
 
         .word-details {
@@ -141,18 +158,21 @@
             padding: 0;
             margin: 0;
             color: #555;
+            font-size: 1.05rem;
+            line-height: 1.6;
         }
 
         .word-details li {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: flex-start;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
         }
 
         .word-details li::before {
             content: "•";
-            color: #3498db;
-            margin-right: 8px;
+            color: #bdc3c7;
+            position: absolute;
+            left: 0;
             font-weight: bold;
         }
 
@@ -173,6 +193,14 @@
             color: #95a5a6;
             font-size: 1.1rem;
         }
+        
+        .stem-info {
+            font-size: 0.9rem;
+            color: #e67e22;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -182,7 +210,7 @@
         
         <div class="header-section">
             <div class="page-title">📚 พจนานุกรมศัพท์บาลี</div>
-            <div class="page-subtitle">รวบรวมศัพท์ อาขยาต กิตก์ สมาส และตัทธิต</div>
+            <div class="page-subtitle">รวบรวมศัพท์จากทุกแหล่งข้อมูล (ไทย/โรมัน)</div>
         </div>
 
         <div class="search-box-container">
@@ -208,15 +236,16 @@
     <!-- Load Vocab Files -->
     <script src="data/pali-script.js"></script>
     <script src="data/vocab-general.js"></script>
-    <script src="data/vocab-dpd.js"></script>
-    <script src="data/vocab-dpd-inflected.js"></script>
+    <script src="data/vocab-newgen.js"></script> <!-- Added New Gen -->
+    <script src="data/vocab-tananunto.js"></script> <!-- Added Tananunto -->
     <script src="data/vocab-etipitaka.js"></script>
+    
     <script src="data/vocab-sc.js"></script>
+    <script src="data/vocab-dpd.js"></script>
     <script src="data/vocab-pts.js"></script>
     <script src="data/vocab-dppn.js"></script>
     <script src="data/vocab-dhammika.js"></script>
-    <!-- Add Tananunto if available, though previously it was Excel. Assuming vocab-tananunto.js exists based on memory/context -->
-    <!-- Checking if vocab-tananunto.js exists in file system -->
+    <script src="data/vocab-dpd-inflected.js"></script>
     
     <script src="data/pali-lookup.js"></script>
 
@@ -224,15 +253,16 @@
         // Initialize Databases
         const databases = {
             general: typeof vocabGeneral !== 'undefined' ? vocabGeneral : {},
-            dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
-            dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {},
+            newgen: typeof vocabNewGen !== 'undefined' ? vocabNewGen : {},
+            tananunto: typeof vocabTananunto !== 'undefined' ? vocabTananunto : {},
             etipitaka: typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {},
+            
             sc: typeof vocabSC !== 'undefined' ? vocabSC : {},
+            dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
             pts: typeof vocabPTS !== 'undefined' ? vocabPTS : {},
             dppn: typeof vocabDPPN !== 'undefined' ? vocabDPPN : {},
             dhammika: typeof vocabDhammika !== 'undefined' ? vocabDhammika : {},
-            // Tananunto might be missing as JS, let's check or handle gracefully
-            tananunto: {} 
+            dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {}
         };
 
         let activeFilter = 'all';
@@ -243,7 +273,6 @@
             // Update buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
-                // Simple check for button text match or logic
                 if (btn.getAttribute('onclick').includes(`'${filter}'`)) {
                     btn.classList.add('active');
                 }
@@ -271,32 +300,29 @@
             // Use PaliLookup.findAll to get results from ALL sources
             let results = PaliLookup.findAll(queryRaw, databases);
 
-            // Also try to find candidates via stemming if no direct results (optional, but good for user experience)
-            if (results.length === 0) {
-                 const candidates = PaliLookup.generateCandidates(queryRaw, databases);
-                 for (const cand of candidates) {
-                     const subResults = PaliLookup.findAll(cand, databases);
-                     // Add stemming info
-                     subResults.forEach(r => r._stemmedFrom = queryRaw);
-                     results = results.concat(subResults);
-                 }
-                 
-                 // Remove duplicates based on source and word
-                 const uniqueResults = [];
-                 const seen = new Set();
-                 for (const r of results) {
-                     const key = r.source + '|' + r.word;
-                     if (!seen.has(key)) {
-                         seen.add(key);
-                         uniqueResults.push(r);
-                     }
-                 }
-                 results = uniqueResults;
+            // Also try to find candidates via stemming if no direct results or to supplement
+            // To ensure we don't miss anything, we'll try stemming if we have < 2 results OR if explicitly requested
+            // But usually we just want to find *something*.
+            // Let's always look for stemmed candidates and append them if they are unique
+            const candidates = PaliLookup.generateCandidates(queryRaw, databases);
+            for (const cand of candidates) {
+                 const subResults = PaliLookup.findAll(cand, databases);
+                 // Add stemming info
+                 subResults.forEach(r => r._stemmedFrom = queryRaw);
+                 results = results.concat(subResults);
             }
-
-            if (activeFilter !== 'all') {
-                // No other filters currently active
-            }
+             
+             // Remove duplicates based on source and word
+             const uniqueResults = [];
+             const seen = new Set();
+             for (const r of results) {
+                 const key = r.source + '|' + r.word + '|' + (r._stemmedFrom || '');
+                 if (!seen.has(key)) {
+                     seen.add(key);
+                     uniqueResults.push(r);
+                 }
+             }
+             results = uniqueResults;
 
             if (results.length === 0) {
                 container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในฐานข้อมูล</div>`;
@@ -315,7 +341,7 @@
                     if (item.data.definition) {
                         defHtml = `<li>${item.data.definition}</li>`;
                     } else if (typeof item.data === 'string') {
-                         defHtml = `<li>${item.data}</li>`; // PTS might be raw HTML string
+                         defHtml = `<li>${item.data}</li>`; 
                     } else {
                          defHtml = `<li>(ดูรายละเอียดในคัมภีร์ฉบับเต็ม)</li>`;
                     }
@@ -323,28 +349,43 @@
 
                 // Stemming Info
                 let stemInfo = "";
-                if (item._stemmedFrom) {
-                    stemInfo = `<div style="font-size:0.9rem; color:#e67e22; margin-bottom:5px;">(จากคำค้น: ${item._stemmedFrom})</div>`;
+                if (item._stemmedFrom && item._stemmedFrom !== item.word) {
+                    stemInfo = `<div class="stem-info"><i class="fa-solid fa-code-branch"></i> ค้นหาจากรากศัพท์: <b>${item.word}</b> (คำเดิม: ${item._stemmedFrom})</div>`;
                 }
 
-                // Badge Color Class
-                let typeClass = 'general';
-                if (item.source === 'Digital Pāḷi Dictionary') typeClass = 'newgen'; // Reuse color
-                else if (item.source === 'พจนานุกรม E-Tipitaka') typeClass = 'newgen';
+                // Determine Source Class for Styling
+                let sourceClass = 'other';
+                const s = item.source;
+                if (s.includes('ทานานุนโต')) sourceClass = 'tananunto';
+                else if (s.includes('E-Tipitaka')) sourceClass = 'etipitaka';
+                else if (s.includes('New Gen')) sourceClass = 'newgen';
+                else if (s.includes('ศัพท์ทั่วไป')) sourceClass = 'general';
+                else if (s === 'sc') sourceClass = 'sc';
+                else if (s === 'Digital Pāḷi Dictionary') sourceClass = 'dpd';
+                else if (s === 'pts') sourceClass = 'pts';
+
+                // Display Source Name
+                let sourceName = item.source;
+                if (sourceName === 'sc') sourceName = 'SuttaCentral (Sujato)';
+                if (sourceName === 'pts') sourceName = 'Pali Text Society';
+                if (sourceName === 'dppn') sourceName = 'Dictionary of Pali Proper Names';
+                if (sourceName === 'dhammika') sourceName = 'Nature Dictionary (Dhammika)';
 
                 return `
-                <div class="vocab-card type-${typeClass}">
-                    <div class="word-title">
-                        <span class="word-text-group">
-                            <span class="pali-head">${item.word}</span>
-                        </span>
-                        <span class="word-type-badge">${item.source}</span>
+                <div class="vocab-card source-${sourceClass}">
+                    <div class="card-header">
+                        <span><i class="fa-solid fa-book"></i> ${sourceName}</span>
                     </div>
-                    ${stemInfo}
-                    ${splitText !== '-' ? `<div class="word-split">${splitText}</div>` : ''}
-                    <ul class="word-details">
-                        ${defHtml}
-                    </ul>
+                    <div class="card-body">
+                        <div class="word-title">
+                            ${item.word}
+                        </div>
+                        ${stemInfo}
+                        ${splitText !== '-' ? `<div class="word-split">${splitText}</div>` : ''}
+                        <ul class="word-details">
+                            ${defHtml}
+                        </ul>
+                    </div>
                 </div>
                 `;
             }).join('');
