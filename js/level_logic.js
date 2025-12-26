@@ -24,6 +24,27 @@ async function initLevelPage(levelId) {
             }
 
             if (room) {
+                 let allow = true;
+                 if (typeof firebase !== 'undefined') {
+                     const u = firebase.auth().currentUser;
+                     if (u) {
+                         let role = 'general';
+                         try {
+                             const userDoc = await firebase.firestore().collection('users').doc(u.uid).get();
+                             if (userDoc.exists && userDoc.data()) role = userDoc.data().role || role;
+                         } catch (e) {}
+                         if (role === 'student') {
+                             try {
+                                 const enr = await firebase.firestore().collection('enrollments').doc(u.uid).get();
+                                 const approved = enr.exists && enr.data().status === 'approved';
+                                 const rooms = enr.exists && Array.isArray(enr.data().rooms) ? enr.data().rooms : [];
+                                 const isMember = rooms.includes(roomId);
+                                 if (!approved || !isMember) allow = false;
+                             } catch (e) { allow = false; }
+                         }
+                     } else { allow = false; }
+                 }
+                 if (!allow) { window.location.href = '../index.html'; return; }
                  renderRoomContent(room);
             } else {
                  console.error("Invalid room ID:", roomId);
