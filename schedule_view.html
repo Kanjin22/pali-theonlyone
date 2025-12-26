@@ -1522,7 +1522,11 @@
                         const level = approved ? (enr.data().levelRequested || null) : null;
                         const rooms = enr.exists && Array.isArray(enr.data().rooms) ? enr.data().rooms : [];
                         const isMember = rooms.includes(rid);
-                        if (!approved || !level || level !== room.level || !isMember) { window.location.href = 'index.html'; return; }
+                        // Allow teachers/admins to bypass membership check even in student mode
+                        if ((!approved || !level || level !== room.level || !isMember) && role !== 'teacher' && role !== 'admin') { 
+                            window.location.href = 'index.html'; 
+                            return; 
+                        }
                     } else {
                         // Teacher/Admin can view all rooms' schedules
                         // Additional editing permissions are controlled elsewhere (create button visibility)
