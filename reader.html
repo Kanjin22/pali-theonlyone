@@ -74,21 +74,17 @@
                     <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
                     <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
                 </select>
-                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (Palithai)">
+                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (84000.org)">
                     <i class="fas fa-book"></i>
                 </button>
             </div>
             
             <script>
                 document.getElementById('dictBtn').onclick = () => {
-                    // Try to use selected text if any
                     const selection = window.getSelection().toString().trim();
-                    let url = 'http://admin.palithai.com/';
+                    let url = 'https://84000.org/tipitaka/dic/v_seek.php';
                     if(selection) {
-                        // Guessing the search parameter, usually 'q' or 'keyword' or path
-                        // Since we don't know, we just open the home page for now, 
-                        // but we could try adding it if the user confirms the pattern.
-                        // url += '?q=' + encodeURIComponent(selection); 
+                        url += '?text=' + encodeURIComponent(selection);
                     }
                     window.open(url, '_blank');
                 };
