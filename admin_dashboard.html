@@ -588,8 +588,10 @@
                             <tr>
                                 <th>ชื่อ-สกุล</th>
                                 <th>ประเภท</th>
-                                <th>ชั้นเรียน</th>
+                                <th>นักเรียนชั้น</th>
                                 <th>ห้องเรียน</th>
+                                <th>อาจารย์ชั้น</th>
+                                <th>สอนห้อง</th>
                                 <th>เบอร์โทร</th>
                                 <th>วันที่อนุมัติ</th>
                                 <th>จัดการ</th>
@@ -597,7 +599,7 @@
                         </thead>
                         <tbody id="memberList">
                             <tr>
-                                <td colspan="5" class="loading">กำลังโหลดข้อมูล...</td>
+                                <td colspan="9" class="loading">กำลังโหลดข้อมูล...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1294,7 +1296,7 @@
         // --- Members Logic ---
         async function loadMembers() {
             const tbody = document.getElementById('memberList');
-            tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" class="loading">กำลังโหลด...</td></tr>';
 
             try {
                 // Fetch all users and enrollments
@@ -1313,7 +1315,7 @@
                     if (readError.code === 'permission-denied') {
                         tbody.innerHTML = `
                             <tr>
-                                <td colspan="5" style="color:red; text-align:center; padding: 20px;">
+                                <td colspan="9" style="color:red; text-align:center; padding: 20px;">
                                     <b>เข้าถึงข้อมูลไม่ได้ (Permission Denied)</b><br>
                                     <small>กรุณาตรวจสอบว่าบัญชีนี้มีสถานะ 'admin' ใน Firestore หรือยัง</small><br>
                                     <button class="btn btn-primary" style="margin-top:10px;" onclick="forceSetAdmin()">
@@ -1401,7 +1403,7 @@
                 }
 
                 if (members.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">ไม่พบข้อมูลสมาชิก</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px;">ไม่พบข้อมูลสมาชิก</td></tr>';
                     return;
                 }
 
@@ -1449,8 +1451,10 @@
                             ${m.role === 'general' ? '<div style="font-size:0.75rem; color:#ccc;">(ผู้ใช้งานทั่วไป)</div>' : ''}
                         </td>
                         <td></td>
-                        <td>${LEVEL_NAMES[m.level] || '-'}</td>
-                        <td></td>
+                        <td></td> <!-- Student Level -->
+                        <td></td> <!-- Student Room -->
+                        <td></td> <!-- Teacher Level -->
+                        <td></td> <!-- Teacher Room -->
                         <td>${m.phone}</td>
                         <td>${m.dateStr}</td>
                         <td></td>
@@ -1460,8 +1464,11 @@
                     tr.children[1].appendChild(select);
 
                     // Level and Room read-only display
-                    const levelCell = tr.children[2];
-                    const roomCell = tr.children[3];
+                    const studentLevelCell = tr.children[2];
+                    const studentRoomCell = tr.children[3];
+                    const teacherLevelCell = tr.children[4];
+                    const teacherRoomCell = tr.children[5];
+
                     async function ensureRoomsLoaded() {
                         if (!window.allClassrooms || window.allClassrooms.length === 0) {
                             try {
@@ -1473,29 +1480,35 @@
                     }
                     (async () => {
                         await ensureRoomsLoaded();
+                        
+                        // Teacher Data
                         const teacherLevelsText = Array.isArray(m.teacherLevels) && m.teacherLevels.length
                             ? m.teacherLevels.map(k => LEVEL_NAMES[k] || k).join(', ')
-                            : '';
-                        const studentLevelText = m.level && LEVEL_NAMES[m.level] ? LEVEL_NAMES[m.level] : (m.level || '');
-                        const levelsParts = [];
-                        if (teacherLevelsText) levelsParts.push('อาจารย์: ' + teacherLevelsText);
-                        if (studentLevelText) levelsParts.push('นักเรียน: ' + studentLevelText);
-                        levelCell.innerHTML = levelsParts.length ? levelsParts.join('<br>') : '-';
+                            : '-';
+                        
                         const teacherRooms = (window.allClassrooms || [])
                             .filter(r => Array.isArray(r.teachers) && r.teachers.includes(m.teacherName))
                             .map(r => r.name || r.id);
+                        const teacherRoomsText = teacherRooms.length ? teacherRooms.join(', ') : '-';
+
+                        // Student Data
+                        const studentLevelText = m.level && LEVEL_NAMES[m.level] ? LEVEL_NAMES[m.level] : (m.level || '-');
+                        
                         const studentRooms = Array.isArray(m.rooms)
                             ? m.rooms.map(id => {
                                 const rr = (window.allClassrooms || []).find(x => x.id === id);
                                 return rr ? (rr.name || rr.id) : id;
                               })
                             : [];
-                        const roomParts = [];
-                        if (teacherRooms.length) roomParts.push('อาจารย์: ' + teacherRooms.join(', '));
-                        if (studentRooms.length) roomParts.push('นักเรียน: ' + studentRooms.join(', '));
-                        roomCell.innerHTML = roomParts.length ? roomParts.join('<br>') : '-';
+                        const studentRoomsText = studentRooms.length ? studentRooms.join(', ') : '-';
+
+                        // Fill Cells
+                        studentLevelCell.innerHTML = studentLevelText;
+                        studentRoomCell.innerHTML = studentRoomsText;
+                        teacherLevelCell.innerHTML = teacherLevelsText;
+                        teacherRoomCell.innerHTML = teacherRoomsText;
                     })();
-                    const actionCell = tr.children[6];
+                    const actionCell = tr.children[8];
                     const actions = document.createElement('div');
                     actions.className = 'action-buttons';
                     const editBtn = document.createElement('button');
@@ -1517,7 +1530,7 @@
 
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
         }
 
