@@ -526,6 +526,37 @@
         'answers': 'เฉลย'
     };
 
+    let allClassrooms = [];
+    let allowedRooms = [];
+    let currentRole = 'general';
+    let teacherName = '';
+    let currentUser = null;
+
+    function computeAllowedRooms() {
+        allowedRooms = (currentRole === 'admin')
+            ? allClassrooms
+            : allClassrooms.filter(r => Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName));
+    }
+
+    function enforceAccessWithParams() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const preRoom = urlParams.get('room');
+            if (!preRoom) return true;
+            const room = (Array.isArray(allowedRooms) ? allowedRooms : []).find(r => r.id === preRoom);
+            if (!room) {
+                alert("คุณไม่มีสิทธิ์ดูหรือแก้ไขตารางของห้องนี้");
+                window.location.href = '../index.html';
+                return false;
+            }
+            levelSelect.value = room.level;
+            onLevelChange(); // Populate rooms for allowed set
+            roomSelect.value = preRoom; // Select room
+            checkAndLoadSchedule();
+            return true;
+        } catch (e) { return false; }
+    }
+
     // Initialize
     (async function init() {
         // Set default date to current
@@ -561,6 +592,14 @@
                     const role = doc.exists ? doc.data().role : 'unknown';
                     statusDiv.innerHTML = `<i class="fas fa-user"></i> ${user.email} (${role})`;
                     statusDiv.style.color = (role === 'admin' || role === 'teacher') ? '#27ae60' : '#e74c3c';
+                    
+                    currentUser = user;
+                    currentRole = role || 'general';
+                    teacherName = user.displayName || user.email || user.uid;
+                    if (allClassrooms.length) {
+                        computeAllowedRooms();
+                        enforceAccessWithParams();
+                    }
                 } catch(e) {
                      statusDiv.innerText = `${user.email} (Error checking role)`;
                 }
@@ -570,22 +609,13 @@
             }
         });
         
-        let allClassrooms = [];
         await Promise.all([loadClassrooms(), loadDynamicFiles()]);
         
         // Check URL params
         const urlParams = new URLSearchParams(window.location.search);
         const preRoom = urlParams.get('room');
-        if (preRoom) {
-            // Find room to set level first
-            const room = allClassrooms.find(r => r.id === preRoom);
-            if (room) {
-                levelSelect.value = room.level;
-                onLevelChange(); // Populate rooms
-                roomSelect.value = preRoom; // Select room
-                checkAndLoadSchedule();
-            }
-        }
+        computeAllowedRooms();
+        if (preRoom) enforceAccessWithParams();
     })();
 
     async function loadClassrooms() {
@@ -625,7 +655,8 @@
             return;
         }
         
-        const filtered = allClassrooms.filter(r => r.level === lvl);
+        const baseRooms = (allowedRooms && allowedRooms.length) ? allowedRooms : allClassrooms;
+        const filtered = baseRooms.filter(r => r.level === lvl);
         filtered.forEach(r => {
              const option = document.createElement('option');
              option.value = r.id;
@@ -644,6 +675,15 @@
 
         if (!roomId || !month || !year) {
             currentScheduleId = null;
+            return;
+        }
+
+        const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
+        if (!isAllowed) {
+            statusMsg.style.display = 'block';
+            statusMsg.style.backgroundColor = '#fff3cd';
+            statusMsg.style.color = '#856404';
+            statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์แก้ไขตารางของห้องนี้`;
             return;
         }
 
@@ -687,8 +727,21 @@
         const roomId = roomSelect.value;
         const month = document.getElementById('month-select').value;
         const year = document.getElementById('year-select').value;
+        const statusMsg = document.getElementById('status-msg');
         
         if (!roomId) return alert("กรุณาเลือกห้องเรียน");
+        
+        const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
+        if (!isAllowed) {
+            alert("คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้");
+            if (statusMsg) {
+                statusMsg.style.display = 'block';
+                statusMsg.style.backgroundColor = '#fff3cd';
+                statusMsg.style.color = '#856404';
+                statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้`;
+            }
+            return;
+        }
         
         const rows = document.querySelectorAll('.row-entry');
         if (rows.length === 0) return alert("กรุณาเพิ่มวันเรียนอย่างน้อย 1 วัน");
