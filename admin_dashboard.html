@@ -1547,9 +1547,12 @@
 
         async function resetAllAssignments() {
             if (!confirm('ยืนยันการลบ “ห้องเรียน” และ “ชั้นเรียน” ที่กำหนดให้ทุกคน ทั้งนักเรียนและอาจารย์?')) return;
+            const phrase = prompt('เพื่อยืนยัน ให้พิมพ์คำว่า: RESET');
+            if (phrase !== 'RESET') { alert('ยกเลิกการลบ'); return; }
             const originalCursor = document.body.style.cursor;
             document.body.style.cursor = 'wait';
             try {
+                const user = auth.currentUser;
                 const enrSnap = await db.collection('enrollments').get();
                 const batch1 = db.batch();
                 enrSnap.forEach(doc => {
@@ -1571,6 +1574,17 @@
                     batch3.set(ref, { teachers: [] }, { merge: true });
                 });
                 await batch3.commit();
+                try {
+                    await db.collection('exam_logs').add({
+                        type: 'reset_assignments',
+                        actorUid: user ? user.uid : null,
+                        actorEmail: user ? user.email : null,
+                        affectedEnrollments: enrSnap.size,
+                        affectedUsers: usersSnap.size,
+                        affectedClassrooms: roomsSnap.size,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (logErr) {}
                 alert('ลบข้อมูลห้องและชั้นเรียนทั้งหมดเรียบร้อย');
                 loadMembers();
                 loadClassrooms();
