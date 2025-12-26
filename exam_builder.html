@@ -1245,6 +1245,30 @@
                     }
                 });
             });
+            // Auto cross-exclusion on render: prevent duplicates without user clicks
+            if (box) {
+                const isSenseMode = (mode === 'sense');
+                const otherSelectedRef = isSenseMode ? selectedLiteral : selectedSense;
+                const thisSelectedRef = isSenseMode ? selectedSense : selectedLiteral;
+                const thisDeselectRef = isSenseMode ? deselectedSense : deselectedLiteral;
+                
+                box.querySelectorAll('button[data-key][data-select="yes"]').forEach(yesBtn => {
+                    const key = yesBtn.getAttribute('data-key');
+                    if (otherSelectedRef.has(key)) {
+                        // Ensure this mode deselects duplicates
+                        thisDeselectRef.add(key);
+                        thisSelectedRef.delete(key);
+                        const parent = yesBtn.parentElement;
+                        const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
+                        if (noBtn) {
+                            noBtn.classList.add('primary'); 
+                            noBtn.classList.remove('secondary'); 
+                            yesBtn.classList.add('secondary'); 
+                            yesBtn.classList.remove('primary');
+                        }
+                    }
+                });
+            }
             // ติดตั้งตัวจัดการคลิกสำหรับปุ่มเลือก/ตัด
             if (box) {
                 box.querySelectorAll('button[data-key]').forEach(btn => {
@@ -1267,25 +1291,24 @@
                             const otherSetRef = isSense ? selectedLiteral : selectedSense;
                             const otherDeselectRef = isSense ? deselectedLiteral : deselectedSense;
                             
+                            // Always mark as explicitly deselected in the other mode,
+                            // so future default selection won't include duplicates
+                            otherDeselectRef.add(key);
                             // If it was selected in the other mode, remove it
                             if (otherSetRef.has(key)) {
                                 otherSetRef.delete(key);
-                                // Mark as explicitly deselected in the other mode
-                                otherDeselectRef.add(key);
-                                
-                                // Update UI for the other list if visible
-                                const otherListId = isSense ? 'literalList' : 'senseList';
-                                const otherList = document.getElementById(otherListId);
-                                if (otherList) {
-                                    const otherYesBtn = otherList.querySelector('button[data-select="yes"][data-key="'+key+'"]');
-                                    const otherNoBtn = otherList.querySelector('button[data-select="no"][data-key="'+key+'"]');
-                                    if (otherYesBtn && otherNoBtn) {
-                                        // Update to NO selected
-                                        otherNoBtn.classList.add('primary'); 
-                                        otherNoBtn.classList.remove('secondary'); 
-                                        otherYesBtn.classList.add('secondary'); 
-                                        otherYesBtn.classList.remove('primary');
-                                    }
+                            }
+                            // Update UI for the other list if visible
+                            const otherListId = isSense ? 'literalList' : 'senseList';
+                            const otherList = document.getElementById(otherListId);
+                            if (otherList) {
+                                const otherYesBtn = otherList.querySelector('button[data-select="yes"][data-key="'+key+'"]');
+                                const otherNoBtn = otherList.querySelector('button[data-select="no"][data-key="'+key+'"]');
+                                if (otherYesBtn && otherNoBtn) {
+                                    otherNoBtn.classList.add('primary'); 
+                                    otherNoBtn.classList.remove('secondary'); 
+                                    otherYesBtn.classList.add('secondary'); 
+                                    otherYesBtn.classList.remove('primary');
                                 }
                             }
 
