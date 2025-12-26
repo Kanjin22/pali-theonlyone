@@ -207,34 +207,58 @@
 
 
 
-        <div id="app-content" style="display:none;">
-            
-            <!-- Student Dashboard -->
-            <div id="student-dashboard" style="display:none; margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
-                <div class="dash-card">
-                    <div style="position: relative; z-index: 2;">
-                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="dash-greeting">สวัสดีครับ นักเรียน</div>
-                        <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">ระดับชั้นเรียนของคุณ</div>
-                        
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                            <div class="dash-stat">
-                                <i class="fa-solid fa-fire" style="color: #f1c40f; font-size: 1.2rem;"></i>
-                                <div>
-                                    <div style="font-size: 0.8rem; opacity: 0.8;">เรียนต่อเนื่อง</div>
-                                    <div style="font-weight: bold;" id="dash-streak">0 วัน</div>
-                                </div>
-                            </div>
-                            
-                            <a id="dash-classroom-btn" href="#" class="dash-btn">
-                                <i class="fa-solid fa-door-open"></i> เข้าห้องเรียน
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Decorative Background Icon -->
-                    <i class="fa-solid fa-shapes" style="position: absolute; right: -20px; bottom: -40px; font-size: 10rem; opacity: 0.1; transform: rotate(-15deg);"></i>
-                </div>
-            </div>
+         <div id="app-content" style="display:none;">
+             
+             <!-- Student Dashboard -->
+             <div id="student-dashboard" style="display:none; margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
+                 <div class="dash-card">
+                     <div style="position: relative; z-index: 2;">
+                         <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="dash-greeting">สวัสดีครับ นักเรียน</div>
+                         <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">ระดับชั้นเรียนของคุณ</div>
+                         
+                         <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                             <div class="dash-stat">
+                                 <i class="fa-solid fa-fire" style="color: #f1c40f; font-size: 1.2rem;"></i>
+                                 <div>
+                                     <div style="font-size: 0.8rem; opacity: 0.8;">เรียนต่อเนื่อง</div>
+                                     <div style="font-weight: bold;" id="dash-streak">0 วัน</div>
+                                 </div>
+                             </div>
+                             <div class="dash-stat">
+                                 <i class="fa-solid fa-list-check" style="color: #2ecc71; font-size: 1.2rem;"></i>
+                                 <div>
+                                     <div style="font-size: 0.8rem; opacity: 0.8;">เป้าหมายสัปดาห์นี้</div>
+                                     <div style="font-weight: bold;" id="dash-week">0/3 ครั้ง</div>
+                                 </div>
+                             </div>
+                             <div class="dash-stat">
+                                 <i class="fa-solid fa-star" style="color: #f39c12; font-size: 1.2rem;"></i>
+                                 <div>
+                                     <div style="font-size: 0.8rem; opacity: 0.8;">คะแนนบัตรคำ</div>
+                                     <div style="font-weight: bold;" id="dash-flash-score">0</div>
+                                 </div>
+                             </div>
+                             
+                             <a id="dash-classroom-btn" href="#" class="dash-btn">
+                                 <i class="fa-solid fa-door-open"></i> เข้าห้องเรียน
+                             </a>
+                             <a id="dash-resume-btn" href="#" class="dash-btn" style="display:none;">
+                                 <i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อจากเดิม
+                             </a>
+                             <a id="dash-flashcard-btn" href="#" class="dash-btn">
+                                 <i class="fa-solid fa-layer-group"></i> ฝึกบัตรคำ
+                             </a>
+                         </div>
+ 
+                         <div id="dash-today" style="margin-top: 15px; font-size: 0.95rem; background: rgba(255,255,255,0.2); padding: 10px 12px; border-radius: 10px;">
+                             วันนี้: - 
+                         </div>
+                     </div>
+                     
+                     <!-- Decorative Background Icon -->
+                     <i class="fa-solid fa-shapes" style="position: absolute; right: -20px; bottom: -40px; font-size: 10rem; opacity: 0.1; transform: rotate(-15deg);"></i>
+                 </div>
+             </div>
             <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
             <div class="grid-menu" style="margin-bottom:40px;">
                 <div id="today-schedule-container" class="menu-card level-tool"
@@ -385,6 +409,26 @@
                     <div class="card-desc">แบบฟอร์มและเอกสาร</div>
                 </a>
 
+            </div>
+        </div>
+        <div id="flashcards-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+            <div style="background:#fff; width:95%; max-width:560px; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.2); overflow:hidden;">
+                <div style="padding:14px 16px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-weight:700; color:#2c3e50;">ฝึกบัตรคำ</div>
+                    <button id="flash-close" style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
+                </div>
+                <div style="padding:18px;">
+                    <div id="flash-card" style="border:1px solid #eee; border-radius:12px; padding:20px; text-align:center; background:#f8f9fa;">
+                        <div id="flash-term" style="font-size:1.4rem; font-weight:700; color:#2c3e50; margin-bottom:10px;">-</div>
+                        <div id="flash-meaning" style="font-size:1rem; color:#7f8c8d; display:none; margin-bottom:10px;">-</div>
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:15px;">
+                        <button id="flash-reveal" style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดูคำแปล</button>
+                        <button id="flash-correct" style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">ถูก ✓</button>
+                        <button id="flash-wrong" style="flex:1; padding:10px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:8px; cursor:pointer; display:none;">ผิด ✗</button>
+                    </div>
+                    <div id="flash-progress" style="margin-top:10px; color:#7f8c8d; text-align:center;">0/0</div>
+                </div>
             </div>
         </div>
 
@@ -1078,6 +1122,12 @@
                 body.innerHTML = '<div style="color:#95a5a6; text-align:center; padding:20px;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
                 return;
             }
+            try {
+                window.todayPins = pins.slice();
+                if (window._currentUser && window._currentRole) {
+                    updateStudentDashboard(window._currentUser, window._currentRole);
+                }
+            } catch (e) {}
             const groups = {};
             pins.forEach(p => {
                 const level = (p.level || 'ทั่วไป');
@@ -1333,6 +1383,7 @@
                             displayName: displayName,
                             photoURL: user.photoURL
                         };
+                        try { window._currentUser = displayUser; window._currentRole = role; } catch (e) {}
                         showUser(displayUser, role);
                         applyRoleUI(role);
                         updateStudentDashboard(displayUser, role);
@@ -1395,78 +1446,263 @@
                 openLogin();
             }
         });
-        function updateStudentDashboard(user, role) {
-            const dashboard = document.getElementById('student-dashboard');
-            if (!dashboard) return;
-
-            if (role !== 'student') {
-                dashboard.style.display = 'none';
-                return;
+         function updateStudentDashboard(user, role) {
+             const dashboard = document.getElementById('student-dashboard');
+             if (!dashboard) return;
+ 
+             if (role !== 'student') {
+                 dashboard.style.display = 'none';
+                 return;
+             }
+ 
+             dashboard.style.display = 'block';
+ 
+             // 1. Update Greeting
+             const greetingEl = document.getElementById('dash-greeting');
+             if (greetingEl && user.displayName) {
+                 greetingEl.textContent = `สวัสดีครับ, ${user.displayName}`;
+             }
+ 
+             // 2. Update Level & Link
+             const levelEl = document.getElementById('dash-level');
+             const btnEl = document.getElementById('dash-classroom-btn');
+             const resumeBtnEl = document.getElementById('dash-resume-btn');
+            const flashBtnEl = document.getElementById('dash-flashcard-btn');
+            if (flashBtnEl) {
+                flashBtnEl.onclick = (e) => { e.preventDefault(); openFlashcardsModal(user.uid); };
             }
-
-            dashboard.style.display = 'block';
-
-            // 1. Update Greeting
-            const greetingEl = document.getElementById('dash-greeting');
-            if (greetingEl && user.displayName) {
-                greetingEl.textContent = `สวัสดีครับ, ${user.displayName}`;
-            }
-
-            // 2. Update Level & Link
-            const levelEl = document.getElementById('dash-level');
-            const btnEl = document.getElementById('dash-classroom-btn');
-            
+             
             let enrolledLevel = null;
-            try {
-                const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
-                if (obj && user.uid && obj[user.uid]) enrolledLevel = obj[user.uid];
-            } catch (e) {}
-
-            const levelMap = {
-                'pt12': 'ประโยค ๑-๒',
-                'pt3': 'ประโยค ๓',
-                'pt4': 'ประโยค ๔',
-                'pt5': 'ประโยค ๕',
-                'pt6': 'ประโยค ๖',
-                'pt7': 'ประโยค ๗',
-                'pt8': 'ประโยค ๘',
-                'pt9': 'ประโยค ๙'
-            };
-
-            if (enrolledLevel && levelMap[enrolledLevel]) {
-                if (levelEl) levelEl.textContent = `กำลังศึกษาชั้น: ${levelMap[enrolledLevel]}`;
-                if (btnEl) {
-                    btnEl.href = `classroom_select.html?level=${enrolledLevel}`;
-                    btnEl.style.display = 'flex';
-                }
-            } else {
-                if (levelEl) levelEl.textContent = 'ยินดีต้อนรับสู่ห้องเรียนบาลี';
-                if (btnEl) btnEl.style.display = 'none';
-            }
-
-            // 3. Update Streak
-            const streakEl = document.getElementById('dash-streak');
-            if (streakEl) {
-                try {
-                    const today = new Date().toISOString().split('T')[0];
-                    let streakData = JSON.parse(localStorage.getItem('pali_streak_data') || '{"lastVisit": "", "streak": 0}');
-                    
-                    if (streakData.lastVisit !== today) {
-                        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-                        
-                        if (streakData.lastVisit === yesterday) {
-                            streakData.streak++;
-                        } else {
-                            streakData.streak = 1;
-                        }
-                        streakData.lastVisit = today;
-                        localStorage.setItem('pali_streak_data', JSON.stringify(streakData));
+             try {
+                 const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
+                 if (obj && user.uid && obj[user.uid]) enrolledLevel = obj[user.uid];
+             } catch (e) {}
+ 
+             const levelMap = {
+                 'pt12': 'ประโยค ๑-๒',
+                 'pt3': 'ประโยค ๓',
+                 'pt4': 'ประโยค ๔',
+                 'pt5': 'ประโยค ๕',
+                 'pt6': 'ประโยค ๖',
+                 'pt7': 'ประโยค ๗',
+                 'pt8': 'ประโยค ๘',
+                 'pt9': 'ประโยค ๙'
+             };
+ 
+             if (enrolledLevel && levelMap[enrolledLevel]) {
+                 if (levelEl) levelEl.textContent = `กำลังศึกษาชั้น: ${levelMap[enrolledLevel]}`;
+                 if (btnEl) {
+                     btnEl.href = `classroom_select.html?level=${enrolledLevel}`;
+                     btnEl.style.display = 'flex';
+                 }
+             } else {
+                 if (levelEl) levelEl.textContent = 'ยินดีต้อนรับสู่ห้องเรียนบาลี';
+                 if (btnEl) btnEl.style.display = 'none';
+             }
+ 
+             // 3. Update Streak
+             const streakEl = document.getElementById('dash-streak');
+             if (streakEl) {
+                 try {
+                     const today = new Date().toISOString().split('T')[0];
+                     let streakData = JSON.parse(localStorage.getItem('pali_streak_data') || '{"lastVisit": "", "streak": 0}');
+                     
+                     if (streakData.lastVisit !== today) {
+                         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                         
+                         if (streakData.lastVisit === yesterday) {
+                             streakData.streak++;
+                         } else {
+                             streakData.streak = 1;
+                         }
+                         streakData.lastVisit = today;
+                         localStorage.setItem('pali_streak_data', JSON.stringify(streakData));
+                     }
+                     streakEl.textContent = `${streakData.streak} วัน`;
+                 } catch (e) {
+                     console.warn('Streak update failed:', e);
+                 }
+             }
+ 
+             // 4. Weekly Goal progress (3 sessions/week)
+             const weekEl = document.getElementById('dash-week');
+             if (weekEl) {
+                 try {
+                     const today = new Date();
+                     const day = today.getDay(); // 0 Sun - 6 Sat
+                     const monday = new Date(today);
+                     const sunday = new Date(today);
+                     // Set to Monday
+                     monday.setDate(today.getDate() - ((day + 6) % 7));
+                     monday.setHours(0,0,0,0);
+                     // Set to Sunday
+                     sunday.setDate(monday.getDate() + 6);
+                     sunday.setHours(23,59,59,999);
+ 
+                     const fmt = (d) => d.toISOString().split('T')[0];
+ 
+                     let visitDates = [];
+                     try {
+                         visitDates = JSON.parse(localStorage.getItem('pali_visit_dates') || '[]');
+                     } catch (e) { visitDates = []; }
+ 
+                     const todayStr = fmt(today);
+                     if (!visitDates.includes(todayStr)) {
+                         visitDates.push(todayStr);
+                         localStorage.setItem('pali_visit_dates', JSON.stringify(visitDates));
+                     }
+ 
+                     const count = visitDates.filter(ds => {
+                         const dt = new Date(ds + 'T00:00:00');
+                         return dt >= monday && dt <= sunday;
+                     }).length;
+ 
+                     weekEl.textContent = `${Math.min(count, 3)}/3 ครั้ง`;
+                 } catch (e) {
+                     console.warn('Weekly progress failed:', e);
+                 }
+             }
+ 
+             // 5. Resume button
+             if (resumeBtnEl) {
+                 try {
+                     const saved = localStorage.getItem('pali_last_session');
+                     if (saved) {
+                         const state = JSON.parse(saved);
+                         if (state.id && typeof state.index !== 'undefined') {
+                             resumeBtnEl.href = `presentation.html?id=${state.id}&index=${state.index}`;
+                             resumeBtnEl.style.display = 'flex';
+                         } else {
+                             resumeBtnEl.style.display = 'none';
+                         }
+                     } else {
+                         resumeBtnEl.style.display = 'none';
+                     }
+                 } catch (e) {
+                     resumeBtnEl.style.display = 'none';
+                 }
+             }
+ 
+             // 6. Today pins summary
+             const todayEl = document.getElementById('dash-today');
+             if (todayEl) {
+                 const pins = window.todayPins || [];
+                 if (pins.length > 0) {
+                     const p = pins[0];
+                     const summary = `${p.level ? p.level + ': ' : ''}${p.time || ''}${p.subject ? ' • ' + p.subject : ''}${p.act ? ' • ' + p.act : ''}`;
+                     todayEl.textContent = `วันนี้: ${summary}`;
+                 } else {
+                     todayEl.textContent = 'วันนี้: ยังไม่มีรายการ';
+                 }
+             }
+            const scoreEl = document.getElementById('dash-flash-score');
+            if (scoreEl) {
+                const uid = user.uid;
+                db.collection('flashcard_stats').doc(uid).get().then(doc => {
+                    if (doc.exists && doc.data()) {
+                        const data = doc.data();
+                        const total = Number(data.totalCorrect || 0);
+                        scoreEl.textContent = String(total);
+                    } else {
+                        try {
+                            const local = JSON.parse(localStorage.getItem('pali_flash_stats') || '{"totalCorrect":0}');
+                            scoreEl.textContent = String(local.totalCorrect || 0);
+                        } catch (e) { scoreEl.textContent = '0'; }
                     }
-                    streakEl.textContent = `${streakData.streak} วัน`;
-                } catch (e) {
-                    console.warn('Streak update failed:', e);
-                }
+                }).catch(() => {
+                    try {
+                        const local = JSON.parse(localStorage.getItem('pali_flash_stats') || '{"totalCorrect":0}');
+                        scoreEl.textContent = String(local.totalCorrect || 0);
+                    } catch (e) { scoreEl.textContent = '0'; }
+                });
             }
+         }
+        function openFlashcardsModal(uid) {
+            const modal = document.getElementById('flashcards-modal');
+            const closeBtn = document.getElementById('flash-close');
+            const revealBtn = document.getElementById('flash-reveal');
+            const correctBtn = document.getElementById('flash-correct');
+            const wrongBtn = document.getElementById('flash-wrong');
+            const termEl = document.getElementById('flash-term');
+            const meaningEl = document.getElementById('flash-meaning');
+            const progressEl = document.getElementById('flash-progress');
+            let deck = [];
+            let index = 0;
+            let correct = 0;
+            let total = 0;
+            function showCard() {
+                const item = deck[index];
+                termEl.textContent = item.term;
+                meaningEl.textContent = item.meaning;
+                meaningEl.style.display = 'none';
+                revealBtn.style.display = 'inline-block';
+                correctBtn.style.display = 'none';
+                wrongBtn.style.display = 'none';
+                progressEl.textContent = `${index+1}/${deck.length}`;
+            }
+            function endSession() {
+                modal.style.display = 'none';
+                const statsDoc = { totalCorrect: firebase.firestore.FieldValue.increment(correct), totalReviewed: firebase.firestore.FieldValue.increment(total), updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
+                db.collection('flashcard_stats').doc(uid).set(statsDoc, { merge: true }).catch(() => {});
+                try {
+                    const local = JSON.parse(localStorage.getItem('pali_flash_stats') || '{"totalCorrect":0,"totalReviewed":0}');
+                    local.totalCorrect = Number(local.totalCorrect || 0) + correct;
+                    local.totalReviewed = Number(local.totalReviewed || 0) + total;
+                    local.updatedAt = Date.now();
+                    localStorage.setItem('pali_flash_stats', JSON.stringify(local));
+                } catch (e) {}
+                if (window._currentUser && window._currentRole) updateStudentDashboard(window._currentUser, window._currentRole);
+            }
+            revealBtn.onclick = () => {
+                meaningEl.style.display = 'block';
+                revealBtn.style.display = 'none';
+                correctBtn.style.display = 'inline-block';
+                wrongBtn.style.display = 'inline-block';
+            };
+            correctBtn.onclick = () => {
+                correct++;
+                total++;
+                index++;
+                if (index >= deck.length) endSession(); else showCard();
+            };
+            wrongBtn.onclick = () => {
+                total++;
+                index++;
+                if (index >= deck.length) endSession(); else showCard();
+            };
+            closeBtn.onclick = () => { modal.style.display = 'none'; };
+            function loadDeck() {
+                return db.collection('flashcard_decks').doc('basic-pt12').get().then(doc => {
+                    if (doc.exists && doc.data() && Array.isArray(doc.data().items)) {
+                        return doc.data().items.map(x => ({ term: x.term, meaning: x.meaning })).slice(0, 12);
+                    }
+                    return null;
+                }).catch(() => null);
+            }
+            function fallbackDeck() {
+                return [
+                    { term: 'bhikkhu', meaning: 'ภิกษุ' },
+                    { term: 'dhamma', meaning: 'ธรรมะ' },
+                    { term: 'sutta', meaning: 'สูตร' },
+                    { term: 'paññā', meaning: 'ปัญญา' },
+                    { term: 'sīla', meaning: 'ศีล' },
+                    { term: 'samādhi', meaning: 'สมาธิ' },
+                    { term: 'kamma', meaning: 'กรรม' },
+                    { term: 'mettā', meaning: 'เมตตา' },
+                    { term: 'saddhā', meaning: 'ศรัทธา' },
+                    { term: 'dāna', meaning: 'ทาน' },
+                    { term: 'kusala', meaning: 'กุศล' },
+                    { term: 'dukkha', meaning: 'ทุกข์' }
+                ];
+            }
+            modal.style.display = 'flex';
+            loadDeck().then(items => {
+                deck = items && items.length ? items : fallbackDeck();
+                index = 0;
+                correct = 0;
+                total = 0;
+                showCard();
+            });
         }
 
         // --- Resume Learning Logic ---
