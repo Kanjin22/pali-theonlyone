@@ -715,31 +715,41 @@
             };
 
             // Collect text
-            if (period.activity) items.push(...processText(period.activity));
+            let hasSpecific = false;
+
             if (period.activityGrammar) {
                 if(Array.isArray(period.activityGrammar)) items.push(...period.activityGrammar);
                 else items.push(period.activityGrammar);
+                hasSpecific = true;
             }
             if (period.activityTranslate) {
                 if(Array.isArray(period.activityTranslate)) items.push(...period.activityTranslate);
                 else items.push(period.activityTranslate);
+                hasSpecific = true;
             }
             if (period.activityReturn) { // Support for 'Return' subject if exists
                 if(Array.isArray(period.activityReturn)) items.push(...period.activityReturn);
                 else items.push(period.activityReturn);
+                hasSpecific = true;
             }
             if (period.activityChan) {
                 if(Array.isArray(period.activityChan)) items.push(...period.activityChan);
                 else items.push(period.activityChan);
+                hasSpecific = true;
             }
             if (period.activitySamphan) {
                  if(Array.isArray(period.activitySamphan)) items.push(...period.activitySamphan);
                 else items.push(period.activitySamphan);
+                hasSpecific = true;
             }
             if (period.activityTang) {
                 if(Array.isArray(period.activityTang)) items.push(...period.activityTang);
                 else items.push(period.activityTang);
+                hasSpecific = true;
             }
+
+            // Only add generic activity if no specific activities are defined
+            if (!hasSpecific && period.activity) items.push(...processText(period.activity));
             
             if (items.length === 0) return '';
             
