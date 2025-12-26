@@ -128,6 +128,7 @@ function renderRoomContent(room) {
         if (typeof firebase !== 'undefined') {
             firebase.auth().onAuthStateChanged(async (user) => {
                 if (user) {
+                    const modePref = localStorage.getItem('access_mode') || 'auto';
                     const FALLBACK_ADMINS = ['admin1234@hotmail.com'];
                     let allow = false;
 
@@ -140,7 +141,12 @@ function renderRoomContent(room) {
                             const doc = await firebase.firestore().collection('users').doc(user.uid).get();
                             if (doc.exists) {
                                 const role = doc.data().role;
-                                if (role === 'admin' || role === 'teacher') allow = true;
+                                const effectiveMode = (function(){
+                                    if (modePref === 'student') return 'student';
+                                    if (modePref === 'teacher') return 'teacher';
+                                    return (role === 'teacher' || role === 'admin') ? 'teacher' : 'student';
+                                })();
+                                if (effectiveMode === 'teacher' && (role === 'admin' || role === 'teacher')) allow = true;
                             }
                         } catch (e) {
                             console.error("Role check failed:", e);
