@@ -1454,8 +1454,6 @@
                 }
                 return `${prefix}<span class="word-span ${hasInfoClass}" 
                               ${vocabInfo}
-                              onmouseenter="showTooltip(this)" 
-                              onmouseleave="hideTooltip()"
                               onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
         }).join(' ');
     }
@@ -1969,35 +1967,6 @@
                 document.getElementById('analysis-modal').style.display = 'none';
             }
         }
-
-        const tooltip = document.getElementById('sandhi-tooltip');
-        function showTooltip(element) {
-            const key = element.getAttribute('data-word');
-            if (!key) return;
-            const s = slides[currentIndex];
-            const data = getAnalysisData(key, s);
-            if (!data) return;
-            const info = data.split || key;
-            let formattedInfo = info;
-            if (info.includes('(')) {
-                const parts = info.split('(');
-                formattedInfo = `<span class="split">${parts[0]}</span> <span class="origin">(${parts[1]}</span>`;
-            } else {
-                formattedInfo = `<span class="split">${info}</span>`;
-            }
-            tooltip.innerHTML = formattedInfo;
-            tooltip.style.display = 'block';
-            const rect = element.getBoundingClientRect();
-            const tooltipRect = tooltip.getBoundingClientRect();
-            let top = rect.top - tooltipRect.height - 10;
-            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
-            if (top < 0) top = rect.bottom + 10;
-            if (left < 10) left = 10;
-            if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 10;
-            tooltip.style.top = `${top}px`;
-            tooltip.style.left = `${left}px`;
-        }
-        function hideTooltip() { tooltip.style.display = 'none'; }
 
         let isThaiHidden = false;
         function toggleThai() { isThaiHidden = !isThaiHidden; applyThaiState(); }
