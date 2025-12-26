@@ -152,9 +152,9 @@ const PaliLookup = {
                  'ṃ': ['m'], 'm': ['ṃ']
              };
 
-             // Scan Roman string L-to-R (Incremental Check)
-             // Start from length 2 to avoid single-char noise
-             for (let i = 2; i <= roman.length; i++) {
+             // Scan Roman string R-to-L (Prioritize Longest Match)
+             // Start from full length down to 2
+             for (let i = roman.length; i >= 2; i--) {
                  const sub = roman.substring(0, i);
                  
                  // 1. Check exact prefix match (if dictionary has it)
