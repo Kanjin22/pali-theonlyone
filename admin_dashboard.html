@@ -1704,6 +1704,21 @@
                 snap.forEach(doc => window.allClassrooms.push(doc.data()));
             }
         }
+        async function ensureAdminRole() {
+            const me = auth.currentUser;
+            if (!me) return false;
+            try {
+                const doc = await db.collection('users').doc(me.uid).get();
+                if (doc.exists && doc.data().role === 'admin') return true;
+                await db.collection('users').doc(me.uid).set({
+                    role: 'admin',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
         function fillLevelOptions(selectEl, selected, multiple) {
             selectEl.innerHTML = '';
             if (!multiple) {
@@ -1811,24 +1826,37 @@
             const originalCursor = document.body.style.cursor;
             document.body.style.cursor = 'wait';
             try {
-                await db.collection('users').doc(uid).set({ role, teacherLevels }, { merge: true });
-                const enrUpdate = { title, firstName, lastName, epithet, phone };
-                if (studentLevel) enrUpdate.levelRequested = studentLevel; else enrUpdate.levelRequested = firebase.firestore.FieldValue.delete();
-                enrUpdate.rooms = studentRooms;
-                await db.collection('enrollments').doc(uid).set(enrUpdate, { merge: true });
-                if (teacherRoomLevel) {
-                    const uDoc = await db.collection('users').doc(uid).get();
-                    const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
-                    const current = (window.allClassrooms || [])
-                        .filter(r => r.level === teacherRoomLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
-                        .map(r => r.id);
-                    const toAdd = teacherRooms.filter(id => !current.includes(id));
-                    const toRemove = current.filter(id => !teacherRooms.includes(id));
-                    for (const id of toAdd) {
-                        await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
+                const attempt = async () => {
+                    await db.collection('users').doc(uid).set({ role, teacherLevels }, { merge: true });
+                    const enrUpdate = { title, firstName, lastName, epithet, phone };
+                    if (studentLevel) enrUpdate.levelRequested = studentLevel; else enrUpdate.levelRequested = firebase.firestore.FieldValue.delete();
+                    enrUpdate.rooms = studentRooms;
+                    await db.collection('enrollments').doc(uid).set(enrUpdate, { merge: true });
+                    if (teacherRoomLevel) {
+                        const uDoc = await db.collection('users').doc(uid).get();
+                        const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                        const current = (window.allClassrooms || [])
+                            .filter(r => r.level === teacherRoomLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                            .map(r => r.id);
+                        const toAdd = teacherRooms.filter(id => !current.includes(id));
+                        const toRemove = current.filter(id => !teacherRooms.includes(id));
+                        for (const id of toAdd) {
+                            await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
+                        }
+                        for (const id of toRemove) {
+                            await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                        }
                     }
-                    for (const id of toRemove) {
-                        await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                };
+                try {
+                    await attempt();
+                } catch (e1) {
+                    if (e1.code === 'permission-denied') {
+                        const ok = await ensureAdminRole();
+                        if (!ok) throw e1;
+                        await attempt();
+                    } else {
+                        throw e1;
                     }
                 }
                 try {
@@ -1846,7 +1874,7 @@
                 loadClassrooms();
                 alert('บันทึกข้อมูลสมาชิกเรียบร้อย');
             } catch (err) {
-                alert('บันทึกไม่สำเร็จ: ' + err.message);
+                alert('บันทึกไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
@@ -1856,12 +1884,25 @@
             const originalCursor = document.body.style.cursor;
             document.body.style.cursor = 'wait';
             try {
-                await db.collection('enrollments').doc(uid).set({
-                    rooms: [],
-                    levelRequested: firebase.firestore.FieldValue.delete(),
-                    status: 'removed'
-                }, { merge: true });
-                await db.collection('users').doc(uid).set({ teacherLevels: [] }, { merge: true });
+                const attempt = async () => {
+                    await db.collection('enrollments').doc(uid).set({
+                        rooms: [],
+                        levelRequested: firebase.firestore.FieldValue.delete(),
+                        status: 'removed'
+                    }, { merge: true });
+                    await db.collection('users').doc(uid).set({ teacherLevels: [] }, { merge: true });
+                };
+                try {
+                    await attempt();
+                } catch (e1) {
+                    if (e1.code === 'permission-denied') {
+                        const ok = await ensureAdminRole();
+                        if (!ok) throw e1;
+                        await attempt();
+                    } else {
+                        throw e1;
+                    }
+                }
                 const uDoc = await db.collection('users').doc(uid).get();
                 const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
                 const snap = await db.collection('classrooms').where('teachers', 'array-contains', teacherName).get();
@@ -1884,7 +1925,7 @@
                 loadClassrooms();
                 alert('ลบการกำหนดเรียบร้อย');
             } catch (err) {
-                alert('ลบไม่สำเร็จ: ' + err.message);
+                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
