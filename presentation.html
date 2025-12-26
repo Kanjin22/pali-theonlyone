@@ -1060,6 +1060,8 @@
     <script src="data/content-visuddhi02.js"></script>
     <script src="data/content-visuddhi03.js"></script>
     <script src="data/content-abhidhamma01.js"></script>
+    <script src="data/vocab-roots.js"></script>
+    <script src="data/vocab-sandhi.js"></script>
 
     <script>
         const commonAnalysis = Object.assign({},
@@ -1488,17 +1490,17 @@
             }
         }
 
-        // 2. Check Manual Sandhi DB (Global)
+        // 2. Check Manual Roots (Word Origin)
+        if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
+             showDictionaryDefinition(vocabRoots[cleanWord]);
+             return;
+        }
+
+        // 3. Check Manual Sandhi DB (Global)
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
             const parts = vocabSandhi[cleanWord];
-             // If only 1 part, redirect immediately (Manual Stemming)
-            if (parts.length === 1) {
-                showDictionaryDefinition(parts[0]);
-                return;
-            }
-            // Else show bubble
             showSandhiBubble(el, parts);
-            return; // Stop here
+            return;
         }
 
         // New Feature: Show Dictionary Definition in Footer

@@ -169,6 +169,7 @@
   <script src="./data/vocab-newgen.js"></script>
   <script src="./data/vocab-tananunto.js"></script>
   <script src="./data/vocab-sc.js"></script>
+  <script src="./data/vocab-roots.js"></script>
   <script src="./data/vocab-sandhi.js"></script>
   <script src="./data/pali-lookup.js"></script>
   <script src="./data/pali-script.js"></script>
@@ -312,17 +313,17 @@
             return;
         }
 
+        // Check Manual Roots (Word Origin)
+        if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
+             showDictionaryDefinition(vocabRoots[cleanWord]);
+             return;
+        }
+
         // Check Manual Sandhi DB
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
             const parts = vocabSandhi[cleanWord];
-            // If only 1 part, redirect immediately (Manual Stemming)
-            if (parts.length === 1) {
-                showDictionaryDefinition(parts[0]);
-                return;
-            }
-            // Else show bubble
             showSandhiBubble(el, parts);
-            return; // Stop here, don't show dictionary yet
+            return;
         }
 
         showDictionaryDefinition(word);

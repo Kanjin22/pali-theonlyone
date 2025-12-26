@@ -6,5 +6,5 @@ const vocabGeneral = {
     "เจว": {
         type: "sandhi",
         split: "จ + เอว"
-    }
+    },
 };
