@@ -1477,7 +1477,8 @@
     function showDictionaryDefinition(word) {
         // Collect all databases
         const dbs = {
-            tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {})
+            tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
+            sc: (typeof vocabSC !== 'undefined' ? vocabSC : {})
         };
 
         // Use smart lookup

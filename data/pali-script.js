@@ -1,10 +1,84 @@
 const PaliScript = {
     /**
-     * Converts Thai Pali script to Roman Pali script.
-     * Based on standard Pali transliteration rules.
-     * @param {string} text - The text in Thai Pali script.
-     * @returns {string} - The text in Roman Pali script.
+     * Converts Roman Pali script to Thai Pali script.
+     * @param {string} text - The text in Roman Pali script.
+     * @returns {string} - The text in Thai Pali script.
      */
+    romanToThai: function(text) {
+        if (!text) return "";
+        const map = {
+            'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',
+            'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',
+            'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',
+            't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',
+            'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',
+            'y': 'ย', 'r': 'ร', 'l': 'ล', 'v': 'ว', 's': 'ส', 'h': 'ห', 'ḷ': 'ฬ',
+            'a': '', 'ā': 'า', 'i': 'ิ', 'ī': 'ี', 'u': 'ุ', 'ū': 'ู', 
+            'e': 'เ', 'o': 'โ', 'ṃ': 'ํ'
+        };
+        const vowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'e', 'o'];
+        const consonants = ['k', 'kh', 'g', 'gh', 'ṅ', 'c', 'ch', 'j', 'jh', 'ñ', 
+                            'ṭ', 'ṭh', 'ḍ', 'ḍh', 'ṇ', 't', 'th', 'd', 'dh', 'n', 
+                            'p', 'ph', 'b', 'bh', 'm', 'y', 'r', 'l', 'v', 's', 'h', 'ḷ'];
+
+        let res = "";
+        let i = 0;
+        while (i < text.length) {
+            // Match multi-char consonants first (kh, gh, etc.)
+            let c = text[i];
+            let next = text[i+1] || "";
+            let key = c + next;
+            let charLen = 1;
+            
+            if (consonants.includes(key)) {
+                c = key;
+                charLen = 2;
+            } else if (!consonants.includes(c)) {
+                // Not a consonant (maybe vowel or special), just append if mapped or keep
+                if (map[c]) res += map[c];
+                else res += c;
+                i++;
+                continue;
+            }
+            
+            // It is a consonant
+            let thaiC = map[c];
+            let nextCharStart = i + charLen;
+            let nextChar = text[nextCharStart] || "";
+            
+            // Check next char
+            if (consonants.includes(nextChar) || consonants.includes(nextChar + (text[nextCharStart+1]||""))) {
+                // Next is consonant -> Add Pinthu
+                res += thaiC + 'ฺ';
+            } else if (vowels.includes(nextChar)) {
+                // Next is vowel
+                if (nextChar === 'e' || nextChar === 'o') {
+                    res += map[nextChar] + thaiC;
+                } else {
+                    res += thaiC + map[nextChar];
+                }
+                // Consume vowel
+                // Check for Niggahita after vowel (e.g. aṃ)
+                let afterVowel = text[nextCharStart + 1];
+                if (afterVowel === 'ṃ') {
+                    res += 'ํ';
+                    i++; // consume ṃ extra
+                }
+                i++; // consume vowel extra
+            } else if (nextChar === 'ṃ') {
+                // Consonant + ṃ (implicit a)
+                res += thaiC + 'ํ';
+                i++; // consume ṃ extra
+            } else {
+                // End of word or unknown
+                res += thaiC + 'ฺ';
+            }
+            
+            i += charLen;
+        }
+        return res;
+    },
+
     thaiToRoman: function(text) {
         if (!text) return "";
         let s = text;

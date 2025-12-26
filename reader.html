@@ -297,7 +297,8 @@
         const dbs = {
             // Only use Tananunto for Thai
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
-            // Other DBs removed as per instruction
+            // Pass SC for Sandhi checking
+            sc: (typeof vocabSC !== 'undefined' ? vocabSC : {})
         };
 
         // Use smart lookup
