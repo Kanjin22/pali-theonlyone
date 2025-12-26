@@ -978,27 +978,21 @@
 
         <div class="footer-box" id="footerBox">
             <!-- 1. บริบท -->
-            <div class="footer-section" style="flex: 1;">
+            <div class="footer-section" style="flex: 0.8;">
                 <div class="sec-title">📝 บริบท / คำอธิบาย</div>
                 <div class="sec-content" id="contextContent">...</div>
             </div>
 
-            <!-- 2. อาขยาต -->
-            <div class="footer-section" style="flex: 0.8;">
-                <div class="sec-title">🔹 อาขยาต (คุมพากย์)</div>
-                <div class="sec-content pali-word" id="akhyataContent">...</div>
+            <!-- 2. Thai Dictionary -->
+            <div class="footer-section" style="flex: 1.5;">
+                <div class="sec-title">📚 พจนานุกรมไทย / วิเคราะห์</div>
+                <div class="sec-content pali-word" id="thaiVocabContent">...</div>
             </div>
 
-            <!-- 3. กิตก์ -->
-            <div class="footer-section" style="flex: 0.8;">
-                <div class="sec-title">🔸 กิริยากิตก์</div>
-                <div class="sec-content pali-word" id="kitakaContent">...</div>
-            </div>
-
-            <!-- 4. ศัพท์/วิเคราะห์ -->
-            <div class="footer-section" style="flex: 1.2;">
-                <div class="sec-title">📚 ศัพท์ / วิเคราะห์ (สมาส/ตัทธิต)</div>
-                <div class="sec-content pali-word" id="vocabContent">...</div>
+            <!-- 3. Roman Dictionary -->
+            <div class="footer-section" style="flex: 1.5;">
+                <div class="sec-title">📖 พจนานุกรมโรมัน (SuttaCentral)</div>
+                <div class="sec-content pali-word" id="romanVocabContent">...</div>
             </div>
         </div>
     </div>
@@ -1578,32 +1572,20 @@
         const result = PaliLookup.lookup(word, dbs);
         
         // Display in Footer
-        const vocabContent = document.getElementById('vocabContent');
-        if (vocabContent) {
-            const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
-            let wordToConvert = cleanWord;
-            if (result && result._stemmedFrom && result.word) {
-                wordToConvert = result.word;
-            }
-            const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(wordToConvert) : "";
-            
-            // SuttaCentral Link
-            const scLink = `https://suttacentral.net/define/${romanWord}`;
-            
-            // SuttaCentral Local Definition
-            let scDefHtml = "";
-            const scEntry = (typeof vocabSC !== 'undefined') ? vocabSC[romanWord] : null;
+        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        let wordToConvert = cleanWord;
+        if (result && result._stemmedFrom && result.word) {
+            wordToConvert = result.word;
+        }
+        const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(wordToConvert) : "";
+        
+        // Links
+        const scLink = `https://suttacentral.net/define/${romanWord}`;
+        const dpdLink = `https://www.dpdict.net/gd?search=${romanWord}`;
 
-            if (scEntry) {
-                 scDefHtml = `
-                    <div style="margin-top:10px; padding:8px; background:#f8f9fa; border-left:3px solid #3498db; border-radius:4px;">
-                        <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(${scEntry.grammar})</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${scEntry.definition}</div>
-                        <div style="margin-top:4px; font-size:0.7em; color:#95a5a6; text-align:right;">New Concise Pali English Dictionary</div>
-                    </div>
-                 `;
-            }
-
+        // --- 1. Thai Dictionary Output ---
+        const thaiVocabContent = document.getElementById('thaiVocabContent');
+        if (thaiVocabContent) {
             if (result) {
                 let detailsHtml = "";
                 if (result.details && Array.isArray(result.details)) {
@@ -1614,13 +1596,12 @@
                     detailsHtml = `<div>${result.split}</div>`;
                 }
                 
-                // Show stem source if available
                 let stemInfo = "";
                 if (result._stemmedFrom) {
                     stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
                 }
 
-                vocabContent.innerHTML = `
+                thaiVocabContent.innerHTML = `
                     <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
                         <div style="font-weight: bold; color: #2980b9;">
                             ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
@@ -1628,45 +1609,57 @@
                             ${stemInfo}
                         </div>
                         <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
-                        <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                            <span style="color:#7f8c8d;">เพิ่มเติม:</span>
-                            ${scDefHtml}
-                            <a href="${scLink}" target="_blank" style="display:inline-block; margin-top:5px; color:#3498db; text-decoration:none;">
-                                <i class="fa-solid fa-dharmachakra"></i> เปิดใน SuttaCentral
-                            </a>
-                        </div>
                     </div>
                 `;
                 
-                // Highlight section
-                vocabContent.parentElement.style.backgroundColor = "#e8f6f3";
-                setTimeout(() => {
-                     vocabContent.parentElement.style.backgroundColor = "";
-                }, 1000);
-
+                // Highlight
+                thaiVocabContent.parentElement.style.backgroundColor = "#e8f6f3";
+                setTimeout(() => { thaiVocabContent.parentElement.style.backgroundColor = ""; }, 1000);
             } else {
-                 vocabContent.innerHTML = `
+                thaiVocabContent.innerHTML = `
                     <div style="color: #95a5a6; font-style: italic;">
                         ไม่พบคำศัพท์: <strong>${cleanWord}</strong> ในฐานข้อมูลไทย
-                        <div style="font-size:0.9em; margin-top:5px;">[${romanWord}]</div>
-                        
-                        ${scDefHtml ? `
-                        <div style="margin-top: 10px; text-align: left; font-style: normal;">
-                             ${scDefHtml}
-                        </div>
-                        ` : ''}
-
-                        <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                            <span style="color:#7f8c8d;">ลองค้นใน:</span>
-                            <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                                <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
-                            </a>
-                            <a href="${dpdLink}" target="_blank" style="color:#27ae60; text-decoration:none; margin-left:10px;">
-                                <i class="fa-solid fa-book"></i> DPD
-                            </a>
-                        </div>
                     </div>
                 `;
+            }
+        }
+
+        // --- 2. Roman Dictionary Output ---
+        const romanVocabContent = document.getElementById('romanVocabContent');
+        if (romanVocabContent) {
+            const scEntry = (typeof vocabSC !== 'undefined') ? vocabSC[romanWord] : null;
+            let scDefHtml = "";
+            
+            if (scEntry) {
+                 scDefHtml = `
+                    <div style="margin-top:10px; padding:8px; background:#f8f9fa; border-left:3px solid #3498db; border-radius:4px;">
+                        <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(${scEntry.grammar})</span></div>
+                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${scEntry.definition}</div>
+                        <div style="margin-top:4px; font-size:0.7em; color:#95a5a6; text-align:right;">New Concise Pali English Dictionary</div>
+                    </div>
+                 `;
+            } else {
+                 scDefHtml = `<div style="color:#95a5a6; font-style:italic; margin-top:10px;">ไม่พบคำศัพท์ในฐานข้อมูล Offline</div>`;
+            }
+
+            romanVocabContent.innerHTML = `
+                <div>
+                    ${scDefHtml}
+                    <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
+                        <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
+                            <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
+                        </a>
+                        <a href="${dpdLink}" target="_blank" style="display:inline-block; color:#27ae60; text-decoration:none;">
+                            <i class="fa-solid fa-book"></i> DPD
+                        </a>
+                    </div>
+                </div>
+            `;
+             
+             // Highlight
+            if (scEntry) {
+                romanVocabContent.parentElement.style.backgroundColor = "#e8f6f3";
+                setTimeout(() => { romanVocabContent.parentElement.style.backgroundColor = ""; }, 1000);
             }
         }
     }
@@ -1854,10 +1847,11 @@
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
 
-            document.getElementById('akhyataContent').innerHTML = processFooterAnalysis(s.akhyata, s);
-            document.getElementById('kitakaContent').innerHTML = processFooterAnalysis(s.kitaka, s);
-            if (document.getElementById('vocabContent')) {
-                document.getElementById('vocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s);
+            if (document.getElementById('thaiVocabContent')) {
+                document.getElementById('thaiVocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s);
+            }
+            if (document.getElementById('romanVocabContent')) {
+                document.getElementById('romanVocabContent').innerHTML = "";
             }
 
             document.getElementById('contextContent').innerText = s.context;
