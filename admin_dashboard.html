@@ -1315,6 +1315,7 @@
                         level,
                         rooms,
                         teacherLevels,
+                        teacherName: u.displayName || u.email || uid,
                         dateStr,
                         rawDate
                     });
@@ -1398,65 +1399,9 @@
                     // Append select to the second column
                     tr.children[1].appendChild(select);
 
-                    // Level selector and Room selector
+                    // Level and Room read-only display
                     const levelCell = tr.children[2];
                     const roomCell = tr.children[3];
-                    const levelSelect = document.createElement('select');
-                    if (m.role === 'teacher') {
-                        levelSelect.multiple = true;
-                        levelSelect.size = 4;
-                    }
-                    Object.keys(LEVEL_NAMES).forEach(k => {
-                        const opt = document.createElement('option');
-                        opt.value = k;
-                        opt.textContent = LEVEL_NAMES[k];
-                        if (m.role === 'teacher') {
-                            if (Array.isArray(m.teacherLevels) && m.teacherLevels.includes(k)) opt.selected = true;
-                        } else {
-                            if (m.level === k) opt.selected = true;
-                        }
-                        levelSelect.appendChild(opt);
-                    });
-                    levelSelect.style.padding = '6px';
-                    levelSelect.style.border = '1px solid #ddd';
-                    levelSelect.style.borderRadius = '6px';
-                    levelSelect.style.fontSize = '0.9rem';
-                    levelCell.innerHTML = '';
-                    levelCell.appendChild(levelSelect);
-                    
-                    const roomsSelect = document.createElement('select');
-                    roomsSelect.multiple = true;
-                    roomsSelect.style.minWidth = '220px';
-                    roomsSelect.style.padding = '6px';
-                    roomsSelect.style.border = '1px solid #ddd';
-                    roomsSelect.style.borderRadius = '6px';
-                    roomsSelect.style.fontSize = '0.9rem';
-                    roomsSelect.size = 3;
-                    roomCell.innerHTML = '';
-                    const roomLevelSelect = document.createElement('select');
-                    roomLevelSelect.style.marginBottom = '6px';
-                    roomLevelSelect.style.padding = '6px';
-                    roomLevelSelect.style.border = '1px solid #ddd';
-                    roomLevelSelect.style.borderRadius = '6px';
-                    roomLevelSelect.style.fontSize = '0.9rem';
-                    const placeholderOpt = document.createElement('option');
-                    placeholderOpt.value = '';
-                    placeholderOpt.textContent = '— เลือกชั้นเพื่อแก้ห้อง —';
-                    roomLevelSelect.appendChild(placeholderOpt);
-                    Object.keys(LEVEL_NAMES).forEach(k => {
-                        const opt = document.createElement('option');
-                        opt.value = k;
-                        opt.textContent = LEVEL_NAMES[k];
-                        roomLevelSelect.appendChild(opt);
-                    });
-                    roomCell.appendChild(roomLevelSelect);
-                    roomCell.appendChild(roomsSelect);
-                    const teacherRoomsInfo = document.createElement('div');
-                    teacherRoomsInfo.style.marginTop = '6px';
-                    teacherRoomsInfo.style.fontSize = '0.85rem';
-                    teacherRoomsInfo.style.color = '#555';
-                    if (m.role === 'teacher') roomCell.appendChild(teacherRoomsInfo);
-                    
                     async function ensureRoomsLoaded() {
                         if (!window.allClassrooms || window.allClassrooms.length === 0) {
                             try {
@@ -1466,97 +1411,30 @@
                             } catch (e) {}
                         }
                     }
-                    function populateRooms(levelCode) {
-                        roomsSelect.innerHTML = '';
-                        const rooms = (window.allClassrooms || []).filter(r => r.level === levelCode);
-                        rooms.forEach(r => {
-                            const opt = document.createElement('option');
-                            opt.value = r.id;
-                            opt.textContent = `${r.name || r.id}`;
-                            opt.selected = m.role === 'teacher'
-                                ? (Array.isArray(m.teacherRooms) && m.teacherRooms.includes(r.id))
-                                : (Array.isArray(m.rooms) && m.rooms.includes(r.id));
-                            roomsSelect.appendChild(opt);
-                        });
-                    }
                     (async () => {
                         await ensureRoomsLoaded();
-                        if (m.role === 'teacher') {
-                            try {
-                                const uDoc = await db.collection('users').doc(m.uid).get();
-                                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
-                                const baseLevel = Array.isArray(m.teacherLevels) && m.teacherLevels.length > 0 ? m.teacherLevels[0] : (m.level || '');
-                                const current = (window.allClassrooms || [])
-                                    .filter(r => r.level === baseLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
-                                    .map(r => r.id);
-                                m.teacherRooms = current;
-                                const allTeachRooms = (window.allClassrooms || [])
-                                    .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
-                                    .map(r => r.name || r.id);
-                                teacherRoomsInfo.textContent = `ห้องสอนทั้งหมด: ${allTeachRooms.length ? allTeachRooms.join(', ') : '-'}`;
-                                if (baseLevel && !roomLevelSelect.value) roomLevelSelect.value = baseLevel;
-                            } catch (e) {}
-                        }
-                        const initialLevel = roomLevelSelect.value || (m.level && LEVEL_NAMES[m.level] ? m.level : '');
-                        if (initialLevel) populateRooms(initialLevel);
+                        const teacherLevelsText = Array.isArray(m.teacherLevels) && m.teacherLevels.length
+                            ? m.teacherLevels.map(k => LEVEL_NAMES[k] || k).join(', ')
+                            : '';
+                        const studentLevelText = m.level && LEVEL_NAMES[m.level] ? LEVEL_NAMES[m.level] : (m.level || '');
+                        const levelsParts = [];
+                        if (teacherLevelsText) levelsParts.push('อาจารย์: ' + teacherLevelsText);
+                        if (studentLevelText) levelsParts.push('นักเรียน: ' + studentLevelText);
+                        levelCell.innerHTML = levelsParts.length ? levelsParts.join('<br>') : '-';
+                        const teacherRooms = (window.allClassrooms || [])
+                            .filter(r => Array.isArray(r.teachers) && r.teachers.includes(m.teacherName))
+                            .map(r => r.name || r.id);
+                        const studentRooms = Array.isArray(m.rooms)
+                            ? m.rooms.map(id => {
+                                const rr = (window.allClassrooms || []).find(x => x.id === id);
+                                return rr ? (rr.name || rr.id) : id;
+                              })
+                            : [];
+                        const roomParts = [];
+                        if (teacherRooms.length) roomParts.push('อาจารย์: ' + teacherRooms.join(', '));
+                        if (studentRooms.length) roomParts.push('นักเรียน: ' + studentRooms.join(', '));
+                        roomCell.innerHTML = roomParts.length ? roomParts.join('<br>') : '-';
                     })();
-                    roomLevelSelect.onchange = () => {
-                        const lv = roomLevelSelect.value;
-                        if (!lv) {
-                            roomsSelect.innerHTML = '';
-                            return;
-                        }
-                        populateRooms(lv);
-                    };
-                    levelSelect.onchange = async () => {
-                        const selectedLevels = Array.from(levelSelect.selectedOptions).map(o => o.value);
-                        if (m.role === 'student') {
-                            try {
-                                const newLevel = selectedLevels[0] || '';
-                                await db.collection('enrollments').doc(m.uid).set({ levelRequested: newLevel, status: 'approved' }, { merge: true });
-                                m.level = newLevel;
-                            } catch (e) { alert('อัปเดตชั้นเรียนไม่สำเร็จ: ' + e.message); }
-                        } else if (m.role === 'teacher') {
-                            try {
-                                await db.collection('users').doc(m.uid).set({ teacherLevels: selectedLevels }, { merge: true });
-                                m.teacherLevels = selectedLevels;
-                            } catch (e) { alert('อัปเดตชั้นอาจารย์ไม่สำเร็จ: ' + e.message); }
-                        }
-                        if (!roomLevelSelect.value) {
-                            const base = m.role === 'teacher' ? (m.teacherLevels[0] || '') : (selectedLevels[0] || '');
-                            if (base) roomLevelSelect.value = base;
-                        }
-                        const lv = roomLevelSelect.value;
-                        if (lv) populateRooms(lv);
-                    };
-                    roomsSelect.onchange = async () => {
-                        const selected = Array.from(roomsSelect.selectedOptions).map(o => o.value);
-                        if (m.role === 'student') {
-                            try {
-                                await db.collection('enrollments').doc(m.uid).set({ rooms: selected }, { merge: true });
-                                m.rooms = selected;
-                            } catch (e) { alert('อัปเดตห้องเรียนไม่สำเร็จ: ' + e.message); }
-                        } else if (m.role === 'teacher') {
-                            try {
-                                const uDoc = await db.collection('users').doc(m.uid).get();
-                                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
-                                const currentRooms = Array.isArray(m.teacherRooms) ? m.teacherRooms : [];
-                                const toAdd = selected.filter(id => !currentRooms.includes(id));
-                                const toRemove = currentRooms.filter(id => !selected.includes(id));
-                                for (const id of toAdd) {
-                                    await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
-                                }
-                                for (const id of toRemove) {
-                                    await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
-                                }
-                                m.teacherRooms = selected;
-                                const allTeachRooms = (window.allClassrooms || [])
-                                    .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
-                                    .map(r => r.name || r.id);
-                                teacherRoomsInfo.textContent = `ห้องสอนทั้งหมด: ${allTeachRooms.length ? allTeachRooms.join(', ') : '-'}`;
-                            } catch (e) { alert('อัปเดตห้องสอนไม่สำเร็จ: ' + e.message); }
-                        }
-                    };
                     const actionCell = tr.children[6];
                     const editBtn = document.createElement('button');
                     editBtn.className = 'btn-warning';
