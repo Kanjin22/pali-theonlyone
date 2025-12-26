@@ -23,58 +23,71 @@
         }
 
         /* Print Styles */
-        @media print {
-            .btn, .details-btn, #back-link, #loading, #error-container, .stats-dashboard, .modal-overlay, .print-hide {
-                display: none !important;
-            }
-            
-            body, .container {
-                background: white;
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                max-width: 100%;
-            }
+            @media print {
+                .btn, .details-btn, #back-link, #loading, #error-container, .stats-dashboard, .modal-overlay, .print-hide {
+                    display: none !important;
+                }
+                
+                body, .container {
+                    background: white;
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    max-width: 100%;
+                }
 
-            .page-header {
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                margin-bottom: 20px;
-            }
+                .page-header {
+                    box-shadow: none;
+                    border: none;
+                    padding: 0;
+                    margin-bottom: 20px;
+                }
 
-            .table-container {
-                box-shadow: none;
-                overflow: visible;
-            }
+                .table-container {
+                    box-shadow: none;
+                    overflow: visible;
+                }
 
-            table {
-                width: 100%;
-                font-size: 10pt;
-            }
+                table {
+                    width: 100%;
+                    font-size: 10pt;
+                    border-collapse: collapse; /* Ensure borders collapse for cleaner look */
+                }
 
-            th, td {
-                border: 1px solid #000;
-                padding: 5px;
-                color: #000;
-            }
-            
-            thead th {
-                background-color: #ddd !important;
-                color: #000 !important;
-            }
+                th, td {
+                    border: 1px solid #bdc3c7; /* Softer border color */
+                    padding: 8px; /* More padding */
+                    color: #2c3e50; /* Dark blue text instead of black */
+                }
+                
+                thead th {
+                    background-color: #34495e !important; /* Dark blue header */
+                    color: #ffffff !important; /* White text */
+                    border-bottom: 2px solid #2c3e50;
+                }
 
-            /* Ensure background colors print */
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
+                /* Zebra striping for print */
+                tbody tr:nth-of-type(even) {
+                    background-color: #f2f6f8 !important; /* Very light blue-gray */
+                }
 
-            @page {
-                size: landscape;
-                margin: 1cm;
+                /* Weekend highlight */
+                .weekend-row {
+                    background-color: #fdedec !important; /* Light red/pink for weekends */
+                    color: #c0392b !important;
+                }
+
+                /* Ensure background colors print */
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+
+                @page {
+                    size: landscape;
+                    margin: 1cm;
+                }
             }
-        }
 
         .container {
             max-width: 1200px;
@@ -563,8 +576,12 @@
                 "May": "พฤษภาคม", "June": "มิถุนายน", "July": "กรกฎาคม", "August": "สิงหาคม",
                 "September": "กันยายน", "October": "ตุลาคม", "November": "พฤศจิกายน", "December": "ธันวาคม"
             };
+            const toThaiDigits = (num) => {
+                const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
+                return num.toString().split('').map(d => thaiDigits[d] || d).join('');
+            };
             const monthThai = monthNames[scheduleData.month] || scheduleData.month;
-            const yearThai = scheduleData.year ? `๒๕${parseInt(scheduleData.year.slice(-2)) + 43}` : '';
+            const yearThai = scheduleData.year ? toThaiDigits(parseInt(scheduleData.year) + 543) : '';
             const title = `ตารางเรียนเดือน${monthThai} ${yearThai}`;
             const roomName = document.getElementById('page-subtitle').innerText;
 
@@ -580,9 +597,9 @@
 
                 if (day.isWeekend) {
                     rows += `
-                        <tr style="background-color: #f0f0f0;">
+                        <tr style="background-color: #fdedec; color: #c0392b;">
                             <td style="text-align:center;">${niceDate}</td>
-                            <td colspan="3" style="text-align:center; font-style:italic; color:#777; vertical-align:middle;">หยุด</td>
+                            <td colspan="3" style="text-align:center; font-style:italic; vertical-align:middle;">หยุด</td>
                         </tr>
                     `;
                 } else {
@@ -615,20 +632,25 @@
                             background: white; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 15mm;
                             box-shadow: 0 0 10px rgba(0,0,0,0.5); box-sizing: border-box; position: relative;
                         }
-                        h1, h2 { text-align: center; margin: 0 0 10px 0; color: #000; line-height: 1.2; }
+                        h1, h2 { text-align: center; margin: 0 0 10px 0; color: #2c3e50; line-height: 1.2; }
                         h1 { font-size: 16pt; font-weight: bold; }
-                        h2 { font-size: 12pt; font-weight: normal; margin-bottom: 20px; }
+                        h2 { font-size: 12pt; font-weight: normal; margin-bottom: 20px; color: #34495e; }
                         
                         table { width: 100%; border-collapse: collapse; font-size: 10pt; table-layout: fixed; }
-                        th, td { border: 1px solid #444; padding: 5px; vertical-align: top; word-wrap: break-word; }
-                        th { background: #eee; font-weight: bold; text-align: center; color: #000; }
+                        th, td { border: 1px solid #bdc3c7; padding: 6px; vertical-align: top; word-wrap: break-word; color: #2c3e50; }
+                        th { background: #34495e; font-weight: bold; text-align: center; color: white; border-bottom: 2px solid #2c3e50; }
                         
+                        /* Zebra striping */
+                        tr:nth-child(even) { background-color: #f2f6f8; }
+
                         .period-item { margin-bottom: 2px; line-height: 1.3; }
                         
                         @media print {
                             body { background: white; padding: 0; }
                             .paper { width: 100%; box-shadow: none; margin: 0; padding: 0; min-height: auto; }
                             .no-print { display: none !important; }
+                            /* Force background colors */
+                            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
                             @page { size: A4 portrait; margin: 10mm; }
                         }
                         
