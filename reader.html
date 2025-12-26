@@ -30,7 +30,7 @@
       <h1><i class="fas fa-book-open"></i> อ่านเนื้อหา</h1>
       <div style="display:flex;gap:8px">
         <a href="./index.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-home"></i> หน้าหลัก</a>
-        <a href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i> ออกข้อสอบ</a>
+        <a id="exam-btn" href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i> ออกข้อสอบ</a>
       </div>
     </div>
     <div class="controls">
@@ -136,7 +136,49 @@
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
     function preferThai(obj){return obj.thai_sense||obj.thai||''}
     function render(){const container=document.getElementById('pages');container.innerHTML='';const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const startPage=document.getElementById('startPage').value;const endPage=document.getElementById('endPage').value;const layout=document.getElementById('layoutSelect').value;const slides=collectSlides(part,startPage,endPage,vagga,story);let idx=1;slides.forEach(s=>{const p=parsePageNumber(s.page);const item=document.createElement('div');item.className='page';const header=document.createElement('div');header.className='page-header';const left=document.createElement('div');left.innerHTML=story?story:(s.story||s.section||'');const right=document.createElement('div');right.innerHTML=`หน้า ${toThaiDigits(p||idx)}`;header.appendChild(left);header.appendChild(right);item.appendChild(header);if(layout==='pali_only'){const b=document.createElement('div');b.className='block';b.textContent=s.pali||'';item.appendChild(b)}else if(layout==='pali_over_thai'){const b1=document.createElement('div');b1.className='block';b1.textContent=s.pali||'';const b2=document.createElement('div');b2.className='block';b2.textContent=preferThai(s);item.appendChild(b1);item.appendChild(b2)}else if(layout==='thai_over_pali'){const b1=document.createElement('div');b1.className='block';b1.textContent=preferThai(s);const b2=document.createElement('div');b2.className='block';b2.textContent=s.pali||'';item.appendChild(b1);item.appendChild(b2)}else if(layout==='side_by_side_lr'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=s.pali||'';const rightB=document.createElement('div');rightB.className='block';rightB.textContent=preferThai(s);grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}else if(layout==='side_by_side_rl'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=preferThai(s);const rightB=document.createElement('div');rightB.className='block';rightB.textContent=s.pali||'';grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}container.appendChild(item);idx++})}
-    function init(){populateLevels();populateSubjects();document.getElementById('renderBtn').onclick=render;document.getElementById('printBtn').onclick=function(){window.print()};document.getElementById('layoutSelect').onchange=render}
+    function init(){
+        populateLevels();
+        
+        // Check URL Params
+        const params = new URLSearchParams(window.location.search);
+        const levelCode = params.get('level');
+        if(levelCode) {
+            const LEVEL_CODE_MAP = {
+                'pt12': 'ประโยค ๑–๒',
+                'pt3': 'ประโยค ป.ธ. ๓',
+                'pt4': 'ประโยค ป.ธ. ๔',
+                'pt5': 'ประโยค ป.ธ. ๕',
+                'pt6': 'ประโยค ป.ธ. ๖',
+                'pt7': 'ประโยค ป.ธ. ๗',
+                'pt8': 'ประโยค ป.ธ. ๘',
+                'pt9': 'ประโยค ป.ธ. ๙'
+            };
+            const label = LEVEL_CODE_MAP[levelCode];
+            if(label) {
+                const sel = document.getElementById('levelSelect');
+                for(let i=0; i<sel.options.length; i++) {
+                    if(sel.options[i].value === label) {
+                        sel.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        populateSubjects();
+        document.getElementById('renderBtn').onclick=render;
+        document.getElementById('printBtn').onclick=function(){window.print()};
+        document.getElementById('layoutSelect').onchange=render;
+
+        // Hide Exam Button if not teacher
+        const accessMode = localStorage.getItem('access_mode');
+        const examBtn = document.getElementById('exam-btn');
+        if(examBtn) {
+            if(accessMode !== 'teacher') {
+                examBtn.style.display = 'none';
+            }
+        }
+    }
     init()
   </script>
 </body>
