@@ -92,9 +92,9 @@ async function initLevelPage(levelId) {
                 }
                 const modePref = localStorage.getItem('access_mode') || 'auto';
                 const effectiveMode = (function(){
-                    if (modePref === 'student') return 'student';
+                    if (role === 'teacher' || role === 'admin') return 'teacher';
                     if (modePref === 'teacher') return 'teacher';
-                    return (role === 'teacher' || role === 'admin') ? 'teacher' : 'student';
+                    return 'student';
                 })();
                 let visible = rooms;
                 if (effectiveMode === 'student') {
@@ -206,9 +206,9 @@ function renderRoomContent(room) {
                             if (doc.exists) {
                                 const role = doc.data().role;
                                 const effectiveMode = (function(){
-                                    if (modePref === 'student') return 'student';
+                                    if (role === 'teacher' || role === 'admin') return 'teacher';
                                     if (modePref === 'teacher') return 'teacher';
-                                    return (role === 'teacher' || role === 'admin') ? 'teacher' : 'student';
+                                    return 'student';
                                 })();
                                 if (effectiveMode === 'teacher' && (role === 'admin' || role === 'teacher')) allow = true;
                             }
