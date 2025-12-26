@@ -102,10 +102,6 @@
             transform: translateX(5px);
         }
 
-        .vocab-card.type-akhyata { border-left-color: #e74c3c; } /* อาขยาต - แดง */
-        .vocab-card.type-kitaka { border-left-color: #f39c12; } /* กิตก์ - ส้ม */
-        .vocab-card.type-samasa { border-left-color: #27ae60; } /* สมาส - เขียว */
-        .vocab-card.type-taddhita { border-left-color: #9b59b6; } /* ตัทธิต - ม่วง */
         .vocab-card.type-general { border-left-color: #34495e; } /* ทั่วไป - เทาเข้ม */
         .vocab-card.type-newgen { border-left-color: #1abc9c; } /* New Gen - เทอร์ควอยซ์ */
 
@@ -197,10 +193,6 @@
             
             <div class="filter-group">
                 <button class="filter-btn active" onclick="toggleFilter('all')">ทั้งหมด</button>
-                <button class="filter-btn" onclick="toggleFilter('akhyata')">อาขยาต</button>
-                <button class="filter-btn" onclick="toggleFilter('kitaka')">กิตก์</button>
-                <button class="filter-btn" onclick="toggleFilter('samasa')">สมาส</button>
-                <button class="filter-btn" onclick="toggleFilter('taddhita')">ตัทธิต</button>
             </div>
         </div>
 
@@ -214,45 +206,36 @@
     </div>
 
     <!-- Load Vocab Files -->
-    <script src="data/vocab-akhyata.js"></script>
-    <script src="data/vocab-kitaka.js"></script>
-    <script src="data/vocab-samasa.js"></script>
-    <script src="data/vocab-taddhita.js"></script>
+    <script src="data/pali-script.js"></script>
     <script src="data/vocab-general.js"></script>
+    <script src="data/vocab-dpd.js"></script>
+    <script src="data/vocab-dpd-inflected.js"></script>
+    <script src="data/vocab-etipitaka.js"></script>
+    <script src="data/vocab-sc.js"></script>
+    <script src="data/vocab-pts.js"></script>
+    <script src="data/vocab-dppn.js"></script>
+    <script src="data/vocab-dhammika.js"></script>
+    <!-- Add Tananunto if available, though previously it was Excel. Assuming vocab-tananunto.js exists based on memory/context -->
+    <!-- Checking if vocab-tananunto.js exists in file system -->
+    
+    <script src="data/pali-lookup.js"></script>
 
     <script>
-        // Combine all vocab data
-        let allVocabData = [];
+        // Initialize Databases
+        const databases = {
+            general: typeof vocabGeneral !== 'undefined' ? vocabGeneral : {},
+            dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
+            dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {},
+            etipitaka: typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {},
+            sc: typeof vocabSC !== 'undefined' ? vocabSC : {},
+            pts: typeof vocabPTS !== 'undefined' ? vocabPTS : {},
+            dppn: typeof vocabDPPN !== 'undefined' ? vocabDPPN : {},
+            dhammika: typeof vocabDhammika !== 'undefined' ? vocabDhammika : {},
+            // Tananunto might be missing as JS, let's check or handle gracefully
+            tananunto: {} 
+        };
+
         let activeFilter = 'all';
-
-        function initData() {
-            // Helper to process object into array
-            const process = (source, type, label) => {
-                if (typeof source === 'undefined') return;
-                Object.keys(source).forEach(key => {
-                    const item = source[key];
-                    allVocabData.push({
-                        word: key,
-                        type: type,
-                        label: label,
-                        split: item.split || '-',
-                        details: item.details || []
-                    });
-                });
-            };
-
-            process((typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}), 'akhyata', 'อาขยาต');
-            process((typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}), 'kitaka', 'กิตก์');
-            process((typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}), 'samasa', 'สมาส');
-            process((typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {}), 'taddhita', 'ตัทธิต');
-            process((typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}), 'general', 'ศัพท์ทั่วไป');
-        }
-
-        function normalize(str) {
-            if (!str) return "";
-            // Remove diacritics (upper/lower vowels/marks)
-            return str.replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, "");
-        }
 
         function toggleFilter(filter) {
             activeFilter = filter;
@@ -260,79 +243,107 @@
             // Update buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.innerText === getFilterLabel(filter) || (filter === 'all' && btn.innerText === 'ทั้งหมด')) {
+                // Simple check for button text match or logic
+                if (btn.getAttribute('onclick').includes(`'${filter}'`)) {
                     btn.classList.add('active');
                 }
             });
 
-            // Re-run search if there is query, else clear
+            // Re-run search if there is query
             const query = document.getElementById('dict-search').value;
             if (query.trim()) performSearch();
-        }
-
-        function getFilterLabel(key) {
-            const map = {
-                'akhyata': 'อาขยาต',
-                'kitaka': 'กิตก์',
-                'samasa': 'สมาส',
-                'taddhita': 'ตัทธิต',
-                'newgen': 'Thai New Gen'
-            };
-            return map[key] || '';
         }
 
         function performSearch() {
             const input = document.getElementById('dict-search');
             const queryRaw = input.value.trim();
-            const queryNorm = normalize(queryRaw);
             const container = document.getElementById('results-area');
 
             if (!queryRaw) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
-                        <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา
+                        <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา (บาลี/ไทย/อังกฤษ)
                     </div>`;
                 return;
             }
 
-            // Filter data
-            const results = allVocabData.filter(item => {
-                // Check Type Filter
-                if (activeFilter !== 'all' && item.type !== activeFilter) return false;
+            // Use PaliLookup.findAll to get results from ALL sources
+            let results = PaliLookup.findAll(queryRaw, databases);
 
-                // Check Search Query (Match word or split)
-                const wordNorm = normalize(item.word);
-                const splitNorm = normalize(item.split);
-                
-                return wordNorm.includes(queryNorm) || splitNorm.includes(queryNorm);
-            });
+            // Also try to find candidates via stemming if no direct results (optional, but good for user experience)
+            if (results.length === 0) {
+                 const candidates = PaliLookup.generateCandidates(queryRaw, databases);
+                 for (const cand of candidates) {
+                     const subResults = PaliLookup.findAll(cand, databases);
+                     // Add stemming info
+                     subResults.forEach(r => r._stemmedFrom = queryRaw);
+                     results = results.concat(subResults);
+                 }
+                 
+                 // Remove duplicates based on source and word
+                 const uniqueResults = [];
+                 const seen = new Set();
+                 for (const r of results) {
+                     const key = r.source + '|' + r.word;
+                     if (!seen.has(key)) {
+                         seen.add(key);
+                         uniqueResults.push(r);
+                     }
+                 }
+                 results = uniqueResults;
+            }
 
-            // Limit results for performance
-            const displayResults = results.slice(0, 50);
+            if (activeFilter !== 'all') {
+                // No other filters currently active
+            }
 
-            if (displayResults.length === 0) {
-                container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในหมวดที่เลือก</div>`;
+            if (results.length === 0) {
+                container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในฐานข้อมูล</div>`;
                 return;
             }
 
-            container.innerHTML = displayResults.map(item => {
-                const translation = (item.details || [])
-                    .filter(d => d.indexOf('แปลว่า:') === 0)
-                    .map(d => d.replace(/^แปลว่า:\s*/,'').trim())
-                    .join(', ');
+            container.innerHTML = results.map(item => {
+                // Extract definition text
+                let defHtml = "";
+                let splitText = item.split || '-';
+                
+                if (item.details) {
+                    defHtml = item.details.map(d => `<li>${d}</li>`).join('');
+                } else if (item.data) {
+                    // Handle SC/PTS/DPPN data format
+                    if (item.data.definition) {
+                        defHtml = `<li>${item.data.definition}</li>`;
+                    } else if (typeof item.data === 'string') {
+                         defHtml = `<li>${item.data}</li>`; // PTS might be raw HTML string
+                    } else {
+                         defHtml = `<li>(ดูรายละเอียดในคัมภีร์ฉบับเต็ม)</li>`;
+                    }
+                }
+
+                // Stemming Info
+                let stemInfo = "";
+                if (item._stemmedFrom) {
+                    stemInfo = `<div style="font-size:0.9rem; color:#e67e22; margin-bottom:5px;">(จากคำค้น: ${item._stemmedFrom})</div>`;
+                }
+
+                // Badge Color Class
+                let typeClass = 'general';
+                if (item.source === 'Digital Pāḷi Dictionary') typeClass = 'newgen'; // Reuse color
+                else if (item.source === 'พจนานุกรม E-Tipitaka') typeClass = 'newgen';
+
                 return `
-                <div class="vocab-card type-${item.type}">
+                <div class="vocab-card type-${typeClass}">
                     <div class="word-title">
                         <span class="word-text-group">
                             <span class="pali-head">${item.word}</span>
-                            ${translation ? `<span class="colon">:</span> <span class="thai-head">${translation}</span>` : ``}
                         </span>
-                        <span class="word-type-badge">${item.label}</span>
+                        <span class="word-type-badge">${item.source}</span>
                     </div>
-                    <div class="word-split">${item.split}</div>
+                    ${stemInfo}
+                    ${splitText !== '-' ? `<div class="word-split">${splitText}</div>` : ''}
                     <ul class="word-details">
-                        ${(item.details || []).map(d => `<li>${d}</li>`).join('')}
+                        ${defHtml}
                     </ul>
                 </div>
                 `;
@@ -341,8 +352,6 @@
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
-            initData();
-            
             // Check for URL param 'q' to auto-search
             const params = new URLSearchParams(window.location.search);
             const q = params.get('q');

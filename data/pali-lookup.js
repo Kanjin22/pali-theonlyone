@@ -170,10 +170,6 @@ const PaliLookup = {
         if (dbs.tananunto && dbs.tananunto[key]) return { details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key };
         if (dbs.etipitaka && dbs.etipitaka[key]) return { details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key };
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
-        if (dbs.akhyata && dbs.akhyata[key]) return { ...dbs.akhyata[key], source: 'อาขยาต', word: key };
-        if (dbs.kitaka && dbs.kitaka[key]) return { ...dbs.kitaka[key], source: 'กิริยากิตก์', word: key };
-        if (dbs.samasa && dbs.samasa[key]) return { ...dbs.samasa[key], source: 'สมาส', word: key };
-        if (dbs.taddhita && dbs.taddhita[key]) return { ...dbs.taddhita[key], source: 'ตัทธิต', word: key };
         
         // Fallback: Check Roman Dictionaries (DPD, PTS, DPPN, Dhammika, SC, DPD Inflected)
         if (dbs.dpd || dbs.sc || dbs.pts || dbs.dppn || dbs.dhammika || dbs.dpdInflected) {
@@ -190,6 +186,31 @@ const PaliLookup = {
         }
 
         return null;
+    },
+
+    findAll: function(key, dbs) {
+        let results = [];
+        
+        // 1. Thai Dictionaries
+        if (dbs.newgen && dbs.newgen[key]) results.push({ ...dbs.newgen[key], source: 'Thai New Gen', word: key });
+        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key });
+        if (dbs.etipitaka && dbs.etipitaka[key]) results.push({ details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key });
+        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
+
+        // 2. Roman Dictionaries
+        let romanKey = key;
+        if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
+             romanKey = PaliScript.thaiToRoman(key);
+        }
+        
+        if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key });
+        if (dbs.pts && dbs.pts[romanKey]) results.push({ source: 'pts', data: dbs.pts[romanKey], word: key });
+        if (dbs.dppn && dbs.dppn[romanKey]) results.push({ source: 'dppn', data: dbs.dppn[romanKey], word: key });
+        if (dbs.dhammika && dbs.dhammika[romanKey]) results.push({ source: 'dhammika', data: dbs.dhammika[romanKey], word: key });
+        if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: key });
+        if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) results.push({ source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key });
+
+        return results;
     },
 
     generateCandidates: function(word, dbs) {
