@@ -200,6 +200,16 @@
             <button id="btn-logout"
                 style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
         </div>
+        <div id="role-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); align-items:center; justify-content:center; z-index:10000;">
+            <div style="background:#fff; width:90%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); padding:20px;">
+                <div style="font-size:1.2rem; font-weight:700; color:#2c3e50; margin-bottom:8px;">เลือกบทบาทการใช้งาน</div>
+                <div id="role-modal-desc" style="color:#555; margin-bottom:16px;"></div>
+                <div style="display:flex; gap:10px;">
+                    <button id="btn-choose-teacher" style="flex:1; padding:12px; background:#2ecc71; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;">เข้าโหมดอาจารย์</button>
+                    <button id="btn-choose-student" style="flex:1; padding:12px; background:#3498db; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;">เข้าโหมดนักเรียน</button>
+                </div>
+            </div>
+        </div>
         <div class="hero-section">
             <div class="hero-title">ระบบการเรียนบาลีออนไลน์</div>
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
@@ -1487,6 +1497,29 @@
                             if (rc2) obj2 = JSON.parse(rc2) || {};
                             obj2[uid] = role;
                             localStorage.setItem('pali_role_cache', JSON.stringify(obj2));
+                        } catch (e) {}
+
+                        try {
+                            const modePref = localStorage.getItem('access_mode') || 'auto';
+                            let isTeacherRole = (role === 'teacher' || role === 'admin');
+                            let isStudentApproved = false;
+                            try {
+                                const enr = await db.collection('enrollments').doc(uid).get();
+                                isStudentApproved = enr.exists && enr.data().status === 'approved';
+                            } catch (e) {}
+                            if (isTeacherRole && isStudentApproved && (modePref === 'auto' || !modePref)) {
+                                const modal = document.getElementById('role-modal');
+                                const desc = document.getElementById('role-modal-desc');
+                                if (modal && desc) {
+                                    const name = displayName || user.email || '';
+                                    desc.textContent = `เนื่องจากคุณ ${name} เป็นทั้งอาจารย์และนักเรียน กรุณาเลือกบทบาทที่จะใช้ในระบบ`;
+                                    modal.style.display = 'flex';
+                                    const btnT = document.getElementById('btn-choose-teacher');
+                                    const btnS = document.getElementById('btn-choose-student');
+                                    if (btnT) btnT.onclick = function(){ localStorage.setItem('access_mode','teacher'); modal.style.display='none'; location.reload(); };
+                                    if (btnS) btnS.onclick = function(){ localStorage.setItem('access_mode','student'); modal.style.display='none'; location.reload(); };
+                                }
+                            }
                         } catch (e) {}
 
                     } catch (e) {
