@@ -103,10 +103,8 @@
                     if (role === 'general' && approved) role = 'student';
                     if (role === 'student' && level !== 'pt3') { location.href = '../index.html'; return; }
                 }
-                document.addEventListener('DOMContentLoaded', () => {
-                    initLevelPage('pt3');
-                    localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt3.html', title: 'ห้องเรียน ป.ธ. ๓' }));
-                });
+                initLevelPage('pt3');
+                localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt3.html', title: 'ห้องเรียน ป.ธ. ๓' }));
             } catch (e) { console.error(e); location.href = '../index.html'; }
         });
     </script>
