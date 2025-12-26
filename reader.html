@@ -74,7 +74,25 @@
                     <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
                     <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
                 </select>
+                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (Palithai)">
+                    <i class="fas fa-book"></i>
+                </button>
             </div>
+            
+            <script>
+                document.getElementById('dictBtn').onclick = () => {
+                    // Try to use selected text if any
+                    const selection = window.getSelection().toString().trim();
+                    let url = 'http://admin.palithai.com/';
+                    if(selection) {
+                        // Guessing the search parameter, usually 'q' or 'keyword' or path
+                        // Since we don't know, we just open the home page for now, 
+                        // but we could try adding it if the user confirms the pattern.
+                        // url += '?q=' + encodeURIComponent(selection); 
+                    }
+                    window.open(url, '_blank');
+                };
+            </script>
 
             <!-- Thai Translation Mode -->
             <div style="display:flex; flex-direction:column; gap:4px;">
@@ -291,13 +309,13 @@
             // Render content based on layout
             if(layout==='pali_only'){
                 const b=document.createElement('div');
-                b.className='block';
+                b.className='block pali-text';
                 b.style.fontWeight='bold';
                 b.textContent=s.pali||'';
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
-                b1.className='block';
+                b1.className='block pali-text';
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
@@ -318,7 +336,7 @@
                 b1.textContent=preferThai(s);
                 
                 const b2=document.createElement('div');
-                b2.className='block';
+                b2.className='block pali-text';
                 b2.style.fontWeight='bold';
                 b2.style.color='#7f8c8d';
                 b2.textContent=s.pali||'';
@@ -329,7 +347,7 @@
                 const grid=document.createElement('div');
                 grid.className='two-col';
                 const leftB=document.createElement('div');
-                leftB.className='block';
+                leftB.className='block pali-text';
                 leftB.style.fontWeight='bold';
                 leftB.textContent=s.pali||'';
                 const rightB=document.createElement('div');
@@ -345,7 +363,7 @@
                 leftB.className='block';
                 leftB.textContent=preferThai(s);
                 const rightB=document.createElement('div');
-                rightB.className='block';
+                rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
                 rightB.textContent=s.pali||'';
                 grid.appendChild(leftB);
