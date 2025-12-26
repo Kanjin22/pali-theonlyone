@@ -7,12 +7,46 @@ const PaliLookup = {
 
         // 1. Exact Match
         let result = this.checkAll(cleanWord, databases);
+        
+        // 2. Indirect Thai Lookup (via DPD Inflected Base Word)
+        // If we didn't find a Thai result (result is null OR result is Roman), try to find base via DPD Inflected
+        const isThaiResult = result && (result.source === 'Thai New Gen' || result.source === 'พจนานุกรม บาลี-ไทย' || result.source === 'พจนานุกรม E-Tipitaka' || result.source === 'ศัพท์ทั่วไป');
+        
+        if (!isThaiResult && databases.dpdInflected) {
+             let roman = cleanWord;
+             if (/[ก-ฮ]/.test(cleanWord) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
+                roman = PaliScript.thaiToRoman(cleanWord);
+             }
+             
+             const inflectedDef = databases.dpdInflected[roman];
+             if (inflectedDef) {
+                 const baseWords = this.extractBaseWords(inflectedDef);
+                 for (const base of baseWords) {
+                     // Check Thai DB for base word
+                     // We use checkAll but verify source is Thai
+                     // Convert base (Roman) to Thai for lookup
+                     let thaiBase = base;
+                     if (typeof PaliScript !== 'undefined' && PaliScript.romanToThai) {
+                         thaiBase = PaliScript.romanToThai(base);
+                     }
+                     
+                     const baseResult = this.checkAll(thaiBase, databases);
+                     if (baseResult && (baseResult.source === 'Thai New Gen' || baseResult.source === 'พจนานุกรม บาลี-ไทย' || baseResult.source === 'พจนานุกรม E-Tipitaka' || baseResult.source === 'ศัพท์ทั่วไป')) {
+                         // Found Thai definition for base word!
+                         baseResult._stemmedFrom = cleanWord;
+                         baseResult._baseWord = thaiBase; // Record base word
+                         return baseResult;
+                     }
+                 }
+             }
+        }
+
         if (result) return result;
 
-        // 2. Normalize and check (remove leading/trailing spaces, maybe zero-width spaces)
+        // 3. Normalize and check (remove leading/trailing spaces, maybe zero-width spaces)
         // (Already trimmed)
 
-        // 3. Smart Suffix Stripping & Dictionary Scanning
+        // 4. Smart Suffix Stripping & Dictionary Scanning
         const candidates = this.generateCandidates(cleanWord, databases);
         for (const candidate of candidates) {
             result = this.checkAll(candidate, databases);
@@ -23,12 +57,31 @@ const PaliLookup = {
             }
         }
 
-        // 4. Sandhi Splitting
+        // 5. Sandhi Splitting
         const sandhiResult = this.splitSandhi(cleanWord, databases);
         if (sandhiResult) return sandhiResult;
 
         return null;
     },
+
+    extractBaseWords: function(inflectedDef) {
+        if (!inflectedDef) return [];
+        const parts = inflectedDef.split('<br>');
+        const bases = new Set();
+        // Regex to match base word at start: "word :" or "word 1 :"
+        // Also handles "word: ..."
+        const regex = /^([a-zāīūṅñṭḍṇḷṃ]+)(?=\s*(\d+)?\s*:)/i; 
+        
+        for (const part of parts) {
+            const cleanPart = part.trim();
+            const match = cleanPart.match(regex);
+            if (match) {
+                bases.add(match[1]);
+            }
+        }
+        return Array.from(bases);
+    },
+
 
     splitSandhi: function(word, dbs) {
         // Convert to Roman if Thai
@@ -98,31 +151,42 @@ const PaliLookup = {
     },
     
     extractDef: function(r) {
+        if (r.source === 'Digital Pāḷi Dictionary') return r.details[0];
         if (r.source === 'sc') return r.data.definition;
+        if (r.source === 'pts') return "PTS Dictionary"; // PTS content is long HTML
+        if (r.source === 'dppn') return "DPPN";
+        if (r.source === 'dhammika') return "Nature Dictionary";
+        if (r.source === 'dpdInflected') return "DPD Inflected";
         if (r.source === 'thai') {
-             if (r.data.details && r.data.details.length > 0) return r.data.details[0];
-             return "พบในพจนานุกรมไทย";
+            if (r.data.details && r.data.details.length > 0) return r.data.details[0];
+            return "พบในพจนานุกรมไทย";
         }
         return "";
     },
-
+    
     checkAll: function(key, dbs) {
         // Priority order can be adjusted here
         if (dbs.newgen && dbs.newgen[key]) return { ...dbs.newgen[key], source: 'Thai New Gen', word: key };
         if (dbs.tananunto && dbs.tananunto[key]) return { details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key };
+        if (dbs.etipitaka && dbs.etipitaka[key]) return { details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key };
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         if (dbs.akhyata && dbs.akhyata[key]) return { ...dbs.akhyata[key], source: 'อาขยาต', word: key };
         if (dbs.kitaka && dbs.kitaka[key]) return { ...dbs.kitaka[key], source: 'กิริยากิตก์', word: key };
         if (dbs.samasa && dbs.samasa[key]) return { ...dbs.samasa[key], source: 'สมาส', word: key };
         if (dbs.taddhita && dbs.taddhita[key]) return { ...dbs.taddhita[key], source: 'ตัทธิต', word: key };
         
-        // Fallback: Check Roman SC (if key is Thai, convert to Roman)
-        if (dbs.sc) {
+        // Fallback: Check Roman Dictionaries (DPD, PTS, DPPN, Dhammika, SC, DPD Inflected)
+        if (dbs.dpd || dbs.sc || dbs.pts || dbs.dppn || dbs.dhammika || dbs.dpdInflected) {
              let romanKey = key;
              if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
                  romanKey = PaliScript.thaiToRoman(key);
              }
-             if (dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
+             if (dbs.dpd && dbs.dpd[romanKey]) return { details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key };
+             if (dbs.pts && dbs.pts[romanKey]) return { source: 'pts', data: dbs.pts[romanKey], word: key };
+             if (dbs.dppn && dbs.dppn[romanKey]) return { source: 'dppn', data: dbs.dppn[romanKey], word: key };
+             if (dbs.dhammika && dbs.dhammika[romanKey]) return { source: 'dhammika', data: dbs.dhammika[romanKey], word: key };
+             if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
+             if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key };
         }
 
         return null;
@@ -159,7 +223,7 @@ const PaliLookup = {
                  
                  // 1. Check exact prefix match (if dictionary has it)
                  // This catches roots hidden inside long words (e.g. bhikkhu inside bhikkhū)
-                 if (dbs && dbs.sc && dbs.sc[sub]) {
+                 if (dbs && ((dbs.sc && dbs.sc[sub]) || (dbs.dpd && dbs.dpd[sub]))) {
                      add(sub);
                  }
                  
@@ -171,7 +235,7 @@ const PaliLookup = {
                  if (vowelMap[lastChar]) {
                      for (const subChar of vowelMap[lastChar]) {
                          const candidate = base + subChar;
-                         if (dbs && dbs.sc && dbs.sc[candidate]) {
+                         if (dbs && ((dbs.sc && dbs.sc[candidate]) || (dbs.dpd && dbs.dpd[candidate]))) {
                              add(candidate);
                          }
                      }
@@ -193,11 +257,11 @@ const PaliLookup = {
                  const base = sub.slice(0, -1);
                  if (vowelMap[lastChar]) {
                      for (const subChar of vowelMap[lastChar]) {
-                         const candidate = base + subChar;
-                         if (dbs && dbs.sc && dbs.sc[candidate]) {
-                             add(candidate);
-                         }
-                     }
+                        const candidate = base + subChar;
+                        if (dbs && ((dbs.sc && dbs.sc[candidate]) || (dbs.dpd && dbs.dpd[candidate]))) {
+                            add(candidate);
+                        }
+                    }
                  }
              }
         }
