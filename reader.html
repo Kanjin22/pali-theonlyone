@@ -354,6 +354,7 @@
 
         // 2. Roman Dictionary (SuttaCentral Local & Online)
         const scLink = `https://suttacentral.net/define/${romanWord}`;
+        const dpdLink = `https://www.dpdict.net/gd?search=${romanWord}`;
         
         let scDefHtml = "";
         const scEntry = (typeof vocabSC !== 'undefined') ? vocabSC[romanWord] : null;
@@ -373,9 +374,14 @@
             <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #bdc3c7;">
                  <div style="font-size:0.9em; font-weight:bold; color:#2980b9; margin-bottom:5px;">พจนานุกรมบาลี-โรมัน (SuttaCentral)</div>
                  ${scDefHtml}
-                 <a href="${scLink}" target="_blank" style="display:inline-block; margin-top:8px; padding:6px 12px; background:#ecf0f1; color:#2c3e50; text-decoration:none; border-radius:4px; border:1px solid #bdc3c7; font-size:0.9em;">
-                    <i class="fa-solid fa-dharmachakra" style="color:#e67e22;"></i> เปิดดูความหมายเพิ่มเติมที่ SuttaCentral
-                 </a>
+                 <div style="margin-top:8px;">
+                     <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:5px; padding:6px 12px; background:#ecf0f1; color:#2c3e50; text-decoration:none; border-radius:4px; border:1px solid #bdc3c7; font-size:0.9em;">
+                        <i class="fa-solid fa-dharmachakra" style="color:#e67e22;"></i> SuttaCentral
+                     </a>
+                     <a href="${dpdLink}" target="_blank" style="display:inline-block; padding:6px 12px; background:#ecf0f1; color:#2c3e50; text-decoration:none; border-radius:4px; border:1px solid #bdc3c7; font-size:0.9em;">
+                        <i class="fa-solid fa-book" style="color:#27ae60;"></i> DPD (Grammar)
+                     </a>
+                 </div>
             </div>
         `;
 
