@@ -37,12 +37,12 @@ async function initLevelPage(levelId) {
                              if (userDoc.exists && userDoc.data()) role = userDoc.data().role || role;
                          } catch (e) {}
 
-                         // If explicitly set to teacher mode, allow access (Testing/Demo)
-                         if (modePref === 'teacher') {
-                             allow = true;
-                         }
-                         // If explicit student mode or actual student role
-                         else if (role === 'student' || modePref === 'student') {
+                         // If explicitly set to teacher mode, or user is teacher/admin, allow access
+                        if (modePref === 'teacher' || role === 'teacher' || role === 'admin') {
+                            allow = true;
+                        }
+                        // If explicit student mode or actual student role
+                        else if (role === 'student' || modePref === 'student') {
                              try {
                                  const enr = await firebase.firestore().collection('enrollments').doc(u.uid).get();
                                  const approved = enr.exists && enr.data().status === 'approved';
