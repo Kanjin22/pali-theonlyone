@@ -517,6 +517,7 @@
                                 <th style="padding:10px; text-align:left;">ชื่อไฟล์</th>
                                 <th style="padding:10px; text-align:left;">ประเภท</th>
                                 <th style="padding:10px; text-align:left;">ชั้นเรียน</th>
+                                <th style="padding:10px; text-align:left;">วิชา</th>
                                 <th style="padding:10px; text-align:left;">วันที่อัปโหลด</th>
                                 <th style="padding:10px; text-align:center;">Action</th>
                             </tr>
@@ -1871,11 +1872,16 @@
                 tr.style.borderBottom = '1px solid #eee';
 
                 const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
+                const subjId = file.subject || '';
+                const subjList = SUBJECT_CONFIG[file.level] || [];
+                const subjObj = subjList.find(s => s.id === subjId) || null;
+                const subjLabel = subjObj ? subjObj.label : (subjId || '-');
 
                 tr.innerHTML = `
                  <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
                  <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
                  <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
+                 <td style="padding:10px;">${subjLabel}</td>
                  <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
                  <td style="padding:10px; text-align:center;">
                      <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
