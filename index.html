@@ -999,7 +999,7 @@
             if (teacherToolLink) {
                 const toolsGrid = teacherToolLink.closest('.grid-menu');
                 const toolsLabel = toolsGrid ? toolsGrid.previousElementSibling : null;
-                const showTools = (role === 'teacher' || role === 'admin');
+                const showTools = (role === 'admin');
                 if (toolsGrid) {
                     toolsGrid.style.display = showTools ? 'grid' : 'none';
                 }
