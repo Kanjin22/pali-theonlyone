@@ -97,6 +97,53 @@
             color: #999;
         }
 
+        /* Student Dashboard */
+        .dash-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .dash-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .dash-stat {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .dash-btn {
+            background: white;
+            color: #2980b9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dash-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+        }
+
         /* Color Coding */
         .level-basic .icon-box {
             color: #27ae60;
@@ -161,6 +208,33 @@
 
 
         <div id="app-content" style="display:none;">
+            
+            <!-- Student Dashboard -->
+            <div id="student-dashboard" style="display:none; margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
+                <div class="dash-card">
+                    <div style="position: relative; z-index: 2;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="dash-greeting">สวัสดีครับ นักเรียน</div>
+                        <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">ระดับชั้นเรียนของคุณ</div>
+                        
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div class="dash-stat">
+                                <i class="fa-solid fa-fire" style="color: #f1c40f; font-size: 1.2rem;"></i>
+                                <div>
+                                    <div style="font-size: 0.8rem; opacity: 0.8;">เรียนต่อเนื่อง</div>
+                                    <div style="font-weight: bold;" id="dash-streak">0 วัน</div>
+                                </div>
+                            </div>
+                            
+                            <a id="dash-classroom-btn" href="#" class="dash-btn">
+                                <i class="fa-solid fa-door-open"></i> เข้าห้องเรียน
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Background Icon -->
+                    <i class="fa-solid fa-shapes" style="position: absolute; right: -20px; bottom: -40px; font-size: 10rem; opacity: 0.1; transform: rotate(-15deg);"></i>
+                </div>
+            </div>
             <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
             <div class="grid-menu" style="margin-bottom:40px;">
                 <div id="today-schedule-container" class="menu-card level-tool"
@@ -1261,6 +1335,7 @@
                         };
                         showUser(displayUser, role);
                         applyRoleUI(role);
+                        updateStudentDashboard(displayUser, role);
                         if (role === 'admin') {
                             updateAdminBadge();
                             updateLevelPendingBadges();
@@ -1320,6 +1395,80 @@
                 openLogin();
             }
         });
+        function updateStudentDashboard(user, role) {
+            const dashboard = document.getElementById('student-dashboard');
+            if (!dashboard) return;
+
+            if (role !== 'student') {
+                dashboard.style.display = 'none';
+                return;
+            }
+
+            dashboard.style.display = 'block';
+
+            // 1. Update Greeting
+            const greetingEl = document.getElementById('dash-greeting');
+            if (greetingEl && user.displayName) {
+                greetingEl.textContent = `สวัสดีครับ, ${user.displayName}`;
+            }
+
+            // 2. Update Level & Link
+            const levelEl = document.getElementById('dash-level');
+            const btnEl = document.getElementById('dash-classroom-btn');
+            
+            let enrolledLevel = null;
+            try {
+                const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
+                if (obj && user.uid && obj[user.uid]) enrolledLevel = obj[user.uid];
+            } catch (e) {}
+
+            const levelMap = {
+                'pt12': 'ประโยค ๑-๒',
+                'pt3': 'ประโยค ๓',
+                'pt4': 'ประโยค ๔',
+                'pt5': 'ประโยค ๕',
+                'pt6': 'ประโยค ๖',
+                'pt7': 'ประโยค ๗',
+                'pt8': 'ประโยค ๘',
+                'pt9': 'ประโยค ๙'
+            };
+
+            if (enrolledLevel && levelMap[enrolledLevel]) {
+                if (levelEl) levelEl.textContent = `กำลังศึกษาชั้น: ${levelMap[enrolledLevel]}`;
+                if (btnEl) {
+                    btnEl.href = `classroom_select.html?level=${enrolledLevel}`;
+                    btnEl.style.display = 'flex';
+                }
+            } else {
+                if (levelEl) levelEl.textContent = 'ยินดีต้อนรับสู่ห้องเรียนบาลี';
+                if (btnEl) btnEl.style.display = 'none';
+            }
+
+            // 3. Update Streak
+            const streakEl = document.getElementById('dash-streak');
+            if (streakEl) {
+                try {
+                    const today = new Date().toISOString().split('T')[0];
+                    let streakData = JSON.parse(localStorage.getItem('pali_streak_data') || '{"lastVisit": "", "streak": 0}');
+                    
+                    if (streakData.lastVisit !== today) {
+                        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                        
+                        if (streakData.lastVisit === yesterday) {
+                            streakData.streak++;
+                        } else {
+                            streakData.streak = 1;
+                        }
+                        streakData.lastVisit = today;
+                        localStorage.setItem('pali_streak_data', JSON.stringify(streakData));
+                    }
+                    streakEl.textContent = `${streakData.streak} วัน`;
+                } catch (e) {
+                    console.warn('Streak update failed:', e);
+                }
+            }
+        }
+
         // --- Resume Learning Logic ---
         function checkResume() {
             const resumeSection = document.getElementById('resume-section');
