@@ -1711,6 +1711,35 @@
             fillLevelOptions(memStudentLevel, e.levelRequested || '', false);
             fillLevelOptions(memStudentRoomLevel, e.levelRequested || '', false);
             fillLevelOptions(memTeacherLevels, Array.isArray(u.teacherLevels) ? u.teacherLevels : [], true);
+            const syncStudentRoomLevel = () => {
+                memStudentRoomLevel.value = memStudentLevel.value || '';
+                memStudentRoomLevel.onchange();
+            };
+            memStudentLevel.onchange = syncStudentRoomLevel;
+            const applyTeacherRoomLevelOptions = () => {
+                const selectedLevels = Array.from(memTeacherLevels.selectedOptions).map(o => o.value);
+                memTeacherRoomLevel.innerHTML = '';
+                const p = document.createElement('option');
+                p.value = '';
+                p.textContent = '—';
+                memTeacherRoomLevel.appendChild(p);
+                selectedLevels.forEach(k => {
+                    const opt = document.createElement('option');
+                    opt.value = k;
+                    opt.textContent = LEVEL_NAMES[k] || k;
+                    memTeacherRoomLevel.appendChild(opt);
+                });
+                if (selectedLevels.length === 0) {
+                    memTeacherRoomLevel.value = '';
+                    memTeacherRooms.innerHTML = '';
+                    return;
+                }
+                if (!selectedLevels.includes(memTeacherRoomLevel.value)) {
+                    memTeacherRoomLevel.value = selectedLevels[0];
+                }
+                memTeacherRoomLevel.onchange();
+            };
+            memTeacherLevels.onchange = applyTeacherRoomLevelOptions;
             memStudentRoomLevel.onchange = () => {
                 const lv = memStudentRoomLevel.value;
                 fillRoomsByLevel(memStudentRooms, lv, Array.isArray(e.rooms) ? e.rooms : []);
@@ -1727,6 +1756,7 @@
                 memStudentRoomLevel.value = e.levelRequested;
                 memTeacherRoomLevel.value = Array.isArray(u.teacherLevels) && u.teacherLevels.length ? u.teacherLevels[0] : '';
             }
+            applyTeacherRoomLevelOptions();
             if (memStudentRoomLevel.value) fillRoomsByLevel(memStudentRooms, memStudentRoomLevel.value, Array.isArray(e.rooms) ? e.rooms : []);
             if (memTeacherRoomLevel.value) {
                 const teacherName = u.displayName || u.email || uid;
