@@ -553,6 +553,7 @@
                                 <th>ชื่อ-สกุล</th>
                                 <th>ประเภท</th>
                                 <th>ชั้นเรียน</th>
+                                <th>ห้องเรียน</th>
                                 <th>เบอร์โทร</th>
                                 <th>วันที่อนุมัติ</th>
                             </tr>
@@ -1202,6 +1203,7 @@
                     let name = u.displayName || u.email || '-';
                     let phone = '-';
                     let level = '-';
+                    let rooms = [];
                     let dateStr = '-';
                     let rawDate = null;
 
@@ -1212,6 +1214,7 @@
                         }
                         if (enr.phone) phone = enr.phone;
                         if (enr.levelRequested) level = enr.levelRequested;
+                        if (Array.isArray(enr.rooms)) rooms = enr.rooms;
 
                         if (enr.approvedAt) {
                             rawDate = enr.approvedAt;
@@ -1228,6 +1231,7 @@
                         name,
                         phone,
                         level,
+                        rooms,
                         dateStr,
                         rawDate
                     });
@@ -1301,13 +1305,118 @@
                             ${m.role === 'general' ? '<div style="font-size:0.75rem; color:#ccc;">(ผู้ใช้งานทั่วไป)</div>' : ''}
                         </td>
                         <td></td>
-                        <td>${m.level !== '-' ? 'ประโยค ' + m.level : '-'}</td>
+                        <td>${LEVEL_NAMES[m.level] || '-'}</td>
+                        <td></td>
                         <td>${m.phone}</td>
                         <td>${m.dateStr}</td>
                     `;
 
                     // Append select to the second column
                     tr.children[1].appendChild(select);
+
+                    // Level selector and Room selector
+                    const levelCell = tr.children[2];
+                    const roomCell = tr.children[3];
+                    const levelSelect = document.createElement('select');
+                    Object.keys(LEVEL_NAMES).forEach(k => {
+                        const opt = document.createElement('option');
+                        opt.value = k;
+                        opt.textContent = LEVEL_NAMES[k];
+                        if (m.level === k) opt.selected = true;
+                        levelSelect.appendChild(opt);
+                    });
+                    levelSelect.style.padding = '6px';
+                    levelSelect.style.border = '1px solid #ddd';
+                    levelSelect.style.borderRadius = '6px';
+                    levelSelect.style.fontSize = '0.9rem';
+                    levelCell.innerHTML = '';
+                    levelCell.appendChild(levelSelect);
+                    
+                    const roomsSelect = document.createElement('select');
+                    roomsSelect.multiple = true;
+                    roomsSelect.style.minWidth = '220px';
+                    roomsSelect.style.padding = '6px';
+                    roomsSelect.style.border = '1px solid #ddd';
+                    roomsSelect.style.borderRadius = '6px';
+                    roomsSelect.style.fontSize = '0.9rem';
+                    roomsSelect.size = 3;
+                    roomCell.innerHTML = '';
+                    roomCell.appendChild(roomsSelect);
+                    
+                    async function ensureRoomsLoaded() {
+                        if (!window.allClassrooms || window.allClassrooms.length === 0) {
+                            try {
+                                const snap = await db.collection('classrooms').orderBy('level').get();
+                                window.allClassrooms = [];
+                                snap.forEach(doc => window.allClassrooms.push(doc.data()));
+                            } catch (e) {}
+                        }
+                    }
+                    function populateRooms(levelCode) {
+                        roomsSelect.innerHTML = '';
+                        const rooms = (window.allClassrooms || []).filter(r => r.level === levelCode);
+                        rooms.forEach(r => {
+                            const opt = document.createElement('option');
+                            opt.value = r.id;
+                            opt.textContent = `${r.name || r.id}`;
+                            opt.selected = m.role === 'teacher'
+                                ? (Array.isArray(m.teacherRooms) && m.teacherRooms.includes(r.id))
+                                : (Array.isArray(m.rooms) && m.rooms.includes(r.id));
+                            roomsSelect.appendChild(opt);
+                        });
+                    }
+                    (async () => {
+                        await ensureRoomsLoaded();
+                        if (m.role === 'teacher') {
+                            try {
+                                const uDoc = await db.collection('users').doc(m.uid).get();
+                                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
+                                const current = (window.allClassrooms || [])
+                                    .filter(r => r.level === m.level && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                                    .map(r => r.id);
+                                m.teacherRooms = current;
+                            } catch (e) {}
+                        }
+                        populateRooms(m.level);
+                    })();
+                    levelSelect.onchange = async () => {
+                        const newLevel = levelSelect.value;
+                        if (m.role === 'student') {
+                            try {
+                                await db.collection('enrollments').doc(m.uid).set({ levelRequested: newLevel, status: 'approved' }, { merge: true });
+                                m.level = newLevel;
+                            } catch (e) { alert('อัปเดตชั้นเรียนไม่สำเร็จ: ' + e.message); }
+                        } else if (m.role === 'teacher') {
+                            try {
+                                await db.collection('users').doc(m.uid).set({ teacherLevels: firebase.firestore.FieldValue.arrayUnion(newLevel) }, { merge: true });
+                            } catch (e) { alert('อัปเดตชั้นอาจารย์ไม่สำเร็จ: ' + e.message); }
+                        }
+                        populateRooms(newLevel);
+                    };
+                    roomsSelect.onchange = async () => {
+                        const selected = Array.from(roomsSelect.selectedOptions).map(o => o.value);
+                        if (m.role === 'student') {
+                            try {
+                                await db.collection('enrollments').doc(m.uid).set({ rooms: selected }, { merge: true });
+                                m.rooms = selected;
+                            } catch (e) { alert('อัปเดตห้องเรียนไม่สำเร็จ: ' + e.message); }
+                        } else if (m.role === 'teacher') {
+                            try {
+                                const uDoc = await db.collection('users').doc(m.uid).get();
+                                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
+                                const currentRooms = Array.isArray(m.teacherRooms) ? m.teacherRooms : [];
+                                const toAdd = selected.filter(id => !currentRooms.includes(id));
+                                const toRemove = currentRooms.filter(id => !selected.includes(id));
+                                for (const id of toAdd) {
+                                    await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
+                                }
+                                for (const id of toRemove) {
+                                    await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                                }
+                                m.teacherRooms = selected;
+                            } catch (e) { alert('อัปเดตห้องสอนไม่สำเร็จ: ' + e.message); }
+                        }
+                    };
 
                     tbody.appendChild(tr);
                 });
