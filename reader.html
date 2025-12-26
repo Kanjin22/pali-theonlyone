@@ -271,7 +271,7 @@
     }
 
     // --- Dictionary Logic ---
-    function wrapWords(text) {
+    function wrapWords(text, slideIndex) {
         if (!text) return "";
         return text.split(' ').map(word => {
             if (word.trim() === "") return "";
@@ -280,7 +280,7 @@
             if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
             let displayText = cleanWord.replace(/_/g, ' ');
             
-            return `${prefix}<span class="word-span" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
+            return `${prefix}<span class="word-span" data-slide-index="${slideIndex}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
         }).join(' ');
     }
 
@@ -294,6 +294,23 @@
 
         const word = el.innerText.trim();
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+
+        // Check Manual Sandhi from Slide Data (AI Generated)
+        const slideIndex = el.dataset.slideIndex;
+        let manualResult = null;
+        if (slideIndex !== undefined && slides[slideIndex]) {
+             const s = slides[slideIndex];
+             if (s.sandhi && s.sandhi[cleanWord]) {
+                 manualResult = { split: s.sandhi[cleanWord], word: cleanWord, source: 'Manual Sandhi' };
+             } else if (s.vocab && s.vocab[cleanWord]) {
+                 manualResult = { details: [s.vocab[cleanWord]], word: cleanWord, source: 'Manual Vocab' };
+             }
+        }
+        
+        if (manualResult) {
+            showDictionaryDefinition(word, manualResult);
+            return;
+        }
 
         // Check Manual Sandhi DB
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
@@ -385,7 +402,7 @@
         setTimeout(() => document.addEventListener('click', closeHandler), 0);
     }
 
-    function showDictionaryDefinition(word) {
+    function showDictionaryDefinition(word, manualOverride = null) {
         // Collect all databases
         const dbs = {
             // Only use Tananunto for Thai
@@ -395,7 +412,7 @@
         };
 
         // Use smart lookup
-        const result = PaliLookup.lookup(word, dbs);
+        const result = manualOverride || PaliLookup.lookup(word, dbs);
         
         const panel = document.getElementById('dict-panel');
         const content = document.getElementById('dict-content');
@@ -429,6 +446,10 @@
             let stemInfo = "";
             if (result._stemmedFrom) {
                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
+            } else if (result.source === 'Manual Sandhi') {
+                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(สนธิ)</span>`;
+            } else if (result.source === 'Manual Vocab') {
+                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ศัพท์)</span>`;
             }
             
             displayHtml += `
@@ -560,11 +581,13 @@
             item.onmouseout = function(){ this.style.transform='translateX(0)'; this.style.borderColor='#eee'; };
 
             // Render content based on layout
+            const sIndex = slides.indexOf(s); // Get correct index from original array
+            
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block pali-text';
                 b.style.fontWeight='bold';
-                b.innerHTML=wrapWords(s.pali||'');
+                b.innerHTML=wrapWords(s.pali||'', sIndex);
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
@@ -572,7 +595,7 @@
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
-                b1.innerHTML=wrapWords(s.pali||'');
+                b1.innerHTML=wrapWords(s.pali||'', sIndex);
                 
                 const b2=document.createElement('div');
                 b2.className='block';
@@ -592,7 +615,7 @@
                 b2.className='block pali-text';
                 b2.style.fontWeight='bold';
                 b2.style.color='#7f8c8d';
-                b2.innerHTML=wrapWords(s.pali||'');
+                b2.innerHTML=wrapWords(s.pali||'', sIndex);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -602,7 +625,7 @@
                 const leftB=document.createElement('div');
                 leftB.className='block pali-text';
                 leftB.style.fontWeight='bold';
-                leftB.innerHTML=wrapWords(s.pali||'');
+                leftB.innerHTML=wrapWords(s.pali||'', sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block';
                 rightB.textContent=preferThai(s);
@@ -618,7 +641,7 @@
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
-                rightB.innerHTML=wrapWords(s.pali||'');
+                rightB.innerHTML=wrapWords(s.pali||'', sIndex);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
