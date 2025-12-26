@@ -1407,8 +1407,48 @@
             }
         }
 
-        // Start
-        loadSchedule();
+        // Start with access guard
+        (function startWithAccessGuard() {
+            const auth = firebase.auth();
+            auth.onAuthStateChanged(async (u) => {
+                if (!u) { window.location.href = 'index.html'; return; }
+                try {
+                    let role = 'general';
+                    const userDoc = await db.collection('users').doc(u.uid).get();
+                    if (userDoc.exists) role = userDoc.data().role || role;
+                    if (role === 'admin') { loadSchedule(); return; }
+
+                    let rid = roomId;
+                    if (!rid) {
+                        const doc = await db.collection('schedules').doc(scheduleId).get();
+                        if (!doc.exists) { showError("ไม่พบข้อมูลตารางเรียนในระบบ"); return; }
+                        const data = doc.data();
+                        rid = data.roomId || null;
+                    }
+                    if (!rid) { window.location.href = 'index.html'; return; }
+                    
+                    const roomDoc = await db.collection('classrooms').doc(rid).get();
+                    if (!roomDoc.exists) { window.location.href = 'index.html'; return; }
+                    const room = roomDoc.data();
+
+                    if (role === 'student') {
+                        const enr = await db.collection('enrollments').doc(u.uid).get();
+                        const approved = enr.exists && enr.data().status === 'approved';
+                        const level = approved ? (enr.data().levelRequested || null) : null;
+                        if (!approved || !level || level !== room.level) { window.location.href = 'index.html'; return; }
+                    } else if (role === 'teacher') {
+                        const name = u.displayName || u.email || '';
+                        const teachers = Array.isArray(room.teachers) ? room.teachers : [];
+                        if (!teachers.includes(name)) { window.location.href = 'index.html'; return; }
+                    }
+
+                    loadSchedule();
+                } catch (e) {
+                    console.error("Access guard error:", e);
+                    window.location.href = 'index.html';
+                }
+            });
+        })();
     </script>
 
 </body>

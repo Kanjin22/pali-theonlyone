@@ -62,6 +62,7 @@
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <!-- Removed system_config.js dependency for rendering list -->
     <script>
@@ -76,6 +77,7 @@
             measurementId: "G-RKML6H6EX7"
         };
         firebase.initializeApp(window.firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.firestore();
 
         const grid = document.getElementById('classroomGrid');
@@ -101,7 +103,7 @@
         }
 
         // Render Rooms from Firestore
-        async function loadRooms() {
+        async function loadRooms(userCtx) {
             grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">กำลังโหลดห้องเรียน...</div>';
             
             try {
@@ -117,6 +119,24 @@
                 grid.innerHTML = '';
                 snapshot.forEach(doc => {
                     const room = doc.data();
+                    
+                    // Role-based filtering
+                    if (userCtx && userCtx.role) {
+                        if (userCtx.role === 'student') {
+                            // Only show rooms that match student's enrolled level
+                            if (!userCtx.level || room.level !== userCtx.level) return;
+                        } else if (userCtx.role === 'teacher') {
+                            // Only show rooms where teacher list contains current user name
+                            const teachers = Array.isArray(room.teachers) ? room.teachers : [];
+                            const name = userCtx.displayName || userCtx.email || '';
+                            if (!teachers.includes(name)) return;
+                        }
+                        // admin sees all
+                    } else {
+                        // Unknown role or not logged in -> block
+                        return;
+                    }
+                    
                     const card = document.createElement('a');
                     
                     if (room.status === 'active') {
@@ -148,7 +168,28 @@
             }
         }
 
-        loadRooms();
+        // Auth guard and context
+        auth.onAuthStateChanged(async u => {
+            if (!u) { location.href = 'index.html'; return; }
+            try {
+                let role = 'general';
+                let level = null;
+                let displayName = u.displayName || '';
+                const userDoc = await db.collection('users').doc(u.uid).get();
+                if (userDoc.exists) role = userDoc.data().role || role;
+                if (role !== 'admin') {
+                    const enr = await db.collection('enrollments').doc(u.uid).get();
+                    if (enr.exists && enr.data().status === 'approved') {
+                        level = enr.data().levelRequested || null;
+                        if (role === 'general') role = 'student';
+                    }
+                }
+                await loadRooms({ role, level, displayName, email: u.email });
+            } catch (e) {
+                console.error("Auth/Access error:", e);
+                location.href = 'index.html';
+            }
+        });
 
     </script>
 </body>

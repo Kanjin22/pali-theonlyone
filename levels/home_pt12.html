@@ -73,6 +73,7 @@
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script>
         window.firebaseConfig = window.firebaseConfig || {
@@ -85,15 +86,35 @@
             measurementId: "G-RKML6H6EX7"
         };
         firebase.initializeApp(window.firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.firestore();
     </script>
 
     <script src="../js/system_config.js"></script>
     <script src="../js/level_logic.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initLevelPage('pt12');
-            localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt12.html', title: 'ห้องเรียน ป.๑-๒' }));
+        auth.onAuthStateChanged(async u => {
+            if (!u) { location.href = '../index.html'; return; }
+            try {
+                let role = 'general';
+                const userDoc = await db.collection('users').doc(u.uid).get();
+                if (userDoc.exists) role = userDoc.data().role || role;
+                if (role !== 'admin') {
+                    const enr = await db.collection('enrollments').doc(u.uid).get();
+                    const approved = enr.exists && enr.data().status === 'approved';
+                    const level = approved ? (enr.data().levelRequested || null) : null;
+                    if (role === 'general' && approved) role = 'student';
+                    if (role === 'student' && level !== 'pt12') { location.href = '../index.html'; return; }
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    initLevelPage('pt12');
+                    localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt12.html', title: 'ห้องเรียน ป.๑-๒' }));
+                    document.getElementById('room-content-section').style.display = 'block';
+                });
+            } catch (e) {
+                console.error(e);
+                location.href = '../index.html';
+            }
         });
     </script>
 </body>

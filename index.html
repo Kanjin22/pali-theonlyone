@@ -779,22 +779,25 @@
                 if (existingEnroll) existingEnroll.remove();
 
             } else if (role === 'student') {
-                // Show Only Open Levels (Open Access Concept: นักเรียนเห็นทุกห้องที่ Admin เปิด)
+                // Show ONLY the classroom selection card for the student's approved level
+                let enrolledLevel = null;
+                try {
+                    const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
+                    const uid = (typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : null;
+                    if (uid && obj[uid]) enrolledLevel = obj[uid];
+                } catch (e) {}
+                
                 let hasVisible = false;
                 classroomLinks.forEach(a => {
-                    // Extract level from href (e.g. classroom_select.html?level=pt12)
-                    const urlParams = new URLSearchParams(a.href.split('?')[1]);
+                    const urlParams = new URLSearchParams(a.href.split('?')[1] || '');
                     const level = urlParams.get('level');
-
-                    // Logic: ถ้า Level นั้นอยู่ในรายการ OPEN_LEVELS ให้แสดงทันที
-                    if (OPEN_LEVELS.includes(level)) {
+                    if (enrolledLevel && level === enrolledLevel) {
                         a.style.display = 'flex';
                         hasVisible = true;
                     } else {
                         a.style.display = 'none';
                     }
                 });
-
                 if (lastClassroom) lastClassroom.style.display = hasVisible ? 'block' : 'none';
                 if (existingEnroll) existingEnroll.remove();
 
@@ -1197,6 +1200,13 @@
                                         const last = enrData.lastName || '';
                                         const epithet = enrData.epithet ? ` (${enrData.epithet})` : '';
                                         displayName = `${title}${first} ${last}${epithet}`;
+                                        
+                                        // Persist enrolled level for UI filtering
+                                        try {
+                                            const store = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
+                                            store[uid] = enrData.levelRequested || null;
+                                            localStorage.setItem('pali_enroll_level', JSON.stringify(store));
+                                        } catch (e) {}
                                     }
                                 }
                             } catch (e) { 
