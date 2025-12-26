@@ -124,6 +124,11 @@
             color: #fff;
         }
 
+        .btn-warning {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
         .btn-secondary {
             background: #ecf0f1;
             color: #7f8c8d;
@@ -137,6 +142,25 @@
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .btn-pill {
+            border-radius: 999px;
+        }
+
+        .btn-elevated {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
 
         /* Table */
@@ -1436,21 +1460,21 @@
                         roomCell.innerHTML = roomParts.length ? roomParts.join('<br>') : '-';
                     })();
                     const actionCell = tr.children[6];
+                    const actions = document.createElement('div');
+                    actions.className = 'action-buttons';
                     const editBtn = document.createElement('button');
-                    editBtn.className = 'btn-warning';
-                    editBtn.style.padding = '2px 8px';
-                    editBtn.style.fontSize = '0.8em';
-                    editBtn.innerHTML = '<i class="fa-solid fa-edit"></i> แก้ไข';
+                    editBtn.className = 'btn btn-warning btn-small btn-pill btn-elevated';
+                    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> แก้ไข';
+                    editBtn.title = 'แก้ไขข้อมูลสมาชิก';
                     editBtn.onclick = () => openMemberEditor(m.uid);
                     const delBtn = document.createElement('button');
-                    delBtn.className = 'btn-danger';
-                    delBtn.style.padding = '2px 8px';
-                    delBtn.style.fontSize = '0.8em';
-                    delBtn.style.marginLeft = '6px';
+                    delBtn.className = 'btn btn-danger btn-small btn-pill btn-elevated';
                     delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> ลบการกำหนด';
+                    delBtn.title = 'ลบการกำหนดชั้นและห้องของสมาชิก';
                     delBtn.onclick = () => resetMemberAssignments(m.uid);
-                    actionCell.appendChild(editBtn);
-                    actionCell.appendChild(delBtn);
+                    actions.appendChild(editBtn);
+                    actions.appendChild(delBtn);
+                    actionCell.appendChild(actions);
 
                     tbody.appendChild(tr);
                 });
