@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:,">
   <title>อ่านเนื้อหา (Reader)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Taviraj:wght@300;400;500;600&family=Maitree:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body{font-family:'Sarabun',sans-serif;background:#f5f5f5;padding:20px}
@@ -62,17 +62,62 @@
         </div>
       </div>
     </div>
-    <div class="layout">
-      <label style="margin:0">รูปแบบแสดงผล</label>
-      <select id="layoutSelect" style="max-width:260px">
-        <option value="pali_only">บาลีอย่างเดียว</option>
-        <option value="pali_over_thai">บาลีบน ไทยล่าง</option>
-        <option value="thai_over_pali">ไทยบน บาลีล่าง</option>
-        <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
-        <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
-      </select>
-      <button class="btn" id="renderBtn"><i class="fas fa-eye"></i> แสดงผล</button>
-      <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
+    <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+        <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:center;">
+            <!-- Layout -->
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <label style="font-size:0.85em; color:#7f8c8d;">รูปแบบแสดงผล</label>
+                <select id="layoutSelect" style="min-width:180px;">
+                    <option value="pali_only">บาลีอย่างเดียว</option>
+                    <option value="pali_over_thai">บาลีบน ไทยล่าง</option>
+                    <option value="thai_over_pali">ไทยบน บาลีล่าง</option>
+                    <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
+                    <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
+                </select>
+            </div>
+
+            <!-- Thai Translation Mode -->
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <label style="font-size:0.85em; color:#7f8c8d;">สำนวนแปล</label>
+                <select id="thaiMode" style="min-width:140px;">
+                    <option value="thai">โดยพยัญชนะ</option>
+                    <option value="thai_sense">โดยอรรถ</option>
+                </select>
+            </div>
+
+            <!-- Font Family -->
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <label style="font-size:0.85em; color:#7f8c8d;">แบบอักษร</label>
+                <select id="fontSelect" style="min-width:120px;">
+                    <option value="'Sarabun', sans-serif">สารบรรณ</option>
+                    <option value="'Taviraj', serif">ทวิราช</option>
+                    <option value="'Maitree', serif">ไมตรี</option>
+                    <option value="'Prompt', sans-serif">พร้อม</option>
+                </select>
+            </div>
+
+            <!-- Font Size -->
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <label style="font-size:0.85em; color:#7f8c8d;">ขนาดตัวอักษร</label>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <input type="range" id="fontSizeRange" min="14" max="32" value="18" style="width:100px;">
+                    <span id="fontSizeVal" style="font-size:0.9em; width:24px;">18</span>
+                </div>
+            </div>
+
+             <!-- Justify Toggle -->
+             <div style="display:flex; flex-direction:column; gap:4px;">
+                <label style="font-size:0.85em; color:#7f8c8d;">จัดย่อหน้า</label>
+                <button id="alignBtn" class="btn secondary" style="padding:8px 12px; background:#95a5a6;">
+                    <i class="fas fa-align-left"></i>
+                </button>
+            </div>
+
+            <div style="margin-left:auto; display:flex; gap:8px;">
+                 <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
+                 <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
+            </div>
+        </div>
     </div>
     <div id="pages"></div>
   </div>
@@ -134,11 +179,19 @@
     function populateVaggas(){const part=document.getElementById('partSelect').value;const vaggas=deriveVaggas(part);const sel=document.getElementById('vaggaSelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);vaggas.forEach(v=>{const o=document.createElement('option');o.value=v;o.text=v;sel.appendChild(o)});sel.onchange=populateStories;populateStories()}
     function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
-    function preferThai(obj){return obj.thai_sense||obj.thai||''}
+    function preferThai(obj){
+        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
+        if(mode === 'thai_sense') {
+            return obj.thai_sense || obj.thai || '';
+        } else {
+            return obj.thai || obj.thai_sense || '';
+        }
+    }
     
     // --- New Pagination Logic ---
     let groupedPages = [];
     let currentBookPageIndex = 0;
+    let isJustified = false;
 
     function groupSlidesByPage(slides) {
         const groups = [];
@@ -216,6 +269,14 @@
         // --- Content Section ---
         const contentDiv = document.createElement('div');
         const layout = document.getElementById('layoutSelect').value;
+
+        // Apply Font & Alignment
+        const fontName = document.getElementById('fontSelect') ? document.getElementById('fontSelect').value : 'inherit';
+        const fontSize = document.getElementById('fontSizeRange') ? document.getElementById('fontSizeRange').value + 'px' : 'inherit';
+        
+        contentDiv.style.fontFamily = fontName;
+        contentDiv.style.fontSize = fontSize;
+        if(isJustified) contentDiv.style.textAlign = 'justify';
         
         slides.forEach(s => {
             const item = document.createElement('div');
@@ -381,6 +442,34 @@
         document.getElementById('renderBtn').onclick=render;
         document.getElementById('printBtn').onclick=function(){window.print()};
         document.getElementById('layoutSelect').onchange=render;
+
+        // New Controls Listeners
+        if(document.getElementById('thaiMode')) document.getElementById('thaiMode').onchange = render;
+        if(document.getElementById('fontSelect')) document.getElementById('fontSelect').onchange = renderCurrentPage;
+        
+        const sizeRange = document.getElementById('fontSizeRange');
+        if(sizeRange) {
+            sizeRange.oninput = function() {
+                const val = document.getElementById('fontSizeVal');
+                if(val) val.textContent = this.value;
+                renderCurrentPage();
+            };
+        }
+        
+        const alignBtn = document.getElementById('alignBtn');
+        if(alignBtn) {
+            alignBtn.onclick = function() {
+                isJustified = !isJustified;
+                if(isJustified) {
+                    this.style.background = '#2ecc71';
+                    this.innerHTML = '<i class="fas fa-align-justify"></i>';
+                } else {
+                    this.style.background = '#95a5a6';
+                    this.innerHTML = '<i class="fas fa-align-left"></i>';
+                }
+                renderCurrentPage();
+            };
+        }
  
          // Hide Exam Button if not teacher
          const accessMode = localStorage.getItem('access_mode');
