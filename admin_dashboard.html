@@ -1206,6 +1206,7 @@
                     let rooms = [];
                     let dateStr = '-';
                     let rawDate = null;
+                    let teacherLevels = Array.isArray(u.teacherLevels) ? u.teacherLevels : [];
 
                     if (enr) {
                         // Prefer Thai name if available
@@ -1232,6 +1233,7 @@
                         phone,
                         level,
                         rooms,
+                        teacherLevels,
                         dateStr,
                         rawDate
                     });
@@ -1318,11 +1320,19 @@
                     const levelCell = tr.children[2];
                     const roomCell = tr.children[3];
                     const levelSelect = document.createElement('select');
+                    if (m.role === 'teacher') {
+                        levelSelect.multiple = true;
+                        levelSelect.size = 4;
+                    }
                     Object.keys(LEVEL_NAMES).forEach(k => {
                         const opt = document.createElement('option');
                         opt.value = k;
                         opt.textContent = LEVEL_NAMES[k];
-                        if (m.level === k) opt.selected = true;
+                        if (m.role === 'teacher') {
+                            if (Array.isArray(m.teacherLevels) && m.teacherLevels.includes(k)) opt.selected = true;
+                        } else {
+                            if (m.level === k) opt.selected = true;
+                        }
                         levelSelect.appendChild(opt);
                     });
                     levelSelect.style.padding = '6px';
@@ -1342,6 +1352,11 @@
                     roomsSelect.size = 3;
                     roomCell.innerHTML = '';
                     roomCell.appendChild(roomsSelect);
+                    const teacherRoomsInfo = document.createElement('div');
+                    teacherRoomsInfo.style.marginTop = '6px';
+                    teacherRoomsInfo.style.fontSize = '0.85rem';
+                    teacherRoomsInfo.style.color = '#555';
+                    if (m.role === 'teacher') roomCell.appendChild(teacherRoomsInfo);
                     
                     async function ensureRoomsLoaded() {
                         if (!window.allClassrooms || window.allClassrooms.length === 0) {
@@ -1371,27 +1386,37 @@
                             try {
                                 const uDoc = await db.collection('users').doc(m.uid).get();
                                 const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
+                                const baseLevel = Array.isArray(m.teacherLevels) && m.teacherLevels.length > 0 ? m.teacherLevels[0] : m.level;
                                 const current = (window.allClassrooms || [])
-                                    .filter(r => r.level === m.level && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                                    .filter(r => r.level === baseLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
                                     .map(r => r.id);
                                 m.teacherRooms = current;
+                                const allTeachRooms = (window.allClassrooms || [])
+                                    .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                                    .map(r => r.name || r.id);
+                                teacherRoomsInfo.textContent = `ห้องสอนทั้งหมด: ${allTeachRooms.length ? allTeachRooms.join(', ') : '-'}`;
+                                m.level = baseLevel;
                             } catch (e) {}
                         }
                         populateRooms(m.level);
                     })();
                     levelSelect.onchange = async () => {
-                        const newLevel = levelSelect.value;
+                        const selectedLevels = Array.from(levelSelect.selectedOptions).map(o => o.value);
                         if (m.role === 'student') {
                             try {
+                                const newLevel = selectedLevels[0] || '';
                                 await db.collection('enrollments').doc(m.uid).set({ levelRequested: newLevel, status: 'approved' }, { merge: true });
                                 m.level = newLevel;
                             } catch (e) { alert('อัปเดตชั้นเรียนไม่สำเร็จ: ' + e.message); }
                         } else if (m.role === 'teacher') {
                             try {
-                                await db.collection('users').doc(m.uid).set({ teacherLevels: firebase.firestore.FieldValue.arrayUnion(newLevel) }, { merge: true });
+                                await db.collection('users').doc(m.uid).set({ teacherLevels: selectedLevels }, { merge: true });
+                                m.teacherLevels = selectedLevels;
                             } catch (e) { alert('อัปเดตชั้นอาจารย์ไม่สำเร็จ: ' + e.message); }
                         }
-                        populateRooms(newLevel);
+                        const base = m.role === 'teacher' ? (m.teacherLevels[0] || '') : (selectedLevels[0] || '');
+                        m.level = base;
+                        populateRooms(base);
                     };
                     roomsSelect.onchange = async () => {
                         const selected = Array.from(roomsSelect.selectedOptions).map(o => o.value);
@@ -1414,6 +1439,10 @@
                                     await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
                                 }
                                 m.teacherRooms = selected;
+                                const allTeachRooms = (window.allClassrooms || [])
+                                    .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                                    .map(r => r.name || r.id);
+                                teacherRoomsInfo.textContent = `ห้องสอนทั้งหมด: ${allTeachRooms.length ? allTeachRooms.join(', ') : '-'}`;
                             } catch (e) { alert('อัปเดตห้องสอนไม่สำเร็จ: ' + e.message); }
                         }
                     };
