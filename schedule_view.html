@@ -809,6 +809,9 @@
                         cloudFilesIndex[d.name] = d.url;
                         if (d.subject) {
                             cloudFilesIndex[`${d.name}|${d.subject}`] = d.url;
+                            if (d.room) {
+                                cloudFilesIndex[`${d.name}|${d.subject}|${d.room}`] = d.url;
+                            }
                         }
                     }
                 });
@@ -1196,10 +1199,13 @@
                             let cleanName = f.split(/[/\\]/).pop();
                             cleanName = cleanName.replace(/^\[LEGACY\]\s*/,'');
                             const subjKey = subjId ? `${cleanName}|${subjId}` : null;
+                            const roomKey = (subjId && roomId) ? `${cleanName}|${subjId}|${roomId}` : null;
 
                             // 1. Try Firestore Index (Original or Clean)
                             if (cloudFilesIndex && cloudFilesIndex[f]) {
                                 finalUrl = cloudFilesIndex[f];
+                            } else if (roomKey && cloudFilesIndex && cloudFilesIndex[roomKey]) {
+                                finalUrl = cloudFilesIndex[roomKey];
                             } else if (subjKey && cloudFilesIndex && cloudFilesIndex[subjKey]) {
                                 finalUrl = cloudFilesIndex[subjKey];
                             } else if (cloudFilesIndex && cloudFilesIndex[cleanName]) {
