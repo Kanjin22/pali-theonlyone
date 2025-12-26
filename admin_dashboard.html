@@ -557,6 +557,7 @@
                                 <th>ห้องเรียน</th>
                                 <th>เบอร์โทร</th>
                                 <th>วันที่อนุมัติ</th>
+                                <th>จัดการ</th>
                             </tr>
                         </thead>
                         <tbody id="memberList">
@@ -835,6 +836,85 @@
         </div>
     </div>
 
+    <div id="memberModal" class="modal">
+        <div class="modal-content" style="max-width: 780px;">
+            <div class="modal-header">
+                <h2 id="memberModalTitle">แก้ไขข้อมูลสมาชิก</h2>
+                <span class="close" onclick="closeMemberModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="memberForm" onsubmit="saveMemberEditor(event)">
+                    <input type="hidden" id="memUid">
+                    <div class="form-group">
+                        <label>บทบาท</label>
+                        <select id="memRole">
+                            <option value="admin">ผู้ดูแล</option>
+                            <option value="teacher">อาจารย์</option>
+                            <option value="student">นักเรียน</option>
+                            <option value="general">ทั่วไป</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <label>ชั้นเรียนของนักเรียน</label>
+                            <select id="memStudentLevel"></select>
+                        </div>
+                        <div>
+                            <label>กรองชั้นเพื่อแก้ห้องนักเรียน</label>
+                            <select id="memStudentRoomLevel"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>ห้องของนักเรียน</label>
+                        <select id="memStudentRooms" multiple size="5" style="width:100%"></select>
+                    </div>
+                    <hr>
+                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <label>ชั้นของอาจารย์</label>
+                            <select id="memTeacherLevels" multiple size="5"></select>
+                        </div>
+                        <div>
+                            <label>กรองชั้นเพื่อแก้ห้องอาจารย์</label>
+                            <select id="memTeacherRoomLevel"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>ห้องสอนของอาจารย์</label>
+                        <select id="memTeacherRooms" multiple size="5" style="width:100%"></select>
+                    </div>
+                    <div class="form-group" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                        <div>
+                            <label>คำนำหน้า</label>
+                            <input id="memTitle" type="text">
+                        </div>
+                        <div>
+                            <label>ชื่อ</label>
+                            <input id="memFirstName" type="text">
+                        </div>
+                        <div>
+                            <label>สกุล</label>
+                            <input id="memLastName" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <label>ฉายา</label>
+                            <input id="memEpithet" type="text">
+                        </div>
+                        <div>
+                            <label>เบอร์โทร</label>
+                            <input id="memPhone" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit"><i class="fa-solid fa-save"></i> บันทึก</button>
+                        <button class="btn btn-secondary" type="button" onclick="closeMemberModal()">ปิด</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Content Modal -->
     <div id="contentModal" class="modal">
         <div class="modal-content" style="max-width: 800px;">
@@ -1312,6 +1392,7 @@
                         <td></td>
                         <td>${m.phone}</td>
                         <td>${m.dateStr}</td>
+                        <td></td>
                     `;
 
                     // Append select to the second column
@@ -1476,6 +1557,22 @@
                             } catch (e) { alert('อัปเดตห้องสอนไม่สำเร็จ: ' + e.message); }
                         }
                     };
+                    const actionCell = tr.children[6];
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'btn-warning';
+                    editBtn.style.padding = '2px 8px';
+                    editBtn.style.fontSize = '0.8em';
+                    editBtn.innerHTML = '<i class="fa-solid fa-edit"></i> แก้ไข';
+                    editBtn.onclick = () => openMemberEditor(m.uid);
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'btn-danger';
+                    delBtn.style.padding = '2px 8px';
+                    delBtn.style.fontSize = '0.8em';
+                    delBtn.style.marginLeft = '6px';
+                    delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> ลบการกำหนด';
+                    delBtn.onclick = () => resetMemberAssignments(m.uid);
+                    actionCell.appendChild(editBtn);
+                    actionCell.appendChild(delBtn);
 
                     tbody.appendChild(tr);
                 });
@@ -1590,6 +1687,204 @@
                 loadClassrooms();
             } catch (e) {
                 alert('ลบไม่สำเร็จ: ' + e.message);
+            } finally {
+                document.body.style.cursor = originalCursor;
+            }
+        }
+
+        let editingMember = null;
+        function closeMemberModal() {
+            document.getElementById('memberModal').style.display = 'none';
+            editingMember = null;
+        }
+        async function ensureAllClassrooms() {
+            if (!window.allClassrooms || window.allClassrooms.length === 0) {
+                const snap = await db.collection('classrooms').orderBy('level').get();
+                window.allClassrooms = [];
+                snap.forEach(doc => window.allClassrooms.push(doc.data()));
+            }
+        }
+        function fillLevelOptions(selectEl, selected, multiple) {
+            selectEl.innerHTML = '';
+            if (!multiple) {
+                const p = document.createElement('option');
+                p.value = '';
+                p.textContent = '—';
+                selectEl.appendChild(p);
+            }
+            Object.keys(LEVEL_NAMES).forEach(k => {
+                const opt = document.createElement('option');
+                opt.value = k;
+                opt.textContent = LEVEL_NAMES[k];
+                if (multiple) {
+                    if (Array.isArray(selected) && selected.includes(k)) opt.selected = true;
+                } else {
+                    if (selected === k) opt.selected = true;
+                }
+                selectEl.appendChild(opt);
+            });
+        }
+        function fillRoomsByLevel(selectEl, levelCode, selectedIds) {
+            selectEl.innerHTML = '';
+            const rooms = (window.allClassrooms || []).filter(r => r.level === levelCode);
+            rooms.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = r.name || r.id;
+                if (Array.isArray(selectedIds) && selectedIds.includes(r.id)) opt.selected = true;
+                selectEl.appendChild(opt);
+            });
+        }
+        async function openMemberEditor(uid) {
+            const uDoc = await db.collection('users').doc(uid).get();
+            const eDoc = await db.collection('enrollments').doc(uid).get();
+            const u = uDoc.exists ? uDoc.data() : {};
+            const e = eDoc.exists ? eDoc.data() : {};
+            editingMember = { uid, u, e };
+            await ensureAllClassrooms();
+            const memUid = document.getElementById('memUid');
+            const memRole = document.getElementById('memRole');
+            const memStudentLevel = document.getElementById('memStudentLevel');
+            const memStudentRoomLevel = document.getElementById('memStudentRoomLevel');
+            const memStudentRooms = document.getElementById('memStudentRooms');
+            const memTeacherLevels = document.getElementById('memTeacherLevels');
+            const memTeacherRoomLevel = document.getElementById('memTeacherRoomLevel');
+            const memTeacherRooms = document.getElementById('memTeacherRooms');
+            const memTitle = document.getElementById('memTitle');
+            const memFirstName = document.getElementById('memFirstName');
+            const memLastName = document.getElementById('memLastName');
+            const memEpithet = document.getElementById('memEpithet');
+            const memPhone = document.getElementById('memPhone');
+            memUid.value = uid;
+            memRole.value = u.role || 'general';
+            fillLevelOptions(memStudentLevel, e.levelRequested || '', false);
+            fillLevelOptions(memStudentRoomLevel, e.levelRequested || '', false);
+            fillLevelOptions(memTeacherLevels, Array.isArray(u.teacherLevels) ? u.teacherLevels : [], true);
+            memStudentRoomLevel.onchange = () => {
+                const lv = memStudentRoomLevel.value;
+                fillRoomsByLevel(memStudentRooms, lv, Array.isArray(e.rooms) ? e.rooms : []);
+            };
+            memTeacherRoomLevel.onchange = () => {
+                const lv = memTeacherRoomLevel.value;
+                const teacherName = u.displayName || u.email || uid;
+                const selected = (window.allClassrooms || [])
+                    .filter(r => r.level === lv && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                    .map(r => r.id);
+                fillRoomsByLevel(memTeacherRooms, lv, selected);
+            };
+            if (e.levelRequested) {
+                memStudentRoomLevel.value = e.levelRequested;
+                memTeacherRoomLevel.value = Array.isArray(u.teacherLevels) && u.teacherLevels.length ? u.teacherLevels[0] : '';
+            }
+            if (memStudentRoomLevel.value) fillRoomsByLevel(memStudentRooms, memStudentRoomLevel.value, Array.isArray(e.rooms) ? e.rooms : []);
+            if (memTeacherRoomLevel.value) {
+                const teacherName = u.displayName || u.email || uid;
+                const selected = (window.allClassrooms || [])
+                    .filter(r => r.level === memTeacherRoomLevel.value && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                    .map(r => r.id);
+                fillRoomsByLevel(memTeacherRooms, memTeacherRoomLevel.value, selected);
+            } else {
+                memTeacherRooms.innerHTML = '';
+            }
+            memTitle.value = e.title || '';
+            memFirstName.value = e.firstName || '';
+            memLastName.value = e.lastName || '';
+            memEpithet.value = e.epithet || '';
+            memPhone.value = e.phone || '';
+            document.getElementById('memberModal').style.display = 'block';
+        }
+        async function saveMemberEditor(evn) {
+            evn.preventDefault();
+            const uid = document.getElementById('memUid').value;
+            const role = document.getElementById('memRole').value;
+            const studentLevel = document.getElementById('memStudentLevel').value || '';
+            const studentRoomLevel = document.getElementById('memStudentRoomLevel').value || '';
+            const studentRooms = Array.from(document.getElementById('memStudentRooms').selectedOptions).map(o => o.value);
+            const teacherLevels = Array.from(document.getElementById('memTeacherLevels').selectedOptions).map(o => o.value);
+            const teacherRoomLevel = document.getElementById('memTeacherRoomLevel').value || '';
+            const teacherRooms = Array.from(document.getElementById('memTeacherRooms').selectedOptions).map(o => o.value);
+            const title = document.getElementById('memTitle').value.trim();
+            const firstName = document.getElementById('memFirstName').value.trim();
+            const lastName = document.getElementById('memLastName').value.trim();
+            const epithet = document.getElementById('memEpithet').value.trim();
+            const phone = document.getElementById('memPhone').value.trim();
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+            try {
+                await db.collection('users').doc(uid).set({ role, teacherLevels }, { merge: true });
+                const enrUpdate = { title, firstName, lastName, epithet, phone };
+                if (studentLevel) enrUpdate.levelRequested = studentLevel; else enrUpdate.levelRequested = firebase.firestore.FieldValue.delete();
+                enrUpdate.rooms = studentRooms;
+                await db.collection('enrollments').doc(uid).set(enrUpdate, { merge: true });
+                if (teacherRoomLevel) {
+                    const uDoc = await db.collection('users').doc(uid).get();
+                    const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                    const current = (window.allClassrooms || [])
+                        .filter(r => r.level === teacherRoomLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                        .map(r => r.id);
+                    const toAdd = teacherRooms.filter(id => !current.includes(id));
+                    const toRemove = current.filter(id => !teacherRooms.includes(id));
+                    for (const id of toAdd) {
+                        await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
+                    }
+                    for (const id of toRemove) {
+                        await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                    }
+                }
+                try {
+                    const actor = auth.currentUser;
+                    await db.collection('exam_logs').add({
+                        type: 'member_update',
+                        actorUid: actor ? actor.uid : null,
+                        actorEmail: actor ? actor.email : null,
+                        targetUid: uid,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (logErr) {}
+                closeMemberModal();
+                loadMembers();
+                loadClassrooms();
+                alert('บันทึกข้อมูลสมาชิกเรียบร้อย');
+            } catch (err) {
+                alert('บันทึกไม่สำเร็จ: ' + err.message);
+            } finally {
+                document.body.style.cursor = originalCursor;
+            }
+        }
+        async function resetMemberAssignments(uid) {
+            if (!confirm('ยืนยันการลบการกำหนดห้องและชั้นเรียนของสมาชิกนี้ทั้งหมด?')) return;
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+            try {
+                await db.collection('enrollments').doc(uid).set({
+                    rooms: [],
+                    levelRequested: firebase.firestore.FieldValue.delete(),
+                    status: 'removed'
+                }, { merge: true });
+                await db.collection('users').doc(uid).set({ teacherLevels: [] }, { merge: true });
+                const uDoc = await db.collection('users').doc(uid).get();
+                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                const snap = await db.collection('classrooms').where('teachers', 'array-contains', teacherName).get();
+                const batch = db.batch();
+                snap.forEach(doc => {
+                    batch.set(db.collection('classrooms').doc(doc.id), { teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                });
+                await batch.commit();
+                try {
+                    const actor = auth.currentUser;
+                    await db.collection('exam_logs').add({
+                        type: 'member_reset',
+                        actorUid: actor ? actor.uid : null,
+                        actorEmail: actor ? actor.email : null,
+                        targetUid: uid,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (logErr) {}
+                loadMembers();
+                loadClassrooms();
+                alert('ลบการกำหนดเรียบร้อย');
+            } catch (err) {
+                alert('ลบไม่สำเร็จ: ' + err.message);
             } finally {
                 document.body.style.cursor = originalCursor;
             }
