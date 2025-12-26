@@ -74,7 +74,7 @@
                     <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
                     <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
                 </select>
-                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (84000.org)">
+                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (Pali-English)">
                     <i class="fas fa-book"></i>
                 </button>
             </div>
@@ -82,9 +82,9 @@
             <script>
                 document.getElementById('dictBtn').onclick = () => {
                     const selection = window.getSelection().toString().trim();
-                    let url = 'https://84000.org/tipitaka/dic/v_seek.php';
+                    let url = 'https://dictionary.sutta.org/browse/';
                     if(selection) {
-                        url += '?text=' + encodeURIComponent(selection);
+                        url += encodeURIComponent(selection.toLowerCase()) + '/';
                     }
                     window.open(url, '_blank');
                 };
