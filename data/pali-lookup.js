@@ -191,23 +191,25 @@ const PaliLookup = {
     findAll: function(key, dbs) {
         let results = [];
         
-        // 1. Thai Dictionaries
-        if (dbs.newgen && dbs.newgen[key]) results.push({ ...dbs.newgen[key], source: 'Thai New Gen', word: key });
-        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key });
+        // 1. Thai Dictionaries (Ordered: Tananunto, E-Tipitaka, New Gen, General)
+        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย (อ.ทานานุนโต)', word: key });
         if (dbs.etipitaka && dbs.etipitaka[key]) results.push({ details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key });
+        if (dbs.newgen && dbs.newgen[key]) results.push({ ...dbs.newgen[key], source: 'Thai New Gen', word: key });
         if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
 
-        // 2. Roman Dictionaries
+        // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
         let romanKey = key;
         if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
              romanKey = PaliScript.thaiToRoman(key);
         }
         
+        if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: key });
         if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key });
         if (dbs.pts && dbs.pts[romanKey]) results.push({ source: 'pts', data: dbs.pts[romanKey], word: key });
+        
+        // Others
         if (dbs.dppn && dbs.dppn[romanKey]) results.push({ source: 'dppn', data: dbs.dppn[romanKey], word: key });
         if (dbs.dhammika && dbs.dhammika[romanKey]) results.push({ source: 'dhammika', data: dbs.dhammika[romanKey], word: key });
-        if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: key });
         if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) results.push({ source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key });
 
         return results;
