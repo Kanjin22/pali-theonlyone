@@ -972,6 +972,8 @@
                         } catch (e) {}
                     }
                     try { window._myRooms = rooms; } catch (e) {}
+                    // Reload pins after loading rooms to ensure correct filtering
+                    loadTodayPins();
                     const shown = renderMyRooms(rooms);
                     if (shown) {
                         classroomLinks.forEach(a => a.style.display = 'none');
@@ -1062,6 +1064,13 @@
             const todayLabel = `วันที่ ${d}/${m}/${y + 543}`;
             const todayDateEl = header.querySelector('#today-date');
             if (todayDateEl) todayDateEl.textContent = todayLabel;
+
+            // Use Cache if available
+            if (window._cachedRawPins && window._cachedRawPinsDate === iso) {
+                renderPins(body, window._cachedRawPins);
+                return;
+            }
+
             // 1) Try Firestore config/today_pins
             let pinsLoaded = false;
             try {
