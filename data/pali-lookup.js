@@ -122,8 +122,7 @@ const PaliLookup = {
         let candidates = [];
         const len = word.length;
 
-        // Common Endings in Thai Pali Script
-        // NOTE: Order matters! Longer suffixes first to avoid partial matches.
+        // --- 1. Common Endings in Thai Pali Script ---
         
         // --- Vowel Transformations (Thai Script Specific) ---
         // Ex: ปุริโส -> ปุริส (remove โ... and keep consonant)
@@ -141,6 +140,89 @@ const PaliLookup = {
                 candidates.push(word.substring(0, len-2) + last);
             }
         }
+
+        // --- 2. Systematic Vowel Substitution (Targeted Strategy) ---
+        
+        let base = word;
+        let originalVowel = ''; // 'o', 'e', 'u', 'uu', 'i', 'ii', 'a', 'aa'
+        const lastChar = word.slice(-1);
+        
+        // Detect and Strip Vowel
+        if (['ิ', 'ี', 'ุ', 'ู', 'า'].includes(lastChar)) {
+             base = word.slice(0, -1);
+             originalVowel = lastChar;
+        } else if (len >= 2) {
+             const secondLast = word[len-2];
+             if (['เ', 'โ', 'ไ'].includes(secondLast)) {
+                 base = word.substring(0, len-2) + lastChar;
+                 originalVowel = secondLast;
+             }
+        }
+        
+        // If no vowel detected (implicitly 'a'), base is word itself
+        if (!originalVowel) {
+             originalVowel = 'a'; 
+        }
+
+        // 3. Scan Dictionary for Matching Roots (Reverse Lookup)
+        // This is much safer than guessing. We look for words starting with 'base' in the dictionary.
+        // We only do this if we have access to vocabTananunto (global).
+        
+        if (typeof vocabTananunto !== 'undefined') {
+            const potentialMatches = [];
+            // Optimize: Instead of iterating all, maybe we just try the most common patterns directly
+            // because iterating 11k keys is fast, but let's stick to targeted checks first.
+            
+            // Actually, let's try the "Smart Guess" first based on Vowel Groups
+            // because strict prefix matching might return too many unrelated words.
+            
+             // Case: O (โอ) -> Try A (อ), then AA (อา)
+            if (originalVowel === 'โ') {
+                 candidates.push(base);      // ปุริโส -> ปุริส (a)
+                 candidates.push(base + 'า'); // ปุริโส -> ปุริสา (aa)
+            }
+            
+            // Case: E (เอ) -> Try A (อ), then AA (อา)
+            else if (originalVowel === 'เ') {
+                 candidates.push(base);      // กุเล -> กุล (a)
+                 candidates.push(base + 'า'); // กญฺเญ -> กญฺญา (aa)
+            }
+            
+            // Case: UU (อู) -> Try U (อุ) FIRST
+            else if (originalVowel === 'ู') {
+                 candidates.push(base + 'ุ'); // ภิกฺขู -> ภิกฺขุ (u) ** Priority **
+            }
+            
+            // Case: II (อี) -> Try I (อิ) FIRST
+            else if (originalVowel === 'ี') {
+                 candidates.push(base + 'ิ'); // เศรษฐี -> เศรษฐิ (i) ** Priority **
+            }
+            
+            // Case: U (อุ) -> Try UU (อู)
+            else if (originalVowel === 'ุ') {
+                 candidates.push(base + 'ู'); 
+            }
+            
+            // Case: I (อิ) -> Try II (อี)
+            else if (originalVowel === 'ิ') {
+                 candidates.push(base + 'ี');
+            }
+            
+            // Fallback: If original was just a consonant (implicit a), try AA
+            else if (originalVowel === 'a') {
+                 candidates.push(base + 'า');
+            }
+            
+            // General fallback: Try 'a' for everything else
+            if (base !== word) {
+                 candidates.push(base);
+            }
+        } else {
+             // Fallback to previous logic if DB not available (should not happen in this context)
+             if (base !== word) candidates.push(base);
+        }
+
+        // --- Suffix Stripping ---
 
         // --- Suffix Stripping ---
         
