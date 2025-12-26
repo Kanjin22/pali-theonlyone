@@ -172,12 +172,8 @@
                 let role = 'general';
                 let level = null;
                 let displayName = u.displayName || '';
-                
-                // 1. Get Firestore Role
                 const userDoc = await db.collection('users').doc(u.uid).get();
                 if (userDoc.exists) role = userDoc.data().role || role;
-                
-                // 2. Check Enrollment for Student Context
                 if (role !== 'admin') {
                     const enr = await db.collection('enrollments').doc(u.uid).get();
                     if (enr.exists && enr.data().status === 'approved') {
@@ -185,21 +181,10 @@
                         if (role === 'general') role = 'student';
                     }
                 }
-
-                // 3. Apply Access Mode Override (for testing/demo)
-                const modePref = localStorage.getItem('access_mode');
-                if (modePref === 'teacher') {
-                    role = 'teacher'; // Override to see all rooms
-                } else if (modePref === 'student') {
-                    role = 'student'; // Force student view (might limit rooms if not enrolled)
-                }
-
                 await loadRooms({ role, level, displayName, email: u.email });
             } catch (e) {
                 console.error("Auth/Access error:", e);
-                // Don't redirect immediately on error, try to load basic view or show error
-                // location.href = 'index.html';
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลดข้อมูลสิทธิ์: ${e.message}</div>`;
+                location.href = 'index.html';
             }
         });
 
