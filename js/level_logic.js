@@ -122,6 +122,31 @@ async function initLevelPage(levelId) {
                 });
                 container.appendChild(grid);
             } catch (e) {
+                const container2 = document.getElementById('room-selection-container');
+                if (container2 && typeof systemConfig !== 'undefined') {
+                    const rooms = systemConfig.getRoomsByLevel(levelId).map(r => ({ id: r.id, ...r }));
+                    container2.style.display = 'block';
+                    container2.innerHTML = '';
+                    if (rooms.length === 0) {
+                        container2.innerHTML = `<div style="padding:20px; color:#7f8c8d;">ยังไม่มีห้องในชั้นนี้สำหรับคุณ</div>`;
+                        return;
+                    }
+                    const grid = document.createElement('div');
+                    grid.style.cssText = 'display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px;';
+                    const user = (typeof firebase !== 'undefined') ? firebase.auth().currentUser : null;
+                    const teacherName = user ? (user.displayName || user.email || user.uid) : '';
+                    rooms.forEach(r => {
+                        const card = document.createElement('a');
+                        card.href = `../schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
+                        card.className = 'menu-button';
+                        const isTeaching = Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName);
+                        const badge = isTeaching ? `<span style="display:inline-block; margin-left:8px; background:#27ae60; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">สอนอยู่</span>` : '';
+                        card.innerHTML = `${r.name || r.id}${badge}`;
+                        grid.appendChild(card);
+                    });
+                    container2.appendChild(grid);
+                    return;
+                }
                 window.location.href = `../classroom_select.html?level=${levelId}`;
             }
         } else {
