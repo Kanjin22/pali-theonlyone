@@ -1562,6 +1562,19 @@
     }
 
     function showDictionaryDefinition(word) {
+        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        
+        // Check Manual Sandhi/Vocab from current slide first
+        let manualResult = null;
+        if (typeof slides !== 'undefined' && slides[currentIndex]) {
+            const s = slides[currentIndex];
+            if (s.sandhi && s.sandhi[cleanWord]) {
+                manualResult = { split: s.sandhi[cleanWord], word: cleanWord, source: 'Manual Sandhi' };
+            } else if (s.vocab && s.vocab[cleanWord]) {
+                manualResult = { details: [s.vocab[cleanWord]], word: cleanWord, source: 'Manual Vocab' };
+            }
+        }
+
         // Collect all databases
         const dbs = {
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
@@ -1569,10 +1582,9 @@
         };
 
         // Use smart lookup
-        const result = PaliLookup.lookup(word, dbs);
+        const result = manualResult || PaliLookup.lookup(word, dbs);
         
         // Display in Footer
-        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         let wordToConvert = cleanWord;
         if (result && result._stemmedFrom && result.word) {
             wordToConvert = result.word;
@@ -1580,49 +1592,53 @@
         const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(wordToConvert) : "";
         
         // Links
-        const scLink = `https://suttacentral.net/define/${romanWord}`;
-        const dpdLink = `https://www.dpdict.net/gd?search=${romanWord}`;
+            const scLink = `https://suttacentral.net/define/${romanWord}`;
+            const dpdLink = `https://www.dpdict.net/gd?search=${romanWord}`;
 
-        // --- 1. Thai Dictionary Output ---
-        const thaiVocabContent = document.getElementById('thaiVocabContent');
-        if (thaiVocabContent) {
-            if (result) {
-                let detailsHtml = "";
-                if (result.details && Array.isArray(result.details)) {
-                    detailsHtml = result.details.map(d => `<div>• ${d}</div>`).join('');
-                } else if (typeof result === 'string') {
-                    detailsHtml = result;
-                } else if (result.split) {
-                    detailsHtml = `<div>${result.split}</div>`;
-                }
-                
-                let stemInfo = "";
-                if (result._stemmedFrom) {
-                    stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
-                }
+            // --- 1. Thai Dictionary Output ---
+            const thaiVocabContent = document.getElementById('thaiVocabContent');
+            if (thaiVocabContent) {
+                if (result) {
+                    let detailsHtml = "";
+                    if (result.details && Array.isArray(result.details)) {
+                        detailsHtml = result.details.map(d => `<div>• ${d}</div>`).join('');
+                    } else if (typeof result === 'string') {
+                        detailsHtml = result;
+                    } else if (result.split) {
+                        detailsHtml = `<div>${result.split}</div>`;
+                    }
+                    
+                    let stemInfo = "";
+                    if (result._stemmedFrom) {
+                        stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
+                    } else if (result.source === 'Manual Sandhi') {
+                         stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(สนธิ)</span>`;
+                    } else if (result.source === 'Manual Vocab') {
+                         stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ศัพท์)</span>`;
+                    }
 
-                thaiVocabContent.innerHTML = `
-                    <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
-                        <div style="font-weight: bold; color: #2980b9;">
-                            ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
-                            <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
-                            ${stemInfo}
+                    thaiVocabContent.innerHTML = `
+                        <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
+                            <div style="font-weight: bold; color: #2980b9;">
+                                ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
+                                ${stemInfo}
+                            </div>
+                            <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
                         </div>
-                        <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
-                    </div>
-                `;
-                
-                // Highlight
-                thaiVocabContent.parentElement.style.backgroundColor = "#e8f6f3";
-                setTimeout(() => { thaiVocabContent.parentElement.style.backgroundColor = ""; }, 1000);
-            } else {
-                thaiVocabContent.innerHTML = `
-                    <div style="color: #95a5a6; font-style: italic;">
-                        ไม่พบคำศัพท์: <strong>${cleanWord}</strong> ในฐานข้อมูลไทย
-                    </div>
-                `;
+                    `;
+                    
+                    // Highlight
+                    thaiVocabContent.parentElement.style.backgroundColor = "#e8f6f3";
+                    setTimeout(() => { thaiVocabContent.parentElement.style.backgroundColor = ""; }, 1000);
+                } else {
+                    thaiVocabContent.innerHTML = `
+                        <div style="color: #95a5a6; font-style: italic;">
+                            ไม่พบคำศัพท์: <strong>${cleanWord}</strong> ในฐานข้อมูลไทย
+                        </div>
+                    `;
+                }
             }
-        }
 
         // --- 2. Roman Dictionary Output ---
         const romanVocabContent = document.getElementById('romanVocabContent');
@@ -1848,7 +1864,12 @@
             thaiBox.parentElement.scrollTop = 0;
 
             if (document.getElementById('thaiVocabContent')) {
-                document.getElementById('thaiVocabContent').innerHTML = processFooterAnalysis(s.vocab_list || "-", s);
+                const vList = s.vocab_list;
+                if (vList && vList !== "-" && vList.trim() !== "") {
+                    document.getElementById('thaiVocabContent').innerHTML = processFooterAnalysis(vList, s);
+                } else {
+                    document.getElementById('thaiVocabContent').innerHTML = `<div style="color:#95a5a6; font-style:italic; padding:10px; text-align:center;">คลิกที่คำศัพท์ในประโยคบาลีเพื่อดูความหมายและการวิเคราะห์</div>`;
+                }
             }
             if (document.getElementById('romanVocabContent')) {
                 document.getElementById('romanVocabContent').innerHTML = "";
