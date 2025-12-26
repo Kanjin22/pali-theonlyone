@@ -477,6 +477,18 @@
                     </div>
                 </div>
 
+                <div id="danger-zone" style="display:none; background:#fff5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c2c7;">
+                    <h3 style="color:#c0392b;"><i class="fas fa-skull-crossbones"></i> ลบไฟล์จำนวนมาก (เฉพาะผู้ดูแลระบบ)</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-danger" onclick="bulkDeleteStorage()" style="background:#e74c3c;">
+                            <i class="fas fa-trash-alt"></i> ลบไฟล์ทั้งหมดใน Storage
+                        </button>
+                        <button class="btn btn-danger" onclick="bulkDeleteFirestoreFiles()" style="background:#e74c3c;">
+                            <i class="fas fa-broom"></i> ล้างรายการไฟล์ทั้งหมดในฐานข้อมูล
+                        </button>
+                    </div>
+                </div>
+
                 <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
                     <table style="width:100%; border-collapse:collapse;">
                         <thead style="background:#f1f2f6; position:sticky; top:0;">
@@ -1719,6 +1731,7 @@
         function openFileManager() {
             document.getElementById('file-modal').style.display = 'flex';
             renderFileList();
+            document.getElementById('danger-zone').style.display = (currentRole === 'admin') ? 'block' : 'none';
 
             // Populate Levels in Upload Form
             const levelSelect = document.getElementById('upload-level');
@@ -1924,6 +1937,52 @@
             } catch (e) {
                 console.error("Delete error:", e);
                 alert("ลบไม่สำเร็จ: " + e.message);
+            }
+        }
+
+        async function bulkDeleteStorage() {
+            if (currentRole !== 'admin') return alert("อนุญาตเฉพาะผู้ดูแลระบบ");
+            if (!confirm("ยืนยันลบไฟล์ทั้งหมดใน Storage?")) return;
+            showLoading(true);
+            try {
+                async function walkAndDelete(ref) {
+                    const res = await ref.listAll();
+                    for (const item of res.items) {
+                        try { await item.delete(); } catch (e) {}
+                    }
+                    for (const p of res.prefixes) {
+                        await walkAndDelete(p);
+                    }
+                }
+                await walkAndDelete(storage.ref('files'));
+                alert("ลบไฟล์ใน Storage สำเร็จ");
+            } catch (e) {
+                alert("ลบไฟล์ใน Storage ไม่สำเร็จ: " + e.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function bulkDeleteFirestoreFiles() {
+            if (currentRole !== 'admin') return alert("อนุญาตเฉพาะผู้ดูแลระบบ");
+            if (!confirm("ยืนยันล้างรายการไฟล์ทั้งหมดในฐานข้อมูล?")) return;
+            showLoading(true);
+            try {
+                let snap = await db.collection('files').get();
+                while (!snap.empty) {
+                    const batch = db.batch();
+                    snap.docs.slice(0, 500).forEach(d => batch.delete(d.ref));
+                    await batch.commit();
+                    snap = await db.collection('files').get();
+                }
+                DYNAMIC_FILES = [];
+                renderFileList();
+                refreshFileDropdowns();
+                alert("ล้างรายการไฟล์ในฐานข้อมูลสำเร็จ");
+            } catch (e) {
+                alert("ล้างรายการไฟล์ในฐานข้อมูลไม่สำเร็จ: " + e.message);
+            } finally {
+                showLoading(false);
             }
         }
     </script>
