@@ -569,7 +569,8 @@
                 alert("คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน");
             }
         });
-
+        
+        let allClassrooms = [];
         await Promise.all([loadClassrooms(), loadDynamicFiles()]);
         
         // Check URL params
@@ -586,8 +587,6 @@
             }
         }
     })();
-
-    let allClassrooms = [];
 
     async function loadClassrooms() {
         allClassrooms = [];
