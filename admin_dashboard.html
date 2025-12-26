@@ -1722,6 +1722,27 @@
                     if (!workingTeacherRooms[r.level]) workingTeacherRooms[r.level] = [];
                     if (!workingTeacherRooms[r.level].includes(r.id)) workingTeacherRooms[r.level].push(r.id);
                 });
+            const updateSummary = () => {
+                const roleText = memRole.value || 'general';
+                memSummaryRole.textContent = roleText;
+                const studentLevelCode = memStudentLevel.value || '';
+                const studentLevelTextNow = studentLevelCode ? (LEVEL_NAMES[studentLevelCode] || studentLevelCode) : '-';
+                memSummaryStudentLevel.textContent = studentLevelTextNow;
+                const studentRoomNamesNow = Array.from(workingStudentRooms).map(id => {
+                    const r = (window.allClassrooms || []).find(x => x.id === id);
+                    return r ? (r.name || r.id) : id;
+                });
+                memSummaryStudentRooms.textContent = studentRoomNamesNow.length ? studentRoomNamesNow.join(', ') : '-';
+                const teacherLevelsNow = Object.keys(workingTeacherRooms);
+                const teacherLevelNamesNow = teacherLevelsNow.map(k => LEVEL_NAMES[k] || k);
+                memSummaryTeacherLevels.textContent = teacherLevelNamesNow.length ? teacherLevelNamesNow.join(', ') : '-';
+                const teacherRoomIdsNow = teacherLevelsNow.flatMap(lv => workingTeacherRooms[lv] || []);
+                const teacherRoomNamesNow = teacherRoomIdsNow.map(id => {
+                    const r = (window.allClassrooms || []).find(x => x.id === id);
+                    return r ? (r.name || r.id) : id;
+                });
+                memSummaryTeacherRooms.textContent = teacherRoomNamesNow.length ? teacherRoomNamesNow.join(', ') : '-';
+            };
             const renderStudentAssigned = () => {
                 memStudentAssignedList.innerHTML = '';
                 Array.from(workingStudentRooms).forEach(id => {
@@ -1742,6 +1763,7 @@
                     span.appendChild(rm);
                     memStudentAssignedList.appendChild(span);
                 });
+                updateSummary();
             };
             const renderTeacherAssigned = () => {
                 memTeacherAssignedList.innerHTML = '';
@@ -1769,12 +1791,14 @@
                         memTeacherAssignedList.appendChild(span);
                     });
                 });
+                updateSummary();
             };
             renderStudentAssigned();
             renderTeacherAssigned();
             memStudentLevel.onchange = () => {
                 const lv = memStudentLevel.value;
                 fillRoomsByLevel(memStudentRooms, lv, []);
+                updateSummary();
             };
             memStudentAddBtn.onclick = () => {
                 const sel = Array.from(memStudentRooms.selectedOptions).map(o => o.value);
@@ -1786,6 +1810,7 @@
                 const lv = memTeacherLevel.value;
                 const selected = (workingTeacherRooms[lv] || []);
                 fillRoomsByLevel(memTeacherRooms, lv, selected);
+                updateSummary();
             };
             memTeacherAddBtn.onclick = () => {
                 const lv = memTeacherLevel.value;
@@ -1796,6 +1821,7 @@
                 memTeacherRooms.selectedIndex = -1;
                 renderTeacherAssigned();
             };
+            memRole.onchange = updateSummary;
             if (e.levelRequested) {
                 memStudentLevel.value = e.levelRequested;
             }
@@ -1832,6 +1858,7 @@
             if (e.epithet) personalParts.push('(' + e.epithet + ')');
             if (e.phone) personalParts.push('โทร: ' + e.phone);
             memSummaryPersonal.textContent = personalParts.length ? personalParts.join(' ') : '-';
+            updateSummary();
             document.getElementById('memberModal').style.display = 'block';
         }
         async function saveMemberEditor(evn) {
