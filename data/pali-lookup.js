@@ -164,6 +164,11 @@ const PaliLookup = {
             candidates.push(word.slice(0, -3)); // ปุริสานํ -> ปุริส
         }
 
+        // -iṃ (ึ) - e.g. นิสฺเสณึ -> นิสฺเสณิ
+        if (word.endsWith('ึ')) {
+             candidates.push(word.slice(0, -1) + 'ิ'); // นิสฺเสณึ -> นิสฺเสณิ
+        }
+
         // -esu (เสุ)
         if (word.endsWith('เสุ')) {
             // Note: สระเอ is before consonant. ...เสุ implies ...esu.
