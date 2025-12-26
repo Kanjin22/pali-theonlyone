@@ -1043,6 +1043,7 @@
     <script src="data/vocab-taddhita.js"></script>
     <script src="data/vocab-general.js"></script>
     <script src="data/vocab-newgen.js"></script>
+    <script src="data/pali-lookup.js"></script>
 
     <script src="data/content-dhamma01.js"></script>
     <script src="data/content-dhamma02.js"></script>
@@ -1472,62 +1473,58 @@
     }
 
     function showDictionaryDefinition(word) {
-        // Remove punctuation
-        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        // Collect all databases
+        const dbs = {
+            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
+            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
+            akhyata: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
+            kitaka: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
+            samasa: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}),
+            taddhita: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {})
+        };
+
+        // Use smart lookup
+        const result = PaliLookup.lookup(word, dbs);
         
-        // Find in Dictionary Databases
-        let definition = null;
-        let source = "";
-
-        // 1. Check Thai New Gen (vocabNewGen)
-        if (typeof vocabNewGen !== 'undefined' && vocabNewGen[cleanWord]) {
-            definition = vocabNewGen[cleanWord];
-            source = "Thai New Gen Dict";
-        } 
-        // 2. Check General Vocab
-        else if (typeof vocabGeneral !== 'undefined' && vocabGeneral[cleanWord]) {
-            definition = vocabGeneral[cleanWord];
-            source = "ศัพท์ทั่วไป";
-        }
-        // 3. Check Akhyata
-        else if (typeof vocabAkhyata !== 'undefined' && vocabAkhyata[cleanWord]) {
-            definition = vocabAkhyata[cleanWord];
-            source = "อาขยาต";
-        }
-
         // Display in Footer
         const vocabContent = document.getElementById('vocabContent');
         if (vocabContent) {
-            if (definition) {
+            const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+            
+            if (result) {
                 let detailsHtml = "";
-                if (definition.details && Array.isArray(definition.details)) {
-                    detailsHtml = definition.details.map(d => `<div>• ${d}</div>`).join('');
-                } else if (typeof definition === 'string') {
-                    detailsHtml = definition;
-                } else if (definition.split) {
-                    detailsHtml = `<div>${definition.split}</div>`;
+                if (result.details && Array.isArray(result.details)) {
+                    detailsHtml = result.details.map(d => `<div>• ${d}</div>`).join('');
+                } else if (typeof result === 'string') {
+                    detailsHtml = result;
+                } else if (result.split) {
+                    detailsHtml = `<div>${result.split}</div>`;
+                }
+                
+                // Show stem source if available
+                let stemInfo = "";
+                if (result._stemmedFrom) {
+                    stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
                 }
 
                 vocabContent.innerHTML = `
                     <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
-                        <div style="font-weight: bold; color: #2980b9;">${cleanWord} <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">(${source})</span></div>
+                        <div style="font-weight: bold; color: #2980b9;">
+                            ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                            <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">(${result.source})</span>
+                            ${stemInfo}
+                        </div>
                         <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
                     </div>
                 `;
                 
-                // Highlight section to draw attention
+                // Highlight section
                 vocabContent.parentElement.style.backgroundColor = "#e8f6f3";
                 setTimeout(() => {
                      vocabContent.parentElement.style.backgroundColor = "";
                 }, 1000);
 
             } else {
-                // If not found, show "Word not found" nicely or keep previous content?
-                // Better to just log or show a subtle message, but user wants to see it.
-                // For now, let's show a "Not found" message briefly if explicitly clicked?
-                // Or maybe just do nothing if not found to avoid disrupting the flow.
-                // But user expects action. Let's show "Searching..." then "Not found".
-                
                  vocabContent.innerHTML = `
                     <div style="color: #95a5a6; font-style: italic;">
                         ไม่พบคำศัพท์: <strong>${cleanWord}</strong> ในฐานข้อมูล

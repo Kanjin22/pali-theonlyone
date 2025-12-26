@@ -167,6 +167,7 @@
   <script src="./data/vocab-taddhita.js"></script>
   <script src="./data/vocab-general.js"></script>
   <script src="./data/vocab-newgen.js"></script>
+  <script src="./data/pali-lookup.js"></script>
 
   <script src="./data/content-dhamma01.js"></script>
   <script src="./data/content-dhamma02.js"></script>
@@ -289,60 +290,44 @@
     }
 
     function showDictionaryDefinition(word) {
-        // Remove punctuation
-        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        // Collect all databases
+        const dbs = {
+            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
+            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
+            akhyata: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
+            kitaka: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
+            samasa: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}),
+            taddhita: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {})
+        };
+
+        // Use smart lookup
+        const result = PaliLookup.lookup(word, dbs);
         
-        // Find in Dictionary Databases
-        let definition = null;
-        let source = "";
-
-        // 1. Check Thai New Gen (vocabNewGen)
-        if (typeof vocabNewGen !== 'undefined' && vocabNewGen[cleanWord]) {
-            definition = vocabNewGen[cleanWord];
-            source = "Thai New Gen Dict";
-        } 
-        // 2. Check General Vocab
-        else if (typeof vocabGeneral !== 'undefined' && vocabGeneral[cleanWord]) {
-            definition = vocabGeneral[cleanWord];
-            source = "ศัพท์ทั่วไป";
-        }
-        // 3. Check Akhyata
-        else if (typeof vocabAkhyata !== 'undefined' && vocabAkhyata[cleanWord]) {
-            definition = vocabAkhyata[cleanWord];
-            source = "อาขยาต";
-        }
-        // 4. Check Kitaka
-        else if (typeof vocabKitaka !== 'undefined' && vocabKitaka[cleanWord]) {
-            definition = vocabKitaka[cleanWord];
-            source = "กิริยากิตก์";
-        }
-        // 5. Check Samasa
-        else if (typeof vocabSamasa !== 'undefined' && vocabSamasa[cleanWord]) {
-            definition = vocabSamasa[cleanWord];
-            source = "สมาส";
-        }
-        // 6. Check Taddhita
-        else if (typeof vocabTaddhita !== 'undefined' && vocabTaddhita[cleanWord]) {
-            definition = vocabTaddhita[cleanWord];
-            source = "ตัทธิต";
-        }
-
         const panel = document.getElementById('dict-panel');
         const content = document.getElementById('dict-content');
-        
-        if (definition) {
+        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+
+        if (result) {
             let detailsHtml = "";
-            if (definition.details && Array.isArray(definition.details)) {
-                detailsHtml = definition.details.map(d => `<div style="margin-bottom:4px;">• ${d}</div>`).join('');
-            } else if (typeof definition === 'string') {
-                detailsHtml = definition;
-            } else if (definition.split) {
-                detailsHtml = `<div>${definition.split}</div>`;
+            if (result.details && Array.isArray(result.details)) {
+                detailsHtml = result.details.map(d => `<div style="margin-bottom:4px;">• ${d}</div>`).join('');
+            } else if (typeof result === 'string') {
+                detailsHtml = result;
+            } else if (result.split) {
+                detailsHtml = `<div>${result.split}</div>`;
+            }
+
+            // Show stem source if available
+            let stemInfo = "";
+            if (result._stemmedFrom) {
+                stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
             }
 
             content.innerHTML = `
                 <div style="font-size:1.2em; font-weight:bold; color:#2c3e50; margin-bottom:8px;">
-                    ${cleanWord} <span class="dict-source">(${source})</span>
+                    ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                    <span class="dict-source">(${result.source})</span>
+                    ${stemInfo}
                 </div>
                 <div style="color:#34495e; line-height:1.6;">${detailsHtml}</div>
             `;
