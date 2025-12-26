@@ -1061,30 +1061,24 @@
     function getFiles(level, type, subjectId) {
         let files = [];
         
-        // 1. Static Files (Legacy) - Filter by type strictly
-        if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
-            files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
+        // 1. Static Files (Legacy)
+        // Strict subject filtering requested: when subjectId is provided, DO NOT include legacy static files
+        if (!subjectId) {
+            if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
+                files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
+            }
         }
         
         // 2. Dynamic Files (Firestore)
-        // Filter: Level + Type matches
-        // Subject: If dropdown has subject, show files with (Matching Subject OR No Subject OR 'General')
+        // Filter by Level + Type, and when subjectId is provided, require exact subject match
         const dyn = DYNAMIC_FILES.filter(f => {
             if (f.level !== level || f.type !== type) return false;
-            
-            if (subjectId) {
-                // Show specific subject files + General files (legacy files usually have no subject)
-                return !f.subject || f.subject === 'General' || f.subject === subjectId;
-            }
+            if (subjectId) return f.subject === subjectId;
             return true;
         });
-
+        
         dyn.forEach(f => {
-            // Add [Subject] tag to name if it's general or different (optional, but good for clarity)
-            let name = `[CLOUD] ${f.name}`;
-            if (f.subject && f.subject !== 'General' && f.subject !== subjectId) {
-                name += ` (${f.subject})`;
-            }
+            const name = `[CLOUD] ${f.name}`;
             files.push({ name: name, value: f.url });
         });
         
