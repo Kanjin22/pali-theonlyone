@@ -325,6 +325,23 @@
                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
             }
 
+            // External Links
+            const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
+            const scLink = `https://suttacentral.net/define/${romanWord}`;
+
+            const externalLinks = `
+                <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
+                    <span style="color:#7f8c8d;">ค้นหาเพิ่มเติม:</span>
+                    <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
+                        <i class="fa-solid fa-book"></i> PTS Dict
+                    </a>
+                    <span style="color:#bdc3c7;">|</span>
+                    <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
+                        <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
+                    </a>
+                </div>
+            `;
+
             content.innerHTML = `
                 <div style="font-size:1.2em; font-weight:bold; color:#2c3e50; margin-bottom:8px;">
                     ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
@@ -333,13 +350,27 @@
                     ${stemInfo}
                 </div>
                 <div style="color:#34495e; line-height:1.6;">${detailsHtml}</div>
+                ${externalLinks}
             `;
             panel.style.display = 'block';
         } else {
+            const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
+            const scLink = `https://suttacentral.net/define/${romanWord}`;
+            
             content.innerHTML = `
                 <div style="color:#7f8c8d; font-style:italic;">
                     ไม่พบข้อมูลคำศัพท์: <strong>${cleanWord}</strong>
                     <div style="font-size:0.9em; margin-top:5px;">[${romanWord}]</div>
+                </div>
+                <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
+                    <span style="color:#7f8c8d;">ลองค้นใน:</span>
+                    <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
+                        <i class="fa-solid fa-book"></i> PTS Dict
+                    </a>
+                    <span style="color:#bdc3c7;">|</span>
+                    <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
+                        <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
+                    </a>
                 </div>
             `;
             panel.style.display = 'block';
