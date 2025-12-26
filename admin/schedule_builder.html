@@ -477,38 +477,7 @@
                     </div>
                 </div>
 
-                <div id="danger-zone" style="display:none; background:#fff5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c2c7;">
-                    <h3 style="color:#c0392b;"><i class="fas fa-skull-crossbones"></i> ลบไฟล์จำนวนมาก (เฉพาะผู้ดูแลระบบ)</h3>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <button class="btn btn-danger" onclick="bulkDeleteStorage()" style="background:#e74c3c;">
-                            <i class="fas fa-trash-alt"></i> ลบไฟล์ทั้งหมดใน Storage
-                        </button>
-                        <button class="btn btn-danger" onclick="bulkDeleteFirestoreFiles()" style="background:#e74c3c;">
-                            <i class="fas fa-broom"></i> ล้างรายการไฟล์ทั้งหมดในฐานข้อมูล
-                        </button>
-                    </div>
-                </div>
-
-                <div style="background:#f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-                    <h3><i class="fas fa-exchange-alt"></i> ย้ายไฟล์ไปตามโครงสร้างใหม่ (ไม่ลบของเดิม)</h3>
-                    <div style="display:grid; grid-template-columns: 1fr auto; gap: 10px; align-items:center;">
-                        <div>
-                            <label>โครงสร้างเป้าหมาย</label>
-                            <select id="migrate-structure">
-                                <option value="type-first">ประเภท/ชั้น/วิชา</option>
-                                <option value="level-first">ชั้น/ประเภท/วิชา</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button class="btn btn-primary" onclick="migrateFiles(false)" id="btn-migrate-copy">
-                                <i class="fas fa-copy"></i> คัดลอกและอัปเดต URL
-                            </button>
-                            <button class="btn" onclick="migrateFiles(true)" id="btn-migrate-move" style="background:#f39c12; color:#fff;">
-                                <i class="fas fa-share-square"></i> คัดลอกแล้วลบต้นฉบับ
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
                     <table style="width:100%; border-collapse:collapse;">
@@ -958,65 +927,6 @@
             }
         }
 
-        async function migrateFiles(deleteOld) {
-            const structureSel = document.getElementById('migrate-structure');
-            const mode = structureSel ? structureSel.value : 'type-first';
-            const snap = await db.collection('files').get();
-            if (snap.empty) return alert("ไม่พบรายการไฟล์ในฐานข้อมูล");
-            showLoading(true);
-            try {
-                let done = 0, failed = 0;
-                for (const d of snap.docs) {
-                    const data = d.data();
-                    const type = data.type || 'materials';
-                    const level = data.level || 'pt12';
-                    const subject = (data.subject || 'General').toLowerCase();
-                    const name = data.name || (data.fullPath ? data.fullPath.split('/').pop() : 'file.pdf');
-                    const oldPath = data.fullPath || null;
-                    let newPath = '';
-                    if (mode === 'type-first') {
-                        newPath = `files/${type}/${level}/${subject}/${name}`;
-                    } else {
-                        newPath = `files/${level}/${type}/${subject}/${name}`;
-                    }
-                    let url = null;
-                    if (oldPath) {
-                        try { url = await storage.ref(oldPath).getDownloadURL(); } catch (e) {}
-                    }
-                    if (!url && data.url) {
-                        url = data.url;
-                    }
-                    if (!url) { failed++; continue; }
-                    let resp;
-                    try {
-                        resp = await fetch(url, { mode: 'cors', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
-                        if (!resp.ok) { failed++; continue; }
-                    } catch (e) { failed++; continue; }
-                    const blob = await resp.blob();
-                    const ref = storage.ref(newPath);
-                    const task = await ref.put(blob);
-                    const newUrl = await task.ref.getDownloadURL();
-                    await d.ref.set({
-                        ...data,
-                        fullPath: newPath,
-                        url: newUrl,
-                        uploadedAt: data.uploadedAt || firebase.firestore.FieldValue.serverTimestamp()
-                    }, { merge: true });
-                    if (deleteOld && oldPath) {
-                        try { await storage.ref(oldPath).delete(); } catch (e) {}
-                    }
-                    done++;
-                }
-                await loadDynamicFiles();
-                renderFileList();
-                refreshFileDropdowns();
-                alert(`ย้ายไฟล์สำเร็จ ${done} รายการ, ล้มเหลว ${failed} รายการ`);
-            } catch (e) {
-                alert("ย้ายไฟล์ไม่สำเร็จ: " + e.message);
-            } finally {
-                showLoading(false);
-            }
-        }
         async function saveSchedule() {
             const roomId = roomSelect.value;
             const month = document.getElementById('month-select').value;
@@ -1812,7 +1722,6 @@
         function openFileManager() {
             document.getElementById('file-modal').style.display = 'flex';
             renderFileList();
-            document.getElementById('danger-zone').style.display = (currentRole === 'admin') ? 'block' : 'none';
 
             // Populate Levels in Upload Form
             const levelSelect = document.getElementById('upload-level');
@@ -2026,51 +1935,6 @@
             }
         }
 
-        async function bulkDeleteStorage() {
-            if (currentRole !== 'admin') return alert("อนุญาตเฉพาะผู้ดูแลระบบ");
-            if (!confirm("ยืนยันลบไฟล์ทั้งหมดใน Storage?")) return;
-            showLoading(true);
-            try {
-                async function walkAndDelete(ref) {
-                    const res = await ref.listAll();
-                    for (const item of res.items) {
-                        try { await item.delete(); } catch (e) {}
-                    }
-                    for (const p of res.prefixes) {
-                        await walkAndDelete(p);
-                    }
-                }
-                await walkAndDelete(storage.ref('files'));
-                alert("ลบไฟล์ใน Storage สำเร็จ");
-            } catch (e) {
-                alert("ลบไฟล์ใน Storage ไม่สำเร็จ: " + e.message);
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        async function bulkDeleteFirestoreFiles() {
-            if (currentRole !== 'admin') return alert("อนุญาตเฉพาะผู้ดูแลระบบ");
-            if (!confirm("ยืนยันล้างรายการไฟล์ทั้งหมดในฐานข้อมูล?")) return;
-            showLoading(true);
-            try {
-                let snap = await db.collection('files').get();
-                while (!snap.empty) {
-                    const batch = db.batch();
-                    snap.docs.slice(0, 500).forEach(d => batch.delete(d.ref));
-                    await batch.commit();
-                    snap = await db.collection('files').get();
-                }
-                DYNAMIC_FILES = [];
-                renderFileList();
-                refreshFileDropdowns();
-                alert("ล้างรายการไฟล์ในฐานข้อมูลสำเร็จ");
-            } catch (e) {
-                alert("ล้างรายการไฟล์ในฐานข้อมูลไม่สำเร็จ: " + e.message);
-            } finally {
-                showLoading(false);
-            }
-        }
     </script>
 
 </body>
