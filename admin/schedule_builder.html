@@ -404,6 +404,15 @@
 
         <div id="status-msg" style="margin-bottom: 20px; padding: 10px; border-radius: 6px; display: none;"></div>
 
+        <div id="file-availability" style="display:flex; align-items:center; gap:12px; margin:10px 0;">
+            <label style="cursor:pointer;">
+                <input type="checkbox" id="toggle-other-rooms"> ดูไฟล์จากห้องอื่น
+            </label>
+            <span id="no-room-files" style="display:none; background:#fff3cd; color:#856404; padding:6px 10px; border-radius:6px;">
+                ไม่มีเอกสารสำหรับห้องนี้
+            </span>
+        </div>
+
         <hr>
 
         <div id="schedule-rows">
@@ -541,6 +550,7 @@
         const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
         let currentScheduleId = null; // Track if we are editing an existing doc
         let DYNAMIC_FILES = []; // Files loaded from Firestore
+        let SHOW_OTHER_ROOMS = false;
 
         // --- Content Mapping ---
         const levelConfig = {
@@ -820,6 +830,14 @@
             const preRoom = urlParams.get('room');
             computeAllowedRooms();
             if (preRoom) enforceAccessWithParams();
+
+            const toggleOther = document.getElementById('toggle-other-rooms');
+            if (toggleOther) {
+                toggleOther.addEventListener('change', (e) => {
+                    SHOW_OTHER_ROOMS = !!e.target.checked;
+                    refreshFileDropdowns();
+                });
+            }
         })();
 
         async function loadClassrooms() {
@@ -915,6 +933,7 @@
                     statusMsg.style.color = '#856404';
                     statusMsg.innerHTML = `<i class="fas fa-info-circle"></i> ยังไม่มีตารางเรียนของเดือนนี้ (สร้างใหม่)`;
                 }
+                refreshFileDropdowns();
             } catch (e) {
                 console.error("Load error:", e);
                 if (e.code === 'permission-denied') {
@@ -1564,16 +1583,33 @@
 
             // 2. Dynamic Files (Firestore)
             // Filter by Level + Type, and when subjectId is provided, require exact subject match
-            const dyn = DYNAMIC_FILES.filter(f => {
+            const currentRoomId = roomSelect.value || null;
+            const dynAll = DYNAMIC_FILES.filter(f => {
                 if (f.level !== level || f.type !== type) return false;
                 if (subjectId) return f.subject === subjectId;
                 return true;
             });
 
-            dyn.forEach(f => {
-                const name = `[CLOUD] ${f.name}`;
+            const dynRoom = dynAll.filter(f => f.room && currentRoomId && f.room === currentRoomId);
+            const dynShared = dynAll.filter(f => !f.room || !currentRoomId);
+            const dynOther = dynAll.filter(f => f.room && currentRoomId && f.room !== currentRoomId);
+
+            dynRoom.forEach(f => {
+                const name = `[ROOM] ${f.name}`;
                 files.push({ name: name, value: f.url });
             });
+            dynShared.forEach(f => {
+                const name = `[SHARED] ${f.name}`;
+                files.push({ name: name, value: f.url });
+            });
+            if (SHOW_OTHER_ROOMS) {
+                dynOther.forEach(f => {
+                    const roomObj = (Array.isArray(allClassrooms) ? allClassrooms : []).find(r => r.id === f.room) || null;
+                    const roomLabel = roomObj ? (roomObj.name || roomObj.id) : f.room;
+                    const name = `[OTHER ${roomLabel}] ${f.name}`;
+                    files.push({ name: name, value: f.url });
+                });
+            }
 
             // Sort by name
             files.sort((a, b) => a.name.localeCompare(b.name));
@@ -1792,18 +1828,22 @@
                 const subjList = SUBJECT_CONFIG[file.level] || [];
                 const subjObj = subjList.find(s => s.id === subjId) || null;
                 const subjLabel = subjObj ? subjObj.label : (subjId || '-');
+                const roomId = file.room || '';
+                const roomObj = (Array.isArray(allClassrooms) ? allClassrooms : []).find(r => r.id === roomId) || null;
+                const roomLabel = roomObj ? (roomObj.name || roomObj.id) : (roomId || '-');
 
                 tr.innerHTML = `
                  <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
                  <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
                  <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
                  <td style="padding:10px;">${subjLabel}</td>
+                 <td style="padding:10px;">${roomLabel}</td>
                  <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
                  <td style="padding:10px; text-align:center;">
                      <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
                          <i class="fas fa-trash"></i>
-                    </button>
-                </td>
+                     </button>
+                 </td>
             `;
                 tbody.appendChild(tr);
             });
@@ -1815,6 +1855,7 @@
 
             // Corrected selectors to match generated HTML
             const selects = document.querySelectorAll('.input-file, .input-exam-file, .input-ans-file');
+            let anyRoomFiles = false;
             selects.forEach(sel => {
                 const currentVal = sel.value;
                 let type = 'materials';
@@ -1824,7 +1865,12 @@
                 const subjId = sel.dataset.subjId || null;
                 const fileObjs = getFiles(level, type, subjId);
                 sel.innerHTML = createOptions(fileObjs, [currentVal]);
+                if (fileObjs.some(o => typeof o.name === 'string' && o.name.startsWith('[ROOM]'))) {
+                    anyRoomFiles = true;
+                }
             });
+            const msg = document.getElementById('no-room-files');
+            if (msg) msg.style.display = anyRoomFiles ? 'none' : 'block';
         }
 
         async function uploadFile() {
@@ -1840,14 +1886,23 @@
             const file = fileInput.files[0];
             if (!file) return alert("กรุณาเลือกไฟล์ PDF");
             if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
+            const baseName = file.name.replace(/\.[^.]+$/, '');
+            const parts = baseName.split('-').map(s => s.trim()).filter(s => s);
+            if (parts.length < 5) {
+                const ok = confirm("ชื่อไฟล์ควรเป็นรูปแบบ: ชั้น-ประเภท-วิชา-ห้อง-ชื่อ\nตัวอย่าง: ป.๑-๒ ประกอบ แปล นวกะ ๑ จักขุปาล\n\nต้องการอัปโหลดต่อหรือไม่?");
+                if (!ok) return;
+            }
 
             const type = typeSelect.value;
             const level = levelSelect.value;
             const subjectId = subjSelect.value || 'General';
             const subjectFolder = (subjectId || '').toLowerCase();
+            const roomId = roomSelect.value || null;
 
             // Create Path: files/{level}/{type}/{subject}/{filename}
-            const storagePath = `files/${level}/${type}/${subjectFolder}/${Date.now()}_${file.name}`;
+            const storagePath = roomId
+                ? `files/${level}/${type}/${subjectFolder}/${roomId}/${Date.now()}_${file.name}`
+                : `files/${level}/${type}/${subjectFolder}/${Date.now()}_${file.name}`;
             const ref = storage.ref(storagePath);
 
             btn.disabled = true;
@@ -1878,6 +1933,7 @@
                             type: type,
                             level: level,
                             subject: subjectId,
+                            room: roomId,
                             url: downloadURL,
                             fullPath: storagePath,
                             uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1891,6 +1947,7 @@
                             type: type,
                             level: level,
                             subject: subjectId,
+                            room: roomId,
                             url: downloadURL,
                             fullPath: storagePath,
                             uploadedAt: { seconds: Date.now() / 1000 } // approx
