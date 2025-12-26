@@ -1042,8 +1042,9 @@
     <script src="data/vocab-samasa.js"></script>
     <script src="data/vocab-taddhita.js"></script>
     <script src="data/vocab-general.js"></script>
-    <script src="data/vocab-newgen.js"></script>
     <script src="data/vocab-tananunto.js"></script>
+    <script src="data/vocab-sc.js"></script>
+    <script src="data/vocab-sandhi.js"></script>
     <script src="data/pali-lookup.js"></script>
     <script src="data/pali-script.js"></script>
 
@@ -1469,9 +1470,95 @@
         // Toggle Highlight (Original Function)
         toggleHighlight(el);
         
-        // New Feature: Show Dictionary Definition in Footer
+        // Remove existing bubbles
+        document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
+
         const word = el.innerText.trim();
+        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+
+        // Check Manual Sandhi DB
+        if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
+            const parts = vocabSandhi[cleanWord];
+            showSandhiBubble(el, parts);
+            return; // Stop here
+        }
+
+        // New Feature: Show Dictionary Definition in Footer
         showDictionaryDefinition(word);
+    }
+
+    function showSandhiBubble(el, parts) {
+        const bubble = document.createElement('div');
+        bubble.className = 'sandhi-bubble';
+        
+        // Style
+        bubble.style.position = 'absolute';
+        bubble.style.backgroundColor = '#2c3e50';
+        bubble.style.color = '#fff';
+        bubble.style.padding = '8px 12px';
+        bubble.style.borderRadius = '6px';
+        bubble.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
+        bubble.style.zIndex = '1000';
+        bubble.style.fontSize = '1em';
+        bubble.style.whiteSpace = 'nowrap';
+        bubble.style.display = 'flex';
+        bubble.style.gap = '8px';
+        bubble.style.alignItems = 'center';
+        
+        // Arrow
+        const arrow = document.createElement('div');
+        arrow.style.position = 'absolute';
+        arrow.style.bottom = '-6px';
+        arrow.style.left = '50%';
+        arrow.style.transform = 'translateX(-50%)';
+        arrow.style.width = '0';
+        arrow.style.height = '0';
+        arrow.style.borderLeft = '6px solid transparent';
+        arrow.style.borderRight = '6px solid transparent';
+        arrow.style.borderTop = '6px solid #2c3e50';
+        bubble.appendChild(arrow);
+
+        // Content
+        parts.forEach((part, index) => {
+            const span = document.createElement('span');
+            span.textContent = part;
+            span.style.cursor = 'pointer';
+            span.style.borderBottom = '1px dashed #ecf0f1';
+            span.onmouseover = () => { span.style.color = '#3498db'; span.style.borderColor = '#3498db'; };
+            span.onmouseout = () => { span.style.color = '#fff'; span.style.borderColor = '#ecf0f1'; };
+            span.onclick = (e) => {
+                e.stopPropagation();
+                showDictionaryDefinition(part);
+            };
+            
+            bubble.appendChild(span);
+            
+            if (index < parts.length - 1) {
+                const plus = document.createElement('span');
+                plus.textContent = '+';
+                plus.style.color = '#95a5a6';
+                bubble.appendChild(plus);
+            }
+        });
+
+        document.body.appendChild(bubble);
+
+        // Positioning
+        const rect = el.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        bubble.style.top = (rect.top + scrollTop - bubble.offsetHeight - 10) + 'px';
+        bubble.style.left = (rect.left + scrollLeft + (rect.width / 2) - (bubble.offsetWidth / 2)) + 'px';
+
+        // Close on outside click
+        const closeHandler = (e) => {
+            if (!bubble.contains(e.target) && e.target !== el) {
+                bubble.remove();
+                document.removeEventListener('click', closeHandler);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeHandler), 0);
     }
 
     function showDictionaryDefinition(word) {
