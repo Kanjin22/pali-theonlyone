@@ -1581,7 +1581,11 @@
         const vocabContent = document.getElementById('vocabContent');
         if (vocabContent) {
             const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
-            const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(cleanWord) : "";
+            let wordToConvert = cleanWord;
+            if (result && result._stemmedFrom && result.word) {
+                wordToConvert = result.word;
+            }
+            const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(wordToConvert) : "";
             
             // SuttaCentral Link
             const scLink = `https://suttacentral.net/define/${romanWord}`;
