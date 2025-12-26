@@ -172,6 +172,7 @@
                 }
                 initLevelPage('pt9');
                 localStorage.setItem('lastClassroom', JSON.stringify({ href: 'home_pt9.html', title: 'ห้องเรียน ป.ธ. ๙' }));
+                document.getElementById('room-content-section').style.display = 'block';
             } catch (e) { console.error(e); location.href = '../index.html'; }
         });
     </script>
