@@ -52,21 +52,10 @@
         }
 
         .grid-menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             animation: fadeInUp 0.8s ease;
-        }
-
-        .grid-menu > .menu-card {
-            flex: 1 1 260px;
-            max-width: 380px;
-        }
-
-        /* Exception: Schedule container should be full width */
-        #today-schedule-container {
-            max-width: 100%;
         }
 
         .menu-card {
