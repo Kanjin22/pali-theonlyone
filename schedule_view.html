@@ -1373,15 +1373,8 @@
 
             if (allFiles.length > 0) {
                  const checkStorageUrl = async (url) => {
-                     try {
-                         const res = await fetch(url, { method: 'HEAD' });
-                         return res.ok;
-                     } catch (err) { 
-                        // If CORS blocks the request, we can't know if it's 200 or 404.
-                        // Better to show the link (assume true) than to hide a valid file.
-                        console.warn("Cannot verify file (CORS/Network):", url);
-                        return true; 
-                     }
+                     // Skip network verification to avoid CORS warnings; rely on download links directly.
+                     return true;
                  };
                  const verified = [];
                  for (const f of allFiles) {
