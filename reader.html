@@ -248,8 +248,10 @@
     let groupedPages = [];
     let currentBookPageIndex = 0;
     let isJustified = false;
+    let currentSlides = []; // Store current slides globally
 
     function groupSlidesByPage(slides) {
+        currentSlides = slides; // Update global slides reference
         const groups = [];
         let currentMap = new Map(); // pageNum -> [slides]
         
@@ -301,8 +303,11 @@
         // Check Manual Sandhi from Slide Data (AI Generated)
         const slideIndex = el.dataset.slideIndex;
         let manualResult = null;
-        if (slideIndex !== undefined && slides[slideIndex]) {
-             const s = slides[slideIndex];
+        // Use currentSlides (global) or try to find it from page data if available
+        const slidesSource = (typeof currentSlides !== 'undefined') ? currentSlides : [];
+        
+        if (slideIndex !== undefined && slidesSource[slideIndex]) {
+             const s = slidesSource[slideIndex];
              if (s.sandhi && s.sandhi[cleanWord]) {
                  manualResult = { split: s.sandhi[cleanWord], word: cleanWord, source: 'Manual Sandhi' };
              } else if (s.vocab && s.vocab[cleanWord]) {
