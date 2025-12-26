@@ -1477,13 +1477,7 @@
     function showDictionaryDefinition(word) {
         // Collect all databases
         const dbs = {
-            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
-            tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
-            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
-            akhyata: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
-            kitaka: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
-            samasa: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}),
-            taddhita: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {})
+            tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {})
         };
 
         // Use smart lookup
@@ -1495,6 +1489,9 @@
             const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
             const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(cleanWord) : "";
             
+            // SuttaCentral Link
+            const scLink = `https://suttacentral.net/define/${romanWord}`;
+
             if (result) {
                 let detailsHtml = "";
                 if (result.details && Array.isArray(result.details)) {
@@ -1511,25 +1508,16 @@
                     stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
                 }
 
-                // External Links
-                const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
-                const scLink = `https://suttacentral.net/define/${romanWord}`;
-
                 vocabContent.innerHTML = `
                     <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
                         <div style="font-weight: bold; color: #2980b9;">
                             ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
                             <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
-                            <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">(${result.source})</span>
                             ${stemInfo}
                         </div>
                         <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
                         <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
                             <span style="color:#7f8c8d;">เพิ่มเติม:</span>
-                            <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                                <i class="fa-solid fa-book"></i> PTS Dict
-                            </a>
-                            <span style="color:#bdc3c7;">|</span>
                             <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
                                 <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
                             </a>
@@ -1544,19 +1532,12 @@
                 }, 1000);
 
             } else {
-                 const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
-                 const scLink = `https://suttacentral.net/define/${romanWord}`;
-
                  vocabContent.innerHTML = `
                     <div style="color: #95a5a6; font-style: italic;">
                         ไม่พบคำศัพท์: <strong>${cleanWord}</strong> ในฐานข้อมูล
                         <div style="font-size:0.9em; margin-top:5px;">[${romanWord}]</div>
                         <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
                             <span style="color:#7f8c8d;">ลองค้นใน:</span>
-                            <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                                <i class="fa-solid fa-book"></i> PTS Dict
-                            </a>
-                            <span style="color:#bdc3c7;">|</span>
                             <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
                                 <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
                             </a>

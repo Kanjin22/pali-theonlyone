@@ -294,13 +294,9 @@
     function showDictionaryDefinition(word) {
         // Collect all databases
         const dbs = {
-            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
+            // Only use Tananunto for Thai
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
-            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
-            akhyata: (typeof vocabAkhyata !== 'undefined' ? vocabAkhyata : {}),
-            kitaka: (typeof vocabKitaka !== 'undefined' ? vocabKitaka : {}),
-            samasa: (typeof vocabSamasa !== 'undefined' ? vocabSamasa : {}),
-            taddhita: (typeof vocabTaddhita !== 'undefined' ? vocabTaddhita : {})
+            // Other DBs removed as per instruction
         };
 
         // Use smart lookup
@@ -311,7 +307,13 @@
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(cleanWord) : "";
 
+        // Build result HTML
+        let displayHtml = "";
+        let foundThai = false;
+
+        // 1. Thai Definition (from Tananunto)
         if (result) {
+            foundThai = true;
             let detailsHtml = "";
             if (result.details && Array.isArray(result.details)) {
                 detailsHtml = result.details.map(d => `<div style="margin-bottom:4px;">• ${d}</div>`).join('');
@@ -319,6 +321,9 @@
                 detailsHtml = result;
             } else if (result.split) {
                 detailsHtml = `<div>${result.split}</div>`;
+            } else if (result.meaning) {
+                 // Fallback if lookup returns object with meaning
+                 detailsHtml = result.meaning;
             }
 
             // Show stem source if available
@@ -326,57 +331,44 @@
             if (result._stemmedFrom) {
                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
             }
-
-            // External Links
-            const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
-            const scLink = `https://suttacentral.net/define/${romanWord}`;
-
-            const externalLinks = `
-                <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                    <span style="color:#7f8c8d;">ค้นหาเพิ่มเติม:</span>
-                    <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                        <i class="fa-solid fa-book"></i> PTS Dict
-                    </a>
-                    <span style="color:#bdc3c7;">|</span>
-                    <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                        <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
-                    </a>
-                </div>
-            `;
-
-            content.innerHTML = `
+            
+            displayHtml += `
                 <div style="font-size:1.2em; font-weight:bold; color:#2c3e50; margin-bottom:8px;">
                     ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
-                    <span style="font-size:0.8em; color:#7f8c8d; font-weight:normal; margin-left:5px;">[${romanWord}]</span>
-                    <span class="dict-source">(${result.source})</span>
                     ${stemInfo}
+                    <span style="font-size:0.7em; color:#95a5a6; font-weight:normal;">[${romanWord}]</span>
                 </div>
-                <div style="color:#34495e; line-height:1.6;">${detailsHtml}</div>
-                ${externalLinks}
+                <div style="color:#34495e;">${detailsHtml}</div>
             `;
-            panel.style.display = 'block';
         } else {
-            const ptsLink = `https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=${romanWord}&searchhws=yes`;
-            const scLink = `https://suttacentral.net/define/${romanWord}`;
-            
-            content.innerHTML = `
-                <div style="color:#7f8c8d; font-style:italic;">
-                    ไม่พบข้อมูลคำศัพท์: <strong>${cleanWord}</strong>
-                    <div style="font-size:0.9em; margin-top:5px;">[${romanWord}]</div>
+             // Not found in Thai DB
+             displayHtml += `
+                <div style="font-size:1.2em; font-weight:bold; color:#e74c3c; margin-bottom:8px;">
+                    ${cleanWord}
+                    <span style="font-size:0.7em; color:#95a5a6; font-weight:normal;">[${romanWord}]</span>
                 </div>
-                <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                    <span style="color:#7f8c8d;">ลองค้นใน:</span>
-                    <a href="${ptsLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                        <i class="fa-solid fa-book"></i> PTS Dict
-                    </a>
-                    <span style="color:#bdc3c7;">|</span>
-                    <a href="${scLink}" target="_blank" style="color:#3498db; text-decoration:none; margin-left:5px;">
-                        <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
-                    </a>
-                </div>
+                <div style="color:#7f8c8d; font-style:italic;">ไม่พบคำแปลในพจนานุกรมไทย</div>
             `;
-            panel.style.display = 'block';
         }
+
+        // 2. Roman Dictionary (SuttaCentral ONLY)
+        const scLink = `https://suttacentral.net/define/${romanWord}`;
+        
+        // Append External Link Section
+        displayHtml += `
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #bdc3c7;">
+                 <div style="font-size:0.9em; font-weight:bold; color:#2980b9; margin-bottom:5px;">พจนานุกรมบาลี-โรมัน (SuttaCentral)</div>
+                 <a href="${scLink}" target="_blank" style="display:inline-block; padding:6px 12px; background:#ecf0f1; color:#2c3e50; text-decoration:none; border-radius:4px; border:1px solid #bdc3c7; font-size:0.9em;">
+                    <i class="fa-solid fa-dharmachakra" style="color:#e67e22;"></i> เปิดดูความหมายที่ SuttaCentral
+                 </a>
+                 <div style="font-size:0.75em; color:#95a5a6; margin-top:4px;">
+                    * คลิกลิงก์เพื่อดูคำแปลภาษาอังกฤษและไวยากรณ์ละเอียด
+                 </div>
+            </div>
+        `;
+
+        content.innerHTML = displayHtml;
+        panel.style.display = 'block';
     }
 
     function closeDictPanel() {
