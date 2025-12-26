@@ -168,6 +168,12 @@
   <script src="./data/vocab-general.js"></script>
   <script src="./data/vocab-newgen.js"></script>
   <script src="./data/vocab-tananunto.js"></script>
+  <script src="./data/vocab-etipitaka.js"></script>
+  <script src="./data/vocab-dpd.js"></script>
+  <script src="./data/vocab-pts.js"></script>
+  <script src="./data/vocab-dppn.js"></script>
+  <script src="./data/vocab-dhammika.js"></script>
+  <script src="./data/vocab-dpd-inflected.js"></script>
   <script src="./data/vocab-sc.js"></script>
   <script src="./data/vocab-roots.js"></script>
   <script src="./data/vocab-sandhi.js"></script>
@@ -406,10 +412,14 @@
     function showDictionaryDefinition(word, manualOverride = null) {
         // Collect all databases
         const dbs = {
-            // Only use Tananunto for Thai
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
-            // Pass SC for Sandhi checking
-            sc: (typeof vocabSC !== 'undefined' ? vocabSC : {})
+            etipitaka: (typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {}),
+            dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
+            sc: (typeof vocabSC !== 'undefined' ? vocabSC : {}),
+            pts: (typeof vocabPTS !== 'undefined' ? vocabPTS : {}),
+            dppn: (typeof vocabDPPN !== 'undefined' ? vocabDPPN : {}),
+            dhammika: (typeof vocabDhammika !== 'undefined' ? vocabDhammika : {}),
+            dpdInflected: (typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {})
         };
 
         // Use smart lookup
@@ -447,6 +457,9 @@
             let stemInfo = "";
             if (result._stemmedFrom) {
                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
+                if (result._baseWord) {
+                    stemInfo += `<span style="font-size:0.8em; color:#16a085; margin-left:5px;">(ศัพท์เดิม: ${result._baseWord})</span>`;
+                }
             } else if (result.source === 'Manual Sandhi') {
                  stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(สนธิ)</span>`;
             } else if (result.source === 'Manual Vocab') {
@@ -472,15 +485,60 @@
             `;
         }
 
-        // 2. Roman Dictionary (SuttaCentral Local & Online)
+        // 2. Roman Dictionary (DPD & SuttaCentral)
         const scLink = `https://suttacentral.net/define/${romanWord}`;
         const dpdLink = `https://www.dpdict.net/gd?search=${romanWord}`;
         
-        let scDefHtml = "";
-        const scEntry = (typeof vocabSC !== 'undefined') ? vocabSC[romanWord] : null;
+        let romanDefHtml = "";
         
+        // Check DPD
+        const dpdEntry = (typeof vocabDPD !== 'undefined') ? vocabDPD[romanWord] : null;
+        if (dpdEntry && Array.isArray(dpdEntry)) {
+             romanDefHtml += `
+                <div style="margin-top:10px; padding:8px; background:#f0f8ff; border-left:3px solid #27ae60; border-radius:4px;">
+                    <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(DPD)</span></div>
+                    <div style="margin-top:4px; color:#2c3e50;">${dpdEntry.join('<br>')}</div>
+                </div>
+             `;
+        }
+
+        // Check PTS
+        const ptsEntry = (typeof vocabPTS !== 'undefined') ? vocabPTS[romanWord] : null;
+        if (ptsEntry) {
+             romanDefHtml += `
+                <div style="margin-top:10px; padding:8px; background:#fff8e1; border-left:3px solid #ff9800; border-radius:4px;">
+                    <div style="font-weight:bold; color:#d35400;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(PTS)</span></div>
+                    <div style="margin-top:4px; color:#2c3e50; font-size:0.95em;">${ptsEntry}</div>
+                </div>
+             `;
+        }
+
+        // Check DPPN
+        const dppnEntry = (typeof vocabDPPN !== 'undefined') ? vocabDPPN[romanWord] : null;
+        if (dppnEntry) {
+             romanDefHtml += `
+                <div style="margin-top:10px; padding:8px; background:#e8f8f5; border-left:3px solid #1abc9c; border-radius:4px;">
+                    <div style="font-weight:bold; color:#16a085;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(DPPN)</span></div>
+                    <div style="margin-top:4px; color:#2c3e50; font-size:0.95em;">${dppnEntry}</div>
+                </div>
+             `;
+        }
+
+        // Check Dhammika
+        const dhammikaEntry = (typeof vocabDhammika !== 'undefined') ? vocabDhammika[romanWord] : null;
+        if (dhammikaEntry) {
+             romanDefHtml += `
+                <div style="margin-top:10px; padding:8px; background:#f5eef8; border-left:3px solid #9b59b6; border-radius:4px;">
+                    <div style="font-weight:bold; color:#8e44ad;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(Nature)</span></div>
+                    <div style="margin-top:4px; color:#2c3e50; font-size:0.95em;">${dhammikaEntry}</div>
+                </div>
+             `;
+        }
+
+        // Check SC
+        const scEntry = (typeof vocabSC !== 'undefined') ? vocabSC[romanWord] : null;
         if (scEntry) {
-             scDefHtml = `
+             romanDefHtml += `
                 <div style="margin-top:10px; padding:8px; background:#f8f9fa; border-left:3px solid #3498db; border-radius:4px;">
                     <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(${scEntry.grammar})</span></div>
                     <div style="margin-top:4px; color:#2c3e50;">${scEntry.definition}</div>
@@ -488,11 +546,22 @@
                 </div>
              `;
         }
+
+        // Check DPD Inflected (Fallback if not found in DPD Headwords)
+        const dpdInflectedEntry = (typeof vocabDPDInflected !== 'undefined') ? vocabDPDInflected[romanWord] : null;
+        if (dpdInflectedEntry && !dpdEntry) {
+             romanDefHtml += `
+                <div style="margin-top:10px; padding:8px; background:#f0f8ff; border-left:3px solid #95a5a6; border-radius:4px;">
+                    <div style="font-weight:bold; color:#7f8c8d;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#bdc3c7;">(DPD Inflected)</span></div>
+                    <div style="margin-top:4px; color:#2c3e50;">${dpdInflectedEntry}</div>
+                </div>
+             `;
+        }
         
         // Append External Link Section
         displayHtml += `
             <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #bdc3c7;">
-                 ${scDefHtml}
+                 ${romanDefHtml}
                  <div style="margin-top:8px;">
                      <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:5px; padding:6px 12px; background:#ecf0f1; color:#2c3e50; text-decoration:none; border-radius:4px; border:1px solid #bdc3c7; font-size:0.9em;">
                         <i class="fa-solid fa-dharmachakra" style="color:#e67e22;"></i> SuttaCentral
