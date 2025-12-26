@@ -22,6 +22,37 @@
     .badge{background:#ecf0f1;color:#2c3e50;border-radius:16px;padding:4px 10px;font-size:.85em}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .block{white-space:pre-wrap;line-height:1.8}
+    
+    /* Word Click Styles */
+    .word-span { cursor: pointer; transition: color 0.2s; border-bottom: 1px dotted transparent; }
+    .word-span:hover { color: #d35400; border-bottom-color: #d35400; background-color: rgba(230, 126, 34, 0.1); border-radius: 3px; }
+    .word-span.active-word { background-color: #f39c12; color: white; border-radius: 3px; padding: 0 2px; }
+
+    /* Dictionary Panel */
+    #dict-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 4px solid #3498db;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        padding: 15px 20px;
+        z-index: 1000;
+        display: none;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    #dict-close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+        color: #95a5a6;
+        font-size: 1.2em;
+    }
+    #dict-close:hover { color: #c0392b; }
+    .dict-source { font-size: 0.85em; color: #7f8c8d; font-weight: normal; margin-left: 8px; }
   </style>
 </head>
 <body>
@@ -123,6 +154,20 @@
     <div id="pages"></div>
   </div>
 
+  <!-- Dictionary Panel -->
+  <div id="dict-panel">
+      <div id="dict-close" onclick="closeDictPanel()"><i class="fas fa-times"></i></div>
+      <div id="dict-content"></div>
+  </div>
+
+  <!-- Vocab Data -->
+  <script src="./data/vocab-akhyata.js"></script>
+  <script src="./data/vocab-kitaka.js"></script>
+  <script src="./data/vocab-samasa.js"></script>
+  <script src="./data/vocab-taddhita.js"></script>
+  <script src="./data/vocab-general.js"></script>
+  <script src="./data/vocab-newgen.js"></script>
+
   <script src="./data/content-dhamma01.js"></script>
   <script src="./data/content-dhamma02.js"></script>
   <script src="./data/content-dhamma03.js"></script>
@@ -220,6 +265,103 @@
         return groups;
     }
 
+    // --- Dictionary Logic ---
+    function wrapWords(text) {
+        if (!text) return "";
+        return text.split(' ').map(word => {
+            if (word.trim() === "") return "";
+            const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
+            let prefix = "", cleanWord = word, suffix = "";
+            if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
+            let displayText = cleanWord.replace(/_/g, ' ');
+            
+            return `${prefix}<span class="word-span" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
+        }).join(' ');
+    }
+
+    function handleWordClick(el) {
+        // Remove active class from all
+        document.querySelectorAll('.word-span').forEach(s => s.classList.remove('active-word'));
+        el.classList.add('active-word');
+        
+        const word = el.innerText.trim();
+        showDictionaryDefinition(word);
+    }
+
+    function showDictionaryDefinition(word) {
+        // Remove punctuation
+        const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        
+        // Find in Dictionary Databases
+        let definition = null;
+        let source = "";
+
+        // 1. Check Thai New Gen (vocabNewGen)
+        if (typeof vocabNewGen !== 'undefined' && vocabNewGen[cleanWord]) {
+            definition = vocabNewGen[cleanWord];
+            source = "Thai New Gen Dict";
+        } 
+        // 2. Check General Vocab
+        else if (typeof vocabGeneral !== 'undefined' && vocabGeneral[cleanWord]) {
+            definition = vocabGeneral[cleanWord];
+            source = "ศัพท์ทั่วไป";
+        }
+        // 3. Check Akhyata
+        else if (typeof vocabAkhyata !== 'undefined' && vocabAkhyata[cleanWord]) {
+            definition = vocabAkhyata[cleanWord];
+            source = "อาขยาต";
+        }
+        // 4. Check Kitaka
+        else if (typeof vocabKitaka !== 'undefined' && vocabKitaka[cleanWord]) {
+            definition = vocabKitaka[cleanWord];
+            source = "กิริยากิตก์";
+        }
+        // 5. Check Samasa
+        else if (typeof vocabSamasa !== 'undefined' && vocabSamasa[cleanWord]) {
+            definition = vocabSamasa[cleanWord];
+            source = "สมาส";
+        }
+        // 6. Check Taddhita
+        else if (typeof vocabTaddhita !== 'undefined' && vocabTaddhita[cleanWord]) {
+            definition = vocabTaddhita[cleanWord];
+            source = "ตัทธิต";
+        }
+
+        const panel = document.getElementById('dict-panel');
+        const content = document.getElementById('dict-content');
+        
+        if (definition) {
+            let detailsHtml = "";
+            if (definition.details && Array.isArray(definition.details)) {
+                detailsHtml = definition.details.map(d => `<div style="margin-bottom:4px;">• ${d}</div>`).join('');
+            } else if (typeof definition === 'string') {
+                detailsHtml = definition;
+            } else if (definition.split) {
+                detailsHtml = `<div>${definition.split}</div>`;
+            }
+
+            content.innerHTML = `
+                <div style="font-size:1.2em; font-weight:bold; color:#2c3e50; margin-bottom:8px;">
+                    ${cleanWord} <span class="dict-source">(${source})</span>
+                </div>
+                <div style="color:#34495e; line-height:1.6;">${detailsHtml}</div>
+            `;
+            panel.style.display = 'block';
+        } else {
+            content.innerHTML = `
+                <div style="color:#7f8c8d; font-style:italic;">
+                    ไม่พบข้อมูลคำศัพท์: <strong>${cleanWord}</strong>
+                </div>
+            `;
+            panel.style.display = 'block';
+        }
+    }
+
+    function closeDictPanel() {
+        document.getElementById('dict-panel').style.display = 'none';
+        document.querySelectorAll('.word-span').forEach(s => s.classList.remove('active-word'));
+    }
+
     function render(){
         const part=document.getElementById('partSelect').value;
         const vagga=document.getElementById('vaggaSelect').value;
@@ -293,7 +435,7 @@
                 const b=document.createElement('div');
                 b.className='block pali-text';
                 b.style.fontWeight='bold';
-                b.textContent=s.pali||'';
+                b.innerHTML=wrapWords(s.pali||'');
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
@@ -301,7 +443,7 @@
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
-                b1.textContent=s.pali||'';
+                b1.innerHTML=wrapWords(s.pali||'');
                 
                 const b2=document.createElement('div');
                 b2.className='block';
@@ -321,7 +463,7 @@
                 b2.className='block pali-text';
                 b2.style.fontWeight='bold';
                 b2.style.color='#7f8c8d';
-                b2.textContent=s.pali||'';
+                b2.innerHTML=wrapWords(s.pali||'');
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -331,7 +473,7 @@
                 const leftB=document.createElement('div');
                 leftB.className='block pali-text';
                 leftB.style.fontWeight='bold';
-                leftB.textContent=s.pali||'';
+                leftB.innerHTML=wrapWords(s.pali||'');
                 const rightB=document.createElement('div');
                 rightB.className='block';
                 rightB.textContent=preferThai(s);
@@ -347,7 +489,7 @@
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
-                rightB.textContent=s.pali||'';
+                rightB.innerHTML=wrapWords(s.pali||'');
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
