@@ -550,7 +550,9 @@
                     // 1. Activity
                     const actInp = block.querySelector('.input-act');
                     if (actInp && actInp.value.trim()) {
-                        periodObj.activities[subjId] = actInp.value.trim();
+                        const lines = actInp.value.split('\n').map(s => s.trim()).filter(s => s);
+                        if (lines.length > 1) periodObj.activities[subjId] = lines;
+                        else periodObj.activities[subjId] = lines[0];
                     }
 
                     // 2. YouTube
@@ -614,7 +616,8 @@
                 
                 // Generic Activity
                 const allActs = Object.values(periodObj.activities);
-                if (allActs.length > 0) periodObj.activity = allActs.join(' / ');
+                const allActsFlat = allActs.flatMap(v => Array.isArray(v) ? v : [v]);
+                if (allActsFlat.length > 0) periodObj.activity = allActsFlat.join(' / ');
 
                 // YouTube
                 const allYt = Object.values(periodObj.youtube).join('\n'); 
@@ -968,8 +971,8 @@
                         
                         <!-- 1. Activity -->
                         <div class="field-group">
-                            <label>กิจกรรม (Activity)</label>
-                            <input type="text" class="input-act" data-subj-id="${subj.id}" placeholder="เช่น ${subj.defaultAct}" value="${actVal}">
+                            <label>กิจกรรม (Activity) - หลายรายการคั่นด้วยบรรทัดใหม่</label>
+                            <textarea class="input-act" data-subj-id="${subj.id}" rows="3" placeholder="เช่น ${subj.defaultAct}&#10;(อ่าน) ภาคที่ ๑ เก็งที่ ๑">${actVal}</textarea>
                         </div>
 
                         <!-- 2. YouTube -->

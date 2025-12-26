@@ -991,8 +991,20 @@
             document.getElementById('modal-title').innerText = `${titleMap[periodName]} (${day.displayDate})`;
 
             let html = '<div class="modal-section"><h4>หัวข้อการเรียน</h4>';
-            if (period.activityGrammar) html += `<p>📘 ${period.activityGrammar}</p>`;
-            if (period.activityTranslate) html += `<p>📙 ${period.activityTranslate}</p>`;
+            if (period.activityGrammar) {
+                if (Array.isArray(period.activityGrammar)) {
+                    period.activityGrammar.forEach(t => { html += `<p>📘 ${t}</p>`; });
+                } else {
+                    html += `<p>📘 ${period.activityGrammar}</p>`;
+                }
+            }
+            if (period.activityTranslate) {
+                if (Array.isArray(period.activityTranslate)) {
+                    period.activityTranslate.forEach(t => { html += `<p>📙 ${t}</p>`; });
+                } else {
+                    html += `<p>📙 ${period.activityTranslate}</p>`;
+                }
+            }
             if (period.activity && !period.activityGrammar && !period.activityTranslate) html += `<p>${period.activity}</p>`;
             
             // Handle multiple activities from structured data
