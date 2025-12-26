@@ -182,11 +182,13 @@
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
     function preferThai(obj){
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
+        let text = '';
         if(mode === 'thai_sense') {
-            return obj.thai_sense || obj.thai || '';
+            text = obj.thai_sense || obj.thai || '';
         } else {
-            return obj.thai || obj.thai_sense || '';
+            text = obj.thai || obj.thai_sense || '';
         }
+        return text.replace(/_/g, ' ');
     }
     
     // --- New Pagination Logic ---
@@ -290,13 +292,13 @@
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block';
-                b.style.fontSize='1.2em';
+                b.style.fontWeight='bold';
                 b.textContent=s.pali||'';
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
                 b1.className='block';
-                b1.style.fontSize='1.2em';
+                b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
                 b1.textContent=s.pali||'';
@@ -311,13 +313,13 @@
             }else if(layout==='thai_over_pali'){
                 const b1=document.createElement('div');
                 b1.className='block';
-                b1.style.fontSize='1.1em';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
                 b1.textContent=preferThai(s);
                 
                 const b2=document.createElement('div');
                 b2.className='block';
+                b2.style.fontWeight='bold';
                 b2.style.color='#7f8c8d';
                 b2.textContent=s.pali||'';
                 
@@ -328,7 +330,7 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block';
-                leftB.style.fontSize='1.1em';
+                leftB.style.fontWeight='bold';
                 leftB.textContent=s.pali||'';
                 const rightB=document.createElement('div');
                 rightB.className='block';
@@ -344,7 +346,7 @@
                 leftB.textContent=preferThai(s);
                 const rightB=document.createElement('div');
                 rightB.className='block';
-                rightB.style.fontSize='1.1em';
+                rightB.style.fontWeight='bold';
                 rightB.textContent=s.pali||'';
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
