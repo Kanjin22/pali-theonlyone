@@ -1014,21 +1014,31 @@
 
             // Slides / Zoom / Presentation
             const renderSlideBtn = (val, labelSuffix = '') => {
-                 let href = val;
-                 let icon = 'fas fa-video';
-                 let label = 'เข้าเรียนผ่าน Zoom';
-                 let cls = 'btn-zoom';
+                 let htmlOut = '';
+                 // Support multiple links separated by newline or comma
+                 const lines = val.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
                  
-                 // Check if it is a Presentation ID (not a URL)
-                 if (val && !val.trim().startsWith('http')) {
-                     href = `presentation.html?id=${encodeURIComponent(val.trim())}`;
-                     icon = 'fas fa-chalkboard-teacher';
-                     label = 'สื่อการสอน';
-                 }
+                 lines.forEach((line, idx) => {
+                     let href = line;
+                     let icon = 'fas fa-video';
+                     let label = 'เข้าเรียนผ่าน Zoom';
+                     let cls = 'btn-zoom';
+                     
+                     // Check if it is a Presentation ID (not a URL)
+                     if (line && !line.startsWith('http')) {
+                         href = `presentation.html?id=${encodeURIComponent(line)}`;
+                         icon = 'fas fa-chalkboard-teacher';
+                         label = 'สื่อการสอน';
+                     }
+                     
+                     let finalLabel = label;
+                     if (labelSuffix) finalLabel += ` ${labelSuffix}`;
+                     if (lines.length > 1) finalLabel += ` (${idx + 1})`;
+                     
+                     htmlOut += `<a href="${href}" target="_blank" class="link-btn ${cls}"><i class="${icon}"></i> ${finalLabel}</a>`;
+                 });
                  
-                 if (labelSuffix) label += ` ${labelSuffix}`;
-                 
-                 return `<a href="${href}" target="_blank" class="link-btn ${cls}"><i class="${icon}"></i> ${label}</a>`;
+                 return htmlOut;
             };
 
             const usedSlides = new Set(); // Track used values to prevent duplicates

@@ -114,6 +114,34 @@
             opacity: 0.6;
             background-color: #e9ecef;
         }
+        /* Multi-file Input Styles */
+        .file-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 5px;
+            min-height: 24px;
+        }
+        .file-chip {
+            background: #e1ecf4;
+            color: #2c3e50;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #b3d7ff;
+        }
+        .file-chip .remove {
+            cursor: pointer;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+        .file-chip .remove:hover {
+            color: #c0392b;
+        }
     </style>
 </head>
 <body>
@@ -507,6 +535,11 @@
                     answerFiles: {}
                 };
 
+                // Helper to get chips values
+                const getChips = (parent) => {
+                    return Array.from(parent.querySelectorAll('.file-chip')).map(c => c.dataset.val);
+                };
+
                 // Iterate over subject blocks
                 container.querySelectorAll('.subject-block').forEach(block => {
                     const checkbox = block.querySelector('.subj-enable');
@@ -533,9 +566,13 @@
                     }
 
                     // 4. Material
-                    const fileInp = block.querySelector('.input-file');
-                    if (fileInp && fileInp.value) {
-                        periodObj.noteFiles[subjId] = fileInp.value;
+                    const matSelect = block.querySelector('.input-file');
+                    if (matSelect) {
+                        const chipsContainer = matSelect.previousElementSibling;
+                        if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                             const files = getChips(chipsContainer);
+                             if (files.length > 0) periodObj.noteFiles[subjId] = files;
+                        }
                     }
 
                     // 5. Exam
@@ -543,14 +580,22 @@
                     if (examCheck && examCheck.checked) {
                         periodObj.isExam[subjId] = true;
                         
-                        const examFileInp = block.querySelector('.input-exam-file');
-                        if (examFileInp && examFileInp.value) {
-                            periodObj.examFiles[subjId] = examFileInp.value;
+                        const examSelect = block.querySelector('.input-exam-file');
+                        if (examSelect) {
+                            const chipsContainer = examSelect.previousElementSibling;
+                            if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                                 const files = getChips(chipsContainer);
+                                 if (files.length > 0) periodObj.examFiles[subjId] = files;
+                            }
                         }
                         
-                        const ansFileInp = block.querySelector('.input-ans-file');
-                        if (ansFileInp && ansFileInp.value) {
-                            periodObj.answerFiles[subjId] = ansFileInp.value;
+                        const ansSelect = block.querySelector('.input-ans-file');
+                        if (ansSelect) {
+                            const chipsContainer = ansSelect.previousElementSibling;
+                            if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                                 const files = getChips(chipsContainer);
+                                 if (files.length > 0) periodObj.answerFiles[subjId] = files;
+                            }
                         }
 
                         // Exam Time (Global for period) - capture from active exam subject
@@ -579,20 +624,22 @@
                 const allSlides = Object.values(periodObj.slides);
                 if (allSlides.length > 0) periodObj.linkZoom = allSlides[0];
 
+                const flatten = (arr) => arr.flat();
+
                 // Materials
-                const allNotes = Object.values(periodObj.noteFiles);
+                const allNotes = flatten(Object.values(periodObj.noteFiles));
                 if (allNotes.length > 0) periodObj.materials = allNotes;
                 if (periodObj.noteFiles['Grammar']) periodObj.fileNoteGrammar = periodObj.noteFiles['Grammar'];
                 if (periodObj.noteFiles['Translate']) periodObj.fileNoteTranslate = periodObj.noteFiles['Translate'];
 
                 // Exam Files
-                const allExams = Object.values(periodObj.examFiles);
+                const allExams = flatten(Object.values(periodObj.examFiles));
                 if (allExams.length > 0) periodObj.exams = allExams;
                 if (periodObj.examFiles['Grammar']) periodObj.fileExamGrammar = periodObj.examFiles['Grammar'];
                 if (periodObj.examFiles['Translate']) periodObj.fileExamTranslate = periodObj.examFiles['Translate'];
 
                 // Answer Files
-                const allAnswers = Object.values(periodObj.answerFiles);
+                const allAnswers = flatten(Object.values(periodObj.answerFiles));
                 if (allAnswers.length > 0) periodObj.answers = allAnswers;
                 if (periodObj.answerFiles['Grammar']) periodObj.fileAnswerGrammar = periodObj.answerFiles['Grammar'];
                 if (periodObj.answerFiles['Translate']) periodObj.fileAnswerTranslate = periodObj.answerFiles['Translate'];
@@ -615,6 +662,41 @@
         });
         
         return data;
+    }
+
+    // --- Multi-File Input Helpers ---
+    function handleFileSelect(select) {
+        if (!select.value) return;
+        const container = select.previousElementSibling; // Chips container
+        if (!container || !container.classList.contains('file-chips')) return;
+        
+        const val = select.value;
+        // Text might contain emojis or extra info, we just want the filename usually, 
+        // but for display, the option text is fine.
+        const text = select.options[select.selectedIndex].text;
+        
+        // Check duplicate
+        if (container.querySelector(`.file-chip[data-val="${val}"]`)) {
+            select.value = "";
+            return;
+        }
+        
+        addChip(container, val, text);
+        select.value = ""; // Reset
+    }
+
+    function addChip(container, val, text) {
+        // If text is not provided, try to guess or just use val
+        if (!text) text = val;
+
+        const chip = document.createElement('div');
+        chip.className = 'file-chip';
+        chip.dataset.val = val;
+        chip.innerHTML = `
+            <span>${text}</span>
+            <span class="remove" onclick="this.parentElement.remove()">×</span>
+        `;
+        container.appendChild(chip);
     }
 
     // Helper to populate row from existing data
@@ -700,6 +782,33 @@
         if (weekendCheckbox.checked) {
             toggleWeekendMode(weekendCheckbox);
         }
+    }
+
+    function renderChips(values, availableFiles) {
+        if (!values || !Array.isArray(values) || values.length === 0) return '';
+        return values.map(val => {
+            if(!val) return '';
+            let name = val;
+            const found = availableFiles.find(f => f.value === val);
+            if (found) {
+                name = found.name;
+            } else {
+                 try {
+                     const parts = val.split(/[/\\]/);
+                     let filename = parts.pop();
+                     filename = filename.replace(/^\[LEGACY\]\s*/,'');
+                     name = filename;
+                     if (val.startsWith('http')) {
+                         name = decodeURIComponent(name.split('?')[0]);
+                         name = `[SAVED] ${name}`;
+                     }
+                 } catch(e){}
+            }
+            return `<div class="file-chip" data-val="${val}">
+                <span>${name}</span>
+                <span class="remove" onclick="this.parentElement.remove()">×</span>
+            </div>`;
+        }).join('');
     }
 
     function createSlotHTML(periodId, label, level, data = null) {
@@ -792,7 +901,9 @@
 
                 // Materials (Note Files)
                 if (data.noteFiles && data.noteFiles[subj.id]) {
-                    noteVal.push(data.noteFiles[subj.id]);
+                    const val = data.noteFiles[subj.id];
+                    if(Array.isArray(val)) noteVal.push(...val);
+                    else noteVal.push(val);
                 } else {
                      // Legacy
                      const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
@@ -822,12 +933,20 @@
                 const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
 
                 // Exam/Answer Files
-                if (data.examFiles && data.examFiles[subj.id]) examFileVal.push(cleanPath(data.examFiles[subj.id]));
+                if (data.examFiles && data.examFiles[subj.id]) {
+                     const val = data.examFiles[subj.id];
+                     if(Array.isArray(val)) examFileVal.push(...val);
+                     else examFileVal.push(val);
+                }
                 else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(cleanPath(data.fileExamGrammar));
                 else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(cleanPath(data.fileExamTranslate));
                 else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(cleanPath(data.exams[0]));
 
-                if (data.answerFiles && data.answerFiles[subj.id]) ansFileVal.push(cleanPath(data.answerFiles[subj.id]));
+                if (data.answerFiles && data.answerFiles[subj.id]) {
+                     const val = data.answerFiles[subj.id];
+                     if(Array.isArray(val)) ansFileVal.push(...val);
+                     else ansFileVal.push(val);
+                }
                 else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(cleanPath(data.fileAnswerGrammar));
                 else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(cleanPath(data.fileAnswerTranslate));
                 else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(cleanPath(data.answers[0]));
@@ -861,14 +980,15 @@
 
                         <!-- 3. Slide (Presentation ID) -->
                         <div class="field-group">
-                            <label>รหัสสื่อการสอน (Presentation ID)</label>
-                            <input type="text" class="input-slide" data-subj-id="${subj.id}" placeholder="เช่น mangala_01_01" value="${slideVal}">
+                            <label>รหัสสื่อการสอน (Presentation ID) - หลายรายการคั่นด้วยบรรทัดใหม่</label>
+                            <textarea class="input-slide" data-subj-id="${subj.id}" rows="2" placeholder="เช่น mangala_01_01\\nmangala_01_02">${slideVal}</textarea>
                         </div>
 
                         <!-- 4. Materials -->
                         <div class="field-group">
                             <label>เอกสารประกอบการเรียน (Material)</label>
-                            <select class="input-file" data-subj-id="${subj.id}">${createOptions(materials, noteVal)}</select>
+                            <div class="file-chips">${renderChips(noteVal, materials)}</div>
+                            <select class="input-file" data-subj-id="${subj.id}" onchange="handleFileSelect(this)">${createOptions(materials, [])}</select>
                         </div>
 
                         <!-- 5. Exam Checkbox -->
@@ -888,11 +1008,13 @@
 
                                 <div class="field-group">
                                     <label>ไฟล์ข้อสอบ (Exam Paper)</label>
-                                    <select class="input-exam-file" data-subj-id="${subj.id}">${createOptions(exams, examFileVal)}</select>
+                                    <div class="file-chips">${renderChips(examFileVal, exams)}</div>
+                                    <select class="input-exam-file" data-subj-id="${subj.id}" onchange="handleFileSelect(this)">${createOptions(exams, [])}</select>
                                 </div>
                                 <div class="field-group">
                                     <label>ไฟล์เฉลย (Answer Key)</label>
-                                    <select class="input-ans-file" data-subj-id="${subj.id}">${createOptions(answers, ansFileVal)}</select>
+                                    <div class="file-chips">${renderChips(ansFileVal, answers)}</div>
+                                    <select class="input-ans-file" data-subj-id="${subj.id}" onchange="handleFileSelect(this)">${createOptions(answers, [])}</select>
                                 </div>
                             </div>
                         </div>
