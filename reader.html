@@ -124,7 +124,7 @@
     function deriveStories(part,vagga){const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const a=obj[k];if(Array.isArray(a))slides=slides.concat(a)});return unique(slides.filter(s=>(vagga?s.vagga===vagga:true)).map(s=>s.story||s.section))}
     function derivePages(part,vagga,story){const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const a=obj[k];if(Array.isArray(a))slides=slides.concat(a)});const nums=slides.filter(s=>{const okV=vagga?s.vagga===vagga:true;const okS=story?((s.story||s.section)===story):true;return okV&&okS}).map(s=>parsePageNumber(s.page));return unique(nums).filter(n=>n>0).sort((a,b)=>a-b)}
     const SUBJECTS_BY_LEVEL={'ประโยค ๑–๒':['แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๓':['แปล  มคธเป็นไทย','สัมพันธ์ไทย'],'ประโยค ป.ธ. ๔':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๕':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๖':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๗':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๘':['แต่งฉันท์ภาษามคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๙':['แต่ง  ไทยเป็นมคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย']};
-    const CONTENT_MAPPING={'ประโยค ๑–๒':{'แปล  มคธเป็นไทย':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑'},{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔'}]},'ประโยค ป.ธ. ๓':{'แปล  มคธเป็นไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}],'สัมพันธ์ไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}]},'ประโยค ป.ธ. ๔':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑'}]},'ประโยค ป.ธ. ๕':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒ (ภาษาไทย)'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓ (ภาษาไทย)'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-2','label':'มังคลัตถทีปนี ภาคที่ ๒'}]},'ประโยค ป.ธ. ๖':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕ (ภาษาไทย)'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖ (ภาษาไทย)'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗ (ภาษาไทย)'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-3','label':'สมันตปาสาทิกา ภาคที่ ๓'}]},'ประโยค ป.ธ. ๗':{'แปล  ไทยเป็นมคธ':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒'}]},'ประโยค ป.ธ. ๘':{'แต่งฉันท์ภาษามคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒'}]},'ประโยค ป.ธ. ๙':{'แต่ง  ไทยเป็นมคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'abhidhamma-1','label':'อภิธรรมฯ'}]}};
+    const CONTENT_MAPPING={'ประโยค ๑–๒':{'แปล  มคธเป็นไทย':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑'},{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔'}]},'ประโยค ป.ธ. ๓':{'แปล  มคธเป็นไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}],'สัมพันธ์ไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}]},'ประโยค ป.ธ. ๔':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑'}]},'ประโยค ป.ธ. ๕':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒ (ภาษาไทย)'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓ (ภาษาไทย)'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-2','label':'มังคลัตถทีปนี ภาคที่ ๒'}]},'ประโยค ป.ธ. ๖':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕ (ภาษาไทย)'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖ (ภาษาไทย)'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗ (ภาษาไทย)'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-3','label':'สมันตปาสาทิกา ภาคที่ ๓'}]},'ประโยค ป.ธ. ๗':{'แปล  ไทยเป็นมคธ':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒'}]},'ประโยค ป.ธ. ๘':{'แต่งฉันท์ภาษามคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒'}]},'ประโยค ป.ธ. ๙':{'แต่ง  ไทยเป็นมคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-3','label':'วิสุทธิมรรค ภาคที่ ๓'}]}};
     const partSlidesCache=new Map();
     function getPartSlides(part){if(partSlidesCache.has(part))return partSlidesCache.get(part);const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const arr=obj[k];if(Array.isArray(arr))slides=slides.concat(arr)});partSlidesCache.set(part,slides);return slides}
     function collectSlides(part,startPage,endPage,vagga,story){const allSlides=getPartSlides(part);let slides=allSlides.filter(s=>typeof s.page!=='undefined');slides=slides.filter(s=>{const okV=vagga?(s.vagga===vagga):true;const okS=story?(((s.story||s.section)===story)):true;return okV&&okS});slides.sort((a,b)=>{const pa=parsePageNumber(a.page);const pb=parsePageNumber(b.page);return pa-pb});const sNum=parseInt(startPage)||0;const eNum=parseInt(endPage)||0;return slides.filter(s=>{const p=parsePageNumber(s.page);if(sNum&&eNum)return p>=sNum&&p<=eNum; if(sNum&&!eNum)return p>=sNum; if(!sNum&&eNum)return p<=eNum; return true})}
@@ -135,7 +135,219 @@
     function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
     function preferThai(obj){return obj.thai_sense||obj.thai||''}
-    function render(){const container=document.getElementById('pages');container.innerHTML='';const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const startPage=document.getElementById('startPage').value;const endPage=document.getElementById('endPage').value;const layout=document.getElementById('layoutSelect').value;const slides=collectSlides(part,startPage,endPage,vagga,story);let idx=1;slides.forEach(s=>{const p=parsePageNumber(s.page);const item=document.createElement('div');item.className='page';const header=document.createElement('div');header.className='page-header';const left=document.createElement('div');left.innerHTML=story?story:(s.story||s.section||'');const right=document.createElement('div');right.innerHTML=`หน้า ${toThaiDigits(p||idx)}`;header.appendChild(left);header.appendChild(right);item.appendChild(header);if(layout==='pali_only'){const b=document.createElement('div');b.className='block';b.textContent=s.pali||'';item.appendChild(b)}else if(layout==='pali_over_thai'){const b1=document.createElement('div');b1.className='block';b1.textContent=s.pali||'';const b2=document.createElement('div');b2.className='block';b2.textContent=preferThai(s);item.appendChild(b1);item.appendChild(b2)}else if(layout==='thai_over_pali'){const b1=document.createElement('div');b1.className='block';b1.textContent=preferThai(s);const b2=document.createElement('div');b2.className='block';b2.textContent=s.pali||'';item.appendChild(b1);item.appendChild(b2)}else if(layout==='side_by_side_lr'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=s.pali||'';const rightB=document.createElement('div');rightB.className='block';rightB.textContent=preferThai(s);grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}else if(layout==='side_by_side_rl'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=preferThai(s);const rightB=document.createElement('div');rightB.className='block';rightB.textContent=s.pali||'';grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}container.appendChild(item);idx++})}
+    
+    // --- New Pagination Logic ---
+    let groupedPages = [];
+    let currentBookPageIndex = 0;
+
+    function groupSlidesByPage(slides) {
+        const groups = [];
+        let currentMap = new Map(); // pageNum -> [slides]
+        
+        slides.forEach(s => {
+            const p = parsePageNumber(s.page);
+            if (!currentMap.has(p)) {
+                currentMap.set(p, []);
+            }
+            currentMap.get(p).push(s);
+        });
+        
+        // Sort pages
+        const sortedKeys = Array.from(currentMap.keys()).sort((a,b)=>a-b);
+        sortedKeys.forEach(k => {
+            groups.push({
+                pageNumber: k,
+                slides: currentMap.get(k)
+            });
+        });
+        
+        return groups;
+    }
+
+    function render(){
+        const part=document.getElementById('partSelect').value;
+        const vagga=document.getElementById('vaggaSelect').value;
+        const story=document.getElementById('storySelect').value;
+        const startPage=document.getElementById('startPage').value;
+        const endPage=document.getElementById('endPage').value;
+        
+        const slides=collectSlides(part,startPage,endPage,vagga,story);
+        groupedPages = groupSlidesByPage(slides);
+        currentBookPageIndex = 0;
+        renderCurrentPage();
+    }
+
+    function renderCurrentPage() {
+        const container = document.getElementById('pages');
+        container.innerHTML = '';
+        
+        if (groupedPages.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:20px;color:#7f8c8d;">ไม่พบเนื้อหาในช่วงที่ระบุ</div>';
+            return;
+        }
+        
+        const pageData = groupedPages[currentBookPageIndex];
+        const slides = pageData.slides;
+        const pageNum = pageData.pageNumber;
+        
+        // --- Header Section ---
+        const partSelect = document.getElementById('partSelect');
+        const partName = partSelect.options[partSelect.selectedIndex].text;
+        const firstSlide = slides[0];
+        const vaggaLabel = firstSlide.vagga || '';
+        const storyLabel = firstSlide.story || firstSlide.section || '';
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.style.cssText = 'background:linear-gradient(90deg, #2c3e50, #34495e); color:white; padding:20px; border-radius:12px; margin-bottom:24px; box-shadow:0 4px 6px rgba(0,0,0,0.1);';
+        headerDiv.innerHTML = `
+            <div style="font-size:1.4em; font-weight:600; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:8px;">${partName}</div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; font-size:1.1em; opacity:0.95;">
+                <div>
+                    <div style="font-size:0.9em; opacity:0.8;">${vaggaLabel}</div>
+                    <div>${storyLabel}</div>
+                </div>
+                <div style="font-size:1.5em; font-weight:bold; background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:8px;">
+                    หน้า ${toThaiDigits(pageNum)}
+                </div>
+            </div>
+        `;
+        container.appendChild(headerDiv);
+        
+        // --- Content Section ---
+        const contentDiv = document.createElement('div');
+        const layout = document.getElementById('layoutSelect').value;
+        
+        slides.forEach(s => {
+            const item = document.createElement('div');
+            // Styling to look like a clean sentence block
+            item.style.cssText = 'background:#fff; border:1px solid #eee; border-radius:8px; padding:16px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.02); transition:transform 0.2s;';
+            item.onmouseover = function(){ this.style.transform='translateX(4px)'; this.style.borderColor='#3498db'; };
+            item.onmouseout = function(){ this.style.transform='translateX(0)'; this.style.borderColor='#eee'; };
+
+            // Render content based on layout
+            if(layout==='pali_only'){
+                const b=document.createElement('div');
+                b.className='block';
+                b.style.fontSize='1.2em';
+                b.textContent=s.pali||'';
+                item.appendChild(b);
+            }else if(layout==='pali_over_thai'){
+                const b1=document.createElement('div');
+                b1.className='block';
+                b1.style.fontSize='1.2em';
+                b1.style.marginBottom='8px';
+                b1.style.color='#2c3e50';
+                b1.textContent=s.pali||'';
+                
+                const b2=document.createElement('div');
+                b2.className='block';
+                b2.style.color='#7f8c8d';
+                b2.textContent=preferThai(s);
+                
+                item.appendChild(b1);
+                item.appendChild(b2);
+            }else if(layout==='thai_over_pali'){
+                const b1=document.createElement('div');
+                b1.className='block';
+                b1.style.fontSize='1.1em';
+                b1.style.marginBottom='8px';
+                b1.style.color='#2c3e50';
+                b1.textContent=preferThai(s);
+                
+                const b2=document.createElement('div');
+                b2.className='block';
+                b2.style.color='#7f8c8d';
+                b2.textContent=s.pali||'';
+                
+                item.appendChild(b1);
+                item.appendChild(b2);
+            }else if(layout==='side_by_side_lr'){
+                const grid=document.createElement('div');
+                grid.className='two-col';
+                const leftB=document.createElement('div');
+                leftB.className='block';
+                leftB.style.fontSize='1.1em';
+                leftB.textContent=s.pali||'';
+                const rightB=document.createElement('div');
+                rightB.className='block';
+                rightB.textContent=preferThai(s);
+                grid.appendChild(leftB);
+                grid.appendChild(rightB);
+                item.appendChild(grid);
+            }else if(layout==='side_by_side_rl'){
+                const grid=document.createElement('div');
+                grid.className='two-col';
+                const leftB=document.createElement('div');
+                leftB.className='block';
+                leftB.textContent=preferThai(s);
+                const rightB=document.createElement('div');
+                rightB.className='block';
+                rightB.style.fontSize='1.1em';
+                rightB.textContent=s.pali||'';
+                grid.appendChild(leftB);
+                grid.appendChild(rightB);
+                item.appendChild(grid);
+            }
+            
+            contentDiv.appendChild(item);
+        });
+        
+        container.appendChild(contentDiv);
+        
+        // --- Navigation Section ---
+        const navDiv = document.createElement('div');
+        navDiv.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-top:30px; padding:20px; background:#f8f9fa; border-radius:12px; border:1px solid #e9ecef;';
+        
+        // Prev Button
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'btn secondary';
+        prevBtn.style.minWidth = '120px';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> หน้าก่อน';
+        if(currentBookPageIndex === 0) {
+            prevBtn.disabled = true;
+            prevBtn.style.opacity = '0.5';
+            prevBtn.style.cursor = 'not-allowed';
+        }
+        prevBtn.onclick = () => {
+            if(currentBookPageIndex > 0) {
+                currentBookPageIndex--;
+                renderCurrentPage();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        };
+        
+        // Next Button
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn';
+        nextBtn.style.minWidth = '120px';
+        nextBtn.innerHTML = 'หน้าถัดไป <i class="fas fa-chevron-right"></i>';
+        if(currentBookPageIndex === groupedPages.length - 1) {
+            nextBtn.disabled = true;
+            nextBtn.style.opacity = '0.5';
+            nextBtn.style.cursor = 'not-allowed';
+        }
+        nextBtn.onclick = () => {
+            if(currentBookPageIndex < groupedPages.length - 1) {
+                currentBookPageIndex++;
+                renderCurrentPage();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        };
+        
+        // Page Indicator
+        const indicator = document.createElement('div');
+        indicator.style.fontSize = '1.1em';
+        indicator.style.fontWeight = 'bold';
+        indicator.style.color = '#7f8c8d';
+        indicator.innerHTML = `หน้าที่ ${toThaiDigits(currentBookPageIndex + 1)} จาก ${toThaiDigits(groupedPages.length)}`;
+        
+        navDiv.appendChild(prevBtn);
+        navDiv.appendChild(indicator);
+        navDiv.appendChild(nextBtn);
+        
+        container.appendChild(navDiv);
+    }
+
     function init(){
         populateLevels();
         
@@ -169,15 +381,15 @@
         document.getElementById('renderBtn').onclick=render;
         document.getElementById('printBtn').onclick=function(){window.print()};
         document.getElementById('layoutSelect').onchange=render;
-
-        // Hide Exam Button if not teacher
-        const accessMode = localStorage.getItem('access_mode');
-        const examBtn = document.getElementById('exam-btn');
-        if(examBtn) {
-            if(accessMode !== 'teacher') {
-                examBtn.style.display = 'none';
-            }
-        }
+ 
+         // Hide Exam Button if not teacher
+         const accessMode = localStorage.getItem('access_mode');
+         const examBtn = document.getElementById('exam-btn');
+         if(examBtn) {
+             if(accessMode !== 'teacher') {
+                 examBtn.style.display = 'none';
+             }
+         }
     }
     init()
   </script>
