@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <title>อ่านเนื้อหา (Reader)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body{font-family:'Sarabun',sans-serif;background:#f5f5f5;padding:20px}
+    .container{max-width:1200px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
+    h1{margin:0 0 10px;color:#2c3e50}
+    .controls{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:#e8f6f3;padding:12px;border-radius:8px;margin-bottom:16px}
+    label{font-size:.9em;color:#555;font-weight:600;margin-bottom:4px;display:block}
+    select,input{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:'Sarabun',sans-serif}
+    .layout{display:flex;gap:10px;align-items:center;margin:10px 0}
+    .btn{background:#2ecc71;color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer}
+    .btn.secondary{background:#3498db}
+    .page{border:1px solid #eee;border-radius:10px;margin:12px 0;padding:16px;background:#fff}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .badge{background:#ecf0f1;color:#2c3e50;border-radius:16px;padding:4px 10px;font-size:.85em}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .block{white-space:pre-wrap;line-height:1.8}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h1><i class="fas fa-book-open"></i> อ่านเนื้อหา</h1>
+      <div style="display:flex;gap:8px">
+        <a href="./index.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-home"></i> หน้าหลัก</a>
+        <a href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i> ออกข้อสอบ</a>
+      </div>
+    </div>
+    <div class="controls">
+      <div>
+        <label>ชั้น</label>
+        <select id="levelSelect"></select>
+      </div>
+      <div>
+        <label>วิชา</label>
+        <select id="subjectSelect"></select>
+      </div>
+      <div>
+        <label>ภาค/หนังสือ</label>
+        <select id="partSelect"></select>
+      </div>
+      <div>
+        <label>วรรค</label>
+        <select id="vaggaSelect"></select>
+      </div>
+      <div>
+        <label>เรื่อง</label>
+        <select id="storySelect"></select>
+      </div>
+      <div>
+        <label>หน้าเริ่ม-จบ</label>
+        <div style="display:flex;gap:6px">
+          <input type="number" id="startPage" placeholder="เริ่ม">
+          <input type="number" id="endPage" placeholder="จบ">
+        </div>
+      </div>
+    </div>
+    <div class="layout">
+      <label style="margin:0">รูปแบบแสดงผล</label>
+      <select id="layoutSelect" style="max-width:260px">
+        <option value="pali_only">บาลีอย่างเดียว</option>
+        <option value="pali_over_thai">บาลีบน ไทยล่าง</option>
+        <option value="thai_over_pali">ไทยบน บาลีล่าง</option>
+        <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
+        <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
+      </select>
+      <button class="btn" id="renderBtn"><i class="fas fa-eye"></i> แสดงผล</button>
+      <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
+    </div>
+    <div id="pages"></div>
+  </div>
+
+  <script src="./data/content-dhamma01.js"></script>
+  <script src="./data/content-dhamma02.js"></script>
+  <script src="./data/content-dhamma03.js"></script>
+  <script src="./data/content-dhamma04.js"></script>
+  <script src="./data/content-dhamma05.js"></script>
+  <script src="./data/content-dhamma06.js"></script>
+  <script src="./data/content-dhamma07.js"></script>
+  <script src="./data/content-dhamma08.js"></script>
+  <script src="./data/content-mangala01.js"></script>
+  <script src="./data/content-mangala02.js"></script>
+  <script src="./data/content-samanta01.js"></script>
+  <script src="./data/content-samanta02.js"></script>
+  <script src="./data/content-samanta03.js"></script>
+  <script src="./data/content-visuddhi01.js"></script>
+  <script src="./data/content-visuddhi02.js"></script>
+  <script src="./data/content-visuddhi03.js"></script>
+  <script src="./data/content-abhidhamma01.js"></script>
+
+  <script>
+    const partsMap = {
+      'dhamma-1': (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+      'dhamma-2': (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+      'dhamma-3': (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+      'dhamma-4': (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+      'dhamma-5': (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+      'dhamma-6': (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+      'dhamma-7': (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+      'dhamma-8': (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {}),
+      'mangala-1': (typeof contentMangala01 !== 'undefined' ? contentMangala01 : {}),
+      'mangala-2': (typeof contentMangala02 !== 'undefined' ? contentMangala02 : {}),
+      'samanta-1': (typeof contentSamanta01 !== 'undefined' ? contentSamanta01 : {}),
+      'samanta-2': (typeof contentSamanta02 !== 'undefined' ? contentSamanta02 : {}),
+      'samanta-3': (typeof contentSamanta03 !== 'undefined' ? contentSamanta03 : {}),
+      'visuddhi-1': (typeof contentVisuddhi01 !== 'undefined' ? contentVisuddhi01 : {}),
+      'visuddhi-2': (typeof contentVisuddhi02 !== 'undefined' ? contentVisuddhi02 : {}),
+      'visuddhi-3': (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
+      'abhidhamma-1': (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
+    };
+    function toThaiDigits(str){const m={'0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙'};return String(str).replace(/[0-9]/g,d=>m[d])}
+    function thaiToArabic(str){const m={'๐':'0','๑':'1','๒':'2','๓':'3','๔':'4','๕':'5','๖':'6','๗':'7','๘':'8','๙':'9'};return String(str).replace(/[๐-๙]/g,d=>m[d])}
+    function parsePageNumber(page){if(typeof page==='number')return page; if(!page)return 0; const str=thaiToArabic(String(page)); const match=str.match(/\d+/); return match?parseInt(match[0],10):0}
+    function unique(arr){return[...new Set(arr.filter(Boolean))]}
+    function getSelectedLevelLabel(){const sel=document.getElementById('levelSelect');const opt=sel&&sel.selectedOptions&&sel.selectedOptions[0]?sel.selectedOptions[0]:null;return opt?opt.textContent.trim():''}
+    function deriveVaggas(part){const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const a=obj[k];if(Array.isArray(a))slides=slides.concat(a)});return unique(slides.map(s=>s.vagga))}
+    function deriveStories(part,vagga){const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const a=obj[k];if(Array.isArray(a))slides=slides.concat(a)});return unique(slides.filter(s=>(vagga?s.vagga===vagga:true)).map(s=>s.story||s.section))}
+    function derivePages(part,vagga,story){const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const a=obj[k];if(Array.isArray(a))slides=slides.concat(a)});const nums=slides.filter(s=>{const okV=vagga?s.vagga===vagga:true;const okS=story?((s.story||s.section)===story):true;return okV&&okS}).map(s=>parsePageNumber(s.page));return unique(nums).filter(n=>n>0).sort((a,b)=>a-b)}
+    const SUBJECTS_BY_LEVEL={'ประโยค ๑–๒':['แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๓':['แปล  มคธเป็นไทย','สัมพันธ์ไทย'],'ประโยค ป.ธ. ๔':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๕':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๖':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๗':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๘':['แต่งฉันท์ภาษามคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๙':['แต่ง  ไทยเป็นมคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย']};
+    const CONTENT_MAPPING={'ประโยค ๑–๒':{'แปล  มคธเป็นไทย':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑'},{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔'}]},'ประโยค ป.ธ. ๓':{'แปล  มคธเป็นไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}],'สัมพันธ์ไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}]},'ประโยค ป.ธ. ๔':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑'}]},'ประโยค ป.ธ. ๕':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒ (ภาษาไทย)'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓ (ภาษาไทย)'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-2','label':'มังคลัตถทีปนี ภาคที่ ๒'}]},'ประโยค ป.ธ. ๖':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕ (ภาษาไทย)'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖ (ภาษาไทย)'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗ (ภาษาไทย)'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-3','label':'สมันตปาสาทิกา ภาคที่ ๓'}]},'ประโยค ป.ธ. ๗':{'แปล  ไทยเป็นมคธ':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒'}]},'ประโยค ป.ธ. ๘':{'แต่งฉันท์ภาษามคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒'}]},'ประโยค ป.ธ. ๙':{'แต่ง  ไทยเป็นมคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'abhidhamma-1','label':'อภิธรรมฯ'}]}};
+    const partSlidesCache=new Map();
+    function getPartSlides(part){if(partSlidesCache.has(part))return partSlidesCache.get(part);const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const arr=obj[k];if(Array.isArray(arr))slides=slides.concat(arr)});partSlidesCache.set(part,slides);return slides}
+    function collectSlides(part,startPage,endPage,vagga,story){const allSlides=getPartSlides(part);let slides=allSlides.filter(s=>typeof s.page!=='undefined');slides=slides.filter(s=>{const okV=vagga?(s.vagga===vagga):true;const okS=story?(((s.story||s.section)===story)):true;return okV&&okS});slides.sort((a,b)=>{const pa=parsePageNumber(a.page);const pb=parsePageNumber(b.page);return pa-pb});const sNum=parseInt(startPage)||0;const eNum=parseInt(endPage)||0;return slides.filter(s=>{const p=parsePageNumber(s.page);if(sNum&&eNum)return p>=sNum&&p<=eNum; if(sNum&&!eNum)return p>=sNum; if(!sNum&&eNum)return p<=eNum; return true})}
+    function populateLevels(){const sel=document.getElementById('levelSelect');sel.innerHTML='';['ประโยค ๑–๒','ประโยค ป.ธ. ๓','ประโยค ป.ธ. ๔','ประโยค ป.ธ. ๕','ประโยค ป.ธ. ๖','ประโยค ป.ธ. ๗','ประโยค ป.ธ. ๘','ประโยค ป.ธ. ๙'].forEach(l=>{const o=document.createElement('option');o.value=l;o.text=l;sel.appendChild(o)});sel.onchange=populateSubjects}
+    function populateSubjects(){const label=getSelectedLevelLabel();const subjects=SUBJECTS_BY_LEVEL[label]||['แปล  มคธเป็นไทย'];const sel=document.getElementById('subjectSelect');sel.innerHTML='';subjects.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=populateParts;populateParts()}
+    function populateParts(){const levelLabel=getSelectedLevelLabel();const subjectLabel=document.getElementById('subjectSelect').value;const levelConfig=CONTENT_MAPPING[levelLabel]||{};const parts=levelConfig[subjectLabel]||[];const sel=document.getElementById('partSelect');sel.innerHTML='';parts.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.text=p.label;sel.appendChild(o)});sel.onchange=populateVaggas;populateVaggas()}
+    function populateVaggas(){const part=document.getElementById('partSelect').value;const vaggas=deriveVaggas(part);const sel=document.getElementById('vaggaSelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);vaggas.forEach(v=>{const o=document.createElement('option');o.value=v;o.text=v;sel.appendChild(o)});sel.onchange=populateStories;populateStories()}
+    function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
+    function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
+    function preferThai(obj){return obj.thai_sense||obj.thai||''}
+    function render(){const container=document.getElementById('pages');container.innerHTML='';const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const startPage=document.getElementById('startPage').value;const endPage=document.getElementById('endPage').value;const layout=document.getElementById('layoutSelect').value;const slides=collectSlides(part,startPage,endPage,vagga,story);let idx=1;slides.forEach(s=>{const p=parsePageNumber(s.page);const item=document.createElement('div');item.className='page';const header=document.createElement('div');header.className='page-header';const left=document.createElement('div');left.innerHTML=story?story:(s.story||s.section||'');const right=document.createElement('div');right.innerHTML=`หน้า ${toThaiDigits(p||idx)}`;header.appendChild(left);header.appendChild(right);item.appendChild(header);if(layout==='pali_only'){const b=document.createElement('div');b.className='block';b.textContent=s.pali||'';item.appendChild(b)}else if(layout==='pali_over_thai'){const b1=document.createElement('div');b1.className='block';b1.textContent=s.pali||'';const b2=document.createElement('div');b2.className='block';b2.textContent=preferThai(s);item.appendChild(b1);item.appendChild(b2)}else if(layout==='thai_over_pali'){const b1=document.createElement('div');b1.className='block';b1.textContent=preferThai(s);const b2=document.createElement('div');b2.className='block';b2.textContent=s.pali||'';item.appendChild(b1);item.appendChild(b2)}else if(layout==='side_by_side_lr'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=s.pali||'';const rightB=document.createElement('div');rightB.className='block';rightB.textContent=preferThai(s);grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}else if(layout==='side_by_side_rl'){const grid=document.createElement('div');grid.className='two-col';const leftB=document.createElement('div');leftB.className='block';leftB.textContent=preferThai(s);const rightB=document.createElement('div');rightB.className='block';rightB.textContent=s.pali||'';grid.appendChild(leftB);grid.appendChild(rightB);item.appendChild(grid)}container.appendChild(item);idx++})}
+    function init(){populateLevels();populateSubjects();document.getElementById('renderBtn').onclick=render;document.getElementById('printBtn').onclick=function(){window.print()};document.getElementById('layoutSelect').onchange=render}
+    init()
+  </script>
+</body>
+</html>
