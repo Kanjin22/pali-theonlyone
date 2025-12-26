@@ -184,6 +184,10 @@ function renderRoomContent(room) {
                class="menu-button" style="display:none; background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
                + สร้างตารางเรียนใหม่
             </a>
+            <a id="btn-exam-builder" href="../exam_builder.html?level=${room.level}&room=${room.id}"
+               class="menu-button" style="display:none; background-color:#8e44ad; color:#fff; border:2px solid #7d3c98; text-align:center;">
+               ออกข้อสอบ
+            </a>
         `;
         
         scheduleContainer.innerHTML = html;
@@ -222,6 +226,7 @@ function renderRoomContent(room) {
                             const doc = await firebase.firestore().collection('users').doc(user.uid).get();
                             const role = doc.exists ? (doc.data().role || 'general') : 'general';
                             const btn = document.getElementById('btn-create-schedule');
+                            const examBtn = document.getElementById('btn-exam-builder');
                             if (btn) {
                                 let canCreate = false;
                                 if (role === 'admin') canCreate = true;
@@ -231,6 +236,7 @@ function renderRoomContent(room) {
                                     canCreate = teachers.includes(teacherName);
                                 }
                                 btn.style.display = canCreate ? 'flex' : 'none';
+                                if (examBtn) examBtn.style.display = canCreate ? 'flex' : 'none';
                             }
                         } catch (e) {}
                     }
