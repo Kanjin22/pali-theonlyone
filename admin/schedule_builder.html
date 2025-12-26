@@ -543,7 +543,29 @@
             const urlParams = new URLSearchParams(window.location.search);
             const preRoom = urlParams.get('room');
             if (!preRoom) return true;
-            const room = (Array.isArray(allowedRooms) ? allowedRooms : []).find(r => r.id === preRoom);
+            const normalize = (s) => (s || '').toLowerCase().trim();
+            const isTeacherOfRoom = (r) => {
+                const teachers = Array.isArray(r.teachers) ? r.teachers.map(normalize) : [];
+                const candidates = [teacherName, (currentUser ? currentUser.email : ''), (currentUser ? currentUser.displayName : '')].map(normalize);
+                return candidates.some(c => c && teachers.includes(c));
+            };
+            let room = (Array.isArray(allowedRooms) ? allowedRooms : []).find(r => r.id === preRoom);
+            let canEdit = (currentRole === 'admin');
+            if (!room) {
+                // Try Firestore directly
+                room = allClassrooms.find(r => r.id === preRoom) || null;
+            }
+            if (room && !canEdit) canEdit = isTeacherOfRoom(room);
+            if (!canEdit) {
+                // Fallback to systemConfig
+                if (typeof systemConfig !== 'undefined') {
+                    const r2 = systemConfig.getRoom(preRoom);
+                    if (r2 && isTeacherOfRoom(r2)) {
+                        room = { id: r2.id, ...r2 };
+                        canEdit = true;
+                    }
+                }
+            }
             if (!room) {
                 alert("คุณไม่มีสิทธิ์ดูหรือแก้ไขตารางของห้องนี้");
                 window.location.href = '../index.html';
