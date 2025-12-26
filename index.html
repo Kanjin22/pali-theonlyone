@@ -278,6 +278,10 @@
                     </div>
                 </a>
             </div>
+            <div id="my-rooms-section" style="display:none; margin-bottom: 20px;">
+                <div class="section-label" style="margin-top: 0; color: #27ae60; border-left-color: #27ae60;">🏫 ห้องเรียนของฉัน</div>
+                <div id="my-rooms-grid" class="grid-menu"></div>
+            </div>
             <div class="grid-menu">
 
                 <!-- ชั้นต้น (สีเขียว) -->
@@ -898,27 +902,91 @@
                 if (existingEnroll) existingEnroll.remove();
 
             } else if (role === 'student') {
-                // Show ONLY the classroom selection card for the student's approved level
-                let enrolledLevel = null;
-                try {
-                    const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
-                    const uid = (typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : null;
-                    if (uid && obj[uid]) enrolledLevel = obj[uid];
-                } catch (e) {}
-                
-                let hasVisible = false;
-                classroomLinks.forEach(a => {
-                    const urlParams = new URLSearchParams(a.href.split('?')[1] || '');
-                    const level = urlParams.get('level');
-                    if (enrolledLevel && level === enrolledLevel) {
-                        a.style.display = 'flex';
-                        hasVisible = true;
-                    } else {
-                        a.style.display = 'none';
+                // Show ONLY student's assigned rooms if available; otherwise fallback to level
+                const uid = (typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : null;
+                const myRoomsSection = document.getElementById('my-rooms-section');
+                const myRoomsGrid = document.getElementById('my-rooms-grid');
+                async function fetchMyRooms() {
+                    let roomIds = [];
+                    try {
+                        const doc = await db.collection('classrooms_members').doc(uid).get();
+                        if (doc.exists && doc.data() && Array.isArray(doc.data().rooms)) {
+                            roomIds = doc.data().rooms;
+                        }
+                    } catch (e) {}
+                    // Fallback: try enrollments.rooms array if present
+                    if (roomIds.length === 0) {
+                        try {
+                            const enr = await db.collection('enrollments').doc(uid).get();
+                            if (enr.exists && enr.data() && Array.isArray(enr.data().rooms)) {
+                                roomIds = enr.data().rooms;
+                            }
+                        } catch (e) {}
                     }
-                });
-
-                if (existingEnroll) existingEnroll.remove();
+                    return roomIds;
+                }
+                function renderMyRooms(rooms) {
+                    if (!myRoomsSection || !myRoomsGrid) return false;
+                    myRoomsGrid.innerHTML = '';
+                    if (!rooms || rooms.length === 0) {
+                        myRoomsSection.style.display = 'none';
+                        return false;
+                    }
+                    const levelMap = { pt12: 'ประโยค ๑-๒', pt3: 'ประโยค ๓', pt4: 'ประโยค ๔', pt5: 'ประโยค ๕', pt6: 'ประโยค ๖', pt7: 'ประโยค ๗', pt8: 'ประโยค ๘', pt9: 'ประโยค ๙' };
+                    rooms.forEach(r => {
+                        const a = document.createElement('a');
+                        a.className = 'menu-card level-tool';
+                        a.href = `levels/home_${r.level}.html?room=${r.id}`;
+                        const icon = document.createElement('div');
+                        icon.className = 'icon-box';
+                        icon.innerHTML = '<i class="fa-solid fa-school"></i>';
+                        const title = document.createElement('div');
+                        title.className = 'card-title';
+                        title.textContent = r.name || r.id;
+                        const desc = document.createElement('div');
+                        desc.className = 'card-desc';
+                        desc.textContent = levelMap[r.level] || r.level;
+                        a.appendChild(icon); a.appendChild(title); a.appendChild(desc);
+                        myRoomsGrid.appendChild(a);
+                    });
+                    myRoomsSection.style.display = 'block';
+                    return true;
+                }
+                (async () => {
+                    const ids = await fetchMyRooms();
+                    const rooms = [];
+                    for (const id of ids) {
+                        try {
+                            const doc = await db.collection('classrooms').doc(id).get();
+                            if (doc.exists) rooms.push({ id, ...doc.data() });
+                        } catch (e) {}
+                    }
+                    try { window._myRooms = rooms; } catch (e) {}
+                    const shown = renderMyRooms(rooms);
+                    if (shown) {
+                        classroomLinks.forEach(a => a.style.display = 'none');
+                        if (existingEnroll) existingEnroll.remove();
+                    } else {
+                        // Fallback to single level card behavior
+                        let enrolledLevel = null;
+                        try {
+                            const obj = JSON.parse(localStorage.getItem('pali_enroll_level') || '{}');
+                            if (uid && obj[uid]) enrolledLevel = obj[uid];
+                        } catch (e) {}
+                        let hasVisible = false;
+                        classroomLinks.forEach(a => {
+                            const urlParams = new URLSearchParams(a.href.split('?')[1] || '');
+                            const level = urlParams.get('level');
+                            if (enrolledLevel && level === enrolledLevel) {
+                                a.style.display = 'flex';
+                                hasVisible = true;
+                            } else {
+                                a.style.display = 'none';
+                            }
+                        });
+                        if (existingEnroll) existingEnroll.remove();
+                    }
+                })();
 
             } else {
                 // General or others -> Hide All, Show Enroll
@@ -1489,6 +1557,15 @@
                  'pt9': 'ประโยค ๙'
              };
  
+             const myRooms = (window._myRooms && Array.isArray(window._myRooms)) ? window._myRooms : [];
+             if (myRooms.length > 0) {
+                 const first = myRooms[0];
+                 if (levelEl) levelEl.textContent = `เข้าห้อง: ${first.name || first.id} (${levelMap[first.level] || first.level})`;
+                 if (btnEl) {
+                     btnEl.href = `levels/home_${first.level}.html?room=${first.id}`;
+                     btnEl.style.display = 'flex';
+                 }
+             } else
              if (enrolledLevel && levelMap[enrolledLevel]) {
                  if (levelEl) levelEl.textContent = `กำลังศึกษาชั้น: ${levelMap[enrolledLevel]}`;
                  if (btnEl) {
