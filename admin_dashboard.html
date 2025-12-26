@@ -544,6 +544,7 @@
                             style="padding:8px; border:1px solid #ddd; border-radius:6px;">
                         <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i>
                             รีเฟรช</button>
+                        <button class="btn btn-danger" onclick="resetAllAssignments()"><i class="fa-solid fa-trash"></i> ลบห้องและชั้นเรียนทั้งหมด</button>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -1543,6 +1544,42 @@
             // For now, let's just re-render fetched data or re-fetch.
             loadMembers();
         });
+
+        async function resetAllAssignments() {
+            if (!confirm('ยืนยันการลบ “ห้องเรียน” และ “ชั้นเรียน” ที่กำหนดให้ทุกคน ทั้งนักเรียนและอาจารย์?')) return;
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+            try {
+                const enrSnap = await db.collection('enrollments').get();
+                const batch1 = db.batch();
+                enrSnap.forEach(doc => {
+                    const ref = db.collection('enrollments').doc(doc.id);
+                    batch1.set(ref, { rooms: [], levelRequested: firebase.firestore.FieldValue.delete() }, { merge: true });
+                });
+                await batch1.commit();
+                const usersSnap = await db.collection('users').get();
+                const batch2 = db.batch();
+                usersSnap.forEach(doc => {
+                    const ref = db.collection('users').doc(doc.id);
+                    batch2.set(ref, { teacherLevels: [] }, { merge: true });
+                });
+                await batch2.commit();
+                const roomsSnap = await db.collection('classrooms').get();
+                const batch3 = db.batch();
+                roomsSnap.forEach(doc => {
+                    const ref = db.collection('classrooms').doc(doc.id);
+                    batch3.set(ref, { teachers: [] }, { merge: true });
+                });
+                await batch3.commit();
+                alert('ลบข้อมูลห้องและชั้นเรียนทั้งหมดเรียบร้อย');
+                loadMembers();
+                loadClassrooms();
+            } catch (e) {
+                alert('ลบไม่สำเร็จ: ' + e.message);
+            } finally {
+                document.body.style.cursor = originalCursor;
+            }
+        }
 
         // --- Class Config Logic ---
         let currentClasses = [];
