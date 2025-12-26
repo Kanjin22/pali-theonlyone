@@ -486,11 +486,7 @@
 
     <body>
         <div class="container">
-            <div id="access-toggle" style="display:flex; justify-content:flex-end; gap:8px; margin:10px 0;">
-                <span style="align-self:center; color:#7f8c8d; font-size:0.9rem;">โหมดเข้าถึง:</span>
-                <button id="btn-mode-student" class="btn" style="background:#e8f6f3; color:#16a085;">นักเรียน</button>
-                <button id="btn-mode-teacher" class="btn" style="background:#ede7f6; color:#6a1b9a;">อาจารย์</button>
-            </div>
+            
         <div id="loading" class="loading">
             <i class="fas fa-spinner fa-spin"></i> กำลังโหลดข้อมูลตารางเรียน...
         </div>
@@ -1477,31 +1473,11 @@
             auth.onAuthStateChanged(async (u) => {
                 if (!u) { window.location.href = 'index.html'; return; }
                 try {
-                    const modePref = localStorage.getItem('access_mode') || 'auto';
                     let role = 'general';
                     const userDoc = await db.collection('users').doc(u.uid).get();
                     if (userDoc.exists) role = userDoc.data().role || role;
-                    const effectiveMode = (function(){
-                        if (modePref === 'student') return 'student';
-                        if (modePref === 'teacher') return 'teacher';
-                        return (role === 'teacher' || role === 'admin') ? 'teacher' : 'student';
-                    })();
-                    const btnS = document.getElementById('btn-mode-student');
-                    const btnT = document.getElementById('btn-mode-teacher');
-                    if (btnS && btnT) {
-                        btnS.style.opacity = effectiveMode === 'student' ? '1' : '0.7';
-                        btnT.style.opacity = effectiveMode === 'teacher' ? '1' : '0.7';
-                        btnS.onclick = () => { localStorage.setItem('access_mode', 'student'); location.reload(); };
-                        btnT.onclick = () => { 
-                            if (role === 'teacher' || role === 'admin') {
-                                localStorage.setItem('access_mode', 'teacher'); 
-                                location.reload(); 
-                            } else {
-                                alert('โหมดอาจารย์ใช้ได้เฉพาะบัญชีอาจารย์/ผู้ดูแลระบบ');
-                            }
-                        };
-                    }
-                    if (role === 'admin' && effectiveMode === 'teacher') { loadSchedule(); return; }
+
+                    if (role === 'admin' || role === 'teacher') { loadSchedule(); return; }
 
                     let rid = roomId;
                     if (!rid) {
@@ -1516,20 +1492,15 @@
                     if (!roomDoc.exists) { window.location.href = 'index.html'; return; }
                     const room = roomDoc.data();
 
-                    if (effectiveMode === 'student') {
-                        const enr = await db.collection('enrollments').doc(u.uid).get();
-                        const approved = enr.exists && enr.data().status === 'approved';
-                        const level = approved ? (enr.data().levelRequested || null) : null;
-                        const rooms = enr.exists && Array.isArray(enr.data().rooms) ? enr.data().rooms : [];
-                        const isMember = rooms.includes(rid);
-                        // Allow teachers/admins to bypass membership check even in student mode
-                        if ((!approved || !level || level !== room.level || !isMember) && role !== 'teacher' && role !== 'admin') { 
-                            window.location.href = 'index.html'; 
-                            return; 
-                        }
-                    } else {
-                        // Teacher/Admin can view all rooms' schedules
-                        // Additional editing permissions are controlled elsewhere (create button visibility)
+                    const enr = await db.collection('enrollments').doc(u.uid).get();
+                    const approved = enr.exists && enr.data().status === 'approved';
+                    const level = approved ? (enr.data().levelRequested || null) : null;
+                    const rooms = enr.exists && Array.isArray(enr.data().rooms) ? enr.data().rooms : [];
+                    const isMember = rooms.includes(rid);
+                    
+                    if (!approved || !level || level !== room.level || !isMember) { 
+                        window.location.href = 'index.html'; 
+                        return; 
                     }
 
                     loadSchedule();
