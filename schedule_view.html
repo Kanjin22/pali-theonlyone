@@ -1496,9 +1496,8 @@
                         const isMember = rooms.includes(rid);
                         if (!approved || !level || level !== room.level || !isMember) { window.location.href = 'index.html'; return; }
                     } else {
-                        const name = u.displayName || u.email || '';
-                        const teachers = Array.isArray(room.teachers) ? room.teachers : [];
-                        if (!teachers.includes(name) && role !== 'admin') { window.location.href = 'index.html'; return; }
+                        // Teacher/Admin can view all rooms' schedules
+                        // Additional editing permissions are controlled elsewhere (create button visibility)
                     }
 
                     loadSchedule();

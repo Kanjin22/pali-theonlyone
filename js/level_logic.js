@@ -60,8 +60,72 @@ async function initLevelPage(levelId) {
              }
         }
     } else {
-        // No room selected -> Redirect to selection
-        window.location.href = `../classroom_select.html?level=${levelId}`;
+        const container = document.getElementById('room-selection-container');
+        if (container) {
+            try {
+                let role = 'general';
+                let user = null;
+                let myRooms = [];
+                if (typeof firebase !== 'undefined') {
+                    user = firebase.auth().currentUser;
+                    if (user) {
+                        try {
+                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                            if (doc.exists && doc.data()) role = doc.data().role || role;
+                        } catch (e) {}
+                        try {
+                            const enr = await firebase.firestore().collection('enrollments').doc(user.uid).get();
+                            if (enr.exists && Array.isArray(enr.data().rooms)) myRooms = enr.data().rooms;
+                        } catch (e) {}
+                    }
+                }
+                let rooms = [];
+                if (typeof db !== 'undefined') {
+                    const snap = await db.collection('classrooms').where('level', '==', levelId).get();
+                    snap.forEach(d => rooms.push({ id: d.id, ...d.data() }));
+                }
+                if (rooms.length === 0 && typeof systemConfig !== 'undefined') {
+                    for (let k in systemConfig.classrooms) {
+                        const r = systemConfig.classrooms[k];
+                        if (r.level === levelId) rooms.push({ id: r.id, ...r });
+                    }
+                }
+                const modePref = localStorage.getItem('access_mode') || 'auto';
+                const effectiveMode = (function(){
+                    if (modePref === 'student') return 'student';
+                    if (modePref === 'teacher') return 'teacher';
+                    return (role === 'teacher' || role === 'admin') ? 'teacher' : 'student';
+                })();
+                let visible = rooms;
+                if (effectiveMode === 'student') {
+                    const allowIds = new Set(myRooms);
+                    visible = rooms.filter(r => allowIds.has(r.id));
+                }
+                container.style.display = 'block';
+                container.innerHTML = '';
+                if (visible.length === 0) {
+                    container.innerHTML = `<div style="padding:20px; color:#7f8c8d;">ยังไม่มีห้องในชั้นนี้สำหรับคุณ</div>`;
+                    return;
+                }
+                const grid = document.createElement('div');
+                grid.style.cssText = 'display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px;';
+                const teacherName = user ? (user.displayName || user.email || user.uid) : '';
+                visible.forEach(r => {
+                    const card = document.createElement('a');
+                    card.href = `../schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
+                    card.className = 'menu-button';
+                    const isTeaching = effectiveMode === 'teacher' && Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName);
+                    const badge = isTeaching ? `<span style="display:inline-block; margin-left:8px; background:#27ae60; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">สอนอยู่</span>` : '';
+                    card.innerHTML = `${r.name || r.id}${badge}`;
+                    grid.appendChild(card);
+                });
+                container.appendChild(grid);
+            } catch (e) {
+                window.location.href = `../classroom_select.html?level=${levelId}`;
+            }
+        } else {
+            window.location.href = `../classroom_select.html?level=${levelId}`;
+        }
     }
 }
 
@@ -154,8 +218,21 @@ function renderRoomContent(room) {
                     }
 
                     if (allow) {
-                        const btn = document.getElementById('btn-create-schedule');
-                        if (btn) btn.style.display = 'flex'; // menu-button usually flex or block
+                        try {
+                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                            const role = doc.exists ? (doc.data().role || 'general') : 'general';
+                            const btn = document.getElementById('btn-create-schedule');
+                            if (btn) {
+                                let canCreate = false;
+                                if (role === 'admin') canCreate = true;
+                                else {
+                                    const teacherName = user.displayName || user.email || user.uid;
+                                    const teachers = Array.isArray(room.teachers) ? room.teachers : [];
+                                    canCreate = teachers.includes(teacherName);
+                                }
+                                btn.style.display = canCreate ? 'flex' : 'none';
+                            }
+                        } catch (e) {}
                     }
                 }
             });
