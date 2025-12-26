@@ -298,6 +298,12 @@
         // Check Manual Sandhi DB
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
             const parts = vocabSandhi[cleanWord];
+            // If only 1 part, redirect immediately (Manual Stemming)
+            if (parts.length === 1) {
+                showDictionaryDefinition(parts[0]);
+                return;
+            }
+            // Else show bubble
             showSandhiBubble(el, parts);
             return; // Stop here, don't show dictionary yet
         }
