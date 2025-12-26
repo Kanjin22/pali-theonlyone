@@ -126,10 +126,7 @@
                             // Only show rooms that match student's enrolled level
                             if (!userCtx.level || room.level !== userCtx.level) return;
                         } else if (userCtx.role === 'teacher') {
-                            // Only show rooms where teacher list contains current user name
-                            const teachers = Array.isArray(room.teachers) ? room.teachers : [];
-                            const name = userCtx.displayName || userCtx.email || '';
-                            if (!teachers.includes(name)) return;
+                            // Show all rooms for teachers
                         }
                         // admin sees all
                     } else {
