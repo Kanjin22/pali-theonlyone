@@ -302,27 +302,30 @@
     // Configuration for Subjects
     const SUBJECT_CONFIG = {
         "pt12": [
-            { id: 'Grammar', label: 'ไวยากรณ์', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' }
+            { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }
         ],
         "pt3": [
-            { id: 'Grammar', label: 'ไวยากรณ์', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Samphan', label: 'สัมพันธ์', defaultAct: 'สัมพันธ์ไทย' }
+            { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
+            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Samphan', label: 'สัม.', defaultAct: 'สัมพันธ์ไทย' }
         ],
         "pt4": [
-            { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' },
-            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' }
+            { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' },
+            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }
         ],
-        "pt5": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt6": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt7": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt5": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt6": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
+        "pt7": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
         "pt8": [
-            { id: 'Chan', label: 'วิชาฉันท์', defaultAct: 'แต่งฉันท์มคธ' },
-            { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Return', label: 'วิชากลับ', defaultAct: 'แปลไทยเป็นมคธ' }
+            { id: 'Chan', label: 'ฉันท์.', defaultAct: 'แต่งฉันท์มคธ' },
+            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
+            { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }
         ],
-        "pt9": [ { id: 'Return', label: 'วิชากลับ', defaultAct: 'แต่งไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล', defaultAct: 'แปลมคธเป็นไทย' } ]
+        "pt9": [
+            { id: 'Tang', label: 'แต่ง.', defaultAct: 'แต่งไทยเป็นมคธ' },
+            { id: 'Return', label: 'กลับ.', defaultAct: 'แต่งไทยเป็นมคธ' },
+            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ]
     };
 
     // Initialize
@@ -1238,10 +1241,21 @@
         
         // Get all levels from systemConfig or hardcoded
         const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
+        const levelLabels = {
+            'pt12': 'ประโยค ๑-๒',
+            'pt3': 'ประโยค ๓',
+            'pt4': 'ประโยค ๔',
+            'pt5': 'ประโยค ๕',
+            'pt6': 'ประโยค ๖',
+            'pt7': 'ประโยค ๗',
+            'pt8': 'ประโยค ๘',
+            'pt9': 'ประโยค ๙'
+        };
+
         levels.forEach(lvl => {
             const opt = document.createElement('option');
             opt.value = lvl;
-            opt.textContent = lvl.toUpperCase();
+            opt.textContent = levelLabels[lvl] || lvl.toUpperCase();
             levelSelect.appendChild(opt);
         });
 
