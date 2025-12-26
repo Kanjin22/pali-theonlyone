@@ -168,6 +168,7 @@
   <script src="./data/vocab-general.js"></script>
   <script src="./data/vocab-newgen.js"></script>
   <script src="./data/pali-lookup.js"></script>
+  <script src="./data/pali-script.js"></script>
 
   <script src="./data/content-dhamma01.js"></script>
   <script src="./data/content-dhamma02.js"></script>
@@ -306,6 +307,7 @@
         const panel = document.getElementById('dict-panel');
         const content = document.getElementById('dict-content');
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+        const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(cleanWord) : "";
 
         if (result) {
             let detailsHtml = "";
@@ -326,6 +328,7 @@
             content.innerHTML = `
                 <div style="font-size:1.2em; font-weight:bold; color:#2c3e50; margin-bottom:8px;">
                     ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                    <span style="font-size:0.8em; color:#7f8c8d; font-weight:normal; margin-left:5px;">[${romanWord}]</span>
                     <span class="dict-source">(${result.source})</span>
                     ${stemInfo}
                 </div>
@@ -336,6 +339,7 @@
             content.innerHTML = `
                 <div style="color:#7f8c8d; font-style:italic;">
                     ไม่พบข้อมูลคำศัพท์: <strong>${cleanWord}</strong>
+                    <div style="font-size:0.9em; margin-top:5px;">[${romanWord}]</div>
                 </div>
             `;
             panel.style.display = 'block';
