@@ -688,6 +688,18 @@
                 updateMargin(s.toLowerCase(), 2.54);
             });
         }
+        function changeMargin(val) {
+            let v = val;
+            if (v === undefined || v === null) v = 2.54;
+            if (typeof v === 'string') {
+                if (v === 'default') v = 2.54;
+                else {
+                    const n = parseFloat(v);
+                    v = isNaN(n) ? 2.54 : n;
+                }
+            }
+            ['top','bottom','left','right'].forEach(side => updateMargin(side, v));
+        }
         // Close panel when clicking outside
         document.addEventListener('click', function(e) {
             const p = document.getElementById('marginPanel');
