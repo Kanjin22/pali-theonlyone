@@ -736,14 +736,23 @@
             tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">กำลังโหลด...</td></tr>';
             
             try {
-                let query = db.collection('sanluang_exams').orderBy('year', 'desc');
+                // If filter is active, we MUST query by level first, then order by year client-side
+                // OR we need a composite index. 
+                // To avoid index requirement errors for now:
+                // 1. Query by Level (if selected)
+                // 2. Query by Year (if no level selected)
+                // 3. Sort client-side
                 
+                let query = db.collection('sanluang_exams');
                 const level = document.getElementById('levelFilter').value;
+                
                 if (level) {
                     query = query.where('level', '==', level);
+                } else {
+                    query = query.orderBy('year', 'desc');
                 }
 
-                const snapshot = await query.limit(50).get();
+                const snapshot = await query.limit(100).get();
                 
                 if (snapshot.empty) {
                     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">ไม่พบข้อมูล</td></tr>';
@@ -752,9 +761,16 @@
 
                 tbody.innerHTML = '';
                 const search = document.getElementById('searchInput').value.toLowerCase();
-
+                
+                let docs = [];
                 snapshot.forEach(doc => {
-                    const d = doc.data();
+                    docs.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Client-side Sort: Year Descending
+                docs.sort((a,b) => b.year - a.year);
+
+                docs.forEach(d => {
                     if (search && !d.story.toLowerCase().includes(search) && !String(d.year).includes(search)) {
                         return;
                     }
@@ -767,8 +783,8 @@
                     if (isAdminUser) {
                         actionHtml = `
                             <div style="display:flex; gap:5px;">
-                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem; background:#f39c12; color:#fff;" onclick="editStat('${doc.id}')"><i class="fa-solid fa-edit"></i></button>
-                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${doc.id}')"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem; background:#f39c12; color:#fff;" onclick="editStat('${d.id}')"><i class="fa-solid fa-edit"></i></button>
+                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${d.id}')"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `;
                     }
