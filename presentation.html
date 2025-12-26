@@ -1470,7 +1470,27 @@
         const word = el.innerText.trim();
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
 
-        // Check Manual Sandhi DB
+        // 1. Check Manual Sandhi from Slide Data (Priority)
+        if (typeof slides !== 'undefined' && slides[currentIndex]) {
+            const s = slides[currentIndex];
+            if (s.sandhi && s.sandhi[cleanWord]) {
+                const val = s.sandhi[cleanWord];
+                // Split by '+' to get parts
+                const parts = val.split('+').map(p => p.trim());
+                
+                if (parts.length > 1) {
+                    // Show Bubble for splits
+                    showSandhiBubble(el, parts);
+                    return; 
+                } else if (parts.length === 1) {
+                    // Direct redirect for single mapping (Manual Stemming)
+                    showDictionaryDefinition(parts[0]);
+                    return;
+                }
+            }
+        }
+
+        // 2. Check Manual Sandhi DB (Global)
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
             const parts = vocabSandhi[cleanWord];
              // If only 1 part, redirect immediately (Manual Stemming)
