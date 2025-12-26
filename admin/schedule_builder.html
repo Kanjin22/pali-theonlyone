@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <title>ระบบสร้างตารางเรียน (Schedule Builder)</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -34,90 +35,257 @@
     <script src="../data/content-visuddhi03.js"></script>
     <script src="../data/content-abhidhamma01.js"></script>
     <style>
-        body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-        h2 { color: #34495e; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 0.9em; }
-        select, input[type="text"], input[type="date"], input[type="time"], textarea, input[type="number"] { 
-            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; 
-            font-family: 'Sarabun', sans-serif; font-size: 0.9em; box-sizing: border-box;
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        select,
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea,
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 0.9em;
+            box-sizing: border-box;
             transition: border-color 0.2s;
         }
-        select:focus, input:focus, textarea:focus { border-color: #3498db; outline: none; }
 
-        .row-entry { 
-            background: #fff; 
-            padding: 15px; 
-            border: 1px solid #e0e0e0; 
-            margin-bottom: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            display: grid; 
-            grid-template-columns: 200px 1fr 1fr 1fr 40px; 
-            gap: 15px; 
-            align-items: start; 
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .row-entry {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr 1fr 40px;
+            gap: 15px;
+            align-items: start;
             animation: fadeIn 0.3s;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .col-group { display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
-        .col-group > div { width: 100%; }
-        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .col-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .col-group>div {
+            width: 100%;
+        }
+
         /* Slot Styles */
-        .slot-container { }
-        .slot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px dashed #ccc; }
-        .slot-header strong { color: #2c3e50; }
-        
-        .field-group { margin-bottom: 8px; }
-        .field-group label { font-size: 0.8em; color: #7f8c8d; margin-bottom: 2px; }
-        
-        .is-exam { background-color: #fff0f0; border: 1px solid #ffcccc; padding: 5px; border-radius: 4px; }
+        .slot-container {}
 
-        .btn { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; transition: 0.2s; }
-        .btn:hover { background: #219150; transform: translateY(-1px); }
-        
-        .btn-danger { background: #e74c3c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
-        .btn-danger:hover { background: #c0392b; }
-        
-        .btn-primary { background: #3498db; }
-        .btn-primary:hover { background: #2980b9; }
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .slot-header strong {
+            color: #2c3e50;
+        }
+
+        .field-group {
+            margin-bottom: 8px;
+        }
+
+        .field-group label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-bottom: 2px;
+        }
+
+        .is-exam {
+            background-color: #fff0f0;
+            border: 1px solid #ffcccc;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #219150;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-primary {
+            background: #3498db;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
 
         .loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8);
-            display: none; justify-content: center; align-items: center; z-index: 9999;
-            font-size: 1.5em; color: #34495e; flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 1.5em;
+            color: #34495e;
+            flex-direction: column;
         }
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .row-entry { grid-template-columns: 1fr; gap: 15px; }
-            .col-group { min-width: auto; }
-            .btn-danger { height: 40px; margin-top: 10px; }
+            .row-entry {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .col-group {
+                min-width: auto;
+            }
+
+            .btn-danger {
+                height: 40px;
+                margin-top: 10px;
+            }
         }
 
         /* Modal */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
-            display: none; justify-content: center; align-items: center; z-index: 10000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
         }
+
         .modal-content {
-            background: #fff; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px;
-            max-height: 90vh; overflow-y: auto; position: relative;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
         }
+
         .modal-close {
-            position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
         }
-        .modal-close:hover { color: #000; }
+
+        .modal-close:hover {
+            color: #000;
+        }
 
         /* Weekend/Holiday Style */
         .row-weekend-disabled {
-            background-color: #e9ecef !important; /* Gray background */
+            background-color: #e9ecef !important;
+            /* Gray background */
             border-color: #adb5bd !important;
         }
-        
+
         .row-weekend-disabled .col-group {
             background-color: #e9ecef !important;
             border-color: #ced4da !important;
@@ -129,10 +297,12 @@
         .row-weekend-disabled select,
         .row-weekend-disabled textarea:not(.input-remarks),
         .row-weekend-disabled button:not(.btn-danger) {
-            pointer-events: none; /* Disable interaction */
+            pointer-events: none;
+            /* Disable interaction */
             opacity: 0.6;
             background-color: #e9ecef;
         }
+
         /* Multi-file Input Styles */
         .file-chips {
             display: flex;
@@ -141,6 +311,7 @@
             margin-bottom: 5px;
             min-height: 24px;
         }
+
         .file-chip {
             background: #e1ecf4;
             color: #2c3e50;
@@ -152,895 +323,903 @@
             gap: 5px;
             border: 1px solid #b3d7ff;
         }
+
         .file-chip .remove {
             cursor: pointer;
             color: #e74c3c;
             font-weight: bold;
             margin-left: 4px;
         }
+
         .file-chip .remove:hover {
             color: #c0392b;
         }
     </style>
 </head>
+
 <body>
 
-<div id="loadingOverlay" class="loading-overlay">
-    <i class="fas fa-spinner fa-spin fa-3x"></i>
-    <div style="margin-top:20px;">กำลังดำเนินการ...</div>
-</div>
-
-<div class="container">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h1>ระบบจัดการตารางเรียน (Schedule Manager)</h1>
-        <div style="display:flex; gap:10px; align-items:center;">
-             <div id="auth-status" style="font-size:0.9em; color:#7f8c8d;">Checking Auth...</div>
-             <a href="../index.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่หน้าหลัก</a>
-        </div>
-    </div>
-    <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-        <div class="form-group" style="margin-bottom:0;">
-            <label>เลือกชั้นเรียน (Level)</label>
-            <select id="level-select" onchange="onLevelChange()">
-                <option value="">-- เลือกชั้นเรียน --</option>
-                <option value="pt12">ประโยค ๑-๒</option>
-                <option value="pt3">ป.ธ. ๓</option>
-                <option value="pt4">ป.ธ. ๔</option>
-                <option value="pt5">ป.ธ. ๕</option>
-                <option value="pt6">ป.ธ. ๖</option>
-                <option value="pt7">ป.ธ. ๗</option>
-                <option value="pt8">ป.ธ. ๘</option>
-                <option value="pt9">ป.ธ. ๙</option>
-            </select>
-        </div>
-
-        <div class="form-group" style="margin-bottom:0;">
-            <label>เลือกห้องเรียน (Room)</label>
-            <select id="room-select" onchange="checkAndLoadSchedule()">
-                <option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>
-            </select>
-        </div>
-
-        <div class="form-group" style="margin-bottom:0;">
-            <label>เดือน (Month)</label>
-            <select id="month-select" onchange="checkAndLoadSchedule()">
-                <option value="November">พฤศจิกายน (November)</option>
-                <option value="December">ธันวาคม (December)</option>
-                <option value="January">มกราคม (January)</option>
-                <option value="February">กุมภาพันธ์ (February)</option>
-                <option value="March">มีนาคม (March)</option>
-                <option value="April">เมษายน (April)</option>
-                <option value="May">พฤษภาคม (May)</option>
-                <option value="June">มิถุนายน (June)</option>
-                <option value="July">กรกฎาคม (July)</option>
-                <option value="August">สิงหาคม (August)</option>
-                <option value="September">กันยายน (September)</option>
-                <option value="October">ตุลาคม (October)</option>
-            </select>
-        </div>
-
-        <div class="form-group" style="margin-bottom:0;">
-            <label>ปีการศึกษา (Year)</label>
-            <input type="number" id="year-select" value="2025" onchange="checkAndLoadSchedule()">
-        </div>
+    <div id="loadingOverlay" class="loading-overlay">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+        <div style="margin-top:20px;">กำลังดำเนินการ...</div>
     </div>
 
-    <div id="status-msg" style="margin-bottom: 20px; padding: 10px; border-radius: 6px; display: none;"></div>
-
-    <hr>
-
-    <div id="schedule-rows">
-        <!-- Rows will be added here -->
-    </div>
-
-    <button class="btn btn-primary" onclick="addRow()">+ เพิ่มวันเรียน</button>
-    <br><br>
-    
-    <div style="display:flex; gap:10px;">
-        <button class="btn" onclick="saveSchedule()" style="flex:1; padding:15px; font-size:1.1em;">
-            <i class="fas fa-save"></i> บันทึกตารางเรียน (Save to Database)
-        </button>
-        <button class="btn" onclick="viewSchedule()" style="background:#3498db; flex:0 0 150px;" title="ดูหน้าตารางเรียนจริง">
-            <i class="fas fa-eye"></i> ดูตารางเรียน
-        </button>
-
-        <button class="btn" onclick="openFileManager()" style="background:#8e44ad; flex:0 0 200px;">
-            <i class="fas fa-cloud-upload-alt"></i> จัดการไฟล์ (Upload)
-        </button>
-    </div>
-
-    <!-- File Manager Modal -->
-    <div id="file-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-content" style="width: 80%; max-width: 900px; height: 80vh; display:flex; flex-direction:column;">
-            <span class="modal-close" onclick="closeFileManager()">&times;</span>
-            <h2><i class="fas fa-folder-open"></i> จัดการไฟล์ (File Manager)</h2>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-                <h3><i class="fas fa-upload"></i> อัปโหลดไฟล์ใหม่</h3>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
-                    <div>
-                        <label>ประเภท (Type)</label>
-                        <select id="upload-type">
-                            <option value="materials">เอกสารเรียน (Materials)</option>
-                            <option value="exams">ข้อสอบ (Exams)</option>
-                            <option value="answers">เฉลย (Answers)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>ชั้นเรียน (Level)</label>
-                        <select id="upload-level">
-                            <!-- Populated by JS -->
-                        </select>
-                    </div>
-                    <div>
-                        <label>วิชา (Subject)</label>
-                        <select id="upload-subject">
-                            <!-- Populated by JS -->
-                        </select>
-                    </div>
-                    <div>
-                        <label>เลือกไฟล์ (PDF Only)</label>
-                        <input type="file" id="upload-file" accept=".pdf">
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="uploadFile()" id="btn-upload">
-                            <i class="fas fa-cloud-upload-alt"></i> Upload
-                        </button>
-                    </div>
-                </div>
-                <div id="upload-progress" style="display:none; margin-top:10px;">
-                    <div style="background:#e9ecef; height:10px; border-radius:5px; overflow:hidden;">
-                        <div id="progress-bar" style="background:#27ae60; width:0%; height:100%; transition: width 0.3s;"></div>
-                    </div>
-                    <small id="progress-text" style="color:#666;">0%</small>
-                </div>
-            </div>
-
-            <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
-                <table style="width:100%; border-collapse:collapse;">
-                    <thead style="background:#f1f2f6; position:sticky; top:0;">
-                        <tr>
-                            <th style="padding:10px; text-align:left;">ชื่อไฟล์</th>
-                            <th style="padding:10px; text-align:left;">ประเภท</th>
-                            <th style="padding:10px; text-align:left;">ชั้นเรียน</th>
-                            <th style="padding:10px; text-align:left;">วันที่อัปโหลด</th>
-                            <th style="padding:10px; text-align:center;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="file-list-body">
-                        <!-- Rows -->
-                    </tbody>
-                </table>
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>ระบบจัดการตารางเรียน (Schedule Manager)</h1>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <div id="auth-status" style="font-size:0.9em; color:#7f8c8d;">Checking Auth...</div>
+                <a href="../index.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่หน้าหลัก</a>
             </div>
         </div>
-    </div>
+        <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
 
-
-
-    <!-- Slide Selector Modal -->
-    <div id="slide-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-content" style="width: 80%; max-width: 800px; height: 80vh; display:flex; flex-direction:column;">
-            <span class="modal-close" onclick="closeSlideSelector()">&times;</span>
-            <h2><i class="fas fa-chalkboard-teacher"></i> เลือกสื่อการสอน (Select Slide)</h2>
-            
-            <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-                <select id="slide-book-select" onchange="renderSlideOptions()" style="flex: 1;">
-                    <option value="">-- เลือกหนังสือ/คัมภีร์ --</option>
+        <div
+            style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom:0;">
+                <label>เลือกชั้นเรียน (Level)</label>
+                <select id="level-select" onchange="onLevelChange()">
+                    <option value="">-- เลือกชั้นเรียน --</option>
+                    <option value="pt12">ประโยค ๑-๒</option>
+                    <option value="pt3">ป.ธ. ๓</option>
+                    <option value="pt4">ป.ธ. ๔</option>
+                    <option value="pt5">ป.ธ. ๕</option>
+                    <option value="pt6">ป.ธ. ๖</option>
+                    <option value="pt7">ป.ธ. ๗</option>
+                    <option value="pt8">ป.ธ. ๘</option>
+                    <option value="pt9">ป.ธ. ๙</option>
                 </select>
-                <input type="text" id="slide-search" placeholder="ค้นหาหัวข้อ..." onkeyup="renderSlideOptions()" style="flex: 1;">
             </div>
 
-            <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding: 10px;" id="slide-list-container">
-                <!-- List items will be injected here -->
+            <div class="form-group" style="margin-bottom:0;">
+                <label>เลือกห้องเรียน (Room)</label>
+                <select id="room-select" onchange="checkAndLoadSchedule()">
+                    <option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>
+                </select>
             </div>
-            
-            <div style="margin-top: 15px; text-align: right;">
-                <button class="btn" onclick="confirmSlideSelection()">เลือกรายการที่ติ๊กไว้</button>
+
+            <div class="form-group" style="margin-bottom:0;">
+                <label>เดือน (Month)</label>
+                <select id="month-select" onchange="checkAndLoadSchedule()">
+                    <option value="November">พฤศจิกายน (November)</option>
+                    <option value="December">ธันวาคม (December)</option>
+                    <option value="January">มกราคม (January)</option>
+                    <option value="February">กุมภาพันธ์ (February)</option>
+                    <option value="March">มีนาคม (March)</option>
+                    <option value="April">เมษายน (April)</option>
+                    <option value="May">พฤษภาคม (May)</option>
+                    <option value="June">มิถุนายน (June)</option>
+                    <option value="July">กรกฎาคม (July)</option>
+                    <option value="August">สิงหาคม (August)</option>
+                    <option value="September">กันยายน (September)</option>
+                    <option value="October">ตุลาคม (October)</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+                <label>ปีการศึกษา (Year)</label>
+                <input type="number" id="year-select" value="2025" onchange="checkAndLoadSchedule()">
             </div>
         </div>
+
+        <div id="status-msg" style="margin-bottom: 20px; padding: 10px; border-radius: 6px; display: none;"></div>
+
+        <hr>
+
+        <div id="schedule-rows">
+            <!-- Rows will be added here -->
+        </div>
+
+        <button class="btn btn-primary" onclick="addRow()">+ เพิ่มวันเรียน</button>
+        <br><br>
+
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="saveSchedule()" style="flex:1; padding:15px; font-size:1.1em;">
+                <i class="fas fa-save"></i> บันทึกตารางเรียน (Save to Database)
+            </button>
+            <button class="btn" onclick="viewSchedule()" style="background:#3498db; flex:0 0 150px;"
+                title="ดูหน้าตารางเรียนจริง">
+                <i class="fas fa-eye"></i> ดูตารางเรียน
+            </button>
+
+            <button class="btn" onclick="openFileManager()" style="background:#8e44ad; flex:0 0 200px;">
+                <i class="fas fa-cloud-upload-alt"></i> จัดการไฟล์ (Upload)
+            </button>
+        </div>
+
+        <!-- File Manager Modal -->
+        <div id="file-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-content"
+                style="width: 80%; max-width: 900px; height: 80vh; display:flex; flex-direction:column;">
+                <span class="modal-close" onclick="closeFileManager()">&times;</span>
+                <h2><i class="fas fa-folder-open"></i> จัดการไฟล์ (File Manager)</h2>
+
+                <div
+                    style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                    <h3><i class="fas fa-upload"></i> อัปโหลดไฟล์ใหม่</h3>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
+                        <div>
+                            <label>ประเภท (Type)</label>
+                            <select id="upload-type">
+                                <option value="materials">เอกสารเรียน (Materials)</option>
+                                <option value="exams">ข้อสอบ (Exams)</option>
+                                <option value="answers">เฉลย (Answers)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>ชั้นเรียน (Level)</label>
+                            <select id="upload-level">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label>วิชา (Subject)</label>
+                            <select id="upload-subject">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label>เลือกไฟล์ (PDF Only)</label>
+                            <input type="file" id="upload-file" accept=".pdf">
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" onclick="uploadFile()" id="btn-upload">
+                                <i class="fas fa-cloud-upload-alt"></i> Upload
+                            </button>
+                        </div>
+                    </div>
+                    <div id="upload-progress" style="display:none; margin-top:10px;">
+                        <div style="background:#e9ecef; height:10px; border-radius:5px; overflow:hidden;">
+                            <div id="progress-bar"
+                                style="background:#27ae60; width:0%; height:100%; transition: width 0.3s;"></div>
+                        </div>
+                        <small id="progress-text" style="color:#666;">0%</small>
+                    </div>
+                </div>
+
+                <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <thead style="background:#f1f2f6; position:sticky; top:0;">
+                            <tr>
+                                <th style="padding:10px; text-align:left;">ชื่อไฟล์</th>
+                                <th style="padding:10px; text-align:left;">ประเภท</th>
+                                <th style="padding:10px; text-align:left;">ชั้นเรียน</th>
+                                <th style="padding:10px; text-align:left;">วันที่อัปโหลด</th>
+                                <th style="padding:10px; text-align:center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="file-list-body">
+                            <!-- Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Slide Selector Modal -->
+        <div id="slide-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-content"
+                style="width: 80%; max-width: 800px; height: 80vh; display:flex; flex-direction:column;">
+                <span class="modal-close" onclick="closeSlideSelector()">&times;</span>
+                <h2><i class="fas fa-chalkboard-teacher"></i> เลือกสื่อการสอน (Select Slide)</h2>
+
+                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                    <select id="slide-book-select" onchange="renderSlideOptions()" style="flex: 1;">
+                        <option value="">-- เลือกหนังสือ/คัมภีร์ --</option>
+                    </select>
+                    <input type="text" id="slide-search" placeholder="ค้นหาหัวข้อ..." onkeyup="renderSlideOptions()"
+                        style="flex: 1;">
+                </div>
+
+                <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding: 10px;"
+                    id="slide-list-container">
+                    <!-- List items will be injected here -->
+                </div>
+
+                <div style="margin-top: 15px; text-align: right;">
+                    <button class="btn" onclick="confirmSlideSelection()">เลือกรายการที่ติ๊กไว้</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-</div>
+    <script src="../js/system_config.js"></script>
+    <script src="../js/file_index.js"></script>
+    <script>
+        // --- Global Variables & Initialization ---
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        const roomSelect = document.getElementById('room-select');
+        const levelSelect = document.getElementById('level-select');
+        const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+        const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+        let currentScheduleId = null; // Track if we are editing an existing doc
+        let DYNAMIC_FILES = []; // Files loaded from Firestore
 
-<script src="../js/system_config.js"></script>
-<script src="../js/file_index.js"></script>
-<script>
-    // --- Global Variables & Initialization ---
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-    const roomSelect = document.getElementById('room-select');
-    const levelSelect = document.getElementById('level-select');
-    const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
-    let currentScheduleId = null; // Track if we are editing an existing doc
-    let DYNAMIC_FILES = []; // Files loaded from Firestore
+        // --- Content Mapping ---
+        const levelConfig = {
+            "pt12": ["ธรรมบท ภาค ๑", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+            "pt3": ["ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+            "pt4": ["มงคลัถทีปนี ภาค ๑", "ธรรมบท ภาค ๑"],
+            "pt5": ["มงคลัถทีปนี ภาค ๒", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+            "pt6": ["สมันตปาสาทิกา ภาค ๓", "ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+            "pt7": ["สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒", "มงคลัถทีปนี ภาค ๑"],
+            "pt8": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒"],
+            "pt9": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "อภิธรรม ภาค ๑"]
+        };
 
-    // --- Content Mapping ---
-    const levelConfig = {
-        "pt12": ["ธรรมบท ภาค ๑", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
-        "pt3": ["ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
-        "pt4": ["มงคลัถทีปนี ภาค ๑", "ธรรมบท ภาค ๑"],
-        "pt5": ["มงคลัถทีปนี ภาค ๒", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
-        "pt6": ["สมันตปาสาทิกา ภาค ๓", "ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
-        "pt7": ["สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒", "มงคลัถทีปนี ภาค ๑"],
-        "pt8": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒"],
-        "pt9": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "อภิธรรม ภาค ๑"]
-    };
-
-    const books = [];
-    function registerBook(name, varObj) {
-        if (typeof varObj !== 'undefined') books.push({ name: name, data: varObj });
-    }
-
-    // Register all available books
-    try { registerBook("ธรรมบท ภาค ๑", contentDhamma01); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๒", contentDhamma02); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๓", contentDhamma03); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๔", contentDhamma04); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๕", contentDhamma05); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๖", contentDhamma06); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๗", contentDhamma07); } catch(e) {}
-    try { registerBook("ธรรมบท ภาค ๘", contentDhamma08); } catch(e) {}
-    try { registerBook("มังคลัถทีปนี ภาค ๑", contentMangala01); } catch(e) {}
-    try { registerBook("มังคลัถทีปนี ภาค ๒", contentMangala02); } catch(e) {}
-    try { registerBook("สมันตปาสาทิกา ภาค ๑", contentSamanta01); } catch(e) {}
-    try { registerBook("สมันตปาสาทิกา ภาค ๒", contentSamanta02); } catch(e) {}
-    try { registerBook("สมันตปาสาทิกา ภาค ๓", contentSamanta03); } catch(e) {}
-    try { registerBook("วิสุทธิมรรค ภาค ๑", contentVisuddhi01); } catch(e) {}
-    try { registerBook("วิสุทธิมรรค ภาค ๒", contentVisuddhi02); } catch(e) {}
-    try { registerBook("วิสุทธิมรรค ภาค ๓", contentVisuddhi03); } catch(e) {}
-    try { registerBook("อภิธรรม ภาค ๑", contentAbhidhamma01); } catch(e) {}
-
-    // --- Slide Selector Logic ---
-    let activeSlideTextarea = null;
-
-    function openSlideSelector(btn) {
-        activeSlideTextarea = btn.previousElementSibling;
-        const level = levelSelect.value;
-        if (!level) { alert('กรุณาเลือกชั้นเรียนก่อน'); return; }
-
-        const bookSelect = document.getElementById('slide-book-select');
-        bookSelect.innerHTML = '<option value="">-- เลือกหนังสือ/คัมภีร์ --</option>';
-
-        const allowedBooks = levelConfig[level] || [];
-        books.forEach((b, idx) => {
-            if (allowedBooks.includes(b.name)) {
-                const opt = document.createElement('option');
-                opt.value = idx; 
-                opt.textContent = b.name;
-                bookSelect.appendChild(opt);
-            }
-        });
-
-        if (bookSelect.options.length > 1) {
-            bookSelect.selectedIndex = 1;
+        const books = [];
+        function registerBook(name, varObj) {
+            if (typeof varObj !== 'undefined') books.push({ name: name, data: varObj });
         }
 
-        renderSlideOptions();
-        document.getElementById('slide-modal').style.display = 'flex';
-    }
+        // Register all available books
+        try { registerBook("ธรรมบท ภาค ๑", contentDhamma01); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๒", contentDhamma02); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๓", contentDhamma03); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๔", contentDhamma04); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๕", contentDhamma05); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๖", contentDhamma06); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๗", contentDhamma07); } catch (e) { }
+        try { registerBook("ธรรมบท ภาค ๘", contentDhamma08); } catch (e) { }
+        try { registerBook("มังคลัถทีปนี ภาค ๑", contentMangala01); } catch (e) { }
+        try { registerBook("มังคลัถทีปนี ภาค ๒", contentMangala02); } catch (e) { }
+        try { registerBook("สมันตปาสาทิกา ภาค ๑", contentSamanta01); } catch (e) { }
+        try { registerBook("สมันตปาสาทิกา ภาค ๒", contentSamanta02); } catch (e) { }
+        try { registerBook("สมันตปาสาทิกา ภาค ๓", contentSamanta03); } catch (e) { }
+        try { registerBook("วิสุทธิมรรค ภาค ๑", contentVisuddhi01); } catch (e) { }
+        try { registerBook("วิสุทธิมรรค ภาค ๒", contentVisuddhi02); } catch (e) { }
+        try { registerBook("วิสุทธิมรรค ภาค ๓", contentVisuddhi03); } catch (e) { }
+        try { registerBook("อภิธรรม ภาค ๑", contentAbhidhamma01); } catch (e) { }
 
-    function closeSlideSelector() {
-        document.getElementById('slide-modal').style.display = 'none';
-        activeSlideTextarea = null;
-    }
+        // --- Slide Selector Logic ---
+        let activeSlideTextarea = null;
 
-    function renderSlideOptions() {
-        const bookIdx = document.getElementById('slide-book-select').value;
-        const search = document.getElementById('slide-search').value.toLowerCase();
-        const container = document.getElementById('slide-list-container');
-        container.innerHTML = '';
+        function openSlideSelector(btn) {
+            activeSlideTextarea = btn.previousElementSibling;
+            const level = levelSelect.value;
+            if (!level) { alert('กรุณาเลือกชั้นเรียนก่อน'); return; }
 
-        if (bookIdx === "") return;
+            const bookSelect = document.getElementById('slide-book-select');
+            bookSelect.innerHTML = '<option value="">-- เลือกหนังสือ/คัมภีร์ --</option>';
 
-        const book = books[bookIdx];
-        if (!book) return;
+            const allowedBooks = levelConfig[level] || [];
+            books.forEach((b, idx) => {
+                if (allowedBooks.includes(b.name)) {
+                    const opt = document.createElement('option');
+                    opt.value = idx;
+                    opt.textContent = b.name;
+                    bookSelect.appendChild(opt);
+                }
+            });
 
-        Object.keys(book.data).forEach(key => {
-            const items = book.data[key];
-            if (!items || items.length === 0) return;
-            const item = items[0]; 
+            if (bookSelect.options.length > 1) {
+                bookSelect.selectedIndex = 1;
+            }
 
-            const title = item.story || key;
-            const episode = item.episode || '';
-            const textToSearch = `${title} ${episode} ${key}`.toLowerCase();
+            renderSlideOptions();
+            document.getElementById('slide-modal').style.display = 'flex';
+        }
 
-            if (search && !textToSearch.includes(search)) return;
+        function closeSlideSelector() {
+            document.getElementById('slide-modal').style.display = 'none';
+            activeSlideTextarea = null;
+        }
 
-            const div = document.createElement('div');
-            div.style.padding = "8px";
-            div.style.borderBottom = "1px solid #eee";
-            div.style.display = "flex";
-            div.style.alignItems = "center";
-            div.style.gap = "10px";
-            
-            div.innerHTML = `
+        function renderSlideOptions() {
+            const bookIdx = document.getElementById('slide-book-select').value;
+            const search = document.getElementById('slide-search').value.toLowerCase();
+            const container = document.getElementById('slide-list-container');
+            container.innerHTML = '';
+
+            if (bookIdx === "") return;
+
+            const book = books[bookIdx];
+            if (!book) return;
+
+            Object.keys(book.data).forEach(key => {
+                const items = book.data[key];
+                if (!items || items.length === 0) return;
+                const item = items[0];
+
+                const title = item.story || key;
+                const episode = item.episode || '';
+                const textToSearch = `${title} ${episode} ${key}`.toLowerCase();
+
+                if (search && !textToSearch.includes(search)) return;
+
+                const div = document.createElement('div');
+                div.style.padding = "8px";
+                div.style.borderBottom = "1px solid #eee";
+                div.style.display = "flex";
+                div.style.alignItems = "center";
+                div.style.gap = "10px";
+
+                div.innerHTML = `
                 <input type="checkbox" class="slide-checkbox" value="${key}">
                 <div style="cursor:pointer;" onclick="this.previousElementSibling.click()">
                     <div style="font-weight:bold; color:#2c3e50;">${title}</div>
                     <div style="font-size:0.85em; color:#7f8c8d;">${episode} (ID: ${key})</div>
                 </div>
             `;
-            container.appendChild(div);
-        });
-    }
-
-    function confirmSlideSelection() {
-        if (!activeSlideTextarea) return;
-
-        const checkboxes = document.querySelectorAll('.slide-checkbox:checked');
-        const ids = Array.from(checkboxes).map(cb => cb.value);
-        
-        if (ids.length > 0) {
-            const currentVal = activeSlideTextarea.value.trim();
-            const newVal = ids.join('\\n');
-            activeSlideTextarea.value = currentVal ? currentVal + '\\n' + newVal : newVal;
-        }
-        closeSlideSelector();
-    }
-
-    // Configuration for Subjects
-    const SUBJECT_CONFIG = {
-        "pt12": [
-            { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }
-        ],
-        "pt3": [
-            { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
-            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Samphan', label: 'สัม.', defaultAct: 'สัมพันธ์ไทย' }
-        ],
-        "pt4": [
-            { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' },
-            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }
-        ],
-        "pt5": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt6": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt7": [ { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ],
-        "pt8": [
-            { id: 'Chan', label: 'ฉันท์.', defaultAct: 'แต่งฉันท์มคธ' },
-            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
-            { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }
-        ],
-        "pt9": [
-            { id: 'Tang', label: 'แต่ง.', defaultAct: 'แต่งไทยเป็นมคธ' },
-            { id: 'Return', label: 'กลับ.', defaultAct: 'แต่งไทยเป็นมคธ' },
-            { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ]
-    };
-
-    const LEVEL_LABELS = {
-        'pt12': 'ประโยค ๑-๒',
-        'pt3': 'ประโยค ๓',
-        'pt4': 'ประโยค ๔',
-        'pt5': 'ประโยค ๕',
-        'pt6': 'ประโยค ๖',
-        'pt7': 'ประโยค ๗',
-        'pt8': 'ประโยค ๘',
-        'pt9': 'ประโยค ๙'
-    };
-    const TYPE_LABELS = {
-        'materials': 'เอกสารประกอบ',
-        'exams': 'ข้อสอบ',
-        'answers': 'เฉลย'
-    };
-
-    let allClassrooms = [];
-    let allowedRooms = [];
-    let currentRole = 'general';
-    let teacherName = '';
-    let currentUser = null;
-
-    function computeAllowedRooms() {
-        allowedRooms = (currentRole === 'admin')
-            ? allClassrooms
-            : allClassrooms.filter(r => Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName));
-    }
-
-    function enforceAccessWithParams() {
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const preRoom = urlParams.get('room');
-            if (!preRoom) return true;
-            const normalize = (s) => (s || '').toLowerCase().trim();
-            const isTeacherOfRoom = (r) => {
-                const teachers = Array.isArray(r.teachers) ? r.teachers.map(normalize) : [];
-                const candidates = [teacherName, (currentUser ? currentUser.email : ''), (currentUser ? currentUser.displayName : '')].map(normalize);
-                return candidates.some(c => c && teachers.includes(c));
-            };
-            let room = (Array.isArray(allowedRooms) ? allowedRooms : []).find(r => r.id === preRoom);
-            let canEdit = (currentRole === 'admin');
-            if (!room) {
-                // Try Firestore directly
-                room = allClassrooms.find(r => r.id === preRoom) || null;
-            }
-            if (room && !canEdit) canEdit = isTeacherOfRoom(room);
-            if (!canEdit) {
-                // Fallback to systemConfig
-                if (typeof systemConfig !== 'undefined') {
-                    const r2 = systemConfig.getRoom(preRoom);
-                    if (r2 && isTeacherOfRoom(r2)) {
-                        room = { id: r2.id, ...r2 };
-                        canEdit = true;
-                    }
-                }
-            }
-            if (!room) {
-                alert("คุณไม่มีสิทธิ์ดูหรือแก้ไขตารางของห้องนี้");
-                window.location.href = '../index.html';
-                return false;
-            }
-            levelSelect.value = room.level;
-            onLevelChange(); // Populate rooms for allowed set
-            roomSelect.value = preRoom; // Select room
-            checkAndLoadSchedule();
-            return true;
-        } catch (e) { return false; }
-    }
-
-    // Initialize
-    (async function init() {
-        // Set default date to current
-        const now = new Date();
-        const currentYear = now.getFullYear();
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const currentMonth = monthNames[now.getMonth()];
-        
-        const yearInput = document.getElementById('year-select');
-        if (yearInput) yearInput.value = currentYear;
-
-        const monthSelect = document.getElementById('month-select');
-        // Add option if not exists? No, keep existing structure but try to select
-        // Check if option exists
-        if (monthSelect) {
-             let found = false;
-             for(let i=0; i<monthSelect.options.length; i++) {
-                 if(monthSelect.options[i].value === currentMonth) {
-                     monthSelect.selectedIndex = i;
-                     found = true;
-                     break;
-                 }
-             }
+                container.appendChild(div);
+            });
         }
 
-        // Check Auth Status
-        firebase.auth().onAuthStateChanged(async user => {
-            const statusDiv = document.getElementById('auth-status');
-            if (user) {
-                // Check Role
-                try {
-                    const doc = await db.collection('users').doc(user.uid).get();
-                    const role = doc.exists ? doc.data().role : 'unknown';
-                    statusDiv.innerHTML = `<i class="fas fa-user"></i> ${user.email} (${role})`;
-                    statusDiv.style.color = (role === 'admin' || role === 'teacher') ? '#27ae60' : '#e74c3c';
-                    
-                    currentUser = user;
-                    currentRole = role || 'general';
-                    teacherName = user.displayName || user.email || user.uid;
-                    if (allClassrooms.length) {
-                        computeAllowedRooms();
-                        enforceAccessWithParams();
-                    }
-                } catch(e) {
-                     statusDiv.innerText = `${user.email} (Error checking role)`;
-                }
-            } else {
-                statusDiv.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
-                alert("คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน");
+        function confirmSlideSelection() {
+            if (!activeSlideTextarea) return;
+
+            const checkboxes = document.querySelectorAll('.slide-checkbox:checked');
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+
+            if (ids.length > 0) {
+                const currentVal = activeSlideTextarea.value.trim();
+                const newVal = ids.join('\\n');
+                activeSlideTextarea.value = currentVal ? currentVal + '\\n' + newVal : newVal;
             }
-        });
-        
-        await Promise.all([loadClassrooms(), loadDynamicFiles()]);
-        
-        // Check URL params
-        const urlParams = new URLSearchParams(window.location.search);
-        const preRoom = urlParams.get('room');
-        computeAllowedRooms();
-        if (preRoom) enforceAccessWithParams();
-    })();
-
-    async function loadClassrooms() {
-        allClassrooms = [];
-        try {
-            const snap = await db.collection('classrooms').orderBy('level').get();
-            if (!snap.empty) {
-                snap.forEach(doc => {
-                    allClassrooms.push({ id: doc.id, ...doc.data() });
-                });
-            }
-        } catch (e) {
-            console.error("Error loading classrooms:", e);
+            closeSlideSelector();
         }
 
-        // Fallback to systemConfig if DB is empty or failed
-        if (allClassrooms.length === 0 && typeof systemConfig !== 'undefined') {
-            console.warn("Loading classrooms from systemConfig (Firestore empty or failed)");
-            for (let key in systemConfig.classrooms) {
-                let room = systemConfig.classrooms[key];
-                allClassrooms.push({ id: room.id, ...room });
-            }
-        }
-        
-        // Don't populate roomSelect yet, wait for level selection
-        roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
-    }
+        // Configuration for Subjects
+        const SUBJECT_CONFIG = {
+            "pt12": [
+                { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
+                { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }
+            ],
+            "pt3": [
+                { id: 'Grammar', label: 'ไวย.', defaultAct: 'บาลีไวยากรณ์' },
+                { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
+                { id: 'Samphan', label: 'สัม.', defaultAct: 'สัมพันธ์ไทย' }
+            ],
+            "pt4": [{ id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }],
+            "pt5": [{ id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }],
+            "pt6": [{ id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }],
+            "pt7": [{ id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }, { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }],
+            "pt8": [
+                { id: 'Chan', label: 'ฉันท์.', defaultAct: 'แต่งฉันท์มคธ' },
+                { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' },
+                { id: 'Return', label: 'กลับ.', defaultAct: 'แปลไทยเป็นมคธ' }
+            ],
+            "pt9": [
+                { id: 'Tang', label: 'แต่ง.', defaultAct: 'แต่งไทยเป็นมคธ' },
+                { id: 'Return', label: 'กลับ.', defaultAct: 'แต่งไทยเป็นมคธ' },
+                { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' }]
+        };
 
-    function onLevelChange() {
-        const lvl = levelSelect.value;
-        roomSelect.innerHTML = '<option value="">-- เลือกห้องเรียน --</option>';
-        document.getElementById('schedule-rows').innerHTML = ''; // Clear schedule
-        document.getElementById('status-msg').style.display = 'none';
-        
-        if (!lvl) {
-            roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
-            return;
-        }
-        
-        const baseRooms = (allowedRooms && allowedRooms.length) ? allowedRooms : allClassrooms;
-        const filtered = baseRooms.filter(r => r.level === lvl);
-        filtered.forEach(r => {
-             const option = document.createElement('option');
-             option.value = r.id;
-             option.dataset.level = r.level;
-             option.textContent = `${r.name} (${r.id})`;
-             roomSelect.appendChild(option);
-        });
-    }
+        const LEVEL_LABELS = {
+            'pt12': 'ประโยค ๑-๒',
+            'pt3': 'ประโยค ๓',
+            'pt4': 'ประโยค ๔',
+            'pt5': 'ประโยค ๕',
+            'pt6': 'ประโยค ๖',
+            'pt7': 'ประโยค ๗',
+            'pt8': 'ประโยค ๘',
+            'pt9': 'ประโยค ๙'
+        };
+        const TYPE_LABELS = {
+            'materials': 'เอกสารประกอบ',
+            'exams': 'ข้อสอบ',
+            'answers': 'เฉลย'
+        };
 
-    async function checkAndLoadSchedule() {
-        const roomId = roomSelect.value;
-        const month = document.getElementById('month-select').value;
-        const year = document.getElementById('year-select').value;
-        const container = document.getElementById('schedule-rows');
-        const statusMsg = document.getElementById('status-msg');
+        let allClassrooms = [];
+        let allowedRooms = [];
+        let currentRole = 'general';
+        let teacherName = '';
+        let currentUser = null;
 
-        if (!roomId || !month || !year) {
-            currentScheduleId = null;
-            return;
-        }
-
-        const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
-        if (!isAllowed) {
-            statusMsg.style.display = 'block';
-            statusMsg.style.backgroundColor = '#fff3cd';
-            statusMsg.style.color = '#856404';
-            statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์แก้ไขตารางของห้องนี้`;
-            return;
+        function computeAllowedRooms() {
+            allowedRooms = (currentRole === 'admin')
+                ? allClassrooms
+                : allClassrooms.filter(r => Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName));
         }
 
-        showLoading(true);
-        container.innerHTML = '';
-        currentScheduleId = `${roomId}_${month}_${year}`; // Deterministic ID
-
-        try {
-            const doc = await db.collection('schedules').doc(currentScheduleId).get();
-            
-            if (doc.exists) {
-                const data = doc.data();
-                statusMsg.style.display = 'block';
-                statusMsg.style.backgroundColor = '#d4edda';
-                statusMsg.style.color = '#155724';
-                statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> พบข้อมูลตารางเรียนเดิม (แก้ไขล่าสุด: ${data.updatedAt ? new Date(data.updatedAt.seconds * 1000).toLocaleString() : '-'})`;
-                
-                // Populate Form
-                if (data.days && Array.isArray(data.days)) {
-                    data.days.forEach(day => addRow(day));
-                }
-            } else {
-                statusMsg.style.display = 'block';
-                statusMsg.style.backgroundColor = '#fff3cd';
-                statusMsg.style.color = '#856404';
-                statusMsg.innerHTML = `<i class="fas fa-info-circle"></i> ยังไม่มีตารางเรียนของเดือนนี้ (สร้างใหม่)`;
-            }
-        } catch (e) {
-            console.error("Load error:", e);
-            if (e.code === 'permission-denied') {
-                alert("สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุ: Security Rules บน Server ยังไม่อนุญาตให้เข้าถึงตารางเรียน\n\nวิธีแก้ไข: กรุณา Deploy ไฟล์ 'firestore.rules' ขึ้นไปยัง Firebase Console หรือแก้ไข Rules บนเว็บให้ตรงกัน");
-            } else {
-                alert("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
-            }
-        } finally {
-            showLoading(false);
-        }
-    }
-
-    async function saveSchedule() {
-        const roomId = roomSelect.value;
-        const month = document.getElementById('month-select').value;
-        const year = document.getElementById('year-select').value;
-        const statusMsg = document.getElementById('status-msg');
-        
-        if (!roomId) return alert("กรุณาเลือกห้องเรียน");
-        
-        const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
-        if (!isAllowed) {
-            alert("คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้");
-            if (statusMsg) {
-                statusMsg.style.display = 'block';
-                statusMsg.style.backgroundColor = '#fff3cd';
-                statusMsg.style.color = '#856404';
-                statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้`;
-            }
-            return;
-        }
-        
-        const rows = document.querySelectorAll('.row-entry');
-        if (rows.length === 0) return alert("กรุณาเพิ่มวันเรียนอย่างน้อย 1 วัน");
-
-        showLoading(true);
-
-        try {
-            const scheduleData = collectData();
-            const id = `${roomId}_${month}_${year}`;
-            
-            await db.collection('schedules').doc(id).set({
-                roomId: roomId,
-                level: roomSelect.options[roomSelect.selectedIndex].dataset.level,
-                month: month,
-                year: year,
-                days: scheduleData,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-
-            alert("บันทึกข้อมูลเรียบร้อย!");
-        } catch (e) {
-            console.error("Save error:", e);
-            if (e.code === 'permission-denied') {
-                alert("บันทึกไม่สำเร็จ: สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุที่เป็นไปได้:\n1. คุณยังไม่ได้เข้าสู่ระบบ (กรุณาตรวจสอบสถานะมุมขวาบน)\n2. บัญชีของคุณไม่ใช่ Admin หรือ Teacher\n3. Security Rules บน Server ยังไม่อนุญาต (ถ้าเป็น Admin ให้ลอง Deploy Rules ใหม่)");
-            } else {
-                alert("บันทึกไม่สำเร็จ: " + e.message);
-            }
-        } finally {
-            showLoading(false);
-        }
-    }
-
-    function collectData() {
-        const rows = document.querySelectorAll('.row-entry');
-        const data = [];
-        
-        rows.forEach(row => {
-            const date = row.querySelector('.input-date').value;
-            const displayDate = row.querySelector('.input-display-date').value;
-            const remarksText = row.querySelector('.input-remarks').value;
-            const isWeekend = row.querySelector('.input-weekend').checked;
-
-            let obj = {
-                date: date,
-                displayDate: displayDate,
-                isWeekend: isWeekend,
-                remarks: {}
-            };
-            
-            if (remarksText) obj.remarks.general = remarksText;
-
-            ['morning', 'afternoon', 'evening'].forEach(period => {
-                const container = row.querySelector(`.slot-container[data-period="${period}"]`);
-                if (!container) return;
-
-                const zoomInp = container.querySelector('.input-zoom');
-
-                const periodObj = {
-                    timeStart: '', // Defaults, will be filled if exam enabled
-                    timeEnd: '',
-                    linkZoom: zoomInp && zoomInp.value.trim() ? zoomInp.value.trim() : null, // Shared Zoom
-                    activities: {},
-                    youtube: {},
-                    slides: {}, 
-                    noteFiles: {},
-                    isExam: {},
-                    examFiles: {},
-                    answerFiles: {}
+        function enforceAccessWithParams() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const preRoom = urlParams.get('room');
+                if (!preRoom) return true;
+                const normalize = (s) => (s || '').toLowerCase().trim();
+                const isTeacherOfRoom = (r) => {
+                    const teachers = Array.isArray(r.teachers) ? r.teachers.map(normalize) : [];
+                    const candidates = [teacherName, (currentUser ? currentUser.email : ''), (currentUser ? currentUser.displayName : '')].map(normalize);
+                    return candidates.some(c => c && teachers.includes(c));
                 };
-
-                // Helper to get chips values
-                const getChips = (parent) => {
-                    return Array.from(parent.querySelectorAll('.file-chip')).map(c => c.dataset.val);
-                };
-
-                // Iterate over subject blocks
-                container.querySelectorAll('.subject-block').forEach(block => {
-                    const checkbox = block.querySelector('.subj-enable');
-                    if (!checkbox || !checkbox.checked) return;
-
-                    const subjId = checkbox.dataset.subjId;
-                    
-                    // 1. Activity
-                    const actInp = block.querySelector('.input-act');
-                    if (actInp && actInp.value.trim()) {
-                        const lines = actInp.value.split('\n').map(s => s.trim()).filter(s => s);
-                        if (lines.length > 1) periodObj.activities[subjId] = lines;
-                        else periodObj.activities[subjId] = lines[0];
-                    }
-
-                    // 2. YouTube
-                    const ytInp = block.querySelector('.input-youtube');
-                    if (ytInp && ytInp.value.trim()) {
-                        periodObj.youtube[subjId] = ytInp.value.trim();
-                    }
-
-                    // 3. Slide (Presentation ID)
-                    const slideInp = block.querySelector('.input-slide');
-                    if (slideInp && slideInp.value.trim()) {
-                        periodObj.slides[subjId] = slideInp.value.trim();
-                    }
-
-                    // 4. Material
-                    const matSelect = block.querySelector('.input-file');
-                    if (matSelect) {
-                        const chipsContainer = matSelect.previousElementSibling;
-                        if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
-                             const files = getChips(chipsContainer);
-                             if (files.length > 0) periodObj.noteFiles[subjId] = files;
+                let room = (Array.isArray(allowedRooms) ? allowedRooms : []).find(r => r.id === preRoom);
+                let canEdit = (currentRole === 'admin');
+                if (!room) {
+                    // Try Firestore directly
+                    room = allClassrooms.find(r => r.id === preRoom) || null;
+                }
+                if (room && !canEdit) canEdit = isTeacherOfRoom(room);
+                if (!canEdit) {
+                    // Fallback to systemConfig
+                    if (typeof systemConfig !== 'undefined') {
+                        const r2 = systemConfig.getRoom(preRoom);
+                        if (r2 && isTeacherOfRoom(r2)) {
+                            room = { id: r2.id, ...r2 };
+                            canEdit = true;
                         }
                     }
+                }
+                if (!room) {
+                    alert("คุณไม่มีสิทธิ์ดูหรือแก้ไขตารางของห้องนี้");
+                    window.location.href = '../index.html';
+                    return false;
+                }
+                levelSelect.value = room.level;
+                onLevelChange(); // Populate rooms for allowed set
+                roomSelect.value = preRoom; // Select room
+                checkAndLoadSchedule();
+                return true;
+            } catch (e) { return false; }
+        }
 
-                    // 5. Exam
-                    const examCheck = block.querySelector('.input-is-exam');
-                    if (examCheck && examCheck.checked) {
-                        periodObj.isExam[subjId] = true;
-                        
-                        const examSelect = block.querySelector('.input-exam-file');
-                        if (examSelect) {
-                            const chipsContainer = examSelect.previousElementSibling;
-                            if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
-                                 const files = getChips(chipsContainer);
-                                 if (files.length > 0) periodObj.examFiles[subjId] = files;
-                            }
-                        }
-                        
-                        const ansSelect = block.querySelector('.input-ans-file');
-                        if (ansSelect) {
-                            const chipsContainer = ansSelect.previousElementSibling;
-                            if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
-                                 const files = getChips(chipsContainer);
-                                 if (files.length > 0) periodObj.answerFiles[subjId] = files;
-                            }
-                        }
+        // Initialize
+        (async function init() {
+            // Set default date to current
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const currentMonth = monthNames[now.getMonth()];
 
-                        // Exam Time (Global for period) - capture from active exam subject
-                        const tStart = block.querySelector('.input-time-start');
-                        const tEnd = block.querySelector('.input-time-end');
-                        if (tStart && tStart.value) periodObj.timeStart = tStart.value;
-                        if (tEnd && tEnd.value) periodObj.timeEnd = tEnd.value;
+            const yearInput = document.getElementById('year-select');
+            if (yearInput) yearInput.value = currentYear;
+
+            const monthSelect = document.getElementById('month-select');
+            // Add option if not exists? No, keep existing structure but try to select
+            // Check if option exists
+            if (monthSelect) {
+                let found = false;
+                for (let i = 0; i < monthSelect.options.length; i++) {
+                    if (monthSelect.options[i].value === currentMonth) {
+                        monthSelect.selectedIndex = i;
+                        found = true;
+                        break;
                     }
-                });
+                }
+            }
 
-                // --- Legacy / Flat Data Generation for Compatibility ---
-                
-                // Activities
-                if (periodObj.activities['Grammar']) periodObj.activityGrammar = periodObj.activities['Grammar'];
-                if (periodObj.activities['Translate']) periodObj.activityTranslate = periodObj.activities['Translate'];
-                if (periodObj.activities['Return']) periodObj.activityReturn = periodObj.activities['Return'];
-                if (periodObj.activities['Chan']) periodObj.activityChan = periodObj.activities['Chan'];
-                if (periodObj.activities['Samphan']) periodObj.activitySamphan = periodObj.activities['Samphan'];
-                if (periodObj.activities['Tang']) periodObj.activityTang = periodObj.activities['Tang'];
-                
-                // Generic Activity
-                const allActs = Object.values(periodObj.activities);
-                const allActsFlat = allActs.flatMap(v => Array.isArray(v) ? v : [v]);
-                if (allActsFlat.length > 0) periodObj.activity = allActsFlat.join(' / ');
+            // Check Auth Status
+            firebase.auth().onAuthStateChanged(async user => {
+                const statusDiv = document.getElementById('auth-status');
+                if (user) {
+                    // Check Role
+                    try {
+                        const doc = await db.collection('users').doc(user.uid).get();
+                        const role = doc.exists ? doc.data().role : 'unknown';
+                        statusDiv.innerHTML = `<i class="fas fa-user"></i> ${user.email} (${role})`;
+                        statusDiv.style.color = (role === 'admin' || role === 'teacher') ? '#27ae60' : '#e74c3c';
 
-                // YouTube
-                const allYt = Object.values(periodObj.youtube).join('\n'); 
-                if (allYt) periodObj.linkYoutube = allYt.split('\n').map(s=>s.trim()).filter(s=>s).join(',');
-
-                // Slide
-                const allSlides = Object.values(periodObj.slides);
-                if (allSlides.length > 0) periodObj.linkZoom = allSlides[0];
-
-                const flatten = (arr) => arr.flat();
-
-                // Materials
-                const allNotes = flatten(Object.values(periodObj.noteFiles));
-                if (allNotes.length > 0) periodObj.materials = allNotes;
-                if (periodObj.noteFiles['Grammar']) periodObj.fileNoteGrammar = periodObj.noteFiles['Grammar'];
-                if (periodObj.noteFiles['Translate']) periodObj.fileNoteTranslate = periodObj.noteFiles['Translate'];
-
-                // Exam Files
-                const allExams = flatten(Object.values(periodObj.examFiles));
-                if (allExams.length > 0) periodObj.exams = allExams;
-                if (periodObj.examFiles['Grammar']) periodObj.fileExamGrammar = periodObj.examFiles['Grammar'];
-                if (periodObj.examFiles['Translate']) periodObj.fileExamTranslate = periodObj.examFiles['Translate'];
-
-                // Answer Files
-                const allAnswers = flatten(Object.values(periodObj.answerFiles));
-                if (allAnswers.length > 0) periodObj.answers = allAnswers;
-                if (periodObj.answerFiles['Grammar']) periodObj.fileAnswerGrammar = periodObj.answerFiles['Grammar'];
-                if (periodObj.answerFiles['Translate']) periodObj.fileAnswerTranslate = periodObj.answerFiles['Translate'];
-
-                // Cleanup
-                if (Object.keys(periodObj.activities).length === 0) delete periodObj.activities;
-                if (Object.keys(periodObj.youtube).length === 0) delete periodObj.youtube;
-                if (Object.keys(periodObj.slides).length === 0) delete periodObj.slides;
-                if (Object.keys(periodObj.noteFiles).length === 0) delete periodObj.noteFiles;
-                if (Object.keys(periodObj.isExam).length === 0) delete periodObj.isExam;
-                if (Object.keys(periodObj.examFiles).length === 0) delete periodObj.examFiles;
-                if (Object.keys(periodObj.answerFiles).length === 0) delete periodObj.answerFiles;
-
-                if (Object.keys(periodObj).length > 0) {
-                    obj[period] = periodObj;
+                        currentUser = user;
+                        currentRole = role || 'general';
+                        teacherName = user.displayName || user.email || user.uid;
+                        if (allClassrooms.length) {
+                            computeAllowedRooms();
+                            enforceAccessWithParams();
+                        }
+                    } catch (e) {
+                        statusDiv.innerText = `${user.email} (Error checking role)`;
+                    }
+                } else {
+                    statusDiv.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
+                    alert("คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน");
                 }
             });
-            
-            data.push(obj);
-        });
-        
-        return data;
-    }
 
-    // --- Multi-File Input Helpers ---
-    function handleFileSelect(select) {
-        if (!select.value) return;
-        const container = select.previousElementSibling; // Chips container
-        if (!container || !container.classList.contains('file-chips')) return;
-        
-        const val = select.value;
-        // Text might contain emojis or extra info, we just want the filename usually, 
-        // but for display, the option text is fine.
-        const text = select.options[select.selectedIndex].text;
-        
-        // Check duplicate
-        if (container.querySelector(`.file-chip[data-val="${val}"]`)) {
-            select.value = "";
-            return;
+            await Promise.all([loadClassrooms(), loadDynamicFiles()]);
+
+            // Check URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const preRoom = urlParams.get('room');
+            computeAllowedRooms();
+            if (preRoom) enforceAccessWithParams();
+        })();
+
+        async function loadClassrooms() {
+            allClassrooms = [];
+            try {
+                const snap = await db.collection('classrooms').orderBy('level').get();
+                if (!snap.empty) {
+                    snap.forEach(doc => {
+                        allClassrooms.push({ id: doc.id, ...doc.data() });
+                    });
+                }
+            } catch (e) {
+                console.error("Error loading classrooms:", e);
+            }
+
+            // Fallback to systemConfig if DB is empty or failed
+            if (allClassrooms.length === 0 && typeof systemConfig !== 'undefined') {
+                console.warn("Loading classrooms from systemConfig (Firestore empty or failed)");
+                for (let key in systemConfig.classrooms) {
+                    let room = systemConfig.classrooms[key];
+                    allClassrooms.push({ id: room.id, ...room });
+                }
+            }
+
+            // Don't populate roomSelect yet, wait for level selection
+            roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
         }
-        
-        addChip(container, val, text);
-        select.value = ""; // Reset
-    }
 
-    function addChip(container, val, text) {
-        // If text is not provided, try to guess or just use val
-        if (!text) text = val;
+        function onLevelChange() {
+            const lvl = levelSelect.value;
+            roomSelect.innerHTML = '<option value="">-- เลือกห้องเรียน --</option>';
+            document.getElementById('schedule-rows').innerHTML = ''; // Clear schedule
+            document.getElementById('status-msg').style.display = 'none';
 
-        const chip = document.createElement('div');
-        chip.className = 'file-chip';
-        chip.dataset.val = val;
-        chip.innerHTML = `
+            if (!lvl) {
+                roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
+                return;
+            }
+
+            const baseRooms = (allowedRooms && allowedRooms.length) ? allowedRooms : allClassrooms;
+            const filtered = baseRooms.filter(r => r.level === lvl);
+            filtered.forEach(r => {
+                const option = document.createElement('option');
+                option.value = r.id;
+                option.dataset.level = r.level;
+                option.textContent = `${r.name} (${r.id})`;
+                roomSelect.appendChild(option);
+            });
+        }
+
+        async function checkAndLoadSchedule() {
+            const roomId = roomSelect.value;
+            const month = document.getElementById('month-select').value;
+            const year = document.getElementById('year-select').value;
+            const container = document.getElementById('schedule-rows');
+            const statusMsg = document.getElementById('status-msg');
+
+            if (!roomId || !month || !year) {
+                currentScheduleId = null;
+                return;
+            }
+
+            const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
+            if (!isAllowed) {
+                statusMsg.style.display = 'block';
+                statusMsg.style.backgroundColor = '#fff3cd';
+                statusMsg.style.color = '#856404';
+                statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์แก้ไขตารางของห้องนี้`;
+                return;
+            }
+
+            showLoading(true);
+            container.innerHTML = '';
+            currentScheduleId = `${roomId}_${month}_${year}`; // Deterministic ID
+
+            try {
+                const doc = await db.collection('schedules').doc(currentScheduleId).get();
+
+                if (doc.exists) {
+                    const data = doc.data();
+                    statusMsg.style.display = 'block';
+                    statusMsg.style.backgroundColor = '#d4edda';
+                    statusMsg.style.color = '#155724';
+                    statusMsg.innerHTML = `<i class="fas fa-check-circle"></i> พบข้อมูลตารางเรียนเดิม (แก้ไขล่าสุด: ${data.updatedAt ? new Date(data.updatedAt.seconds * 1000).toLocaleString() : '-'})`;
+
+                    // Populate Form
+                    if (data.days && Array.isArray(data.days)) {
+                        data.days.forEach(day => addRow(day));
+                    }
+                } else {
+                    statusMsg.style.display = 'block';
+                    statusMsg.style.backgroundColor = '#fff3cd';
+                    statusMsg.style.color = '#856404';
+                    statusMsg.innerHTML = `<i class="fas fa-info-circle"></i> ยังไม่มีตารางเรียนของเดือนนี้ (สร้างใหม่)`;
+                }
+            } catch (e) {
+                console.error("Load error:", e);
+                if (e.code === 'permission-denied') {
+                    alert("สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุ: Security Rules บน Server ยังไม่อนุญาตให้เข้าถึงตารางเรียน\n\nวิธีแก้ไข: กรุณา Deploy ไฟล์ 'firestore.rules' ขึ้นไปยัง Firebase Console หรือแก้ไข Rules บนเว็บให้ตรงกัน");
+                } else {
+                    alert("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + e.message);
+                }
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function saveSchedule() {
+            const roomId = roomSelect.value;
+            const month = document.getElementById('month-select').value;
+            const year = document.getElementById('year-select').value;
+            const statusMsg = document.getElementById('status-msg');
+
+            if (!roomId) return alert("กรุณาเลือกห้องเรียน");
+
+            const isAllowed = (currentRole === 'admin') || ((Array.isArray(allowedRooms) ? allowedRooms : []).some(r => r.id === roomId));
+            if (!isAllowed) {
+                alert("คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้");
+                if (statusMsg) {
+                    statusMsg.style.display = 'block';
+                    statusMsg.style.backgroundColor = '#fff3cd';
+                    statusMsg.style.color = '#856404';
+                    statusMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> คุณไม่มีสิทธิ์บันทึกตารางของห้องนี้`;
+                }
+                return;
+            }
+
+            const rows = document.querySelectorAll('.row-entry');
+            if (rows.length === 0) return alert("กรุณาเพิ่มวันเรียนอย่างน้อย 1 วัน");
+
+            showLoading(true);
+
+            try {
+                const scheduleData = collectData();
+                const id = `${roomId}_${month}_${year}`;
+
+                await db.collection('schedules').doc(id).set({
+                    roomId: roomId,
+                    level: roomSelect.options[roomSelect.selectedIndex].dataset.level,
+                    month: month,
+                    year: year,
+                    days: scheduleData,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+
+                alert("บันทึกข้อมูลเรียบร้อย!");
+            } catch (e) {
+                console.error("Save error:", e);
+                if (e.code === 'permission-denied') {
+                    alert("บันทึกไม่สำเร็จ: สิทธิ์การเข้าถึงถูกปฏิเสธ (Permission Denied)\n\nสาเหตุที่เป็นไปได้:\n1. คุณยังไม่ได้เข้าสู่ระบบ (กรุณาตรวจสอบสถานะมุมขวาบน)\n2. บัญชีของคุณไม่ใช่ Admin หรือ Teacher\n3. Security Rules บน Server ยังไม่อนุญาต (ถ้าเป็น Admin ให้ลอง Deploy Rules ใหม่)");
+                } else {
+                    alert("บันทึกไม่สำเร็จ: " + e.message);
+                }
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function collectData() {
+            const rows = document.querySelectorAll('.row-entry');
+            const data = [];
+
+            rows.forEach(row => {
+                const date = row.querySelector('.input-date').value;
+                const displayDate = row.querySelector('.input-display-date').value;
+                const remarksText = row.querySelector('.input-remarks').value;
+                const isWeekend = row.querySelector('.input-weekend').checked;
+
+                let obj = {
+                    date: date,
+                    displayDate: displayDate,
+                    isWeekend: isWeekend,
+                    remarks: {}
+                };
+
+                if (remarksText) obj.remarks.general = remarksText;
+
+                ['morning', 'afternoon', 'evening'].forEach(period => {
+                    const container = row.querySelector(`.slot-container[data-period="${period}"]`);
+                    if (!container) return;
+
+                    const zoomInp = container.querySelector('.input-zoom');
+
+                    const periodObj = {
+                        timeStart: '', // Defaults, will be filled if exam enabled
+                        timeEnd: '',
+                        linkZoom: zoomInp && zoomInp.value.trim() ? zoomInp.value.trim() : null, // Shared Zoom
+                        activities: {},
+                        youtube: {},
+                        slides: {},
+                        noteFiles: {},
+                        isExam: {},
+                        examFiles: {},
+                        answerFiles: {}
+                    };
+
+                    // Helper to get chips values
+                    const getChips = (parent) => {
+                        return Array.from(parent.querySelectorAll('.file-chip')).map(c => c.dataset.val);
+                    };
+
+                    // Iterate over subject blocks
+                    container.querySelectorAll('.subject-block').forEach(block => {
+                        const checkbox = block.querySelector('.subj-enable');
+                        if (!checkbox || !checkbox.checked) return;
+
+                        const subjId = checkbox.dataset.subjId;
+
+                        // 1. Activity
+                        const actInp = block.querySelector('.input-act');
+                        if (actInp && actInp.value.trim()) {
+                            const lines = actInp.value.split('\n').map(s => s.trim()).filter(s => s);
+                            if (lines.length > 1) periodObj.activities[subjId] = lines;
+                            else periodObj.activities[subjId] = lines[0];
+                        }
+
+                        // 2. YouTube
+                        const ytInp = block.querySelector('.input-youtube');
+                        if (ytInp && ytInp.value.trim()) {
+                            periodObj.youtube[subjId] = ytInp.value.trim();
+                        }
+
+                        // 3. Slide (Presentation ID)
+                        const slideInp = block.querySelector('.input-slide');
+                        if (slideInp && slideInp.value.trim()) {
+                            periodObj.slides[subjId] = slideInp.value.trim();
+                        }
+
+                        // 4. Material
+                        const matSelect = block.querySelector('.input-file');
+                        if (matSelect) {
+                            const chipsContainer = matSelect.previousElementSibling;
+                            if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                                const files = getChips(chipsContainer);
+                                if (files.length > 0) periodObj.noteFiles[subjId] = files;
+                            }
+                        }
+
+                        // 5. Exam
+                        const examCheck = block.querySelector('.input-is-exam');
+                        if (examCheck && examCheck.checked) {
+                            periodObj.isExam[subjId] = true;
+
+                            const examSelect = block.querySelector('.input-exam-file');
+                            if (examSelect) {
+                                const chipsContainer = examSelect.previousElementSibling;
+                                if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                                    const files = getChips(chipsContainer);
+                                    if (files.length > 0) periodObj.examFiles[subjId] = files;
+                                }
+                            }
+
+                            const ansSelect = block.querySelector('.input-ans-file');
+                            if (ansSelect) {
+                                const chipsContainer = ansSelect.previousElementSibling;
+                                if (chipsContainer && chipsContainer.classList.contains('file-chips')) {
+                                    const files = getChips(chipsContainer);
+                                    if (files.length > 0) periodObj.answerFiles[subjId] = files;
+                                }
+                            }
+
+                            // Exam Time (Global for period) - capture from active exam subject
+                            const tStart = block.querySelector('.input-time-start');
+                            const tEnd = block.querySelector('.input-time-end');
+                            if (tStart && tStart.value) periodObj.timeStart = tStart.value;
+                            if (tEnd && tEnd.value) periodObj.timeEnd = tEnd.value;
+                        }
+                    });
+
+                    // --- Legacy / Flat Data Generation for Compatibility ---
+
+                    // Activities
+                    if (periodObj.activities['Grammar']) periodObj.activityGrammar = periodObj.activities['Grammar'];
+                    if (periodObj.activities['Translate']) periodObj.activityTranslate = periodObj.activities['Translate'];
+                    if (periodObj.activities['Return']) periodObj.activityReturn = periodObj.activities['Return'];
+                    if (periodObj.activities['Chan']) periodObj.activityChan = periodObj.activities['Chan'];
+                    if (periodObj.activities['Samphan']) periodObj.activitySamphan = periodObj.activities['Samphan'];
+                    if (periodObj.activities['Tang']) periodObj.activityTang = periodObj.activities['Tang'];
+
+                    // Generic Activity
+                    const allActs = Object.values(periodObj.activities);
+                    const allActsFlat = allActs.flatMap(v => Array.isArray(v) ? v : [v]);
+                    if (allActsFlat.length > 0) periodObj.activity = allActsFlat.join(' / ');
+
+                    // YouTube
+                    const allYt = Object.values(periodObj.youtube).join('\n');
+                    if (allYt) periodObj.linkYoutube = allYt.split('\n').map(s => s.trim()).filter(s => s).join(',');
+
+                    // Slide
+                    const allSlides = Object.values(periodObj.slides);
+                    if (allSlides.length > 0) periodObj.linkZoom = allSlides[0];
+
+                    const flatten = (arr) => arr.flat();
+
+                    // Materials
+                    const allNotes = flatten(Object.values(periodObj.noteFiles));
+                    if (allNotes.length > 0) periodObj.materials = allNotes;
+                    if (periodObj.noteFiles['Grammar']) periodObj.fileNoteGrammar = periodObj.noteFiles['Grammar'];
+                    if (periodObj.noteFiles['Translate']) periodObj.fileNoteTranslate = periodObj.noteFiles['Translate'];
+
+                    // Exam Files
+                    const allExams = flatten(Object.values(periodObj.examFiles));
+                    if (allExams.length > 0) periodObj.exams = allExams;
+                    if (periodObj.examFiles['Grammar']) periodObj.fileExamGrammar = periodObj.examFiles['Grammar'];
+                    if (periodObj.examFiles['Translate']) periodObj.fileExamTranslate = periodObj.examFiles['Translate'];
+
+                    // Answer Files
+                    const allAnswers = flatten(Object.values(periodObj.answerFiles));
+                    if (allAnswers.length > 0) periodObj.answers = allAnswers;
+                    if (periodObj.answerFiles['Grammar']) periodObj.fileAnswerGrammar = periodObj.answerFiles['Grammar'];
+                    if (periodObj.answerFiles['Translate']) periodObj.fileAnswerTranslate = periodObj.answerFiles['Translate'];
+
+                    // Cleanup
+                    if (Object.keys(periodObj.activities).length === 0) delete periodObj.activities;
+                    if (Object.keys(periodObj.youtube).length === 0) delete periodObj.youtube;
+                    if (Object.keys(periodObj.slides).length === 0) delete periodObj.slides;
+                    if (Object.keys(periodObj.noteFiles).length === 0) delete periodObj.noteFiles;
+                    if (Object.keys(periodObj.isExam).length === 0) delete periodObj.isExam;
+                    if (Object.keys(periodObj.examFiles).length === 0) delete periodObj.examFiles;
+                    if (Object.keys(periodObj.answerFiles).length === 0) delete periodObj.answerFiles;
+
+                    if (Object.keys(periodObj).length > 0) {
+                        obj[period] = periodObj;
+                    }
+                });
+
+                data.push(obj);
+            });
+
+            return data;
+        }
+
+        // --- Multi-File Input Helpers ---
+        function handleFileSelect(select) {
+            if (!select.value) return;
+            const container = select.previousElementSibling; // Chips container
+            if (!container || !container.classList.contains('file-chips')) return;
+
+            const val = select.value;
+            // Text might contain emojis or extra info, we just want the filename usually, 
+            // but for display, the option text is fine.
+            const text = select.options[select.selectedIndex].text;
+
+            // Check duplicate
+            if (container.querySelector(`.file-chip[data-val="${val}"]`)) {
+                select.value = "";
+                return;
+            }
+
+            addChip(container, val, text);
+            select.value = ""; // Reset
+        }
+
+        function addChip(container, val, text) {
+            // If text is not provided, try to guess or just use val
+            if (!text) text = val;
+
+            const chip = document.createElement('div');
+            chip.className = 'file-chip';
+            chip.dataset.val = val;
+            chip.innerHTML = `
             <span>${text}</span>
             <span class="remove" onclick="this.parentElement.remove()">×</span>
         `;
-        container.appendChild(chip);
-    }
-
-    // Helper to populate row from existing data
-    function addRow(data = null) {
-        let level = levelSelect.value;
-        if (!level) {
-             // Fallback for legacy behavior
-             const selectedOption = roomSelect.options[roomSelect.selectedIndex];
-             level = (selectedOption && selectedOption.dataset.level) ? selectedOption.dataset.level : 'pt12';
+            container.appendChild(chip);
         }
 
-        const div = document.createElement('div');
-        div.className = 'row-entry';
-
-        // Column 1: Date Info
-        let col1 = document.createElement('div');
-        col1.className = 'col-group';
-        col1.style.minWidth = '200px';
-
-        // Helper to extract remarks string safely
-        let remarksStr = '';
-        if (data && data.remarks) {
-            if (typeof data.remarks === 'string') {
-                remarksStr = data.remarks;
-            } else {
-                // Combine all fields
-                let parts = [];
-                if (data.remarks.general) parts.push(data.remarks.general);
-                if (data.remarks.grammar) parts.push(`[ไวยากรณ์] ${data.remarks.grammar}`);
-                if (data.remarks.translate) {
-                     if(Array.isArray(data.remarks.translate)) parts.push(`[แปล] ${data.remarks.translate.join(', ')}`);
-                     else parts.push(`[แปล] ${data.remarks.translate}`);
-                }
-                remarksStr = parts.join('\n');
+        // Helper to populate row from existing data
+        function addRow(data = null) {
+            let level = levelSelect.value;
+            if (!level) {
+                // Fallback for legacy behavior
+                const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+                level = (selectedOption && selectedOption.dataset.level) ? selectedOption.dataset.level : 'pt12';
             }
-        }
 
-        col1.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'row-entry';
+
+            // Column 1: Date Info
+            let col1 = document.createElement('div');
+            col1.className = 'col-group';
+            col1.style.minWidth = '200px';
+
+            // Helper to extract remarks string safely
+            let remarksStr = '';
+            if (data && data.remarks) {
+                if (typeof data.remarks === 'string') {
+                    remarksStr = data.remarks;
+                } else {
+                    // Combine all fields
+                    let parts = [];
+                    if (data.remarks.general) parts.push(data.remarks.general);
+                    if (data.remarks.grammar) parts.push(`[ไวยากรณ์] ${data.remarks.grammar}`);
+                    if (data.remarks.translate) {
+                        if (Array.isArray(data.remarks.translate)) parts.push(`[แปล] ${data.remarks.translate.join(', ')}`);
+                        else parts.push(`[แปล] ${data.remarks.translate}`);
+                    }
+                    remarksStr = parts.join('\n');
+                }
+            }
+
+            col1.innerHTML = `
             <div>
                 <label>วันที่</label>
                 <input type="date" class="input-date" onchange="handleDateChange(this)" value="${data ? data.date : ''}">
@@ -1059,212 +1238,212 @@
                 <textarea class="input-remarks" rows="3" placeholder="หมายเหตุทั่วไป...">${remarksStr.trim()}</textarea>
             </div>
         `;
-        
-        // Slots
-        let colMorning = document.createElement('div');
-        colMorning.className = 'col-group';
-        colMorning.innerHTML = createSlotHTML('morning', 'เช้า (Morning)', level, data ? data.morning : null);
 
-        let colAfternoon = document.createElement('div');
-        colAfternoon.className = 'col-group';
-        colAfternoon.innerHTML = createSlotHTML('afternoon', 'บ่าย (Afternoon)', level, data ? data.afternoon : null);
+            // Slots
+            let colMorning = document.createElement('div');
+            colMorning.className = 'col-group';
+            colMorning.innerHTML = createSlotHTML('morning', 'เช้า (Morning)', level, data ? data.morning : null);
 
-        let colEvening = document.createElement('div');
-        colEvening.className = 'col-group';
-        colEvening.innerHTML = createSlotHTML('evening', 'ค่ำ (Evening)', level, data ? data.evening : null);
+            let colAfternoon = document.createElement('div');
+            colAfternoon.className = 'col-group';
+            colAfternoon.innerHTML = createSlotHTML('afternoon', 'บ่าย (Afternoon)', level, data ? data.afternoon : null);
 
-        // Column Delete
-        let colDel = document.createElement('div');
-        colDel.style.height = '100%';
-        colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
+            let colEvening = document.createElement('div');
+            colEvening.className = 'col-group';
+            colEvening.innerHTML = createSlotHTML('evening', 'ค่ำ (Evening)', level, data ? data.evening : null);
 
-        div.appendChild(col1);
-        div.appendChild(colMorning);
-        div.appendChild(colAfternoon);
-        div.appendChild(colEvening);
-        div.appendChild(colDel);
+            // Column Delete
+            let colDel = document.createElement('div');
+            colDel.style.height = '100%';
+            colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
 
-        document.getElementById('schedule-rows').appendChild(div);
+            div.appendChild(col1);
+            div.appendChild(colMorning);
+            div.appendChild(colAfternoon);
+            div.appendChild(colEvening);
+            div.appendChild(colDel);
 
-        // Initial check for weekend
-        const weekendCheckbox = div.querySelector('.input-weekend');
-        if (weekendCheckbox.checked) {
-            toggleWeekendMode(weekendCheckbox);
-        }
-    }
+            document.getElementById('schedule-rows').appendChild(div);
 
-    function renderChips(values, availableFiles) {
-        if (!values || !Array.isArray(values) || values.length === 0) return '';
-        return values.map(val => {
-            if(!val) return '';
-            let name = val;
-            const found = availableFiles.find(f => f.value === val);
-            if (found) {
-                name = found.name;
-            } else {
-                 try {
-                     const parts = val.split(/[/\\]/);
-                     let filename = parts.pop();
-                     filename = filename.replace(/^\[LEGACY\]\s*/,'');
-                     name = filename;
-                     if (val.startsWith('http')) {
-                         name = decodeURIComponent(name.split('?')[0]);
-                         name = `[SAVED] ${name}`;
-                     }
-                 } catch(e){}
+            // Initial check for weekend
+            const weekendCheckbox = div.querySelector('.input-weekend');
+            if (weekendCheckbox.checked) {
+                toggleWeekendMode(weekendCheckbox);
             }
-            return `<div class="file-chip" data-val="${val}">
+        }
+
+        function renderChips(values, availableFiles) {
+            if (!values || !Array.isArray(values) || values.length === 0) return '';
+            return values.map(val => {
+                if (!val) return '';
+                let name = val;
+                const found = availableFiles.find(f => f.value === val);
+                if (found) {
+                    name = found.name;
+                } else {
+                    try {
+                        const parts = val.split(/[/\\]/);
+                        let filename = parts.pop();
+                        filename = filename.replace(/^\[LEGACY\]\s*/, '');
+                        name = filename;
+                        if (val.startsWith('http')) {
+                            name = decodeURIComponent(name.split('?')[0]);
+                            name = `[SAVED] ${name}`;
+                        }
+                    } catch (e) { }
+                }
+                return `<div class="file-chip" data-val="${val}">
                 <span>${name}</span>
                 <span class="remove" onclick="this.parentElement.remove()">×</span>
             </div>`;
-        }).join('');
-    }
+            }).join('');
+        }
 
-    function createSlotHTML(periodId, label, level, data = null) {
-        // Files helpers - We will fetch per subject now
-        // const materials = getFiles(level, 'materials');
-        // const exams = getFiles(level, 'exams');
-        // const answers = getFiles(level, 'answers');
-        
-        const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
-        
-        // Default times based on period
-        let defaultStart = '';
-        let defaultEnd = '';
-        if (periodId === 'morning') { defaultStart = '09:00'; defaultEnd = '11:15'; }
-        else if (periodId === 'afternoon') { defaultStart = '13:00'; defaultEnd = '16:00'; }
-        else if (periodId === 'evening') { defaultStart = '18:30'; defaultEnd = '20:30'; }
+        function createSlotHTML(periodId, label, level, data = null) {
+            // Files helpers - We will fetch per subject now
+            // const materials = getFiles(level, 'materials');
+            // const exams = getFiles(level, 'exams');
+            // const answers = getFiles(level, 'answers');
 
-        const timeStart = (data && data.timeStart) ? data.timeStart : '';
-        const timeEnd = (data && data.timeEnd) ? data.timeEnd : '';
+            const subjects = SUBJECT_CONFIG[level] || SUBJECT_CONFIG['pt12'];
 
-        let html = `<div class="slot-container" data-period="${periodId}">`;
-        
-        // Header (Simplified)
-        html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px;">
+            // Default times based on period
+            let defaultStart = '';
+            let defaultEnd = '';
+            if (periodId === 'morning') { defaultStart = '09:00'; defaultEnd = '11:15'; }
+            else if (periodId === 'afternoon') { defaultStart = '13:00'; defaultEnd = '16:00'; }
+            else if (periodId === 'evening') { defaultStart = '18:30'; defaultEnd = '20:30'; }
+
+            const timeStart = (data && data.timeStart) ? data.timeStart : '';
+            const timeEnd = (data && data.timeEnd) ? data.timeEnd : '';
+
+            let html = `<div class="slot-container" data-period="${periodId}">`;
+
+            // Header (Simplified)
+            html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px;">
                     <strong>${label}</strong>
                  </div>`;
 
-        let sharedSlideVal = '';
-        if (data) {
-             if (data.linkZoom) sharedSlideVal = data.linkZoom;
-             else if (data.slides) {
-                 // Fallback: take first slide val found
-                 const vals = Object.values(data.slides);
-                 if (vals.length > 0) sharedSlideVal = vals[0];
-             }
-        }
-
-        subjects.forEach((subj, idx) => {
-            // Determine if this subject has data
-            let hasData = false;
-            let actVal = '';
-            let ytVal = '';
-            let slideVal = ''; 
-            let noteVal = [];
-            let isExam = false;
-            let examFileVal = [];
-            let ansFileVal = [];
-
-            // Fetch files specific to this subject (plus General)
-            const materials = getFiles(level, 'materials', subj.id);
-            const exams = getFiles(level, 'exams', subj.id);
-            const answers = getFiles(level, 'answers', subj.id);
-
+            let sharedSlideVal = '';
             if (data) {
-                // Activity
-                if (data.activities && data.activities[subj.id]) {
-                    actVal = data.activities[subj.id];
-                    hasData = true;
-                } else {
-                    // Legacy Fallback
-                    if (subj.id === 'Grammar' && data.activityGrammar) { actVal = data.activityGrammar; hasData = true; }
-                    else if (subj.id === 'Translate' && data.activityTranslate) { actVal = data.activityTranslate; hasData = true; }
-                    else if (idx === 0 && data.activity && !data.activities) { actVal = data.activity; hasData = true; } // Generic fallback to first subject
+                if (data.linkZoom) sharedSlideVal = data.linkZoom;
+                else if (data.slides) {
+                    // Fallback: take first slide val found
+                    const vals = Object.values(data.slides);
+                    if (vals.length > 0) sharedSlideVal = vals[0];
                 }
-
-                // YouTube
-                if (data.youtube && data.youtube[subj.id]) {
-                    ytVal = data.youtube[subj.id]; // Expect newline separated
-                } else if (data.linkYoutube) {
-                    // Legacy: Check if this subject is 'Translate' (for pt12 style) or default to first
-                    // The user requested that all legacy YouTube links belong to Translate.
-                    const isTranslate = subj.id === 'Translate';
-                    
-                    if (isTranslate || idx === 0) {
-                         if (Array.isArray(data.linkYoutube)) {
-                             ytVal = data.linkYoutube.join('\n');
-                         } else if (typeof data.linkYoutube === 'string') {
-                             ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
-                         }
-                    }
-                }
-
-                // Slide (Presentation ID)
-                if (data.slides && data.slides[subj.id]) {
-                    slideVal = data.slides[subj.id];
-                } else if (data.slideId && (subj.id === 'Translate' || idx === 0)) {
-                    // Legacy: slideId maps to Translate subject or first subject
-                    slideVal = data.slideId;
-                }
-
-                // Materials (Note Files)
-                if (data.noteFiles && data.noteFiles[subj.id]) {
-                    const val = data.noteFiles[subj.id];
-                    if(Array.isArray(val)) noteVal.push(...val);
-                    else noteVal.push(val);
-                } else {
-                     // Legacy
-                     const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
-                     
-                     if (subj.id === 'Grammar' && data.fileNoteGrammar) noteVal.push(cleanPath(data.fileNoteGrammar));
-                     else if (subj.id === 'Translate' && data.fileNoteTranslate) {
-                         if(Array.isArray(data.fileNoteTranslate)) noteVal.push(...data.fileNoteTranslate.map(cleanPath));
-                         else noteVal.push(cleanPath(data.fileNoteTranslate));
-                     }
-                     // Fallback generic (only for first subject if not specific)
-                     if (noteVal.length === 0 && idx === 0 && data.materials && data.materials.length > 0) {
-                         noteVal.push(cleanPath(data.materials[0]));
-                     }
-                }
-
-                // Exam Status
-                if (data.isExam && data.isExam[subj.id]) {
-                    isExam = true;
-                } else {
-                    // Legacy Global Exam Mode
-                    if (data.isExam === true || (data.activity && data.activity.includes('สอบ'))) {
-                        // Heuristic: If global exam mode, apply to all? Or just first?
-                        // Let's apply to subjects that have activity content or are exams
-                         if (actVal || (data.exams && data.exams.length > 0)) isExam = true;
-                    }
-                }
-                const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
-
-                // Exam/Answer Files
-                if (data.examFiles && data.examFiles[subj.id]) {
-                     const val = data.examFiles[subj.id];
-                     if(Array.isArray(val)) examFileVal.push(...val);
-                     else examFileVal.push(val);
-                }
-                else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(cleanPath(data.fileExamGrammar));
-                else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(cleanPath(data.fileExamTranslate));
-                else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(cleanPath(data.exams[0]));
-
-                if (data.answerFiles && data.answerFiles[subj.id]) {
-                     const val = data.answerFiles[subj.id];
-                     if(Array.isArray(val)) ansFileVal.push(...val);
-                     else ansFileVal.push(val);
-                }
-                else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(cleanPath(data.fileAnswerGrammar));
-                else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(cleanPath(data.fileAnswerTranslate));
-                else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(cleanPath(data.answers[0]));
             }
 
-            const displayStyle = hasData ? 'block' : 'none';
-            const checked = hasData ? 'checked' : '';
+            subjects.forEach((subj, idx) => {
+                // Determine if this subject has data
+                let hasData = false;
+                let actVal = '';
+                let ytVal = '';
+                let slideVal = '';
+                let noteVal = [];
+                let isExam = false;
+                let examFileVal = [];
+                let ansFileVal = [];
 
-            html += `
+                // Fetch files specific to this subject (plus General)
+                const materials = getFiles(level, 'materials', subj.id);
+                const exams = getFiles(level, 'exams', subj.id);
+                const answers = getFiles(level, 'answers', subj.id);
+
+                if (data) {
+                    // Activity
+                    if (data.activities && data.activities[subj.id]) {
+                        actVal = data.activities[subj.id];
+                        hasData = true;
+                    } else {
+                        // Legacy Fallback
+                        if (subj.id === 'Grammar' && data.activityGrammar) { actVal = data.activityGrammar; hasData = true; }
+                        else if (subj.id === 'Translate' && data.activityTranslate) { actVal = data.activityTranslate; hasData = true; }
+                        else if (idx === 0 && data.activity && !data.activities) { actVal = data.activity; hasData = true; } // Generic fallback to first subject
+                    }
+
+                    // YouTube
+                    if (data.youtube && data.youtube[subj.id]) {
+                        ytVal = data.youtube[subj.id]; // Expect newline separated
+                    } else if (data.linkYoutube) {
+                        // Legacy: Check if this subject is 'Translate' (for pt12 style) or default to first
+                        // The user requested that all legacy YouTube links belong to Translate.
+                        const isTranslate = subj.id === 'Translate';
+
+                        if (isTranslate || idx === 0) {
+                            if (Array.isArray(data.linkYoutube)) {
+                                ytVal = data.linkYoutube.join('\n');
+                            } else if (typeof data.linkYoutube === 'string') {
+                                ytVal = data.linkYoutube.split(',').map(s => s.trim()).join('\n');
+                            }
+                        }
+                    }
+
+                    // Slide (Presentation ID)
+                    if (data.slides && data.slides[subj.id]) {
+                        slideVal = data.slides[subj.id];
+                    } else if (data.slideId && (subj.id === 'Translate' || idx === 0)) {
+                        // Legacy: slideId maps to Translate subject or first subject
+                        slideVal = data.slideId;
+                    }
+
+                    // Materials (Note Files)
+                    if (data.noteFiles && data.noteFiles[subj.id]) {
+                        const val = data.noteFiles[subj.id];
+                        if (Array.isArray(val)) noteVal.push(...val);
+                        else noteVal.push(val);
+                    } else {
+                        // Legacy
+                        const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
+
+                        if (subj.id === 'Grammar' && data.fileNoteGrammar) noteVal.push(cleanPath(data.fileNoteGrammar));
+                        else if (subj.id === 'Translate' && data.fileNoteTranslate) {
+                            if (Array.isArray(data.fileNoteTranslate)) noteVal.push(...data.fileNoteTranslate.map(cleanPath));
+                            else noteVal.push(cleanPath(data.fileNoteTranslate));
+                        }
+                        // Fallback generic (only for first subject if not specific)
+                        if (noteVal.length === 0 && idx === 0 && data.materials && data.materials.length > 0) {
+                            noteVal.push(cleanPath(data.materials[0]));
+                        }
+                    }
+
+                    // Exam Status
+                    if (data.isExam && data.isExam[subj.id]) {
+                        isExam = true;
+                    } else {
+                        // Legacy Global Exam Mode
+                        if (data.isExam === true || (data.activity && data.activity.includes('สอบ'))) {
+                            // Heuristic: If global exam mode, apply to all? Or just first?
+                            // Let's apply to subjects that have activity content or are exams
+                            if (actVal || (data.exams && data.exams.length > 0)) isExam = true;
+                        }
+                    }
+                    const cleanPath = (p) => p ? p.split(/[/\\]/).pop() : p;
+
+                    // Exam/Answer Files
+                    if (data.examFiles && data.examFiles[subj.id]) {
+                        const val = data.examFiles[subj.id];
+                        if (Array.isArray(val)) examFileVal.push(...val);
+                        else examFileVal.push(val);
+                    }
+                    else if (subj.id === 'Grammar' && data.fileExamGrammar) examFileVal.push(cleanPath(data.fileExamGrammar));
+                    else if (subj.id === 'Translate' && data.fileExamTranslate) examFileVal.push(cleanPath(data.fileExamTranslate));
+                    else if (idx === 0 && data.exams && data.exams.length > 0) examFileVal.push(cleanPath(data.exams[0]));
+
+                    if (data.answerFiles && data.answerFiles[subj.id]) {
+                        const val = data.answerFiles[subj.id];
+                        if (Array.isArray(val)) ansFileVal.push(...val);
+                        else ansFileVal.push(val);
+                    }
+                    else if (subj.id === 'Grammar' && data.fileAnswerGrammar) ansFileVal.push(cleanPath(data.fileAnswerGrammar));
+                    else if (subj.id === 'Translate' && data.fileAnswerTranslate) ansFileVal.push(cleanPath(data.fileAnswerTranslate));
+                    else if (idx === 0 && data.answers && data.answers.length > 0) ansFileVal.push(cleanPath(data.answers[0]));
+                }
+
+                const displayStyle = hasData ? 'block' : 'none';
+                const checked = hasData ? 'checked' : '';
+
+                html += `
                 <div class="subject-block" style="border:1px solid #eee; border-radius:4px; padding:10px; margin-bottom:10px; background:#fff;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <label style="cursor:pointer; font-weight:bold; color:#2c3e50;">
@@ -1336,278 +1515,278 @@
                     </div>
                 </div>
             `;
-        });
+            });
 
-        // Shared Slide/Zoom Input at the bottom
-        html += `<div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
+            // Shared Slide/Zoom Input at the bottom
+            html += `<div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
                     <div class="field-group">
                         <label>ลิงค์ Zoom (เข้าเรียนออนไลน์) - ใช้ร่วมกันทุกวิชา</label>
                         <input type="text" class="input-zoom" placeholder="วางลิงค์ Zoom ที่นี่" value="${sharedSlideVal}">
                     </div>
                  </div>`;
 
-        html += `</div>`;
-        return html;
-    }
-
-    function toggleSubject(checkbox) {
-        const block = checkbox.closest('.subject-block');
-        const content = block.querySelector('.subj-content');
-        if (checkbox.checked) {
-            content.style.display = 'block';
-        } else {
-            content.style.display = 'none';
+            html += `</div>`;
+            return html;
         }
-    }
 
-    function toggleSubjectExam(checkbox) {
-        const container = checkbox.closest('.field-group');
-        const filesDiv = container.querySelector('.exam-files');
-        if (checkbox.checked) {
-            filesDiv.style.display = 'block';
-        } else {
-            filesDiv.style.display = 'none';
-        }
-    }
-    function getFiles(level, type, subjectId) {
-        let files = [];
-        
-        // 1. Static Files (Legacy)
-        // Strict subject filtering requested: when subjectId is provided, DO NOT include legacy static files
-        if (!subjectId) {
-            if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
-                files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
+        function toggleSubject(checkbox) {
+            const block = checkbox.closest('.subject-block');
+            const content = block.querySelector('.subj-content');
+            if (checkbox.checked) {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
             }
         }
-        
-        // 2. Dynamic Files (Firestore)
-        // Filter by Level + Type, and when subjectId is provided, require exact subject match
-        const dyn = DYNAMIC_FILES.filter(f => {
-            if (f.level !== level || f.type !== type) return false;
-            if (subjectId) return f.subject === subjectId;
-            return true;
-        });
-        
-        dyn.forEach(f => {
-            const name = `[CLOUD] ${f.name}`;
-            files.push({ name: name, value: f.url });
-        });
-        
-        // Sort by name
-        files.sort((a, b) => a.name.localeCompare(b.name));
-        
-        return files;
-    }
 
-    function createOptions(fileObjs, selected = []) {
-         let opts = '<option value="">-- เลือกไฟล์ --</option>';
-         
-         // 1. Add existing files from list
-         fileObjs.forEach(f => {
-             const isSel = selected.includes(f.value) ? 'selected' : '';
-             opts += `<option value="${f.value}" ${isSel}>${f.name}</option>`;
-         });
-
-         // 2. Preserve selected values that are NOT in the list (Legacy or Missing)
-         selected.forEach(val => {
-             if (!val) return;
-             const exists = fileObjs.some(f => f.value === val);
-             if (!exists) {
-                 // Try to make a readable name
-                 let name = val;
-                 let cleanVal = val;
-                 try {
-                     // Remove path if present (both / and \)
-                     const parts = val.split(/[/\\]/);
-                     let filename = parts.pop();
-                     filename = filename.replace(/^\[LEGACY\]\s*/,'');
-                     name = filename;
-                     cleanVal = filename;
-                     
-                     // If it was a URL, clean it up
-                     if (val.startsWith('http')) {
-                         name = decodeURIComponent(name.split('?')[0]);
-                         name = `[SAVED] ${name}`;
-                         cleanVal = val; // keep full URL for value
-                     } else {
-                         // Just the filename for legacy files
-                         // Prefix [LEGACY] removed from both display and value
-                     }
-                 } catch(e){}
-                 
-                 opts += `<option value="${cleanVal}" selected>${name}</option>`;
-             }
-         });
-
-         return opts;
-    };
-
-    function handleDateChange(input) {
-        const dateVal = input.value;
-        if (!dateVal) return;
-        
-        const dateObj = new Date(dateVal);
-        const day = thaiDaysShort[dateObj.getDay()];
-        const dateNum = dateObj.getDate();
-        const month = thaiMonthsShort[dateObj.getMonth()];
-        const year = (dateObj.getFullYear() + 543).toString().slice(2);
-        
-        const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
-        const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
-        
-        const dateThai = toThaiNum(dateNum);
-        const yearThai = toThaiNum(year);
-        
-        const displayStr = `${day} ${dateThai}-${month}-${yearThai}`;
-        
-        const row = input.closest('.row-entry');
-        const displayInput = row.querySelector('.input-display-date');
-        if (displayInput) {
-            displayInput.value = displayStr;
+        function toggleSubjectExam(checkbox) {
+            const container = checkbox.closest('.field-group');
+            const filesDiv = container.querySelector('.exam-files');
+            if (checkbox.checked) {
+                filesDiv.style.display = 'block';
+            } else {
+                filesDiv.style.display = 'none';
+            }
         }
-    }
+        function getFiles(level, type, subjectId) {
+            let files = [];
 
-    function checkActivityInput(input) {
-        const subjId = input.dataset.subjId;
-        const container = input.closest('.mode-normal') || input.closest('.mode-exam');
-        if (!container) return;
+            // 1. Static Files (Legacy)
+            // Strict subject filtering requested: when subjectId is provided, DO NOT include legacy static files
+            if (!subjectId) {
+                if (typeof FILE_INDEX !== 'undefined' && FILE_INDEX[level] && FILE_INDEX[level][type]) {
+                    files = FILE_INDEX[level][type].map(f => ({ name: f, value: f }));
+                }
+            }
 
-        const hasValue = input.value.trim().length > 0;
-        
-        // Find related selects with same subject ID within this mode container
-        const selects = container.querySelectorAll(`select[data-subj-id="${subjId}"]`);
-        selects.forEach(sel => {
-            sel.disabled = !hasValue;
-        });
-    }
-
-    function toggleExamMode(checkbox) {
-        const slotContainer = checkbox.closest('.slot-container');
-        const normalMode = slotContainer.querySelector('.mode-normal');
-        const examMode = slotContainer.querySelector('.mode-exam');
-        
-        if (checkbox.checked) {
-            normalMode.style.display = 'none';
-            examMode.style.display = 'block';
-            slotContainer.classList.add('is-exam');
-        } else {
-            normalMode.style.display = 'block';
-            examMode.style.display = 'none';
-            slotContainer.classList.remove('is-exam');
-        }
-    }
-
-    function toggleWeekendMode(checkbox) {
-        const row = checkbox.closest('.row-entry');
-        if (checkbox.checked) {
-            row.classList.add('row-weekend-disabled');
-        } else {
-            row.classList.remove('row-weekend-disabled');
-        }
-    }
-    
-    function showLoading(show) {
-        document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-    }
-
-    function viewSchedule() {
-        const roomId = roomSelect.value;
-        const month = document.getElementById('month-select').value;
-        const year = document.getElementById('year-select').value;
-        if (!roomId || !month || !year) return alert("กรุณาเลือกห้อง เดือน และปีก่อนครับ");
-        
-        const id = `${roomId}_${month}_${year}`;
-        // Open in new tab
-        window.open(`../schedule_view.html?id=${id}&room=${roomId}`, '_blank');
-    }
-
-
-
-    // --- File Manager Functions ---
-    async function loadDynamicFiles() {
-        try {
-            const snap = await db.collection('files').orderBy('uploadedAt', 'desc').get();
-            DYNAMIC_FILES = [];
-            snap.forEach(doc => {
-                DYNAMIC_FILES.push({ id: doc.id, ...doc.data() });
+            // 2. Dynamic Files (Firestore)
+            // Filter by Level + Type, and when subjectId is provided, require exact subject match
+            const dyn = DYNAMIC_FILES.filter(f => {
+                if (f.level !== level || f.type !== type) return false;
+                if (subjectId) return f.subject === subjectId;
+                return true;
             });
-            console.log("Loaded dynamic files:", DYNAMIC_FILES.length);
-        } catch (e) {
-            console.error("Error loading files:", e);
-        }
-    }
 
-    function openFileManager() {
-        document.getElementById('file-modal').style.display = 'flex';
-        renderFileList();
-        
-        // Populate Levels in Upload Form
-        const levelSelect = document.getElementById('upload-level');
-        const subjSelect = document.getElementById('upload-subject');
-        levelSelect.innerHTML = '';
-        subjSelect.innerHTML = '';
-        
-        // Get all levels from systemConfig or hardcoded
-        const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
-        const levelLabels = {
-            'pt12': 'ประโยค ๑-๒',
-            'pt3': 'ประโยค ๓',
-            'pt4': 'ประโยค ๔',
-            'pt5': 'ประโยค ๕',
-            'pt6': 'ประโยค ๖',
-            'pt7': 'ประโยค ๗',
-            'pt8': 'ประโยค ๘',
-            'pt9': 'ประโยค ๙'
+            dyn.forEach(f => {
+                const name = `[CLOUD] ${f.name}`;
+                files.push({ name: name, value: f.url });
+            });
+
+            // Sort by name
+            files.sort((a, b) => a.name.localeCompare(b.name));
+
+            return files;
+        }
+
+        function createOptions(fileObjs, selected = []) {
+            let opts = '<option value="">-- เลือกไฟล์ --</option>';
+
+            // 1. Add existing files from list
+            fileObjs.forEach(f => {
+                const isSel = selected.includes(f.value) ? 'selected' : '';
+                opts += `<option value="${f.value}" ${isSel}>${f.name}</option>`;
+            });
+
+            // 2. Preserve selected values that are NOT in the list (Legacy or Missing)
+            selected.forEach(val => {
+                if (!val) return;
+                const exists = fileObjs.some(f => f.value === val);
+                if (!exists) {
+                    // Try to make a readable name
+                    let name = val;
+                    let cleanVal = val;
+                    try {
+                        // Remove path if present (both / and \)
+                        const parts = val.split(/[/\\]/);
+                        let filename = parts.pop();
+                        filename = filename.replace(/^\[LEGACY\]\s*/, '');
+                        name = filename;
+                        cleanVal = filename;
+
+                        // If it was a URL, clean it up
+                        if (val.startsWith('http')) {
+                            name = decodeURIComponent(name.split('?')[0]);
+                            name = `[SAVED] ${name}`;
+                            cleanVal = val; // keep full URL for value
+                        } else {
+                            // Just the filename for legacy files
+                            // Prefix [LEGACY] removed from both display and value
+                        }
+                    } catch (e) { }
+
+                    opts += `<option value="${cleanVal}" selected>${name}</option>`;
+                }
+            });
+
+            return opts;
         };
 
-        levels.forEach(lvl => {
-            const opt = document.createElement('option');
-            opt.value = lvl;
-            opt.textContent = levelLabels[lvl] || lvl.toUpperCase();
-            levelSelect.appendChild(opt);
-        });
+        function handleDateChange(input) {
+            const dateVal = input.value;
+            if (!dateVal) return;
 
-        // Set default based on current room
-        if (roomSelect.value) {
-            const selectedOpt = roomSelect.options[roomSelect.selectedIndex];
-            if (selectedOpt && selectedOpt.dataset.level) {
-                levelSelect.value = selectedOpt.dataset.level;
+            const dateObj = new Date(dateVal);
+            const day = thaiDaysShort[dateObj.getDay()];
+            const dateNum = dateObj.getDate();
+            const month = thaiMonthsShort[dateObj.getMonth()];
+            const year = (dateObj.getFullYear() + 543).toString().slice(2);
+
+            const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
+            const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
+
+            const dateThai = toThaiNum(dateNum);
+            const yearThai = toThaiNum(year);
+
+            const displayStr = `${day} ${dateThai}-${month}-${yearThai}`;
+
+            const row = input.closest('.row-entry');
+            const displayInput = row.querySelector('.input-display-date');
+            if (displayInput) {
+                displayInput.value = displayStr;
             }
         }
 
-        // Populate Subjects based on selected level
-        const populateSubjects = () => {
+        function checkActivityInput(input) {
+            const subjId = input.dataset.subjId;
+            const container = input.closest('.mode-normal') || input.closest('.mode-exam');
+            if (!container) return;
+
+            const hasValue = input.value.trim().length > 0;
+
+            // Find related selects with same subject ID within this mode container
+            const selects = container.querySelectorAll(`select[data-subj-id="${subjId}"]`);
+            selects.forEach(sel => {
+                sel.disabled = !hasValue;
+            });
+        }
+
+        function toggleExamMode(checkbox) {
+            const slotContainer = checkbox.closest('.slot-container');
+            const normalMode = slotContainer.querySelector('.mode-normal');
+            const examMode = slotContainer.querySelector('.mode-exam');
+
+            if (checkbox.checked) {
+                normalMode.style.display = 'none';
+                examMode.style.display = 'block';
+                slotContainer.classList.add('is-exam');
+            } else {
+                normalMode.style.display = 'block';
+                examMode.style.display = 'none';
+                slotContainer.classList.remove('is-exam');
+            }
+        }
+
+        function toggleWeekendMode(checkbox) {
+            const row = checkbox.closest('.row-entry');
+            if (checkbox.checked) {
+                row.classList.add('row-weekend-disabled');
+            } else {
+                row.classList.remove('row-weekend-disabled');
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function viewSchedule() {
+            const roomId = roomSelect.value;
+            const month = document.getElementById('month-select').value;
+            const year = document.getElementById('year-select').value;
+            if (!roomId || !month || !year) return alert("กรุณาเลือกห้อง เดือน และปีก่อนครับ");
+
+            const id = `${roomId}_${month}_${year}`;
+            // Open in new tab
+            window.open(`../schedule_view.html?id=${id}&room=${roomId}`, '_blank');
+        }
+
+
+
+        // --- File Manager Functions ---
+        async function loadDynamicFiles() {
+            try {
+                const snap = await db.collection('files').orderBy('uploadedAt', 'desc').get();
+                DYNAMIC_FILES = [];
+                snap.forEach(doc => {
+                    DYNAMIC_FILES.push({ id: doc.id, ...doc.data() });
+                });
+                console.log("Loaded dynamic files:", DYNAMIC_FILES.length);
+            } catch (e) {
+                console.error("Error loading files:", e);
+            }
+        }
+
+        function openFileManager() {
+            document.getElementById('file-modal').style.display = 'flex';
+            renderFileList();
+
+            // Populate Levels in Upload Form
+            const levelSelect = document.getElementById('upload-level');
+            const subjSelect = document.getElementById('upload-subject');
+            levelSelect.innerHTML = '';
             subjSelect.innerHTML = '';
-            const lvl = levelSelect.value || 'pt12';
-            const subjects = SUBJECT_CONFIG[lvl] || SUBJECT_CONFIG['pt12'];
-            subjects.forEach(s => {
+
+            // Get all levels from systemConfig or hardcoded
+            const levels = ['pt12', 'pt3', 'pt4', 'pt5', 'pt6', 'pt7', 'pt8', 'pt9'];
+            const levelLabels = {
+                'pt12': 'ประโยค ๑-๒',
+                'pt3': 'ประโยค ๓',
+                'pt4': 'ประโยค ๔',
+                'pt5': 'ประโยค ๕',
+                'pt6': 'ประโยค ๖',
+                'pt7': 'ประโยค ๗',
+                'pt8': 'ประโยค ๘',
+                'pt9': 'ประโยค ๙'
+            };
+
+            levels.forEach(lvl => {
                 const opt = document.createElement('option');
-                opt.value = s.id;
-                opt.textContent = s.label;
-                subjSelect.appendChild(opt);
+                opt.value = lvl;
+                opt.textContent = levelLabels[lvl] || lvl.toUpperCase();
+                levelSelect.appendChild(opt);
             });
-        };
-        populateSubjects();
-        // Remove existing listener to avoid duplicates if opened multiple times
-        levelSelect.removeEventListener('change', populateSubjects); 
-        levelSelect.addEventListener('change', populateSubjects);
-    }
 
-    function closeFileManager() {
-        document.getElementById('file-modal').style.display = 'none';
-    }
+            // Set default based on current room
+            if (roomSelect.value) {
+                const selectedOpt = roomSelect.options[roomSelect.selectedIndex];
+                if (selectedOpt && selectedOpt.dataset.level) {
+                    levelSelect.value = selectedOpt.dataset.level;
+                }
+            }
 
-    function renderFileList() {
-        const tbody = document.getElementById('file-list-body');
-        tbody.innerHTML = '';
-        
-        DYNAMIC_FILES.forEach(file => {
-            const tr = document.createElement('tr');
-            tr.style.borderBottom = '1px solid #eee';
-            
-            const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
-            
-             tr.innerHTML = `
+            // Populate Subjects based on selected level
+            const populateSubjects = () => {
+                subjSelect.innerHTML = '';
+                const lvl = levelSelect.value || 'pt12';
+                const subjects = SUBJECT_CONFIG[lvl] || SUBJECT_CONFIG['pt12'];
+                subjects.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = s.label;
+                    subjSelect.appendChild(opt);
+                });
+            };
+            populateSubjects();
+            // Remove existing listener to avoid duplicates if opened multiple times
+            levelSelect.removeEventListener('change', populateSubjects);
+            levelSelect.addEventListener('change', populateSubjects);
+        }
+
+        function closeFileManager() {
+            document.getElementById('file-modal').style.display = 'none';
+        }
+
+        function renderFileList() {
+            const tbody = document.getElementById('file-list-body');
+            tbody.innerHTML = '';
+
+            DYNAMIC_FILES.forEach(file => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #eee';
+
+                const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
+
+                tr.innerHTML = `
                  <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
                  <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
                  <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
@@ -1618,136 +1797,137 @@
                     </button>
                 </td>
             `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    function refreshFileDropdowns() {
-        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
-        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
-        
-        // Corrected selectors to match generated HTML
-        const selects = document.querySelectorAll('.input-file, .input-exam-file, .input-ans-file');
-        selects.forEach(sel => {
-            const currentVal = sel.value;
-            let type = 'materials';
-            if (sel.classList.contains('input-exam-file')) type = 'exams';
-            else if (sel.classList.contains('input-ans-file')) type = 'answers';
-            
-            const subjId = sel.dataset.subjId || null;
-            const fileObjs = getFiles(level, type, subjId);
-            sel.innerHTML = createOptions(fileObjs, [currentVal]);
-        });
-    }
-
-    async function uploadFile() {
-        const fileInput = document.getElementById('upload-file');
-        const typeSelect = document.getElementById('upload-type');
-        const levelSelect = document.getElementById('upload-level');
-        const subjSelect = document.getElementById('upload-subject');
-        const btn = document.getElementById('btn-upload');
-        const progressDiv = document.getElementById('upload-progress');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-
-        const file = fileInput.files[0];
-        if (!file) return alert("กรุณาเลือกไฟล์ PDF");
-        if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
-
-        const type = typeSelect.value;
-        const level = levelSelect.value;
-        const subjectId = subjSelect.value || 'General';
-        const subjectFolder = (subjectId || '').toLowerCase();
-        
-        // Create Path: files/{level}/{type}/{subject}/{filename}
-        const storagePath = `files/${level}/${type}/${subjectFolder}/${Date.now()}_${file.name}`;
-        const ref = storage.ref(storagePath);
-
-        btn.disabled = true;
-        progressDiv.style.display = 'block';
-
-        const task = ref.put(file);
-
-        task.on('state_changed', 
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressText.innerText = `${Math.round(progress)}%`;
-            }, 
-            (error) => {
-                console.error("Upload error:", error);
-                alert("Upload failed: " + error.message);
-                btn.disabled = false;
-                progressDiv.style.display = 'none';
-            }, 
-            async () => {
-                // Complete
-                try {
-                    const downloadURL = await task.snapshot.ref.getDownloadURL();
-                    
-                    // Save to Firestore
-                    const docRef = await db.collection('files').add({
-                        name: file.name,
-                        type: type,
-                        level: level,
-                        subject: subjectId,
-                        url: downloadURL,
-                        fullPath: storagePath,
-                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        size: file.size
-                    });
-
-                    // Update Local List
-                    DYNAMIC_FILES.unshift({
-                        id: docRef.id,
-                        name: file.name,
-                        type: type,
-                        level: level,
-                        subject: subjectId,
-                        url: downloadURL,
-                        fullPath: storagePath,
-                        uploadedAt: { seconds: Date.now() / 1000 } // approx
-                    });
-
-                    renderFileList();
-                    refreshFileDropdowns();
-                    
-                    alert("อัปโหลดสำเร็จ!");
-                    fileInput.value = ''; // Clear input
-                    progressDiv.style.display = 'none';
-                } catch (e) {
-                    console.error("Error saving file metadata:", e);
-                    alert("Upload successful but failed to save metadata.");
-                } finally {
-                    btn.disabled = false;
-                }
-            }
-        );
-    }
-
-    async function deleteFile(id, fullPath) {
-        if (!confirm("คุณต้องการลบไฟล์นี้ใช่หรือไม่?")) return;
-
-        try {
-            // Delete from Storage
-            if (fullPath) {
-                await storage.ref(fullPath).delete().catch(e => console.warn("Storage delete error (might be missing):", e));
-            }
-
-            // Delete from Firestore
-            await db.collection('files').doc(id).delete();
-
-            // Update Local
-            DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
-            renderFileList();
-            refreshFileDropdowns();
-
-        } catch (e) {
-            console.error("Delete error:", e);
-            alert("ลบไม่สำเร็จ: " + e.message);
+                tbody.appendChild(tr);
+            });
         }
-    }
-</script>
+
+        function refreshFileDropdowns() {
+            const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+            const level = selectedOption ? selectedOption.dataset.level : 'pt12';
+
+            // Corrected selectors to match generated HTML
+            const selects = document.querySelectorAll('.input-file, .input-exam-file, .input-ans-file');
+            selects.forEach(sel => {
+                const currentVal = sel.value;
+                let type = 'materials';
+                if (sel.classList.contains('input-exam-file')) type = 'exams';
+                else if (sel.classList.contains('input-ans-file')) type = 'answers';
+
+                const subjId = sel.dataset.subjId || null;
+                const fileObjs = getFiles(level, type, subjId);
+                sel.innerHTML = createOptions(fileObjs, [currentVal]);
+            });
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('upload-file');
+            const typeSelect = document.getElementById('upload-type');
+            const levelSelect = document.getElementById('upload-level');
+            const subjSelect = document.getElementById('upload-subject');
+            const btn = document.getElementById('btn-upload');
+            const progressDiv = document.getElementById('upload-progress');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            const file = fileInput.files[0];
+            if (!file) return alert("กรุณาเลือกไฟล์ PDF");
+            if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
+
+            const type = typeSelect.value;
+            const level = levelSelect.value;
+            const subjectId = subjSelect.value || 'General';
+            const subjectFolder = (subjectId || '').toLowerCase();
+
+            // Create Path: files/{level}/{type}/{subject}/{filename}
+            const storagePath = `files/${level}/${type}/${subjectFolder}/${Date.now()}_${file.name}`;
+            const ref = storage.ref(storagePath);
+
+            btn.disabled = true;
+            progressDiv.style.display = 'block';
+
+            const task = ref.put(file);
+
+            task.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    progressText.innerText = `${Math.round(progress)}%`;
+                },
+                (error) => {
+                    console.error("Upload error:", error);
+                    alert("Upload failed: " + error.message);
+                    btn.disabled = false;
+                    progressDiv.style.display = 'none';
+                },
+                async () => {
+                    // Complete
+                    try {
+                        const downloadURL = await task.snapshot.ref.getDownloadURL();
+
+                        // Save to Firestore
+                        const docRef = await db.collection('files').add({
+                            name: file.name,
+                            type: type,
+                            level: level,
+                            subject: subjectId,
+                            url: downloadURL,
+                            fullPath: storagePath,
+                            uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            size: file.size
+                        });
+
+                        // Update Local List
+                        DYNAMIC_FILES.unshift({
+                            id: docRef.id,
+                            name: file.name,
+                            type: type,
+                            level: level,
+                            subject: subjectId,
+                            url: downloadURL,
+                            fullPath: storagePath,
+                            uploadedAt: { seconds: Date.now() / 1000 } // approx
+                        });
+
+                        renderFileList();
+                        refreshFileDropdowns();
+
+                        alert("อัปโหลดสำเร็จ!");
+                        fileInput.value = ''; // Clear input
+                        progressDiv.style.display = 'none';
+                    } catch (e) {
+                        console.error("Error saving file metadata:", e);
+                        alert("Upload successful but failed to save metadata.");
+                    } finally {
+                        btn.disabled = false;
+                    }
+                }
+            );
+        }
+
+        async function deleteFile(id, fullPath) {
+            if (!confirm("คุณต้องการลบไฟล์นี้ใช่หรือไม่?")) return;
+
+            try {
+                // Delete from Storage
+                if (fullPath) {
+                    await storage.ref(fullPath).delete().catch(e => console.warn("Storage delete error (might be missing):", e));
+                }
+
+                // Delete from Firestore
+                await db.collection('files').doc(id).delete();
+
+                // Update Local
+                DYNAMIC_FILES = DYNAMIC_FILES.filter(f => f.id !== id);
+                renderFileList();
+                refreshFileDropdowns();
+
+            } catch (e) {
+                console.error("Delete error:", e);
+                alert("ลบไม่สำเร็จ: " + e.message);
+            }
+        }
+    </script>
 
 </body>
+
 </html>
