@@ -1351,6 +1351,23 @@
                     roomsSelect.style.fontSize = '0.9rem';
                     roomsSelect.size = 3;
                     roomCell.innerHTML = '';
+                    const roomLevelSelect = document.createElement('select');
+                    roomLevelSelect.style.marginBottom = '6px';
+                    roomLevelSelect.style.padding = '6px';
+                    roomLevelSelect.style.border = '1px solid #ddd';
+                    roomLevelSelect.style.borderRadius = '6px';
+                    roomLevelSelect.style.fontSize = '0.9rem';
+                    const placeholderOpt = document.createElement('option');
+                    placeholderOpt.value = '';
+                    placeholderOpt.textContent = '— เลือกชั้นเพื่อแก้ห้อง —';
+                    roomLevelSelect.appendChild(placeholderOpt);
+                    Object.keys(LEVEL_NAMES).forEach(k => {
+                        const opt = document.createElement('option');
+                        opt.value = k;
+                        opt.textContent = LEVEL_NAMES[k];
+                        roomLevelSelect.appendChild(opt);
+                    });
+                    roomCell.appendChild(roomLevelSelect);
                     roomCell.appendChild(roomsSelect);
                     const teacherRoomsInfo = document.createElement('div');
                     teacherRoomsInfo.style.marginTop = '6px';
@@ -1386,7 +1403,7 @@
                             try {
                                 const uDoc = await db.collection('users').doc(m.uid).get();
                                 const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || m.uid) : m.uid;
-                                const baseLevel = Array.isArray(m.teacherLevels) && m.teacherLevels.length > 0 ? m.teacherLevels[0] : m.level;
+                                const baseLevel = Array.isArray(m.teacherLevels) && m.teacherLevels.length > 0 ? m.teacherLevels[0] : (m.level || '');
                                 const current = (window.allClassrooms || [])
                                     .filter(r => r.level === baseLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
                                     .map(r => r.id);
@@ -1395,11 +1412,20 @@
                                     .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
                                     .map(r => r.name || r.id);
                                 teacherRoomsInfo.textContent = `ห้องสอนทั้งหมด: ${allTeachRooms.length ? allTeachRooms.join(', ') : '-'}`;
-                                m.level = baseLevel;
+                                if (baseLevel && !roomLevelSelect.value) roomLevelSelect.value = baseLevel;
                             } catch (e) {}
                         }
-                        populateRooms(m.level);
+                        const initialLevel = roomLevelSelect.value || (m.level && LEVEL_NAMES[m.level] ? m.level : '');
+                        if (initialLevel) populateRooms(initialLevel);
                     })();
+                    roomLevelSelect.onchange = () => {
+                        const lv = roomLevelSelect.value;
+                        if (!lv) {
+                            roomsSelect.innerHTML = '';
+                            return;
+                        }
+                        populateRooms(lv);
+                    };
                     levelSelect.onchange = async () => {
                         const selectedLevels = Array.from(levelSelect.selectedOptions).map(o => o.value);
                         if (m.role === 'student') {
@@ -1414,9 +1440,12 @@
                                 m.teacherLevels = selectedLevels;
                             } catch (e) { alert('อัปเดตชั้นอาจารย์ไม่สำเร็จ: ' + e.message); }
                         }
-                        const base = m.role === 'teacher' ? (m.teacherLevels[0] || '') : (selectedLevels[0] || '');
-                        m.level = base;
-                        populateRooms(base);
+                        if (!roomLevelSelect.value) {
+                            const base = m.role === 'teacher' ? (m.teacherLevels[0] || '') : (selectedLevels[0] || '');
+                            if (base) roomLevelSelect.value = base;
+                        }
+                        const lv = roomLevelSelect.value;
+                        if (lv) populateRooms(lv);
                     };
                     roomsSelect.onchange = async () => {
                         const selected = Array.from(roomsSelect.selectedOptions).map(o => o.value);
