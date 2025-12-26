@@ -99,7 +99,7 @@
                 let role = 'general';
                 const userDoc = await db.collection('users').doc(u.uid).get();
                 if (userDoc.exists) role = userDoc.data().role || role;
-                if (role !== 'admin' && role !== 'teacher') {
+                if (role !== 'admin') {
                     const enr = await db.collection('enrollments').doc(u.uid).get();
                     const approved = enr.exists && enr.data().status === 'approved';
                     const level = approved ? (enr.data().levelRequested || null) : null;
