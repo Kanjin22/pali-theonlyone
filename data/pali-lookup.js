@@ -71,15 +71,16 @@ const PaliLookup = {
     },
     
     checkPart: function(romanWord, dbs) {
-        // Check Roman DB (vocabSC)
-        if (dbs.sc && dbs.sc[romanWord]) return { source: 'sc', data: dbs.sc[romanWord] };
-        
-        // Check Thai DB (vocabTananunto) via romanToThai
+        // 1. Check Thai DB (vocabTananunto) via romanToThai FIRST
         if (typeof PaliScript !== 'undefined' && PaliScript.romanToThai) {
             let thaiWord = PaliScript.romanToThai(romanWord);
             let res = this.checkAll(thaiWord, dbs);
             if (res) return { source: 'thai', data: res };
         }
+
+        // 2. Check Roman DB (vocabSC) SECOND
+        if (dbs.sc && dbs.sc[romanWord]) return { source: 'sc', data: dbs.sc[romanWord] };
+        
         return null;
     },
     
