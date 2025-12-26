@@ -1129,7 +1129,7 @@
                                         else if (subj === 'Samphan') subjLabel = 'สัมพันธ์';
                                         else if (subj === 'Tang') subjLabel = 'แต่ง';
                                         
-                                        allPins.push({ time: timeLabel, act: cleanAct, level: lvlLabel, subject: subjLabel });
+                                        allPins.push({ time: timeLabel, act: cleanAct, level: lvlLabel, subject: subjLabel, roomId: data.roomId });
                                     };
 
                                     // 1. Structured Activities
@@ -1191,13 +1191,34 @@
                 return;
             }
             try {
-                window.todayPins = pins.slice();
+                // Filter for student: show only pins of their rooms
+                let filtered = pins.slice();
+                try {
+                    const user = window._currentUser;
+                    const role = window._currentRole;
+                    const myRooms = (window._myRooms && Array.isArray(window._myRooms)) ? window._myRooms : [];
+                    if (user && role === 'student' && myRooms.length > 0) {
+                        const allowIds = new Set(myRooms.map(r => r.id));
+                        const allowNames = new Set(myRooms.map(r => (r.name || r.id)));
+                        filtered = filtered.filter(p => {
+                            if (p.roomId && allowIds.has(p.roomId)) return true;
+                            if (!p.roomId && typeof p.level === 'string') {
+                                for (const nm of allowNames) {
+                                    if (p.level.includes(nm)) return true;
+                                }
+                            }
+                            return false;
+                        });
+                    }
+                } catch (e) {}
+                window.todayPins = filtered.slice();
                 if (window._currentUser && window._currentRole) {
                     updateStudentDashboard(window._currentUser, window._currentRole);
                 }
             } catch (e) {}
             const groups = {};
-            pins.forEach(p => {
+            const pinsToShow = window.todayPins || pins;
+            pinsToShow.forEach(p => {
                 const level = (p.level || 'ทั่วไป');
                 if (!groups[level]) groups[level] = [];
                 groups[level].push(p);
