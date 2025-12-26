@@ -28,8 +28,6 @@ async function initLevelPage(levelId) {
                  if (typeof firebase !== 'undefined') {
                      const u = firebase.auth().currentUser;
                      if (u) {
-                         // Check Access Mode Preference
-                         const modePref = localStorage.getItem('access_mode') || 'auto';
                          
                          let role = 'general';
                          try {
@@ -37,12 +35,12 @@ async function initLevelPage(levelId) {
                              if (userDoc.exists && userDoc.data()) role = userDoc.data().role || role;
                          } catch (e) {}
 
-                         // If explicitly set to teacher mode, or user is teacher/admin, allow access
-                        if (modePref === 'teacher' || role === 'teacher' || role === 'admin') {
+                         // Teacher/Admin can always access
+                        if (role === 'teacher' || role === 'admin') {
                             allow = true;
                         }
-                        // If explicit student mode or actual student role
-                        else if (role === 'student' || modePref === 'student') {
+                        // Students check enrollment
+                        else {
                              try {
                                  const enr = await firebase.firestore().collection('enrollments').doc(u.uid).get();
                                  const approved = enr.exists && enr.data().status === 'approved';
@@ -245,7 +243,6 @@ function renderRoomContent(room) {
         if (typeof firebase !== 'undefined') {
             firebase.auth().onAuthStateChanged(async (user) => {
                 if (user) {
-                    const modePref = localStorage.getItem('access_mode') || 'auto';
                     const FALLBACK_ADMINS = ['admin1234@hotmail.com'];
                     let allow = false;
 
@@ -258,12 +255,7 @@ function renderRoomContent(room) {
                             const doc = await firebase.firestore().collection('users').doc(user.uid).get();
                             if (doc.exists) {
                                 const role = doc.data().role;
-                                const effectiveMode = (function(){
-                                    if (role === 'teacher' || role === 'admin') return 'teacher';
-                                    if (modePref === 'teacher') return 'teacher';
-                                    return 'student';
-                                })();
-                                if (effectiveMode === 'teacher' && (role === 'admin' || role === 'teacher')) allow = true;
+                                if (role === 'admin' || role === 'teacher') allow = true;
                             }
                         } catch (e) {
                             console.error("Role check failed:", e);

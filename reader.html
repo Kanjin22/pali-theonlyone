@@ -474,14 +474,14 @@
             };
         }
  
-         // Hide Exam Button if not teacher
-         const accessMode = localStorage.getItem('access_mode');
-         const examBtn = document.getElementById('exam-btn');
-         if(examBtn) {
-             if(accessMode !== 'teacher') {
-                 examBtn.style.display = 'none';
-             }
-         }
+        // Hide Exam Button if not teacher
+        const isTeacher = localStorage.getItem('pali_is_teacher') === 'true';
+        const examBtn = document.getElementById('exam-btn');
+        if(examBtn) {
+            if(!isTeacher) {
+                examBtn.style.display = 'none';
+            }
+        }
     }
     init()
   </script>
