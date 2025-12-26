@@ -883,76 +883,105 @@
                     pinsLoaded = true;
                 }
             } catch (e) { }
-            // 2) Fallback to local data files if not loaded
+            // 2) Load from 'schedules' collection (The New System)
             if (!pinsLoaded) {
-                const iso = new Date().toISOString().split('T')[0]; // Ensure iso is available in this scope if needed, though it is likely defined above
+                try {
+                    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    const currentMonth = monthNames[today.getMonth()];
+                    const currentYear = today.getFullYear().toString();
+                    
+                    const snap = await db.collection('schedules')
+                        .where('month', '==', currentMonth)
+                        .where('year', '==', currentYear)
+                        .get();
 
-                // Define helper to safely get array
-                const getArr = (v) => (typeof v !== 'undefined' && Array.isArray(v)) ? v : [];
+                    const allPins = [];
+                    const levelMap = {
+                        'pt12': 'ประโยค ๑-๒',
+                        'pt3': 'ประโยค ๓',
+                        'pt4': 'ประโยค ๔',
+                        'pt5': 'ประโยค ๕',
+                        'pt6': 'ประโยค ๖',
+                        'pt7': 'ประโยค ๗',
+                        'pt8': 'ประโยค ๘',
+                        'pt9': 'ประโยค ๙'
+                    };
+                    const getLevelLabel = (l) => levelMap[l] || l;
 
-                const standardSets = [
-                    ...getArr(typeof dataNovember !== 'undefined' ? dataNovember : undefined),
-                    ...getArr(typeof dataDecember !== 'undefined' ? dataDecember : undefined),
-                    ...getArr(typeof dataJanuary !== 'undefined' ? dataJanuary : undefined),
-                    ...getArr(typeof dataFebruary !== 'undefined' ? dataFebruary : undefined)
-                ];
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        // Find today's entry
+                        if (data.days && Array.isArray(data.days)) {
+                            const dayEntry = data.days.find(d => d.date === iso);
+                            if (dayEntry) {
+                                const lvlLabel = getLevelLabel(data.level);
+                                
+                                const extract = (periodData, periodName) => {
+                                    if (!periodData) return;
+                                    const timeLabel = periodName === 'morning' ? 'เช้า' : (periodName === 'afternoon' ? 'บ่าย' : 'ค่ำ');
+                                    
+                                    // Helper to add pin
+                                    const add = (subj, act) => {
+                                        if (!act) return;
+                                        // Clean act (if array)
+                                        const cleanAct = Array.isArray(act) ? act.join(', ') : act;
+                                        // Determine subject label
+                                        let subjLabel = subj;
+                                        if (subj === 'Grammar') subjLabel = 'ไวยากรณ์';
+                                        else if (subj === 'Translate') subjLabel = 'แปล';
+                                        else if (subj === 'Return') subjLabel = 'กลับ';
+                                        else if (subj === 'Chan') subjLabel = 'ฉันท์';
+                                        else if (subj === 'Samphan') subjLabel = 'สัมพันธ์';
+                                        else if (subj === 'Tang') subjLabel = 'แต่ง';
+                                        
+                                        allPins.push({ time: timeLabel, act: cleanAct, level: lvlLabel, subject: subjLabel });
+                                    };
 
-                const noviceSets = [
-                    ...getArr(typeof data_pt12_novice_november_2025 !== 'undefined' ? data_pt12_novice_november_2025 : undefined),
-                    ...getArr(typeof data_pt12_novice_december_2025 !== 'undefined' ? data_pt12_novice_december_2025 : undefined),
-                    ...getArr(typeof dataJanuary_Novice !== 'undefined' ? dataJanuary_Novice : undefined),
-                    ...getArr(typeof dataFebruary_Novice !== 'undefined' ? dataFebruary_Novice : undefined)
-                ];
+                                    // 1. Structured Activities
+                                    if (periodData.activities) {
+                                        Object.keys(periodData.activities).forEach(k => {
+                                            add(k, periodData.activities[k]);
+                                        });
+                                    } 
+                                    // 2. Legacy Fallbacks (if no structured activities found for standard types)
+                                    else {
+                                        if (periodData.activityGrammar) add('Grammar', periodData.activityGrammar);
+                                        if (periodData.activityTranslate) add('Translate', periodData.activityTranslate);
+                                        if (periodData.activityReturn) add('Return', periodData.activityReturn);
+                                        if (periodData.activityChan) add('Chan', periodData.activityChan);
+                                        if (periodData.activitySamphan) add('Samphan', periodData.activitySamphan);
+                                        if (periodData.activityTang) add('Tang', periodData.activityTang);
+                                        
+                                        // Generic
+                                        const hasSpecific = periodData.activityGrammar || periodData.activityTranslate || periodData.activityReturn || periodData.activityChan || periodData.activitySamphan || periodData.activityTang;
+                                        if (periodData.activity && !hasSpecific) {
+                                            add('กิจกรรม', periodData.activity);
+                                        }
+                                    }
+                                };
 
-                const allPins = [];
-
-                const extractPins = (entry, defaultLevel) => {
-                    if (!entry) return;
-                    // Morning
-                    if (entry.morning) {
-                        if (entry.evening.activity) {
-                            allPins.push({ time: 'เช้า', act: entry.morning.activity, level: defaultLevel, subject: 'กิจกรรม' });
+                                extract(dayEntry.morning, 'morning');
+                                extract(dayEntry.afternoon, 'afternoon');
+                                extract(dayEntry.evening, 'evening');
+                            }
                         }
-                        if (entry.morning.activityGrammar)
-                            allPins.push({ time: 'เช้า', act: entry.morning.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
-                        if (entry.morning.activityTranslate)
-                            allPins.push({ time: 'เช้า', act: entry.morning.activityTranslate, level: defaultLevel, subject: 'แปล' });
+                    });
+
+                    if (allPins.length > 0) {
+                        // Sort pins: Morning -> Afternoon -> Evening, then by Level
+                        const timeOrder = { 'เช้า': 1, 'บ่าย': 2, 'ค่ำ': 3 };
+                        allPins.sort((a, b) => {
+                            const tDiff = (timeOrder[a.time] || 4) - (timeOrder[b.time] || 4);
+                            if (tDiff !== 0) return tDiff;
+                            return a.level.localeCompare(b.level);
+                        });
+
+                        renderPins(body, allPins);
+                        pinsLoaded = true;
                     }
-                    // Afternoon
-                    if (entry.afternoon) {
-                        if (entry.evening.activity) {
-                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activity, level: defaultLevel, subject: 'กิจกรรม' });
-                        }
-                        if (entry.afternoon.activityGrammar)
-                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activityGrammar, level: defaultLevel, subject: 'ไวยากรณ์' });
-                        if (entry.afternoon.activityTranslate)
-                            allPins.push({ time: 'บ่าย', act: entry.afternoon.activityTranslate, level: defaultLevel, subject: 'แปล' });
-                    }
-                    // Evening
-                    if (entry.evening) {
-                        if (entry.evening.activity) {
-                            allPins.push({ time: 'ค่ำ', act: entry.evening.activity, level: defaultLevel, subject: 'กิจกรรม' });
-                        }
-                        if (entry.evening.activityGrammar) {
-                            let act = Array.isArray(entry.evening.activityGrammar) ? entry.evening.activityGrammar.join(', ') : entry.evening.activityGrammar;
-                            allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'ไวยากรณ์' });
-                        }
-                        if (entry.evening.activityTranslate) {
-                            let act = Array.isArray(entry.evening.activityTranslate) ? entry.evening.activityTranslate.join(', ') : entry.evening.activityTranslate;
-                            allPins.push({ time: 'ค่ำ', act: act, level: defaultLevel, subject: 'แปล' });
-                        }
-                    }
-                };
 
-                const stdEntry = standardSets.find(d => d && d.date === iso);
-                extractPins(stdEntry, 'ประโยค ๑-๒ (สาธุชนทั่วไป)');
-
-                const novEntry = noviceSets.find(d => d && d.date === iso);
-                extractPins(novEntry, 'ประโยค ๑-๒ (สามเณรนวกะ)');
-
-                if (allPins.length > 0) {
-                    renderPins(body, allPins);
-                    pinsLoaded = true;
+                } catch (e) {
+                    console.error("Failed to load dynamic pins:", e);
                 }
             }
             if (!pinsLoaded) {
