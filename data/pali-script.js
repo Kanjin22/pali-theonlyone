@@ -34,9 +34,19 @@ const PaliScript = {
                 c = key;
                 charLen = 2;
             } else if (!consonants.includes(c)) {
-                // Not a consonant (maybe vowel or special), just append if mapped or keep
-                if (map[c]) res += map[c];
-                else res += c;
+                // Not a consonant
+                if (vowels.includes(c)) {
+                     // Standalone vowel -> Add 'อ' base
+                     if (c === 'e' || c === 'o') {
+                         res += map[c] + 'อ';
+                     } else {
+                         res += 'อ' + map[c];
+                     }
+                } else {
+                     // Other chars
+                     if (map[c] !== undefined) res += map[c];
+                     else res += c;
+                }
                 i++;
                 continue;
             }
