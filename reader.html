@@ -400,7 +400,11 @@
         const panel = document.getElementById('dict-panel');
         const content = document.getElementById('dict-content');
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
-        const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(cleanWord) : "";
+        let wordToConvert = cleanWord;
+        if (result && result._stemmedFrom && result.word) {
+            wordToConvert = result.word;
+        }
+        const romanWord = (typeof PaliScript !== 'undefined') ? PaliScript.thaiToRoman(wordToConvert) : "";
 
         // Build result HTML
         let displayHtml = "";
