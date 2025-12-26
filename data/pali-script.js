@@ -132,6 +132,10 @@ const PaliScript = {
                 // Vowel -ī
                 if (res.endsWith('a')) res = res.slice(0, -1);
                 res += 'ī';
+            } else if (c === 'ึ') {
+                // Vowel -iṃ (สระอึ = อิ + ํ)
+                if (res.endsWith('a')) res = res.slice(0, -1);
+                res += 'iṃ';
             } else if (c === 'ุ') {
                 // Vowel -u
                 if (res.endsWith('a')) res = res.slice(0, -1);
