@@ -1498,9 +1498,9 @@
                     editBtn.onclick = () => openMemberEditor(m.uid);
                     const delBtn = document.createElement('button');
                     delBtn.className = 'btn btn-danger btn-small btn-pill btn-elevated';
-                    delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> ลบการกำหนด';
-                    delBtn.title = 'ลบการกำหนดชั้นและห้องของสมาชิก';
-                    delBtn.onclick = () => resetMemberAssignments(m.uid);
+                    delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> ลบออกจากฐานข้อมูล';
+                    delBtn.title = 'ลบสมาชิกออกจากฐานข้อมูล';
+                    delBtn.onclick = () => deleteMember(m.uid);
                     actions.appendChild(editBtn);
                     actions.appendChild(delBtn);
                     actionCell.appendChild(actions);
@@ -1886,6 +1886,58 @@
                 alert('ลบการกำหนดเรียบร้อย');
             } catch (err) {
                 alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
+            } finally {
+                document.body.style.cursor = originalCursor;
+            }
+        }
+        async function deleteMember(uid) {
+            if (!confirm('ยืนยันการลบสมาชิกนี้ออกจากฐานข้อมูลทั้งหมด?')) return;
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+            try {
+                const uDoc = await db.collection('users').doc(uid).get();
+                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                const snap = await db.collection('classrooms').where('teachers', 'array-contains', teacherName).get();
+                const batchRm = db.batch();
+                snap.forEach(doc => {
+                    batchRm.set(db.collection('classrooms').doc(doc.id), { teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
+                });
+                await batchRm.commit();
+                let hardDeleted = { users: false, enrollments: false };
+                try {
+                    await db.collection('users').doc(uid).delete();
+                    hardDeleted.users = true;
+                } catch (e1) {
+                    await db.collection('users').doc(uid).set({ deleted: true, role: 'general', teacherLevels: [] }, { merge: true });
+                }
+                try {
+                    await db.collection('enrollments').doc(uid).delete();
+                    hardDeleted.enrollments = true;
+                } catch (e2) {
+                    await db.collection('enrollments').doc(uid).set({
+                        status: 'deleted',
+                        rooms: [],
+                        levelRequested: firebase.firestore.FieldValue.delete(),
+                        deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+                }
+                try {
+                    const actor = auth.currentUser;
+                    await db.collection('exam_logs').add({
+                        type: 'member_delete',
+                        actorUid: actor ? actor.uid : null,
+                        actorEmail: actor ? actor.email : null,
+                        targetUid: uid,
+                        hardUsers: hardDeleted.users,
+                        hardEnrollments: hardDeleted.enrollments,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (logErr) {}
+                loadMembers();
+                loadClassrooms();
+                alert('ลบสมาชิกเรียบร้อย');
+            } catch (err) {
+                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด'));
             } finally {
                 document.body.style.cursor = originalCursor;
             }
