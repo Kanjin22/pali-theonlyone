@@ -794,8 +794,18 @@
 
         // Get ID from URL
         const urlParams = new URLSearchParams(window.location.search);
-        const scheduleId = urlParams.get('id');
+        let scheduleId = urlParams.get('id');
         const roomId = urlParams.get('room'); // fallback or context
+        const mode = urlParams.get('mode');
+
+        // Handle Daily Mode
+        if (mode === 'daily' && roomId) {
+             const now = new Date();
+             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+             const monthName = months[now.getMonth()];
+             const year = now.getFullYear();
+             scheduleId = `${roomId}_${monthName}_${year}`;
+        }
 
         let scheduleData = null;
         let cloudFilesIndex = {}; // Cache for cloud files
@@ -905,7 +915,26 @@
             const d = String(now.getDate()).padStart(2, '0');
             const todayStr = `${year}-${month}-${d}`;
 
-            data.days.forEach(day => {
+            let daysToRender = data.days;
+            if (mode === 'daily') {
+                 document.getElementById('page-title').innerText = "ตารางเรียนวันนี้";
+                 document.getElementById('back-link').innerText = "← กลับสู่หน้าห้องเรียน";
+                 
+                 // Hide PDF button in daily mode
+                 const pdfBtn = document.querySelector('.print-hide button');
+                 if(pdfBtn) pdfBtn.style.display = 'none';
+
+                 daysToRender = data.days.filter(day => day.date === todayStr);
+                 
+                 if (daysToRender.length === 0) {
+                     tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:50px; font-size:1.5em; color:#7f8c8d;">
+                        <i class="fas fa-calendar-times"></i> วันนี้ไม่มีการเรียนการสอน
+                     </td></tr>`;
+                     return;
+                 }
+            }
+
+            daysToRender.forEach(day => {
                 const tr = document.createElement('tr');
                 
                 // Check for Today
