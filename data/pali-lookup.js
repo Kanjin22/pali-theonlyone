@@ -177,6 +177,29 @@ const PaliLookup = {
                      }
                  }
              }
+
+             // Additional Heuristic: Force check specific roots for common stems
+             // e.g. p -> pu -> pur -> puri -> puris -> purisa
+             // This is computationally expensive but requested by user ("แปลงไปเทียบไปเลย")
+             // Only do this if no candidates found yet? Or always? 
+             // Let's do it L-to-R for "building up" roots
+             for (let i = 2; i <= roman.length; i++) {
+                const sub = roman.substring(0, i);
+                 if (dbs && dbs.sc && dbs.sc[sub]) {
+                     add(sub);
+                 }
+                 // Check substitutions for L-to-R too
+                 const lastChar = sub.slice(-1);
+                 const base = sub.slice(0, -1);
+                 if (vowelMap[lastChar]) {
+                     for (const subChar of vowelMap[lastChar]) {
+                         const candidate = base + subChar;
+                         if (dbs && dbs.sc && dbs.sc[candidate]) {
+                             add(candidate);
+                         }
+                     }
+                 }
+             }
         }
 
         // --- 2. Suffix Stripping (Complex Endings) ---
