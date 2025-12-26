@@ -14,6 +14,25 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script src="../js/firebase_config.js"></script>
+
+    <!-- Content Data Scripts -->
+    <script src="../data/content-dhamma01.js"></script>
+    <script src="../data/content-dhamma02.js"></script>
+    <script src="../data/content-dhamma03.js"></script>
+    <script src="../data/content-dhamma04.js"></script>
+    <script src="../data/content-dhamma05.js"></script>
+    <script src="../data/content-dhamma06.js"></script>
+    <script src="../data/content-dhamma07.js"></script>
+    <script src="../data/content-dhamma08.js"></script>
+    <script src="../data/content-mangala01.js"></script>
+    <script src="../data/content-mangala02.js"></script>
+    <script src="../data/content-samanta01.js"></script>
+    <script src="../data/content-samanta02.js"></script>
+    <script src="../data/content-samanta03.js"></script>
+    <script src="../data/content-visuddhi01.js"></script>
+    <script src="../data/content-visuddhi02.js"></script>
+    <script src="../data/content-visuddhi03.js"></script>
+    <script src="../data/content-abhidhamma01.js"></script>
     <style>
         body { font-family: 'Sarabun', sans-serif; background: #f5f5f5; padding: 20px; }
         .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -161,11 +180,26 @@
     </div>
     <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <div class="form-group" style="margin-bottom:0;">
+            <label>เลือกชั้นเรียน (Level)</label>
+            <select id="level-select" onchange="onLevelChange()">
+                <option value="">-- เลือกชั้นเรียน --</option>
+                <option value="pt12">ประโยค ๑-๒</option>
+                <option value="pt3">ป.ธ. ๓</option>
+                <option value="pt4">ป.ธ. ๔</option>
+                <option value="pt5">ป.ธ. ๕</option>
+                <option value="pt6">ป.ธ. ๖</option>
+                <option value="pt7">ป.ธ. ๗</option>
+                <option value="pt8">ป.ธ. ๘</option>
+                <option value="pt9">ป.ธ. ๙</option>
+            </select>
+        </div>
+
         <div class="form-group" style="margin-bottom:0;">
             <label>เลือกห้องเรียน (Room)</label>
             <select id="room-select" onchange="checkAndLoadSchedule()">
-                <option value="">-- กำลังโหลดห้องเรียน... --</option>
+                <option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>
             </select>
         </div>
 
@@ -285,6 +319,29 @@
 
 
 
+    <!-- Slide Selector Modal -->
+    <div id="slide-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="width: 80%; max-width: 800px; height: 80vh; display:flex; flex-direction:column;">
+            <span class="modal-close" onclick="closeSlideSelector()">&times;</span>
+            <h2><i class="fas fa-chalkboard-teacher"></i> เลือกสื่อการสอน (Select Slide)</h2>
+            
+            <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+                <select id="slide-book-select" onchange="renderSlideOptions()" style="flex: 1;">
+                    <option value="">-- เลือกหนังสือ/คัมภีร์ --</option>
+                </select>
+                <input type="text" id="slide-search" placeholder="ค้นหาหัวข้อ..." onkeyup="renderSlideOptions()" style="flex: 1;">
+            </div>
+
+            <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding: 10px;" id="slide-list-container">
+                <!-- List items will be injected here -->
+            </div>
+            
+            <div style="margin-top: 15px; text-align: right;">
+                <button class="btn" onclick="confirmSlideSelection()">เลือกรายการที่ติ๊กไว้</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="../js/system_config.js"></script>
@@ -294,10 +351,135 @@
     const db = firebase.firestore();
     const storage = firebase.storage();
     const roomSelect = document.getElementById('room-select');
+    const levelSelect = document.getElementById('level-select');
     const thaiMonthsShort = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     const thaiDaysShort = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
     let currentScheduleId = null; // Track if we are editing an existing doc
     let DYNAMIC_FILES = []; // Files loaded from Firestore
+
+    // --- Content Mapping ---
+    const levelConfig = {
+        "pt12": ["ธรรมบท ภาค ๑", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+        "pt3": ["ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+        "pt4": ["มงคลัถทีปนี ภาค ๑", "ธรรมบท ภาค ๑"],
+        "pt5": ["มงคลัถทีปนี ภาค ๒", "ธรรมบท ภาค ๒", "ธรรมบท ภาค ๓", "ธรรมบท ภาค ๔"],
+        "pt6": ["สมันตปาสาทิกา ภาค ๓", "ธรรมบท ภาค ๕", "ธรรมบท ภาค ๖", "ธรรมบท ภาค ๗", "ธรรมบท ภาค ๘"],
+        "pt7": ["สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒", "มงคลัถทีปนี ภาค ๑"],
+        "pt8": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "สมันตปาสาทิกา ภาค ๑", "สมันตปาสาทิกา ภาค ๒"],
+        "pt9": ["วิสุทธิมรรค ภาค ๑", "วิสุทธิมรรค ภาค ๒", "อภิธรรม ภาค ๑"]
+    };
+
+    const books = [];
+    function registerBook(name, varObj) {
+        if (typeof varObj !== 'undefined') books.push({ name: name, data: varObj });
+    }
+
+    // Register all available books
+    try { registerBook("ธรรมบท ภาค ๑", contentDhamma01); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๒", contentDhamma02); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๓", contentDhamma03); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๔", contentDhamma04); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๕", contentDhamma05); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๖", contentDhamma06); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๗", contentDhamma07); } catch(e) {}
+    try { registerBook("ธรรมบท ภาค ๘", contentDhamma08); } catch(e) {}
+    try { registerBook("มังคลัถทีปนี ภาค ๑", contentMangala01); } catch(e) {}
+    try { registerBook("มังคลัถทีปนี ภาค ๒", contentMangala02); } catch(e) {}
+    try { registerBook("สมันตปาสาทิกา ภาค ๑", contentSamanta01); } catch(e) {}
+    try { registerBook("สมันตปาสาทิกา ภาค ๒", contentSamanta02); } catch(e) {}
+    try { registerBook("สมันตปาสาทิกา ภาค ๓", contentSamanta03); } catch(e) {}
+    try { registerBook("วิสุทธิมรรค ภาค ๑", contentVisuddhi01); } catch(e) {}
+    try { registerBook("วิสุทธิมรรค ภาค ๒", contentVisuddhi02); } catch(e) {}
+    try { registerBook("วิสุทธิมรรค ภาค ๓", contentVisuddhi03); } catch(e) {}
+    try { registerBook("อภิธรรม ภาค ๑", contentAbhidhamma01); } catch(e) {}
+
+    // --- Slide Selector Logic ---
+    let activeSlideTextarea = null;
+
+    function openSlideSelector(btn) {
+        activeSlideTextarea = btn.previousElementSibling;
+        const level = levelSelect.value;
+        if (!level) { alert('กรุณาเลือกชั้นเรียนก่อน'); return; }
+
+        const bookSelect = document.getElementById('slide-book-select');
+        bookSelect.innerHTML = '<option value="">-- เลือกหนังสือ/คัมภีร์ --</option>';
+
+        const allowedBooks = levelConfig[level] || [];
+        books.forEach((b, idx) => {
+            if (allowedBooks.includes(b.name)) {
+                const opt = document.createElement('option');
+                opt.value = idx; 
+                opt.textContent = b.name;
+                bookSelect.appendChild(opt);
+            }
+        });
+
+        if (bookSelect.options.length > 1) {
+            bookSelect.selectedIndex = 1;
+        }
+
+        renderSlideOptions();
+        document.getElementById('slide-modal').style.display = 'flex';
+    }
+
+    function closeSlideSelector() {
+        document.getElementById('slide-modal').style.display = 'none';
+        activeSlideTextarea = null;
+    }
+
+    function renderSlideOptions() {
+        const bookIdx = document.getElementById('slide-book-select').value;
+        const search = document.getElementById('slide-search').value.toLowerCase();
+        const container = document.getElementById('slide-list-container');
+        container.innerHTML = '';
+
+        if (bookIdx === "") return;
+
+        const book = books[bookIdx];
+        if (!book) return;
+
+        Object.keys(book.data).forEach(key => {
+            const items = book.data[key];
+            if (!items || items.length === 0) return;
+            const item = items[0]; 
+
+            const title = item.story || key;
+            const episode = item.episode || '';
+            const textToSearch = `${title} ${episode} ${key}`.toLowerCase();
+
+            if (search && !textToSearch.includes(search)) return;
+
+            const div = document.createElement('div');
+            div.style.padding = "8px";
+            div.style.borderBottom = "1px solid #eee";
+            div.style.display = "flex";
+            div.style.alignItems = "center";
+            div.style.gap = "10px";
+            
+            div.innerHTML = `
+                <input type="checkbox" class="slide-checkbox" value="${key}">
+                <div style="cursor:pointer;" onclick="this.previousElementSibling.click()">
+                    <div style="font-weight:bold; color:#2c3e50;">${title}</div>
+                    <div style="font-size:0.85em; color:#7f8c8d;">${episode} (ID: ${key})</div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function confirmSlideSelection() {
+        if (!activeSlideTextarea) return;
+
+        const checkboxes = document.querySelectorAll('.slide-checkbox:checked');
+        const ids = Array.from(checkboxes).map(cb => cb.value);
+        
+        if (ids.length > 0) {
+            const currentVal = activeSlideTextarea.value.trim();
+            const newVal = ids.join('\\n');
+            activeSlideTextarea.value = currentVal ? currentVal + '\\n' + newVal : newVal;
+        }
+        closeSlideSelector();
+    }
 
     // Configuration for Subjects
     const SUBJECT_CONFIG = {
@@ -394,43 +576,64 @@
         const urlParams = new URLSearchParams(window.location.search);
         const preRoom = urlParams.get('room');
         if (preRoom) {
-            roomSelect.value = preRoom;
-            checkAndLoadSchedule();
+            // Find room to set level first
+            const room = allClassrooms.find(r => r.id === preRoom);
+            if (room) {
+                levelSelect.value = room.level;
+                onLevelChange(); // Populate rooms
+                roomSelect.value = preRoom; // Select room
+                checkAndLoadSchedule();
+            }
         }
     })();
 
+    let allClassrooms = [];
+
     async function loadClassrooms() {
-        roomSelect.innerHTML = '<option value="">-- กรุณาเลือกห้อง --</option>';
-        let loadedFromDb = false;
+        allClassrooms = [];
         try {
             const snap = await db.collection('classrooms').orderBy('level').get();
             if (!snap.empty) {
                 snap.forEach(doc => {
-                    const room = doc.data();
-                    const option = document.createElement('option');
-                    option.value = room.id;
-                    option.dataset.level = room.level;
-                    option.textContent = `${room.name} (${room.id})`;
-                    roomSelect.appendChild(option);
+                    allClassrooms.push({ id: doc.id, ...doc.data() });
                 });
-                loadedFromDb = true;
             }
         } catch (e) {
             console.error("Error loading classrooms:", e);
         }
 
         // Fallback to systemConfig if DB is empty or failed
-        if (!loadedFromDb && typeof systemConfig !== 'undefined') {
+        if (allClassrooms.length === 0 && typeof systemConfig !== 'undefined') {
             console.warn("Loading classrooms from systemConfig (Firestore empty or failed)");
             for (let key in systemConfig.classrooms) {
                 let room = systemConfig.classrooms[key];
-                let option = document.createElement('option');
-                option.value = room.id; 
-                option.dataset.level = room.level; 
-                option.textContent = `${room.name} (${room.id})`;
-                roomSelect.appendChild(option);
+                allClassrooms.push({ id: room.id, ...room });
             }
         }
+        
+        // Don't populate roomSelect yet, wait for level selection
+        roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
+    }
+
+    function onLevelChange() {
+        const lvl = levelSelect.value;
+        roomSelect.innerHTML = '<option value="">-- เลือกห้องเรียน --</option>';
+        document.getElementById('schedule-rows').innerHTML = ''; // Clear schedule
+        document.getElementById('status-msg').style.display = 'none';
+        
+        if (!lvl) {
+            roomSelect.innerHTML = '<option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>';
+            return;
+        }
+        
+        const filtered = allClassrooms.filter(r => r.level === lvl);
+        filtered.forEach(r => {
+             const option = document.createElement('option');
+             option.value = r.id;
+             option.dataset.level = r.level;
+             option.textContent = `${r.name} (${r.id})`;
+             roomSelect.appendChild(option);
+        });
     }
 
     async function checkAndLoadSchedule() {
@@ -440,7 +643,10 @@
         const container = document.getElementById('schedule-rows');
         const statusMsg = document.getElementById('status-msg');
 
-        if (!roomId || !month || !year) return;
+        if (!roomId || !month || !year) {
+            currentScheduleId = null;
+            return;
+        }
 
         showLoading(true);
         container.innerHTML = '';
@@ -727,9 +933,12 @@
 
     // Helper to populate row from existing data
     function addRow(data = null) {
-        const roomVal = roomSelect.value;
-        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
-        const level = selectedOption ? selectedOption.dataset.level : 'pt12';
+        let level = levelSelect.value;
+        if (!level) {
+             // Fallback for legacy behavior
+             const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+             level = (selectedOption && selectedOption.dataset.level) ? selectedOption.dataset.level : 'pt12';
+        }
 
         const div = document.createElement('div');
         div.className = 'row-entry';
@@ -1007,7 +1216,12 @@
                         <!-- 3. Slide (Presentation ID) -->
                         <div class="field-group">
                             <label>รหัสสื่อการสอน (Presentation ID) - หลายรายการคั่นด้วยบรรทัดใหม่</label>
-                            <textarea class="input-slide" data-subj-id="${subj.id}" rows="2" placeholder="เช่น mangala_01_01\\nmangala_01_02">${slideVal}</textarea>
+                            <div style="display: flex; gap: 5px;">
+                                <textarea class="input-slide" data-subj-id="${subj.id}" rows="2" placeholder="เช่น mangala_01_01\nmangala_01_02">${slideVal}</textarea>
+                                <button class="btn btn-primary" onclick="openSlideSelector(this)" style="padding: 5px 10px; font-size: 0.9em;" title="เลือกจากรายการ">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- 4. Materials -->
