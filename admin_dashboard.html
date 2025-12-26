@@ -1924,49 +1924,62 @@
             const originalCursor = document.body.style.cursor;
             document.body.style.cursor = 'wait';
             try {
-                const uDoc = await db.collection('users').doc(uid).get();
-                const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
-                const snap = await db.collection('classrooms').where('teachers', 'array-contains', teacherName).get();
-                const batchRm = db.batch();
-                snap.forEach(doc => {
-                    batchRm.set(db.collection('classrooms').doc(doc.id), { teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
-                });
-                await batchRm.commit();
-                let hardDeleted = { users: false, enrollments: false };
-                try {
-                    await db.collection('users').doc(uid).delete();
-                    hardDeleted.users = true;
-                } catch (e1) {
-                    await db.collection('users').doc(uid).set({ deleted: true, role: 'general', teacherLevels: [] }, { merge: true });
-                }
-                try {
-                    await db.collection('enrollments').doc(uid).delete();
-                    hardDeleted.enrollments = true;
-                } catch (e2) {
-                    await db.collection('enrollments').doc(uid).set({
-                        status: 'deleted',
-                        rooms: [],
-                        levelRequested: firebase.firestore.FieldValue.delete(),
-                        deletedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }, { merge: true });
-                }
-                try {
-                    const actor = auth.currentUser;
-                    await db.collection('exam_logs').add({
-                        type: 'member_delete',
-                        actorUid: actor ? actor.uid : null,
-                        actorEmail: actor ? actor.email : null,
-                        targetUid: uid,
-                        hardUsers: hardDeleted.users,
-                        hardEnrollments: hardDeleted.enrollments,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                const attempt = async () => {
+                    const uDoc = await db.collection('users').doc(uid).get();
+                    const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                    const snap = await db.collection('classrooms').where('teachers', 'array-contains', teacherName).get();
+                    const batchRm = db.batch();
+                    snap.forEach(doc => {
+                        batchRm.set(db.collection('classrooms').doc(doc.id), { teachers: firebase.firestore.FieldValue.arrayRemove(teacherName) }, { merge: true });
                     });
-                } catch (logErr) {}
+                    await batchRm.commit();
+                    let hardDeleted = { users: false, enrollments: false };
+                    try {
+                        await db.collection('users').doc(uid).delete();
+                        hardDeleted.users = true;
+                    } catch (e1) {
+                        await db.collection('users').doc(uid).set({ deleted: true, role: 'general', teacherLevels: [] }, { merge: true });
+                    }
+                    try {
+                        await db.collection('enrollments').doc(uid).delete();
+                        hardDeleted.enrollments = true;
+                    } catch (e2) {
+                        await db.collection('enrollments').doc(uid).set({
+                            status: 'deleted',
+                            rooms: [],
+                            levelRequested: firebase.firestore.FieldValue.delete(),
+                            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                    }
+                    try {
+                        const actor = auth.currentUser;
+                        await db.collection('exam_logs').add({
+                            type: 'member_delete',
+                            actorUid: actor ? actor.uid : null,
+                            actorEmail: actor ? actor.email : null,
+                            targetUid: uid,
+                            hardUsers: hardDeleted.users,
+                            hardEnrollments: hardDeleted.enrollments,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    } catch (logErr) {}
+                };
+                try {
+                    await attempt();
+                } catch (e1) {
+                    if (e1.code === 'permission-denied') {
+                        const ok = await ensureAdminRole();
+                        if (!ok) throw e1;
+                        await attempt();
+                    } else {
+                        throw e1;
+                    }
+                }
                 loadMembers();
                 loadClassrooms();
                 alert('ลบสมาชิกเรียบร้อย');
             } catch (err) {
-                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด'));
+                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
