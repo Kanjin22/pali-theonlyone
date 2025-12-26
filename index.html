@@ -277,7 +277,7 @@
                 </div>
             </div>
 
-            <div class="section-label">🎓 ชั้นเรียนบาลี</div>
+            <div id="pali-classrooms-label" class="section-label">🎓 ชั้นเรียนบาลี</div>
             <div id="resume-section" style="display:none; margin-bottom: 30px;">
                 <div class="section-label" style="margin-top: 0; color: #f39c12; border-left-color: #f39c12;">⏳ เรียนต่อจากเดิม</div>
                 <a id="resume-btn" href="#" class="menu-card level-tool" style="flex-direction: row; text-align: left; background: #fff8e1; border: 1px solid #ffecb3;">
@@ -292,7 +292,7 @@
                 <div class="section-label" style="margin-top: 0; color: #27ae60; border-left-color: #27ae60;">🏫 ห้องเรียนของฉัน</div>
                 <div id="my-rooms-grid" class="grid-menu"></div>
             </div>
-            <div class="grid-menu">
+            <div id="pali-classrooms-grid" class="grid-menu">
 
                 <!-- ชั้นต้น (สีเขียว) -->
                 <a href="classroom_select.html?level=pt12" class="menu-card level-basic">
@@ -976,6 +976,12 @@
                     loadTodayPins();
                     const shown = renderMyRooms(rooms);
                     if (shown) {
+                        // Hide generic classroom section completely
+                        const label = document.getElementById('pali-classrooms-label');
+                        const grid = document.getElementById('pali-classrooms-grid');
+                        if (label) label.style.display = 'none';
+                        if (grid) grid.style.display = 'none';
+
                         classroomLinks.forEach(a => a.style.display = 'none');
                         if (existingEnroll) existingEnroll.remove();
                     } else {
