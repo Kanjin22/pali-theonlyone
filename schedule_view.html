@@ -736,6 +736,10 @@
                  if(Array.isArray(period.activitySamphan)) items.push(...period.activitySamphan);
                 else items.push(period.activitySamphan);
             }
+            if (period.activityTang) {
+                if(Array.isArray(period.activityTang)) items.push(...period.activityTang);
+                else items.push(period.activityTang);
+            }
             
             if (items.length === 0) return '';
             
@@ -974,10 +978,11 @@
         // Mapping for subject labels
         const subjMap = {
             'Grammar': 'ไวย.',
-            'Translate': 'แปล',
-            'Return': 'กลับ',
-            'Chan': 'ฉันท์',
-            'Samphan': 'สัมพันธ์'
+            'Translate': 'แปล.',
+            'Return': 'กลับ.',
+            'Chan': 'ฉันท์.',
+            'Samphan': 'สัม.',
+            'Tang': 'แต่ง.'
         };
         const getSubjLabel = (id) => subjMap[id] || id;
 
@@ -1003,6 +1008,34 @@
                     period.activityTranslate.forEach(t => { html += `<p>📙 ${t}</p>`; });
                 } else {
                     html += `<p>📙 ${period.activityTranslate}</p>`;
+                }
+            }
+            if (period.activityReturn) {
+                if (Array.isArray(period.activityReturn)) {
+                    period.activityReturn.forEach(t => { html += `<p>↩️ ${t}</p>`; });
+                } else {
+                    html += `<p>↩️ ${period.activityReturn}</p>`;
+                }
+            }
+            if (period.activityChan) {
+                if (Array.isArray(period.activityChan)) {
+                    period.activityChan.forEach(t => { html += `<p>📝 ${t}</p>`; });
+                } else {
+                    html += `<p>📝 ${period.activityChan}</p>`;
+                }
+            }
+            if (period.activitySamphan) {
+                if (Array.isArray(period.activitySamphan)) {
+                    period.activitySamphan.forEach(t => { html += `<p>🤝 ${t}</p>`; });
+                } else {
+                    html += `<p>🤝 ${period.activitySamphan}</p>`;
+                }
+            }
+            if (period.activityTang) {
+                if (Array.isArray(period.activityTang)) {
+                    period.activityTang.forEach(t => { html += `<p>✍️ ${t}</p>`; });
+                } else {
+                    html += `<p>✍️ ${period.activityTang}</p>`;
                 }
             }
             if (period.activity && !period.activityGrammar && !period.activityTranslate) html += `<p>${period.activity}</p>`;
