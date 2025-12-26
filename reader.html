@@ -161,10 +161,6 @@
   </div>
 
   <!-- Vocab Data -->
-  <script src="./data/vocab-akhyata.js"></script>
-  <script src="./data/vocab-kitaka.js"></script>
-  <script src="./data/vocab-samasa.js"></script>
-  <script src="./data/vocab-taddhita.js"></script>
   <script src="./data/vocab-general.js"></script>
   <script src="./data/vocab-newgen.js"></script>
   <script src="./data/vocab-tananunto.js"></script>
@@ -412,6 +408,8 @@
     function showDictionaryDefinition(word, manualOverride = null) {
         // Collect all databases
         const dbs = {
+            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
+            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
             etipitaka: (typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {}),
             dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
