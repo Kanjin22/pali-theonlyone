@@ -328,6 +328,22 @@
             { id: 'Translate', label: 'แปล.', defaultAct: 'แปลมคธเป็นไทย' } ]
     };
 
+    const LEVEL_LABELS = {
+        'pt12': 'ประโยค ๑-๒',
+        'pt3': 'ประโยค ๓',
+        'pt4': 'ประโยค ๔',
+        'pt5': 'ประโยค ๕',
+        'pt6': 'ประโยค ๖',
+        'pt7': 'ประโยค ๗',
+        'pt8': 'ประโยค ๘',
+        'pt9': 'ประโยค ๙'
+    };
+    const TYPE_LABELS = {
+        'materials': 'เอกสารประกอบ',
+        'exams': 'ข้อสอบ',
+        'answers': 'เฉลย'
+    };
+
     // Initialize
     (async function init() {
         // Set default date to current
@@ -1303,14 +1319,14 @@
             
             const dateStr = file.uploadedAt ? new Date(file.uploadedAt.seconds * 1000).toLocaleString() : '-';
             
-            tr.innerHTML = `
-                <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
-                <td style="padding:10px;">${file.type}</td>
-                <td style="padding:10px;">${file.level}</td>
-                <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
-                <td style="padding:10px; text-align:center;">
-                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
-                        <i class="fas fa-trash"></i>
+             tr.innerHTML = `
+                 <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
+                 <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
+                 <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
+                 <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
+                 <td style="padding:10px; text-align:center;">
+                     <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
+                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
             `;
