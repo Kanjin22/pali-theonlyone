@@ -920,6 +920,10 @@
                         <label>ห้องของนักเรียน</label>
                         <select id="memStudentRooms" multiple size="5" style="width:100%"></select>
                     </div>
+                    <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+                        <button type="button" class="btn-success" id="memStudentAddBtn"><i class="fa-solid fa-plus"></i> เพิ่มห้องนักเรียน</button>
+                        <div id="memStudentAssignedList" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+                    </div>
                     <hr>
                     <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                         <div>
@@ -934,6 +938,10 @@
                     <div class="form-group">
                         <label>ห้องสอนของอาจารย์</label>
                         <select id="memTeacherRooms" multiple size="5" style="width:100%"></select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+                        <button type="button" class="btn-success" id="memTeacherAddBtn"><i class="fa-solid fa-plus"></i> เพิ่มห้องอาจารย์</button>
+                        <div id="memTeacherAssignedList" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
                     </div>
                     <div class="form-group" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
                         <div>
@@ -1623,9 +1631,13 @@
         }
 
         let editingMember = null;
+        let workingStudentRooms = new Set();
+        let workingTeacherRooms = {};
         function closeMemberModal() {
             document.getElementById('memberModal').style.display = 'none';
             editingMember = null;
+            workingStudentRooms = new Set();
+            workingTeacherRooms = {};
         }
         async function ensureAllClassrooms() {
             if (!window.allClassrooms || window.allClassrooms.length === 0) {
@@ -1695,6 +1707,10 @@
             const memTeacherLevels = document.getElementById('memTeacherLevels');
             const memTeacherRoomLevel = document.getElementById('memTeacherRoomLevel');
             const memTeacherRooms = document.getElementById('memTeacherRooms');
+            const memStudentAddBtn = document.getElementById('memStudentAddBtn');
+            const memStudentAssignedList = document.getElementById('memStudentAssignedList');
+            const memTeacherAddBtn = document.getElementById('memTeacherAddBtn');
+            const memTeacherAssignedList = document.getElementById('memTeacherAssignedList');
             const memTitle = document.getElementById('memTitle');
             const memFirstName = document.getElementById('memFirstName');
             const memLastName = document.getElementById('memLastName');
@@ -1711,6 +1727,65 @@
             fillLevelOptions(memStudentLevel, e.levelRequested || '', false);
             fillLevelOptions(memStudentRoomLevel, e.levelRequested || '', false);
             fillLevelOptions(memTeacherLevels, Array.isArray(u.teacherLevels) ? u.teacherLevels : [], true);
+            const teacherNameInit = u.displayName || u.email || uid;
+            workingStudentRooms = new Set(Array.isArray(e.rooms) ? e.rooms : []);
+            workingTeacherRooms = {};
+            (window.allClassrooms || [])
+                .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherNameInit))
+                .forEach(r => {
+                    if (!workingTeacherRooms[r.level]) workingTeacherRooms[r.level] = [];
+                    if (!workingTeacherRooms[r.level].includes(r.id)) workingTeacherRooms[r.level].push(r.id);
+                });
+            const renderStudentAssigned = () => {
+                memStudentAssignedList.innerHTML = '';
+                Array.from(workingStudentRooms).forEach(id => {
+                    const r = (window.allClassrooms || []).find(x => x.id === id);
+                    const name = r ? (r.name || r.id) : id;
+                    const span = document.createElement('span');
+                    span.className = 'tag';
+                    span.style.cssText = 'background:#ecf0f1; padding:4px 8px; border-radius:12px; display:flex; align-items:center; gap:6px;';
+                    const t = document.createElement('span');
+                    t.textContent = name;
+                    const rm = document.createElement('button');
+                    rm.type = 'button';
+                    rm.className = 'btn-danger';
+                    rm.style.cssText = 'padding:2px 6px; font-size:0.8rem;';
+                    rm.innerHTML = '<i class="fa-solid fa-times"></i>';
+                    rm.onclick = () => { workingStudentRooms.delete(id); renderStudentAssigned(); };
+                    span.appendChild(t);
+                    span.appendChild(rm);
+                    memStudentAssignedList.appendChild(span);
+                });
+            };
+            const renderTeacherAssigned = () => {
+                memTeacherAssignedList.innerHTML = '';
+                Object.keys(workingTeacherRooms).forEach(lv => {
+                    (workingTeacherRooms[lv] || []).forEach(id => {
+                        const r = (window.allClassrooms || []).find(x => x.id === id);
+                        const name = r ? (r.name || r.id) : id;
+                        const span = document.createElement('span');
+                        span.className = 'tag';
+                        span.style.cssText = 'background:#dfe6e9; padding:4px 8px; border-radius:12px; display:flex; align-items:center; gap:6px;';
+                        const t = document.createElement('span');
+                        t.textContent = (LEVEL_NAMES[lv] || lv) + ': ' + name;
+                        const rm = document.createElement('button');
+                        rm.type = 'button';
+                        rm.className = 'btn-danger';
+                        rm.style.cssText = 'padding:2px 6px; font-size:0.8rem;';
+                        rm.innerHTML = '<i class="fa-solid fa-times"></i>';
+                        rm.onclick = () => {
+                            workingTeacherRooms[lv] = (workingTeacherRooms[lv] || []).filter(x => x !== id);
+                            if (workingTeacherRooms[lv].length === 0) delete workingTeacherRooms[lv];
+                            renderTeacherAssigned();
+                        };
+                        span.appendChild(t);
+                        span.appendChild(rm);
+                        memTeacherAssignedList.appendChild(span);
+                    });
+                });
+            };
+            renderStudentAssigned();
+            renderTeacherAssigned();
             const syncStudentRoomLevel = () => {
                 memStudentRoomLevel.value = memStudentLevel.value || '';
                 memStudentRoomLevel.onchange();
@@ -1744,6 +1819,12 @@
                 const lv = memStudentRoomLevel.value;
                 fillRoomsByLevel(memStudentRooms, lv, Array.isArray(e.rooms) ? e.rooms : []);
             };
+            memStudentAddBtn.onclick = () => {
+                const sel = Array.from(memStudentRooms.selectedOptions).map(o => o.value);
+                sel.forEach(id => workingStudentRooms.add(id));
+                memStudentRooms.selectedIndex = -1;
+                renderStudentAssigned();
+            };
             memTeacherRoomLevel.onchange = () => {
                 const lv = memTeacherRoomLevel.value;
                 const teacherName = u.displayName || u.email || uid;
@@ -1751,6 +1832,16 @@
                     .filter(r => r.level === lv && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
                     .map(r => r.id);
                 fillRoomsByLevel(memTeacherRooms, lv, selected);
+            };
+            memTeacherAddBtn.onclick = () => {
+                const lv = memTeacherRoomLevel.value;
+                if (!lv) return;
+                const sel = Array.from(memTeacherRooms.selectedOptions).map(o => o.value);
+                if (!workingTeacherRooms[lv]) workingTeacherRooms[lv] = [];
+                sel.forEach(id => { if (!workingTeacherRooms[lv].includes(id)) workingTeacherRooms[lv].push(id); });
+                Array.from(memTeacherLevels.options).forEach(o => { if (o.value === lv) o.selected = true; });
+                memTeacherRooms.selectedIndex = -1;
+                renderTeacherAssigned();
             };
             if (e.levelRequested) {
                 memStudentRoomLevel.value = e.levelRequested;
@@ -1803,10 +1894,8 @@
             const role = document.getElementById('memRole').value;
             const studentLevel = document.getElementById('memStudentLevel').value || '';
             const studentRoomLevel = document.getElementById('memStudentRoomLevel').value || '';
-            const studentRooms = Array.from(document.getElementById('memStudentRooms').selectedOptions).map(o => o.value);
             const teacherLevels = Array.from(document.getElementById('memTeacherLevels').selectedOptions).map(o => o.value);
             const teacherRoomLevel = document.getElementById('memTeacherRoomLevel').value || '';
-            const teacherRooms = Array.from(document.getElementById('memTeacherRooms').selectedOptions).map(o => o.value);
             const title = document.getElementById('memTitle').value.trim();
             const firstName = document.getElementById('memFirstName').value.trim();
             const lastName = document.getElementById('memLastName').value.trim();
@@ -1819,16 +1908,23 @@
                     await db.collection('users').doc(uid).set({ role, teacherLevels }, { merge: true });
                     const enrUpdate = { title, firstName, lastName, epithet, phone };
                     if (studentLevel) enrUpdate.levelRequested = studentLevel; else enrUpdate.levelRequested = firebase.firestore.FieldValue.delete();
-                    enrUpdate.rooms = studentRooms;
+                    enrUpdate.rooms = Array.from(workingStudentRooms);
                     await db.collection('enrollments').doc(uid).set(enrUpdate, { merge: true });
-                    if (teacherRoomLevel) {
-                        const uDoc = await db.collection('users').doc(uid).get();
-                        const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
-                        const current = (window.allClassrooms || [])
-                            .filter(r => r.level === teacherRoomLevel && Array.isArray(r.teachers) && r.teachers.includes(teacherName))
-                            .map(r => r.id);
-                        const toAdd = teacherRooms.filter(id => !current.includes(id));
-                        const toRemove = current.filter(id => !teacherRooms.includes(id));
+                    const uDoc = await db.collection('users').doc(uid).get();
+                    const teacherName = uDoc.exists ? (uDoc.data().displayName || uDoc.data().email || uid) : uid;
+                    const currentByLevel = {};
+                    (window.allClassrooms || [])
+                        .filter(r => Array.isArray(r.teachers) && r.teachers.includes(teacherName))
+                        .forEach(r => {
+                            if (!currentByLevel[r.level]) currentByLevel[r.level] = [];
+                            currentByLevel[r.level].push(r.id);
+                        });
+                    const levelsUnion = new Set([...Object.keys(currentByLevel), ...Object.keys(workingTeacherRooms)]);
+                    for (const lv of levelsUnion) {
+                        const current = currentByLevel[lv] || [];
+                        const desired = workingTeacherRooms[lv] || [];
+                        const toAdd = desired.filter(id => !current.includes(id));
+                        const toRemove = current.filter(id => !desired.includes(id));
                         for (const id of toAdd) {
                             await db.collection('classrooms').doc(id).set({ teachers: firebase.firestore.FieldValue.arrayUnion(teacherName) }, { merge: true });
                         }
