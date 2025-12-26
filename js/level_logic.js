@@ -94,7 +94,8 @@ async function initLevelPage(levelId) {
                 const effectiveMode = (function(){
                     if (role === 'teacher' || role === 'admin') return 'teacher';
                     if (modePref === 'teacher') return 'teacher';
-                    return 'student';
+                    if (role === 'student') return 'student';
+                    return (Array.isArray(myRooms) && myRooms.length > 0) ? 'student' : 'teacher';
                 })();
                 let visible = rooms;
                 if (effectiveMode === 'student') {
