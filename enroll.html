@@ -138,6 +138,20 @@
             outline: none;
             border-color: var(--input-focus);
         }
+        
+        /* Validation Error Style */
+        .input-error {
+            border-color: #e74c3c !important;
+            background-color: #fdf2f2;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
         .date-d { flex: 0 0 70px; }
         .date-m { flex: 1; }
         .date-y { flex: 0 0 90px; }
@@ -551,24 +565,47 @@
         function validate() {
             if (!currentUserType) return false;
 
-            const title = (titleInput.value || '').trim();
-            const first = (firstNameInput.value || '').trim();
-            const last = (lastNameInput.value || '').trim();
-            const birth = (birthDateInput.value || '').trim();
-            const phone = (phoneInput.value || '').trim();
-            const level = levelSelect.value || '';
+            let isValid = true;
+            let firstErrorInput = null;
 
-            // Common Fields
-            if (!title || !first || !last || !birth || !phone || !level) return false;
+            const setError = (el, isError) => {
+                if (isError) {
+                    el.classList.add('input-error');
+                    isValid = false;
+                    if (!firstErrorInput) firstErrorInput = el;
+                } else {
+                    el.classList.remove('input-error');
+                }
+            };
 
-            // Monk Specific Fields
+            // 1. Common Fields
+            setError(titleInput, !titleInput.value.trim());
+            setError(firstNameInput, !firstNameInput.value.trim());
+            setError(lastNameInput, !lastNameInput.value.trim());
+            setError(phoneInput, !phoneInput.value.trim());
+            setError(levelSelect, !levelSelect.value);
+
+            // 2. Birth Date (Composite)
+            const birthValid = !!birthDateInput.value;
+            const birthSelects = document.querySelectorAll('#birthDateContainer select');
+            birthSelects.forEach(s => setError(s, !birthValid));
+
+            // 3. Monk Specific Fields
             if (currentUserType === 'monk') {
-                const epithet = (epithetInput.value || '').trim();
-                const ord = (ordinationDateInput.value || '').trim();
-                if (!epithet || !ord) return false;
+                setError(epithetInput, !epithetInput.value.trim());
+                
+                const ordValid = !!ordinationDateInput.value;
+                const ordSelects = document.querySelectorAll('#ordinationDateContainer select');
+                ordSelects.forEach(s => setError(s, !ordValid));
             }
 
-            return true;
+            // Scroll to first error
+            if (firstErrorInput) {
+                firstErrorInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstErrorInput.focus({ preventScroll: true });
+            }
+
+            return isValid;
         }
 
         // Submit
