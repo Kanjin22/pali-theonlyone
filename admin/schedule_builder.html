@@ -965,7 +965,7 @@
             if (snap.empty) return alert("ไม่พบรายการไฟล์ในฐานข้อมูล");
             showLoading(true);
             try {
-                let done = 0;
+                let done = 0, failed = 0;
                 for (const d of snap.docs) {
                     const data = d.data();
                     const type = data.type || 'materials';
@@ -979,12 +979,19 @@
                     } else {
                         newPath = `files/${level}/${type}/${subject}/${name}`;
                     }
-                    let url = data.url || null;
-                    if (!url && oldPath) {
+                    let url = null;
+                    if (oldPath) {
                         try { url = await storage.ref(oldPath).getDownloadURL(); } catch (e) {}
                     }
-                    if (!url) continue;
-                    const resp = await fetch(url);
+                    if (!url && data.url) {
+                        url = data.url;
+                    }
+                    if (!url) { failed++; continue; }
+                    let resp;
+                    try {
+                        resp = await fetch(url, { mode: 'cors', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
+                        if (!resp.ok) { failed++; continue; }
+                    } catch (e) { failed++; continue; }
                     const blob = await resp.blob();
                     const ref = storage.ref(newPath);
                     const task = await ref.put(blob);
@@ -1003,7 +1010,7 @@
                 await loadDynamicFiles();
                 renderFileList();
                 refreshFileDropdowns();
-                alert(`ย้ายไฟล์สำเร็จ ${done} รายการ`);
+                alert(`ย้ายไฟล์สำเร็จ ${done} รายการ, ล้มเหลว ${failed} รายการ`);
             } catch (e) {
                 alert("ย้ายไฟล์ไม่สำเร็จ: " + e.message);
             } finally {
