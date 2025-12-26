@@ -74,21 +74,7 @@
                     <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
                     <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
                 </select>
-                <button id="dictBtn" class="btn secondary" style="min-width:40px; padding:0 12px;" title="พจนานุกรม (PTS Pali-English)">
-                    <i class="fas fa-book"></i>
-                </button>
             </div>
-            
-            <script>
-                document.getElementById('dictBtn').onclick = () => {
-                    const selection = window.getSelection().toString().trim();
-                    let url = 'https://dsal.uchicago.edu/cgi-bin/app/pali_query.py?qs=' + encodeURIComponent(selection) + '&searchhws=yes';
-                    if(!selection) {
-                         url = 'https://dsal.uchicago.edu/dictionaries/pali/'; 
-                    }
-                    window.open(url, '_blank');
-                };
-            </script>
 
             <!-- Thai Translation Mode -->
             <div style="display:flex; flex-direction:column; gap:4px;">
