@@ -538,9 +538,24 @@
         
         if (slideIndex !== undefined && slidesSource[slideIndex]) {
              const s = slidesSource[slideIndex];
+             
+             // 1. Check Sandhi (Slide Data) - Priority
              if (s.sandhi && s.sandhi[cleanWord]) {
-                 manualResult = { split: s.sandhi[cleanWord], word: cleanWord, source: 'Manual Sandhi' };
-             } else if (s.vocab && s.vocab[cleanWord]) {
+                 const val = s.sandhi[cleanWord];
+                 const parts = val.split('+').map(p => p.trim());
+                 
+                 if (parts.length > 1) {
+                     // Show Bubble for splits
+                     showSandhiBubble(el, parts);
+                     return; 
+                 } else if (parts.length === 1) {
+                     // Direct redirect for single mapping (Manual Stemming)
+                     showDictionaryDefinition(parts[0]);
+                     return;
+                 }
+             }
+             // 2. Check Vocab (Slide Data)
+             else if (s.vocab && s.vocab[cleanWord]) {
                  manualResult = { details: [s.vocab[cleanWord]], word: cleanWord, source: 'Manual Vocab' };
              }
         }
@@ -667,7 +682,7 @@
         // --- 1. Thai Dictionary Section ---
         const thaiHeader = document.createElement('div');
         thaiHeader.className = 'sec-title';
-        thaiHeader.innerText = '📖 พจนานุกรมไทย';
+        thaiHeader.innerText = '📖 พจนานุกรมบาลี - ไทย';
         content.appendChild(thaiHeader);
 
         const thaiContent = document.createElement('div');
@@ -715,7 +730,7 @@
 
             thaiContent.innerHTML = `
                 <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
-                     onclick="openGenericModal('พจนานุกรมไทย', this.getAttribute('data-content'))"
+                     onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
                      data-content="${safeContent}">
                     <div style="font-weight: bold; color: #2980b9;">
                         ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
@@ -736,7 +751,7 @@
                         <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
                     </div>
                     <div style="margin-top: 5px; color: #7f8c8d; font-style: italic;">
-                        ไม่พบคำแปลในพจนานุกรมไทย
+                        ไม่พบคำแปลในพจนานุกรมบาลี - ไทย
                     </div>
                 </div>
             `;
@@ -745,7 +760,7 @@
         // --- 2. Roman Dictionary Section ---
         const romanHeader = document.createElement('div');
         romanHeader.className = 'sec-title';
-        romanHeader.innerText = '📖 พจนานุกรมโรมัน (SuttaCentral)';
+        romanHeader.innerText = '📖 พจนานุกรมบาลี - โรมัน (SuttaCentral)';
         romanHeader.style.marginTop = '15px';
         content.appendChild(romanHeader);
 
@@ -835,7 +850,7 @@
 
         romanContent.innerHTML = `
             <div style="cursor: pointer;"
-                 onclick="openGenericModal('พจนานุกรมโรมัน', this.getAttribute('data-content'))"
+                 onclick="openGenericModal('พจนานุกรมบาลี - โรมัน', this.getAttribute('data-content'))"
                  data-content="${safeInteractiveHtml}">
                 ${interactiveHtml}
                 <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">

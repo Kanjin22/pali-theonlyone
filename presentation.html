@@ -967,13 +967,13 @@
 
             <!-- 2. Thai Dictionary -->
             <div class="footer-section" style="flex: 1.5;">
-                <div class="sec-title">📚 พจนานุกรมไทย / วิเคราะห์</div>
+                <div class="sec-title">📚 พจนานุกรมบาลี - ไทย</div>
                 <div class="sec-content" id="thaiVocabContent" style="font-family: 'Sarabun', sans-serif !important; font-size: 1rem !important;">...</div>
             </div>
 
             <!-- 3. Roman Dictionary -->
             <div class="footer-section" style="flex: 1.5;">
-                <div class="sec-title">📖 พจนานุกรมโรมัน (SuttaCentral)</div>
+                <div class="sec-title">📖 พจนานุกรมบาลี - โรมัน (SuttaCentral)</div>
                 <div class="sec-content" id="romanVocabContent" style="font-family: 'Sarabun', sans-serif !important; font-size: 1rem !important;"></div>
             </div>
         </div>
@@ -1622,7 +1622,7 @@
 
                     thaiVocabContent.innerHTML = `
                         <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
-                             onclick="openGenericModal('พจนานุกรมไทย', this.getAttribute('data-content'))"
+                             onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
                              data-content="${safeContent}">
                             <div style="font-weight: bold; color: #2980b9;">
                                 ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
@@ -1728,7 +1728,7 @@
 
             romanVocabContent.innerHTML = `
                 <div style="cursor: pointer;"
-                     onclick="openGenericModal('พจนานุกรมโรมัน', this.getAttribute('data-content'))"
+                     onclick="openGenericModal('พจนานุกรมบาลี - โรมัน', this.getAttribute('data-content'))"
                      data-content="${safeInteractiveHtml}">
                     ${interactiveHtml}
                     <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
