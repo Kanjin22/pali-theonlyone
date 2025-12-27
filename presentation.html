@@ -968,13 +968,13 @@
             <!-- 2. Thai Dictionary -->
             <div class="footer-section" style="flex: 1.5;">
                 <div class="sec-title">📚 พจนานุกรมไทย / วิเคราะห์</div>
-                <div class="sec-content pali-word" id="thaiVocabContent">...</div>
+                <div class="sec-content" id="thaiVocabContent" style="font-family: 'Sarabun', sans-serif !important; font-size: 1rem !important;">...</div>
             </div>
 
             <!-- 3. Roman Dictionary -->
             <div class="footer-section" style="flex: 1.5;">
                 <div class="sec-title">📖 พจนานุกรมโรมัน (SuttaCentral)</div>
-                <div class="sec-content pali-word" id="romanVocabContent">...</div>
+                <div class="sec-content" id="romanVocabContent" style="font-family: 'Sarabun', sans-serif !important; font-size: 1rem !important;"></div>
             </div>
         </div>
     </div>
@@ -1320,8 +1320,16 @@
             }
             
             // Apply to Pali elements (Left pane + Footer Pali words + Modal Pali)
+            // EXCLUDE: .pali-word in footer-section (Dictionary)
             const paliFamily = `"${paliFont.split(',')[0]}", ${paliFont}, sans-serif`;
-            document.querySelectorAll('.pali-text, .pali-word, .analysis-word').forEach(el => {
+            document.querySelectorAll('.pali-text, .analysis-word').forEach(el => {
+                el.style.fontFamily = paliFamily;
+            });
+
+            // Handle .pali-word separately to EXCLUDE Dictionary Footer
+            document.querySelectorAll('.pali-word').forEach(el => {
+                // If this is inside the Dictionary Footer (#thaiVocabContent), SKIP IT
+                if (el.id === 'thaiVocabContent') return;
                 el.style.fontFamily = paliFamily;
             });
 
@@ -1338,7 +1346,10 @@
             currentFontSize += (change * 0.2);
             if (currentFontSize < 1.0) currentFontSize = 1.0;
 
+            // Apply ONLY to Pali and Thai Text content areas (Main Slide)
+            // EXCLUDE: Footer content (Dictionary, Context)
             document.querySelectorAll('.pali-text, .thai-text').forEach(el => {
+                if (el.closest('.footer-box')) return;
                 el.style.fontSize = `${currentFontSize}rem`;
             });
         }
@@ -1509,6 +1520,28 @@
         setTimeout(() => document.addEventListener('click', closeHandler), 0);
     }
 
+    function formatDictText(text) {
+        if (!text) return "";
+        // 1. Normalize Newlines: Convert \n to <br> and collapse multiple <br>
+        let clean = text.replace(/(\r\n|\n|\r)+/g, '<br>'); 
+        clean = clean.replace(/(<br\s*\/?>\s*){2,}/gi, '<br>');
+
+        // 2. Normalize Spaces: Collapse multiple spaces to single space
+        clean = clean.replace(/[ \t]{2,}/g, ' ');
+
+        // 3. Formatting (Beauty): Add breaks/styling for key sections
+        // Analysis section (วิ.ว่า) -> New paragraph + Orange Bold
+        clean = clean.replace(/(วิ\.ว่า)/g, '<br><br><span style="color:#d35400; font-weight:bold;">$1</span>');
+        
+        // Declension section (แจกเหมือน) -> New line + Green Bold
+        clean = clean.replace(/(แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
+        
+        // 4. Cleanup excessive breaks (in case we added too many)
+        clean = clean.replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>');
+
+        return clean;
+    }
+
     function showDictionaryDefinition(word) {
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         
@@ -1555,11 +1588,11 @@
                 if (result) {
                     let detailsHtml = "";
                     if (result.details && Array.isArray(result.details)) {
-                        detailsHtml = result.details.map(d => `<div>• ${d}</div>`).join('');
+                        detailsHtml = result.details.map(d => `<div>• ${formatDictText(d)}</div>`).join('');
                     } else if (typeof result === 'string') {
-                        detailsHtml = result;
+                        detailsHtml = formatDictText(result);
                     } else if (result.split) {
-                        detailsHtml = `<div>${result.split}</div>`;
+                        detailsHtml = `<div>${formatDictText(result.split)}</div>`;
                     }
                     
                     let stemInfo = "";
@@ -1623,7 +1656,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#f0f8ff; border-left:3px solid #27ae60; border-radius:4px;">
                         <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(DPD)</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${dpdEntry.join('<br>')}</div>
+                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${dpdEntry.map(d => formatDictText(d)).join('<br>')}</div>
                     </div>
                  `;
             }
@@ -1634,7 +1667,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#fff8e1; border-left:3px solid #ff9800; border-radius:4px;">
                         <div style="font-weight:bold; color:#d35400;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(PTS)</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${ptsEntry}</div>
+                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${formatDictText(ptsEntry)}</div>
                     </div>
                  `;
             }
@@ -1645,7 +1678,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#e8f8f5; border-left:3px solid #1abc9c; border-radius:4px;">
                         <div style="font-weight:bold; color:#16a085;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(DPPN)</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${dppnEntry}</div>
+                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${formatDictText(dppnEntry)}</div>
                     </div>
                  `;
             }
@@ -1656,7 +1689,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#f5eef8; border-left:3px solid #9b59b6; border-radius:4px;">
                         <div style="font-weight:bold; color:#8e44ad;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(Nature)</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${dhammikaEntry}</div>
+                        <div style="margin-top:4px; color:#2c3e50; font-size:0.95em; text-align:left;">${formatDictText(dhammikaEntry)}</div>
                     </div>
                  `;
             }
@@ -1667,7 +1700,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#f8f9fa; border-left:3px solid #3498db; border-radius:4px;">
                         <div style="font-weight:bold; color:#2c3e50;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#7f8c8d;">(${scEntry.grammar})</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${scEntry.definition}</div>
+                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${formatDictText(scEntry.definition)}</div>
                         <div style="margin-top:4px; font-size:0.7em; color:#95a5a6; text-align:right;">New Concise Pali English Dictionary</div>
                     </div>
                  `;
@@ -1679,7 +1712,7 @@
                  romanDefHtml += `
                     <div style="margin-top:10px; padding:8px; background:#f0f8ff; border-left:3px solid #95a5a6; border-radius:4px;">
                         <div style="font-weight:bold; color:#7f8c8d;">${romanWord} <span style="font-weight:normal; font-style:italic; font-size:0.9em; color:#bdc3c7;">(DPD Inflected)</span></div>
-                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${dpdInflectedEntry}</div>
+                        <div style="margin-top:4px; color:#2c3e50; text-align:left;">${formatDictText(dpdInflectedEntry)}</div>
                     </div>
                  `;
             }
