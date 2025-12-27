@@ -371,7 +371,7 @@
 
         .sec-content {
             font-size: 1rem;
-            font-family: 'Niramit', serif;
+            font-family: 'Sarabun', sans-serif;
             color: #37474f;
             line-height: 1.6;
         }
@@ -1901,12 +1901,8 @@
             thaiBox.parentElement.scrollTop = 0;
 
             if (document.getElementById('thaiVocabContent')) {
-                const vList = s.vocab_list;
-                if (vList && vList !== "-" && vList.trim() !== "") {
-                    document.getElementById('thaiVocabContent').innerHTML = processFooterAnalysis(vList, s);
-                } else {
-                    document.getElementById('thaiVocabContent').innerHTML = `<div style="color:#95a5a6; font-style:italic; padding:10px; text-align:center;">คลิกที่คำศัพท์ในประโยคบาลีเพื่อดูความหมายและการวิเคราะห์</div>`;
-                }
+                // Clear vocab list (reserved for dictionary only)
+                document.getElementById('thaiVocabContent').innerHTML = `<div style="color:#95a5a6; font-style:italic; padding:10px; text-align:center;">คลิกที่คำศัพท์ในประโยคบาลีเพื่อดูความหมายและการวิเคราะห์</div>`;
             }
             if (document.getElementById('romanVocabContent')) {
                 document.getElementById('romanVocabContent').innerHTML = "";
