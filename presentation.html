@@ -1326,10 +1326,8 @@
                 el.style.fontFamily = paliFamily;
             });
 
-            // Handle .pali-word separately to EXCLUDE Dictionary Footer
+            // Handle .pali-word separately
             document.querySelectorAll('.pali-word').forEach(el => {
-                // If this is inside the Dictionary Footer (#thaiVocabContent), SKIP IT
-                if (el.id === 'thaiVocabContent') return;
                 el.style.fontFamily = paliFamily;
             });
 
@@ -1624,9 +1622,9 @@
                         <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
                              onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
                              data-content="${safeContent}">
-                            <div style="font-weight: bold; color: #2980b9;">
+                            <div class="pali-word" style="font-weight: bold; color: #2980b9;">
                                 ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
-                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
+                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal; font-family: 'Sarabun', sans-serif;">[${romanWord}]</span>
                                 ${stemInfo}
                                 <i class="fa-solid fa-expand" style="float:right; color:#bdc3c7; font-size:0.8em;"></i>
                             </div>

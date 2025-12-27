@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปัญหา-เฉลย บาลีไวยากรณ์ ประโยค ๑-๒</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #D35400; /* Burnt Orange */
+            --secondary-color: #F5B041; /* Golden */
+            --accent-color: #2E86C1; /* Muted Blue for contrast */
+            --bg-color: #FDFBF7; /* Warm Paper */
+            --text-color: #2C3E50;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            --card-hover-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-link, .btn {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        /* Modern Hero Header */
+        .hero-section {
+            background: linear-gradient(135deg, #e65c00 0%, #F9D423 100%);
+            color: white;
+            padding: 3rem 0 4rem;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 4px 20px rgba(230, 92, 0, 0.2);
+            position: relative;
+            margin-bottom: -30px;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Floating Filter Card */
+        .filter-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        /* Navigation Tabs */
+        .nav-pills {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            border-radius: 50px;
+            display: inline-flex;
+            margin-bottom: 2rem;
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 50px;
+            color: var(--text-color);
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+        }
+
+        /* QA Cards */
+        .qa-card {
+            border: none;
+            border-radius: 16px;
+            background: white;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .qa-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+            opacity: 0.7;
+        }
+
+        .qa-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card-body {
+            padding: 1.5rem 2rem;
+        }
+
+        .badge-modern {
+            font-weight: 500;
+            padding: 0.5em 1em;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .badge-year { background-color: #EAF2F8; color: #2980B9; }
+        .badge-cat { background-color: #FEF5E7; color: #D35400; }
+
+        .question-text {
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 1.15rem;
+            margin-top: 10px;
+        }
+
+        /* Answer Box */
+        .answer-box {
+            background-color: #F8F9F9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #27AE60;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        /* Sub-question formatting */
+        .sub-question-item {
+            display: flex;
+            align-items: baseline;
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+        .sub-question-item.level-1 {
+            margin-left: 25px;
+        }
+        .sub-question-item.level-2 {
+            margin-left: 55px; /* Indent deeper for numbers */
+        }
+        .sub-question-item .sub-label {
+            font-weight: 600;
+            min-width: 25px;
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        .sub-question-item .sub-content {
+            flex: 1;
+        }
+        
+        /* Bullet List Item */
+        .bullet-item {
+            display: flex;
+            align-items: baseline;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        .bullet-item .bullet-marker {
+            min-width: 20px;
+            text-align: center;
+            margin-right: 5px;
+            color: #666;
+        }
+        .bullet-item.level-1 { margin-left: 55px; } /* Align with Level 1 content */
+        .bullet-item.level-2 { margin-left: 85px; } /* Align with Level 2 content */
+
+        /* Grammar Term Row Formatting */
+        .grammar-item {
+            display: flex;
+            align-items: baseline;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+        .grammar-term {
+            min-width: 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        .grammar-desc {
+            flex: 1;
+        }
+        .grammar-analysis {
+            margin-left: 130px; /* 120px (term) + 10px (gap) */
+            margin-bottom: 4px;
+            color: #555;
+        }
+
+        /* Indented Grammar Items (for multi-line alignment) */
+        .grammar-item.level-1 { margin-left: 55px; }
+        .grammar-item.level-2 { margin-left: 85px; }
+        
+        .grammar-analysis.level-1 { margin-left: 185px; } /* 55 + 130 */
+        .grammar-analysis.level-2 { margin-left: 215px; } /* 85 + 130 */
+
+        .grammar-item.nested {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* Conjugation Table Styling */
+        .conjugation-table {
+            width: auto;
+            min-width: 300px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        .conjugation-table th, .conjugation-table td {
+            padding: 6px 15px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .conjugation-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            border: none;
+        }
+        .conjugation-table .label-col {
+            background-color: #fcfcfc;
+            font-weight: 600;
+            color: #666;
+            text-align: left;
+            width: 80px;
+        }
+        .conjugation-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Indented Tables */
+        .table-indent-1 { margin-left: 55px; }
+        .table-indent-2 { margin-left: 85px; }
+
+        @media (max-width: 576px) {
+            .grammar-item {
+                flex-direction: column;
+            }
+            .grammar-term {
+                margin-bottom: 2px;
+            }
+            .grammar-analysis {
+                margin-left: 20px;
+            }
+        }
+        .question-intro {
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .answer-box.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Controls */
+        .form-select, .form-control {
+            border-radius: 12px;
+            border: 1px solid #E0E0E0;
+            padding: 10px 15px;
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        .form-select:focus, .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(211, 84, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #BA4A00;
+            border-color: #BA4A00;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 12px;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Exam Paper */
+        .exam-paper {
+            background: white;
+            padding: 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 297mm;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .exam-paper::before {
+            /* Paper texture effect optional */
+        }
+
+        /* Toggle Icon */
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        .qa-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 0 3rem;
+                border-radius: 0 0 30px 30px;
+            }
+            .filter-card {
+                padding: 1rem;
+            }
+            .card-body {
+                padding: 1.25rem;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            .hero-section, .filter-card, .nav, .no-print { display: none !important; }
+            .exam-paper { box-shadow: none; margin: 0; width: 100%; }
+            #exam-preview { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-5 hero-title mb-2">บาลีไวยากรณ์ ประโยค ๑-๒</h1>
+            <p class="lead opacity-75">คลังข้อสอบและเฉลย สำหรับนักเรียนและคณาจารย์</p>
+        </div>
+    </div>
+
+    <div class="container mb-5" style="max-width: 1000px;">
+        
+        <!-- Navigation Tabs -->
+        <div class="text-center mt-n4" style="margin-top: -25px; position: relative; z-index: 3;">
+            <ul class="nav nav-pills shadow-sm bg-white" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-study-tab" data-bs-toggle="pill" data-bs-target="#pills-study" type="button" role="tab">
+                        <i class="fas fa-book-open me-2"></i>โหมดอ่านทบทวน
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-exam-tab" data-bs-toggle="pill" data-bs-target="#pills-exam" type="button" role="tab">
+                        <i class="fas fa-file-alt me-2"></i>สร้างข้อสอบ
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content pt-4" id="pills-tabContent">
+            
+            <!-- Study Mode -->
+            <div class="tab-pane fade show active" id="pills-study" role="tabpanel">
+                
+                <!-- Filters -->
+                <div class="filter-card">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">ตั้งแต่ พ.ศ.</label>
+                            <select class="form-select" id="filter-year-start">
+                                <option value="all">เริ่มต้น</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">ถึง พ.ศ.</label>
+                            <select class="form-select" id="filter-year-end">
+                                <option value="all">ล่าสุด</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">หมวดหมู่</label>
+                            <select class="form-select" id="filter-category">
+                                <option value="all">ทุกหมวดหมู่</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button class="btn btn-outline-primary w-100" onclick="toggleAllAnswers()">
+                                <i class="fas fa-eye me-2"></i>แสดง/ซ่อน เฉลย
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="qa-list">
+                    <!-- Q&A Items will be injected here -->
+                </div>
+            </div>
+
+            <!-- Exam Mode -->
+            <div class="tab-pane fade" id="pills-exam" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-4 no-print mb-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 20px;">
+                            <h5 class="card-title text-primary mb-3"><i class="fas fa-cog me-2"></i>ตั้งค่าการสอบ</h5>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">จำนวนข้อ</label>
+                                <input type="number" class="form-control" id="exam-amount" value="10" min="1" max="50">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted small">หมวดหมู่</label>
+                                <select class="form-select" id="exam-category">
+                                    <option value="all">สุ่มทุกหมวด</option>
+                                </select>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label text-muted small">ตั้งแต่ พ.ศ.</label>
+                                    <select class="form-select" id="exam-year-start">
+                                        <option value="all">เริ่มต้น</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted small">ถึง พ.ศ.</label>
+                                    <select class="form-select" id="exam-year-end">
+                                        <option value="all">ล่าสุด</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="exam-show-answer">
+                                    <label class="form-check-label" for="exam-show-answer">
+                                        แสดงเฉลยท้ายข้อสอบ
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mb-2 py-2" onclick="generateExam()">
+                                <i class="fas fa-rocket me-2"></i>สร้างข้อสอบ
+                            </button>
+                            <button class="btn btn-light w-100 text-muted" onclick="window.print()">
+                                <i class="fas fa-print me-2"></i>พิมพ์ข้อสอบ
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div id="exam-preview" class="exam-paper">
+                            <div class="text-center text-muted py-5 mt-5">
+                                <i class="fas fa-file-contract fa-4x mb-3 opacity-25"></i>
+                                <h3>ตัวอย่างข้อสอบ</h3>
+                                <p>กดปุ่ม "สร้างข้อสอบ" เพื่อเริ่มสุ่มข้อสอบ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Load Data -->
+    <script src="data/qa-grammar-1-2.js"></script>
+    
+    <!-- App Logic -->
+    <script>
+        // State
+        let currentData = grammarQA12;
+        let isAllAnswersShown = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilters();
+            renderStudyList(currentData);
+        });
+
+        // ------------------------------------------
+        // Helper Functions
+        // ------------------------------------------
+
+        function formatContent(text) {
+            if (!text) return '';
+            
+            // Normalize line breaks: replace <p>...</p> with <br> to handle mixed HTML content
+            let processedText = text.replace(/<\/p>/gi, '<br>').replace(/<p>/gi, '');
+
+            // Split by <br> tags
+            const parts = processedText.split(/<br\s*\/?>/i);
+            
+            // Helper to clean and match
+            const parseLine = (str) => {
+                let tempStr = str.trim();
+                let matchAlpha = tempStr.match(/^([ก-ฮA-Za-z]\.)\s*(.*)/);
+                let matchNumeric = tempStr.match(/^([๑-๙0-9]+\.)\s*(.*)/);
+                return { matchAlpha, matchNumeric };
+            };
+
+            let html = '';
+            let insideGrammarBlock = false;
+            let currentIndentLevel = 0; // 0=None, 1=Alpha, 2=Numeric
+            
+            // Helper to render table
+            const renderConjugationTable = (title, matches, level) => {
+                const headerHtml = title ? `<thead><tr><th colspan="3">${title}</th></tr></thead>` : '';
+                const indentClass = level === 1 ? 'table-indent-1' : (level === 2 ? 'table-indent-2' : '');
+                
+                return `<div class="overflow-auto ${indentClass}">
+                        <table class="conjugation-table">
+                            ${headerHtml}
+                            <tbody>
+                                <tr style="background-color: #f8f9fa; font-size: 0.85em; color: #666;">
+                                    <td>บุรุษ</td>
+                                    <td>เอกวจนะ</td>
+                                    <td>พหุวจนะ</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">ปฐม</td>
+                                    <td>${matches[1]}</td>
+                                    <td>${matches[2]}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">มัธยม</td>
+                                    <td>${matches[3]}</td>
+                                    <td>${matches[4]}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">อุตตม</td>
+                                    <td>${matches[5]}</td>
+                                    <td>${matches[6]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>`;
+            };
+
+            // Helper to render Noun/Declension table
+            const renderDeclensionTable = (rows, level, columns = { eka: true, bahu: true }) => {
+                const indentClass = level === 1 ? 'table-indent-1' : (level === 2 ? 'table-indent-2' : '');
+                
+                let thHtml = '<th>วิภัตติ</th>';
+                if (columns.eka) thHtml += '<th>เอกวจนะ</th>';
+                if (columns.bahu) thHtml += '<th>พหุวจนะ</th>';
+
+                let tableHtml = `<div class="overflow-auto ${indentClass}"><table class="conjugation-table">
+                        <thead>
+                            <tr>
+                                ${thHtml}
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                
+                rows.forEach(row => {
+                    let trHtml = `<tr><td class="label-col" style="width: 120px;">${row.vibhatti}</td>`;
+                    if (columns.eka) trHtml += `<td>${row.eka || '-'}</td>`;
+                    if (columns.bahu) trHtml += `<td>${row.bahu || '-'}</td>`;
+                    trHtml += `</tr>`;
+                    tableHtml += trHtml;
+                });
+                
+                tableHtml += `</tbody></table></div>`;
+                return tableHtml;
+            };
+
+            for (let i = 0; i < parts.length; i++) {
+                let part = parts[i].trim();
+                if (!part) continue;
+
+                // Check for Noun Declension Table Header
+                const hasVibhatti = part.includes('วิภัตติ');
+                const hasEka = part.includes('เอกวจนะ');
+                const hasBahu = part.includes('พหุวจนะ');
+
+                if (hasVibhatti && (hasEka || hasBahu)) {
+                    // Start collecting rows!
+                    let rows = [];
+                    let j = i + 1;
+                    
+                    while (j < parts.length) {
+                        const rowPart = parts[j].trim();
+                        
+                        // Skip empty lines
+                        if (!rowPart) {
+                            j++;
+                            continue;
+                        }
+
+                        // Match: Name : Content (Strict) or Name Space Content (Flexible)
+                        let matchRow = rowPart.match(/^([^:]+):\s*(.+)$/);
+                        if (!matchRow) {
+                             matchRow = rowPart.match(/^([^\s]+)\s+(.+)$/);
+                        }
+                        
+                        if (matchRow) {
+                            let vibhatti = matchRow[1].trim();
+                            let content = matchRow[2].trim();
+                            let eka = null;
+                            let bahu = null;
+
+                            if (hasEka && hasBahu) {
+                                // Try Pipe
+                                const pipeSplit = content.split('|');
+                                if (pipeSplit.length === 2) {
+                                    eka = pipeSplit[0].trim();
+                                    bahu = pipeSplit[1].trim();
+                                } else {
+                                    // Try Double Space (or more) as separator
+                                    const doubleSpaceSplit = content.split(/\s\s+/);
+                                    if (doubleSpaceSplit.length === 2) {
+                                        eka = doubleSpaceSplit[0].trim();
+                                        bahu = doubleSpaceSplit[1].trim();
+                                    } else {
+                                        // Try Single Space (First word = Eka, Rest = Bahu)
+                                        // This is fallback for simple cases
+                                        const spaceMatch = content.match(/^([^\s]+)\s+(.+)$/);
+                                        if (spaceMatch) {
+                                            eka = spaceMatch[1].trim();
+                                            bahu = spaceMatch[2].trim();
+                                        } else {
+                                            // Fallback? Or maybe single word line?
+                                            eka = content;
+                                            bahu = ''; 
+                                        }
+                                    }
+                                }
+                            } else if (hasBahu) {
+                                bahu = content;
+                            } else if (hasEka) {
+                                eka = content;
+                            }
+
+                            rows.push({ vibhatti, eka, bahu });
+                            j++;
+                        } else {
+                            break; // Not a row, stop
+                        }
+                    }
+                    
+                    if (rows.length > 0) {
+                        html += renderDeclensionTable(rows, currentIndentLevel, { eka: hasEka, bahu: hasBahu });
+                        i = j - 1; // Advance main loop index
+                        continue;
+                    }
+                }
+
+                // Check for Conjugation Table Pattern (e.g. ติ อนฺติ, สิ ถ, มิ ม)
+                // Pattern: word space word comma word space word comma word space word
+                // Also support explicit header "บุรุษ เอกวจนะ พหุวจนะ"
+                
+                // NEW: Check for explicit Declension-style Table for Verbs (using same logic as Declension but different keywords)
+                // Support abbreviations: "บุรุษ เอก. พหุ." or "บุรุษ เอกวจนะ พหุวจนะ"
+                // Also handle potential typos like "บรุษ"
+                const isVerbTableStart = (part.includes('บุรุษ') || part.includes('บรุษ')) && (part.includes('เอก') && part.includes('พหุ'));
+                
+                if (isVerbTableStart) {
+                    // Check if previous line was a Title?
+                    // But we can't check 'i-1' easily as we consumed it.
+                    // Instead, the loop below handles title detection for 'next' iteration.
+                    // However, if we arrived here, we might have been triggered by the 'next' check in previous iteration?
+                    // No, the 'next' check in previous iteration explicitly calls render function and SKIPS this iteration.
+                    // So if we are here, it means previous line was NOT detected as a title (or didn't trigger the skip).
+                    // This is fine. We just render table without title (or with title passed via args if we refactor).
+                    
+                    // Actually, let's just render the table here.
+                    
+                    // Parse the header row to respect user's column names
+                    // e.g., "บุรุษ เอก. พหุ."
+                    const headerParts = part.match(/^(.*?)\s+(.*?)\s+(.*?)$/);
+                    let col1 = 'บุรุษ';
+                    let col2 = 'เอกวจนะ';
+                    let col3 = 'พหุวจนะ';
+                    
+                    if (headerParts) {
+                        // Simple space split might be risky if "บุรุษ" has spaces? No, usually single word.
+                        // Let's use simple split by space, filtering empty
+                        const cols = part.split(/\s+/).filter(x => x);
+                        if (cols.length >= 3) {
+                            col1 = cols[0];
+                            col2 = cols[1];
+                            col3 = cols[2];
+                        }
+                    }
+
+                    // Start collecting rows!
+                    let rows = [];
+                    let j = i + 1;
+                    
+                    while (j < parts.length) {
+                        const rowPart = parts[j].trim();
+                        if (!rowPart) { j++; continue; }
+
+                        // Match: Name Rest
+                        // "ป. เต อนฺเต" or "ป. เต อนฺเต," (handle trailing comma)
+                        
+                        // Prevent consuming the next Title line as a row
+                        if (rowPart.includes('<b>')) {
+                            break;
+                        }
+
+                        const cleanRowPart = rowPart.replace(/,$/, '');
+                        const matchRow = cleanRowPart.match(/^([^\s]+)\s+(.+)$/);
+                        
+                        if (matchRow) {
+                            let purisa = matchRow[1].trim();
+                            let content = matchRow[2].trim();
+                            let eka = '';
+                            let bahu = '';
+
+                            // Check for Dash Separator " - "
+                            if (content.includes(' - ')) {
+                                const parts = content.split(' - ');
+                                eka = parts[0].trim();
+                                bahu = parts[1] ? parts[1].trim() : '';
+                            } else {
+                                // Fallback to space splitting
+                                const parts = content.split(/\s+/);
+                                if (parts.length >= 2) {
+                                    eka = parts[0];
+                                    bahu = parts.slice(1).join(' ');
+                                } else {
+                                    eka = content;
+                                }
+                            }
+
+                            rows.push({
+                                vibhatti: purisa, // Acts as 'Purisa'
+                                eka: eka,
+                                bahu: bahu
+                            });
+                            j++;
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    if (rows.length > 0) {
+                        const indentClass = currentIndentLevel === 1 ? 'table-indent-1' : (currentIndentLevel === 2 ? 'table-indent-2' : '');
+                        let tableHtml = `<div class="overflow-auto ${indentClass}"><table class="conjugation-table">
+                                <thead>
+                                    <tr>
+                                        <th>${col1}</th>
+                                        <th>${col2}</th>
+                                        <th>${col3}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        rows.forEach(row => {
+                            tableHtml += `<tr>
+                                <td class="label-col">${row.vibhatti}</td>
+                                <td>${row.eka}</td>
+                                <td>${row.bahu}</td>
+                            </tr>`;
+                        });
+                        tableHtml += `</tbody></table></div>`;
+                        
+                        html += tableHtml;
+                        i = j - 1;
+                        continue;
+                    }
+                }
+
+                const matchConjugation = part.match(/^([^\s,]+)\s+([^\s,]+)\s*,\s*([^\s,]+)\s+([^\s,]+)\s*,\s*([^\s,]+)\s+([^\s,]+)$/);
+
+                if (matchConjugation) {
+                    html += renderConjugationTable(null, matchConjugation, currentIndentLevel);
+                    continue; 
+                }
+                
+                // Check if THIS line is a Title for a NEXT line Table?
+                if (i + 1 < parts.length) {
+                    const nextPart = parts[i+1].trim();
+                    const nextMatch = nextPart.match(/^([^\s,]+)\s+([^\s,]+)\s*,\s*([^\s,]+)\s+([^\s,]+)\s*,\s*([^\s,]+)\s+([^\s,]+)$/);
+                    
+                    // Simple title check: short, no HTML tags (except b), no sub-question markers
+                    const isSimpleTitle = part.length < 100 && !part.includes('<div') && !part.match(/^[ก-ฮ0-9]+\./);
+                    
+                    if (nextMatch && isSimpleTitle) {
+                        // Yes! Render table with this title.
+                        // Remove HTML tags from title for the header
+                        const cleanTitle = part.replace(/<[^>]+>/g, '');
+                        html += renderConjugationTable(cleanTitle, nextMatch, currentIndentLevel);
+                        i++; // Skip next part as we consumed it
+                        continue;
+                    }
+
+                    // Check for Explicit Verb Table Title
+                    const isNextVerbTableStart = (nextPart.includes('บุรุษ') || nextPart.includes('บรุษ')) && (nextPart.includes('เอก') && nextPart.includes('พหุ'));
+                    
+                    if (isNextVerbTableStart && isSimpleTitle) {
+                         // We found a Title line, and the next line is the start of an Explicit Verb Table.
+                         // We need to pass this title to the explicit table renderer.
+                         // Since we don't have a separate function call easily accessible (it's inline above),
+                         // we can cheat: Modify 'nextPart' in 'parts' array? No, bad practice.
+                         // We can handle the table rendering RIGHT HERE.
+                         
+                         const title = part.replace(/<[^>]+>/g, '');
+                         const tablePart = nextPart; // The "บุรุษ..." line
+                         
+                         // We need to invoke the logic that is currently in `if (isVerbTableStart)`...
+                         // Let's copy-paste that logic here but inject the title.
+                         // Refactoring would be cleaner but for now let's inline-duplicate to ensure correctness without breaking the other flow.
+                         
+                         // Parse Header
+                         const cols = tablePart.split(/\s+/).filter(x => x);
+                         let col1 = cols[0] || 'บุรุษ';
+                         let col2 = cols[1] || 'เอกวจนะ';
+                         let col3 = cols[2] || 'พหุวจนะ';
+
+                         // Start collecting rows!
+                         let rows = [];
+                         let j = i + 2; // i = title, i+1 = header, so rows start at i+2
+                         
+                         while (j < parts.length) {
+                            const rowPart = parts[j].trim();
+                            if (!rowPart) { j++; continue; }
+                            
+                            // Prevent consuming the next Title line as a row
+                            if (rowPart.includes('<b>')) {
+                                break;
+                            }
+
+                            const cleanRowPart = rowPart.replace(/,$/, '');
+                            const matchRow = cleanRowPart.match(/^([^\s]+)\s+(.+)$/);
+                            if (matchRow) {
+                                let purisa = matchRow[1].trim();
+                                let content = matchRow[2].trim();
+                                let eka = '', bahu = '';
+                                if (content.includes(' - ')) {
+                                    const parts = content.split(' - ');
+                                    eka = parts[0].trim(); bahu = parts[1] ? parts[1].trim() : '';
+                                } else {
+                                    const parts = content.split(/\s+/);
+                                    if (parts.length >= 2) { eka = parts[0]; bahu = parts.slice(1).join(' '); } else { eka = content; }
+                                }
+                                rows.push({ vibhatti: purisa, eka, bahu });
+                                j++;
+                            } else { break; }
+                         }
+
+                         if (rows.length > 0) {
+                            const indentClass = currentIndentLevel === 1 ? 'table-indent-1' : (currentIndentLevel === 2 ? 'table-indent-2' : '');
+                            let tableHtml = `<div class="overflow-auto ${indentClass} mb-3"><table class="conjugation-table">
+                                    <thead>
+                                        <tr style="background-color: #d35400; color: white;">
+                                            <th colspan="3" style="text-align: center; border-color: #d35400;">${title}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>${col1}</th>
+                                            <th>${col2}</th>
+                                            <th>${col3}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+                            rows.forEach(row => {
+                                tableHtml += `<tr><td class="label-col">${row.vibhatti}</td><td>${row.eka}</td><td>${row.bahu}</td></tr>`;
+                            });
+                            tableHtml += `</tbody></table></div>`;
+                            html += tableHtml;
+                            i = j - 1; // Advance loop
+                            continue;
+                        }
+                    }
+                }
+
+                const { matchAlpha, matchNumeric } = parseLine(part);
+                const matchTerm = part.match(/^<b>(.*?)<\/b>\s*(.*)/);
+                const matchBullet = part.match(/^-\s+(.*)/); // Match "- text"
+                
+                // NEW: Match simple numbered list "1.text" (Arabic or Thai numerals) but NOT sub-question markers
+                // We treat "1. " inside a normal paragraph flow as a list item if it doesn't look like a main sub-question
+                // Actually, the user input uses "1.สระสนธิ" (no space sometimes).
+                // Let's detect if it starts with a number and dot.
+                const matchSimpleList = part.match(/^([0-9๑-๙]+\.)\s*(.*)/);
+
+                if (matchAlpha) {
+                    currentIndentLevel = 1;
+                    const content = matchAlpha[2];
+                    const nestedTerm = content.match(/^<b>(.*?)<\/b>\s*(.*)/);
+                    
+                    if (nestedTerm) {
+                        insideGrammarBlock = true;
+                        html += `<div class="sub-question-item level-1">
+                                    <span class="sub-label">${matchAlpha[1]}</span>
+                                    <div class="sub-content">
+                                        <div class="grammar-item nested">
+                                            <div class="grammar-term">${nestedTerm[1]}</div>
+                                            <div class="grammar-desc">${nestedTerm[2]}</div>
+                                        </div>
+                                    </div>
+                                 </div>`;
+                    } else {
+                        insideGrammarBlock = false;
+                        html += `<div class="sub-question-item level-1">
+                                    <span class="sub-label">${matchAlpha[1]}</span>
+                                    <span class="sub-content">${content}</span>
+                                 </div>`;
+                    }
+                } else if (matchNumeric) {
+                    // Logic: 
+                    // - If we are already in an Alpha block (Level 1), then Numeric is Level 2.
+                    // - If we are NOT in an Alpha block (Level 0), then Numeric is Level 1 (Top Level List).
+                    
+                    const targetLevel = (currentIndentLevel === 1) ? 2 : 1;
+                    
+                    // Update current level ONLY if we are diving deeper? 
+                    // Or should we switch context?
+                    // If we are Level 0 -> Level 1 (Numeric).
+                    // If we are Level 1 (Alpha) -> Level 2 (Numeric).
+                    
+                    // We shouldn't change `currentIndentLevel` globally if it's just a list item?
+                    // But if it's a sub-question structure, we should.
+                    
+                    // Let's assume:
+                    // Alpha is ALWAYS Level 1.
+                    // Numeric is Level 2 IF preceded by Alpha.
+                    // Numeric is Level 1 IF NOT preceded by Alpha.
+                    
+                    const content = matchNumeric[2];
+                    const nestedTerm = content.match(/^<b>(.*?)<\/b>\s*(.*)/);
+                    
+                    // We render it based on targetLevel
+                    const levelClass = `level-${targetLevel}`;
+
+                    if (nestedTerm) {
+                        insideGrammarBlock = true;
+                        html += `<div class="sub-question-item ${levelClass}">
+                                    <span class="sub-label">${matchNumeric[1]}</span>
+                                    <div class="sub-content">
+                                        <div class="grammar-item nested">
+                                            <div class="grammar-term">${nestedTerm[1]}</div>
+                                            <div class="grammar-desc">${nestedTerm[2]}</div>
+                                        </div>
+                                    </div>
+                                 </div>`;
+                    } else {
+                        insideGrammarBlock = false;
+                        html += `<div class="sub-question-item ${levelClass}">
+                                    <span class="sub-label">${matchNumeric[1]}</span>
+                                    <span class="sub-content">${content}</span>
+                                 </div>`;
+                    }
+                    
+                    // Update state?
+                    // If we were Level 0, now we are conceptually in a "Numeric List" context.
+                    // But if we encounter Alpha later, we switch back to Level 1 (Alpha).
+                    // If we encounter normal text, it should align with this list?
+                    // Let's set currentIndentLevel to targetLevel so subsequent text aligns.
+                    currentIndentLevel = targetLevel;
+                    
+                } else if (matchBullet) {
+                    // Bullet list item ( - Item )
+                    const levelClass = currentIndentLevel > 0 ? `level-${currentIndentLevel}` : 'level-1';
+                    html += `<div class="bullet-item ${levelClass}">
+                                <span class="bullet-marker">-</span>
+                                <span>${matchBullet[1]}</span>
+                             </div>`;
+                } else if (matchTerm) {
+                    // Standalone Term Row
+                    insideGrammarBlock = true;
+                    // If we are already inside a level (e.g. sub-question), align with it
+                    // But terms usually have their own indentation logic (hanging indent)
+                    // Let's allow terms to be nested?
+                    
+                    const levelClass = currentIndentLevel > 0 ? `level-${currentIndentLevel}` : '';
+                    html += `<div class="grammar-item ${levelClass}">
+                                <div class="grammar-term">${matchTerm[1]}</div>
+                                <div class="grammar-desc">${matchTerm[2]}</div>
+                             </div>`;
+                } else if (matchSimpleList && !insideGrammarBlock) {
+                     // NO-OP or Fallback
+                     // Since matchNumeric (which uses parseLine) already captures this pattern,
+                     // this block is technically unreachable unless parseLine behaves differently.
+                     // But to be safe, if we reach here, treat it as normal text or handle specially?
+                     // Let's treat it as normal text flow for now to avoid duplication.
+                     // Actually, I removed the code block content in previous thought but didn't actually delete the block in file?
+                     // I will just remove this block entirely in next cleanup. 
+                     // For now, let's treat it as Normal Text to be safe.
+                     
+                     // Wait, if I delete it, it falls through to 'else' (Normal Text).
+                     // That's what we want if matchNumeric didn't catch it.
+                     // So I will empty this block or merge it with 'else'.
+                     
+                     // Let's just pass through to 'else' logic by doing nothing specific here?
+                     // No, javascript needs a block.
+                     
+                     // Actually, better to remove this 'else if' entirely.
+                     // But I need to match the file content for SearchReplace.
+                     // The previous SearchReplace added this block.
+                     // So I should remove it now.
+                } else {
+                    // Normal text
+
+                    // Force break out of grammar block for new instructions/sections
+                    if (part.match(/^(แจก|ได้แจก|ได้เขียน|จง|วิธี|หลัก)/)) {
+                        insideGrammarBlock = false;
+                    }
+
+                    if (insideGrammarBlock) {
+                        // If we are inside a grammar block (following a Term), treat as Analysis
+                        const levelClass = currentIndentLevel > 0 ? `level-${currentIndentLevel}` : '';
+                        html += `<div class="grammar-analysis ${levelClass}">${part}</div>`;
+                    } else {
+                        // Standard text / Intro
+                        const className = i === 0 ? "question-intro" : "question-text-line my-2";
+                        if (currentIndentLevel > 0) {
+                             const indentClass = currentIndentLevel === 1 ? 'table-indent-1' : 'table-indent-2';
+                              html += `<div class="${className} ${indentClass}">${part}</div>`;
+                        } else {
+                              html += `<div class="${className}">${part}</div>`;
+                        }
+                    }
+                }
+            }
+
+            return html;
+        }
+
+        function populateFilters() {
+            const categories = [...new Set(grammarQA12.map(item => item.category))];
+            // Sort years numerically ascending for dropdowns
+            const years = [...new Set(grammarQA12.map(item => item.year))].sort((a, b) => parseInt(a) - parseInt(b));
+            
+            const catSelect = document.getElementById('filter-category');
+            const examCatSelect = document.getElementById('exam-category');
+            
+            const yearStartSelect = document.getElementById('filter-year-start');
+            const yearEndSelect = document.getElementById('filter-year-end');
+            
+            const examYearStartSelect = document.getElementById('exam-year-start');
+            const examYearEndSelect = document.getElementById('exam-year-end');
+
+            // Clear existing options (except first)
+            catSelect.innerHTML = '<option value="all">ทุกหมวดหมู่</option>';
+            examCatSelect.innerHTML = '<option value="all">สุ่มทุกหมวด</option>';
+            
+            yearStartSelect.innerHTML = '<option value="all">เริ่มต้น</option>';
+            yearEndSelect.innerHTML = '<option value="all">ล่าสุด</option>';
+            
+            examYearStartSelect.innerHTML = '<option value="all">เริ่มต้น</option>';
+            examYearEndSelect.innerHTML = '<option value="all">ล่าสุด</option>';
+
+            categories.forEach(c => {
+                catSelect.innerHTML += `<option value="${c}">${c}</option>`;
+                examCatSelect.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+
+            years.forEach(y => {
+                const option = `<option value="${y}">${y}</option>`;
+                yearStartSelect.innerHTML += option;
+                yearEndSelect.innerHTML += option;
+                examYearStartSelect.innerHTML += option;
+                examYearEndSelect.innerHTML += option;
+            });
+
+            // Set default End Year to the latest year
+            if (years.length > 0) {
+                // For Study Mode, maybe default to "all" (latest logic handles "all")
+                // For now keep "all" as default which means open range
+            }
+
+            // Add Event Listeners
+            catSelect.addEventListener('change', filterData);
+            yearStartSelect.addEventListener('change', filterData);
+            yearEndSelect.addEventListener('change', filterData);
+        }
+
+        function filterData() {
+            const cat = document.getElementById('filter-category').value;
+            const startYearVal = document.getElementById('filter-year-start').value;
+            const endYearVal = document.getElementById('filter-year-end').value;
+
+            const startYear = startYearVal === 'all' ? 0 : parseInt(startYearVal);
+            const endYear = endYearVal === 'all' ? 9999 : parseInt(endYearVal);
+
+            currentData = grammarQA12.filter(item => {
+                const y = parseInt(item.year);
+                return (cat === 'all' || item.category === cat) &&
+                       (y >= startYear && y <= endYear);
+            });
+
+            renderStudyList(currentData);
+        }
+
+        function renderStudyList(data) {
+            const container = document.getElementById('qa-list');
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-search fa-3x mb-3 opacity-50"></i>
+                        <p>ไม่พบข้อมูลตามเงื่อนไขที่ระบุ</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            data.forEach((item, index) => {
+                html += `
+                    <div class="card qa-card" onclick="toggleAnswer(this, 'ans-${index}')" style="cursor: pointer;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <span class="badge badge-modern badge-year me-1"><i class="fas fa-calendar-alt me-1"></i>${item.year}</span>
+                                    <span class="badge badge-modern badge-cat">${item.category}</span>
+                                </div>
+                                <span class="text-muted small">ข้อที่ ${index + 1}</span>
+                            </div>
+                            <div class="question-text lh-base">${formatContent(item.question)}</div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <span class="text-primary small fw-bold"><i class="fas fa-chevron-down toggle-icon me-1"></i>ดูเฉลย</span>
+                            </div>
+                            <div id="ans-${index}" class="answer-box ${isAllAnswersShown ? 'show' : ''}" onclick="event.stopPropagation()">
+                                <div class="d-flex">
+                                    <div class="me-3 text-success"><i class="fas fa-check-circle mt-1"></i></div>
+                                    <div class="w-100">${formatContent(item.answer)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleAnswer(card, id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('show')) {
+                el.classList.remove('show');
+                card.classList.remove('active');
+            } else {
+                el.classList.add('show');
+                card.classList.add('active');
+            }
+        }
+
+        function toggleAllAnswers() {
+            isAllAnswersShown = !isAllAnswersShown;
+            const answers = document.querySelectorAll('.answer-box');
+            answers.forEach(el => {
+                if (isAllAnswersShown) el.classList.add('show');
+                else el.classList.remove('show');
+            });
+        }
+
+        // ------------------------------------------
+        // Exam Mode Logic
+        // ------------------------------------------
+
+        function generateExam() {
+            const amount = parseInt(document.getElementById('exam-amount').value);
+            const category = document.getElementById('exam-category').value;
+            const showAnswer = document.getElementById('exam-show-answer').checked;
+            
+            const startYearVal = document.getElementById('exam-year-start').value;
+            const endYearVal = document.getElementById('exam-year-end').value;
+
+            const startYear = startYearVal === 'all' ? 0 : parseInt(startYearVal);
+            const endYear = endYearVal === 'all' ? 9999 : parseInt(endYearVal);
+
+            // Filter pool
+            let pool = grammarQA12.filter(item => {
+                const y = parseInt(item.year);
+                return (category === 'all' || item.category === category) &&
+                       (y >= startYear && y <= endYear);
+            });
+
+            // Shuffle and slice
+            const shuffled = pool.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, amount);
+
+            renderExamPaper(selected, showAnswer);
+        }
+
+        function renderExamPaper(questions, showAnswer) {
+            const container = document.getElementById('exam-preview');
+            const date = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            let html = `
+                <div class="text-center mb-5">
+                    <h3 class="fw-bold">ข้อสอบบาลีไวยากรณ์ ประโยค ๑-๒</h3>
+                    <p class="text-muted">วันที่ ${date} | คะแนนเต็ม ${questions.length * 10} คะแนน</p>
+                    <div style="border-bottom: 2px solid #eee; margin: 0 auto; width: 50%;"></div>
+                </div>
+            `;
+
+            questions.forEach((item, index) => {
+                html += `
+                    <div class="mb-5 break-inside-avoid">
+                        <div class="d-flex mb-2">
+                            <span class="fw-bold me-2">${index + 1}.</span>
+                            <div class="fw-bold w-100">${formatContent(item.question)}</div>
+                        </div>
+                        <div class="p-4 rounded bg-light" style="min-height: 120px; border: 2px dashed #ddd; background-color: #fcfcfc !important;">
+                            <!-- พื้นที่สำหรับเขียนคำตอบ -->
+                        </div>
+                        ${showAnswer ? `
+                            <div class="mt-3 p-3 bg-light rounded border border-success border-opacity-25">
+                                <strong class="text-success small">เฉลย:</strong> 
+                                <div class="small mt-1 w-100">${formatContent(item.answer)}</div>
+                            </div>` : ''}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
