@@ -1751,91 +1751,9 @@
             }
          }
         function openFlashcardsModal(uid) {
-            const modal = document.getElementById('flashcards-modal');
-            const closeBtn = document.getElementById('flash-close');
-            const revealBtn = document.getElementById('flash-reveal');
-            const correctBtn = document.getElementById('flash-correct');
-            const wrongBtn = document.getElementById('flash-wrong');
-            const termEl = document.getElementById('flash-term');
-            const meaningEl = document.getElementById('flash-meaning');
-            const progressEl = document.getElementById('flash-progress');
-            let deck = [];
-            let index = 0;
-            let correct = 0;
-            let total = 0;
-            function showCard() {
-                const item = deck[index];
-                termEl.textContent = item.term;
-                meaningEl.textContent = item.meaning;
-                meaningEl.style.display = 'none';
-                revealBtn.style.display = 'inline-block';
-                correctBtn.style.display = 'none';
-                wrongBtn.style.display = 'none';
-                progressEl.textContent = `${index+1}/${deck.length}`;
-            }
-            function endSession() {
-                modal.style.display = 'none';
-                const statsDoc = { totalCorrect: firebase.firestore.FieldValue.increment(correct), totalReviewed: firebase.firestore.FieldValue.increment(total), updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
-                db.collection('flashcard_stats').doc(uid).set(statsDoc, { merge: true }).catch(() => {});
-                try {
-                    const local = JSON.parse(localStorage.getItem('pali_flash_stats') || '{"totalCorrect":0,"totalReviewed":0}');
-                    local.totalCorrect = Number(local.totalCorrect || 0) + correct;
-                    local.totalReviewed = Number(local.totalReviewed || 0) + total;
-                    local.updatedAt = Date.now();
-                    localStorage.setItem('pali_flash_stats', JSON.stringify(local));
-                } catch (e) {}
-                if (window._currentUser && window._currentRole) updateStudentDashboard(window._currentUser, window._currentRole);
-            }
-            revealBtn.onclick = () => {
-                meaningEl.style.display = 'block';
-                revealBtn.style.display = 'none';
-                correctBtn.style.display = 'inline-block';
-                wrongBtn.style.display = 'inline-block';
-            };
-            correctBtn.onclick = () => {
-                correct++;
-                total++;
-                index++;
-                if (index >= deck.length) endSession(); else showCard();
-            };
-            wrongBtn.onclick = () => {
-                total++;
-                index++;
-                if (index >= deck.length) endSession(); else showCard();
-            };
-            closeBtn.onclick = () => { modal.style.display = 'none'; };
-            function loadDeck() {
-                return db.collection('flashcard_decks').doc('basic-pt12').get().then(doc => {
-                    if (doc.exists && doc.data() && Array.isArray(doc.data().items)) {
-                        return doc.data().items.map(x => ({ term: x.term, meaning: x.meaning })).slice(0, 12);
-                    }
-                    return null;
-                }).catch(() => null);
-            }
-            function fallbackDeck() {
-                return [
-                    { term: 'bhikkhu', meaning: 'ภิกษุ' },
-                    { term: 'dhamma', meaning: 'ธรรมะ' },
-                    { term: 'sutta', meaning: 'สูตร' },
-                    { term: 'paññā', meaning: 'ปัญญา' },
-                    { term: 'sīla', meaning: 'ศีล' },
-                    { term: 'samādhi', meaning: 'สมาธิ' },
-                    { term: 'kamma', meaning: 'กรรม' },
-                    { term: 'mettā', meaning: 'เมตตา' },
-                    { term: 'saddhā', meaning: 'ศรัทธา' },
-                    { term: 'dāna', meaning: 'ทาน' },
-                    { term: 'kusala', meaning: 'กุศล' },
-                    { term: 'dukkha', meaning: 'ทุกข์' }
-                ];
-            }
-            modal.style.display = 'flex';
-            loadDeck().then(items => {
-                deck = items && items.length ? items : fallbackDeck();
-                index = 0;
-                correct = 0;
-                total = 0;
-                showCard();
-            });
+            // Redirect to the new dedicated Flashcards page
+            // It handles score tracking and auth automatically
+            window.location.href = 'flashcards.html';
         }
 
         // --- Resume Learning Logic ---
