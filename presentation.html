@@ -998,10 +998,22 @@
                 <h2 id="ana-word" class="analysis-word">...</h2>
                 <span class="analysis-close" onclick="closeAnalysisModal(event, true)">&times;</span>
             </div>
-            <div class="analysis-body">
+            <div class="analysis-body" id="ana-body-container">
                 <div id="ana-split" class="analysis-split">...</div>
                 <ul id="ana-details" class="analysis-list"></ul>
+                <div id="ana-generic-content" style="display:none; font-size:1.2rem; line-height:1.6; color:#2c3e50;"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Translation Modal (iframe) -->
+    <div id="trans-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; justify-content:center; align-items:center; backdrop-filter: blur(2px);" onclick="if(event.target===this) this.style.display='none'">
+        <div style="background:white; width:90%; max-width:500px; height:80%; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+            <div style="padding:12px 20px; background:#f7f9f9; border-bottom:1px solid #eceff1; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:bold; color:#2c3e50;"><i class="fa-solid fa-language"></i> แปลภาษา (Longdo Dict)</span>
+                <span onclick="document.getElementById('trans-modal').style.display='none'" style="cursor:pointer; font-size:1.5rem; color:#95a5a6;">&times;</span>
+            </div>
+            <iframe id="trans-iframe" style="flex:1; border:none; width:100%; background:#fff;"></iframe>
         </div>
     </div>
 
@@ -1210,81 +1222,7 @@
                         currentIndex = index;
                         updateSlide();
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('toolsSidebar');
-            const toggleBtn = document.getElementById('sidebar-toggle');
-            const closeBtn = document.getElementById('btn-close-sidebar');
 
-            // ตรวจสอบสถานะปัจจุบัน
-            if (sidebar.classList.contains('collapsed')) {
-                // เปิด Sidebar
-                sidebar.classList.remove('collapsed');
-                if (toggleBtn) toggleBtn.style.display = 'none'; // ซ่อนปุ่มเปิด
-                if (closeBtn) closeBtn.style.display = 'flex'; // แสดงปุ่มปิด
-            } else {
-                // ปิด Sidebar
-                sidebar.classList.add('collapsed');
-                if (toggleBtn) toggleBtn.style.display = 'flex'; // แสดงปุ่มเปิด
-                if (closeBtn) closeBtn.style.display = 'none'; // ซ่อนปุ่มปิด
-            }
-        }
-
-        function toggleFooter() {
-            const footer = document.getElementById('footerBox');
-            const toggleBtn = document.getElementById('footer-toggle');
-            
-            if (footer.classList.contains('hidden')) {
-                footer.classList.remove('hidden');
-                // เปลี่ยนไอคอนเป็น info
-                toggleBtn.innerHTML = '<i class="fa-solid fa-info"></i>';
-                toggleBtn.title = "ซ่อนรายละเอียด";
-            } else {
-                footer.classList.add('hidden');
-                // เปลี่ยนไอคอนเป็น expand/show
-                toggleBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
-                toggleBtn.title = "แสดงรายละเอียด";
-            }
-        }
-
-        // Auto-hide on mobile init
-        function initMobileView() {
-            if (window.innerWidth <= 768) {
-                // เริ่มต้นมาซ่อน Sidebar และ Footer
-                toggleSidebar(); 
-                // toggleFooter(); // Footer อาจจะเปิดไว้ก่อน หรือปิดไว้ก็ได้ตามต้องการ (user ขอซ่อน/แสดงได้)
-                // ถ้า user บอกว่า "พื้นที่จำกัด" อาจจะปิดไปก่อนก็ได้ แต่ user ขอ "สามารถแสดง/ซ่อน ได้ไหม"
-                // เอาเป็นว่าเปิดไว้ก่อน แต่มีปุ่มให้ซ่อน
-                const toggleBtn = document.getElementById('footer-toggle');
-                if (toggleBtn) toggleBtn.style.display = 'flex';
-                
-                // ให้ Sidebar เริ่มต้นเป็น collapsed (เรียก toggleSidebar ครั้งแรกจะ add collapsed)
-            }
-        }
-
-        // Call init on load
-        window.addEventListener('load', initMobileView);
-        window.addEventListener('resize', () => {
-             const toggleBtn = document.getElementById('footer-toggle');
-             const sidebarToggle = document.getElementById('sidebar-toggle');
-             if (window.innerWidth <= 768) {
-                 if(toggleBtn) toggleBtn.style.display = 'flex';
-                 // Check sidebar state
-                 const sidebar = document.getElementById('toolsSidebar');
-                 if(sidebar && sidebar.classList.contains('collapsed')) {
-                     if(sidebarToggle) sidebarToggle.style.display = 'flex';
-                 }
-             } else {
-                 if(toggleBtn) toggleBtn.style.display = 'none';
-                 if(sidebarToggle) sidebarToggle.style.display = 'none';
-                 
-                 // Reset sidebar visibility on desktop
-                 const sidebar = document.getElementById('toolsSidebar');
-                 if(sidebar) sidebar.classList.remove('collapsed');
-                 
-                 const footer = document.getElementById('footerBox');
-                 if(footer) footer.classList.remove('hidden');
-             }
-        });
                         if (window.innerWidth < 768) {
                              toggleTOC(); // Close on mobile
                         }
@@ -1623,12 +1561,27 @@
                          stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ศัพท์)</span>`;
                     }
 
+                    // Prepare content for Popup (Click to expand)
+                    const contentForPopup = `
+                        <div style="font-size:1.4rem;">
+                            <div style="font-weight: bold; color: #2980b9; margin-bottom:10px;">
+                                ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
+                            </div>
+                            <div style="line-height:1.6;">${detailsHtml}</div>
+                        </div>
+                    `;
+                    const safeContent = contentForPopup.replace(/"/g, '&quot;');
+
                     thaiVocabContent.innerHTML = `
-                        <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px;">
+                        <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
+                             onclick="openGenericModal('พจนานุกรมไทย', this.getAttribute('data-content'))"
+                             data-content="${safeContent}">
                             <div style="font-weight: bold; color: #2980b9;">
                                 ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
                                 <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
                                 ${stemInfo}
+                                <i class="fa-solid fa-expand" style="float:right; color:#bdc3c7; font-size:0.8em;"></i>
                             </div>
                             <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
                         </div>
@@ -1722,14 +1675,21 @@
                  romanDefHtml = `<div style="color:#95a5a6; font-style:italic; margin-top:10px;">ไม่พบคำศัพท์ในฐานข้อมูล Offline</div>`;
             }
 
+            // Feature: Wrap English words for Translation Click
+            const interactiveHtml = wrapEnglishWords(romanDefHtml);
+            const safeInteractiveHtml = interactiveHtml.replace(/"/g, '&quot;');
+
             romanVocabContent.innerHTML = `
-                <div>
-                    ${romanDefHtml}
+                <div style="cursor: pointer;"
+                     onclick="openGenericModal('พจนานุกรมโรมัน', this.getAttribute('data-content'))"
+                     data-content="${safeInteractiveHtml}">
+                    ${interactiveHtml}
                     <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                        <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
+                        <span style="float:right; color:#bdc3c7;"><i class="fa-solid fa-expand"></i></span>
+                        <a href="${scLink}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
                             <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
                         </a>
-                        <a href="${dpdLink}" target="_blank" style="display:inline-block; color:#27ae60; text-decoration:none;">
+                        <a href="${dpdLink}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; color:#27ae60; text-decoration:none;">
                             <i class="fa-solid fa-book"></i> DPD
                         </a>
                     </div>
@@ -2011,7 +1971,68 @@
         function closeAnalysisModal(event, force = false) {
             if (force || event.target.id === 'analysis-modal') {
                 document.getElementById('analysis-modal').style.display = 'none';
+                // Reset view to default state (so next time it opens correctly)
+                document.getElementById('ana-generic-content').style.display = 'none';
+                document.getElementById('ana-split').style.display = 'block';
+                document.getElementById('ana-details').style.display = 'block';
             }
+        }
+
+        function openGenericModal(title, content) {
+            document.getElementById('ana-word').innerHTML = title;
+            document.getElementById('ana-split').style.display = 'none';
+            document.getElementById('ana-details').style.display = 'none';
+            
+            const generic = document.getElementById('ana-generic-content');
+            generic.style.display = 'block';
+            generic.innerHTML = content;
+            
+            document.getElementById('analysis-modal').style.display = 'flex';
+        }
+
+        function showTranslation(word, event) {
+            if (event) event.stopPropagation();
+            const modal = document.getElementById('trans-modal');
+            const iframe = document.getElementById('trans-iframe');
+            // Use Longdo Dict for Thai translation
+            iframe.src = `https://dict.longdo.com/mobile.php?search=${word}`;
+            modal.style.display = 'flex';
+        }
+
+        function wrapEnglishWords(html) {
+            // Helper to wrap English words in clickable spans
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            
+            const walker = document.createTreeWalker(div, NodeFilter.SHOW_TEXT, null, false);
+            let node;
+            const nodesToReplace = [];
+            
+            while(node = walker.nextNode()) {
+                // Skip script/style/already wrapped/links
+                if (node.parentElement && (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE' || node.parentElement.classList.contains('trans-word') || node.parentElement.tagName === 'A')) {
+                    continue;
+                }
+                nodesToReplace.push(node);
+            }
+            
+            nodesToReplace.forEach(node => {
+                const text = node.nodeValue;
+                // Match English words (2+ chars)
+                // Avoid wrapping inside HTML tags (handled by TreeWalker)
+                // We use a regex that identifies words.
+                const newHTML = text.replace(/([a-zA-Z\u00C0-\u00FF]{2,})/g, (match) => {
+                    return `<span class="trans-word" style="cursor:pointer; border-bottom:1px dotted #bdc3c7;" onclick="showTranslation('${match}', event)">${match}</span>`;
+                });
+                
+                if (newHTML !== text) {
+                    const span = document.createElement('span');
+                    span.innerHTML = newHTML;
+                    node.replaceWith(...span.childNodes);
+                }
+            });
+            
+            return div.innerHTML;
         }
 
         let isThaiHidden = false;
