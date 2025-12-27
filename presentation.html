@@ -1382,6 +1382,12 @@
         // Remove existing bubbles
         document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
 
+        // ********** Fix: Thai Content - Click to Highlight only, No Dictionary **********
+        // User requested: "Allow clicking but don't trigger the dictionary" for Thai translation box.
+        if (el.closest('#thaiContent')) {
+            return;
+        }
+
         const word = el.innerText.trim();
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
 
