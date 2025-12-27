@@ -200,10 +200,10 @@
                 <label style="font-size:0.85em; color:#7f8c8d;">รูปแบบแสดงผล</label>
                 <select id="layoutSelect" style="min-width:180px;">
                     <option value="pali_only">บาลีอย่างเดียว</option>
-                    <option value="pali_over_thai">บาลีบน ไทยล่าง</option>
-                    <option value="thai_over_pali">ไทยบน บาลีล่าง</option>
-                    <option value="side_by_side_lr">บาลีซ้าย ไทยขวา</option>
-                    <option value="side_by_side_rl">ไทยซ้าย บาลีขวา</option>
+                    <option value="pali_over_thai">บาลีบน - ไทยล่าง</option>
+                    <option value="thai_over_pali">ไทยบน - บาลีล่าง</option>
+                    <option value="side_by_side_lr">บาลีซ้าย - ไทยขวา</option>
+                    <option value="side_by_side_rl">ไทยซ้าย - บาลีขวา</option>
                 </select>
             </div>
 
@@ -219,12 +219,17 @@
             <!-- Font Family -->
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">แบบอักษร</label>
-                <select id="fontSelect" style="min-width:120px;">
-                    <option value="'Sarabun', sans-serif">สารบรรณ</option>
-                    <option value="'Taviraj', serif">ทวิราช</option>
-                    <option value="'Maitree', serif">ไมตรี</option>
-                    <option value="'Prompt', sans-serif">พร้อม</option>
-                    <option value="'DilleniaUPC', sans-serif">DilleniaUPC</option>
+                <select id="fontSelect" style="min-width:120px;" onchange="changeFontFamily(this.value)">
+                    <option value="DilleniaUPC_4Balee" selected>DilleniaUPC (บาลี)</option>
+                    <option value="DilleniaUPC">DilleniaUPC</option>
+                    <option value="Buddhadham">Buddhadham</option>
+                    <option value="BuddhadhamPali">Buddhadham (บาลี)</option>
+                    <option value="Buddhawajana">Buddhawajana</option>
+                    <option value="BuddhawajanaPali">Buddhawajana (บาลี)</option>
+                    <option value="Burapa">Burapa</option>
+                    <option value="TH Sarabun New, Sarabun">TH Sarabun New</option>
+                    <option value="Cordia New">Cordia New</option>
+                    <option value="Niramit">Niramit</option>
                 </select>
             </div>
 
@@ -927,7 +932,6 @@
         const fontName = document.getElementById('fontSelect') ? document.getElementById('fontSelect').value : 'inherit';
         const fontSize = document.getElementById('fontSizeRange') ? document.getElementById('fontSizeRange').value + 'px' : 'inherit';
         
-        contentDiv.style.fontFamily = fontName;
         contentDiv.style.fontSize = fontSize;
         if(isJustified) contentDiv.style.textAlign = 'justify';
         
@@ -956,7 +960,7 @@
                 b1.innerHTML=wrapWords(s.pali||'', sIndex);
                 
                 const b2=document.createElement('div');
-                b2.className='block';
+                b2.className='block thai-text';
                 b2.style.color='#7f8c8d';
                 b2.textContent=preferThai(s);
                 
@@ -964,7 +968,7 @@
                 item.appendChild(b2);
             }else if(layout==='thai_over_pali'){
                 const b1=document.createElement('div');
-                b1.className='block';
+                b1.className='block thai-text';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
                 b1.textContent=preferThai(s);
@@ -985,7 +989,7 @@
                 leftB.style.fontWeight='bold';
                 leftB.innerHTML=wrapWords(s.pali||'', sIndex);
                 const rightB=document.createElement('div');
-                rightB.className='block';
+                rightB.className='block thai-text';
                 rightB.textContent=preferThai(s);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
@@ -994,7 +998,7 @@
                 const grid=document.createElement('div');
                 grid.className='two-col';
                 const leftB=document.createElement('div');
-                leftB.className='block';
+                leftB.className='block thai-text';
                 leftB.textContent=preferThai(s);
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
@@ -1062,6 +1066,43 @@
         navDiv.appendChild(nextBtn);
         
         container.appendChild(navDiv);
+
+        // Apply Font (Smart Mapping)
+        if(document.getElementById('fontSelect')) {
+             changeFontFamily(document.getElementById('fontSelect').value);
+        }
+    }
+
+    function changeFontFamily(font) {
+        let paliFont = font;
+        let thaiFont = font;
+
+        // Smart mapping for Pali variants
+        if (font === 'DilleniaUPC_4Balee') {
+            thaiFont = 'DilleniaUPC';
+        } else if (font === 'BuddhadhamPali') {
+            thaiFont = 'Buddhadham';
+        } else if (font === 'BuddhawajanaPali') {
+            thaiFont = 'Buddhawajana';
+        } else if (font === 'DilleniaUPC') {
+            paliFont = 'DilleniaUPC_4Balee';
+        } else if (font === 'Buddhadham') {
+            paliFont = 'BuddhadhamPali';
+        } else if (font === 'Buddhawajana') {
+            paliFont = 'BuddhawajanaPali';
+        }
+        
+        // Apply to Pali elements
+        const paliFamily = `"${paliFont.split(',')[0]}", ${paliFont}, sans-serif`;
+        document.querySelectorAll('.pali-text, .analysis-word').forEach(el => {
+            el.style.fontFamily = paliFamily;
+        });
+
+        // Apply to Thai elements
+        const thaiFamily = `"${thaiFont.split(',')[0]}", ${thaiFont}, sans-serif`;
+        document.querySelectorAll('.thai-text').forEach(el => {
+            el.style.fontFamily = thaiFamily;
+        });
     }
 
     function init(){
