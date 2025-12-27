@@ -143,10 +143,8 @@ const PaliLookup = {
             if (res) return { source: 'thai', data: res };
         }
 
-        // 2. Check Roman DB (vocabSC) SECOND
-        if (dbs.sc && dbs.sc[romanWord]) return { source: 'sc', data: dbs.sc[romanWord] };
-        
-        return null;
+        // 2. Check Roman DBs (SC, DPD, PTS, etc. via checkAll)
+        return this.checkAll(romanWord, dbs);
     },
     
     formatSandhiResult: function(w1, w2, r1, r2) {
@@ -177,23 +175,28 @@ const PaliLookup = {
     },
     
     checkAll: function(key, dbs) {
-        // Priority order can be adjusted here
-        if (dbs.newgen && dbs.newgen[key]) return { ...dbs.newgen[key], source: 'Thai New Gen', word: key };
+        // Priority order adjusted by user request
+        
+        // 1. Thai Dictionaries (Ordered: Tananunto, E-Tipitaka, New Gen, General)
         if (dbs.tananunto && dbs.tananunto[key]) return { details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key };
         if (dbs.etipitaka && dbs.etipitaka[key]) return { details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key };
+        if (dbs.newgen && dbs.newgen[key]) return { ...dbs.newgen[key], source: 'Thai New Gen', word: key };
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         
-        // Fallback: Check Roman Dictionaries (DPD, PTS, DPPN, Dhammika, SC, DPD Inflected)
+        // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
         if (dbs.dpd || dbs.sc || dbs.pts || dbs.dppn || dbs.dhammika || dbs.dpdInflected) {
              let romanKey = key;
              if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
                  romanKey = PaliScript.thaiToRoman(key);
              }
+             
+             if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
              if (dbs.dpd && dbs.dpd[romanKey]) return { details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key };
              if (dbs.pts && dbs.pts[romanKey]) return { source: 'pts', data: dbs.pts[romanKey], word: key };
+             
+             // Others
              if (dbs.dppn && dbs.dppn[romanKey]) return { source: 'dppn', data: dbs.dppn[romanKey], word: key };
              if (dbs.dhammika && dbs.dhammika[romanKey]) return { source: 'dhammika', data: dbs.dhammika[romanKey], word: key };
-             if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
              if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key };
         }
 
