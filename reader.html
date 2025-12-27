@@ -570,6 +570,12 @@
             return;
         }
 
+        // Check Manual Roots (Word Origin) - Priority 2
+        if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
+             showDictionaryDefinition(vocabRoots[cleanWord]);
+             return;
+        }
+
         // Check Manual Sandhi DB
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
             const parts = vocabSandhi[cleanWord];
@@ -657,8 +663,6 @@
     function showDictionaryDefinition(word, manualOverride = null) {
         // Collect all databases
         const dbs = {
-            general: (typeof vocabGeneral !== 'undefined' ? vocabGeneral : {}),
-            newgen: (typeof vocabNewGen !== 'undefined' ? vocabNewGen : {}),
             tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
             etipitaka: (typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {}),
             dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
