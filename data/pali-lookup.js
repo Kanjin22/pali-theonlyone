@@ -5,6 +5,18 @@ const PaliLookup = {
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '').trim();
         if (!cleanWord) return null;
 
+        // 0. Manual Root Mapping (User Defined)
+        if (databases.roots && databases.roots[cleanWord]) {
+            const rootWord = databases.roots[cleanWord];
+            let rootResult = this.checkAll(rootWord, databases);
+            if (rootResult) {
+                rootResult._stemmedFrom = cleanWord;
+                rootResult._baseWord = rootWord;
+                // Preserve original source but mark as manually mapped if needed
+                return rootResult;
+            }
+        }
+
         // 1. Exact Match
         let result = this.checkAll(cleanWord, databases);
         
