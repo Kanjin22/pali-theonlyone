@@ -656,6 +656,9 @@
             background: white;
             width: 90%;
             max-width: 600px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
@@ -679,6 +682,7 @@
             color: white;
             padding: 25px;
             position: relative;
+            flex-shrink: 0;
         }
 
         .analysis-word {
@@ -703,6 +707,8 @@
 
         .analysis-body {
             padding: 30px;
+            overflow-y: auto;
+            flex: 1;
         }
 
         .analysis-split {
