@@ -58,7 +58,7 @@
         /* Card Flip Effect */
         .scene {
             width: 100%;
-            height: 350px;
+            height: 400px;
             perspective: 1000px;
             margin-bottom: 30px;
         }
@@ -89,6 +89,7 @@
             padding: 20px;
             box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .card-front {
@@ -100,170 +101,275 @@
             background-color: #f1c40f;
             color: #2c3e50;
             transform: rotateY(180deg);
+            overflow-y: auto;
+            justify-content: flex-start;
+            padding-top: 30px;
         }
 
         .pali-word {
             font-family: 'Niramit', serif;
-            font-size: 3.5rem;
-            font-weight: 600;
+            font-size: 3rem;
+            font-weight: bold;
             margin-bottom: 10px;
+            color: #2c3e50;
         }
 
         .word-type {
-            background: #ecf0f1;
-            color: #7f8c8d;
+            background: #e74c3c;
+            color: white;
             padding: 5px 15px;
-            border-radius: 15px;
+            border-radius: 20px;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
-        .thai-meaning {
-            font-size: 2rem;
+        .meaning {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
             font-weight: bold;
-            margin-bottom: 15px;
         }
 
         .details-list {
-            text-align: left;
-            font-size: 1.1rem;
             list-style: none;
             padding: 0;
+            text-align: left;
+            width: 100%;
         }
 
         .details-list li {
-            margin-bottom: 5px;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            font-size: 1rem;
         }
 
         .controls {
             display: flex;
             gap: 20px;
             justify-content: center;
-            width: 100%;
         }
 
-        .btn-control {
+        .btn {
+            background: #3498db;
+            color: white;
             border: none;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            font-size: 1.5rem;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+            min-width: 100px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
-        .btn-control:active { transform: scale(0.9); }
-        
-        .btn-miss { background-color: #e74c3c; color: white; }
-        .btn-pass { background-color: #2ecc71; color: white; }
-
-        .hint-text {
-            margin-top: 15px;
-            color: #95a5a6;
-            font-size: 0.9rem;
+        .btn:hover {
+            background: #2980b9;
         }
-        
-        /* Category Selector */
-        .category-select {
-            margin-bottom: 20px;
-            padding: 8px;
-            border-radius: 8px;
+
+        .btn-red { background: #e74c3c; }
+        .btn-red:hover { background: #c0392b; }
+
+        .btn-green { background: #2ecc71; }
+        .btn-green:hover { background: #27ae60; }
+
+        select {
+            padding: 8px 15px;
+            border-radius: 20px;
             border: none;
             background: rgba(255,255,255,0.1);
             color: white;
-            font-family: 'Sarabun';
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
         }
-        
-        option { color: #333; }
-
+        select option {
+            background: #34495e;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="header">
-            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-            <h2>บัตรคำศัพท์ช่วยจำ</h2>
-            <div style="width: 24px;"></div> <!-- Spacer -->
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> หน้าแรก</a>
+            <select id="catSelect" onchange="changeCategory()">
+                <option value="all">ทั้งหมด (All)</option>
+                <option value="akhyata">อาขยาต (Akhyata)</option>
+                <option value="kitaka">กิตก์ (Kitaka)</option>
+                <option value="vocab">ศัพท์ทั่วไป (Vocab)</option>
+            </select>
         </div>
 
-        <select id="catSelect" class="category-select" onchange="changeCategory()">
-            <option value="all">รวมทุกหมวด</option>
-            <option value="akhyata">อาขยาต</option>
-            <option value="kitaka">กิริยากิตก์</option>
-            <option value="samasa">สมาส</option>
-            <option value="taddhita">ตัทธิต</option>
-            <option value="general">ทั่วไป</option>
-        </select>
-
         <div class="stats-bar">
-            <div class="stat-item stat-green"><i class="fa-solid fa-check"></i> <span id="count-remember">0</span></div>
-            <div class="stat-item stat-red"><i class="fa-solid fa-xmark"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item stat-green"><i class="fas fa-check"></i> <span id="count-remember">0</span></div>
+            <div class="stat-item stat-red"><i class="fas fa-times"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item" style="color:#bdc3c7;"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
         </div>
 
         <div class="scene">
             <div class="card" onclick="flipCard()">
                 <div class="card-face card-front">
-                    <div class="pali-word" id="card-pali">...</div>
-                    <div class="hint-text">(แตะเพื่อดูเฉลย)</div>
+                    <div class="word-type" id="card-type-front">TYPE</div>
+                    <div class="pali-word" id="card-pali">Loading...</div>
+                    <div style="font-size: 0.9rem; color: #95a5a6; margin-top: 20px;">(แตะเพื่อดูเฉลย)</div>
                 </div>
                 <div class="card-face card-back">
-                    <div class="thai-meaning" id="card-thai">...</div>
-                    <ul class="details-list" id="card-details"></ul>
                     <div class="word-type" id="card-type">TYPE</div>
+                    <div class="pali-word" id="card-pali-back" style="font-size: 2rem;">Word</div>
+                    <div class="meaning" id="card-thai">Meaning</div>
+                    <ul class="details-list" id="card-details">
+                        <!-- Details -->
+                    </ul>
                 </div>
             </div>
         </div>
 
         <div class="controls">
-            <button class="btn-control btn-miss" onclick="markResult(false)"><i class="fa-solid fa-xmark"></i></button>
-            <button class="btn-control btn-pass" onclick="markResult(true)"><i class="fa-solid fa-check"></i></button>
+            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times"></i> ยังไม่ได้</button>
+            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check"></i> ได้แล้ว</button>
         </div>
-        <p class="hint-text">จำไม่ได้กดแดง / จำได้กดเขียว</p>
+        <div style="margin-top: 20px;">
+            <button class="btn" style="background:transparent; border:1px solid rgba(255,255,255,0.3);" onclick="nextCard()">ข้าม (Next)</button>
+        </div>
     </div>
 
-    <!-- Load Data -->
-    <script src="data/vocab-akhyata.js"></script>
-    <script src="data/vocab-kitaka.js"></script>
-    <script src="data/vocab-samasa.js"></script>
-    <script src="data/vocab-taddhita.js"></script>
-    <script src="data/vocab-general.js"></script>
+    <!-- Scripts -->
+    <!-- Content Data -->
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
+
+    <!-- Dictionary Data -->
+    <script src="data/vocab-tananunto.js"></script>
+    <script src="data/vocab-etipitaka.js"></script>
+    <script src="data/vocab-dpd.js"></script>
+    <script src="data/vocab-pts.js"></script>
+    <script src="data/vocab-dppn.js"></script>
+    <script src="data/vocab-dhammika.js"></script>
+    <script src="data/vocab-dpd-inflected.js"></script>
+    <script src="data/vocab-sc.js"></script>
+    <script src="data/vocab-sandhi.js"></script>
+    <script src="data/vocab-roots.js"></script>
+    
+    <!-- Logic -->
+    <script src="data/pali-lookup.js"></script>
+    <script src="data/pali-script.js"></script>
 
     <script>
+        // 1. Collect Content
+        const slidesDatabase = Object.assign({},
+            (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+            (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+            (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+            (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+            (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+            (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+            (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+            (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {}),
+
+            (typeof contentMangala01 !== 'undefined' ? contentMangala01 : {}),
+            (typeof contentMangala02 !== 'undefined' ? contentMangala02 : {}),
+            (typeof contentSamanta01 !== 'undefined' ? contentSamanta01 : {}),
+            (typeof contentSamanta02 !== 'undefined' ? contentSamanta02 : {}),
+            (typeof contentSamanta03 !== 'undefined' ? contentSamanta03 : {}),
+            (typeof contentVisuddhi01 !== 'undefined' ? contentVisuddhi01 : {}),
+            (typeof contentVisuddhi02 !== 'undefined' ? contentVisuddhi02 : {}),
+            (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
+            (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
+        );
+
+        // 2. Dictionary DBs
+        const dbs = {
+            tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
+            etipitaka: (typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {}),
+            dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
+            sc: (typeof vocabSC !== 'undefined' ? vocabSC : {}),
+            pts: (typeof vocabPTS !== 'undefined' ? vocabPTS : {}),
+            dppn: (typeof vocabDPPN !== 'undefined' ? vocabDPPN : {}),
+            dhammika: (typeof vocabDhammika !== 'undefined' ? vocabDhammika : {}),
+            dpdInflected: (typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {})
+        };
+
         let allVocab = [];
         let currentDeck = [];
         let currentCard = null;
         let stats = { remember: 0, forgot: 0 };
 
-        // Initialize
         function initData() {
-            const process = (source, type, label) => {
-                if (source) {
-                    Object.keys(source).forEach(key => {
-                        const item = source[key];
-                        allVocab.push({
-                            word: key,
-                            split: item.split || key,
-                            details: item.details || [],
-                            type: type,
-                            label: label
-                        });
-                    });
-                }
-            };
+            const seen = new Set();
 
-            if(typeof vocabAkhyata !== 'undefined') process(vocabAkhyata, 'akhyata', 'อาขยาต');
-            if(typeof vocabKitaka !== 'undefined') process(vocabKitaka, 'kitaka', 'กิริยากิตก์');
-            if(typeof vocabSamasa !== 'undefined') process(vocabSamasa, 'samasa', 'สมาส');
-            if(typeof vocabTaddhita !== 'undefined') process(vocabTaddhita, 'taddhita', 'ตัทธิต');
-            if(typeof vocabGeneral !== 'undefined') process(vocabGeneral, 'general', 'ทั่วไป');
+            Object.keys(slidesDatabase).forEach(key => {
+                const slides = slidesDatabase[key];
+                if (!Array.isArray(slides)) return;
+
+                slides.forEach(slide => {
+                    const source = `${slide.vagga || ''} ${slide.story || ''}`;
+                    
+                    // Akhyata
+                    extractWords(slide.akhyata, 'akhyata', 'อาขยาต', source, seen);
+                    // Kitaka
+                    extractWords(slide.kitaka, 'kitaka', 'กิตก์', source, seen);
+                    // Vocab List
+                    extractWords(slide.vocab_list, 'vocab', 'ศัพท์ทั่วไป', source, seen);
+                });
+            });
+
+            console.log(`Loaded ${allVocab.length} words.`);
+            document.getElementById('count-total').innerText = allVocab.length;
             
             loadStats();
             changeCategory();
+        }
+
+        function extractWords(text, type, label, source, seen) {
+            if (!text || text === 'รอข้อมูล' || text === '-') return;
+            
+            // Split by comma
+            const parts = text.split(',');
+            parts.forEach(part => {
+                let raw = part.trim();
+                if (!raw) return;
+
+                // Parse "Word (Details)"
+                // Matches: "Word" or "Word (Detail)" or "Word (Detail1, Detail2)"
+                const match = raw.match(/^([^\(]+)(\((.+)\))?$/);
+                if (match) {
+                    let word = match[1].trim();
+                    let details = match[3] ? match[3].trim() : "";
+                    
+                    // Clean word (remove punctuation if any mostly)
+                    word = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+
+                    // Unique Key: Word + Type (allow same word in different types?)
+                    // Let's use Word as key to avoid duplicates, but merge sources?
+                    // User might want to see same word if it appears as different grammar?
+                    // Let's stick to unique word for now to avoid spam.
+                    if (seen.has(word)) return;
+                    seen.add(word);
+
+                    allVocab.push({
+                        word: word,
+                        details: details,
+                        type: type,
+                        label: label,
+                        source: source
+                    });
+                }
+            });
         }
 
         function changeCategory() {
@@ -273,6 +379,8 @@
             } else {
                 currentDeck = allVocab.filter(v => v.type === cat);
             }
+            
+            document.getElementById('count-total').innerText = currentDeck.length;
             
             // Shuffle
             shuffle(currentDeck);
@@ -290,64 +398,80 @@
             // Reset Flip
             document.querySelector('.card').classList.remove('is-flipped');
 
-            // Pick random
             if (currentDeck.length === 0) {
-                alert("ไม่มีคำศัพท์ในหมวดนี้");
+                // Show Empty State
+                document.getElementById('card-pali').innerText = "ไม่มีคำศัพท์";
+                document.getElementById('card-type-front').innerText = "-";
+                currentCard = null;
                 return;
             }
             
-            // Just pick next or random? Let's pick random from deck
+            // Pick next random
             const index = Math.floor(Math.random() * currentDeck.length);
             currentCard = currentDeck[index];
 
             setTimeout(() => {
                 renderCard(currentCard);
-            }, 300); // Wait for flip back if needed
+            }, 300);
         }
 
         function renderCard(card) {
-            // Front
-            document.getElementById('card-pali').innerText = card.word.split('#')[0]; // Remove hash if any
+            if (!card) return;
 
-            // Back
-            // Extract meaning from details
-            let meaning = "ไม่มีคำแปล";
-            let otherDetails = [];
-            
-            if (card.details) {
-                card.details.forEach(d => {
-                    if (d.startsWith('แปลว่า:')) {
-                        meaning = d.replace('แปลว่า:', '').trim();
-                    } else {
-                        otherDetails.push(d);
-                    }
-                });
-            }
+            // --- Front ---
+            document.getElementById('card-pali').innerText = card.word;
+            document.getElementById('card-type-front').innerText = card.label;
 
-            document.getElementById('card-thai').innerText = meaning;
+            // --- Back ---
+            document.getElementById('card-pali-back').innerText = card.word;
             document.getElementById('card-type').innerText = card.label;
             
-            const ul = document.getElementById('card-details');
-            ul.innerHTML = '';
-            // Show split
-            if (card.split && card.split !== card.word) {
-                const li = document.createElement('li');
-                li.innerHTML = `<strong>แยก:</strong> ${card.split}`;
-                ul.appendChild(li);
+            // Lookup Definition
+            let definition = "กำลังค้นหา...";
+            const result = PaliLookup.lookup(card.word, dbs);
+            
+            let meaningHtml = "";
+            let detailsListHtml = "";
+
+            if (result) {
+                if (typeof result === 'string') {
+                    meaningHtml = result;
+                } else if (result.details) {
+                    meaningHtml = result.details[0]; // First definition
+                    if (result.details.length > 1) {
+                         detailsListHtml += `<li><strong>ความหมายอื่น:</strong> ${result.details.slice(1).join(', ')}</li>`;
+                    }
+                }
+                
+                if (result.source) {
+                    detailsListHtml += `<li><small style="color:#7f8c8d;">ที่มา: ${result.source}</small></li>`;
+                }
+            } else {
+                meaningHtml = "ไม่พบความหมายในพจนานุกรม";
             }
-            // Show other details (limit 2)
-            otherDetails.slice(0, 3).forEach(d => {
-                const li = document.createElement('li');
-                li.innerText = d;
-                ul.appendChild(li);
-            });
+
+            document.getElementById('card-thai').innerHTML = meaningHtml;
+
+            // Append Manual Details
+            let extraDetails = "";
+            if (card.details) {
+                extraDetails += `<li><strong>ไวยากรณ์/เพิ่มเติม:</strong> ${card.details}</li>`;
+            }
+            if (card.source) {
+                extraDetails += `<li><strong>บทเรียน:</strong> ${card.source}</li>`;
+            }
+
+            document.getElementById('card-details').innerHTML = extraDetails + detailsListHtml;
         }
 
         function flipCard() {
+            if (!currentCard) return;
             document.querySelector('.card').classList.toggle('is-flipped');
         }
 
         function markResult(remembered) {
+            if (!currentCard) return;
+
             if (remembered) {
                 stats.remember++;
             } else {
@@ -356,8 +480,6 @@
             saveStats();
             updateStatsUI();
             
-            // Automatically next card
-            // If flipped, unflip first?
             const card = document.querySelector('.card');
             if (card.classList.contains('is-flipped')) {
                 card.classList.remove('is-flipped');
