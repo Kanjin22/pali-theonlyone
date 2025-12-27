@@ -37,7 +37,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="library_center.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่คลังความรู้</a>
+        <a id="backBtn" href="library_center.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่คลังความรู้</a>
         
         <div class="header">
             <h1>ห้องสมุดบทเรียน</h1>
@@ -97,6 +97,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const currentLevel = urlParams.get('level');
         const mode = urlParams.get('mode'); // 'picker' or null
+
+        // Dynamic Back Button
+        const backBtn = document.getElementById('backBtn');
+        if (currentLevel) {
+            backBtn.href = `levels/home_${currentLevel}.html`;
+            backBtn.innerHTML = '<i class="fa-solid fa-arrow-left"></i> กลับสู่ห้องเรียน';
+        }
 
         function registerBook(name, varObj) {
             if (typeof varObj !== 'undefined') {

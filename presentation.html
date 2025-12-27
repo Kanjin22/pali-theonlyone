@@ -171,6 +171,19 @@
             width: 100%;
             flex-shrink: 0;
         }
+        .back-btn-overlay {
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            z-index: 100; 
+            color: #78909c; 
+            font-size: 1.5rem; 
+            text-decoration: none; 
+            transition: color 0.3s;
+        }
+        .back-btn-overlay:hover {
+            color: #2c3e50;
+        }
         .slide-meta {
             display: flex;
             justify-content: space-between;
@@ -860,6 +873,9 @@
     </button>
 
     <div class="card" id="cardContainer">
+        <a href="content_browser.html" class="back-btn-overlay no-print">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="header-bar"></div>
         <div class="slide-meta">
             <div id="slideTitle" class="slide-title">สื่อการสอน</div>
