@@ -370,7 +370,8 @@
         }
 
         .sec-content {
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-family: 'Niramit', serif;
             color: #37474f;
             line-height: 1.6;
         }
@@ -1324,9 +1325,9 @@
                 el.style.fontFamily = paliFamily;
             });
 
-            // Apply to Thai elements (Right pane + Context + TOC)
+            // Apply to Thai elements (Right pane only)
             const thaiFamily = `"${thaiFont.split(',')[0]}", ${thaiFont}, sans-serif`;
-            document.querySelectorAll('.thai-text, .sec-content:not(.pali-word), .toc-content-label').forEach(el => {
+            document.querySelectorAll('.thai-text').forEach(el => {
                 el.style.fontFamily = thaiFamily;
             });
         }
