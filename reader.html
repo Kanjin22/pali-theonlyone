@@ -479,9 +479,10 @@
                     span.textContent = part;
                     span.style.cursor = 'pointer';
                     span.style.borderBottom = '1px dashed #bdc3c7';
-                    span.onclick = (e) => showTranslation(part, e);
-                    span.onmouseover = () => { span.style.color = '#e74c3c'; span.style.borderColor = '#e74c3c'; };
-                    span.onmouseout = () => { span.style.color = ''; span.style.borderColor = '#bdc3c7'; };
+                    // Use setAttribute to persist events in innerHTML
+                    span.setAttribute('onclick', `showTranslation('${part}', event)`);
+                    span.setAttribute('onmouseover', "this.style.color='#e74c3c'; this.style.borderColor='#e74c3c'");
+                    span.setAttribute('onmouseout', "this.style.color=''; this.style.borderColor='#bdc3c7'");
                     fragment.appendChild(span);
                 } else {
                     fragment.appendChild(document.createTextNode(part));
