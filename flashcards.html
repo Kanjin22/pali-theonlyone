@@ -325,12 +325,7 @@
     </div>
 
     <!-- Scripts -->
-    <!-- Content Data -->
-    <script src="data/content-dhamma01.js"></script>
-    <script src="data/content-dhamma02.js"></script>
-    <script src="data/content-dhamma03.js"></script>
-    <script src="data/content-dhamma04.js"></script>
-    <script src="data/content-dhamma05.js"></script>
+    <!-- pt src="data/content-dhamma05.js"></script>
     <script src="data/content-dhamma06.js"></script>
     <script src="data/content-dhamma07.js"></script>
     <script src="data/content-dhamma08.js"></script>
@@ -398,7 +393,44 @@
         let allVocab = [];
         let currentDeck = [];
         let currentCard = null;
-        let stats = { remember: 0, forgot: 0 };
+        let stats = { totalCorrect: 0, totalReviewed: 0 };
+        let currentUser = null;
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Auth Listener
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user) {
+                // Sync from Firestore
+                db.collection('flashcard_stats').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        // Merge strategy: Take the higher values to avoid overwriting progress
+                        // Or just take remote? Let's take remote if it exists.
+                        if (data.totalCorrect !== undefined) {
+                            // Simple sync: Update local to match remote if remote is valid
+                            stats.totalCorrect = data.totalCorrect;
+                            stats.totalReviewed = data.totalReviewed || data.totalCorrect;
+                            saveStats(false); // Save to local only
+                            updateStatsUI();
+                        }
+                    }
+                }).catch(err => console.error("Error fetching stats:", err));
+            }
+        });
 
         function initData() {
             const seen = new Set();
@@ -570,10 +602,19 @@
         function markResult(remembered) {
             if (!currentCard) return;
 
+            stats.totalReviewed++;
             if (remembered) {
-                stats.remember++;
+                stats.totalCorrect++;
             } else {
-                stats.forgot++;
+                // Just cousyncToCloud = truent reviewed
+            }
+            
+            if (syncToCloud && currentUser) {
+                db.collection('flashcard_stats').doc(currentUser.uid).set({
+                    totalCorrect: stats.totalCorrect,
+                    totalReviewed: stats.totalReviewed,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
             }
             saveStats();
             updateStatsUI();
@@ -588,20 +629,30 @@
         }
 
         function loadStats() {
-            const s = localStorage.getItem('flashcard_stats');
+            const s = localStorage.getItem('pali_flash_stats');
             if (s) {
-                stats = JSON.parse(s);
+                try {
+                    const saved = JSON.parse(s);
+                    // Check if it's new format
+                    if (saved.totalCorrect !== undefined) {
+                        stats = saved;
+                    } else if (saved.remember !== undefined) {
+                        // Migrate
+                        stats.totalCorrect = saved.remember || 0;
+                        stats.totalReviewed = (saved.remember || 0) + (saved.forgot || 0);
+                    }
+                } catch(e) {}
             }
             updateStatsUI();
         }
 
         function saveStats() {
-            localStorage.setItem('flashcard_stats', JSON.stringify(stats));
+            localStorage.setItem('pali_flash_stats', JSON.stringify(stats));
         }
 
         function updateStatsUI() {
-            document.getElementById('count-remember').innerText = stats.remember;
-            document.getElementById('count-forgot').innerText = stats.forgot;
+            document.getElementById('count-remember').innerText = stats.totalCorrect;
+            document.getElementById('count-forgot').innerText = (stats.totalReviewed - stats.totalCorrect);
         }
 
         window.onload = initData;
