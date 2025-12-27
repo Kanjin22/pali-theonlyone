@@ -1179,6 +1179,24 @@
                  examBtn.style.display = 'none';
              }
          }
+
+        // Global Click Listener to close dictionary panel
+        document.addEventListener('click', function(event) {
+            const dictPanel = document.getElementById('dict-panel');
+            // If dictionary is open
+            if (dictPanel && dictPanel.style.display !== 'none') {
+                // If click is NOT inside dictPanel AND NOT on a word-span (which triggers opening)
+                // AND NOT inside a sandhi bubble
+                if (!dictPanel.contains(event.target) && 
+                    !event.target.closest('.word-span') && 
+                    !event.target.closest('.sandhi-bubble')) {
+                        
+                     dictPanel.style.display = 'none';
+                     // Remove active highlight
+                     document.querySelectorAll('.word-span').forEach(s => s.classList.remove('active-word'));
+                }
+            }
+        });
     }
     init()
   </script>
