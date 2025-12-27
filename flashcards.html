@@ -428,17 +428,18 @@
                 db.collection('flashcard_stats').doc(user.uid).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
-                        // Merge strategy: Take the higher values to avoid overwriting progress
-                        // Or just take remote? Let's take remote if it exists.
                         if (data.totalCorrect !== undefined) {
                             // Simple sync: Update local to match remote if remote is valid
-                            stats.totalCorrect = data.totalCorrect;
-                            stats.totalReviewed = data.totalReviewed || data.totalCorrect;
-                            saveStats(false); // Save to local only
+                            // We trust remote more than local if logged in
+                            stats.totalCorrect = data.totalCorrect || 0;
+                            stats.totalReviewed = data.totalReviewed || 0;
+                            saveStats(); 
                             updateStatsUI();
                         }
                     }
-                }).catch(err => console.error("Error fetching stats:", err));
+                }).catch(err => {
+                    console.log("Offline mode or permission denied. Using local stats.");
+                });
             }
         });
 
@@ -615,19 +616,11 @@
             stats.totalReviewed++;
             if (remembered) {
                 stats.totalCorrect++;
-            } else {
-                // Just cousyncToCloud = truent reviewed
             }
             
-            if (syncToCloud && currentUser) {
-                db.collection('flashcard_stats').doc(currentUser.uid).set({
-                    totalCorrect: stats.totalCorrect,
-                    totalReviewed: stats.totalReviewed,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
-            }
             saveStats();
             updateStatsUI();
+            syncToCloud();
             
             const card = document.querySelector('.card');
             if (card.classList.contains('is-flipped')) {
@@ -635,6 +628,18 @@
                 setTimeout(nextCard, 300);
             } else {
                 nextCard();
+            }
+        }
+
+        function syncToCloud() {
+            if (currentUser) {
+                db.collection('flashcard_stats').doc(currentUser.uid).set({
+                    totalCorrect: stats.totalCorrect,
+                    totalReviewed: stats.totalReviewed,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch(err => {
+                    console.log("Sync skipped (offline/permission):", err.message);
+                });
             }
         }
 
