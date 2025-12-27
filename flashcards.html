@@ -300,6 +300,7 @@
             <div class="card" onclick="flipCard()">
                 <div class="card-face card-front">
                     <div class="word-type" id="card-type-front">TYPE</div>
+                    <div class="roman-hint" id="card-roman">Roman</div>
                     <div class="pali-word" id="card-pali">Loading...</div>
                     <div class="hint-text"><i class="fas fa-hand-pointer"></i> แตะเพื่อดูเฉลย</div>
                 </div>
@@ -511,6 +512,13 @@
             // --- Front ---
             document.getElementById('card-pali').innerText = card.word;
             document.getElementById('card-type-front').innerText = card.label;
+            
+            // Add Roman
+            if (typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
+                document.getElementById('card-roman').innerText = PaliScript.thaiToRoman(card.word);
+            } else {
+                document.getElementById('card-roman').innerText = "";
+            }
 
             // --- Back ---
             document.getElementById('card-pali-back').innerText = card.word;
