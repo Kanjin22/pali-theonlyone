@@ -565,6 +565,9 @@
                             <button class="btn btn-primary w-100 mb-2 py-2" onclick="generateExam()">
                                 <i class="fas fa-rocket me-2"></i>สร้างข้อสอบ
                             </button>
+                            <button id="btn-edit-exam" class="btn btn-outline-warning w-100 mb-2" onclick="toggleExamEdit()">
+                                <i class="fas fa-edit me-2"></i>แก้ไขข้อสอบ
+                            </button>
                             <button class="btn btn-light w-100 text-muted" onclick="window.print()">
                                 <i class="fas fa-print me-2"></i>พิมพ์ข้อสอบ
                             </button>
@@ -1297,8 +1300,50 @@
             renderExamPaper(selected, showAnswer);
         }
 
-        function renderExamPaper(questions, showAnswer) {
+        let isExamEditing = false;
+
+        function toggleExamEdit() {
             const container = document.getElementById('exam-preview');
+            const btn = document.getElementById('btn-edit-exam');
+            
+            isExamEditing = !isExamEditing;
+            
+            if (isExamEditing) {
+                container.contentEditable = "true";
+                container.style.border = "2px dashed #F5B041";
+                container.style.outline = "none";
+                btn.innerHTML = '<i class="fas fa-save me-2"></i>บันทึกการแก้ไข';
+                btn.classList.remove('btn-outline-warning');
+                btn.classList.add('btn-warning');
+                container.focus();
+            } else {
+                container.contentEditable = "false";
+                container.style.border = "none"; // Or revert to original style if any
+                // The original style is controlled by class .exam-paper, which has no border usually (shadow only)
+                // But for print it has no shadow. 
+                // Let's just remove the inline border we added.
+                container.style.removeProperty('border');
+                
+                btn.innerHTML = '<i class="fas fa-edit me-2"></i>แก้ไขข้อสอบ';
+                btn.classList.remove('btn-warning');
+                btn.classList.add('btn-outline-warning');
+            }
+        }
+
+        function renderExamPaper(questions, showAnswer) {
+            // Reset Edit Mode
+            isExamEditing = false;
+            const btn = document.getElementById('btn-edit-exam');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-edit me-2"></i>แก้ไขข้อสอบ';
+                btn.classList.remove('btn-warning');
+                btn.classList.add('btn-outline-warning');
+            }
+
+            const container = document.getElementById('exam-preview');
+            container.contentEditable = "false";
+            container.style.removeProperty('border');
+            
             const date = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
 
             let html = `
