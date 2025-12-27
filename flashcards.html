@@ -10,13 +10,26 @@
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: #34495e;
-            color: white;
+            /* พื้นหลังสีสันสดใสแต่สบายตา (Deep Ocean Gradient) */
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* เพิ่มลวดลายพื้นหลังจางๆ */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
@@ -25,41 +38,65 @@
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .back-btn {
-            color: #bdc3c7;
+            color: #fff;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+        .back-btn:hover {
+            transform: translateX(-5px);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
         .stats-bar {
-            background: rgba(0,0,0,0.2);
-            padding: 10px 20px;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 25px;
+            border-radius: 50px;
             display: inline-flex;
-            gap: 20px;
+            gap: 30px;
             margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .stat-item {
-            font-weight: bold;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .stat-green { color: #2ecc71; }
-        .stat-red { color: #e74c3c; }
+        .stat-green { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.4); }
+        .stat-red { color: #ff6b6b; text-shadow: 0 0 10px rgba(255, 107, 107, 0.4); }
+        .stat-total { color: #fff; }
 
         /* Card Flip Effect */
         .scene {
             width: 100%;
-            height: 400px;
-            perspective: 1000px;
+            height: 420px; /* เพิ่มความสูงอีกนิด */
+            perspective: 1200px;
             margin-bottom: 30px;
         }
 
@@ -67,7 +104,7 @@
             width: 100%;
             height: 100%;
             position: relative;
-            transition: transform 0.6s;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* เด้งดึ๋ง */
             transform-style: preserve-3d;
             cursor: pointer;
         }
@@ -81,53 +118,66 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 20px;
+            border-radius: 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 30px;
             box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 5px solid rgba(255,255,255,0.1);
         }
 
+        /* หน้าบัตร - เรียบหรู สะอาด */
         .card-front {
-            background-color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
             color: #2c3e50;
         }
 
+        /* หลังบัตร - สีสันสดใส (Pastel Yellow/Orange Gradient) */
         .card-back {
-            background-color: #f1c40f;
+            background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
             color: #2c3e50;
             transform: rotateY(180deg);
             overflow-y: auto;
             justify-content: flex-start;
-            padding-top: 30px;
+            padding-top: 40px;
+            border: 5px solid rgba(255,255,255,0.5);
         }
+
+        /* Scrollbar สำหรับหลังบัตร */
+        .card-back::-webkit-scrollbar { width: 6px; }
+        .card-back::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
         .pali-word {
             font-family: 'Niramit', serif;
-            font-size: 3rem;
+            font-size: 3.5rem; /* ใหญ่ขึ้น */
             font-weight: bold;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            margin-bottom: 15px;
+            color: #1a2a6c;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
         }
 
         .word-type {
-            background: #e74c3c;
+            background: linear-gradient(to right, #ff512f, #dd2476); /* Vivid Pink/Red */
             color: white;
-            padding: 5px 15px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 0.9rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(221, 36, 118, 0.3);
         }
 
         .meaning {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
-            font-weight: bold;
+            font-weight: 800;
+            color: #2c3e50;
+            line-height: 1.4;
         }
 
         .details-list {
@@ -135,75 +185,115 @@
             padding: 0;
             text-align: left;
             width: 100%;
+            background: rgba(255,255,255,0.6);
+            border-radius: 15px;
+            padding: 15px;
         }
 
         .details-list li {
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px dashed rgba(0,0,0,0.1);
-            font-size: 1rem;
+            font-size: 1.1rem;
+            color: #444;
         }
+        .details-list li:last-child { border-bottom: none; }
+        .details-list strong { color: #1a2a6c; }
 
         .controls {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
+            margin-top: 10px;
         }
 
         .btn {
-            background: #3498db;
-            color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 15px 30px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
-            min-width: 100px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            min-width: 140px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn:hover {
-            background: #2980b9;
+        .btn:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+
+        .btn-red { 
+            background: linear-gradient(to right, #cb2d3e, #ef473a); 
+            color: white; 
         }
+        .btn-red:hover { box-shadow: 0 0 20px rgba(239, 71, 58, 0.6); transform: translateY(-3px); }
 
-        .btn-red { background: #e74c3c; }
-        .btn-red:hover { background: #c0392b; }
+        .btn-green { 
+            background: linear-gradient(to right, #11998e, #38ef7d); 
+            color: white; 
+        }
+        .btn-green:hover { box-shadow: 0 0 20px rgba(56, 239, 125, 0.6); transform: translateY(-3px); }
 
-        .btn-green { background: #2ecc71; }
-        .btn-green:hover { background: #27ae60; }
+        .btn-skip {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            margin-top: 20px;
+            padding: 10px 25px;
+        }
+        .btn-skip:hover { background: rgba(255,255,255,0.3); }
 
+        /* Select Box Styling */
         select {
-            padding: 8px 15px;
+            padding: 8px 20px;
             border-radius: 20px;
-            border: none;
-            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.2);
             color: white;
             font-family: 'Sarabun', sans-serif;
             font-size: 1rem;
+            cursor: pointer;
+            outline: none;
         }
         select option {
-            background: #34495e;
+            background: #2c3e50;
             color: white;
         }
+
+        /* Hint Text Animation */
+        .hint-text {
+            font-size: 0.9rem;
+            color: #95a5a6;
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="header">
-            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> หน้าแรก</a>
+            <a href="index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
             <select id="catSelect" onchange="changeCategory()">
-                <option value="all">ทั้งหมด (All)</option>
-                <option value="akhyata">อาขยาต (Akhyata)</option>
-                <option value="kitaka">กิตก์ (Kitaka)</option>
-                <option value="vocab">ศัพท์ทั่วไป (Vocab)</option>
+                <option value="all">📚 ทั้งหมด (All)</option>
+                <option value="akhyata">🔴 อาขยาต (Akhyata)</option>
+                <option value="kitaka">🔵 กิตก์ (Kitaka)</option>
+                <option value="vocab">🟢 ศัพท์ทั่วไป (Vocab)</option>
             </select>
         </div>
 
         <div class="stats-bar">
-            <div class="stat-item stat-green"><i class="fas fa-check"></i> <span id="count-remember">0</span></div>
-            <div class="stat-item stat-red"><i class="fas fa-times"></i> <span id="count-forgot">0</span></div>
-            <div class="stat-item" style="color:#bdc3c7;"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
+            <div class="stat-item stat-green" title="จำได้"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
+            <div class="stat-item stat-red" title="ลืม/ยังไม่ได้"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item stat-total" title="จำนวนการ์ดในกอง"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
         </div>
 
         <div class="scene">
@@ -211,11 +301,11 @@
                 <div class="card-face card-front">
                     <div class="word-type" id="card-type-front">TYPE</div>
                     <div class="pali-word" id="card-pali">Loading...</div>
-                    <div style="font-size: 0.9rem; color: #95a5a6; margin-top: 20px;">(แตะเพื่อดูเฉลย)</div>
+                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> แตะเพื่อดูเฉลย</div>
                 </div>
                 <div class="card-face card-back">
                     <div class="word-type" id="card-type">TYPE</div>
-                    <div class="pali-word" id="card-pali-back" style="font-size: 2rem;">Word</div>
+                    <div class="pali-word" id="card-pali-back" style="font-size: 2.2rem;">Word</div>
                     <div class="meaning" id="card-thai">Meaning</div>
                     <ul class="details-list" id="card-details">
                         <!-- Details -->
@@ -225,11 +315,11 @@
         </div>
 
         <div class="controls">
-            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times"></i> ยังไม่ได้</button>
-            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check"></i> ได้แล้ว</button>
+            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> ยังไม่ได้</button>
+            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> ได้แล้ว!</button>
         </div>
-        <div style="margin-top: 20px;">
-            <button class="btn" style="background:transparent; border:1px solid rgba(255,255,255,0.3);" onclick="nextCard()">ข้าม (Next)</button>
+        <div>
+            <button class="btn btn-skip" onclick="nextCard()">ข้ามไปก่อน (Skip) <i class="fas fa-forward"></i></button>
         </div>
     </div>
 
