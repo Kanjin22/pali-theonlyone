@@ -756,9 +756,9 @@
         } else {
              thaiContent.innerHTML = `
                 <div style="border-left: 4px solid #e74c3c; padding-left: 10px; background: #fff5f5; border-radius: 4px;">
-                    <div style="font-weight: bold; color: #c0392b;">
+                    <div class="pali-word" style="font-weight: bold; color: #c0392b;">
                         ${cleanWord}
-                        <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
+                        <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal; font-family: 'Sarabun', sans-serif;">[${romanWord}]</span>
                     </div>
                     <div style="margin-top: 5px; color: #7f8c8d; font-style: italic;">
                         ไม่พบคำแปลในพจนานุกรมบาลี - ไทย
@@ -1100,6 +1100,11 @@
         // Apply to Pali elements
         const paliFamily = `"${paliFont.split(',')[0]}", ${paliFont}, sans-serif`;
         document.querySelectorAll('.pali-text, .analysis-word').forEach(el => {
+            el.style.fontFamily = paliFamily;
+        });
+
+        // Handle .pali-word separately
+        document.querySelectorAll('.pali-word').forEach(el => {
             el.style.fontFamily = paliFamily;
         });
 
