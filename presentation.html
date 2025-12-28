@@ -187,20 +187,30 @@
         .slide-meta {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            padding: 12px 20px 6px 20px;
+            align-items: center;
+            padding: 12px 15px 10px 50px; /* เว้นระยะซ้ายให้ปุ่มย้อนกลับ */
             background-color: #f7f9f9;
             border-bottom: 1px solid #eceff1;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .slide-title {
             font-size: 1.2rem;
             font-weight: 700;
             color: #2c3e50;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.4;
+            max-width: 100%;
         }
         .slide-subtitle {
             font-size: 1rem;
             font-weight: 600;
             color: #607d8b;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.4;
+            max-width: 100%;
         }
 
         /* --- พื้นที่เนื้อหาแบบ Split View --- */
@@ -951,6 +961,12 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
+                padding-left: 50px; /* ยืนยันระยะเว้นสำหรับปุ่ม Back */
+                padding-right: 15px;
+                width: 100%; /* บังคับให้ไม่เกินจอ */
+            }
+            .slide-title, .slide-subtitle {
+                width: 100%; /* ให้เต็มความกว้างที่เหลือ */
             }
             .toc-panel {
                 width: 85%;
