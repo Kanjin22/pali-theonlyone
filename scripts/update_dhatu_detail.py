@@ -1,36 +1,61 @@
 import os
 
-path = "D:/pali-dhatu-app/src/components/DhatuDetail.js"
+file_path = r"d:\pali-dhatu-app\src\components\DhatuDetail.js"
 
-try:
-    with open(path, 'r', encoding='utf-8') as f:
-        content = f.read()
+with open(file_path, 'r', encoding='utf-8') as f:
+    content = f.read()
 
-    # Add Dhatu Type Card
-    # Find where to insert. After "คำแปลอรรถ (ไทย)" card?
-    target_card = """            <div className="detail-card">
-              <h2>คำแปลอรรถ (ไทย)</h2>
-              <p>{dhatu.arth_thai || '-'}</p>
-            </div>"""
+# 1. Add Imports
+old_import = "import LoadingSpinner from '../components/LoadingSpinner';"
+new_import = "import LoadingSpinner from '../components/LoadingSpinner';\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\nimport PaliScript from '../utils/paliScript';"
 
-    new_card = """            <div className="detail-card">
-              <h2>คำแปลอรรถ (ไทย)</h2>
-              <p>{dhatu.arth_thai || '-'}</p>
-            </div>
-            {dhatu.dhatu_type && (
-            <div className="detail-card">
-              <h2>ประเภทธาตุ</h2>
-              <p>{dhatu.dhatu_type}</p>
-            </div>
-            )}"""
+if "vocabRootsDPDDerived" not in content:
+    content = content.replace(old_import, new_import)
 
-    if target_card in content and "ประเภทธาตุ" not in content:
-        content = content.replace(target_card, new_card)
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Added Dhatu Type field to DhatuDetail.js")
-    else:
-        print("Could not add Dhatu Type field (pattern not found or already exists)")
+# 2. Add Logic
+old_logic = "const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;"
+new_logic = "const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;"
 
-except Exception as e:
-    print(f"Error: {e}")
+if "derivedWords" not in content:
+    content = content.replace(old_logic, new_logic)
+
+# 3. Add JSX
+old_jsx = """            {/* School Examples Section */}
+            {dhatu.udaharana_school && (
+                <div className="detail-card full-width" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>
+                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>
+                </div>
+            )}
+
+            <div className="detail-card full-width">"""
+
+new_jsx = """            {/* School Examples Section */}
+            {dhatu.udaharana_school && (
+                <div className="detail-card full-width" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>
+                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>
+                </div>
+            )}
+
+            {/* Derived Words Section (DPD) */}
+            {derivedWords && derivedWords.length > 0 && (
+              <div className="detail-card full-width">
+                <h2>ศัพท์ที่สร้างจากธาตุนี้ (DPD)</h2>
+                <div className="derived-words-list">
+                  {derivedWords.map((word, index) => (
+                    <span key={index} className="derived-word-tag">{word}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="detail-card full-width">"""
+
+if "Derived Words Section" not in content:
+    content = content.replace(old_jsx, new_jsx)
+
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Successfully updated DhatuDetail.js")

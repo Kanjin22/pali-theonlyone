@@ -18,6 +18,15 @@
         "documentation": {}
     },
     {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
         "label": "sqlite3",
         "kind": 6,
         "isExtraImport": true,
@@ -261,6 +270,33 @@
         "documentation": {}
     },
     {
+        "label": "vocabRootsDPDDerived",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "vocabRootsDPDDerived",
+        "description": "vocabRootsDPDDerived",
+        "detail": "vocabRootsDPDDerived",
+        "documentation": {}
+    },
+    {
+        "label": "vocabDerivedMeanings",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "vocabDerivedMeanings",
+        "description": "vocabDerivedMeanings",
+        "detail": "vocabDerivedMeanings",
+        "documentation": {}
+    },
+    {
+        "label": "PaliScript",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "PaliScript",
+        "description": "PaliScript",
+        "detail": "PaliScript",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -352,12 +388,28 @@
         "documentation": {}
     },
     {
-        "label": "re",
+        "label": "firebase_admin",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "detail": "firebase_admin",
+        "documentation": {}
+    },
+    {
+        "label": "credentials",
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "isExtraImport": true,
+        "detail": "firebase_admin",
+        "documentation": {}
+    },
+    {
+        "label": "firestore",
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "isExtraImport": true,
+        "detail": "firebase_admin",
         "documentation": {}
     },
     {
@@ -388,6 +440,114 @@
         "documentation": {}
     },
     {
+        "label": "thai_to_roman",
+        "kind": 2,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "keys",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "keys = re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content)\n# Load vocab-roots-dpd-derived.js\nwith open(r\"d:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js\", \"r\", encoding=\"utf-8\") as f:\n    dpd_content = f.read()\n# Extract keys from DPD\ndpd_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', dpd_content))\n# Thai to Roman (Simplified Python version of the JS logic)\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "dpd_keys",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "dpd_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', dpd_content))\n# Thai to Roman (Simplified Python version of the JS logic)\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "matches",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "matches = 0\ntotal = 0\nmismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    if roman in dpd_keys:\n        matches += 1\n    else:\n        mismatches.append(f\"{k} -> {roman}\")",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "total",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "total = 0\nmismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    if roman in dpd_keys:\n        matches += 1\n    else:\n        mismatches.append(f\"{k} -> {roman}\")\nprint(f\"Total Roots in DB: {total}\")",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "mismatches",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches",
+        "description": "scripts.check_root_matches",
+        "peekOfCode": "mismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    if roman in dpd_keys:\n        matches += 1\n    else:\n        mismatches.append(f\"{k} -> {roman}\")\nprint(f\"Total Roots in DB: {total}\")\nprint(f\"Matches in DPD: {matches}\")",
+        "detail": "scripts.check_root_matches",
+        "documentation": {}
+    },
+    {
+        "label": "thai_to_roman",
+        "kind": 2,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
+        "label": "keys",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "keys = re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content)\n# Load vocab-roots-dpd-derived.js\nwith open(r\"d:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js\", \"r\", encoding=\"utf-8\") as f:\n    dpd_content = f.read()\ndpd_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', dpd_content))\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
+        "label": "dpd_keys",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "dpd_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', dpd_content))\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
+        "label": "matches",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "matches = 0\ntotal = 0\nmismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    roman_stripped = roman[:-1] if roman.endswith('a') else roman\n    if roman in dpd_keys:\n        matches += 1\n    elif roman_stripped in dpd_keys:",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
+        "label": "total",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "total = 0\nmismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    roman_stripped = roman[:-1] if roman.endswith('a') else roman\n    if roman in dpd_keys:\n        matches += 1\n    elif roman_stripped in dpd_keys:\n        matches += 1",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
+        "label": "mismatches",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v2",
+        "description": "scripts.check_root_matches_v2",
+        "peekOfCode": "mismatches = []\nfor k in keys:\n    total += 1\n    roman = thai_to_roman(k)\n    roman_stripped = roman[:-1] if roman.endswith('a') else roman\n    if roman in dpd_keys:\n        matches += 1\n    elif roman_stripped in dpd_keys:\n        matches += 1\n    else:",
+        "detail": "scripts.check_root_matches_v2",
+        "documentation": {}
+    },
+    {
         "label": "total_entries",
         "kind": 5,
         "importPath": "scripts.check_stats",
@@ -403,6 +563,69 @@
         "description": "scripts.check_stats",
         "peekOfCode": "unique_roots = len(data)\nprint(f\"Unique Roots: {unique_roots}\")\nprint(f\"Total Entries: {total_entries}\")",
         "detail": "scripts.check_stats",
+        "documentation": {}
+    },
+    {
+        "label": "roman_to_thai",
+        "kind": 2,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "def roman_to_thai(text):\n    if not text: return \"\"\n    map_char = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',\n        'y': 'ย', 'r': 'ร', 'l': 'ล', 'v': 'ว', 's': 'ส', 'h': 'ห', 'ḷ': 'ฬ',\n        'a': '', 'ā': 'า', 'i': 'ิ', 'ī': 'ี', 'u': 'ุ', 'ū': 'ู', ",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "def load_js_object(path):\n    print(f\"Loading {path}...\")\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n            # Regex to capture the object content: const x = { ... };\n            # We assume it starts with \"const ... = {\" and ends with \"};\" or similar.\n            match = re.search(r'=\\s*(\\{[\\s\\S]*\\});?', content)\n            if match:\n                json_str = match.group(1)",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "def main():\n    # 1. Load Dictionaries\n    dicts = {}\n    for name, path in FILES.items():\n        if os.path.exists(path):\n            dicts[name] = load_js_object(path)\n        else:\n            print(f\"File not found: {path}\")\n    # 2. Load DPD Derived List\n    dpd_data = load_js_object(DPD_DERIVED_PATH)",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "DATA_DIR",
+        "kind": 5,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "DATA_DIR = r'd:\\pali-theonlyone\\data'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_PATH",
+        "kind": 5,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "FILES",
+        "kind": 5,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "FILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"",
+        "detail": "scripts.combine_vocab_full",
+        "documentation": {}
+    },
+    {
+        "label": "DPD_DERIVED_PATH",
+        "kind": 5,
+        "importPath": "scripts.combine_vocab_full",
+        "description": "scripts.combine_vocab_full",
+        "peekOfCode": "DPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"\n    map_char = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',",
+        "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
     {
@@ -457,6 +680,51 @@
         "description": "scripts.convert_newgen_db",
         "peekOfCode": "output_path = r'd:\\pali-theonlyone\\data\\vocab-newgen.js'\ndef convert_db_to_js():\n    print(f\"Connecting to database: {db_path}\")\n    conn = sqlite3.connect(db_path)\n    cursor = conn.cursor()\n    # Get total count\n    cursor.execute(\"SELECT COUNT(*) FROM palithaiNewGen\")\n    count = cursor.fetchone()[0]\n    print(f\"Total records found: {count}\")\n    # Fetch data",
         "detail": "scripts.convert_newgen_db",
+        "documentation": {}
+    },
+    {
+        "label": "process_and_copy",
+        "kind": 2,
+        "importPath": "scripts.copy_vocab_data",
+        "description": "scripts.copy_vocab_data",
+        "peekOfCode": "def process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export\n            if \"export default\" not in content:\n                content += \"\\n\\nexport default vocabRootsDPDDerived;\"\n        elif type == \"script\":\n            # Change \"const PaliScript =\" to \"const PaliScript =\" and add export",
+        "detail": "scripts.copy_vocab_data",
+        "documentation": {}
+    },
+    {
+        "label": "source_vocab",
+        "kind": 5,
+        "importPath": "scripts.copy_vocab_data",
+        "description": "scripts.copy_vocab_data",
+        "peekOfCode": "source_vocab = r\"d:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js\"\ndest_vocab = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js\"\nsource_script = r\"d:\\pali-theonlyone\\data\\pali-script.js\"\ndest_script = r\"d:\\pali-dhatu-app\\src\\utils\\paliScript.js\"\ndef process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export",
+        "detail": "scripts.copy_vocab_data",
+        "documentation": {}
+    },
+    {
+        "label": "dest_vocab",
+        "kind": 5,
+        "importPath": "scripts.copy_vocab_data",
+        "description": "scripts.copy_vocab_data",
+        "peekOfCode": "dest_vocab = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js\"\nsource_script = r\"d:\\pali-theonlyone\\data\\pali-script.js\"\ndest_script = r\"d:\\pali-dhatu-app\\src\\utils\\paliScript.js\"\ndef process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export\n            if \"export default\" not in content:",
+        "detail": "scripts.copy_vocab_data",
+        "documentation": {}
+    },
+    {
+        "label": "source_script",
+        "kind": 5,
+        "importPath": "scripts.copy_vocab_data",
+        "description": "scripts.copy_vocab_data",
+        "peekOfCode": "source_script = r\"d:\\pali-theonlyone\\data\\pali-script.js\"\ndest_script = r\"d:\\pali-dhatu-app\\src\\utils\\paliScript.js\"\ndef process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export\n            if \"export default\" not in content:\n                content += \"\\n\\nexport default vocabRootsDPDDerived;\"",
+        "detail": "scripts.copy_vocab_data",
+        "documentation": {}
+    },
+    {
+        "label": "dest_script",
+        "kind": 5,
+        "importPath": "scripts.copy_vocab_data",
+        "description": "scripts.copy_vocab_data",
+        "peekOfCode": "dest_script = r\"d:\\pali-dhatu-app\\src\\utils\\paliScript.js\"\ndef process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export\n            if \"export default\" not in content:\n                content += \"\\n\\nexport default vocabRootsDPDDerived;\"\n        elif type == \"script\":",
+        "detail": "scripts.copy_vocab_data",
         "documentation": {}
     },
     {
@@ -559,6 +827,78 @@
         "documentation": {}
     },
     {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.create_vocab_search_page",
+        "description": "scripts.create_vocab_search_page",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\ncontent = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\nimport vocabDerivedMeanings from '../data/vocab-derived-meanings';\nimport PaliScript from '../utils/paliScript';\nfunction VocabSearchPage() {",
+        "detail": "scripts.create_vocab_search_page",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.create_vocab_search_page",
+        "description": "scripts.create_vocab_search_page",
+        "peekOfCode": "content = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\nimport vocabDerivedMeanings from '../data/vocab-derived-meanings';\nimport PaliScript from '../utils/paliScript';\nfunction VocabSearchPage() {\n    const [vocabList, setVocabList] = useState([]);",
+        "detail": "scripts.create_vocab_search_page",
+        "documentation": {}
+    },
+    {
+        "label": "roman_to_thai",
+        "kind": 2,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "def roman_to_thai(text):\n    if not text: return \"\"\n    s = text\n    # 1. Move pre-positioned vowels (e, o) to after consonant\n    # JS: s = s.replace(/([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])/g, \"$2$1\"); \n    # Wait, the JS logic was for Thai->Roman fix or Roman->Thai?\n    # The JS `romanToThai` function:\n    # 1. Maps Roman chars to Thai chars.\n    # 2. Handles special cases.\n    # Actually, the JS logic I saw was:",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "def load_js_object(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        content = f.read()\n        # Remove \"const variableName = \" and trailing \";\"\n        content = re.sub(r'const\\s+\\w+\\s*=\\s*', '', content)\n        content = content.strip().rstrip(';')\n        # Fix JS keys (no quotes) to JSON keys (quotes) if needed\n        # But wait, the files might have quoted keys already?\n        # Let's check. vocab-roots-dpd-derived.js: \"acc\": [...] -> Quoted.\n        # vocab-etipitaka.js: \"กกฺขฬิย\": ... -> Quoted.",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "extract_meanings",
+        "kind": 2,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "def extract_meanings():\n    print(\"Loading DPD Derived data...\")\n    dpd_data = load_js_object(DPD_DERIVED_PATH)\n    if not dpd_data:\n        print(\"Failed to load DPD data\")\n        return\n    print(\"Loading Etipitaka data...\")\n    etipitaka_data = load_js_object(ETIPITAKA_PATH)\n    if not etipitaka_data:\n        print(\"Failed to load Etipitaka data\")",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "DPD_DERIVED_PATH",
+        "kind": 5,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "DPD_DERIVED_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js'\nETIPITAKA_PATH = r'd:\\pali-theonlyone\\data\\vocab-etipitaka.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\n# Roman to Thai Transliteration (Ported from PaliScript.js)\ndef roman_to_thai(text):\n    if not text: return \"\"\n    s = text\n    # 1. Move pre-positioned vowels (e, o) to after consonant\n    # JS: s = s.replace(/([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])/g, \"$2$1\"); \n    # Wait, the JS logic was for Thai->Roman fix or Roman->Thai?",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "ETIPITAKA_PATH",
+        "kind": 5,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "ETIPITAKA_PATH = r'd:\\pali-theonlyone\\data\\vocab-etipitaka.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\n# Roman to Thai Transliteration (Ported from PaliScript.js)\ndef roman_to_thai(text):\n    if not text: return \"\"\n    s = text\n    # 1. Move pre-positioned vowels (e, o) to after consonant\n    # JS: s = s.replace(/([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])/g, \"$2$1\"); \n    # Wait, the JS logic was for Thai->Roman fix or Roman->Thai?\n    # The JS `romanToThai` function:",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_PATH",
+        "kind": 5,
+        "importPath": "scripts.extract_derived_meanings",
+        "description": "scripts.extract_derived_meanings",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\n# Roman to Thai Transliteration (Ported from PaliScript.js)\ndef roman_to_thai(text):\n    if not text: return \"\"\n    s = text\n    # 1. Move pre-positioned vowels (e, o) to after consonant\n    # JS: s = s.replace(/([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])/g, \"$2$1\"); \n    # Wait, the JS logic was for Thai->Roman fix or Roman->Thai?\n    # The JS `romanToThai` function:\n    # 1. Maps Roman chars to Thai chars.",
+        "detail": "scripts.extract_derived_meanings",
+        "documentation": {}
+    },
+    {
         "label": "url",
         "kind": 5,
         "importPath": "scripts.fetch_detail_raw",
@@ -574,6 +914,96 @@
         "description": "scripts.fetch_detail_raw",
         "peekOfCode": "response = requests.get(url)\nwith open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:\n    f.write(response.text)\nprint(\"Saved to temp_detail.html\")",
         "detail": "scripts.fetch_detail_raw",
+        "documentation": {}
+    },
+    {
+        "label": "css_path",
+        "kind": 5,
+        "importPath": "scripts.fix_derived_width",
+        "description": "scripts.fix_derived_width",
+        "peekOfCode": "css_path = r\"d:\\pali-dhatu-app\\src\\App.css\"\nwith open(css_path, \"r\", encoding=\"utf-8\") as f:\n    content = f.read()\n# Target the specific block we added/modified recently\ntarget_block = \"\"\".derived-words-section {\n  margin-top: 2rem;\"\"\"\nreplacement_block = \"\"\".derived-words-section {\n  grid-column: 1 / -1;\n  margin-top: 2rem;\"\"\"\nif target_block in content:",
+        "detail": "scripts.fix_derived_width",
+        "documentation": {}
+    },
+    {
+        "label": "target_block",
+        "kind": 5,
+        "importPath": "scripts.fix_derived_width",
+        "description": "scripts.fix_derived_width",
+        "peekOfCode": "target_block = \"\"\".derived-words-section {\n  margin-top: 2rem;\"\"\"\nreplacement_block = \"\"\".derived-words-section {\n  grid-column: 1 / -1;\n  margin-top: 2rem;\"\"\"\nif target_block in content:\n    content = content.replace(target_block, replacement_block)\n    print(\"Added grid-column: 1 / -1 to .derived-words-section\")\nelse:\n    print(\"Could not find exact block to replace. Trying regex/broader search.\")",
+        "detail": "scripts.fix_derived_width",
+        "documentation": {}
+    },
+    {
+        "label": "replacement_block",
+        "kind": 5,
+        "importPath": "scripts.fix_derived_width",
+        "description": "scripts.fix_derived_width",
+        "peekOfCode": "replacement_block = \"\"\".derived-words-section {\n  grid-column: 1 / -1;\n  margin-top: 2rem;\"\"\"\nif target_block in content:\n    content = content.replace(target_block, replacement_block)\n    print(\"Added grid-column: 1 / -1 to .derived-words-section\")\nelse:\n    print(\"Could not find exact block to replace. Trying regex/broader search.\")\n    # Fallback to broader replace if indentation varies\n    if \".derived-words-section {\" in content:",
+        "detail": "scripts.fix_derived_width",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_colors",
+        "description": "scripts.fix_dhatu_colors",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nwith open(file_path, \"r\", encoding=\"utf-8\") as f:\n    content = f.read()\n# 1. Update Source Mapping Colors\nold_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#95a5a6', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#95a5a6', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#95a5a6', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#95a5a6', icon: 'fas fa-globe' }\n};\"\"\"",
+        "detail": "scripts.fix_dhatu_colors",
+        "documentation": {}
+    },
+    {
+        "label": "old_mapping",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_colors",
+        "description": "scripts.fix_dhatu_colors",
+        "peekOfCode": "old_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#95a5a6', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#95a5a6', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#95a5a6', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#95a5a6', icon: 'fas fa-globe' }\n};\"\"\"\nnew_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#d35400', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },",
+        "detail": "scripts.fix_dhatu_colors",
+        "documentation": {}
+    },
+    {
+        "label": "new_mapping",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_colors",
+        "description": "scripts.fix_dhatu_colors",
+        "peekOfCode": "new_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#d35400', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#2980b9', icon: 'fas fa-globe' }\n};\"\"\"\nif old_mapping in content:\n    content = content.replace(old_mapping, new_mapping)\n    print(\"Updated sourceMapping colors.\")\nelse:",
+        "detail": "scripts.fix_dhatu_colors",
+        "documentation": {}
+    },
+    {
+        "label": "target_div",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_colors",
+        "description": "scripts.fix_dhatu_colors",
+        "peekOfCode": "target_div = '<div className=\"dict-label\">'\nreplacement_div = '<div className=\"dict-label\" style={{ backgroundColor: group.source.color }}>'\nif target_div in content:\n    content = content.replace(target_div, replacement_div)\n    print(\"Added style to dict-label.\")\nelse:\n    print(\"Could not find <div className=\\\"dict-label\\\">\")\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)",
+        "detail": "scripts.fix_dhatu_colors",
+        "documentation": {}
+    },
+    {
+        "label": "replacement_div",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_colors",
+        "description": "scripts.fix_dhatu_colors",
+        "peekOfCode": "replacement_div = '<div className=\"dict-label\" style={{ backgroundColor: group.source.color }}>'\nif target_div in content:\n    content = content.replace(target_div, replacement_div)\n    print(\"Added style to dict-label.\")\nelse:\n    print(\"Could not find <div className=\\\"dict-label\\\">\")\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)",
+        "detail": "scripts.fix_dhatu_colors",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_detail_syntax",
+        "description": "scripts.fix_dhatu_detail_syntax",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# The garbage pattern to remove\ngarbage = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}\n                </div>\n              </div>",
+        "detail": "scripts.fix_dhatu_detail_syntax",
+        "documentation": {}
+    },
+    {
+        "label": "garbage",
+        "kind": 5,
+        "importPath": "scripts.fix_dhatu_detail_syntax",
+        "description": "scripts.fix_dhatu_detail_syntax",
+        "peekOfCode": "garbage = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}\n                </div>\n              </div>\n            )}\"\"\"\n# We want to remove this garbage.\n# However, exact whitespace matching might be tricky if my copy-paste above isn't perfect.\n# Let's try to find it.",
+        "detail": "scripts.fix_dhatu_detail_syntax",
         "documentation": {}
     },
     {
@@ -667,6 +1097,78 @@
         "documentation": {}
     },
     {
+        "label": "keys",
+        "kind": 5,
+        "importPath": "scripts.list_b_keys",
+        "description": "scripts.list_b_keys",
+        "peekOfCode": "keys = re.findall(r'\"([^\"]+)\":\\s*\\[', content)\nb_keys = [k for k in keys if k.startswith('bh')]\nprint(\"Found keys starting with bh:\")\nfor k in sorted(b_keys):\n    print(k)",
+        "detail": "scripts.list_b_keys",
+        "documentation": {}
+    },
+    {
+        "label": "b_keys",
+        "kind": 5,
+        "importPath": "scripts.list_b_keys",
+        "description": "scripts.list_b_keys",
+        "peekOfCode": "b_keys = [k for k in keys if k.startswith('bh')]\nprint(\"Found keys starting with bh:\")\nfor k in sorted(b_keys):\n    print(k)",
+        "detail": "scripts.list_b_keys",
+        "documentation": {}
+    },
+    {
+        "label": "keys",
+        "kind": 5,
+        "importPath": "scripts.list_k_keys",
+        "description": "scripts.list_k_keys",
+        "peekOfCode": "keys = re.findall(r'\"([^\"]+)\":\\s*\\[', content)\nk_keys = [k for k in keys if k.startswith('k')]\nprint(\"Found keys starting with k:\")\nfor k in sorted(k_keys):\n    print(k)",
+        "detail": "scripts.list_k_keys",
+        "documentation": {}
+    },
+    {
+        "label": "k_keys",
+        "kind": 5,
+        "importPath": "scripts.list_k_keys",
+        "description": "scripts.list_k_keys",
+        "peekOfCode": "k_keys = [k for k in keys if k.startswith('k')]\nprint(\"Found keys starting with k:\")\nfor k in sorted(k_keys):\n    print(k)",
+        "detail": "scripts.list_k_keys",
+        "documentation": {}
+    },
+    {
+        "label": "katha_manager_path",
+        "kind": 5,
+        "importPath": "scripts.refactor_admin_forms_part1",
+        "description": "scripts.refactor_admin_forms_part1",
+        "peekOfCode": "katha_manager_path = 'D:/pali-dhatu-app/src/components/KathaManager.js'\nwith open(katha_manager_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Replace the linear form with grid form\nold_form = \"\"\"                    <form onSubmit={handleUpdate}>\n                        <h3>แก้ไขคาถาที่: {editingKatha.katha_no}</h3>\n                        <label>เนื้อหาคาถา (บาลี):</label>\n                        <textarea name=\"katha_pali\" value={editingKatha.katha_pali} onChange={handleEditChange} rows=\"6\" required />\n                        <label>จำนวนธาตุ:</label>\n                        <input type=\"number\" name=\"dhatu_count\" value={editingKatha.dhatu_count} onChange={handleEditChange} required />",
+        "detail": "scripts.refactor_admin_forms_part1",
+        "documentation": {}
+    },
+    {
+        "label": "old_form",
+        "kind": 5,
+        "importPath": "scripts.refactor_admin_forms_part1",
+        "description": "scripts.refactor_admin_forms_part1",
+        "peekOfCode": "old_form = \"\"\"                    <form onSubmit={handleUpdate}>\n                        <h3>แก้ไขคาถาที่: {editingKatha.katha_no}</h3>\n                        <label>เนื้อหาคาถา (บาลี):</label>\n                        <textarea name=\"katha_pali\" value={editingKatha.katha_pali} onChange={handleEditChange} rows=\"6\" required />\n                        <label>จำนวนธาตุ:</label>\n                        <input type=\"number\" name=\"dhatu_count\" value={editingKatha.dhatu_count} onChange={handleEditChange} required />\n                        <label>ประเภทคาถา:</label>\n                        <select name=\"katha_type\" value={editingKatha.katha_type} onChange={handleEditChange}>\n                            <option value=\"pathyavatta\">คาถาปัฐยาวัตร (2/4 บาท)</option>\n                            <option value=\"pathyavatta-6\">คาถาปัฐยาวัตร (6 บาท)</option>",
+        "detail": "scripts.refactor_admin_forms_part1",
+        "documentation": {}
+    },
+    {
+        "label": "new_form",
+        "kind": 5,
+        "importPath": "scripts.refactor_admin_forms_part1",
+        "description": "scripts.refactor_admin_forms_part1",
+        "peekOfCode": "new_form = \"\"\"                    <form onSubmit={handleUpdate}>\n                        <h3>แก้ไขคาถาที่: {editingKatha.katha_no}</h3>\n                        <div className=\"form-grid\">\n                            <div className=\"form-column\">\n                                <label>เลขคาถา (แก้ไขไม่ได้):</label>\n                                <input type=\"number\" value={editingKatha.katha_no} readOnly className=\"readonly-input\" />\n                                <label>จำนวนธาตุ:</label>\n                                <input type=\"number\" name=\"dhatu_count\" value={editingKatha.dhatu_count} onChange={handleEditChange} required />\n                                <label>ประเภทคาถา:</label>\n                                <select name=\"katha_type\" value={editingKatha.katha_type} onChange={handleEditChange}>",
+        "detail": "scripts.refactor_admin_forms_part1",
+        "documentation": {}
+    },
+    {
+        "label": "add_dhatu_path",
+        "kind": 5,
+        "importPath": "scripts.refactor_admin_forms_part1",
+        "description": "scripts.refactor_admin_forms_part1",
+        "peekOfCode": "add_dhatu_path = 'D:/pali-dhatu-app/src/components/AddDhatuForm.js'\nwith open(add_dhatu_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# I'll need to match a larger block or be clever. The file read earlier shows the form is inside `return`.\n# I will use a simple regex-like replacement or just find the block if it's contiguous.\n# The `return` block in `AddDhatuForm.js` (lines 94+) is simpler to just replace entirely if I construct it right.\n# Let's try to replace the whole `return` statement block.\n# Actually, the file content I read earlier ends at line 100. I need to be careful.\n# I'll read the full file first to be safe.\npass",
+        "detail": "scripts.refactor_admin_forms_part1",
+        "documentation": {}
+    },
+    {
         "label": "search_page_path",
         "kind": 5,
         "importPath": "scripts.refine_search_ui",
@@ -727,6 +1229,33 @@
         "description": "scripts.remove_footer_text",
         "peekOfCode": "new_content = \"\"\"// src/components/Footer.js\nimport React from 'react';\nfunction Footer() {\n  return (\n    <footer className=\"App-footer\">\n      {/* Footer content removed as per request */}\n    </footer>\n  );\n}\nexport default Footer;\"\"\"",
         "detail": "scripts.remove_footer_text",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.restore_dhatu_tags",
+        "description": "scripts.restore_dhatu_tags",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# We need to insert the missing closing tags before the next section.\n# The next section starts with <div className=\"detail-card full-width\"> containing \"อุทาหรณ์ (ตัวอย่างการใช้)\"\ntarget = '<div className=\"detail-card full-width\">\\n              <h2>อุทาหรณ์ (ตัวอย่างการใช้)</h2>'\nmissing_tags = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}",
+        "detail": "scripts.restore_dhatu_tags",
+        "documentation": {}
+    },
+    {
+        "label": "target",
+        "kind": 5,
+        "importPath": "scripts.restore_dhatu_tags",
+        "description": "scripts.restore_dhatu_tags",
+        "peekOfCode": "target = '<div className=\"detail-card full-width\">\\n              <h2>อุทาหรณ์ (ตัวอย่างการใช้)</h2>'\nmissing_tags = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}\n                </div>\n              </div>\n            )}\n\"\"\"\nif target in content:",
+        "detail": "scripts.restore_dhatu_tags",
+        "documentation": {}
+    },
+    {
+        "label": "missing_tags",
+        "kind": 5,
+        "importPath": "scripts.restore_dhatu_tags",
+        "description": "scripts.restore_dhatu_tags",
+        "peekOfCode": "missing_tags = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}\n                </div>\n              </div>\n            )}\n\"\"\"\nif target in content:\n    content = content.replace(target, missing_tags + \"            \" + target)",
+        "detail": "scripts.restore_dhatu_tags",
         "documentation": {}
     },
     {
@@ -874,21 +1403,282 @@
         "documentation": {}
     },
     {
-        "label": "APP_CSS_PATH",
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "def update_file(path, old_content, new_content):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n        # Check if the content is already updated (partial check)\n        if new_content in content:\n            print(f\"File {path} is already updated.\")\n            return\n        if old_content in content:\n            updated_content = content.replace(old_content, new_content)",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "base_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "base_path = \"d:/pali-dhatu-app/src\"\nadd_dhatu_path = os.path.join(base_path, \"components/AddDhatuForm.js\")\nadd_katha_path = os.path.join(base_path, \"pages/AdminAddKatha.js\")\nuser_manager_path = os.path.join(base_path, \"components/UserManager.js\")\ndef update_file(path, old_content, new_content):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n        # Check if the content is already updated (partial check)\n        if new_content in content:",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_dhatu_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_dhatu_path = os.path.join(base_path, \"components/AddDhatuForm.js\")\nadd_katha_path = os.path.join(base_path, \"pages/AdminAddKatha.js\")\nuser_manager_path = os.path.join(base_path, \"components/UserManager.js\")\ndef update_file(path, old_content, new_content):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n        # Check if the content is already updated (partial check)\n        if new_content in content:\n            print(f\"File {path} is already updated.\")",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_katha_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_katha_path = os.path.join(base_path, \"pages/AdminAddKatha.js\")\nuser_manager_path = os.path.join(base_path, \"components/UserManager.js\")\ndef update_file(path, old_content, new_content):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n        # Check if the content is already updated (partial check)\n        if new_content in content:\n            print(f\"File {path} is already updated.\")\n            return",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "user_manager_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "user_manager_path = os.path.join(base_path, \"components/UserManager.js\")\ndef update_file(path, old_content, new_content):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n        # Check if the content is already updated (partial check)\n        if new_content in content:\n            print(f\"File {path} is already updated.\")\n            return\n        if old_content in content:",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_dhatu_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_dhatu_old = \"\"\"  return (\n    <div className=\"add-dhatu-form-container\">\n      <div className=\"latest-dhatu-info\">\n        {latestDhatu ? (\n          <p>ธาตุล่าสุด: <strong>{latestDhatu.dhatu_word}</strong> (ลำดับที่: <strong>{latestDhatu.anukrom_dhatu}</strong>)</p>\n        ) : (\n          <p>ยังไม่มีข้อมูลในระบบ</p>\n        )}\n      </div>\n      <h4>เพิ่มธาตุใหม่โดยตรง</h4>",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_dhatu_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_dhatu_new = \"\"\"  return (\n    <div className=\"add-dhatu-form-container\">\n      <div className=\"latest-dhatu-info\">\n        {latestDhatu ? (\n          <p>ธาตุล่าสุด: <strong>{latestDhatu.dhatu_word}</strong> (ลำดับที่: <strong>{latestDhatu.anukrom_dhatu}</strong>)</p>\n        ) : (\n          <p>ยังไม่มีข้อมูลในระบบ</p>\n        )}\n      </div>\n      <h4>เพิ่มธาตุใหม่โดยตรง</h4>",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_katha_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_katha_old = \"\"\"            <div className=\"add-dhatu-form-container\" style={{ maxWidth: '600px', margin: '20px 0' }}>\n                <form onSubmit={handleSubmit}>\n                    <label>เลขคาถา (สร้างอัตโนมัติ):</label>\n                    {/* *** 4. เพิ่ม readOnly และ className *** */}\n                    <input type=\"number\" name=\"katha_no\" value={formData.katha_no} onChange={handleChange} required readOnly className=\"readonly-input\" />\n                    <label>เนื้อหาคาถา (บาลี):</label>\n                    <textarea name=\"katha_pali\" value={formData.katha_pali} onChange={handleChange} rows=\"6\" required />\n                    <label>จำนวนธาตุ:</label>\n                    <input type=\"number\" name=\"dhatu_count\" value={formData.dhatu_count} onChange={handleChange} required />\n                    <label>ประเภทคาถา:</label>",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "add_katha_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "add_katha_new = \"\"\"            <div className=\"add-dhatu-form-container\" style={{ maxWidth: '100%', margin: '20px 0' }}>\n                <form onSubmit={handleSubmit}>\n                    <div className=\"form-grid\">\n                        <div className=\"form-column\">\n                            <label>เลขคาถา (สร้างอัตโนมัติ):</label>\n                            <input type=\"number\" name=\"katha_no\" value={formData.katha_no} onChange={handleChange} required readOnly className=\"readonly-input\" />\n                            <label>จำนวนธาตุ:</label>\n                            <input type=\"number\" name=\"dhatu_count\" value={formData.dhatu_count} onChange={handleChange} required />\n                            <label>ประเภทคาถา:</label>\n                            <select name=\"katha_type\" value={formData.katha_type} onChange={handleChange}>",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "user_manager_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "user_manager_old = \"\"\"  return (\n    <div className=\"user-manager-container\">\n      <h4>จัดการผู้ดูแลระบบ (Admin)</h4>\n      <p>ส่วนนี้สำหรับเพิ่มผู้ดูแลระบบคนใหม่ (ต้องใช้ Firebase Functions)</p>\n      <form onSubmit={handleAddAdmin} className=\"center-form\"> {/* เอา edit-form และ style ออก */}\n        <label>อีเมล Admin ใหม่:</label>\n        <input\n          type=\"email\"\n          value={email}\n          onChange={(e) => setEmail(e.target.value)}",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "user_manager_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_forms",
+        "description": "scripts.update_admin_forms",
+        "peekOfCode": "user_manager_new = \"\"\"  return (\n    <div className=\"add-dhatu-form-container\">\n      <h4>จัดการผู้ดูแลระบบ (Admin)</h4>\n      <p>ส่วนนี้สำหรับเพิ่มผู้ดูแลระบบคนใหม่ (ต้องใช้ Firebase Functions)</p>\n      <form onSubmit={handleAddAdmin}>\n        <label>อีเมล Admin ใหม่:</label>\n        <input\n          type=\"email\"\n          value={email}\n          onChange={(e) => setEmail(e.target.value)}",
+        "detail": "scripts.update_admin_forms",
+        "documentation": {}
+    },
+    {
+        "label": "css_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_styles",
+        "description": "scripts.update_admin_styles",
+        "peekOfCode": "css_path = 'D:/pali-dhatu-app/src/App.css'\ncss_content = \"\"\"\n/* --- Admin Theme (New) --- */\n/* 1. General Admin Page Layout */\n.admin-content h3 {\n  color: #2c3e50;\n  border-bottom: 2px solid #3498db;\n  padding-bottom: 10px;\n  margin-bottom: 25px;\n  font-size: 1.5rem;",
+        "detail": "scripts.update_admin_styles",
+        "documentation": {}
+    },
+    {
+        "label": "css_content",
+        "kind": 5,
+        "importPath": "scripts.update_admin_styles",
+        "description": "scripts.update_admin_styles",
+        "peekOfCode": "css_content = \"\"\"\n/* --- Admin Theme (New) --- */\n/* 1. General Admin Page Layout */\n.admin-content h3 {\n  color: #2c3e50;\n  border-bottom: 2px solid #3498db;\n  padding-bottom: 10px;\n  margin-bottom: 25px;\n  font-size: 1.5rem;\n}",
+        "detail": "scripts.update_admin_styles",
+        "documentation": {}
+    },
+    {
+        "label": "admin_menu_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "admin_menu_path = 'D:/pali-dhatu-app/src/components/AdminMenu.js'\nwith open(admin_menu_path, 'r', encoding='utf-8') as f:\n    menu_content = f.read()\nmenu_old = \"\"\"      <ul>\n        {/* --- กลุ่มเมนู \"สร้างข้อมูลใหม่\" --- */}\n        <li><NavLink to=\"/admin/add-dhatu\"><strong>+ เพิ่มธาตุใหม่</strong></NavLink></li>\n        <li><NavLink to=\"/admin/add-katha\"><strong>+ เพิ่มคาถาใหม่</strong></NavLink></li>\n        <hr />\n        {/* --- กลุ่มเมนู \"จัดการข้อมูล\" --- */}\n        <li><NavLink to=\"/admin/submissions\">จัดการเสนอแนะ</NavLink></li>",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "menu_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "menu_old = \"\"\"      <ul>\n        {/* --- กลุ่มเมนู \"สร้างข้อมูลใหม่\" --- */}\n        <li><NavLink to=\"/admin/add-dhatu\"><strong>+ เพิ่มธาตุใหม่</strong></NavLink></li>\n        <li><NavLink to=\"/admin/add-katha\"><strong>+ เพิ่มคาถาใหม่</strong></NavLink></li>\n        <hr />\n        {/* --- กลุ่มเมนู \"จัดการข้อมูล\" --- */}\n        <li><NavLink to=\"/admin/submissions\">จัดการเสนอแนะ</NavLink></li>\n        <li><NavLink to=\"/admin/dhatu-management\">จัดการคลังธาตุ</NavLink></li>\n        <li><NavLink to=\"/admin/katha-management\">จัดการคาถา</NavLink></li>\n        <li><NavLink to=\"/admin/user-management\">จัดการผู้ใช้งาน</NavLink></li>",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "menu_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "menu_new = \"\"\"      <ul className=\"admin-menu-list\">\n        <li className=\"menu-section-title\">ส่วนเพิ่มข้อมูล</li>\n        <li><NavLink to=\"/admin/add-dhatu\" className={({ isActive }) => isActive ? \"active-menu\" : \"\"}> <i className=\"fas fa-plus-circle\"></i> เพิ่มธาตุ</NavLink></li>\n        <li><NavLink to=\"/admin/add-katha\" className={({ isActive }) => isActive ? \"active-menu\" : \"\"}> <i className=\"fas fa-plus-circle\"></i> เพิ่มคาถา</NavLink></li>\n        <li className=\"menu-section-title\">ส่วนแก้ไข/จัดการ</li>\n        {/* ลบเมนูจัดการเสนอแนะออกตามคำขอ */}\n        <li><NavLink to=\"/admin/dhatu-management\" className={({ isActive }) => isActive ? \"active-menu\" : \"\"}> <i className=\"fas fa-database\"></i> จัดการคลังธาตุ</NavLink></li>\n        <li><NavLink to=\"/admin/katha-management\" className={({ isActive }) => isActive ? \"active-menu\" : \"\"}> <i className=\"fas fa-book\"></i> จัดการคาถา</NavLink></li>\n        <li><NavLink to=\"/admin/user-management\" className={({ isActive }) => isActive ? \"active-menu\" : \"\"}> <i className=\"fas fa-users\"></i> จัดการผู้ใช้งาน</NavLink></li>\n        <li className=\"menu-separator\"></li>",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "app_js_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "app_js_path = 'D:/pali-dhatu-app/src/App.js'\nwith open(app_js_path, 'r', encoding='utf-8') as f:\n    app_content = f.read()\napp_old = \"\"\"            {/* Admin Routes */}\n            <Route path=\"/admin\" element={<AdminLayout />}>\n              <Route index element={<AdminSubmissions />} />\n              <Route path=\"submissions\" element={<AdminSubmissions />} />\n              <Route path=\"dhatu-management\" element={<AdminDhatuManagement />} />\"\"\"\napp_new = \"\"\"            {/* Admin Routes */}\n            <Route path=\"/admin\" element={<AdminLayout />}>",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "app_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "app_old = \"\"\"            {/* Admin Routes */}\n            <Route path=\"/admin\" element={<AdminLayout />}>\n              <Route index element={<AdminSubmissions />} />\n              <Route path=\"submissions\" element={<AdminSubmissions />} />\n              <Route path=\"dhatu-management\" element={<AdminDhatuManagement />} />\"\"\"\napp_new = \"\"\"            {/* Admin Routes */}\n            <Route path=\"/admin\" element={<AdminLayout />}>\n              <Route index element={<AdminDhatuManagement />} />\n              {/* <Route path=\"submissions\" element={<AdminSubmissions />} /> */}\n              <Route path=\"dhatu-management\" element={<AdminDhatuManagement />} />\"\"\"",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "app_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "app_new = \"\"\"            {/* Admin Routes */}\n            <Route path=\"/admin\" element={<AdminLayout />}>\n              <Route index element={<AdminDhatuManagement />} />\n              {/* <Route path=\"submissions\" element={<AdminSubmissions />} /> */}\n              <Route path=\"dhatu-management\" element={<AdminDhatuManagement />} />\"\"\"\nif app_old in app_content:\n    app_content = app_content.replace(app_old, app_new)\n    with open(app_js_path, 'w', encoding='utf-8') as f:\n        f.write(app_content)\n    print(\"Updated App.js\")",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "login_js_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "login_js_path = 'D:/pali-dhatu-app/src/components/Login.js'\nwith open(login_js_path, 'r', encoding='utf-8') as f:\n    login_content = f.read()\nlogin_old = \"\"\"  return (\n    <main className=\"Login-container\">\n      <h2>เข้าสู่ระบบสำหรับเจ้าหน้าที่</h2>\n      <form onSubmit={handleLogin} className=\"login-form\">\n        <div className=\"form-group\">\n          <label htmlFor=\"email\">อีเมล:</label>\n          <input",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "login_old",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "login_old = \"\"\"  return (\n    <main className=\"Login-container\">\n      <h2>เข้าสู่ระบบสำหรับเจ้าหน้าที่</h2>\n      <form onSubmit={handleLogin} className=\"login-form\">\n        <div className=\"form-group\">\n          <label htmlFor=\"email\">อีเมล:</label>\n          <input\n            type=\"email\"\n            id=\"email\"\n            value={email}",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "login_new",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "login_new = \"\"\"  return (\n    <div className=\"login-page-wrapper\">\n      <main className=\"Login-container\">\n        <div className=\"login-header\">\n          <div className=\"login-logo\">☸️</div>\n          <h2>ระบบจัดการคลังธาตุ</h2>\n          <p>เข้าสู่ระบบสำหรับเจ้าหน้าที่ (Admin)</p>\n        </div>\n        <form onSubmit={handleLogin} className=\"login-form\">\n          <div className=\"form-group\">",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "css_path",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "css_path = 'D:/pali-dhatu-app/src/App.css'\ncss_to_append = \"\"\"\n/* --- Admin Login Page --- */\n.login-page-wrapper {\n  min-height: 80vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: #f0f2f5;\n  padding: 20px;",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "css_to_append",
+        "kind": 5,
+        "importPath": "scripts.update_admin_ui",
+        "description": "scripts.update_admin_ui",
+        "peekOfCode": "css_to_append = \"\"\"\n/* --- Admin Login Page --- */\n.login-page-wrapper {\n  min-height: 80vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: #f0f2f5;\n  padding: 20px;\n}",
+        "detail": "scripts.update_admin_ui",
+        "documentation": {}
+    },
+    {
+        "label": "css_path",
         "kind": 5,
         "importPath": "scripts.update_app_css",
         "description": "scripts.update_app_css",
-        "peekOfCode": "APP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\ncontent = \"\"\"\n/* ===== LIGHT THEME: \"Modern Classroom\" ===== */\n:root {\n  --primary-color: #3498db;      /* Blue header */\n  --primary-dark: #2980b9;\n  --accent-color: #e67e22;       /* Orange accents */\n  --bg-color: #f8f9fa;           /* Light gray background */\n  --card-bg: #ffffff;\n  --text-primary: #2c3e50;       /* Dark gray text */",
+        "peekOfCode": "css_path = r\"d:\\pali-dhatu-app\\src\\App.css\"\nnew_css = \"\"\"\n/* Enhanced Derived Words Section */\n.derived-words-section {\n  margin-top: 2rem;\n  background-color: #fff;\n  border-radius: var(--radius);\n  padding: 1.5rem;\n  box-shadow: var(--shadow-sm);\n}",
         "detail": "scripts.update_app_css",
         "documentation": {}
     },
     {
-        "label": "content",
+        "label": "new_css",
         "kind": 5,
         "importPath": "scripts.update_app_css",
         "description": "scripts.update_app_css",
-        "peekOfCode": "content = \"\"\"\n/* ===== LIGHT THEME: \"Modern Classroom\" ===== */\n:root {\n  --primary-color: #3498db;      /* Blue header */\n  --primary-dark: #2980b9;\n  --accent-color: #e67e22;       /* Orange accents */\n  --bg-color: #f8f9fa;           /* Light gray background */\n  --card-bg: #ffffff;\n  --text-primary: #2c3e50;       /* Dark gray text */\n  --text-secondary: #7f8c8d;",
+        "peekOfCode": "new_css = \"\"\"\n/* Enhanced Derived Words Section */\n.derived-words-section {\n  margin-top: 2rem;\n  background-color: #fff;\n  border-radius: var(--radius);\n  padding: 1.5rem;\n  box-shadow: var(--shadow-sm);\n}\n.derived-section-header {",
         "detail": "scripts.update_app_css",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_app_css_derived",
+        "description": "scripts.update_app_css_derived",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\App.css'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\nold_css = '''/* Derived Words Section */\n.derived-words-list {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 10px;\n}",
+        "detail": "scripts.update_app_css_derived",
+        "documentation": {}
+    },
+    {
+        "label": "old_css",
+        "kind": 5,
+        "importPath": "scripts.update_app_css_derived",
+        "description": "scripts.update_app_css_derived",
+        "peekOfCode": "old_css = '''/* Derived Words Section */\n.derived-words-list {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 10px;\n}\n.derived-word-tag {\n  background-color: #e8f5e9;\n  color: #2e7d32;",
+        "detail": "scripts.update_app_css_derived",
+        "documentation": {}
+    },
+    {
+        "label": "new_css",
+        "kind": 5,
+        "importPath": "scripts.update_app_css_derived",
+        "description": "scripts.update_app_css_derived",
+        "peekOfCode": "new_css = '''/* Derived Words Section (List with Meanings) */\n.derived-words-list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  margin-top: 15px;\n}\n.derived-word-item {\n  display: flex;\n  align-items: flex-start;",
+        "detail": "scripts.update_app_css_derived",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_app_css_katha",
+        "description": "scripts.update_app_css_katha",
+        "peekOfCode": "file_path = \"d:/pali-dhatu-app/src/App.css\"\ncss_to_append = \"\"\"\n/* Added for Linear Katha Display */\n.verse-line {\n  font-size: 1.15rem;\n  margin-bottom: 8px;\n  color: #2c3e50;\n  line-height: 1.6;\n}\n\"\"\"",
+        "detail": "scripts.update_app_css_katha",
+        "documentation": {}
+    },
+    {
+        "label": "css_to_append",
+        "kind": 5,
+        "importPath": "scripts.update_app_css_katha",
+        "description": "scripts.update_app_css_katha",
+        "peekOfCode": "css_to_append = \"\"\"\n/* Added for Linear Katha Display */\n.verse-line {\n  font-size: 1.15rem;\n  margin-bottom: 8px;\n  color: #2c3e50;\n  line-height: 1.6;\n}\n\"\"\"\ntry:",
+        "detail": "scripts.update_app_css_katha",
         "documentation": {}
     },
     {
@@ -925,6 +1715,15 @@
         "description": "scripts.update_app_js_routes",
         "peekOfCode": "content = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport KathaListPage from './pages/KathaListPage'; // Changed from HomePage\nimport { AuthProvider } from './contexts/AuthContext';",
         "detail": "scripts.update_app_js_routes",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_app_routes_v2",
+        "description": "scripts.update_app_routes_v2",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\App.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add Import\nif \"import VocabSearchPage\" not in content:\n    content = content.replace(\n        \"import SearchPage from './pages/SearchPage';\",\n        \"import SearchPage from './pages/SearchPage';\\nimport VocabSearchPage from './pages/VocabSearchPage';\"\n    )\n# 2. Add Route",
+        "detail": "scripts.update_app_routes_v2",
         "documentation": {}
     },
     {
@@ -1081,12 +1880,354 @@
         "documentation": {}
     },
     {
-        "label": "path",
+        "label": "file_path",
         "kind": 5,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "path = \"D:/pali-dhatu-app/src/components/DhatuDetail.js\"\ntry:\n    with open(path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Add Dhatu Type Card\n    # Find where to insert. After \"คำแปลอรรถ (ไทย)\" card?\n    target_card = \"\"\"            <div className=\"detail-card\">\n              <h2>คำแปลอรรถ (ไทย)</h2>\n              <p>{dhatu.arth_thai || '-'}</p>\n            </div>\"\"\"",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add Imports\nold_import = \"import LoadingSpinner from '../components/LoadingSpinner';\"\nnew_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"",
         "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "old_import",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "old_import = \"import LoadingSpinner from '../components/LoadingSpinner';\"\nnew_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "new_import",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "new_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "old_logic",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "old_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "new_logic",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "new_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "old_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "old_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>\n            )}\n            <div className=\"detail-card full-width\">\"\"\"\nnew_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "new_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "new_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>\n            )}\n            {/* Derived Words Section (DPD) */}\n            {derivedWords && derivedWords.length > 0 && (\n              <div className=\"detail-card full-width\">",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add Helper Functions (outside component or inside, but before return)\n# We will insert them before the component function for cleanliness, or just inside.\n# Let's insert them before \"function DhatuDetail() {\"\nhelper_code = \"\"\"\nconst sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธนานันท์', color: '#2980b9', icon: 'fas fa-user-tie' },",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "helper_code",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "helper_code = \"\"\"\nconst sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธนานันท์', color: '#2980b9', icon: 'fas fa-user-tie' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#e67e22', icon: 'fas fa-globe' }\n};\nconst parseMeaning = (text) => {\n    if (!text) return [];\n    // Split by separator if multiple sources exist",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "old_jsx_start",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "old_jsx_start = \"{/* Derived Words Section (DPD) */}\"\n# We need to find the matching closing brace for the condition block. \n# The block is:\n# {derivedWords && derivedWords.length > 0 && (\n#   <div className=\"detail-card full-width\">\n#     ...\n#   </div>\n# )}\n# Since regex replacement across multiple lines can be tricky with nested braces, \n# I will use a known unique substring to identify the block and replace it carefully.",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "block_signature",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "block_signature = \"\"\"{derivedWords && derivedWords.length > 0 && (\n              <div className=\"detail-card full-width\">\n                <h2>ศัพท์ที่สร้างจากธาตุนี้ (DPD)</h2>\n                <div className=\"derived-words-list\">\n                  {derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const meaning = vocabDerivedMeanings[thaiWord];\n                    return (\n                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "new_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "new_jsx = \"\"\"{/* Derived Words Section (DPD) - Enhanced */}\n            {derivedWords && derivedWords.length > 0 && (\n              <div className=\"derived-words-section\">\n                <div className=\"derived-section-header\">\n                    <div className=\"derived-section-icon\">\n                        <i className=\"fas fa-sitemap\"></i>\n                    </div>\n                    <h2>ศัพท์ที่สร้างจากธาตุนี้ (DPD)</h2>\n                </div>\n                <div className=\"derived-words-list-enhanced\">",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "pattern",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "pattern = r\"\\{\\/\\* Derived Words Section \\(DPD\\) \\*\\/\\}[\\s\\S]*?\\}\\)\\}[\\s\\S]*?\\}\\)\"\n# This regex is risky if there are nested }) that match early.\n# Better approach: Replace the inner <div> content if possible, or use exact string from my previous read.\n# Let's trust the `block_signature` but be careful about whitespace.\n# I will use the exact string I got from `Read` tool.\n# The Read tool output:\nexact_block = \"\"\"            {/* Derived Words Section (DPD) */}\n            {derivedWords && derivedWords.length > 0 && (\n              <div className=\"detail-card full-width\">\n                <h2>ศัพท์ที่สร้างจากธาตุนี้ (DPD)</h2>",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "exact_block",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived",
+        "description": "scripts.update_dhatu_detail_derived",
+        "peekOfCode": "exact_block = \"\"\"            {/* Derived Words Section (DPD) */}\n            {derivedWords && derivedWords.length > 0 && (\n              <div className=\"detail-card full-width\">\n                <h2>ศัพท์ที่สร้างจากธาตุนี้ (DPD)</h2>\n                <div className=\"derived-words-list\">\n                  {derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const meaning = vocabDerivedMeanings[thaiWord];\n                    return (\n                        <div key={index} className=\"derived-word-item\">",
+        "detail": "scripts.update_dhatu_detail_derived",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived_v2",
+        "description": "scripts.update_dhatu_detail_derived_v2",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add Helper Functions\nhelper_code = \"\"\"\nconst sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธนานันท์', color: '#2980b9', icon: 'fas fa-user-tie' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#e67e22', icon: 'fas fa-globe' }",
+        "detail": "scripts.update_dhatu_detail_derived_v2",
+        "documentation": {}
+    },
+    {
+        "label": "helper_code",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived_v2",
+        "description": "scripts.update_dhatu_detail_derived_v2",
+        "peekOfCode": "helper_code = \"\"\"\nconst sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธนานันท์', color: '#2980b9', icon: 'fas fa-user-tie' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#e67e22', icon: 'fas fa-globe' }\n};\nconst parseMeaning = (text) => {\n    if (!text) return [];\n    // Split by separator if multiple sources exist",
+        "detail": "scripts.update_dhatu_detail_derived_v2",
+        "documentation": {}
+    },
+    {
+        "label": "start_marker",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived_v2",
+        "description": "scripts.update_dhatu_detail_derived_v2",
+        "peekOfCode": "start_marker = \"{/* Derived Words Section (DPD) */}\"\nend_marker = \"            )}\" # identifying the closing of the condition\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing tag. It should be the first one after start_idx.\n    # Note: We need to be careful not to match a nested one, but the structure is:\n    # {cond && (\n    #    <div>...</div>\n    # )}\n    # So searching for \"            )}\" (12 spaces + )}) should work if formatting is consistent.",
+        "detail": "scripts.update_dhatu_detail_derived_v2",
+        "documentation": {}
+    },
+    {
+        "label": "end_marker",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived_v2",
+        "description": "scripts.update_dhatu_detail_derived_v2",
+        "peekOfCode": "end_marker = \"            )}\" # identifying the closing of the condition\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing tag. It should be the first one after start_idx.\n    # Note: We need to be careful not to match a nested one, but the structure is:\n    # {cond && (\n    #    <div>...</div>\n    # )}\n    # So searching for \"            )}\" (12 spaces + )}) should work if formatting is consistent.\n    # Let's verify what the file actually has by searching",
+        "detail": "scripts.update_dhatu_detail_derived_v2",
+        "documentation": {}
+    },
+    {
+        "label": "start_idx",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_derived_v2",
+        "description": "scripts.update_dhatu_detail_derived_v2",
+        "peekOfCode": "start_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing tag. It should be the first one after start_idx.\n    # Note: We need to be careful not to match a nested one, but the structure is:\n    # {cond && (\n    #    <div>...</div>\n    # )}\n    # So searching for \"            )}\" (12 spaces + )}) should work if formatting is consistent.\n    # Let's verify what the file actually has by searching\n    next_end = content.find(end_marker, start_idx)",
+        "detail": "scripts.update_dhatu_detail_derived_v2",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Update Helper Functions (Dictionary Name Change)\n# I need to find the `const sourceMapping` block and replace it.\nold_mapping_start = \"const sourceMapping = {\"\nnew_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#95a5a6', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#95a5a6', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#95a5a6', icon: 'fas fa-leaf' },",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "old_mapping_start",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "old_mapping_start = \"const sourceMapping = {\"\nnew_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#95a5a6', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#95a5a6', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#95a5a6', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#95a5a6', icon: 'fas fa-globe' }\n};\"\"\"\n# Regex replace for the object\npattern_mapping = r\"const sourceMapping = \\{[\\s\\S]*?\\};\"\ncontent = re.sub(pattern_mapping, new_mapping, content)",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "new_mapping",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "new_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#95a5a6', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#95a5a6', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#95a5a6', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#95a5a6', icon: 'fas fa-globe' }\n};\"\"\"\n# Regex replace for the object\npattern_mapping = r\"const sourceMapping = \\{[\\s\\S]*?\\};\"\ncontent = re.sub(pattern_mapping, new_mapping, content)\n# 2. Update the JSX structure for the new \"Faint Box\" design",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "pattern_mapping",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "pattern_mapping = r\"const sourceMapping = \\{[\\s\\S]*?\\};\"\ncontent = re.sub(pattern_mapping, new_mapping, content)\n# 2. Update the JSX structure for the new \"Faint Box\" design\n# Locate the map loop inside derived-words-list-enhanced\n# The block to replace:\n# return (\n#     <div key={index} className=\"derived-word-card\">\n#         ...\n#     </div>\n# );",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "content = re.sub(pattern_mapping, new_mapping, content)\n# 2. Update the JSX structure for the new \"Faint Box\" design\n# Locate the map loop inside derived-words-list-enhanced\n# The block to replace:\n# return (\n#     <div key={index} className=\"derived-word-card\">\n#         ...\n#     </div>\n# );\n# I will replace the entire `derived-words-list-enhanced` content or just the map callback return.",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "start_marker",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "start_marker = \"{derivedWords.map((word, index) => {\"\nend_marker = \"                  })}\" # The closing of the map\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    end_idx = content.find(end_marker, start_idx) + len(end_marker)\n    new_map_block = \"\"\"{derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const rawMeaning = vocabDerivedMeanings[thaiWord];\n                    const meaningGroups = parseMeaning(rawMeaning);\n                    return (",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "end_marker",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "end_marker = \"                  })}\" # The closing of the map\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    end_idx = content.find(end_marker, start_idx) + len(end_marker)\n    new_map_block = \"\"\"{derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const rawMeaning = vocabDerivedMeanings[thaiWord];\n                    const meaningGroups = parseMeaning(rawMeaning);\n                    return (\n                        <div key={index} className=\"derived-word-card\">",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "start_idx",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_design_v3",
+        "description": "scripts.update_dhatu_detail_design_v3",
+        "peekOfCode": "start_idx = content.find(start_marker)\nif start_idx != -1:\n    end_idx = content.find(end_marker, start_idx) + len(end_marker)\n    new_map_block = \"\"\"{derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const rawMeaning = vocabDerivedMeanings[thaiWord];\n                    const meaningGroups = parseMeaning(rawMeaning);\n                    return (\n                        <div key={index} className=\"derived-word-card\">\n                            <div className=\"derived-word-header\">",
+        "detail": "scripts.update_dhatu_detail_design_v3",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_meanings",
+        "description": "scripts.update_dhatu_detail_meanings",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add import\nif \"import vocabDerivedMeanings\" not in content:\n    content = content.replace(\n        \"import vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\",\n        \"import vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport vocabDerivedMeanings from '../data/vocab-derived-meanings';\"\n    )\n# 2. Update render logic",
+        "detail": "scripts.update_dhatu_detail_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "old_block",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_meanings",
+        "description": "scripts.update_dhatu_detail_meanings",
+        "peekOfCode": "old_block = '''                <div className=\"derived-words-list\">\n                  {derivedWords.map((word, index) => (\n                    <span key={index} className=\"derived-word-tag\">{PaliScript.romanToThai(word)}</span>\n                  ))}\n                </div>'''\nnew_block = '''                <div className=\"derived-words-list\">\n                  {derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const meaning = vocabDerivedMeanings[thaiWord];\n                    return (",
+        "detail": "scripts.update_dhatu_detail_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "new_block",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_meanings",
+        "description": "scripts.update_dhatu_detail_meanings",
+        "peekOfCode": "new_block = '''                <div className=\"derived-words-list\">\n                  {derivedWords.map((word, index) => {\n                    const thaiWord = PaliScript.romanToThai(word);\n                    const meaning = vocabDerivedMeanings[thaiWord];\n                    return (\n                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>\n                            {meaning ? (\n                                <span className=\"derived-word-meaning\">{meaning}</span>\n                            ) : (",
+        "detail": "scripts.update_dhatu_detail_meanings",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_thai",
+        "description": "scripts.update_dhatu_detail_thai",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\nold_str = '<span key={index} className=\"derived-word-tag\">{word}</span>'\nnew_str = '<span key={index} className=\"derived-word-tag\">{PaliScript.romanToThai(word)}</span>'\nif old_str in content:\n    new_content = content.replace(old_str, new_str)\n    with open(file_path, 'w', encoding='utf-8') as f:\n        f.write(new_content)\n    print(\"Updated DhatuDetail.js successfully.\")",
+        "detail": "scripts.update_dhatu_detail_thai",
+        "documentation": {}
+    },
+    {
+        "label": "old_str",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_thai",
+        "description": "scripts.update_dhatu_detail_thai",
+        "peekOfCode": "old_str = '<span key={index} className=\"derived-word-tag\">{word}</span>'\nnew_str = '<span key={index} className=\"derived-word-tag\">{PaliScript.romanToThai(word)}</span>'\nif old_str in content:\n    new_content = content.replace(old_str, new_str)\n    with open(file_path, 'w', encoding='utf-8') as f:\n        f.write(new_content)\n    print(\"Updated DhatuDetail.js successfully.\")\nelse:\n    print(\"Target string not found in DhatuDetail.js\")",
+        "detail": "scripts.update_dhatu_detail_thai",
+        "documentation": {}
+    },
+    {
+        "label": "new_str",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_thai",
+        "description": "scripts.update_dhatu_detail_thai",
+        "peekOfCode": "new_str = '<span key={index} className=\"derived-word-tag\">{PaliScript.romanToThai(word)}</span>'\nif old_str in content:\n    new_content = content.replace(old_str, new_str)\n    with open(file_path, 'w', encoding='utf-8') as f:\n        f.write(new_content)\n    print(\"Updated DhatuDetail.js successfully.\")\nelse:\n    print(\"Target string not found in DhatuDetail.js\")",
+        "detail": "scripts.update_dhatu_detail_thai",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Logic to add\nnew_logic = \"\"\"\n  const getDerivedWords = (roman) => {\n      if (!roman) return null;\n      if (vocabRootsDPDDerived[roman]) return vocabRootsDPDDerived[roman];\n      // Strip final 'a' (common for Thai implicit 'a')\n      if (roman.endsWith('a') && vocabRootsDPDDerived[roman.slice(0, -1)]) {",
+        "detail": "scripts.update_dhatu_detail_v2",
+        "documentation": {}
+    },
+    {
+        "label": "new_logic",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "new_logic = \"\"\"\n  const getDerivedWords = (roman) => {\n      if (!roman) return null;\n      if (vocabRootsDPDDerived[roman]) return vocabRootsDPDDerived[roman];\n      // Strip final 'a' (common for Thai implicit 'a')\n      if (roman.endsWith('a') && vocabRootsDPDDerived[roman.slice(0, -1)]) {\n          return vocabRootsDPDDerived[roman.slice(0, -1)];\n      }\n      // Strip final 'i' (common for Thai 'i' ending roots like kakhi -> kakh)\n      if (roman.endsWith('i') && vocabRootsDPDDerived[roman.slice(0, -1)]) {",
+        "detail": "scripts.update_dhatu_detail_v2",
+        "documentation": {}
+    },
+    {
+        "label": "pattern_start",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "pattern_start = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\npattern_end = \"const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\n# Construct the block to replace\nold_block = pattern_start + \"\\n  \" + pattern_end\nif old_block in content:\n    content = content.replace(old_block, new_logic.strip())\n    print(\"Updated with smart lookup logic\")\nelse:\n    # Fallback search if exact formatting matches\n    # Just replace the two lines we added previously",
+        "detail": "scripts.update_dhatu_detail_v2",
+        "documentation": {}
+    },
+    {
+        "label": "pattern_end",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "pattern_end = \"const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\n# Construct the block to replace\nold_block = pattern_start + \"\\n  \" + pattern_end\nif old_block in content:\n    content = content.replace(old_block, new_logic.strip())\n    print(\"Updated with smart lookup logic\")\nelse:\n    # Fallback search if exact formatting matches\n    # Just replace the two lines we added previously\n    pass",
+        "detail": "scripts.update_dhatu_detail_v2",
+        "documentation": {}
+    },
+    {
+        "label": "old_block",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "old_block = pattern_start + \"\\n  \" + pattern_end\nif old_block in content:\n    content = content.replace(old_block, new_logic.strip())\n    print(\"Updated with smart lookup logic\")\nelse:\n    # Fallback search if exact formatting matches\n    # Just replace the two lines we added previously\n    pass\n# Let's try to locate \"const groupCode\" and replace up to \"const derivedWords\"\nimport re",
+        "detail": "scripts.update_dhatu_detail_v2",
+        "documentation": {}
+    },
+    {
+        "label": "regex",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail_v2",
+        "description": "scripts.update_dhatu_detail_v2",
+        "peekOfCode": "regex = r\"const groupCode = dhatu \\? getGroupCode\\(dhatu\\.mawat_dhatu\\) : null;\\s+const derivedWords = dhatu \\? vocabRootsDPDDerived\\[PaliScript\\.thaiToRoman\\(dhatu\\.dhatu_word\\)\\] : null;\"\nif re.search(regex, content):\n    content = re.sub(regex, new_logic.strip(), content)\n    print(\"Updated with regex\")\nelse:\n    print(\"Could not find the code block to replace\")\nwith open(file_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
+        "detail": "scripts.update_dhatu_detail_v2",
         "documentation": {}
     },
     {
@@ -1159,6 +2300,204 @@
         "description": "scripts.update_katha_list",
         "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {\n    const [kathas, setKathas] = useState([]);\n    const [loading, setLoading] = useState(true);",
         "detail": "scripts.update_katha_list",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_katha_renderer",
+        "description": "scripts.update_katha_renderer",
+        "peekOfCode": "file_path = \"d:/pali-dhatu-app/src/components/KathaRenderer.js\"\nold_content = \"\"\"        default:\n            return (\n                <div className=\"katha-linear-display\">\n                    <p>{text}</p>\n                </div>\n            );\"\"\"\nnew_content = \"\"\"        default:\n            return (\n                <div className=\"katha-linear-display\">",
+        "detail": "scripts.update_katha_renderer",
+        "documentation": {}
+    },
+    {
+        "label": "old_content",
+        "kind": 5,
+        "importPath": "scripts.update_katha_renderer",
+        "description": "scripts.update_katha_renderer",
+        "peekOfCode": "old_content = \"\"\"        default:\n            return (\n                <div className=\"katha-linear-display\">\n                    <p>{text}</p>\n                </div>\n            );\"\"\"\nnew_content = \"\"\"        default:\n            return (\n                <div className=\"katha-linear-display\">\n                    {verses.map((verse, index) => (",
+        "detail": "scripts.update_katha_renderer",
+        "documentation": {}
+    },
+    {
+        "label": "new_content",
+        "kind": 5,
+        "importPath": "scripts.update_katha_renderer",
+        "description": "scripts.update_katha_renderer",
+        "peekOfCode": "new_content = \"\"\"        default:\n            return (\n                <div className=\"katha-linear-display\">\n                    {verses.map((verse, index) => (\n                        <div key={index} className=\"verse-line\">{verse}</div>\n                    ))}\n                </div>\n            );\"\"\"\ntry:\n    with open(file_path, 'r', encoding='utf-8') as f:",
+        "detail": "scripts.update_katha_renderer",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.update_katha_v2",
+        "description": "scripts.update_katha_v2",
+        "peekOfCode": "app_css_path = \"D:/pali-dhatu-app/src/App.css\"\nverse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update App.css for centering\ntry:\n    with open(app_css_path, 'r', encoding='utf-8') as f:\n        css_content = f.read()\n    new_css_rule = \"\"\"\n.page-header {\n  text-align: center;\n  margin-bottom: 2rem;",
+        "detail": "scripts.update_katha_v2",
+        "documentation": {}
+    },
+    {
+        "label": "verse_detail_path",
+        "kind": 5,
+        "importPath": "scripts.update_katha_v2",
+        "description": "scripts.update_katha_v2",
+        "peekOfCode": "verse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update App.css for centering\ntry:\n    with open(app_css_path, 'r', encoding='utf-8') as f:\n        css_content = f.read()\n    new_css_rule = \"\"\"\n.page-header {\n  text-align: center;\n  margin-bottom: 2rem;\n}",
+        "detail": "scripts.update_katha_v2",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_detail",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "file_path_detail = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path_detail, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Replace the inner part of derived-word-item to support block display\nold_jsx = \"\"\"                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>\n                            {meaning ? (\n                                <span className=\"derived-word-meaning\">{meaning}</span>\n                            ) : (\n                                <span className=\"derived-word-meaning text-muted\">-</span>",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "old_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "old_jsx = \"\"\"                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>\n                            {meaning ? (\n                                <span className=\"derived-word-meaning\">{meaning}</span>\n                            ) : (\n                                <span className=\"derived-word-meaning text-muted\">-</span>\n                            )}\n                        </div>\"\"\"\nnew_jsx = \"\"\"                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "new_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "new_jsx = \"\"\"                        <div key={index} className=\"derived-word-item\">\n                            <span className=\"derived-word-tag\">{thaiWord}</span>\n                            {meaning ? (\n                                <div className=\"derived-word-meaning\">{meaning}</div>\n                            ) : (\n                                <div className=\"derived-word-meaning text-muted\">-</div>\n                            )}\n                        </div>\"\"\"\nif old_jsx in content:\n    content = content.replace(old_jsx, new_jsx)",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_search",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "file_path_search = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\nwith open(file_path_search, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Update the display in VocabSearchPage\nold_p = \"\"\"<p style={{ margin: 0, color: '#555', fontFamily: 'Sarabun' }}>{item.meaning || '-'}</p>\"\"\"\nnew_div = \"\"\"<div style={{ margin: 0, color: '#555', fontFamily: 'Sarabun', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>{item.meaning || '-'}</div>\"\"\"\ncontent = content.replace(old_p, new_div)\nwith open(file_path_search, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"VocabSearchPage.js updated.\")",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "old_p",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "old_p = \"\"\"<p style={{ margin: 0, color: '#555', fontFamily: 'Sarabun' }}>{item.meaning || '-'}</p>\"\"\"\nnew_div = \"\"\"<div style={{ margin: 0, color: '#555', fontFamily: 'Sarabun', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>{item.meaning || '-'}</div>\"\"\"\ncontent = content.replace(old_p, new_div)\nwith open(file_path_search, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"VocabSearchPage.js updated.\")\n# 3. Update App.css\nfile_path_css = r'd:\\pali-dhatu-app\\src\\App.css'\ncss_append = \"\"\"\n/* Derived Words Styles - Updated for Full Meanings */",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "new_div",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "new_div = \"\"\"<div style={{ margin: 0, color: '#555', fontFamily: 'Sarabun', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>{item.meaning || '-'}</div>\"\"\"\ncontent = content.replace(old_p, new_div)\nwith open(file_path_search, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"VocabSearchPage.js updated.\")\n# 3. Update App.css\nfile_path_css = r'd:\\pali-dhatu-app\\src\\App.css'\ncss_append = \"\"\"\n/* Derived Words Styles - Updated for Full Meanings */\n.derived-word-item {",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "content = content.replace(old_p, new_div)\nwith open(file_path_search, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"VocabSearchPage.js updated.\")\n# 3. Update App.css\nfile_path_css = r'd:\\pali-dhatu-app\\src\\App.css'\ncss_append = \"\"\"\n/* Derived Words Styles - Updated for Full Meanings */\n.derived-word-item {\n  display: block;",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_css",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "file_path_css = r'd:\\pali-dhatu-app\\src\\App.css'\ncss_append = \"\"\"\n/* Derived Words Styles - Updated for Full Meanings */\n.derived-word-item {\n  display: block;\n  background: #f8f9fa;\n  padding: 15px;\n  border-radius: 8px;\n  margin-bottom: 15px;\n  border-left: 4px solid #3498db;",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "css_append",
+        "kind": 5,
+        "importPath": "scripts.update_meaning_display",
+        "description": "scripts.update_meaning_display",
+        "peekOfCode": "css_append = \"\"\"\n/* Derived Words Styles - Updated for Full Meanings */\n.derived-word-item {\n  display: block;\n  background: #f8f9fa;\n  padding: 15px;\n  border-radius: 8px;\n  margin-bottom: 15px;\n  border-left: 4px solid #3498db;\n  box-shadow: 0 1px 3px rgba(0,0,0,0.05);",
+        "detail": "scripts.update_meaning_display",
+        "documentation": {}
+    },
+    {
+        "label": "update_headers",
+        "kind": 2,
+        "importPath": "scripts.update_principles_header",
+        "description": "scripts.update_principles_header",
+        "peekOfCode": "def update_headers():\n    collection_ref = db.collection('grammar_principles')\n    docs = collection_ref.stream()\n    updated_count = 0\n    for doc in docs:\n        data = doc.to_dict()\n        if 'content_html' in data:\n            html = data['content_html']\n            # Regex to find H1 with parenthesis and split it\n            # Pattern: <h1>Text (Subtitle)</h1>",
+        "detail": "scripts.update_principles_header",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "scripts.update_principles_header",
+        "description": "scripts.update_principles_header",
+        "peekOfCode": "db = firestore.client()\ndef update_headers():\n    collection_ref = db.collection('grammar_principles')\n    docs = collection_ref.stream()\n    updated_count = 0\n    for doc in docs:\n        data = doc.to_dict()\n        if 'content_html' in data:\n            html = data['content_html']\n            # Regex to find H1 with parenthesis and split it",
+        "detail": "scripts.update_principles_header",
+        "documentation": {}
+    },
+    {
+        "label": "principles_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_principles_header_client",
+        "description": "scripts.update_principles_header_client",
+        "peekOfCode": "principles_page_path = 'D:/pali-dhatu-app/src/pages/PrinciplesPage.js'\nwith open(principles_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\nold_snippet = \"\"\"                    const docSnap = await getDoc(docRef);\n                    if (docSnap.exists()) {\n                        setContent(docSnap.data());\n                    }\"\"\"\nnew_snippet = \"\"\"                    const docSnap = await getDoc(docRef);\n                    if (docSnap.exists()) {\n                        const data = docSnap.data();",
+        "detail": "scripts.update_principles_header_client",
+        "documentation": {}
+    },
+    {
+        "label": "old_snippet",
+        "kind": 5,
+        "importPath": "scripts.update_principles_header_client",
+        "description": "scripts.update_principles_header_client",
+        "peekOfCode": "old_snippet = \"\"\"                    const docSnap = await getDoc(docRef);\n                    if (docSnap.exists()) {\n                        setContent(docSnap.data());\n                    }\"\"\"\nnew_snippet = \"\"\"                    const docSnap = await getDoc(docRef);\n                    if (docSnap.exists()) {\n                        const data = docSnap.data();\n                        // Format H1 to be 2 lines: Title <br> (Subtitle)\n                        if (data.content_html) {\n                            data.content_html = data.content_html.replace(",
+        "detail": "scripts.update_principles_header_client",
+        "documentation": {}
+    },
+    {
+        "label": "new_snippet",
+        "kind": 5,
+        "importPath": "scripts.update_principles_header_client",
+        "description": "scripts.update_principles_header_client",
+        "peekOfCode": "new_snippet = \"\"\"                    const docSnap = await getDoc(docRef);\n                    if (docSnap.exists()) {\n                        const data = docSnap.data();\n                        // Format H1 to be 2 lines: Title <br> (Subtitle)\n                        if (data.content_html) {\n                            data.content_html = data.content_html.replace(\n                                /<h1>(.*?) \\\\((.*?)\\\\)<\\\\/h1>/,\n                                '<h1>$1<br><span style=\"font-size:0.8em\">($2)</span></h1>'\n                            );\n                        }",
+        "detail": "scripts.update_principles_header_client",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.update_principles_style",
+        "description": "scripts.update_principles_style",
+        "peekOfCode": "app_css_path = 'D:/pali-dhatu-app/src/App.css'\nprinciples_page_path = 'D:/pali-dhatu-app/src/pages/PrinciplesPage.js'\n# 1. Update PrinciplesPage.js to add 'grammar-content' class\nwith open(principles_page_path, 'r', encoding='utf-8') as f:\n    js_content = f.read()\nif '<div dangerouslySetInnerHTML={{ __html: content.content_html }} />' in js_content:\n    js_content = js_content.replace(\n        '<div dangerouslySetInnerHTML={{ __html: content.content_html }} />',\n        '<div className=\"grammar-content\" dangerouslySetInnerHTML={{ __html: content.content_html }} />'\n    )",
+        "detail": "scripts.update_principles_style",
+        "documentation": {}
+    },
+    {
+        "label": "principles_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_principles_style",
+        "description": "scripts.update_principles_style",
+        "peekOfCode": "principles_page_path = 'D:/pali-dhatu-app/src/pages/PrinciplesPage.js'\n# 1. Update PrinciplesPage.js to add 'grammar-content' class\nwith open(principles_page_path, 'r', encoding='utf-8') as f:\n    js_content = f.read()\nif '<div dangerouslySetInnerHTML={{ __html: content.content_html }} />' in js_content:\n    js_content = js_content.replace(\n        '<div dangerouslySetInnerHTML={{ __html: content.content_html }} />',\n        '<div className=\"grammar-content\" dangerouslySetInnerHTML={{ __html: content.content_html }} />'\n    )\n    with open(principles_page_path, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.update_principles_style",
+        "documentation": {}
+    },
+    {
+        "label": "grammar_styles",
+        "kind": 5,
+        "importPath": "scripts.update_principles_style",
+        "description": "scripts.update_principles_style",
+        "peekOfCode": "grammar_styles = \"\"\"\n/* ===== Grammar Principles Styles (Classroom Theme) ===== */\n.grammar-content {\n  font-family: 'Sarabun', sans-serif;\n  color: #333;\n  line-height: 1.8;\n}\n.grammar-content h1 {\n  font-family: 'Niramit', serif;\n  font-size: 2.2rem;",
+        "detail": "scripts.update_principles_style",
         "documentation": {}
     },
     {
@@ -1243,6 +2582,42 @@
         "documentation": {}
     },
     {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_page_title_and_button",
+        "description": "scripts.update_search_page_title_and_button",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Update Title\ncontent = content.replace(\n    '<h1>สืบค้นธาตุบาลี</h1>', \n    '<h1>สืบค้นธาตุบาลีและคำศัพท์</h1>'\n)\n# 2. Add Search Button\n# We look for the input field and wrap it or append a button",
+        "detail": "scripts.update_search_page_title_and_button",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_search_page_title_and_button",
+        "description": "scripts.update_search_page_title_and_button",
+        "peekOfCode": "content = content.replace(\n    '<h1>สืบค้นธาตุบาลี</h1>', \n    '<h1>สืบค้นธาตุบาลีและคำศัพท์</h1>'\n)\n# 2. Add Search Button\n# We look for the input field and wrap it or append a button\nold_input_block = \"\"\"                        <input \n                            type=\"text\" \n                            placeholder=\"ค้นหาชื่อธาตุ หรือคำแปล...\" \n                            value={searchText}",
+        "detail": "scripts.update_search_page_title_and_button",
+        "documentation": {}
+    },
+    {
+        "label": "old_input_block",
+        "kind": 5,
+        "importPath": "scripts.update_search_page_title_and_button",
+        "description": "scripts.update_search_page_title_and_button",
+        "peekOfCode": "old_input_block = \"\"\"                        <input \n                            type=\"text\" \n                            placeholder=\"ค้นหาชื่อธาตุ หรือคำแปล...\" \n                            value={searchText}\n                            onChange={(e) => setSearchText(e.target.value)}\n                            className=\"search-input\"\n                        />\"\"\"\nnew_input_block = \"\"\"                        <div className=\"input-group\" style={{ display: 'flex', gap: '8px', width: '100%' }}>\n                            <input \n                                type=\"text\" ",
+        "detail": "scripts.update_search_page_title_and_button",
+        "documentation": {}
+    },
+    {
+        "label": "new_input_block",
+        "kind": 5,
+        "importPath": "scripts.update_search_page_title_and_button",
+        "description": "scripts.update_search_page_title_and_button",
+        "peekOfCode": "new_input_block = \"\"\"                        <div className=\"input-group\" style={{ display: 'flex', gap: '8px', width: '100%' }}>\n                            <input \n                                type=\"text\" \n                                placeholder=\"ค้นหาชื่อธาตุ หรือคำแปล...\" \n                                value={searchText}\n                                onChange={(e) => setSearchText(e.target.value)}\n                                className=\"search-input\"\n                                style={{ flex: 1 }}\n                            />\n                            <button className=\"search-btn\" style={{ ",
+        "detail": "scripts.update_search_page_title_and_button",
+        "documentation": {}
+    },
+    {
         "label": "search_page_path",
         "kind": 5,
         "importPath": "scripts.update_search_ui",
@@ -1324,11 +2699,110 @@
         "documentation": {}
     },
     {
-        "label": "search_page_path",
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Fix the Vocab Search Link (make it visible and distinct)\n# Old: <Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link>\n# New: Styled as a secondary button/box\nold_link = '<div style={{ marginBottom: \"15px\" }}><Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link></div>'\nnew_link = \"\"\"<div style={{ marginBottom: \"20px\" }}>\n                    <Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ \n                        display: 'inline-block',",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "old_link",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "old_link = '<div style={{ marginBottom: \"15px\" }}><Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link></div>'\nnew_link = \"\"\"<div style={{ marginBottom: \"20px\" }}>\n                    <Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ \n                        display: 'inline-block',\n                        backgroundColor: '#e67e22', \n                        color: 'white', \n                        padding: '10px 20px', \n                        borderRadius: '30px', \n                        textDecoration: 'none',\n                        fontWeight: 'bold',",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "new_link",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "new_link = \"\"\"<div style={{ marginBottom: \"20px\" }}>\n                    <Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ \n                        display: 'inline-block',\n                        backgroundColor: '#e67e22', \n                        color: 'white', \n                        padding: '10px 20px', \n                        borderRadius: '30px', \n                        textDecoration: 'none',\n                        fontWeight: 'bold',\n                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "input_search_str",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "input_search_str = 'className=\"search-input\"'\n# We want to add style={{ flex: 1, backgroundColor: '#f0f2f5' }} \n# Currently it has style={{ flex: 1 }}\nold_style = 'style={{ flex: 1 }}'\nnew_style = \"style={{ flex: 1, backgroundColor: '#f8f9fa', border: '2px solid #bdc3c7' }}\"\n# Be careful not to replace other inputs if any (there's only one search-input in this file usually)\n# But wait, I just wrote the file with `style={{ flex: 1 }}` in the previous step.\nif old_style in content:\n    content = content.replace(old_style, new_style)\nwith open(file_path, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "old_style",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "old_style = 'style={{ flex: 1 }}'\nnew_style = \"style={{ flex: 1, backgroundColor: '#f8f9fa', border: '2px solid #bdc3c7' }}\"\n# Be careful not to replace other inputs if any (there's only one search-input in this file usually)\n# But wait, I just wrote the file with `style={{ flex: 1 }}` in the previous step.\nif old_style in content:\n    content = content.replace(old_style, new_style)\nwith open(file_path, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"SearchPage.js styles updated.\")",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "new_style",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_styles",
+        "description": "scripts.update_search_ui_styles",
+        "peekOfCode": "new_style = \"style={{ flex: 1, backgroundColor: '#f8f9fa', border: '2px solid #bdc3c7' }}\"\n# Be careful not to replace other inputs if any (there's only one search-input in this file usually)\n# But wait, I just wrote the file with `style={{ flex: 1 }}` in the previous step.\nif old_style in content:\n    content = content.replace(old_style, new_style)\nwith open(file_path, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"SearchPage.js styles updated.\")",
+        "detail": "scripts.update_search_ui_styles",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
         "kind": 5,
         "importPath": "scripts.update_search_ui_v2",
         "description": "scripts.update_search_ui_v2",
-        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Remove \"(Affix Group)\"\nif \"(Affix Group)\" in content:\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    print(\"Removed (Affix Group) from label\")\n# 2. Style search-results-info\n# We can add inline styles or just rely on CSS class update.\n# Let's check the JSX structure.",
+        "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Update Filter Logic (Remove arth_pali and udaharana)\nold_filter = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && String(d.arth_pali).toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && (Array.isArray(d.udaharana) ? d.udaharana.join(' ') : String(d.udaharana)).toLowerCase().includes(searchLower));\"\"\"\nnew_filter = \"\"\"            const matchesText = !searchText || ",
+        "detail": "scripts.update_search_ui_v2",
+        "documentation": {}
+    },
+    {
+        "label": "old_filter",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "old_filter = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && String(d.arth_pali).toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && (Array.isArray(d.udaharana) ? d.udaharana.join(' ') : String(d.udaharana)).toLowerCase().includes(searchLower));\"\"\"\nnew_filter = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower));\"\"\"\n# Try to find a substring if exact match fails (due to whitespace)\nif old_filter not in content:",
+        "detail": "scripts.update_search_ui_v2",
+        "documentation": {}
+    },
+    {
+        "label": "new_filter",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "new_filter = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower));\"\"\"\n# Try to find a substring if exact match fails (due to whitespace)\nif old_filter not in content:\n    # Construct a simpler regex or just look for the block\n    start_marker = \"const matchesText = !searchText ||\"\n    end_marker = \"return matchesGroup && matchesText;\"\n    start_idx = content.find(start_marker)\n    end_idx = content.find(end_marker)",
+        "detail": "scripts.update_search_ui_v2",
+        "documentation": {}
+    },
+    {
+        "label": "old_placeholder",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "old_placeholder = 'placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\"'\nnew_placeholder = 'placeholder=\"ค้นหาชื่อธาตุ หรือคำแปล...\"'\ncontent = content.replace(old_placeholder, new_placeholder)\n# 3. Add Link to Vocab Search\n# Insert it after <h1>\nif '<h1>สืบค้นธาตุบาลี</h1>' in content and 'Link to=\"/search-vocab\"' not in content:\n    content = content.replace(\n        '<h1>สืบค้นธาตุบาลี</h1>',\n        '<h1>สืบค้นธาตุบาลี</h1>\\n                <div style={{ marginBottom: \"15px\" }}><Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link></div>'\n    )",
+        "detail": "scripts.update_search_ui_v2",
+        "documentation": {}
+    },
+    {
+        "label": "new_placeholder",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "new_placeholder = 'placeholder=\"ค้นหาชื่อธาตุ หรือคำแปล...\"'\ncontent = content.replace(old_placeholder, new_placeholder)\n# 3. Add Link to Vocab Search\n# Insert it after <h1>\nif '<h1>สืบค้นธาตุบาลี</h1>' in content and 'Link to=\"/search-vocab\"' not in content:\n    content = content.replace(\n        '<h1>สืบค้นธาตุบาลี</h1>',\n        '<h1>สืบค้นธาตุบาลี</h1>\\n                <div style={{ marginBottom: \"15px\" }}><Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link></div>'\n    )\nwith open(file_path, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.update_search_ui_v2",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "content = content.replace(old_placeholder, new_placeholder)\n# 3. Add Link to Vocab Search\n# Insert it after <h1>\nif '<h1>สืบค้นธาตุบาลี</h1>' in content and 'Link to=\"/search-vocab\"' not in content:\n    content = content.replace(\n        '<h1>สืบค้นธาตุบาลี</h1>',\n        '<h1>สืบค้นธาตุบาลี</h1>\\n                <div style={{ marginBottom: \"15px\" }}><Link to=\"/search-vocab\" className=\"vocab-search-link\" style={{ color: \"#fff\", textDecoration: \"underline\" }}>🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)</Link></div>'\n    )\nwith open(file_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
         "detail": "scripts.update_search_ui_v2",
         "documentation": {}
     },
@@ -1420,6 +2894,141 @@
         "description": "scripts.update_ui_modern",
         "peekOfCode": "detail_card_style = \"\"\"\n.detail-card {\n    background-color: var(--white);\n    border-radius: 16px;\n    padding: 24px;\n    box-shadow: 0 8px 20px rgba(0,0,0,0.05);\n    margin-bottom: 0; /* Let grid handle gap */\n    transition: transform 0.2s;\n}\n.detail-card:hover {",
         "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements",
+        "description": "scripts.update_ui_refinements",
+        "peekOfCode": "app_css_path = \"D:/pali-dhatu-app/src/App.css\"\nverse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\nheader_path = \"D:/pali-dhatu-app/src/components/Header.js\"\n# 1. Update App.css (Remove verse background)\ntry:\n    with open(app_css_path, 'r', encoding='utf-8') as f:\n        css_content = f.read()\n    # Find the rule and replace it\n    old_rule = \"background-color: #f8f9fa; /* Light bg for readability */\"\n    new_rule = \"background-color: transparent; /* Transparent as requested */\"",
+        "detail": "scripts.update_ui_refinements",
+        "documentation": {}
+    },
+    {
+        "label": "verse_detail_path",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements",
+        "description": "scripts.update_ui_refinements",
+        "peekOfCode": "verse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\nheader_path = \"D:/pali-dhatu-app/src/components/Header.js\"\n# 1. Update App.css (Remove verse background)\ntry:\n    with open(app_css_path, 'r', encoding='utf-8') as f:\n        css_content = f.read()\n    # Find the rule and replace it\n    old_rule = \"background-color: #f8f9fa; /* Light bg for readability */\"\n    new_rule = \"background-color: transparent; /* Transparent as requested */\"\n    if old_rule in css_content:",
+        "detail": "scripts.update_ui_refinements",
+        "documentation": {}
+    },
+    {
+        "label": "header_path",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements",
+        "description": "scripts.update_ui_refinements",
+        "peekOfCode": "header_path = \"D:/pali-dhatu-app/src/components/Header.js\"\n# 1. Update App.css (Remove verse background)\ntry:\n    with open(app_css_path, 'r', encoding='utf-8') as f:\n        css_content = f.read()\n    # Find the rule and replace it\n    old_rule = \"background-color: #f8f9fa; /* Light bg for readability */\"\n    new_rule = \"background-color: transparent; /* Transparent as requested */\"\n    if old_rule in css_content:\n        css_content = css_content.replace(old_rule, new_rule)",
+        "detail": "scripts.update_ui_refinements",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "app_css_path = 'D:/pali-dhatu-app/src/App.css'\ndhatu_detail_path = 'D:/pali-dhatu-app/src/components/DhatuDetail.js'\n# 1. Update App.css\nwith open(app_css_path, 'r', encoding='utf-8') as f:\n    css_content = f.read()\n# Update katha-grid-display\nif '.katha-grid-display {' in css_content:\n    css_content = css_content.replace(\n        '.katha-grid-display {',\n        '.katha-grid-display {\\n  max-width: 700px;\\n  margin: 1.5rem auto;\\n  padding: 0 1.5rem;'",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "dhatu_detail_path",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "dhatu_detail_path = 'D:/pali-dhatu-app/src/components/DhatuDetail.js'\n# 1. Update App.css\nwith open(app_css_path, 'r', encoding='utf-8') as f:\n    css_content = f.read()\n# Update katha-grid-display\nif '.katha-grid-display {' in css_content:\n    css_content = css_content.replace(\n        '.katha-grid-display {',\n        '.katha-grid-display {\\n  max-width: 700px;\\n  margin: 1.5rem auto;\\n  padding: 0 1.5rem;'\n    )",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "js_content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "js_content = js_content.replace(\n    \"full = 'ธาตุปทีปิกา (รวบรวมโดย พระมหาโพธิวงศาจารย์)';\",\n    \"full = 'ธาตุปทีปิกา';\"\n)\njs_content = js_content.replace(\n    \"full = 'พจนานุกรมธาตุ (พระมหาโพธิวงศาจารย์)';\",\n    \"full = 'พจนานุกรมธาตุ';\"\n)\n# Add formatExample function\nformat_func = \"\"\"",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "js_content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "js_content = js_content.replace(\n    \"full = 'พจนานุกรมธาตุ (พระมหาโพธิวงศาจารย์)';\",\n    \"full = 'พจนานุกรมธาตุ';\"\n)\n# Add formatExample function\nformat_func = \"\"\"\n  const formatExample = (text) => {\n      if (!text) return text;\n      // Ensure space after . and ,\n      return text.replace(/([.,])(?!\\\\s)/g, '$1 ');",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "format_func",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "format_func = \"\"\"\n  const formatExample = (text) => {\n      if (!text) return text;\n      // Ensure space after . and ,\n      return text.replace(/([.,])(?!\\\\s)/g, '$1 ');\n  };\n  const groupCode\"\"\"\nif \"const groupCode\" in js_content and \"const formatExample\" not in js_content:\n    js_content = js_content.replace(\"const groupCode\", format_func)\n# Apply formatExample to list items",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "js_content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_refinements_v2",
+        "description": "scripts.update_ui_refinements_v2",
+        "peekOfCode": "js_content = js_content.replace(\n    \"<li key={index}>{item}</li>\",\n    \"<li key={index}>{formatExample(item)}</li>\"\n)\nwith open(dhatu_detail_path, 'w', encoding='utf-8') as f:\n    f.write(js_content)\nprint(f\"Updated {dhatu_detail_path}\")",
+        "detail": "scripts.update_ui_refinements_v2",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_search",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "file_path_search = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\nwith open(file_path_search, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Modify title with inline style for responsive font size (using clamp or vw, but let's stick to user request \"reduce size\")\n# The user said \"overflows on phone\", so let's use a smaller base size or clamp.\n# Current: <h1>สืบค้นธาตุบาลีและคำศัพท์</h1>\n# New: <h1 style={{ fontSize: 'min(2rem, 8vw)' }}>สืบค้นธาตุบาลีและคำศัพท์</h1>\ncontent = content.replace(\n    '<h1>สืบค้นธาตุบาลีและคำศัพท์</h1>', \n    '<h1 style={{ fontSize: \"min(2rem, 7vw)\" }}>สืบค้นธาตุบาลีและคำศัพท์</h1>'",
+        "detail": "scripts.update_ui_text_size",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "content = content.replace(\n    '<h1>สืบค้นธาตุบาลีและคำศัพท์</h1>', \n    '<h1 style={{ fontSize: \"min(2rem, 7vw)\" }}>สืบค้นธาตุบาลีและคำศัพท์</h1>'\n)\n# Remove English text from Link\n# Old: 🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)\n# New: 🔍 ไปที่หน้าค้นหาศัพท์\ncontent = content.replace(\n    '🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)', \n    '🔍 ไปที่หน้าค้นหาศัพท์'",
+        "detail": "scripts.update_ui_text_size",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "content = content.replace(\n    '🔍 ไปที่หน้าค้นหาศัพท์ (Vocabulary Search)', \n    '🔍 ไปที่หน้าค้นหาศัพท์'\n)\nwith open(file_path_search, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"SearchPage.js updated.\")\n# 2. Update VocabSearchPage.js\nfile_path_vocab = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\nwith open(file_path_vocab, 'r', encoding='utf-8') as f:",
+        "detail": "scripts.update_ui_text_size",
+        "documentation": {}
+    },
+    {
+        "label": "file_path_vocab",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "file_path_vocab = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\nwith open(file_path_vocab, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Update Title (remove English)\n# Old: <h1>สืบค้นศัพท์บาลี (Vocabulary)</h1>\n# New: <h1>สืบค้นศัพท์บาลี</h1>\ncontent = content.replace(\n    '<h1>สืบค้นศัพท์บาลี (Vocabulary)</h1>', \n    '<h1>สืบค้นศัพท์บาลี</h1>'\n)",
+        "detail": "scripts.update_ui_text_size",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "content = content.replace(\n    '<h1>สืบค้นศัพท์บาลี (Vocabulary)</h1>', \n    '<h1>สืบค้นศัพท์บาลี</h1>'\n)\n# Update Back Link (remove English)\n# Old: ⬅ กลับไปค้นหาธาตุ (Root Search)\n# New: ⬅ กลับไปค้นหาธาตุ\ncontent = content.replace(\n    '⬅ กลับไปค้นหาธาตุ (Root Search)', \n    '⬅ กลับไปค้นหาธาตุ'",
+        "detail": "scripts.update_ui_text_size",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_text_size",
+        "description": "scripts.update_ui_text_size",
+        "peekOfCode": "content = content.replace(\n    '⬅ กลับไปค้นหาธาตุ (Root Search)', \n    '⬅ กลับไปค้นหาธาตุ'\n)\nwith open(file_path_vocab, 'w', encoding='utf-8') as f:\n    f.write(content)\nprint(\"VocabSearchPage.js updated.\")",
+        "detail": "scripts.update_ui_text_size",
         "documentation": {}
     },
     {

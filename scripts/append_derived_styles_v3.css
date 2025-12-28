@@ -1,0 +1,72 @@
+
+/* Enhanced/Revised Derived Words Styles */
+.derived-word-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.derived-word-header {
+  background: #fff; /* Changed from gray to white to be cleaner */
+  padding: 15px 20px;
+  border-bottom: 2px solid #f0f0f0;
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+}
+
+.derived-word-thai {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50; /* Strong dark color */
+}
+
+.derived-word-roman {
+  font-family: 'Niramit', serif;
+  font-size: 1.1rem;
+  color: #95a5a6;
+  font-style: italic;
+}
+
+.derived-meaning-list {
+  padding: 15px;
+  background-color: #fff;
+}
+
+.dict-entry-box {
+  background-color: #fcfcfc; /* Very light background */
+  border: 1px solid #f0f0f0; /* Subtle border */
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.dict-entry-box:last-child {
+  margin-bottom: 0;
+}
+
+.dict-label {
+  font-size: 0.85rem;
+  color: #999; /* Faint/Subtle */
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.dict-label i {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.meaning-text {
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.6;
+  padding-left: 5px;
+}
