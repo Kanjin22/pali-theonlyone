@@ -613,6 +613,33 @@
         "documentation": {}
     },
     {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.refine_search_ui",
+        "description": "scripts.refine_search_ui",
+        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Fix the parens issue: Only show parens if arth_pali exists\nold_span = \"\"\"<span className=\"pali-meaning\">({dhatu.arth_pali})</span>\"\"\"\nnew_span = \"\"\"{dhatu.arth_pali ? <span className=\"pali-meaning\">({dhatu.arth_pali})</span> : null}\"\"\"\nif old_span in content:\n    content = content.replace(old_span, new_span)\n    print(\"Fixed empty parens issue.\")\n    with open(search_page_path, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.refine_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "old_span",
+        "kind": 5,
+        "importPath": "scripts.refine_search_ui",
+        "description": "scripts.refine_search_ui",
+        "peekOfCode": "old_span = \"\"\"<span className=\"pali-meaning\">({dhatu.arth_pali})</span>\"\"\"\nnew_span = \"\"\"{dhatu.arth_pali ? <span className=\"pali-meaning\">({dhatu.arth_pali})</span> : null}\"\"\"\nif old_span in content:\n    content = content.replace(old_span, new_span)\n    print(\"Fixed empty parens issue.\")\n    with open(search_page_path, 'w', encoding='utf-8') as f:\n        f.write(content)\nelse:\n    print(\"Pattern not found (maybe already fixed or different format).\")",
+        "detail": "scripts.refine_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "new_span",
+        "kind": 5,
+        "importPath": "scripts.refine_search_ui",
+        "description": "scripts.refine_search_ui",
+        "peekOfCode": "new_span = \"\"\"{dhatu.arth_pali ? <span className=\"pali-meaning\">({dhatu.arth_pali})</span> : null}\"\"\"\nif old_span in content:\n    content = content.replace(old_span, new_span)\n    print(\"Fixed empty parens issue.\")\n    with open(search_page_path, 'w', encoding='utf-8') as f:\n        f.write(content)\nelse:\n    print(\"Pattern not found (maybe already fixed or different format).\")",
+        "detail": "scripts.refine_search_ui",
+        "documentation": {}
+    },
+    {
         "label": "load_data",
         "kind": 2,
         "importPath": "scripts.scrape_root_details",
@@ -1051,6 +1078,87 @@
         "description": "scripts.update_search_page",
         "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction SearchPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
         "detail": "scripts.update_search_page",
+        "documentation": {}
+    },
+    {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\napp_css_path = r\"D:\\pali-dhatu-app\\src\\App.css\"\n# 1. Update SearchPage.js\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    search_content = f.read()\n# Update fetchData to include arth_pali\nold_fetch = \"\"\"                const data = snapshot.docs.map(doc => ({\n                    id: doc.id,\n                    dhatu_word: doc.data().dhatu_word,\n                    arth_thai: doc.data().arth_thai,",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "app_css_path = r\"D:\\pali-dhatu-app\\src\\App.css\"\n# 1. Update SearchPage.js\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    search_content = f.read()\n# Update fetchData to include arth_pali\nold_fetch = \"\"\"                const data = snapshot.docs.map(doc => ({\n                    id: doc.id,\n                    dhatu_word: doc.data().dhatu_word,\n                    arth_thai: doc.data().arth_thai,\n                    mawat_dhatu: doc.data().mawat_dhatu,",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "old_fetch",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "old_fetch = \"\"\"                const data = snapshot.docs.map(doc => ({\n                    id: doc.id,\n                    dhatu_word: doc.data().dhatu_word,\n                    arth_thai: doc.data().arth_thai,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu\n                }));\"\"\"\nnew_fetch = \"\"\"                const data = snapshot.docs.map(doc => ({\n                    id: doc.id,\n                    dhatu_word: doc.data().dhatu_word,",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "new_fetch",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "new_fetch = \"\"\"                const data = snapshot.docs.map(doc => ({\n                    id: doc.id,\n                    dhatu_word: doc.data().dhatu_word,\n                    arth_thai: doc.data().arth_thai,\n                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu\n                }));\"\"\"\nif old_fetch in search_content:\n    search_content = search_content.replace(old_fetch, new_fetch)",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "old_filter",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "old_filter = \"\"\"                                (d.arth_thai && d.arth_thai.toLowerCase().includes(searchLower));\"\"\"\nnew_filter = \"\"\"                                (d.arth_thai && d.arth_thai.toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower));\"\"\"\nif old_filter in search_content:\n    search_content = search_content.replace(old_filter, new_filter)\n# Update JSX Render\nold_jsx = \"\"\"            <div className=\"results-grid\">\n                {displayedData.map(dhatu => (\n                    <Link to={`/dhatu/${dhatu.id}`} key={dhatu.id} className=\"dhatu-card-mini\">\n                        <div className=\"card-top\">",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "new_filter",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "new_filter = \"\"\"                                (d.arth_thai && d.arth_thai.toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower));\"\"\"\nif old_filter in search_content:\n    search_content = search_content.replace(old_filter, new_filter)\n# Update JSX Render\nold_jsx = \"\"\"            <div className=\"results-grid\">\n                {displayedData.map(dhatu => (\n                    <Link to={`/dhatu/${dhatu.id}`} key={dhatu.id} className=\"dhatu-card-mini\">\n                        <div className=\"card-top\">\n                            <span className=\"id-badge\">#{dhatu.anukrom_dhatu}</span>",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "old_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "old_jsx = \"\"\"            <div className=\"results-grid\">\n                {displayedData.map(dhatu => (\n                    <Link to={`/dhatu/${dhatu.id}`} key={dhatu.id} className=\"dhatu-card-mini\">\n                        <div className=\"card-top\">\n                            <span className=\"id-badge\">#{dhatu.anukrom_dhatu}</span>\n                            <span className=\"group-badge\">{dhatu.mawat_dhatu}</span>\n                        </div>\n                        <h3>{dhatu.dhatu_word}</h3>\n                        <p>{dhatu.arth_thai}</p>\n                    </Link>",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "new_jsx",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "new_jsx = \"\"\"            <div className=\"results-grid\">\n                {displayedData.map(dhatu => (\n                    <Link to={`/dhatu/${dhatu.id}`} key={dhatu.id} className=\"dhatu-card-mini\">\n                        <div className=\"card-top\">\n                            <span className=\"dhatu-name\">{dhatu.dhatu_word}</span>\n                            <span className=\"group-badge\">{dhatu.mawat_dhatu}</span>\n                        </div>\n                        <div className=\"dhatu-meaning-container\">\n                            <span className=\"pali-meaning\">({dhatu.arth_pali})</span>\n                            <span className=\"thai-meaning\"> {dhatu.arth_thai}</span>",
+        "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "new_styles",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui",
+        "description": "scripts.update_search_ui",
+        "peekOfCode": "new_styles = \"\"\"\n/* Updated Search Result Styles */\n.dhatu-name {\n  font-size: 1.5rem;\n  font-weight: bold;\n  color: var(--primary-color);\n}\n.dhatu-meaning-container {\n  margin-top: 0.5rem;\n  font-size: 1rem;",
+        "detail": "scripts.update_search_ui",
         "documentation": {}
     },
     {
