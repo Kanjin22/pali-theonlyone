@@ -206,6 +206,12 @@ const PaliLookup = {
     findAll: function(key, dbs) {
         let results = [];
         
+        // 0. Root Dictionary
+        if (dbs.roots && dbs.roots[key] && Array.isArray(dbs.roots[key])) {
+             const entries = dbs.roots[key].map(e => `[${e.group}] ${e.meaning} ${e.example ? '('+e.example+')' : ''}`);
+             results.push({ details: entries, source: 'พจนานุกรมธาตุ', word: key });
+        }
+
         // 1. Thai Dictionaries (Ordered: Tananunto, E-Tipitaka, New Gen, General)
         if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย (ธรรมบทภาค ๑-๘)', word: key });
         if (dbs.etipitaka && dbs.etipitaka[key]) results.push({ details: [dbs.etipitaka[key]], source: 'พจนานุกรม E-Tipitaka', word: key });

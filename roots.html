@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พจนานุกรมธาตุ (Pali Roots) - ระบบการเรียนบาลีออนไลน์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header-section { text-align: center; margin-bottom: 40px; }
+        .page-title { font-size: 2.5rem; color: #2c3e50; font-weight: 700; margin-bottom: 10px; }
+        .page-subtitle { color: #7f8c8d; font-size: 1.2rem; }
+        
+        .search-box-container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+        }
+
+        .search-input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Sarabun', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            border-color: #27ae60;
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 1.2rem;
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .root-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+
+        .root-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            background: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .root-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Niramit', serif;
+        }
+
+        .root-group {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .root-meaning {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .root-example {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-btn:hover { color: #2c3e50; }
+
+        .stats-text {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-top: -20px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #27ae60;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1 class="page-title"><i class="fa-solid fa-seedling" style="color: #27ae60;"></i> พจนานุกรมธาตุ</h1>
+            <div class="page-subtitle">ค้นหาธาตุ ปัจจัย และคำแปล (Pali Roots Dictionary)</div>
+        </div>
+
+        <div class="search-box-container">
+            <div class="search-input-group">
+                <input type="text" id="searchInput" class="search-input" placeholder="พิมพ์ชื่อธาตุ หรือ ความหมาย (เช่น กก, ไป, ถึง)..." autocomplete="off">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
+            <div class="stats-text" id="statsDisplay">กำลังโหลดฐานข้อมูล...</div>
+        </div>
+
+        <div class="spinner" id="spinner"></div>
+        <div id="resultsContainer" class="results-container"></div>
+
+        <div style="text-align: center;">
+            <a href="dictionary_links.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้ารวมลิงค์</a>
+        </div>
+    </div>
+
+    <!-- Load Roots Data -->
+    <script src="data/vocab-roots.js"></script>
+
+    <script>
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const statsDisplay = document.getElementById('statsDisplay');
+        const spinner = document.getElementById('spinner');
+
+        let allRoots = []; // Array of { key: "กก", ...data }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            if (typeof vocabRoots !== 'undefined') {
+                processData();
+            } else {
+                statsDisplay.innerText = "ไม่พบฐานข้อมูลธาตุ (vocab-roots.js)";
+            }
+        });
+
+        function processData() {
+            spinner.style.display = 'block';
+            
+            // Convert object to searchable array
+            // vocabRoots = { "root": [ {meaning, example, group}, ... ] }
+            setTimeout(() => {
+                const keys = Object.keys(vocabRoots);
+                allRoots = keys.map(key => {
+                    return {
+                        root: key,
+                        entries: vocabRoots[key]
+                    };
+                });
+                
+                statsDisplay.innerText = `มีข้อมูลธาตุทั้งหมด ${allRoots.length} คำ (รวม ${keys.reduce((acc, k) => acc + vocabRoots[k].length, 0)} ความหมาย)`;
+                spinner.style.display = 'none';
+                
+                // Show some random roots initially or empty?
+                // Let's show nothing or top 5
+                displayResults(allRoots.slice(0, 5));
+            }, 10);
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            if (query.length < 1) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            performSearch(query);
+        });
+
+        function performSearch(query) {
+            // Filter logic
+            const results = allRoots.filter(item => {
+                // Match Root Name
+                if (item.root.includes(query)) return true;
+                
+                // Match inside entries (meaning, group)
+                return item.entries.some(entry => {
+                    return (entry.meaning && entry.meaning.toLowerCase().includes(query)) ||
+                           (entry.group && entry.group.toLowerCase().includes(query));
+                });
+            });
+
+            displayResults(results.slice(0, 50)); // Limit 50 results
+        }
+
+        function displayResults(items) {
+            resultsContainer.innerHTML = '';
+            
+            if (items.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div style="text-align:center; color:#95a5a6; padding: 40px;">
+                        <i class="fa-regular fa-face-frown" style="font-size:3rem; margin-bottom:15px;"></i>
+                        <p>ไม่พบข้อมูลที่ค้นหา</p>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach(item => {
+                item.entries.forEach(entry => {
+                    const card = document.createElement('div');
+                    card.className = 'root-card';
+                    
+                    const groupHtml = entry.group ? `<span class="root-group"><i class="fa-solid fa-layer-group"></i> ${entry.group}</span>` : '';
+                    
+                    const exampleHtml = entry.example 
+                        ? `<div class="root-example"><span class="label">อุทาหรณ์:</span> ${highlightText(entry.example, searchInput.value)}</div>` 
+                        : '';
+
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <span class="root-title">${highlightText(item.root, searchInput.value)}</span>
+                            ${groupHtml}
+                        </div>
+                        <div class="card-body">
+                            <div class="root-meaning">
+                                <span class="label">ความหมาย:</span> ${highlightText(entry.meaning, searchInput.value)}
+                            </div>
+                            ${exampleHtml}
+                        </div>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            });
+        }
+        
+        function highlightText(text, query) {
+            if (!query || !text) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+    </script>
+</body>
+</html>
