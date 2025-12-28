@@ -1,20 +1,20 @@
 [
     {
-        "label": "sqlite3",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sqlite3",
-        "description": "sqlite3",
-        "detail": "sqlite3",
-        "documentation": {}
-    },
-    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "json",
         "description": "json",
         "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
         "documentation": {}
     },
     {
@@ -27,12 +27,142 @@
         "documentation": {}
     },
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "{",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "{",
+        "description": "{",
+        "detail": "{",
+        "documentation": {}
+    },
+    {
+        "label": "LoadingSpinner",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "LoadingSpinner",
+        "description": "LoadingSpinner",
+        "detail": "LoadingSpinner",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "re",
         "description": "re",
         "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "total_entries",
+        "kind": 5,
+        "importPath": "scripts.check_stats",
+        "description": "scripts.check_stats",
+        "peekOfCode": "total_entries = sum(len(entries) for entries in data.values())\nunique_roots = len(data)\nprint(f\"Unique Roots: {unique_roots}\")\nprint(f\"Total Entries: {total_entries}\")",
+        "detail": "scripts.check_stats",
+        "documentation": {}
+    },
+    {
+        "label": "unique_roots",
+        "kind": 5,
+        "importPath": "scripts.check_stats",
+        "description": "scripts.check_stats",
+        "peekOfCode": "unique_roots = len(data)\nprint(f\"Unique Roots: {unique_roots}\")\nprint(f\"Total Entries: {total_entries}\")",
+        "detail": "scripts.check_stats",
+        "documentation": {}
+    },
+    {
+        "label": "input_file",
+        "kind": 5,
+        "importPath": "scripts.convert_detailed_roots",
+        "description": "scripts.convert_detailed_roots",
+        "peekOfCode": "input_file = \"data/vocab-roots-detailed.json\"\noutput_file = \"data/vocab-roots.js\"\nwith open(input_file, \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\nprint(f\"Loaded {len(data)} roots.\")\n# Transform to JS object string\njs_content = \"const vocabRoots = \" + json.dumps(data, ensure_ascii=False, indent=2) + \";\"\nwith open(output_file, \"w\", encoding=\"utf-8\") as f:\n    f.write(js_content)\nprint(f\"Saved to {output_file}\")",
+        "detail": "scripts.convert_detailed_roots",
+        "documentation": {}
+    },
+    {
+        "label": "output_file",
+        "kind": 5,
+        "importPath": "scripts.convert_detailed_roots",
+        "description": "scripts.convert_detailed_roots",
+        "peekOfCode": "output_file = \"data/vocab-roots.js\"\nwith open(input_file, \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\nprint(f\"Loaded {len(data)} roots.\")\n# Transform to JS object string\njs_content = \"const vocabRoots = \" + json.dumps(data, ensure_ascii=False, indent=2) + \";\"\nwith open(output_file, \"w\", encoding=\"utf-8\") as f:\n    f.write(js_content)\nprint(f\"Saved to {output_file}\")",
+        "detail": "scripts.convert_detailed_roots",
+        "documentation": {}
+    },
+    {
+        "label": "js_content",
+        "kind": 5,
+        "importPath": "scripts.convert_detailed_roots",
+        "description": "scripts.convert_detailed_roots",
+        "peekOfCode": "js_content = \"const vocabRoots = \" + json.dumps(data, ensure_ascii=False, indent=2) + \";\"\nwith open(output_file, \"w\", encoding=\"utf-8\") as f:\n    f.write(js_content)\nprint(f\"Saved to {output_file}\")",
+        "detail": "scripts.convert_detailed_roots",
         "documentation": {}
     },
     {
@@ -63,6 +193,24 @@
         "documentation": {}
     },
     {
+        "label": "url",
+        "kind": 5,
+        "importPath": "scripts.fetch_detail_raw",
+        "description": "scripts.fetch_detail_raw",
+        "peekOfCode": "url = \"https://palidict.com/node/4236\"\nprint(f\"Fetching {url}...\")\nresponse = requests.get(url)\nwith open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:\n    f.write(response.text)\nprint(\"Saved to temp_detail.html\")",
+        "detail": "scripts.fetch_detail_raw",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "kind": 5,
+        "importPath": "scripts.fetch_detail_raw",
+        "description": "scripts.fetch_detail_raw",
+        "peekOfCode": "response = requests.get(url)\nwith open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:\n    f.write(response.text)\nprint(\"Saved to temp_detail.html\")",
+        "detail": "scripts.fetch_detail_raw",
+        "documentation": {}
+    },
+    {
         "label": "inspect_db",
         "kind": 2,
         "importPath": "scripts.inspect_db",
@@ -78,6 +226,285 @@
         "description": "scripts.inspect_db",
         "peekOfCode": "db_path = r'd:\\pali-theonlyone\\data\\DB\\palitothai_newgen.db'\ndef inspect_db():\n    if not os.path.exists(db_path):\n        print(f\"Error: Database file not found at {db_path}\")\n        print(\"Please copy 'palitothai_newgen' to 'd:\\\\pali-theonlyone\\\\data\\\\'\")\n        return\n    try:\n        conn = sqlite3.connect(db_path)\n        cursor = conn.cursor()\n        # Get all tables",
         "detail": "scripts.inspect_db",
+        "documentation": {}
+    },
+    {
+        "label": "url",
+        "kind": 5,
+        "importPath": "scripts.inspect_roots_page",
+        "description": "scripts.inspect_roots_page",
+        "peekOfCode": "url = \"https://palidict.com/พจนานุกรมธาตุ\"\nprint(f\"Fetching {url}...\")\ntry:\n    response = requests.get(url, timeout=10)\n    response.raise_for_status()\n    print(\"Fetch successful.\")\nexcept Exception as e:\n    print(f\"Error fetching: {e}\")\n    exit(1)\nsoup = BeautifulSoup(response.content, 'html.parser')",
+        "detail": "scripts.inspect_roots_page",
+        "documentation": {}
+    },
+    {
+        "label": "soup",
+        "kind": 5,
+        "importPath": "scripts.inspect_roots_page",
+        "description": "scripts.inspect_roots_page",
+        "peekOfCode": "soup = BeautifulSoup(response.content, 'html.parser')\n# Find the first few rows\nrows = soup.find_all('tr')\nprint(f\"Found {len(rows)} rows.\")\nfor i, row in enumerate(rows[:5]):\n    print(f\"--- Row {i} ---\")\n    cols = row.find_all('td')\n    for j, col in enumerate(cols):\n        print(f\"Col {j}: {col.get_text(strip=True)}\")\n        # Check for links",
+        "detail": "scripts.inspect_roots_page",
+        "documentation": {}
+    },
+    {
+        "label": "rows",
+        "kind": 5,
+        "importPath": "scripts.inspect_roots_page",
+        "description": "scripts.inspect_roots_page",
+        "peekOfCode": "rows = soup.find_all('tr')\nprint(f\"Found {len(rows)} rows.\")\nfor i, row in enumerate(rows[:5]):\n    print(f\"--- Row {i} ---\")\n    cols = row.find_all('td')\n    for j, col in enumerate(cols):\n        print(f\"Col {j}: {col.get_text(strip=True)}\")\n        # Check for links\n        links = col.find_all('a')\n        for link in links:",
+        "detail": "scripts.inspect_roots_page",
+        "documentation": {}
+    },
+    {
+        "label": "url",
+        "kind": 5,
+        "importPath": "scripts.inspect_root_detail",
+        "description": "scripts.inspect_root_detail",
+        "peekOfCode": "url = \"https://palidict.com/node/4236\"\nprint(f\"Fetching {url}...\")\nheaders = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n}\ntry:\n    response = requests.get(url, headers=headers, timeout=10)\n    print(f\"Status: {response.status_code}\")\n    response.raise_for_status()\n    with open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:",
+        "detail": "scripts.inspect_root_detail",
+        "documentation": {}
+    },
+    {
+        "label": "headers",
+        "kind": 5,
+        "importPath": "scripts.inspect_root_detail",
+        "description": "scripts.inspect_root_detail",
+        "peekOfCode": "headers = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n}\ntry:\n    response = requests.get(url, headers=headers, timeout=10)\n    print(f\"Status: {response.status_code}\")\n    response.raise_for_status()\n    with open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:\n        f.write(response.text)\n    print(\"Saved HTML to temp_detail.html\")",
+        "detail": "scripts.inspect_root_detail",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "def load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:\n            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:\n                return json.load(f)\n        except json.JSONDecodeError:\n            return {}\n    return {}\ndef save_data(data):\n    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "save_data",
+        "kind": 2,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "def save_data(data):\n    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:\n        json.dump(data, f, ensure_ascii=False, indent=2)\ndef extract_text(soup, selector):\n    element = soup.select_one(selector)\n    if element:\n        # Get text, preserving newlines for readability if needed, but mostly we want clean text\n        return element.get_text(separator=' ', strip=True)\n    return \"\"\ndef scrape_details():",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "extract_text",
+        "kind": 2,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "def extract_text(soup, selector):\n    element = soup.select_one(selector)\n    if element:\n        # Get text, preserving newlines for readability if needed, but mostly we want clean text\n        return element.get_text(separator=' ', strip=True)\n    return \"\"\ndef scrape_details():\n    # Load links\n    with open(INPUT_FILE, 'r', encoding='utf-8') as f:\n        links = json.load(f)",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "scrape_details",
+        "kind": 2,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "def scrape_details():\n    # Load links\n    with open(INPUT_FILE, 'r', encoding='utf-8') as f:\n        links = json.load(f)\n    # Load existing progress\n    scraped_data = load_data()\n    print(f\"Total links to scrape: {len(links)}\")\n    print(f\"Already scraped: {len(scraped_data)}\")\n    count = 0\n    for item in links:",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "convert_to_vocab_format",
+        "kind": 2,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "def convert_to_vocab_format(raw_data):\n    print(\"Converting to vocab-roots structure...\")\n    vocab_roots = {}\n    for url, entry in raw_data.items():\n        root = entry['root']\n        # Remove URL from final object if not needed, or keep it. User didn't ask for URL but useful for ref.\n        # Clean entry for final output\n        clean_entry = {k: v for k, v in entry.items() if k != 'url'}\n        if root not in vocab_roots:\n            vocab_roots[root] = []",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "INPUT_FILE",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "INPUT_FILE = 'data/root_links.json'\nOUTPUT_FILE = 'data/scraped_roots_raw.json'\nHEADERS = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n}\nSAVE_INTERVAL = 5\nLIMIT = None\ndef load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_FILE",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "OUTPUT_FILE = 'data/scraped_roots_raw.json'\nHEADERS = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n}\nSAVE_INTERVAL = 5\nLIMIT = None\ndef load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:\n            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "HEADERS",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "HEADERS = {\n    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n}\nSAVE_INTERVAL = 5\nLIMIT = None\ndef load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:\n            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:\n                return json.load(f)",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "SAVE_INTERVAL",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "SAVE_INTERVAL = 5\nLIMIT = None\ndef load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:\n            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:\n                return json.load(f)\n        except json.JSONDecodeError:\n            return {}\n    return {}",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "LIMIT",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_details",
+        "description": "scripts.scrape_root_details",
+        "peekOfCode": "LIMIT = None\ndef load_data():\n    if os.path.exists(OUTPUT_FILE):\n        try:\n            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:\n                return json.load(f)\n        except json.JSONDecodeError:\n            return {}\n    return {}\ndef save_data(data):",
+        "detail": "scripts.scrape_root_details",
+        "documentation": {}
+    },
+    {
+        "label": "base_url",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links",
+        "description": "scripts.scrape_root_links",
+        "peekOfCode": "base_url = \"https://palidict.com/พจนานุกรมธาตุ\"\nlinks_data = []\n# Assuming max 100 pages based on previous experience (2500 items / 25 per page = 100 pages)\n# I'll check for \"next\" button to stop.\nprint(\"Scraping root links...\")\nfor page in range(101): # 0 to 100\n    url = f\"{base_url}?page={page}\"\n    print(f\"Fetching page {page}...\")\n    try:\n        response = requests.get(url, timeout=10)",
+        "detail": "scripts.scrape_root_links",
+        "documentation": {}
+    },
+    {
+        "label": "links_data",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links",
+        "description": "scripts.scrape_root_links",
+        "peekOfCode": "links_data = []\n# Assuming max 100 pages based on previous experience (2500 items / 25 per page = 100 pages)\n# I'll check for \"next\" button to stop.\nprint(\"Scraping root links...\")\nfor page in range(101): # 0 to 100\n    url = f\"{base_url}?page={page}\"\n    print(f\"Fetching page {page}...\")\n    try:\n        response = requests.get(url, timeout=10)\n        if response.status_code != 200:",
+        "detail": "scripts.scrape_root_links",
+        "documentation": {}
+    },
+    {
+        "label": "base_url",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links_robust",
+        "description": "scripts.scrape_root_links_robust",
+        "peekOfCode": "base_url = \"https://palidict.com/พจนานุกรมธาตุ\"\nlinks_data = []\noutput_file = \"data/root_links.json\"\n# Load existing if any\ntry:\n    with open(output_file, \"r\", encoding=\"utf-8\") as f:\n        links_data = json.load(f)\n    print(f\"Loaded {len(links_data)} existing links.\")\nexcept:\n    pass",
+        "detail": "scripts.scrape_root_links_robust",
+        "documentation": {}
+    },
+    {
+        "label": "links_data",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links_robust",
+        "description": "scripts.scrape_root_links_robust",
+        "peekOfCode": "links_data = []\noutput_file = \"data/root_links.json\"\n# Load existing if any\ntry:\n    with open(output_file, \"r\", encoding=\"utf-8\") as f:\n        links_data = json.load(f)\n    print(f\"Loaded {len(links_data)} existing links.\")\nexcept:\n    pass\nstart_page = len(links_data) // 25",
+        "detail": "scripts.scrape_root_links_robust",
+        "documentation": {}
+    },
+    {
+        "label": "output_file",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links_robust",
+        "description": "scripts.scrape_root_links_robust",
+        "peekOfCode": "output_file = \"data/root_links.json\"\n# Load existing if any\ntry:\n    with open(output_file, \"r\", encoding=\"utf-8\") as f:\n        links_data = json.load(f)\n    print(f\"Loaded {len(links_data)} existing links.\")\nexcept:\n    pass\nstart_page = len(links_data) // 25\nprint(f\"Starting from page {start_page}...\")",
+        "detail": "scripts.scrape_root_links_robust",
+        "documentation": {}
+    },
+    {
+        "label": "start_page",
+        "kind": 5,
+        "importPath": "scripts.scrape_root_links_robust",
+        "description": "scripts.scrape_root_links_robust",
+        "peekOfCode": "start_page = len(links_data) // 25\nprint(f\"Starting from page {start_page}...\")\nfor page in range(start_page, 155): # Max pages around 155 for 3800 items\n    url = f\"{base_url}?page={page}\"\n    print(f\"Fetching page {page}...\")\n    success = False\n    for attempt in range(3):\n        try:\n            response = requests.get(url, timeout=20)\n            if response.status_code == 200:",
+        "detail": "scripts.scrape_root_links_robust",
+        "documentation": {}
+    },
+    {
+        "label": "app_dir",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "app_dir = r\"D:\\pali-dhatu-app\"\nsrc_dir = os.path.join(app_dir, \"src\")\ncomponents_dir = os.path.join(src_dir, \"components\")\npages_dir = os.path.join(src_dir, \"pages\")\n# 1. Update DhatuDetail.js\ndhatu_detail_path = os.path.join(components_dir, \"DhatuDetail.js\")\ndhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "src_dir",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "src_dir = os.path.join(app_dir, \"src\")\ncomponents_dir = os.path.join(src_dir, \"components\")\npages_dir = os.path.join(src_dir, \"pages\")\n# 1. Update DhatuDetail.js\ndhatu_detail_path = os.path.join(components_dir, \"DhatuDetail.js\")\ndhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "components_dir",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "components_dir = os.path.join(src_dir, \"components\")\npages_dir = os.path.join(src_dir, \"pages\")\n# 1. Update DhatuDetail.js\ndhatu_detail_path = os.path.join(components_dir, \"DhatuDetail.js\")\ndhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "pages_dir",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "pages_dir = os.path.join(src_dir, \"pages\")\n# 1. Update DhatuDetail.js\ndhatu_detail_path = os.path.join(components_dir, \"DhatuDetail.js\")\ndhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "dhatu_detail_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "dhatu_detail_path = os.path.join(components_dir, \"DhatuDetail.js\")\ndhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);\n  const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "dhatu_detail_content",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "dhatu_detail_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState('');",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "principles_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "principles_page_path = os.path.join(pages_dir, \"PrinciplesPage.js\")\nprinciples_page_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc, collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction PrinciplesPage() {\n    const { groupCode } = useParams();\n    const [content, setContent] = useState(null);\n    const [list, setList] = useState([]);",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "principles_page_content",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "principles_page_content = \"\"\"import React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc, collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction PrinciplesPage() {\n    const { groupCode } = useParams();\n    const [content, setContent] = useState(null);\n    const [list, setList] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "app_js_path",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "app_js_path = os.path.join(src_dir, \"App.js\")\nwith open(app_js_path, \"r\", encoding=\"utf-8\") as f:\n    app_js_content = f.read()\n# Add the new route if not exists\nnew_route = '<Route path=\"/principles/:groupCode\" element={<PrinciplesPage />} />'\nif new_route not in app_js_content:\n    old_route = '<Route path=\"/principles\" element={<PrinciplesPage />} />'\n    if old_route in app_js_content:\n        app_js_content = app_js_content.replace(old_route, old_route + '\\n            ' + new_route)\n        with open(app_js_path, \"w\", encoding=\"utf-8\") as f:",
+        "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "new_route",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_app",
+        "description": "scripts.update_dhatu_app",
+        "peekOfCode": "new_route = '<Route path=\"/principles/:groupCode\" element={<PrinciplesPage />} />'\nif new_route not in app_js_content:\n    old_route = '<Route path=\"/principles\" element={<PrinciplesPage />} />'\n    if old_route in app_js_content:\n        app_js_content = app_js_content.replace(old_route, old_route + '\\n            ' + new_route)\n        with open(app_js_path, \"w\", encoding=\"utf-8\") as f:\n            f.write(app_js_content)\n        print(f\"Updated {app_js_path}\")\n    else:\n        print(\"Could not find anchor to patch App.js\")",
+        "detail": "scripts.update_dhatu_app",
         "documentation": {}
     },
     {

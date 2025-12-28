@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>พจนานุกรมธาตุ (Pali Roots) - ระบบการเรียนบาลีออนไลน์</title>
+    <title>พจนานุกรมธาตุ (Preview) - ระบบการเรียนบาลีออนไลน์</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -48,10 +48,9 @@
             background: white; 
             padding: 30px; 
             border-radius: 15px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
             margin-bottom: 30px;
-            border: 1px solid #dce4ec;
-            border-top: 5px solid #27ae60;
+            border: 1px solid #eee;
         }
 
         .search-input-group {
@@ -64,13 +63,12 @@
             padding: 15px 20px;
             padding-right: 220px;
             font-size: 1.1rem;
-            border: 2px solid #bdc3c7;
+            border: 2px solid #e0e0e0;
             border-radius: 30px;
             outline: none;
-            transition: all 0.3s;
+            transition: border-color 0.3s;
             font-family: 'Sarabun', sans-serif;
             box-sizing: border-box;
-            background-color: #fdfdfd;
         }
 
         .search-select {
@@ -79,20 +77,18 @@
             top: 50%;
             transform: translateY(-50%);
             padding: 8px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #ddd;
             border-radius: 20px;
-            background: #f0f2f5;
+            background: #f9f9f9;
             font-family: 'Sarabun', sans-serif;
-            color: #444;
+            color: #555;
             cursor: pointer;
             outline: none;
             max-width: 150px;
         }
 
         .search-input:focus {
-            border-color: #27ae60;
-            background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.15);
+            border-color: #3498db;
         }
 
         .search-icon {
@@ -102,7 +98,7 @@
             transform: translateY(-50%);
             color: #aaa;
             font-size: 1.2rem;
-            pointer-events: none; /* Let clicks pass through if needed, but select is before it */
+            pointer-events: none;
         }
 
         .results-container {
@@ -265,9 +261,9 @@
         </div>
 
         <div class="credit-box">
-            <div><i class="fa-solid fa-heart"></i> <strong>กราบขอบพระคุณและอนุโมทนาบุญ:</strong> ข้อมูลต้นฉบับจาก <a href="https://palidict.com" target="_blank" style="color:#2980b9; text-decoration:underline;"><strong>Palidict.com</strong></a></div>
+            <div><i class="fa-solid fa-heart"></i> <strong>กราบขอบพระคุณและอนุโมทนาบุญ:</strong> ข้อมูลต้นฉบับจาก <strong>Palidict.com</strong></div>
             <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
-                รวบรวมเพื่อการศึกษาพระปริยัติธรรม และการเชื่อมโยงข้อมูลต่างๆ ภายในเว็บเท่านั้น (ไม่ใช่เพื่อการพาณิชย์) <br>
+                รวบรวมเพื่อการศึกษาพระปริยัติธรรมและเผยแผ่เป็นธรรมทาน (ไม่ใช่เพื่อการพาณิชย์) <br>
                 ขอน้อมถวายส่วนกุศลนี้แด่คณะผู้จัดทำ Palidict และบูรพาจารย์เจ้าของข้อมูลทุกท่าน
             </div>
         </div>
@@ -298,47 +294,63 @@
 
         <div class="search-box-container">
             <div class="search-input-group">
-                <input type="text" id="searchInput" class="search-input" placeholder="พิมพ์ชื่อธาตุ หรือ ความหมาย (เช่น กก, ไป, ถึง)..." autocomplete="off">
+                <input type="text" id="searchInput" class="search-input" placeholder="พิมพ์ชื่อธาตุ หรือ ความหมาย (เช่น กก, ไป, ถึง)..." autocomplete="off" value="กก">
                 <select id="groupFilter" class="search-select">
                     <option value="">ทุกหมวดธาตุ</option>
                 </select>
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
             </div>
-            <div class="stats-text" id="statsDisplay">กำลังโหลดฐานข้อมูล...</div>
+            <div class="stats-text" id="statsDisplay">กำลังโหลดฐานข้อมูลตัวอย่าง...</div>
         </div>
 
         <div class="spinner" id="spinner"></div>
         <div id="resultsContainer" class="results-container"></div>
 
         <div style="text-align: center;">
-            <a href="dictionary_links.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้ารวมลิงค์</a>
+            <a href="roots.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
         </div>
     </div>
 
-    <!-- Load Roots Data -->
-    <script src="data/vocab-roots.js"></script>
-    <script src="data/vocab-roots-dpd-derived.js"></script>
+    <!-- MOCK DATA -->
+    <script>
+        // Mocking the data structure as it will be scraped
+        const vocabRoots = {
+            "กก": [
+                {
+                    "root": "กก",
+                    "meaning_pali": "โลลเย",
+                    "meaning_thai": "เหลวไหล, เลวทราม",
+                    "example": "กกติ กาโก กากี กาโก กาก์ (ตัวผู้)  ตัวเมียเป็น กากี.   ศัพท์เป็นชื่อของกาก์ คือ กาโก ธงฺโก วายโส พลิโภชี อริฏฺโฐ - ส.",
+                    "group": "ภู (อ)",
+                    "page": "294",
+                    "source": "ธป"
+                }
+            ],
+            "กจ": [
+                {
+                    "root": "กจ",
+                    "meaning_pali": "ทิตฺติยํ",
+                    "meaning_thai": "รุ่งเรือง, สว่าง",
+                    "example": "กจติ",
+                    "group": "ภู (อ)",
+                    "page": "294",
+                    "source": "ธป"
+                },
+                {
+                    "root": "กจ",
+                    "meaning_pali": "พนฺธเน",
+                    "meaning_thai": "ผูก",
+                    "example": "กจติ",
+                    "group": "ภู (อ)",
+                    "page": "294",
+                    "source": "ธป"
+                }
+            ]
+        };
+        const vocabRootsDPDDerived = {}; // Empty for preview
+    </script>
 
     <script>
-        // --- Helper: Format Example Text (Fix spacing issues) ---
-        function formatExampleText(text) {
-            if (!text) return "";
-            let formatted = text;
-
-            // 1. Space after punctuation
-            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
-            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
-
-            // 2. Common Pali endings/sandhi separation heuristics
-            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
-            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
-            
-            // 3. Clean up multiple spaces
-            formatted = formatted.replace(/\s+/g, ' ');
-            
-            return formatted;
-        }
-
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
         const groupFilter = document.getElementById('groupFilter');
@@ -352,6 +364,15 @@
         window.addEventListener('load', () => {
             if (typeof vocabRoots !== 'undefined') {
                 processData();
+                // Check URL params
+                const params = new URLSearchParams(window.location.search);
+                const q = params.get('q');
+                if (q) {
+                    searchInput.value = q;
+                    performSearch(q);
+                } else {
+                    performSearch("กก"); // Auto search for demo
+                }
             } else {
                 statsDisplay.innerText = "ไม่พบฐานข้อมูลธาตุ (vocab-roots.js)";
             }
@@ -361,7 +382,6 @@
             spinner.style.display = 'block';
             
             // Convert object to searchable array
-            // vocabRoots = { "root": [ {meaning, example, group}, ... ] }
             setTimeout(() => {
                 const keys = Object.keys(vocabRoots);
                 const uniqueGroups = new Set();
@@ -378,7 +398,7 @@
                         entries: entries
                     };
                 });
-
+                
                 // Populate Filter
                 const sortedGroups = Array.from(uniqueGroups).sort();
                 sortedGroups.forEach(g => {
@@ -387,24 +407,14 @@
                     option.textContent = g;
                     groupFilter.appendChild(option);
                 });
-                
-                statsDisplay.innerText = `มีข้อมูลธาตุทั้งหมด ${allRoots.length} คำ (รวม ${keys.reduce((acc, k) => acc + vocabRoots[k].length, 0)} ความหมาย)`;
+
+                statsDisplay.innerText = `มีข้อมูลธาตุตัวอย่าง ${allRoots.length} คำ`;
                 spinner.style.display = 'none';
-                
-                // Check URL params
-                const params = new URLSearchParams(window.location.search);
-                const q = params.get('q');
-                if (q) {
-                    searchInput.value = q;
-                    performSearch(q);
-                } else {
-                    displayResults(allRoots.slice(0, 5));
-                }
             }, 10);
         }
 
         searchInput.addEventListener('input', (e) => {
-            performSearch(e.target.value);
+             performSearch(e.target.value);
         });
 
         groupFilter.addEventListener('change', () => {
@@ -414,12 +424,6 @@
         function performSearch(queryInput) {
             const query = queryInput.trim().toLowerCase();
             const group = groupFilter.value;
-
-            if (query.length < 1 && group === "") {
-                resultsContainer.innerHTML = '';
-                displayResults(allRoots.slice(0, 5));
-                return;
-            }
 
             // Filter logic
             const results = allRoots.filter(item => {
@@ -495,11 +499,11 @@
                     
                     const groupHtml = entry.group ? `<span class="root-group"><i class="fa-solid fa-layer-group"></i> ${entry.group}</span>` : '';
                     
-                    const uniqueId = `${item.root}-${index}`;
+                    // Hidden Example (Toggle) replaced by Link to Detail Page
                     const exampleHtml = `
                         <div style="text-align:right; margin-top:15px;">
-                            <a href="root_detail.html?r=${encodeURIComponent(item.root)}&i=${index}" class="detail-btn" style="text-decoration:none; display:inline-block;" target="_blank">
-                                <i class="fa-solid fa-eye"></i> ดูรายละเอียด/อุทาหรณ์
+                            <a href="root_detail.html?r=${encodeURIComponent(item.root)}&i=${index}" target="_blank" class="detail-btn" style="text-decoration:none;">
+                                <i class="fa-solid fa-up-right-from-square"></i> ดูรายละเอียด
                             </a>
                         </div>
                     `;
@@ -522,25 +526,6 @@
                     if (entry.source) metaHtml.push(`<span style="color:#555; font-weight:600; font-size:0.9rem;"><i class="fa-solid fa-book-open"></i> ${entry.source}</span>`);
                     const metaBlock = metaHtml.length > 0 ? `<div style="margin-top:8px;">${metaHtml.join('')}</div>` : '';
 
-                    // DPD Derived Words Integration
-                    let dpdHtml = '';
-                    if (typeof vocabRootsDPDDerived !== 'undefined' && vocabRootsDPDDerived[item.root]) {
-                        const words = vocabRootsDPDDerived[item.root];
-                        if (words.length > 0) {
-                             // Show only first 20 words to avoid clutter, with toggle?
-                             const displayWords = words.slice(0, 20).join(', ');
-                             const moreCount = words.length - 20;
-                             const moreText = moreCount > 0 ? ` และอีก ${moreCount} คำ...` : '';
-                             
-                             dpdHtml = `
-                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee; font-size: 0.95rem;">
-                                    <span class="label" style="color:#2980b9;"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุนี้ (DPD):</span>
-                                    <span style="color: #555;">${displayWords}${moreText}</span>
-                                </div>
-                             `;
-                        }
-                    }
-
                     card.innerHTML = `
                         <div class="card-header" style="background-color: ${headerColor};">
                             <div>
@@ -552,7 +537,6 @@
                         <div class="card-body">
                             ${meaningHtml}
                             ${exampleHtml}
-                            ${dpdHtml}
                         </div>
                     `;
                     resultsContainer.appendChild(card);
@@ -560,6 +544,14 @@
             });
         }
         
+        function toggleExample(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'none') {
+                el.style.display = 'block';
+            } else {
+                el.style.display = 'none';
+            }
+        }
         function highlightText(text, query) {
             if (!query || !text) return text;
             const regex = new RegExp(`(${query})`, 'gi');

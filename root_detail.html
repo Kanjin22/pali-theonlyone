@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดธาตุ - พจนานุกรมธาตุ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f6f9; margin: 0; padding: 40px 20px; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        .back-nav { margin-bottom: 20px; }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .back-btn:hover { color: #2c3e50; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .back-btn i { margin-right: 8px; }
+
+        .detail-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #fff;
+        }
+
+        .card-header {
+            padding: 40px 30px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background pattern/effect for header */
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent);
+        }
+
+        .root-title-large {
+            font-family: 'Niramit', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .root-group-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            padding: 6px 15px;
+            border-radius: 30px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .grammar-link {
+            display: inline-block;
+            background: #fff;
+            color: #27ae60;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+        .grammar-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: #f0fff4;
+        }
+
+        @media (max-width: 600px) {
+            .grammar-link {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+        }
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .section-title i { margin-right: 10px; color: #3498db; }
+
+        .meaning-box {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .meaning-pali { color: #e67e22; display: block; margin-bottom: 5px; font-family: 'Niramit', serif; }
+        .meaning-thai { color: #2c3e50; }
+
+        .example-box {
+            background-color: #f9fbfd;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 1.15rem;
+            color: #444;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .info-label { font-size: 0.9rem; color: #95a5a6; display: block; margin-bottom: 5px; }
+        .info-value { font-size: 1.1rem; color: #2c3e50; font-weight: 600; }
+
+        .derived-section {
+            background-color: #fff8e1;
+            border: 1px solid #ffe0b2;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        /* Loading & Error */
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 50px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .error-msg {
+            text-align: center;
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="javascript:window.close()" class="back-btn"><i class="fa-solid fa-arrow-left"></i> ปิดหน้านี้</a>
+            <a href="roots.html" class="back-btn" style="margin-left: 10px;"><i class="fa-solid fa-home"></i> กลับหน้าหลัก</a>
+        </div>
+
+        <div id="contentArea">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="footer-note">
+            พจนานุกรมธาตุ (Pali Roots Dictionary)
+        </div>
+    </div>
+
+    <!-- Load Data -->
+    <script src="data/vocab-roots.js"></script>
+    <script src="data/vocab-roots-dpd-derived.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const rootKey = params.get('r');
+            const index = parseInt(params.get('i') || '0');
+
+            if (!rootKey) {
+                showError("ไม่พบข้อมูลธาตุ (Invalid Parameters)");
+                return;
+            }
+
+            // Simulate loading (or wait for scripts)
+            setTimeout(() => {
+                if (typeof vocabRoots === 'undefined') {
+                    showError("ไม่พบฐานข้อมูล (Database not loaded)");
+                    return;
+                }
+
+                const entries = vocabRoots[rootKey];
+                if (!entries || !entries[index]) {
+                    showError("ไม่พบข้อมูลธาตุที่ระบุ");
+                    return;
+                }
+
+                const entry = entries[index];
+                renderDetail(rootKey, entry);
+            }, 100);
+        });
+
+        function getFullSourceName(code) {
+            if (!code) return "";
+            if (code.includes("ธป")) return "ธาตุปฺปทีปิกา";
+            if (code.includes("พธ")) return "พจนานุกรมธาตุ (พ.ม.ปราโมทย์)";
+            return code;
+        }
+
+        function formatExampleText(text) {
+            if (!text) return "";
+            let formatted = text;
+
+            // 1. Space after punctuation
+            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
+            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
+
+            // 2. Common Pali endings/sandhi separation heuristics
+            // ...ตีติ (ti + iti) is a very common sentence/definition ending
+            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
+            // ...นฺติ (nti + iti)
+            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
+            
+            // 3. Clean up multiple spaces
+            formatted = formatted.replace(/\s+/g, ' ');
+            
+            return formatted;
+        }
+
+        function renderDetail(rootKey, entry) {
+            const container = document.getElementById('contentArea');
+            
+            // Color Logic (Same as roots.html)
+            const groupColors = {
+                "ภู (อ)": ["#27ae60", "#2ecc71"],
+                "รุธ (อ-เอ)": ["#c0392b", "#e74c3c"],
+                "ทิว (ย)": ["#2980b9", "#3498db"],
+                "สุ (ณุ ณา)": ["#8e44ad", "#9b59b6"],
+                "กี (นา)": ["#d35400", "#e67e22"],
+                "คห (ณฺหา)": ["#16a085", "#1abc9c"],
+                "ตน (โอ)": ["#f39c12", "#f1c40f"],
+                "จุร (เณ ณย)": ["#2c3e50", "#34495e"]
+            };
+
+            let colors = ["#7f8c8d", "#95a5a6"]; // Default Grey
+            let groupLink = "";
+            
+            if (entry.group) {
+                if (entry.group.includes("ภู")) {
+                    colors = groupColors["ภู (อ)"];
+                    groupLink = `<a href="grammar_bhu.html" target="_blank" class="grammar-link"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ภู)</a>`;
+                }
+                else if (entry.group.includes("รุธ")) {
+                    colors = groupColors["รุธ (อ-เอ)"];
+                    groupLink = `<a href="grammar_rudha.html" target="_blank" class="grammar-link" style="color:#c0392b;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด รุธ)</a>`;
+                }
+                else if (entry.group.includes("ทิว")) {
+                    colors = groupColors["ทิว (ย)"];
+                    groupLink = `<a href="grammar_divu.html" target="_blank" class="grammar-link" style="color:#2980b9;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ทิว)</a>`;
+                }
+                else if (entry.group.includes("สุ")) {
+                    colors = groupColors["สุ (ณุ ณา)"];
+                    groupLink = `<a href="grammar_su.html" target="_blank" class="grammar-link" style="color:#8e44ad;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด สุ)</a>`;
+                }
+                else if (entry.group.includes("กี")) {
+                    colors = groupColors["กี (นา)"];
+                    groupLink = `<a href="grammar_ki.html" target="_blank" class="grammar-link" style="color:#d35400;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด กี)</a>`;
+                }
+                else if (entry.group.includes("คห")) {
+                    colors = groupColors["คห (ณฺหา)"];
+                    groupLink = `<a href="grammar_gaha.html" target="_blank" class="grammar-link" style="color:#16a085;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด คห)</a>`;
+                }
+                else if (entry.group.includes("ตน")) {
+                    colors = groupColors["ตน (โอ)"];
+                    groupLink = `<a href="grammar_tana.html" target="_blank" class="grammar-link" style="color:#f39c12;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ตน)</a>`;
+                }
+                else if (entry.group.includes("จุร")) {
+                    colors = groupColors["จุร (เณ ณย)"];
+                    groupLink = `<a href="grammar_cura.html" target="_blank" class="grammar-link" style="color:#2c3e50;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด จุร)</a>`;
+                }
+            }
+
+            // Derived Words
+            let dpdHtml = '';
+            if (typeof vocabRootsDPDDerived !== 'undefined' && vocabRootsDPDDerived[rootKey]) {
+                const words = vocabRootsDPDDerived[rootKey];
+                if (words.length > 0) {
+                     dpdHtml = `
+                        <div class="derived-section">
+                            <div class="section-title" style="border:none; color:#d35400;">
+                                <i class="fa-solid fa-tree" style="color:#d35400;"></i> ศัพท์ที่มาจากธาตุนี้ (DPD)
+                            </div>
+                            <div style="color:#555; line-height:1.6;">${words.join(', ')}</div>
+                        </div>
+                     `;
+                }
+            }
+
+            // Determine Source Name
+            const sourceName = getFullSourceName(entry.source);
+            
+            // Construct HTML
+            container.innerHTML = `
+                <div class="detail-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
+                        <h1 class="root-title-large" style="position:relative; z-index:1;">${rootKey}</h1>
+                        ${entry.group ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${entry.group}</div>` : ''}
+                        ${groupLink ? `<div style="margin-top:15px; position:relative; z-index:1;">${groupLink}</div>` : ''}
+                    </div>
+                    
+                    <div class="card-body">
+                        
+                        <div class="meaning-box">
+                            ${entry.meaning_pali ? `<span class="meaning-pali">${entry.meaning_pali}</span>` : ''}
+                            ${entry.meaning_thai ? `<span class="meaning-thai">${entry.meaning_thai}</span>` : (entry.meaning || '')}
+                        </div>
+
+                        <div class="info-grid">
+                            ${sourceName ? `
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-solid fa-book-open"></i> ที่มา</span>
+                                <span class="info-value">${sourceName}</span>
+                            </div>` : ''}
+                            
+                            ${entry.page ? `
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-regular fa-file-lines"></i> อ้างอิงหน้า/คาถา</span>
+                                <span class="info-value">${entry.page}</span>
+                            </div>` : ''}
+                        </div>
+
+                        <div style="text-align: right; margin-top: 10px; margin-bottom: 20px;">
+                            <a href="grammar_aneka.html" target="_blank" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
+                                <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
+                            </a>
+                        </div>
+
+                        ${entry.example_school ? `
+                        <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12;">
+                            <i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)
+                        </div>
+                        <div class="example-box" style="background-color: #fff8e1; border-left: 4px solid #f39c12;">
+                            ${formatExampleText(entry.example_school)}
+                        </div>
+                        ` : ''}
+
+                        ${entry.example ? `
+                        <div class="section-title">
+                            <i class="fa-solid fa-quote-left"></i> อุทาหรณ์ (ตัวอย่างการใช้)
+                        </div>
+                        <div class="example-box">
+                            ${formatExampleText(entry.example)}
+                        </div>
+                        ` : ''}
+
+                        ${dpdHtml}
+
+                    </div>
+                </div>
+            `;
+        }
+
+        function showError(msg) {
+            document.getElementById('contentArea').innerHTML = `<div class="error-msg"><i class="fa-solid fa-triangle-exclamation"></i> ${msg}</div>`;
+        }
+    </script>
+</body>
+</html>

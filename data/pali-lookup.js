@@ -5,9 +5,23 @@ const PaliLookup = {
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '').trim();
         if (!cleanWord) return null;
 
-        // 0. Manual Root Mapping (User Defined)
+        // 0. Manual Root Mapping (User Defined) or Pali Roots Dictionary
         if (databases.roots && databases.roots[cleanWord]) {
-            const rootWord = databases.roots[cleanWord];
+            const rootData = databases.roots[cleanWord];
+            
+            // NEW: Handle Roots Dictionary (Array of Objects)
+            if (Array.isArray(rootData)) {
+                 const entries = rootData.map(e => `[${e.group}] ${e.meaning_pali} (${e.meaning_thai})`);
+                 return {
+                     details: entries,
+                     source: 'พจนานุกรมธาตุ',
+                     word: cleanWord,
+                     data: rootData, 
+                     _stemmedFrom: cleanWord
+                 };
+            }
+
+            const rootWord = rootData;
             let rootResult = this.checkAll(rootWord, databases);
             if (rootResult) {
                 rootResult._stemmedFrom = cleanWord;
