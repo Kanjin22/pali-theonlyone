@@ -1,5 +1,14 @@
 [
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -15,15 +24,6 @@
         "importPath": "sqlite3",
         "description": "sqlite3",
         "detail": "sqlite3",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -361,6 +361,33 @@
         "documentation": {}
     },
     {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.apply_fixes_v3",
+        "description": "scripts.apply_fixes_v3",
+        "peekOfCode": "search_page_path = \"D:/pali-dhatu-app/src/pages/SearchPage.js\"\napp_css_path = \"D:/pali-dhatu-app/src/App.css\"\nverse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update SearchPage.js\ntry:\n    with open(search_page_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Remove (Affix Group)\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    # Move search-results-info",
+        "detail": "scripts.apply_fixes_v3",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_path",
+        "kind": 5,
+        "importPath": "scripts.apply_fixes_v3",
+        "description": "scripts.apply_fixes_v3",
+        "peekOfCode": "app_css_path = \"D:/pali-dhatu-app/src/App.css\"\nverse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update SearchPage.js\ntry:\n    with open(search_page_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Remove (Affix Group)\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    # Move search-results-info\n    # We look for the closing of search-hero and the info block following it",
+        "detail": "scripts.apply_fixes_v3",
+        "documentation": {}
+    },
+    {
+        "label": "verse_detail_path",
+        "kind": 5,
+        "importPath": "scripts.apply_fixes_v3",
+        "description": "scripts.apply_fixes_v3",
+        "peekOfCode": "verse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update SearchPage.js\ntry:\n    with open(search_page_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Remove (Affix Group)\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    # Move search-results-info\n    # We look for the closing of search-hero and the info block following it\n    search_hero_end_pattern = \"\"\"                </div>",
+        "detail": "scripts.apply_fixes_v3",
+        "documentation": {}
+    },
+    {
         "label": "total_entries",
         "kind": 5,
         "importPath": "scripts.check_stats",
@@ -550,6 +577,33 @@
         "documentation": {}
     },
     {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.fix_search_error",
+        "description": "scripts.fix_search_error",
+        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Replace the filter logic with a more robust version\nold_logic = \"\"\"            const matchesText = !searchText || \n                                d.dhatu_word.toLowerCase().includes(searchLower) || \n                                (d.arth_thai && d.arth_thai.toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nnew_logic = \"\"\"            const matchesText = !searchText || ",
+        "detail": "scripts.fix_search_error",
+        "documentation": {}
+    },
+    {
+        "label": "old_logic",
+        "kind": 5,
+        "importPath": "scripts.fix_search_error",
+        "description": "scripts.fix_search_error",
+        "peekOfCode": "old_logic = \"\"\"            const matchesText = !searchText || \n                                d.dhatu_word.toLowerCase().includes(searchLower) || \n                                (d.arth_thai && d.arth_thai.toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nnew_logic = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && String(d.arth_pali).toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && (Array.isArray(d.udaharana) ? d.udaharana.join(' ') : String(d.udaharana)).toLowerCase().includes(searchLower));\"\"\"",
+        "detail": "scripts.fix_search_error",
+        "documentation": {}
+    },
+    {
+        "label": "new_logic",
+        "kind": 5,
+        "importPath": "scripts.fix_search_error",
+        "description": "scripts.fix_search_error",
+        "peekOfCode": "new_logic = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && String(d.arth_pali).toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && (Array.isArray(d.udaharana) ? d.udaharana.join(' ') : String(d.udaharana)).toLowerCase().includes(searchLower));\"\"\"\nif old_logic in content:\n    content = content.replace(old_logic, new_logic)\n    print(\"Updated filter logic to be robust against non-string types\")\nelse:\n    # Fallback search if exact match fails (e.g. whitespace differences)",
+        "detail": "scripts.fix_search_error",
+        "documentation": {}
+    },
+    {
         "label": "inspect_db",
         "kind": 2,
         "importPath": "scripts.inspect_db",
@@ -637,6 +691,42 @@
         "description": "scripts.refine_search_ui",
         "peekOfCode": "new_span = \"\"\"{dhatu.arth_pali ? <span className=\"pali-meaning\">({dhatu.arth_pali})</span> : null}\"\"\"\nif old_span in content:\n    content = content.replace(old_span, new_span)\n    print(\"Fixed empty parens issue.\")\n    with open(search_page_path, 'w', encoding='utf-8') as f:\n        f.write(content)\nelse:\n    print(\"Pattern not found (maybe already fixed or different format).\")",
         "detail": "scripts.refine_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "footer_path",
+        "kind": 5,
+        "importPath": "scripts.remove_footer_text",
+        "description": "scripts.remove_footer_text",
+        "peekOfCode": "footer_path = r\"D:\\pali-dhatu-app\\src\\components\\Footer.js\"\nwith open(footer_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Remove the paragraph with copyright\nold_p = \"\"\"<p>&copy; 2025 คลังธาตุบาลี. สงวนลิขสิทธิ์.</p>\"\"\"\nnew_p = \"\"\"{/* <p>&copy; 2025 คลังธาตุบาลี. สงวนลิขสิทธิ์.</p> */}\"\"\" \n# Or just empty string if we want to remove it completely from view.\n# The user said \"remove it\", so let's just make the footer content empty or minimal.\nnew_content = \"\"\"// src/components/Footer.js\nimport React from 'react';",
+        "detail": "scripts.remove_footer_text",
+        "documentation": {}
+    },
+    {
+        "label": "old_p",
+        "kind": 5,
+        "importPath": "scripts.remove_footer_text",
+        "description": "scripts.remove_footer_text",
+        "peekOfCode": "old_p = \"\"\"<p>&copy; 2025 คลังธาตุบาลี. สงวนลิขสิทธิ์.</p>\"\"\"\nnew_p = \"\"\"{/* <p>&copy; 2025 คลังธาตุบาลี. สงวนลิขสิทธิ์.</p> */}\"\"\" \n# Or just empty string if we want to remove it completely from view.\n# The user said \"remove it\", so let's just make the footer content empty or minimal.\nnew_content = \"\"\"// src/components/Footer.js\nimport React from 'react';\nfunction Footer() {\n  return (\n    <footer className=\"App-footer\">\n      {/* Footer content removed as per request */}",
+        "detail": "scripts.remove_footer_text",
+        "documentation": {}
+    },
+    {
+        "label": "new_p",
+        "kind": 5,
+        "importPath": "scripts.remove_footer_text",
+        "description": "scripts.remove_footer_text",
+        "peekOfCode": "new_p = \"\"\"{/* <p>&copy; 2025 คลังธาตุบาลี. สงวนลิขสิทธิ์.</p> */}\"\"\" \n# Or just empty string if we want to remove it completely from view.\n# The user said \"remove it\", so let's just make the footer content empty or minimal.\nnew_content = \"\"\"// src/components/Footer.js\nimport React from 'react';\nfunction Footer() {\n  return (\n    <footer className=\"App-footer\">\n      {/* Footer content removed as per request */}\n    </footer>",
+        "detail": "scripts.remove_footer_text",
+        "documentation": {}
+    },
+    {
+        "label": "new_content",
+        "kind": 5,
+        "importPath": "scripts.remove_footer_text",
+        "description": "scripts.remove_footer_text",
+        "peekOfCode": "new_content = \"\"\"// src/components/Footer.js\nimport React from 'react';\nfunction Footer() {\n  return (\n    <footer className=\"App-footer\">\n      {/* Footer content removed as per request */}\n    </footer>\n  );\n}\nexport default Footer;\"\"\"",
+        "detail": "scripts.remove_footer_text",
         "documentation": {}
     },
     {
@@ -991,21 +1081,30 @@
         "documentation": {}
     },
     {
-        "label": "DHATU_DETAIL_PATH",
+        "label": "path",
         "kind": 5,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "DHATU_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\ncontent = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);",
+        "peekOfCode": "path = \"D:/pali-dhatu-app/src/components/DhatuDetail.js\"\ntry:\n    with open(path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Add Dhatu Type Card\n    # Find where to insert. After \"คำแปลอรรถ (ไทย)\" card?\n    target_card = \"\"\"            <div className=\"detail-card\">\n              <h2>คำแปลอรรถ (ไทย)</h2>\n              <p>{dhatu.arth_thai || '-'}</p>\n            </div>\"\"\"",
         "detail": "scripts.update_dhatu_detail",
         "documentation": {}
     },
     {
-        "label": "content",
+        "label": "path",
         "kind": 5,
-        "importPath": "scripts.update_dhatu_detail",
-        "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);\n  const [loading, setLoading] = useState(true);",
-        "detail": "scripts.update_dhatu_detail",
+        "importPath": "scripts.update_functions_node",
+        "description": "scripts.update_functions_node",
+        "peekOfCode": "path = r\"D:\\pali-dhatu-app\\functions\\package.json\"\nwith open(path, 'r', encoding='utf-8') as f:\n    data = json.load(f)\ndata['engines']['node'] = \"20\"\nwith open(path, 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2)\nprint(\"Updated functions/package.json to Node 20\")",
+        "detail": "scripts.update_functions_node",
+        "documentation": {}
+    },
+    {
+        "label": "data['engines']['node']",
+        "kind": 5,
+        "importPath": "scripts.update_functions_node",
+        "description": "scripts.update_functions_node",
+        "peekOfCode": "data['engines']['node'] = \"20\"\nwith open(path, 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2)\nprint(\"Updated functions/package.json to Node 20\")",
+        "detail": "scripts.update_functions_node",
         "documentation": {}
     },
     {
@@ -1060,6 +1159,69 @@
         "description": "scripts.update_katha_list",
         "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {\n    const [kathas, setKathas] = useState([]);\n    const [loading, setLoading] = useState(true);",
         "detail": "scripts.update_katha_list",
+        "documentation": {}
+    },
+    {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Update Cache Key to force refresh\nif \"dhatu_cache\" in content:\n    content = content.replace(\"'dhatu_cache'\", \"'dhatu_cache_v2'\")\n    content = content.replace(\"'dhatu_cache_time'\", \"'dhatu_cache_time_v2'\")\n    print(\"Updated cache key to v2\")\n# 2. Update Fetch Logic to include udaharana\nold_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "old_fetch",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "old_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu\n                }));\"\"\"\nnew_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu,\n                    udaharana: doc.data().udaharana\n                }));\"\"\"\nif old_fetch in content:",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "new_fetch",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "new_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu,\n                    udaharana: doc.data().udaharana\n                }));\"\"\"\nif old_fetch in content:\n    content = content.replace(old_fetch, new_fetch)\n    print(\"Added udaharana to fetch logic\")\nelse:\n    print(\"Warning: Fetch logic pattern not found\")",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "old_search",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "old_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower));\"\"\"\nnew_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nif old_search in content:\n    content = content.replace(old_search, new_search)\n    print(\"Added udaharana to search logic\")\nelse:\n    print(\"Warning: Search logic pattern not found\")\n# 4. Update Placeholder text to indicate example search\nold_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "new_search",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "new_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nif old_search in content:\n    content = content.replace(old_search, new_search)\n    print(\"Added udaharana to search logic\")\nelse:\n    print(\"Warning: Search logic pattern not found\")\n# 4. Update Placeholder text to indicate example search\nold_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"\nnew_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "old_placeholder",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "old_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"\nnew_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"\nif old_placeholder in content:\n    content = content.replace(old_placeholder, new_placeholder)\n    print(\"Updated placeholder text\")\nwith open(search_page_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
+        "detail": "scripts.update_search_logic",
+        "documentation": {}
+    },
+    {
+        "label": "new_placeholder",
+        "kind": 5,
+        "importPath": "scripts.update_search_logic",
+        "description": "scripts.update_search_logic",
+        "peekOfCode": "new_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"\nif old_placeholder in content:\n    content = content.replace(old_placeholder, new_placeholder)\n    print(\"Updated placeholder text\")\nwith open(search_page_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
+        "detail": "scripts.update_search_logic",
         "documentation": {}
     },
     {
@@ -1159,6 +1321,15 @@
         "description": "scripts.update_search_ui",
         "peekOfCode": "new_styles = \"\"\"\n/* Updated Search Result Styles */\n.dhatu-name {\n  font-size: 1.5rem;\n  font-weight: bold;\n  color: var(--primary-color);\n}\n.dhatu-meaning-container {\n  margin-top: 0.5rem;\n  font-size: 1rem;",
         "detail": "scripts.update_search_ui",
+        "documentation": {}
+    },
+    {
+        "label": "search_page_path",
+        "kind": 5,
+        "importPath": "scripts.update_search_ui_v2",
+        "description": "scripts.update_search_ui_v2",
+        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Remove \"(Affix Group)\"\nif \"(Affix Group)\" in content:\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    print(\"Removed (Affix Group) from label\")\n# 2. Style search-results-info\n# We can add inline styles or just rely on CSS class update.\n# Let's check the JSX structure.",
+        "detail": "scripts.update_search_ui_v2",
         "documentation": {}
     },
     {
