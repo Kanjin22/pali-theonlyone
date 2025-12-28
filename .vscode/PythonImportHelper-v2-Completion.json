@@ -94,6 +94,30 @@
         "documentation": {}
     },
     {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageFont",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
         "label": "{",
         "kind": 6,
         "isExtraImport": true,
@@ -418,6 +442,69 @@
         "documentation": {}
     },
     {
+        "label": "create_icon",
+        "kind": 2,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "def create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)\n    # Since complex gradients are hard, we'll use a solid fill with the primary color\n    # or we can try a simple vertical gradient manually, but solid is safer and cleaner.\n    # Rounded corners\n    radius = size // 5\n    draw.rounded_rectangle([(0, 0), (size, size)], radius=radius, fill=LOGO_COLOR)",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "def main():\n    print(\"Generating icons...\")\n    # 1. Generate logo512.png\n    icon512 = create_icon(512)\n    icon512.save(os.path.join(PUBLIC_DIR, \"logo512.png\"))\n    print(\"Saved logo512.png\")\n    # 2. Generate logo192.png\n    icon192 = icon512.resize((192, 192), Image.Resampling.LANCZOS)\n    icon192.save(os.path.join(PUBLIC_DIR, \"logo192.png\"))\n    print(\"Saved logo192.png\")",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "APP_DIR",
+        "kind": 5,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "APP_DIR = r\"D:\\pali-dhatu-app\"\nPUBLIC_DIR = os.path.join(APP_DIR, \"public\")\nLOGO_COLOR = (39, 174, 96) # #27ae60\nLOGO_COLOR_2 = (46, 204, 113) # #2ecc71\nTEXT_COLOR = (255, 255, 255)\ndef create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "PUBLIC_DIR",
+        "kind": 5,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "PUBLIC_DIR = os.path.join(APP_DIR, \"public\")\nLOGO_COLOR = (39, 174, 96) # #27ae60\nLOGO_COLOR_2 = (46, 204, 113) # #2ecc71\nTEXT_COLOR = (255, 255, 255)\ndef create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)\n    # Since complex gradients are hard, we'll use a solid fill with the primary color",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "LOGO_COLOR",
+        "kind": 5,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "LOGO_COLOR = (39, 174, 96) # #27ae60\nLOGO_COLOR_2 = (46, 204, 113) # #2ecc71\nTEXT_COLOR = (255, 255, 255)\ndef create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)\n    # Since complex gradients are hard, we'll use a solid fill with the primary color\n    # or we can try a simple vertical gradient manually, but solid is safer and cleaner.",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "LOGO_COLOR_2",
+        "kind": 5,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "LOGO_COLOR_2 = (46, 204, 113) # #2ecc71\nTEXT_COLOR = (255, 255, 255)\ndef create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)\n    # Since complex gradients are hard, we'll use a solid fill with the primary color\n    # or we can try a simple vertical gradient manually, but solid is safer and cleaner.\n    # Rounded corners",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
+        "label": "TEXT_COLOR",
+        "kind": 5,
+        "importPath": "scripts.update_branding",
+        "description": "scripts.update_branding",
+        "peekOfCode": "TEXT_COLOR = (255, 255, 255)\ndef create_icon(size):\n    # Create image with transparent background\n    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))\n    draw = ImageDraw.Draw(img)\n    # Draw rounded rectangle (simulated gradient)\n    # Since complex gradients are hard, we'll use a solid fill with the primary color\n    # or we can try a simple vertical gradient manually, but solid is safer and cleaner.\n    # Rounded corners\n    radius = size // 5",
+        "detail": "scripts.update_branding",
+        "documentation": {}
+    },
+    {
         "label": "app_dir",
         "kind": 5,
         "importPath": "scripts.update_dhatu_app",
@@ -505,6 +592,24 @@
         "description": "scripts.update_dhatu_app",
         "peekOfCode": "new_route = '<Route path=\"/principles/:groupCode\" element={<PrinciplesPage />} />'\nif new_route not in app_js_content:\n    old_route = '<Route path=\"/principles\" element={<PrinciplesPage />} />'\n    if old_route in app_js_content:\n        app_js_content = app_js_content.replace(old_route, old_route + '\\n            ' + new_route)\n        with open(app_js_path, \"w\", encoding=\"utf-8\") as f:\n            f.write(app_js_content)\n        print(f\"Updated {app_js_path}\")\n    else:\n        print(\"Could not find anchor to patch App.js\")",
         "detail": "scripts.update_dhatu_app",
+        "documentation": {}
+    },
+    {
+        "label": "header_path",
+        "kind": 5,
+        "importPath": "scripts.update_header_and_app",
+        "description": "scripts.update_header_and_app",
+        "peekOfCode": "header_path = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\napp_path = r\"D:\\pali-dhatu-app\\src\\App.js\"\n# 1. Update Header.js\ntry:\n    with open(header_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Target block to remove\n    target = \"\"\"          <li><NavLink to=\"/flashcards\" style={{color: \"#f39c12\"}}>ทบทวนธาตุ</NavLink></li>\n          <li className=\"nav-separator\">|</li>\n          <li><NavLink to=\"/submit\">เสนอแนะข้อมูล</NavLink></li>",
+        "detail": "scripts.update_header_and_app",
+        "documentation": {}
+    },
+    {
+        "label": "app_path",
+        "kind": 5,
+        "importPath": "scripts.update_header_and_app",
+        "description": "scripts.update_header_and_app",
+        "peekOfCode": "app_path = r\"D:\\pali-dhatu-app\\src\\App.js\"\n# 1. Update Header.js\ntry:\n    with open(header_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Target block to remove\n    target = \"\"\"          <li><NavLink to=\"/flashcards\" style={{color: \"#f39c12\"}}>ทบทวนธาตุ</NavLink></li>\n          <li className=\"nav-separator\">|</li>\n          <li><NavLink to=\"/submit\">เสนอแนะข้อมูล</NavLink></li>\n          <li><NavLink to=\"/about\">เกี่ยวกับ</NavLink></li>",
+        "detail": "scripts.update_header_and_app",
         "documentation": {}
     },
     {
