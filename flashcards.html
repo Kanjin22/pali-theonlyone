@@ -88,6 +88,22 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
+        .btn-icon {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
         .stats-bar {
             background: rgba(255, 255, 255, 0.15);
             padding: 12px 25px;
@@ -176,6 +192,9 @@
             margin-bottom: 15px;
             color: #1a2a6c;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            white-space: nowrap; /* ห้ามขึ้นบรรทัดใหม่ */
+            width: 100%;
+            overflow: hidden; /* ซ่อนส่วนเกินชั่วคราวระหว่างปรับขนาด */
         }
 
         .word-type {
@@ -301,12 +320,15 @@
     <div class="container">
         <div class="header">
             <a href="index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
-            <select id="catSelect" onchange="changeCategory()">
-                <option value="all">📚 ทั้งหมด (All)</option>
-                <option value="akhyata">🔴 อาขยาต (Akhyata)</option>
-                <option value="kitaka">🔵 กิตก์ (Kitaka)</option>
-                <option value="vocab">🟢 ศัพท์ทั่วไป (Vocab)</option>
-            </select>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <select id="catSelect" onchange="changeCategory()">
+                    <option value="all">📚 ทั้งหมด (All)</option>
+                    <option value="akhyata">🔴 อาขยาต (Akhyata)</option>
+                    <option value="kitaka">🔵 กิตก์ (Kitaka)</option>
+                    <option value="vocab">🟢 ศัพท์ทั่วไป (Vocab)</option>
+                </select>
+                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="เต็มหน้าจอ"><i class="fas fa-expand"></i></button>
+            </div>
         </div>
 
         <div class="stats-bar">
@@ -573,6 +595,7 @@
 
             // --- Front ---
             document.getElementById('card-pali').innerText = card.word;
+            fitTextToContainer('card-pali');
             document.getElementById('card-type-front').innerText = card.label;
             
             // Add Roman
@@ -584,6 +607,7 @@
 
             // --- Back ---
             document.getElementById('card-pali-back').innerText = card.word;
+            fitTextToContainer('card-pali-back');
             document.getElementById('card-type').innerText = card.label;
             
             // Lookup Definition
@@ -687,6 +711,66 @@
         function updateStatsUI() {
             document.getElementById('count-remember').innerText = stats.totalCorrect;
             document.getElementById('count-forgot').innerText = (stats.totalReviewed - stats.totalCorrect);
+        }
+
+        // --- Fullscreen & Auto-fit ---
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`ไม่สามารถเปิดเต็มหน้าจอได้: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function updateFullscreenButton() {
+            const icon = document.querySelector('#fullscreenBtn i');
+            if (document.fullscreenElement) {
+                icon.classList.replace('fa-expand', 'fa-compress');
+            } else {
+                icon.classList.replace('fa-compress', 'fa-expand');
+            }
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+
+        function fitTextToContainer(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            // Reset to max size first
+            let maxRem = 3.5; // Start with 3.5rem (matches CSS)
+            if (window.innerWidth <= 768) maxRem = 2.5; // Mobile max size matches CSS
+            
+            element.style.fontSize = `${maxRem}rem`;
+            
+            // Check overflow
+            const scrollW = element.scrollWidth;
+            const clientW = element.clientWidth;
+            
+            if (scrollW > clientW) {
+                // Calculate ratio: newSize / oldSize = clientW / scrollW
+                let ratio = clientW / scrollW;
+                let newSize = maxRem * ratio;
+                
+                // Safety buffer (95%)
+                newSize = newSize * 0.95;
+                
+                // Min limit
+                if (newSize < 0.5) newSize = 0.5;
+                
+                element.style.fontSize = `${newSize}rem`;
+                
+                // Double check loop (just in case)
+                while (element.scrollWidth > element.clientWidth && newSize > 0.5) {
+                    newSize -= 0.1;
+                    element.style.fontSize = `${newSize}rem`;
+                }
+            }
         }
 
         window.onload = initData;
