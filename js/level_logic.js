@@ -291,4 +291,21 @@ function renderRoomContent(room) {
     if (statsLink) {
         statsLink.href = `../statistics.html?room=${room.id}`;
     }
+
+    // Update Subject Links with Room ID
+    const subjectContainer = document.getElementById('subject-links-container');
+    if (subjectContainer) {
+        const links = subjectContainer.querySelectorAll('a');
+        links.forEach(link => {
+            const url = new URL(link.href, window.location.origin);
+            url.searchParams.set('room', room.id);
+            // Also preserve level if it exists, or add it if missing and known
+            if (!url.searchParams.has('level') && room.level) {
+                url.searchParams.set('level', room.level);
+            }
+            // Add return_to parameter
+            url.searchParams.set('return_to', window.location.href);
+            link.href = url.toString();
+        });
+    }
 }
