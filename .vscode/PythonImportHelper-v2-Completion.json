@@ -613,6 +613,105 @@
         "documentation": {}
     },
     {
+        "label": "APP_CSS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "APP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\nDHATU_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nVERSE_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\VerseDetailPage.js\"\nKATHA_RENDERER_PATH = r\"D:\\pali-dhatu-app\\src\\components\\KathaRenderer.js\"\n# --- 1. Update App.css ---\nwith open(APP_CSS_PATH, \"r\", encoding=\"utf-8\") as f:\n    css_content = f.read()\n# Replace dhātu-card style for better mobile/modern look\nnew_dhatu_card_style = \"\"\"\n.dhātu-card {",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "DHATU_DETAIL_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "DHATU_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nVERSE_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\VerseDetailPage.js\"\nKATHA_RENDERER_PATH = r\"D:\\pali-dhatu-app\\src\\components\\KathaRenderer.js\"\n# --- 1. Update App.css ---\nwith open(APP_CSS_PATH, \"r\", encoding=\"utf-8\") as f:\n    css_content = f.read()\n# Replace dhātu-card style for better mobile/modern look\nnew_dhatu_card_style = \"\"\"\n.dhātu-card {\n  width: 100%;",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "VERSE_DETAIL_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "VERSE_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\VerseDetailPage.js\"\nKATHA_RENDERER_PATH = r\"D:\\pali-dhatu-app\\src\\components\\KathaRenderer.js\"\n# --- 1. Update App.css ---\nwith open(APP_CSS_PATH, \"r\", encoding=\"utf-8\") as f:\n    css_content = f.read()\n# Replace dhātu-card style for better mobile/modern look\nnew_dhatu_card_style = \"\"\"\n.dhātu-card {\n  width: 100%;\n  max-width: 340px;",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "KATHA_RENDERER_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "KATHA_RENDERER_PATH = r\"D:\\pali-dhatu-app\\src\\components\\KathaRenderer.js\"\n# --- 1. Update App.css ---\nwith open(APP_CSS_PATH, \"r\", encoding=\"utf-8\") as f:\n    css_content = f.read()\n# Replace dhātu-card style for better mobile/modern look\nnew_dhatu_card_style = \"\"\"\n.dhātu-card {\n  width: 100%;\n  max-width: 340px;\n  background-color: var(--white);",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "new_dhatu_card_style",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "new_dhatu_card_style = \"\"\"\n.dhātu-card {\n  width: 100%;\n  max-width: 340px;\n  background-color: var(--white);\n  border: none;\n  border-radius: 20px; /* Modern rounded corners */\n  padding: 24px;\n  text-align: left;\n  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06); /* Soft, modern shadow */",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "css_content",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "css_content = re.sub(r\"\\.dhātu-card\\s*\\{[^}]*\\}\", new_dhatu_card_style.strip(), css_content)\n# Add helper classes for \"No Wrap Title\" and Katha styling\nadditional_css = \"\"\"\n/* --- Modern UI Helpers --- */\n.nowrap-title {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-width: 100%;\n  display: block;",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "additional_css",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "additional_css = \"\"\"\n/* --- Modern UI Helpers --- */\n.nowrap-title {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-width: 100%;\n  display: block;\n  line-height: 1.4;\n}",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "detail_card_style",
+        "kind": 5,
+        "importPath": "scripts.update_ui_modern",
+        "description": "scripts.update_ui_modern",
+        "peekOfCode": "detail_card_style = \"\"\"\n.detail-card {\n    background-color: var(--white);\n    border-radius: 16px;\n    padding: 24px;\n    box-shadow: 0 8px 20px rgba(0,0,0,0.05);\n    margin-bottom: 0; /* Let grid handle gap */\n    transition: transform 0.2s;\n}\n.detail-card:hover {",
+        "detail": "scripts.update_ui_modern",
+        "documentation": {}
+    },
+    {
+        "label": "VERSE_DETAIL_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_verse_page",
+        "description": "scripts.update_verse_page",
+        "peekOfCode": "VERSE_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\VerseDetailPage.js\"\nwith open(VERSE_DETAIL_PATH, \"r\", encoding=\"utf-8\") as f:\n    content = f.read()\nold_str = '<h2>ธาตุในคาถาที่ {id}</h2>'\nnew_str = '<h2 className=\"nowrap-title\">ธาตุในคาถาที่ {id}</h2>'\nif old_str in content:\n    content = content.replace(old_str, new_str)\n    with open(VERSE_DETAIL_PATH, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\n    print(\"VerseDetailPage updated.\")",
+        "detail": "scripts.update_verse_page",
+        "documentation": {}
+    },
+    {
+        "label": "old_str",
+        "kind": 5,
+        "importPath": "scripts.update_verse_page",
+        "description": "scripts.update_verse_page",
+        "peekOfCode": "old_str = '<h2>ธาตุในคาถาที่ {id}</h2>'\nnew_str = '<h2 className=\"nowrap-title\">ธาตุในคาถาที่ {id}</h2>'\nif old_str in content:\n    content = content.replace(old_str, new_str)\n    with open(VERSE_DETAIL_PATH, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\n    print(\"VerseDetailPage updated.\")\nelse:\n    print(\"Target string not found.\")",
+        "detail": "scripts.update_verse_page",
+        "documentation": {}
+    },
+    {
+        "label": "new_str",
+        "kind": 5,
+        "importPath": "scripts.update_verse_page",
+        "description": "scripts.update_verse_page",
+        "peekOfCode": "new_str = '<h2 className=\"nowrap-title\">ธาตุในคาถาที่ {id}</h2>'\nif old_str in content:\n    content = content.replace(old_str, new_str)\n    with open(VERSE_DETAIL_PATH, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\n    print(\"VerseDetailPage updated.\")\nelse:\n    print(\"Target string not found.\")",
+        "detail": "scripts.update_verse_page",
+        "documentation": {}
+    },
+    {
         "label": "db_path",
         "kind": 5,
         "importPath": "extract_dpd",
