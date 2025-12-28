@@ -428,6 +428,44 @@
             .card-body {
                 padding: 1.25rem;
             }
+            
+            .answer-box {
+                padding: 15px;
+                overflow-x: auto; /* Enable horizontal scroll for tables */
+            }
+            
+            /* Reduce indentation for nested items */
+            .sub-question-item.level-1,
+            .grammar-item.level-1,
+            .grammar-analysis.level-1 { margin-left: 15px; }
+            
+            .sub-question-item.level-2,
+            .grammar-item.level-2,
+            .grammar-analysis.level-2 { margin-left: 30px; }
+            
+            .table-indent-1 { margin-left: 15px; }
+            .table-indent-2 { margin-left: 30px; }
+            
+            .grammar-analysis { margin-left: 15px; display: block; margin-top: 5px; }
+            
+            .grammar-item { flex-direction: column; }
+            
+            .nav-pills .nav-link {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .conjugation-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .conjugation-table th, 
+            .conjugation-table td {
+                padding: 4px 8px;
+                font-size: 0.85rem;
+            }
         }
 
         @media print {

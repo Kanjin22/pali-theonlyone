@@ -184,6 +184,37 @@
                 transform: translateY(0);
             }
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body { padding: 20px 15px; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .grid-menu { grid-template-columns: 1fr; gap: 15px; }
+            
+            /* Compact list view for mobile menu */
+            .menu-card { 
+                padding: 15px; 
+                flex-direction: row; 
+                text-align: left; 
+                align-items: center; 
+                min-height: auto;
+            }
+            .icon-box { 
+                margin-bottom: 0; 
+                margin-right: 20px; 
+                font-size: 2rem; 
+                width: 40px; 
+                text-align: center;
+            }
+            .card-title { font-size: 1.1rem; margin-bottom: 2px; }
+            .card-desc { font-size: 0.85rem; }
+            
+            /* Dashboard adjustments */
+            .dash-card { padding: 20px; }
+            .dash-stat { width: 100%; box-sizing: border-box; }
+            #dash-classroom-btn, #dash-flashcard-btn { width: 100%; justify-content: center; box-sizing: border-box; }
+        }
     </style>
 </head>
 

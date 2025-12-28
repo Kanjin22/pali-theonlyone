@@ -857,6 +857,105 @@
                 cursor: pointer;
             }
         }
+        /* --- Responsive Design (Mobile/Tablet) --- */
+        @media (max-width: 992px) {
+            .pali-text, .thai-text {
+                font-size: 1.8rem;
+                text-indent: 30px;
+            }
+            .split-pane {
+                padding: 20px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                display: block;
+                padding: 10px;
+            }
+            .card {
+                width: 100%;
+                height: auto;
+                min-height: 80vh;
+                margin-bottom: 70px; /* Space for controls */
+                box-shadow: none;
+            }
+            .content-area {
+                height: auto;
+                min-height: 400px;
+            }
+            .split-pane {
+                padding: 15px 20px;
+                /* On mobile, maybe we don't need independent scroll if body scrolls, 
+                   but keeping it contained is safer for the "slide" feel. 
+                   Let's stick to flex layout for content-area but let card grow? 
+                   If card grows, split-pane needs height or flex. 
+                   If card is auto height, split-pane will expand to fit content. */
+                overflow-y: visible; 
+            }
+            .pali-text, .thai-text {
+                font-size: 1.6rem;
+                text-indent: 20px;
+                line-height: 1.6;
+            }
+            .footer-box {
+                height: auto;
+                flex-wrap: wrap;
+                display: block; /* Stack blocks */
+            }
+            .footer-section {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #eceff1;
+                height: auto;
+                min-height: 100px;
+                padding: 15px 20px;
+                box-sizing: border-box;
+            }
+            .controls {
+                width: 100%;
+                justify-content: center;
+                bottom: 15px;
+                padding: 0 15px;
+                gap: 15px;
+                left: 0;
+                box-sizing: border-box;
+            }
+            button.nav-btn {
+                flex: 1;
+                padding: 12px 0;
+                font-size: 1rem;
+                max-width: 45%;
+            }
+            .tools-sidebar {
+                top: 60px;
+                right: 10px;
+            }
+            .tool-btn {
+                width: 38px;
+                height: 38px;
+            }
+            .settings-panel {
+                right: 10px;
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pali-text, .thai-text {
+                font-size: 1.4rem;
+                text-indent: 15px;
+            }
+            .slide-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .toc-panel {
+                width: 85%;
+            }
+        }
     </style>
 </head>
 

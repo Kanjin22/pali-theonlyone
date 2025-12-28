@@ -21,6 +21,25 @@
             overflow-x: hidden;
         }
 
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 10px; max-width: 100%; }
+            .header { flex-direction: column; gap: 10px; border-radius: 15px; padding: 15px; }
+            .back-btn { align-self: flex-start; }
+            select { width: 100%; box-sizing: border-box; }
+            .stats-bar { padding: 10px 15px; gap: 15px; width: 90%; justify-content: space-between; box-sizing: border-box; }
+            .stat-item { font-size: 1rem; }
+            .scene { height: 380px; }
+            .card-face { padding: 20px; }
+            .pali-word { font-size: 2.5rem; }
+            #card-pali-back { font-size: 1.8rem !important; }
+            .meaning { font-size: 1.4rem; }
+            .word-type { padding: 4px 12px; font-size: 0.8rem; }
+            .details-list li { font-size: 1rem; }
+            .controls { gap: 15px; }
+            .btn { padding: 12px 20px; min-width: 110px; font-size: 1rem; }
+        }
+
         /* เพิ่มลวดลายพื้นหลังจางๆ */
         body::before {
             content: '';

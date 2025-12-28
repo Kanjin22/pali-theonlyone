@@ -43,6 +43,75 @@
         .status-maintenance { background-color: #fef9e7; color: #f1c40f; }
 
         .back-btn { display: inline-block; margin-top: 40px; color: #7f8c8d; text-decoration: none; font-weight: bold; }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            .header { margin-bottom: 25px; }
+            h1 { font-size: 1.8em; }
+            p { font-size: 1em; }
+            .classroom-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .room-card { 
+                padding: 15px; 
+                flex-direction: row; 
+                align-items: center; 
+                flex-wrap: wrap;
+            }
+            .room-icon { 
+                font-size: 2em; 
+                margin-bottom: 0; 
+                margin-right: 15px; 
+                width: 40px; text-align: center;
+            }
+            .room-name { 
+                font-size: 1.2em; 
+                margin-bottom: 5px; 
+                width: calc(100% - 60px); /* Fill rest of line next to icon */
+            }
+            .room-desc { 
+                width: 100%; 
+                font-size: 0.9em; 
+                margin-top: 5px; 
+                margin-bottom: 10px; 
+                padding-left: 55px; /* Indent to align with text */
+                box-sizing: border-box;
+            }
+            .teacher-list { 
+                width: 100%; 
+                padding-left: 55px; 
+                box-sizing: border-box;
+            }
+            .status-badge {
+                position: static;
+                margin-left: auto;
+                font-size: 0.7em;
+                margin-bottom: 10px; /* If we want it at top, but flex row makes it tricky. Let's keep absolute but smaller? */
+            }
+            /* Actually, keeping card vertical might be cleaner for the content if it has description. 
+               Let's try a hybrid approach or just keep it block but smaller padding. */
+             .room-card {
+                flex-direction: column;
+                align-items: flex-start;
+             }
+             .room-icon {
+                margin-bottom: 15px;
+                width: auto;
+             }
+             .room-name {
+                width: 100%;
+             }
+             .room-desc, .teacher-list {
+                padding-left: 0;
+             }
+             .status-badge {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+             }
+        }
     </style>
 </head>
 <body>

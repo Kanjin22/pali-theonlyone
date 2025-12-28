@@ -153,6 +153,33 @@
         line-height: 1;
         margin-right: 10px;
     }
+
+    @media (max-width: 992px) {
+      .controls { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .controls { grid-template-columns: repeat(2, 1fr); }
+      .container { padding: 12px; margin: 10px; width: auto; }
+      h1 { font-size: 1.8em; }
+      .two-col { grid-template-columns: 1fr; }
+      
+      /* Adjust buttons to be full width or larger touch targets */
+      .btn { padding: 12px; }
+      
+      /* Header buttons stack */
+      .container > div:first-child {
+          flex-direction: column;
+          align-items: flex-start !important;
+          gap: 10px;
+      }
+      .container > div:first-child > div {
+          width: 100%;
+          justify-content: space-between;
+      }
+    }
+    @media (max-width: 480px) {
+      .controls { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
