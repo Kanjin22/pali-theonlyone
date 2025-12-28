@@ -325,6 +325,7 @@
   <script src="./data/vocab-tananunto.js"></script>
   <script src="./data/vocab-etipitaka.js"></script>
   <script src="./data/vocab-enthai.js"></script>
+  <script src="./data/vocab-ipa.js"></script>
   <script src="./data/vocab-dpd.js"></script>
   <script src="./data/vocab-pts.js"></script>
   <script src="./data/vocab-dppn.js"></script>
@@ -549,6 +550,17 @@
         if (!Array.isArray(entries)) entries = [entries];
         
         let html = `<div style="margin-bottom:15px;"><strong style="font-size:1.4rem; color:#2c3e50;">${word}</strong></div>`;
+        
+        if (typeof vocabIPA !== 'undefined' && vocabIPA[word.toUpperCase()]) {
+            const ipaData = vocabIPA[word.toUpperCase()];
+            html += `<div style="margin-bottom:12px; padding:10px; background:#fafafa; border:1px solid #eee; border-radius:8px; font-family:'Sarabun', sans-serif;">`;
+            html += `<div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">`;
+            html += `<span style="color:#d35400; font-weight:bold;">/${ipaData[1]}/</span>`; // Thai
+            html += `<span style="color:#7f8c8d; font-size:0.9em;">/${ipaData[2]}/</span>`; // ARPABET
+            html += `<span style="color:#27ae60; font-family:'Arial Unicode MS', sans-serif;">/${ipaData[0]}/</span>`; // IPA
+            html += `</div>`;
+            html += `</div>`;
+        }
         
         entries.forEach((entry, index) => {
             html += `<div style="margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;">`;
