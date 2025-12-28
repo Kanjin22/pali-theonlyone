@@ -8,11 +8,11 @@ OUTPUT_PATH = r'd:\pali-dhatu-app\src\data\vocab-derived-meanings.js'
 
 FILES = {
     'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),
-    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),
+    'พจนานุกรมธรรมบทภาค ๑-๘': os.path.join(DATA_DIR, 'vocab-tananunto.js'),
     'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')
 }
 
-DPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')
+DPD_DERIVED_PATH = r'd:\pali-dhatu-app\src\data\vocab-roots-dpd-derived.js'
 
 # Roman to Thai Mapping (simplified for Python)
 # We can reuse the logic from existing scripts or just implement the basics needed for Pali
@@ -134,6 +134,7 @@ def main():
     for name, path in FILES.items():
         if os.path.exists(path):
             dicts[name] = load_js_object(path)
+            print(f"Loaded {name}: {len(dicts[name])} entries")
         else:
             print(f"File not found: {path}")
 
@@ -164,22 +165,54 @@ def main():
     # For Roman->Thai, I really need a good converter.
     # I'll rely on the `extract_derived_meanings` module if possible.
     
-    from extract_derived_meanings import roman_to_thai
+    try:
+        from extract_derived_meanings import roman_to_thai
+    except ImportError:
+        pass
+
+    def normalize_roman(text):
+        if text.endswith('vant'):
+            return text[:-4] + 'vantu'
+        if text.endswith('mant'):
+            return text[:-4] + 'mantu'
+        if text.endswith('ar'):
+            return text[:-2] + 'u'
+        return text
     
     for roman in all_roman_words:
-        thai = roman_to_thai(roman)
+        # 1. Normalized form (for display key and primary lookup)
+        norm_roman = normalize_roman(roman)
+        thai_display = roman_to_thai(norm_roman)
+        
+        # 2. Original form (fallback lookup)
+        thai_original = roman_to_thai(roman)
         
         entry_parts = []
         
         # Check each dictionary
         # Priority: Etipitaka -> Tananunto -> NewGen
-        order = ['Etipitaka', 'Tananunto', 'NewGen']
+        order = ['Etipitaka', 'พจนานุกรมธรรมบทภาค ๑-๘', 'NewGen']
         
         for source in order:
             data = dicts.get(source)
-            if data and thai in data:
-                definition = data[thai]
-                
+            if not data: continue
+
+            definition = None
+            if thai_display in data:
+                definition = data[thai_display]
+            elif thai_original != thai_display and thai_original in data:
+                definition = data[thai_original]
+            # Try specific fallback for samavekkhitā -> samavekkhitar (สมเวกฺขิตา -> สมเวกฺขิตรฺ)
+            elif roman == "samavekkhitā" and "สมเวกฺขิตรฺ" in data:
+                definition = data["สมเวกฺขิตรฺ"]
+            # Try general fallback for -ā -> -ar stem (Thai -า -> -รฺ)
+            elif roman.endswith("ā") and (thai_original[:-1] + "รฺ") in data:
+                 definition = data[thai_original[:-1] + "รฺ"]
+            # Try fallback for -vantu -> -vant (Thai -วนฺตุ -> -วนฺตฺ)
+            elif roman.endswith("vantu") and (thai_display[:-1] + "ฺ") in data:
+                 definition = data[thai_display[:-1] + "ฺ"]
+            
+            if definition:
                 # Handle Object format (NewGen)
                 if isinstance(definition, dict) and 'details' in definition:
                     # Join details array
@@ -199,7 +232,7 @@ def main():
         if entry_parts:
             # Join with separator
             full_meaning = "\n\n---\n\n".join(entry_parts)
-            combined_meanings[thai] = full_meaning
+            combined_meanings[thai_display] = full_meaning
             found_count += 1
             
     print(f"Found meanings for {found_count} words.")

@@ -36,15 +36,6 @@
         "documentation": {}
     },
     {
-        "label": "React,",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "React.",
-        "description": "React.",
-        "detail": "React.",
-        "documentation": {}
-    },
-    {
         "label": "{",
         "kind": 6,
         "isExtraImport": true,
@@ -60,6 +51,24 @@
         "importPath": "LoadingSpinner",
         "description": "LoadingSpinner",
         "detail": "LoadingSpinner",
+        "documentation": {}
+    },
+    {
+        "label": "tananuntoRootKeys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tananuntoRootKeys",
+        "description": "tananuntoRootKeys",
+        "detail": "tananuntoRootKeys",
+        "documentation": {}
+    },
+    {
+        "label": "React,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "React.",
+        "description": "React.",
+        "detail": "React.",
         "documentation": {}
     },
     {
@@ -297,6 +306,23 @@
         "documentation": {}
     },
     {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "roman_to_thai",
+        "importPath": "extract_derived_meanings",
+        "description": "extract_derived_meanings",
+        "isExtraImport": true,
+        "detail": "extract_derived_meanings",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -306,43 +332,12 @@
         "documentation": {}
     },
     {
-        "label": "BeautifulSoup",
-        "importPath": "bs4",
-        "description": "bs4",
+        "label": "shutil",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "bs4",
-        "documentation": {}
-    },
-    {
-        "label": "BeautifulSoup",
-        "importPath": "bs4",
-        "description": "bs4",
-        "isExtraImport": true,
-        "detail": "bs4",
-        "documentation": {}
-    },
-    {
-        "label": "BeautifulSoup",
-        "importPath": "bs4",
-        "description": "bs4",
-        "isExtraImport": true,
-        "detail": "bs4",
-        "documentation": {}
-    },
-    {
-        "label": "BeautifulSoup",
-        "importPath": "bs4",
-        "description": "bs4",
-        "isExtraImport": true,
-        "detail": "bs4",
-        "documentation": {}
-    },
-    {
-        "label": "BeautifulSoup",
-        "importPath": "bs4",
-        "description": "bs4",
-        "isExtraImport": true,
-        "detail": "bs4",
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
         "documentation": {}
     },
     {
@@ -352,6 +347,46 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
         "documentation": {}
     },
     {
@@ -588,7 +623,7 @@
         "kind": 2,
         "importPath": "scripts.combine_vocab_full",
         "description": "scripts.combine_vocab_full",
-        "peekOfCode": "def main():\n    # 1. Load Dictionaries\n    dicts = {}\n    for name, path in FILES.items():\n        if os.path.exists(path):\n            dicts[name] = load_js_object(path)\n        else:\n            print(f\"File not found: {path}\")\n    # 2. Load DPD Derived List\n    dpd_data = load_js_object(DPD_DERIVED_PATH)",
+        "peekOfCode": "def main():\n    # 1. Load Dictionaries\n    dicts = {}\n    for name, path in FILES.items():\n        if os.path.exists(path):\n            dicts[name] = load_js_object(path)\n            print(f\"Loaded {name}: {len(dicts[name])} entries\")\n        else:\n            print(f\"File not found: {path}\")\n    # 2. Load DPD Derived List",
         "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
@@ -597,7 +632,7 @@
         "kind": 5,
         "importPath": "scripts.combine_vocab_full",
         "description": "scripts.combine_vocab_full",
-        "peekOfCode": "DATA_DIR = r'd:\\pali-theonlyone\\data'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali",
+        "peekOfCode": "DATA_DIR = r'd:\\pali-theonlyone\\data'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'พจนานุกรมธรรมบทภาค ๑-๘': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali",
         "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
@@ -606,7 +641,7 @@
         "kind": 5,
         "importPath": "scripts.combine_vocab_full",
         "description": "scripts.combine_vocab_full",
-        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-derived-meanings.js'\nFILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'พจนานุกรมธรรมบทภาค ๑-๘': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):",
         "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
@@ -615,7 +650,7 @@
         "kind": 5,
         "importPath": "scripts.combine_vocab_full",
         "description": "scripts.combine_vocab_full",
-        "peekOfCode": "FILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'Tananunto': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"",
+        "peekOfCode": "FILES = {\n    'Etipitaka': os.path.join(DATA_DIR, 'vocab-etipitaka.js'),\n    'พจนานุกรมธรรมบทภาค ๑-๘': os.path.join(DATA_DIR, 'vocab-tananunto.js'),\n    'NewGen': os.path.join(DATA_DIR, 'vocab-newgen.js')\n}\nDPD_DERIVED_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"",
         "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
@@ -624,7 +659,7 @@
         "kind": 5,
         "importPath": "scripts.combine_vocab_full",
         "description": "scripts.combine_vocab_full",
-        "peekOfCode": "DPD_DERIVED_PATH = os.path.join(DATA_DIR, 'vocab-roots-dpd-derived.js')\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"\n    map_char = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',",
+        "peekOfCode": "DPD_DERIVED_PATH = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\n# Roman to Thai Mapping (simplified for Python)\n# We can reuse the logic from existing scripts or just implement the basics needed for Pali\ndef roman_to_thai(text):\n    if not text: return \"\"\n    map_char = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',",
         "detail": "scripts.combine_vocab_full",
         "documentation": {}
     },
@@ -725,6 +760,78 @@
         "description": "scripts.copy_vocab_data",
         "peekOfCode": "dest_script = r\"d:\\pali-dhatu-app\\src\\utils\\paliScript.js\"\ndef process_and_copy(source, dest, type):\n    try:\n        with open(source, 'r', encoding='utf-8') as f:\n            content = f.read()\n        if type == \"vocab\":\n            # Change \"const vocabRootsDPDDerived =\" to \"const vocabRootsDPDDerived =\" and add export\n            if \"export default\" not in content:\n                content += \"\\n\\nexport default vocabRootsDPDDerived;\"\n        elif type == \"script\":",
         "detail": "scripts.copy_vocab_data",
+        "documentation": {}
+    },
+    {
+        "label": "update_app_js",
+        "kind": 2,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "def update_app_js():\n    print(f\"Updating {APP_JS_PATH}...\")\n    with open(APP_JS_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # 1. Add Import\n    if \"import TananuntoRootsPage\" not in content:\n        content = content.replace(\"import VocabSearchPage from './pages/VocabSearchPage';\", \n                                  \"import VocabSearchPage from './pages/VocabSearchPage';\\nimport TananuntoRootsPage from './pages/TananuntoRootsPage';\")\n    # 2. Add Route\n    if 'path=\"/tananunto-roots\"' not in content:",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "update_search_page",
+        "kind": 2,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "def update_search_page():\n    print(f\"Updating {SEARCH_PAGE_PATH}...\")\n    with open(SEARCH_PAGE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Add link button\n    if \"/tananunto-roots\" not in content:\n        # Find the link to search-vocab and add another one\n        search_str = '</Link>'\n        replacement = \"\"\"</Link>\n                    <Link to=\"/tananunto-roots\" className=\"vocab-search-link\" style={{ ",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "def main():\n    # 1. Create Page\n    page_path = os.path.join(PAGES_DIR, 'TananuntoRootsPage.js')\n    print(f\"Creating {page_path}...\")\n    with open(page_path, 'w', encoding='utf-8') as f:\n        f.write(TANANUNTO_PAGE_CONTENT)\n    # 2. Update App\n    update_app_js()\n    # 3. Update Search Page\n    update_search_page()",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "APP_DIR",
+        "kind": 5,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "APP_DIR = r'd:\\pali-dhatu-app\\src'\nPAGES_DIR = os.path.join(APP_DIR, 'pages')\nAPP_JS_PATH = os.path.join(APP_DIR, 'App.js')\nSEARCH_PAGE_PATH = os.path.join(PAGES_DIR, 'SearchPage.js')\nTANANUNTO_PAGE_CONTENT = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoRootKeys from '../data/tananunto-root-keys';",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "PAGES_DIR",
+        "kind": 5,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "PAGES_DIR = os.path.join(APP_DIR, 'pages')\nAPP_JS_PATH = os.path.join(APP_DIR, 'App.js')\nSEARCH_PAGE_PATH = os.path.join(PAGES_DIR, 'SearchPage.js')\nTANANUNTO_PAGE_CONTENT = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoRootKeys from '../data/tananunto-root-keys';\nfunction TananuntoRootsPage() {",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "APP_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "APP_JS_PATH = os.path.join(APP_DIR, 'App.js')\nSEARCH_PAGE_PATH = os.path.join(PAGES_DIR, 'SearchPage.js')\nTANANUNTO_PAGE_CONTENT = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoRootKeys from '../data/tananunto-root-keys';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "SEARCH_PAGE_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "SEARCH_PAGE_PATH = os.path.join(PAGES_DIR, 'SearchPage.js')\nTANANUNTO_PAGE_CONTENT = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoRootKeys from '../data/tananunto-root-keys';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.create_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PAGE_CONTENT",
+        "kind": 5,
+        "importPath": "scripts.create_tananunto_page",
+        "description": "scripts.create_tananunto_page",
+        "peekOfCode": "TANANUNTO_PAGE_CONTENT = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoRootKeys from '../data/tananunto-root-keys';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
+        "detail": "scripts.create_tananunto_page",
         "documentation": {}
     },
     {
@@ -845,6 +952,78 @@
         "documentation": {}
     },
     {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.debug_combine",
+        "description": "scripts.debug_combine",
+        "peekOfCode": "def load_js_object(path):\n    print(f\"Loading {path}...\")\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n            match = re.search(r'=\\s*(\\{[\\s\\S]*\\});?', content)\n            if match:\n                json_str = match.group(1)\n                return json.loads(json_str)\n            else:",
+        "detail": "scripts.debug_combine",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.debug_combine",
+        "description": "scripts.debug_combine",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\ndef load_js_object(path):\n    print(f\"Loading {path}...\")\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n            match = re.search(r'=\\s*(\\{[\\s\\S]*\\});?', content)\n            if match:\n                json_str = match.group(1)\n                return json.loads(json_str)",
+        "detail": "scripts.debug_combine",
+        "documentation": {}
+    },
+    {
+        "label": "tananunto",
+        "kind": 5,
+        "importPath": "scripts.debug_combine",
+        "description": "scripts.debug_combine",
+        "peekOfCode": "tananunto = load_js_object(TANANUNTO_PATH)\nif \"กริสฺสติ\" in tananunto:\n    print(\"Found 'กริสฺสติ' in Tananunto.\")\n    print(\"Value:\", tananunto[\"กริสฺสติ\"])\nelse:\n    print(\"'กริสฺสติ' NOT found in Tananunto.\")\nroman = \"karissati\"\nthai = roman_to_thai(roman)\nprint(f\"Roman: {roman} -> Thai: {thai}\")\nif thai in tananunto:",
+        "detail": "scripts.debug_combine",
+        "documentation": {}
+    },
+    {
+        "label": "roman",
+        "kind": 5,
+        "importPath": "scripts.debug_combine",
+        "description": "scripts.debug_combine",
+        "peekOfCode": "roman = \"karissati\"\nthai = roman_to_thai(roman)\nprint(f\"Roman: {roman} -> Thai: {thai}\")\nif thai in tananunto:\n    print(f\"Match! '{thai}' is in Tananunto.\")\nelse:\n    print(f\"No match for '{thai}' in Tananunto.\")",
+        "detail": "scripts.debug_combine",
+        "documentation": {}
+    },
+    {
+        "label": "thai",
+        "kind": 5,
+        "importPath": "scripts.debug_combine",
+        "description": "scripts.debug_combine",
+        "peekOfCode": "thai = roman_to_thai(roman)\nprint(f\"Roman: {roman} -> Thai: {thai}\")\nif thai in tananunto:\n    print(f\"Match! '{thai}' is in Tananunto.\")\nelse:\n    print(f\"No match for '{thai}' in Tananunto.\")",
+        "detail": "scripts.debug_combine",
+        "documentation": {}
+    },
+    {
+        "label": "roman_to_thai",
+        "kind": 2,
+        "importPath": "scripts.debug_vocab_matching",
+        "description": "scripts.debug_vocab_matching",
+        "peekOfCode": "def roman_to_thai(text):\n    if not text: return \"\"\n    s = text\n    map_char = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',\n        'y': 'ย', 'r': 'ร', 'l': 'ล', 'v': 'ว', 's': 'ส', 'h': 'ห', 'ḷ': 'ฬ',",
+        "detail": "scripts.debug_vocab_matching",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.debug_vocab_matching",
+        "description": "scripts.debug_vocab_matching",
+        "peekOfCode": "def load_js_object(path):\n    print(f\"Loading {path}...\")\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n            match = re.search(r'=\\s*(\\{[\\s\\S]*\\});?', content)\n            if match:\n                return json.loads(match.group(1))\n            else:\n                print(f\"Regex match failed for {path}\")",
+        "detail": "scripts.debug_vocab_matching",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.debug_vocab_matching",
+        "description": "scripts.debug_vocab_matching",
+        "peekOfCode": "def main():\n    roman_word = \"kaṭṭhahārikā\"\n    thai_word = roman_to_thai(roman_word)\n    print(f\"Roman: {roman_word}\")\n    print(f\"Thai (converted): {thai_word}\")\n    # Load Tananunto\n    tananunto_path = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\n    tananunto = load_js_object(tananunto_path)\n    if thai_word in tananunto:\n        print(f\"Found in Tananunto: Yes\")",
+        "detail": "scripts.debug_vocab_matching",
+        "documentation": {}
+    },
+    {
         "label": "roman_to_thai",
         "kind": 2,
         "importPath": "scripts.extract_derived_meanings",
@@ -899,6 +1078,51 @@
         "documentation": {}
     },
     {
+        "label": "thai_to_roman",
+        "kind": 2,
+        "importPath": "scripts.extract_tananunto_roots",
+        "description": "scripts.extract_tananunto_roots",
+        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "detail": "scripts.extract_tananunto_roots",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_root",
+        "kind": 2,
+        "importPath": "scripts.extract_tananunto_roots",
+        "description": "scripts.extract_tananunto_roots",
+        "peekOfCode": "def normalize_root(roman_root, available_keys):\n    # Try exact match\n    if roman_root in available_keys:\n        return roman_root\n    # Try removing final 'a' (kara -> kar)\n    if roman_root.endswith('a'):\n        shorter = roman_root[:-1]\n        if shorter in available_keys:\n            return shorter\n    # Try adding final 'a' (kar -> kara)",
+        "detail": "scripts.extract_tananunto_roots",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.extract_tananunto_roots",
+        "description": "scripts.extract_tananunto_roots",
+        "peekOfCode": "def main():\n    print(f\"Reading {TANANUNTO_PATH}...\")\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Extract entries\n    # Pattern to match \"Key\": \"Value\"\n    # Handling escaped quotes in value is important\n    entries = re.findall(r'\"((?:[^\"\\\\]|\\\\.)+)\":\\s*\"((?:[^\"\\\\]|\\\\.)+)\"', content)\n    print(f\"Found {len(entries)} entries in Tananunto.\")\n    # Read DPD Derived",
+        "detail": "scripts.extract_tananunto_roots",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.extract_tananunto_roots",
+        "description": "scripts.extract_tananunto_roots",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\nDPD_DERIVED_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js'\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',",
+        "detail": "scripts.extract_tananunto_roots",
+        "documentation": {}
+    },
+    {
+        "label": "DPD_DERIVED_PATH",
+        "kind": 5,
+        "importPath": "scripts.extract_tananunto_roots",
+        "description": "scripts.extract_tananunto_roots",
+        "peekOfCode": "DPD_DERIVED_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js'\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',",
+        "detail": "scripts.extract_tananunto_roots",
+        "documentation": {}
+    },
+    {
         "label": "url",
         "kind": 5,
         "importPath": "scripts.fetch_detail_raw",
@@ -914,6 +1138,15 @@
         "description": "scripts.fetch_detail_raw",
         "peekOfCode": "response = requests.get(url)\nwith open(\"temp_detail.html\", \"w\", encoding=\"utf-8\") as f:\n    f.write(response.text)\nprint(\"Saved to temp_detail.html\")",
         "detail": "scripts.fetch_detail_raw",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.find_word",
+        "description": "scripts.find_word",
+        "peekOfCode": "file_path = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    for line in f:\n        if \"กริสฺสติ\" in line:\n            print(line.strip())",
+        "detail": "scripts.find_word",
         "documentation": {}
     },
     {
@@ -1031,6 +1264,114 @@
         "description": "scripts.fix_search_error",
         "peekOfCode": "new_logic = \"\"\"            const matchesText = !searchText || \n                                (d.dhatu_word && String(d.dhatu_word).toLowerCase().includes(searchLower)) || \n                                (d.arth_thai && String(d.arth_thai).toLowerCase().includes(searchLower)) ||\n                                (d.arth_pali && String(d.arth_pali).toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && (Array.isArray(d.udaharana) ? d.udaharana.join(' ') : String(d.udaharana)).toLowerCase().includes(searchLower));\"\"\"\nif old_logic in content:\n    content = content.replace(old_logic, new_logic)\n    print(\"Updated filter logic to be robust against non-string types\")\nelse:\n    # Fallback search if exact match fails (e.g. whitespace differences)",
         "detail": "scripts.fix_search_error",
+        "documentation": {}
+    },
+    {
+        "label": "src",
+        "kind": 5,
+        "importPath": "scripts.force_copy_derived",
+        "description": "scripts.force_copy_derived",
+        "peekOfCode": "src = r'd:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js'\ndst = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\nprint(f\"Copying {src} to {dst}...\")\ntry:\n    shutil.copy2(src, dst)\n    print(\"Success!\")\nexcept Exception as e:\n    print(f\"Error: {e}\")\n    # Try to force by removing destination first\n    try:",
+        "detail": "scripts.force_copy_derived",
+        "documentation": {}
+    },
+    {
+        "label": "dst",
+        "kind": 5,
+        "importPath": "scripts.force_copy_derived",
+        "description": "scripts.force_copy_derived",
+        "peekOfCode": "dst = r'd:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived.js'\nprint(f\"Copying {src} to {dst}...\")\ntry:\n    shutil.copy2(src, dst)\n    print(\"Success!\")\nexcept Exception as e:\n    print(f\"Error: {e}\")\n    # Try to force by removing destination first\n    try:\n        if os.path.exists(dst):",
+        "detail": "scripts.force_copy_derived",
+        "documentation": {}
+    },
+    {
+        "label": "thai_to_roman",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_root",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "def normalize_root(roman_root, available_keys):\n    # Try exact match\n    if roman_root in available_keys:\n        return roman_root\n    # Try removing final 'a' (kara -> kar)\n    if roman_root.endswith('a'):\n        shorter = roman_root[:-1]\n        if shorter in available_keys:\n            return shorter\n    # Try adding final 'a' (kar -> kara)",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "def main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Read Tananunto\n    print(f\"Reading {TANANUNTO_PATH}...\")",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\nROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "ROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index",
+        "description": "scripts.generate_tananunto_root_index",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',",
+        "detail": "scripts.generate_tananunto_root_index",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_root_index_v2",
+        "description": "scripts.generate_tananunto_root_index_v2",
+        "peekOfCode": "def main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Read Tananunto\n    print(f\"Reading {TANANUNTO_PATH}...\")",
+        "detail": "scripts.generate_tananunto_root_index_v2",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index_v2",
+        "description": "scripts.generate_tananunto_root_index_v2",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\nROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))",
+        "detail": "scripts.generate_tananunto_root_index_v2",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index_v2",
+        "description": "scripts.generate_tananunto_root_index_v2",
+        "peekOfCode": "ROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")",
+        "detail": "scripts.generate_tananunto_root_index_v2",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_root_index_v2",
+        "description": "scripts.generate_tananunto_root_index_v2",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-root-keys.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Read Tananunto",
+        "detail": "scripts.generate_tananunto_root_index_v2",
         "documentation": {}
     },
     {
@@ -1400,6 +1741,51 @@
         "description": "scripts.scrape_root_links_robust",
         "peekOfCode": "start_page = len(links_data) // 25\nprint(f\"Starting from page {start_page}...\")\nfor page in range(start_page, 155): # Max pages around 155 for 3800 items\n    url = f\"{base_url}?page={page}\"\n    print(f\"Fetching page {page}...\")\n    success = False\n    for attempt in range(3):\n        try:\n            response = requests.get(url, timeout=20)\n            if response.status_code == 200:",
         "detail": "scripts.scrape_root_links_robust",
+        "documentation": {}
+    },
+    {
+        "label": "thai_to_roman",
+        "kind": 2,
+        "importPath": "scripts.test_extraction",
+        "description": "scripts.test_extraction",
+        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "detail": "scripts.test_extraction",
+        "documentation": {}
+    },
+    {
+        "label": "definition",
+        "kind": 5,
+        "importPath": "scripts.test_extraction",
+        "description": "scripts.test_extraction",
+        "peekOfCode": "definition = \"ก. (เช่น ชโน อ. ชน) จักกระทำ กร ธาตุ ใน ความทำ + โอ ปัจจัยในกัตตุวาจก + สฺสติ ภวิสสันติ วิภัต                ตติ ลง อิ อาคม ลบ โอ ปัจจัย สำเร็จรูปเป็น กริสฺสติ\"\nmatch = re.search(r'(?:[+\\s]|^)([ก-ฮ]+)\\s*ธาตุ', definition)\nprint(f\"Definition: {definition}\")\nif match:\n    thai_root = match.group(1)\n    print(f\"Found Thai Root: {thai_root}\")\n    roman_root = thai_to_roman(thai_root)\n    print(f\"Roman Root: {roman_root}\")\nelse:\n    print(\"No root match found\")",
+        "detail": "scripts.test_extraction",
+        "documentation": {}
+    },
+    {
+        "label": "match",
+        "kind": 5,
+        "importPath": "scripts.test_extraction",
+        "description": "scripts.test_extraction",
+        "peekOfCode": "match = re.search(r'(?:[+\\s]|^)([ก-ฮ]+)\\s*ธาตุ', definition)\nprint(f\"Definition: {definition}\")\nif match:\n    thai_root = match.group(1)\n    print(f\"Found Thai Root: {thai_root}\")\n    roman_root = thai_to_roman(thai_root)\n    print(f\"Roman Root: {roman_root}\")\nelse:\n    print(\"No root match found\")\nthai_word = \"กริสฺสติ\"",
+        "detail": "scripts.test_extraction",
+        "documentation": {}
+    },
+    {
+        "label": "thai_word",
+        "kind": 5,
+        "importPath": "scripts.test_extraction",
+        "description": "scripts.test_extraction",
+        "peekOfCode": "thai_word = \"กริสฺสติ\"\nroman_word = thai_to_roman(thai_word)\nprint(f\"Thai Word: {thai_word} -> Roman: {roman_word}\")",
+        "detail": "scripts.test_extraction",
+        "documentation": {}
+    },
+    {
+        "label": "roman_word",
+        "kind": 5,
+        "importPath": "scripts.test_extraction",
+        "description": "scripts.test_extraction",
+        "peekOfCode": "roman_word = thai_to_roman(thai_word)\nprint(f\"Thai Word: {thai_word} -> Roman: {roman_word}\")",
+        "detail": "scripts.test_extraction",
         "documentation": {}
     },
     {
@@ -2429,6 +2815,33 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "kind": 5,
+        "importPath": "scripts.update_pali_script",
+        "description": "scripts.update_pali_script",
+        "peekOfCode": "path = r'd:\\pali-dhatu-app\\src\\utils\\PaliScript.js'\nwith open(path, 'r', encoding='utf-8') as f:\n    content = f.read()\nold_str = \"\"\"    romanToThai: function(text) {\n        if (!text) return \"\";\n        const map = {\"\"\"\nnew_str = \"\"\"    romanToThai: function(text) {\n        if (!text) return \"\";\n        // Normalization for Thai Pali conventions (Display)\n        if (text.endsWith('vant')) text = text.slice(0, -4) + 'vantu';",
+        "detail": "scripts.update_pali_script",
+        "documentation": {}
+    },
+    {
+        "label": "old_str",
+        "kind": 5,
+        "importPath": "scripts.update_pali_script",
+        "description": "scripts.update_pali_script",
+        "peekOfCode": "old_str = \"\"\"    romanToThai: function(text) {\n        if (!text) return \"\";\n        const map = {\"\"\"\nnew_str = \"\"\"    romanToThai: function(text) {\n        if (!text) return \"\";\n        // Normalization for Thai Pali conventions (Display)\n        if (text.endsWith('vant')) text = text.slice(0, -4) + 'vantu';\n        if (text.endsWith('mant')) text = text.slice(0, -4) + 'mantu';\n        if (text.endsWith('ar')) text = text.slice(0, -2) + 'u'; // e.g. samavekkhitar -> samavekkhitu\n        const map = {\"\"\"",
+        "detail": "scripts.update_pali_script",
+        "documentation": {}
+    },
+    {
+        "label": "new_str",
+        "kind": 5,
+        "importPath": "scripts.update_pali_script",
+        "description": "scripts.update_pali_script",
+        "peekOfCode": "new_str = \"\"\"    romanToThai: function(text) {\n        if (!text) return \"\";\n        // Normalization for Thai Pali conventions (Display)\n        if (text.endsWith('vant')) text = text.slice(0, -4) + 'vantu';\n        if (text.endsWith('mant')) text = text.slice(0, -4) + 'mantu';\n        if (text.endsWith('ar')) text = text.slice(0, -2) + 'u'; // e.g. samavekkhitar -> samavekkhitu\n        const map = {\"\"\"\nif old_str in content:\n    content = content.replace(old_str, new_str)\n    with open(path, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.update_pali_script",
+        "documentation": {}
+    },
+    {
         "label": "update_headers",
         "kind": 2,
         "importPath": "scripts.update_principles_header",
@@ -2501,65 +2914,38 @@
         "documentation": {}
     },
     {
-        "label": "search_page_path",
-        "kind": 5,
+        "label": "update_search_page",
+        "kind": 2,
         "importPath": "scripts.update_search_logic",
         "description": "scripts.update_search_logic",
-        "peekOfCode": "search_page_path = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nwith open(search_page_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Update Cache Key to force refresh\nif \"dhatu_cache\" in content:\n    content = content.replace(\"'dhatu_cache'\", \"'dhatu_cache_v2'\")\n    content = content.replace(\"'dhatu_cache_time'\", \"'dhatu_cache_time_v2'\")\n    print(\"Updated cache key to v2\")\n# 2. Update Fetch Logic to include udaharana\nold_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,",
+        "peekOfCode": "def update_search_page():\n    print(f\"Updating {SEARCH_PAGE_PATH}...\")\n    with open(SEARCH_PAGE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Old Filter Logic\n    old_logic = \"\"\"    // Filter Logic\n    const filteredData = useMemo(() => {\n        return allDhatus.filter(d => {\n            const matchesGroup = selectedGroup === 'all' || (d.mawat_dhatu && d.mawat_dhatu.includes(selectedGroup));\n            const searchLower = searchText.toLowerCase();",
         "detail": "scripts.update_search_logic",
         "documentation": {}
     },
     {
-        "label": "old_fetch",
-        "kind": 5,
+        "label": "update_vocab_page",
+        "kind": 2,
         "importPath": "scripts.update_search_logic",
         "description": "scripts.update_search_logic",
-        "peekOfCode": "old_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu\n                }));\"\"\"\nnew_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu,\n                    udaharana: doc.data().udaharana\n                }));\"\"\"\nif old_fetch in content:",
+        "peekOfCode": "def update_vocab_page():\n    print(f\"Updating {VOCAB_PAGE_PATH}...\")\n    with open(VOCAB_PAGE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # 1. Update Filter Logic\n    old_logic = \"\"\"    const filteredData = useMemo(() => {\n        if (!searchText) return [];\n        const lower = searchText.toLowerCase();\n        return vocabList.filter(item => \n            item.wordThai.includes(lower) || ",
         "detail": "scripts.update_search_logic",
         "documentation": {}
     },
     {
-        "label": "new_fetch",
+        "label": "SEARCH_PAGE_PATH",
         "kind": 5,
         "importPath": "scripts.update_search_logic",
         "description": "scripts.update_search_logic",
-        "peekOfCode": "new_fetch = \"\"\"                    arth_pali: doc.data().arth_pali,\n                    mawat_dhatu: doc.data().mawat_dhatu,\n                    anukrom_dhatu: doc.data().anukrom_dhatu,\n                    udaharana: doc.data().udaharana\n                }));\"\"\"\nif old_fetch in content:\n    content = content.replace(old_fetch, new_fetch)\n    print(\"Added udaharana to fetch logic\")\nelse:\n    print(\"Warning: Fetch logic pattern not found\")",
+        "peekOfCode": "SEARCH_PAGE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\nVOCAB_PAGE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\ndef update_search_page():\n    print(f\"Updating {SEARCH_PAGE_PATH}...\")\n    with open(SEARCH_PAGE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Old Filter Logic\n    old_logic = \"\"\"    // Filter Logic\n    const filteredData = useMemo(() => {\n        return allDhatus.filter(d => {",
         "detail": "scripts.update_search_logic",
         "documentation": {}
     },
     {
-        "label": "old_search",
+        "label": "VOCAB_PAGE_PATH",
         "kind": 5,
         "importPath": "scripts.update_search_logic",
         "description": "scripts.update_search_logic",
-        "peekOfCode": "old_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower));\"\"\"\nnew_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nif old_search in content:\n    content = content.replace(old_search, new_search)\n    print(\"Added udaharana to search logic\")\nelse:\n    print(\"Warning: Search logic pattern not found\")\n# 4. Update Placeholder text to indicate example search\nold_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"",
-        "detail": "scripts.update_search_logic",
-        "documentation": {}
-    },
-    {
-        "label": "new_search",
-        "kind": 5,
-        "importPath": "scripts.update_search_logic",
-        "description": "scripts.update_search_logic",
-        "peekOfCode": "new_search = \"\"\"                                (d.arth_pali && d.arth_pali.toLowerCase().includes(searchLower)) ||\n                                (d.udaharana && d.udaharana.toLowerCase().includes(searchLower));\"\"\"\nif old_search in content:\n    content = content.replace(old_search, new_search)\n    print(\"Added udaharana to search logic\")\nelse:\n    print(\"Warning: Search logic pattern not found\")\n# 4. Update Placeholder text to indicate example search\nold_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"\nnew_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"",
-        "detail": "scripts.update_search_logic",
-        "documentation": {}
-    },
-    {
-        "label": "old_placeholder",
-        "kind": 5,
-        "importPath": "scripts.update_search_logic",
-        "description": "scripts.update_search_logic",
-        "peekOfCode": "old_placeholder = \"\"\"placeholder=\"เช่น ภุ, มีความมี...\\\"\"\"\"\nnew_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"\nif old_placeholder in content:\n    content = content.replace(old_placeholder, new_placeholder)\n    print(\"Updated placeholder text\")\nwith open(search_page_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
-        "detail": "scripts.update_search_logic",
-        "documentation": {}
-    },
-    {
-        "label": "new_placeholder",
-        "kind": 5,
-        "importPath": "scripts.update_search_logic",
-        "description": "scripts.update_search_logic",
-        "peekOfCode": "new_placeholder = \"\"\"placeholder=\"ค้นหาชื่อธาตุ, คำแปล หรือศัพท์ในอุทาหรณ์...\\\"\"\"\"\nif old_placeholder in content:\n    content = content.replace(old_placeholder, new_placeholder)\n    print(\"Updated placeholder text\")\nwith open(search_page_path, 'w', encoding='utf-8') as f:\n    f.write(content)",
+        "peekOfCode": "VOCAB_PAGE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\ndef update_search_page():\n    print(f\"Updating {SEARCH_PAGE_PATH}...\")\n    with open(SEARCH_PAGE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Old Filter Logic\n    old_logic = \"\"\"    // Filter Logic\n    const filteredData = useMemo(() => {\n        return allDhatus.filter(d => {\n            const matchesGroup = selectedGroup === 'all' || (d.mawat_dhatu && d.mawat_dhatu.includes(selectedGroup));",
         "detail": "scripts.update_search_logic",
         "documentation": {}
     },
