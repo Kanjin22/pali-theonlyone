@@ -188,6 +188,7 @@
 
     <!-- Load Roots Data -->
     <script src="data/vocab-roots.js"></script>
+    <script src="data/vocab-roots-dpd-derived.js"></script>
 
     <script>
         // DOM Elements
@@ -278,6 +279,25 @@
                     const exampleHtml = entry.example 
                         ? `<div class="root-example"><span class="label">อุทาหรณ์:</span> ${highlightText(entry.example, searchInput.value)}</div>` 
                         : '';
+                    
+                    // DPD Derived Words Integration
+                    let dpdHtml = '';
+                    if (typeof vocabRootsDPDDerived !== 'undefined' && vocabRootsDPDDerived[item.root]) {
+                        const words = vocabRootsDPDDerived[item.root];
+                        if (words.length > 0) {
+                             // Show only first 20 words to avoid clutter, with toggle?
+                             const displayWords = words.slice(0, 20).join(', ');
+                             const moreCount = words.length - 20;
+                             const moreText = moreCount > 0 ? ` และอีก ${moreCount} คำ...` : '';
+                             
+                             dpdHtml = `
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee; font-size: 0.95rem;">
+                                    <span class="label" style="color:#2980b9;"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุนี้ (DPD):</span>
+                                    <span style="color: #555;">${displayWords}${moreText}</span>
+                                </div>
+                             `;
+                        }
+                    }
 
                     card.innerHTML = `
                         <div class="card-header">
@@ -289,6 +309,7 @@
                                 <span class="label">ความหมาย:</span> ${highlightText(entry.meaning, searchInput.value)}
                             </div>
                             ${exampleHtml}
+                            ${dpdHtml}
                         </div>
                     `;
                     resultsContainer.appendChild(card);
