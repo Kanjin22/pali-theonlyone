@@ -157,6 +157,7 @@ async function migrate() {
                     mawat_dhatu: v.group || "",
                     source: v.source || "",
                     katha_no: v.page || "", // Mapping page -> katha_no
+                    udaharana_school: v.example_school || "",
                     udaharana: v.example ? [v.example] : [], // Wrap in array
                     // For sorting:
                     _sortKey: v.root

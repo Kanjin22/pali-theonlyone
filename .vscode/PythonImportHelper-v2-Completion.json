@@ -27,6 +27,240 @@
         "documentation": {}
     },
     {
+        "label": "React,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "React.",
+        "description": "React.",
+        "detail": "React.",
+        "documentation": {}
+    },
+    {
+        "label": "{",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "{",
+        "description": "{",
+        "detail": "{",
+        "documentation": {}
+    },
+    {
+        "label": "LoadingSpinner",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "LoadingSpinner",
+        "description": "LoadingSpinner",
+        "detail": "LoadingSpinner",
+        "documentation": {}
+    },
+    {
+        "label": "KathaRenderer",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "KathaRenderer",
+        "description": "KathaRenderer",
+        "detail": "KathaRenderer",
+        "documentation": {}
+    },
+    {
+        "label": "'./App.css';",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "'..App.css';",
+        "description": "'..App.css';",
+        "detail": "'..App.css';",
+        "documentation": {}
+    },
+    {
+        "label": "Header",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "Header",
+        "description": "Header",
+        "detail": "Header",
+        "documentation": {}
+    },
+    {
+        "label": "Footer",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "Footer",
+        "description": "Footer",
+        "detail": "Footer",
+        "documentation": {}
+    },
+    {
+        "label": "Login",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "Login",
+        "description": "Login",
+        "detail": "Login",
+        "documentation": {}
+    },
+    {
+        "label": "DhatuDetail",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "DhatuDetail",
+        "description": "DhatuDetail",
+        "detail": "DhatuDetail",
+        "documentation": {}
+    },
+    {
+        "label": "SearchPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "SearchPage",
+        "description": "SearchPage",
+        "detail": "SearchPage",
+        "documentation": {}
+    },
+    {
+        "label": "KathaListPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "KathaListPage",
+        "description": "KathaListPage",
+        "detail": "KathaListPage",
+        "documentation": {}
+    },
+    {
+        "label": "'react-toastify/dist/ReactToastify.css';",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "'react-toastify.dist.ReactToastify.css';",
+        "description": "'react-toastify.dist.ReactToastify.css';",
+        "detail": "'react-toastify.dist.ReactToastify.css';",
+        "documentation": {}
+    },
+    {
+        "label": "AdminLayout",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminLayout",
+        "description": "AdminLayout",
+        "detail": "AdminLayout",
+        "documentation": {}
+    },
+    {
+        "label": "AdminSubmissions",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminSubmissions",
+        "description": "AdminSubmissions",
+        "detail": "AdminSubmissions",
+        "documentation": {}
+    },
+    {
+        "label": "AdminDhatuManagement",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminDhatuManagement",
+        "description": "AdminDhatuManagement",
+        "detail": "AdminDhatuManagement",
+        "documentation": {}
+    },
+    {
+        "label": "AdminUserManagement",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminUserManagement",
+        "description": "AdminUserManagement",
+        "detail": "AdminUserManagement",
+        "documentation": {}
+    },
+    {
+        "label": "AdminAddDhatu",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminAddDhatu",
+        "description": "AdminAddDhatu",
+        "detail": "AdminAddDhatu",
+        "documentation": {}
+    },
+    {
+        "label": "AboutPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AboutPage",
+        "description": "AboutPage",
+        "detail": "AboutPage",
+        "documentation": {}
+    },
+    {
+        "label": "ContactPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ContactPage",
+        "description": "ContactPage",
+        "detail": "ContactPage",
+        "documentation": {}
+    },
+    {
+        "label": "PrinciplesPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "PrinciplesPage",
+        "description": "PrinciplesPage",
+        "detail": "PrinciplesPage",
+        "documentation": {}
+    },
+    {
+        "label": "FlashcardsPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "FlashcardsPage",
+        "description": "FlashcardsPage",
+        "detail": "FlashcardsPage",
+        "documentation": {}
+    },
+    {
+        "label": "VerseDetailPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "VerseDetailPage",
+        "description": "VerseDetailPage",
+        "detail": "VerseDetailPage",
+        "documentation": {}
+    },
+    {
+        "label": "AllDhatusPage",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AllDhatusPage",
+        "description": "AllDhatusPage",
+        "detail": "AllDhatusPage",
+        "documentation": {}
+    },
+    {
+        "label": "AdminKathaManagement",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminKathaManagement",
+        "description": "AdminKathaManagement",
+        "detail": "AdminKathaManagement",
+        "documentation": {}
+    },
+    {
+        "label": "AdminAddKatha",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "AdminAddKatha",
+        "description": "AdminAddKatha",
+        "detail": "AdminAddKatha",
+        "documentation": {}
+    },
+    {
+        "label": "React",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "React",
+        "description": "React",
+        "detail": "React",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -118,24 +352,6 @@
         "documentation": {}
     },
     {
-        "label": "{",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "{",
-        "description": "{",
-        "detail": "{",
-        "documentation": {}
-    },
-    {
-        "label": "LoadingSpinner",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "LoadingSpinner",
-        "description": "LoadingSpinner",
-        "detail": "LoadingSpinner",
-        "documentation": {}
-    },
-    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -214,6 +430,105 @@
         "description": "scripts.convert_newgen_db",
         "peekOfCode": "output_path = r'd:\\pali-theonlyone\\data\\vocab-newgen.js'\ndef convert_db_to_js():\n    print(f\"Connecting to database: {db_path}\")\n    conn = sqlite3.connect(db_path)\n    cursor = conn.cursor()\n    # Get total count\n    cursor.execute(\"SELECT COUNT(*) FROM palithaiNewGen\")\n    count = cursor.fetchone()[0]\n    print(f\"Total records found: {count}\")\n    # Fetch data",
         "detail": "scripts.convert_newgen_db",
+        "documentation": {}
+    },
+    {
+        "label": "write_file",
+        "kind": 2,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "def write_file(path, content):\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(content.strip())\n    print(f\"Updated: {path}\")\n# Execute updates\nwrite_file(KATHA_LIST_PATH, katha_list_content)\nwrite_file(SEARCH_PAGE_PATH, search_page_content)\nwrite_file(APP_CSS_PATH, app_css_content)\nwrite_file(APP_JS_PATH, app_js_content)\nwrite_file(HEADER_JS_PATH, header_js_content)",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "KATHA_LIST_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "KATHA_LIST_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\KathaListPage.js\"\nSEARCH_PAGE_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nAPP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\nAPP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\nHEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\n# --- KathaListPage.js ---\nkatha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "SEARCH_PAGE_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "SEARCH_PAGE_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\nAPP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\nAPP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\nHEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\n# --- KathaListPage.js ---\nkatha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "APP_CSS_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "APP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\nAPP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\nHEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\n# --- KathaListPage.js ---\nkatha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "APP_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "APP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\nHEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\n# --- KathaListPage.js ---\nkatha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "HEADER_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "HEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\n# --- KathaListPage.js ---\nkatha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "katha_list_content",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "katha_list_content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {\n    const [kathas, setKathas] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "search_page_content",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "search_page_content = \"\"\"\nimport React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction SearchPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "app_css_content",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "app_css_content = \"\"\"\n/* ===== LIGHT THEME: \"Modern Classroom\" ===== */\n:root {\n  --primary-color: #3498db;      /* Blue header */\n  --primary-dark: #2980b9;\n  --accent-color: #e67e22;       /* Orange accents */\n  --bg-color: #f8f9fa;           /* Light gray background */\n  --card-bg: #ffffff;\n  --text-primary: #2c3e50;       /* Dark gray text */\n  --text-secondary: #7f8c8d;",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "app_js_content",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "app_js_content = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport KathaListPage from './pages/KathaListPage'; // Changed from HomePage\nimport { AuthProvider } from './contexts/AuthContext';",
+        "detail": "scripts.create_update_script",
+        "documentation": {}
+    },
+    {
+        "label": "header_js_content",
+        "kind": 5,
+        "importPath": "scripts.create_update_script",
+        "description": "scripts.create_update_script",
+        "peekOfCode": "header_js_content = \"\"\"\n// src/components/Header.js\nimport React from 'react';\nimport { Link, NavLink, useNavigate } from 'react-router-dom';\nimport { useAuth } from '../contexts/AuthContext';\nimport { signOut } from 'firebase/auth';\nimport { auth } from '../firebaseConfig';\nfunction Header() {\n  const { currentUser } = useAuth();\n  const navigate = useNavigate();",
+        "detail": "scripts.create_update_script",
         "documentation": {}
     },
     {
@@ -442,6 +757,60 @@
         "documentation": {}
     },
     {
+        "label": "APP_CSS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_app_css",
+        "description": "scripts.update_app_css",
+        "peekOfCode": "APP_CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\ncontent = \"\"\"\n/* ===== LIGHT THEME: \"Modern Classroom\" ===== */\n:root {\n  --primary-color: #3498db;      /* Blue header */\n  --primary-dark: #2980b9;\n  --accent-color: #e67e22;       /* Orange accents */\n  --bg-color: #f8f9fa;           /* Light gray background */\n  --card-bg: #ffffff;\n  --text-primary: #2c3e50;       /* Dark gray text */",
+        "detail": "scripts.update_app_css",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_app_css",
+        "description": "scripts.update_app_css",
+        "peekOfCode": "content = \"\"\"\n/* ===== LIGHT THEME: \"Modern Classroom\" ===== */\n:root {\n  --primary-color: #3498db;      /* Blue header */\n  --primary-dark: #2980b9;\n  --accent-color: #e67e22;       /* Orange accents */\n  --bg-color: #f8f9fa;           /* Light gray background */\n  --card-bg: #ffffff;\n  --text-primary: #2c3e50;       /* Dark gray text */\n  --text-secondary: #7f8c8d;",
+        "detail": "scripts.update_app_css",
+        "documentation": {}
+    },
+    {
+        "label": "APP_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_app_js",
+        "description": "scripts.update_app_js",
+        "peekOfCode": "APP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\ncontent = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport { AuthProvider } from './contexts/AuthContext';",
+        "detail": "scripts.update_app_js",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_app_js",
+        "description": "scripts.update_app_js",
+        "peekOfCode": "content = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport { AuthProvider } from './contexts/AuthContext';\nimport { ToastContainer } from 'react-toastify';",
+        "detail": "scripts.update_app_js",
+        "documentation": {}
+    },
+    {
+        "label": "APP_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_app_js_routes",
+        "description": "scripts.update_app_js_routes",
+        "peekOfCode": "APP_JS_PATH = r\"D:\\pali-dhatu-app\\src\\App.js\"\ncontent = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport KathaListPage from './pages/KathaListPage'; // Changed from HomePage",
+        "detail": "scripts.update_app_js_routes",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_app_js_routes",
+        "description": "scripts.update_app_js_routes",
+        "peekOfCode": "content = \"\"\"\n// src/App.js\nimport './App.css';\nimport Header from './components/Header';\nimport Footer from './components/Footer';\nimport Login from './components/Login';\nimport DhatuDetail from './components/DhatuDetail';\nimport SearchPage from './pages/SearchPage';\nimport KathaListPage from './pages/KathaListPage'; // Changed from HomePage\nimport { AuthProvider } from './contexts/AuthContext';",
+        "detail": "scripts.update_app_js_routes",
+        "documentation": {}
+    },
+    {
         "label": "create_icon",
         "kind": 2,
         "importPath": "scripts.update_branding",
@@ -595,6 +964,42 @@
         "documentation": {}
     },
     {
+        "label": "DHATU_DETAIL_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "DHATU_DETAIL_PATH = r\"D:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\ncontent = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_dhatu_detail",
+        "description": "scripts.update_dhatu_detail",
+        "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { useParams, Link } from 'react-router-dom';\nimport { doc, getDoc } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction DhatuDetail() {\n  const { id } = useParams();\n  const [dhatu, setDhatu] = useState(null);\n  const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_dhatu_detail",
+        "documentation": {}
+    },
+    {
+        "label": "HEADER_JS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_header",
+        "description": "scripts.update_header",
+        "peekOfCode": "HEADER_JS_PATH = r\"D:\\pali-dhatu-app\\src\\components\\Header.js\"\ncontent = \"\"\"\n// src/components/Header.js\nimport React from 'react';\nimport { Link, NavLink, useNavigate } from 'react-router-dom';\nimport { useAuth } from '../contexts/AuthContext';\nimport { signOut } from 'firebase/auth';\nimport { auth } from '../firebaseConfig';\nfunction Header() {\n  const { currentUser } = useAuth();",
+        "detail": "scripts.update_header",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_header",
+        "description": "scripts.update_header",
+        "peekOfCode": "content = \"\"\"\n// src/components/Header.js\nimport React from 'react';\nimport { Link, NavLink, useNavigate } from 'react-router-dom';\nimport { useAuth } from '../contexts/AuthContext';\nimport { signOut } from 'firebase/auth';\nimport { auth } from '../firebaseConfig';\nfunction Header() {\n  const { currentUser } = useAuth();\n  const navigate = useNavigate();",
+        "detail": "scripts.update_header",
+        "documentation": {}
+    },
+    {
         "label": "header_path",
         "kind": 5,
         "importPath": "scripts.update_header_and_app",
@@ -610,6 +1015,60 @@
         "description": "scripts.update_header_and_app",
         "peekOfCode": "app_path = r\"D:\\pali-dhatu-app\\src\\App.js\"\n# 1. Update Header.js\ntry:\n    with open(header_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Target block to remove\n    target = \"\"\"          <li><NavLink to=\"/flashcards\" style={{color: \"#f39c12\"}}>ทบทวนธาตุ</NavLink></li>\n          <li className=\"nav-separator\">|</li>\n          <li><NavLink to=\"/submit\">เสนอแนะข้อมูล</NavLink></li>\n          <li><NavLink to=\"/about\">เกี่ยวกับ</NavLink></li>",
         "detail": "scripts.update_header_and_app",
+        "documentation": {}
+    },
+    {
+        "label": "KATHA_LIST_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_katha_list",
+        "description": "scripts.update_katha_list",
+        "peekOfCode": "KATHA_LIST_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\KathaListPage.js\"\ncontent = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {\n    const [kathas, setKathas] = useState([]);",
+        "detail": "scripts.update_katha_list",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_katha_list",
+        "description": "scripts.update_katha_list",
+        "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport KathaRenderer from '../components/KathaRenderer';\nfunction KathaListPage() {\n    const [kathas, setKathas] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_katha_list",
+        "documentation": {}
+    },
+    {
+        "label": "SEARCH_PAGE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_search_page",
+        "description": "scripts.update_search_page",
+        "peekOfCode": "SEARCH_PAGE_PATH = r\"D:\\pali-dhatu-app\\src\\pages\\SearchPage.js\"\ncontent = \"\"\"\nimport React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction SearchPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_search_page",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.update_search_page",
+        "description": "scripts.update_search_page",
+        "peekOfCode": "content = \"\"\"\nimport React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nfunction SearchPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
+        "detail": "scripts.update_search_page",
+        "documentation": {}
+    },
+    {
+        "label": "CSS_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_styles",
+        "description": "scripts.update_styles",
+        "peekOfCode": "CSS_PATH = r\"D:\\pali-dhatu-app\\src\\App.css\"\nnew_styles = \"\"\"\n/* --- Grammar Principles Styles (Ported from Learning Web) --- */\n.content-box { font-size: 1.15rem; color: #444; text-align: justify; line-height: 1.8; }\n.content-box p { margin-bottom: 1.5em; }\n.example-list { list-style: none; padding: 0; }\n.example-list li { \n    background: #f9fbfd; \n    margin-bottom: 10px; \n    padding: 15px; ",
+        "detail": "scripts.update_styles",
+        "documentation": {}
+    },
+    {
+        "label": "new_styles",
+        "kind": 5,
+        "importPath": "scripts.update_styles",
+        "description": "scripts.update_styles",
+        "peekOfCode": "new_styles = \"\"\"\n/* --- Grammar Principles Styles (Ported from Learning Web) --- */\n.content-box { font-size: 1.15rem; color: #444; text-align: justify; line-height: 1.8; }\n.content-box p { margin-bottom: 1.5em; }\n.example-list { list-style: none; padding: 0; }\n.example-list li { \n    background: #f9fbfd; \n    margin-bottom: 10px; \n    padding: 15px; \n    border-radius: 8px; ",
+        "detail": "scripts.update_styles",
         "documentation": {}
     },
     {
