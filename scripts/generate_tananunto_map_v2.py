@@ -39,7 +39,7 @@ def normalize_root(thai_root, available_keys):
         "คม": "คมุ",
         "ฉิท": "ฉิทิ",
         "วิช": "วิชิ",
-        "ฐป": "ฐา",
+        "ฐป": "ถป",
         "กร": "กร",
         "ทิส": "ทิส",
         "ภุช": "ภุช",
@@ -69,11 +69,15 @@ def normalize_root(thai_root, available_keys):
         "อจฺฉ": "อาส",
         "ปารุป": "รุป",
     }
-    
-    candidates = [thai_root]
+    candidates = []
     
     if thai_root in manual_map:
-        candidates.append(manual_map[thai_root])
+        mapped = manual_map[thai_root]
+        if mapped in available_keys:
+            return mapped
+        candidates.append(mapped)
+    
+    candidates.append(thai_root)
         
     if thai_root.endswith('ฺ'):
         candidates.append(thai_root[:-1])
