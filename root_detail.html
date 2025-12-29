@@ -202,76 +202,38 @@
     </div>
 
     <!-- Load Data -->
-    <!-- Removed vocab-roots.js (migrated to Firebase) -->
+    <script src="data/vocab-roots.js"></script>
     <script src="data/vocab-roots-dpd-derived.js"></script>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
-            authDomain: "pali-dhatu-app.firebaseapp.com",
-            projectId: "pali-dhatu-app",
-            storageBucket: "pali-dhatu-app.firebasestorage.app",
-            messagingSenderId: "188304412939",
-            appId: "1:188304412939:web:22a6bd82480f40a909120e"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        document.addEventListener('DOMContentLoaded', async () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            const rootKey = params.get('r'); // Backward compatibility/Fallback if needed
+            const rootKey = params.get('r');
+            const index = parseInt(params.get('i') || '0');
 
-            if (!id) {
-                if (rootKey) {
-                    // Fallback for old links (though we can't easily fetch by root+index without querying all)
-                    // Better to just show error or redirect
-                    showError("รูปแบบลิงก์ไม่ถูกต้อง (กรุณาเข้าผ่านหน้า roots.html ใหม่)");
-                } else {
-                    showError("ไม่พบรหัสข้อมูล (Missing ID)");
-                }
+            if (!rootKey) {
+                showError("ไม่พบข้อมูลธาตุ (Invalid Parameters)");
                 return;
             }
 
-            try {
-                const docRef = doc(db, "dhatu", id);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    
-                    // Map Firestore data to UI entry format
-                    const entry = {
-                        group: data.mawat_dhatu,
-                        meaning_thai: data.arth_thai,
-                        meaning_pali: data.arth_pali,
-                        page: data.page,
-                        source: data.source,
-                        example: data.udaharana,
-                        example_school: data.example_school
-                    };
-                    
-                    // renderDetail expects rootKey and entry
-                    renderDetail(data.dhatu_word, entry);
-                } else {
-                    showError("ไม่พบข้อมูลในฐานข้อมูล (Document not found)");
+            // Simulate loading (or wait for scripts)
+            setTimeout(() => {
+                if (typeof vocabRoots === 'undefined') {
+                    showError("ไม่พบฐานข้อมูล (Database not loaded)");
+                    return;
                 }
-            } catch (err) {
-                console.error("Error fetching document:", err);
-                showError("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + err.message);
-            }
-        });
-    </script>
 
-    <script>
-        // Helper functions
+                const entries = vocabRoots[rootKey];
+                if (!entries || !entries[index]) {
+                    showError("ไม่พบข้อมูลธาตุที่ระบุ");
+                    return;
+                }
+
+                const entry = entries[index];
+                renderDetail(rootKey, entry);
+            }, 100);
+        });
+
         function getFullSourceName(code) {
             if (!code) return "";
             if (code.includes("ธป")) return "ธาตุปฺปทีปิกา";
