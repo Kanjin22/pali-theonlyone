@@ -261,7 +261,14 @@
                     // renderDetail expects rootKey and entry
                     renderDetail(data.dhatu_word, entry);
                 } else {
-                    showError("ไม่พบข้อมูลในฐานข้อมูล (Document not found)");
+                    showError(`
+                        <div>ไม่พบข้อมูลในฐานข้อมูล (Document not found)</div>
+                        <div style="margin-top:20px;">
+                            <a href="roots.html" class="back-btn" style="background:#3498db; color:white;">
+                                <i class="fa-solid fa-magnifying-glass"></i> ไปหน้าค้นหาธาตุ
+                            </a>
+                        </div>
+                    `);
                 }
             } catch (err) {
                 console.error("Error fetching document:", err);

@@ -356,8 +356,8 @@
             spinner.style.display = 'block';
             
             // Cache handling
-            const CACHE_KEY = 'dhatu_cache_v3'; 
-            const TIME_KEY = 'dhatu_cache_time_v3';
+            const CACHE_KEY = 'dhatu_cache_v4'; 
+            const TIME_KEY = 'dhatu_cache_time_v4';
             
             const cachedData = localStorage.getItem(CACHE_KEY);
             const cachedTime = localStorage.getItem(TIME_KEY);
@@ -418,6 +418,7 @@
                 
                 // Map Firestore fields to UI entry fields
                 grouped[key].push({
+                    id: item.id,
                     group: item.mawat_dhatu,
                     meaning_thai: item.arth_thai,
                     meaning_pali: item.arth_pali,
