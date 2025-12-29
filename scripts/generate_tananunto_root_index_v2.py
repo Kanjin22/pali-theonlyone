@@ -34,38 +34,72 @@ def main():
         definition = definition.replace('\\"', '"')
         
         # Regex to find Root: XX ธาตุ
+        # Allow optional characters before 'ธาตุ' to capture context if needed, but group 1 is the root
         match = re.search(r'(?:[+\s(]|^)([ก-ฮ\u0e30-\u0e3a\u0e40-\u0e4e]+)\s*ธาตุ', definition)
         if match:
             thai_root = match.group(1).strip()
             
-            # 1. Try exact match
-            if thai_root in available_keys:
-                found_roots.add(thai_root)
-                continue
-                
-            # 2. Try variations
-            # If root ends with phinthu (e.g. กรฺ), try removing it (กร)
+            # Manual mappings for known mismatches
+            # Tananunto -> vocab-roots.js
+            manual_map = {
+                "คม": "คมุ",
+                "ฉิท": "ฉิทิ",
+                "วิช": "วิชิ",
+                "ฐป": "ฐา",
+                "กร": "กร", # Sometimes matches กรฺ
+                "ทิส": "ทิส", # Check if ทิสฺ exists
+                "ภุช": "ภุช",
+                "มุจ": "มุจ",
+                # New mappings
+                "วินฺท": "วิท",
+                "สีท": "สท",
+                "อิจฺฉ": "อิส",
+                "เนห": "สเนห",
+                "ปิย": "ปีย",
+                "ชห": "หา",
+                "ทุพฺภิ": "ทุภ",
+            }
+            
+            candidate_roots = [thai_root]
+            
+            # Add mapped root if exists
+            if thai_root in manual_map:
+                candidate_roots.append(manual_map[thai_root])
+            
+            # Generate variations
+            # 1. Phinthu variations
             if thai_root.endswith('ฺ'):
-                without_phinthu = thai_root[:-1]
-                if without_phinthu in available_keys:
-                    found_roots.add(without_phinthu)
-                    continue
+                candidate_roots.append(thai_root[:-1])
             else:
-                # If root doesn't end with phinthu (e.g. กร), try adding it (กรฺ)
-                with_phinthu = thai_root + 'ฺ'
-                if with_phinthu in available_keys:
-                    found_roots.add(with_phinthu)
-                    continue
+                candidate_roots.append(thai_root + 'ฺ')
             
-            # If ends with vowel 'ะ', try removing it? (กะ -> ก)
+            # 2. Vowel variations (roots often have implicit vowels like u or i)
+            # e.g. คม -> คมุ, ฉิท -> ฉิทิ
+            candidate_roots.append(thai_root + 'ุ')
+            candidate_roots.append(thai_root + 'ิ')
+            
+            # 3. Remove final vowel (e.g. กะ -> ก)
             if thai_root.endswith('ะ'):
-                without_a = thai_root[:-1]
-                if without_a in available_keys:
-                    found_roots.add(without_a)
-                    continue
+                candidate_roots.append(thai_root[:-1])
+
+            root_found = False
+            for r in candidate_roots:
+                if r in available_keys:
+                    found_roots.add(r)
+                    root_found = True
+                    break
             
-            # If still not found, add to missed
-            missed_roots.add(thai_root)
+            if not root_found:
+                # Filter out obvious noise
+                noise_keywords = ["ในหนังสือ", "สัททนีติ", "เช่น", "กล่าวว่า", "แปลว่า", "มาจาก"]
+                is_noise = False
+                for k in noise_keywords:
+                    if k in thai_root:
+                        is_noise = True
+                        break
+                
+                if not is_noise and len(thai_root) > 1: # Single letter might be noise or real root, usually >1
+                     missed_roots.add(thai_root)
     
     print(f"Found {len(found_roots)} unique roots used in Tananunto.")
     print(f"Missed {len(missed_roots)} roots. Examples: {list(missed_roots)[:10]}")
