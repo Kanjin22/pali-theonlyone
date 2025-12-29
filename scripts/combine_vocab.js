@@ -9,8 +9,8 @@ const outputDir = path.join(__dirname, '../../pali-dhatu-app/src/data');
 // Files to process
 const sources = [
     { file: 'vocab-etipitaka.js', name: 'Etipitaka', varName: 'vocabEtipitaka' },
-    { file: 'vocab-tananunto.js', name: 'Tananunto', varName: 'vocabTananunto' },
-    { file: 'vocab-newgen.js', name: 'NewGen', varName: 'vocabNewGen' }
+    { file: 'vocab-tananunto.js', name: 'Tananunto', varName: 'vocabTananunto' }
+    // NewGen removed as per request
 ];
 
 // Helper to load JS file content as object
@@ -49,15 +49,8 @@ sources.forEach(source => {
 
         let content = "";
         
-        if (source.name === 'NewGen') {
-            // Handle NewGen specific structure
-            if (data[key] && data[key].details && Array.isArray(data[key].details)) {
-                content = data[key].details.join('\n');
-            }
-        } else {
-            // Handle simple string value
-            content = data[key];
-        }
+        // Handle simple string value
+        content = data[key];
 
         if (content) {
              // Add source label and content
