@@ -1,14 +1,5 @@
 [
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -27,12 +18,30 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "sqlite3",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "sqlite3",
         "description": "sqlite3",
         "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "difflib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "difflib",
+        "description": "difflib",
+        "detail": "difflib",
         "documentation": {}
     },
     {
@@ -448,6 +457,102 @@
         "documentation": {}
     },
     {
+        "label": "tananuntoVocabMap",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tananuntoVocabMap",
+        "description": "tananuntoVocabMap",
+        "detail": "tananuntoVocabMap",
+        "documentation": {}
+    },
+    {
+        "label": "vocabRootsDpdDerivedEnriched",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "vocabRootsDpdDerivedEnriched",
+        "description": "vocabRootsDpdDerivedEnriched",
+        "detail": "vocabRootsDpdDerivedEnriched",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "DpdRoot",
+        "importPath": "db.models",
+        "description": "db.models",
+        "isExtraImport": true,
+        "detail": "db.models",
+        "documentation": {}
+    },
+    {
+        "label": "urllib.request",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib.request",
+        "description": "urllib.request",
+        "detail": "urllib.request",
+        "documentation": {}
+    },
+    {
+        "label": "urllib.error",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib.error",
+        "description": "urllib.error",
+        "detail": "urllib.error",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.analyze_dpd_structure",
+        "description": "scripts.analyze_dpd_structure",
+        "peekOfCode": "def load_js_object(path, var_name):\n    try:\n        with open(path, 'r', encoding='utf-8') as f:\n            content = f.read()\n            # Basic stripping of JS syntax\n            content = content.replace(f\"const {var_name} = \", \"\")\n            content = re.sub(r'export default .*', '', content)\n            content = content.strip().rstrip(\";\")\n            # Remove trailing commas (simple regex approach)\n            content = re.sub(r',(\\s*[}\\]])', r'\\1', content)",
+        "detail": "scripts.analyze_dpd_structure",
+        "documentation": {}
+    },
+    {
+        "label": "extract_construction",
+        "kind": 2,
+        "importPath": "scripts.analyze_dpd_structure",
+        "description": "scripts.analyze_dpd_structure",
+        "peekOfCode": "def extract_construction(defn):\n    match = re.search(r'\\[(.*?)\\]', defn)\n    if match:\n        return match.group(0)\n    return None\ndef extract_stem_from_construction(const):\n    # e.g. [karo + ti] -> karo\n    # e.g. [aggha + ti] -> aggha\n    if not const: return None\n    clean = const.strip(\"[]\")",
+        "detail": "scripts.analyze_dpd_structure",
+        "documentation": {}
+    },
+    {
+        "label": "extract_stem_from_construction",
+        "kind": 2,
+        "importPath": "scripts.analyze_dpd_structure",
+        "description": "scripts.analyze_dpd_structure",
+        "peekOfCode": "def extract_stem_from_construction(const):\n    # e.g. [karo + ti] -> karo\n    # e.g. [aggha + ti] -> aggha\n    if not const: return None\n    clean = const.strip(\"[]\")\n    parts = clean.split(\"+\")\n    # Heuristic: The part before the final 'ti' (or similar ending) is the base/stem\n    # Or, if it's \"root + affix + ending\", we want \"root + affix\"\n    # Common endings to ignore for stem extraction\n    endings = [\"ti\", \"nti\", \"si\", \"tha\", \"mi\", \"ma\", \"te\", \"ante\", \"se\", \"vhe\", \"e\", \"mhase\"]",
+        "detail": "scripts.analyze_dpd_structure",
+        "documentation": {}
+    },
+    {
+        "label": "analyze",
+        "kind": 2,
+        "importPath": "scripts.analyze_dpd_structure",
+        "description": "scripts.analyze_dpd_structure",
+        "peekOfCode": "def analyze():\n    print(\"Loading data...\")\n    vocab_dpd = load_js_object(r\"d:\\pali-theonlyone\\data\\vocab-dpd.js\", \"vocabDPD\")\n    roots_dpd = load_js_object(r\"d:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js\", \"vocabRootsDpdDerived\")\n    print(\"Inverting root map...\")\n    word_to_root = {}\n    for root, words in roots_dpd.items():\n        for word in words:\n            # Handle potential duplicates (one word multiple roots?) - Just overwrite for now\n            word_to_root[word] = root",
+        "detail": "scripts.analyze_dpd_structure",
+        "documentation": {}
+    },
+    {
         "label": "search_page_path",
         "kind": 5,
         "importPath": "scripts.apply_fixes_v3",
@@ -472,6 +577,69 @@
         "description": "scripts.apply_fixes_v3",
         "peekOfCode": "verse_detail_path = \"D:/pali-dhatu-app/src/pages/VerseDetailPage.js\"\n# 1. Update SearchPage.js\ntry:\n    with open(search_page_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Remove (Affix Group)\n    content = content.replace(\"หมวดธาตุ (Affix Group)\", \"หมวดธาตุ\")\n    # Move search-results-info\n    # We look for the closing of search-hero and the info block following it\n    search_hero_end_pattern = \"\"\"                </div>",
         "detail": "scripts.apply_fixes_v3",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.check_dpd_headwords_roots",
+        "description": "scripts.check_dpd_headwords_roots",
+        "peekOfCode": "def main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    words_to_check = [\n        \"hiṃsati\", \"mukha\", \"vaṇij\", \"valañjeti\", \"valañja\", \"lāha\", \"acchati\", \"acchāti\"\n    ]\n    print(\"Checking headwords for root info...\")",
+        "detail": "scripts.check_dpd_headwords_roots",
+        "documentation": {}
+    },
+    {
+        "label": "DB_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_dpd_headwords_roots",
+        "description": "scripts.check_dpd_headwords_roots",
+        "peekOfCode": "DB_PATH = r\"d:\\pali-theonlyone\\data\\dpd-db-repo\\dpd.db\"\ndef main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    words_to_check = [\n        \"hiṃsati\", \"mukha\", \"vaṇij\", \"valañjeti\", \"valañja\", \"lāha\", \"acchati\", \"acchāti\"\n    ]",
+        "detail": "scripts.check_dpd_headwords_roots",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.check_dpd_keys",
+        "description": "scripts.check_dpd_keys",
+        "peekOfCode": "def load_js_object(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        content = f.read()\n    # Strip JS parts\n    import re\n    content = re.sub(r'export default .*', '', content)\n    content = re.sub(r'const \\w+ = ', '', content)\n    content = content.strip().rstrip(\";\")\n    return json.loads(content)\ndef main():",
+        "detail": "scripts.check_dpd_keys",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.check_dpd_keys",
+        "description": "scripts.check_dpd_keys",
+        "peekOfCode": "def main():\n    try:\n        data = load_js_object(FILE_PATH)\n        keys = list(data.keys())\n        print(f\"Total keys: {len(keys)}\")\n        print(\"First 20 keys:\", keys[:20])\n        # Check specific roots\n        check_list = [\"ji\", \"jī\", \"bhu\", \"bhū\", \"ni\", \"nī\", \"gam\", \"gamu\", \"kar\", \"kara\"]\n        for k in check_list:\n            if k in data:",
+        "detail": "scripts.check_dpd_keys",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_dpd_keys",
+        "description": "scripts.check_dpd_keys",
+        "peekOfCode": "FILE_PATH = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived-enriched.js\"\ndef load_js_object(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        content = f.read()\n    # Strip JS parts\n    import re\n    content = re.sub(r'export default .*', '', content)\n    content = re.sub(r'const \\w+ = ', '', content)\n    content = content.strip().rstrip(\";\")\n    return json.loads(content)",
+        "detail": "scripts.check_dpd_keys",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.check_dpd_roots_really_specific",
+        "description": "scripts.check_dpd_roots_really_specific",
+        "peekOfCode": "def main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    print(\"VERSION: NEW_FILE_NAME\")\n    print(\"Searching for roots matching 'hiṃs' or 'mukh' in dpd_roots...\")\n    try:\n        c.execute(\"SELECT root, root_meaning, dhatupatha_pali FROM dpd_roots WHERE root LIKE '%hiṃs%' OR root LIKE '%mukh%'\")",
+        "detail": "scripts.check_dpd_roots_really_specific",
+        "documentation": {}
+    },
+    {
+        "label": "DB_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_dpd_roots_really_specific",
+        "description": "scripts.check_dpd_roots_really_specific",
+        "peekOfCode": "DB_PATH = r\"d:\\pali-theonlyone\\data\\dpd-db-repo\\dpd.db\"\ndef main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    print(\"VERSION: NEW_FILE_NAME\")\n    print(\"Searching for roots matching 'hiṃs' or 'mukh' in dpd_roots...\")\n    try:",
+        "detail": "scripts.check_dpd_roots_really_specific",
         "documentation": {}
     },
     {
@@ -583,6 +751,60 @@
         "documentation": {}
     },
     {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.check_root_matches_v3",
+        "description": "scripts.check_root_matches_v3",
+        "peekOfCode": "def main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    entries = re.findall(r'\"((?:[^\"\\\\]|\\\\.)+)\":\\s*\"((?:[^\"\\\\]|\\\\.)+)\"', content)",
+        "detail": "scripts.check_root_matches_v3",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v3",
+        "description": "scripts.check_root_matches_v3",
+        "peekOfCode": "ROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nTANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\ndef main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:",
+        "detail": "scripts.check_root_matches_v3",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v3",
+        "description": "scripts.check_root_matches_v3",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\ndef main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()",
+        "detail": "scripts.check_root_matches_v3",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.check_root_matches_v4",
+        "description": "scripts.check_root_matches_v4",
+        "peekOfCode": "def main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    entries = re.findall(r'\"((?:[^\"\\\\]|\\\\.)+)\":\\s*\"((?:[^\"\\\\]|\\\\.)+)\"', content)",
+        "detail": "scripts.check_root_matches_v4",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v4",
+        "description": "scripts.check_root_matches_v4",
+        "peekOfCode": "ROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nTANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\ndef main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:",
+        "detail": "scripts.check_root_matches_v4",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.check_root_matches_v4",
+        "description": "scripts.check_root_matches_v4",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\ndef main():\n    # 1. Load available roots\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Extract Tananunto roots\n    with open(TANANUNTO_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()",
+        "detail": "scripts.check_root_matches_v4",
+        "documentation": {}
+    },
+    {
         "label": "total_entries",
         "kind": 5,
         "importPath": "scripts.check_stats",
@@ -598,6 +820,60 @@
         "description": "scripts.check_stats",
         "peekOfCode": "unique_roots = len(data)\nprint(f\"Unique Roots: {unique_roots}\")\nprint(f\"Total Entries: {total_entries}\")",
         "detail": "scripts.check_stats",
+        "documentation": {}
+    },
+    {
+        "label": "read_file",
+        "kind": 2,
+        "importPath": "scripts.clarify_comment",
+        "description": "scripts.clarify_comment",
+        "peekOfCode": "def read_file(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return f.read()\ndef write_file(path, content):\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\ndef main():\n    content = read_file(FILE_PATH)\n    # Simple comment update to clarify source of data\n    old_comment = \"const group = dhatu.mawat_dhatu; // e.g. \\\"ภู (อ)\\\"\"",
+        "detail": "scripts.clarify_comment",
+        "documentation": {}
+    },
+    {
+        "label": "write_file",
+        "kind": 2,
+        "importPath": "scripts.clarify_comment",
+        "description": "scripts.clarify_comment",
+        "peekOfCode": "def write_file(path, content):\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\ndef main():\n    content = read_file(FILE_PATH)\n    # Simple comment update to clarify source of data\n    old_comment = \"const group = dhatu.mawat_dhatu; // e.g. \\\"ภู (อ)\\\"\"\n    new_comment = \"const group = dhatu.mawat_dhatu; // Check against Our Root Dictionary (Palidict) Group\"\n    if old_comment in content:\n        content = content.replace(old_comment, new_comment)",
+        "detail": "scripts.clarify_comment",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.clarify_comment",
+        "description": "scripts.clarify_comment",
+        "peekOfCode": "def main():\n    content = read_file(FILE_PATH)\n    # Simple comment update to clarify source of data\n    old_comment = \"const group = dhatu.mawat_dhatu; // e.g. \\\"ภู (อ)\\\"\"\n    new_comment = \"const group = dhatu.mawat_dhatu; // Check against Our Root Dictionary (Palidict) Group\"\n    if old_comment in content:\n        content = content.replace(old_comment, new_comment)\n        print(\"Updated comment in TananuntoRootsPage.js\")\n    else:\n        print(\"Could not find the comment to update\")",
+        "detail": "scripts.clarify_comment",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.clarify_comment",
+        "description": "scripts.clarify_comment",
+        "peekOfCode": "FILE_PATH = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\ndef read_file(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return f.read()\ndef write_file(path, content):\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\ndef main():\n    content = read_file(FILE_PATH)\n    # Simple comment update to clarify source of data",
+        "detail": "scripts.clarify_comment",
+        "documentation": {}
+    },
+    {
+        "label": "cleanup_file",
+        "kind": 2,
+        "importPath": "scripts.cleanup_tananunto_page",
+        "description": "scripts.cleanup_tananunto_page",
+        "peekOfCode": "def cleanup_file():\n    if not os.path.exists(file_path):\n        print(f\"File not found: {file_path}\")\n        return\n    with open(file_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # 1. Fix duplicated dpdList logic at lines 264-265 (approx)\n    # The duplicate:\n    # let dpdList = showDpd ? getDpdVocab(rootWord) : [];\n    # let dpdList = showDpd ? getDpdVocab(rootWord) : [];",
+        "detail": "scripts.cleanup_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.cleanup_tananunto_page",
+        "description": "scripts.cleanup_tananunto_page",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\ndef cleanup_file():\n    if not os.path.exists(file_path):\n        print(f\"File not found: {file_path}\")\n        return\n    with open(file_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # 1. Fix duplicated dpdList logic at lines 264-265 (approx)\n    # The duplicate:\n    # let dpdList = showDpd ? getDpdVocab(rootWord) : [];",
+        "detail": "scripts.cleanup_tananunto_page",
         "documentation": {}
     },
     {
@@ -1024,6 +1300,87 @@
         "documentation": {}
     },
     {
+        "label": "roman_to_thai_robust",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',\n        'y': 'ย', 'r': 'ร', 'l': 'ล', 'v': 'ว', 's': 'ส', 'h': 'ห', 'ḷ': 'ฬ',",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_dpd_root",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def normalize_dpd_root(root_str):\n    # 1. Strip √\n    s = root_str.replace(\"√\", \"\").strip()\n    # 2. Strip numbers and spaces (e.g., \"gam 1\" -> \"gam\")\n    s = re.sub(r'\\s+\\d+$', '', s)\n    s = s.strip()\n    # 3. Transliterate\n    thai = roman_to_thai_robust(s)\n    # 4. Strip final Pinthu if present\n    # But only if it's the very last character",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def load_js_object(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        content = f.read()\n    # Strip \"const name = \" and \";\" and \"export default\"\n    content = re.sub(r'export default .*', '', content)\n    content = re.sub(r'const \\w+ = ', '', content)\n    content = content.strip().rstrip(\";\")\n    # Remove comments\n    content = re.sub(r'//.*', '', content)\n    return json.loads(content)",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "extract_construction",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def extract_construction(defn):\n    match = re.search(r'\\[(.*?)\\]', defn, re.DOTALL)\n    return match.group(1) if match else None\ndef extract_first_suffix(construction):\n    if not construction:\n        return None\n    # Clean up: take the first line if multiple lines (e.g. [A + B\\nC + D])\n    # We assume the first line contains the root decomposition.\n    construction = construction.split('\\n')[0]\n    # Split by +",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "extract_first_suffix",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def extract_first_suffix(construction):\n    if not construction:\n        return None\n    # Clean up: take the first line if multiple lines (e.g. [A + B\\nC + D])\n    # We assume the first line contains the root decomposition.\n    construction = construction.split('\\n')[0]\n    # Split by +\n    parts = construction.split('+')\n    parts = [p.strip() for p in parts]\n    for i, p in enumerate(parts):",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "def main():\n    print(\"Loading data...\")\n    try:\n        derived_data = load_js_object(INPUT_DERIVED)\n        vocab_dpd = load_js_object(INPUT_DPD_VOCAB)\n    except Exception as e:\n        print(f\"Error loading JS files: {e}\")\n        return\n    print(f\"Loaded {len(derived_data)} root entries.\")\n    enriched_data = {}",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "INPUT_DERIVED",
+        "kind": 5,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "INPUT_DERIVED = r\"d:\\pali-theonlyone\\data\\vocab-roots-dpd-derived.js\"\nINPUT_DPD_VOCAB = r\"d:\\pali-theonlyone\\data\\vocab-dpd.js\"\nOUTPUT_ENRICHED = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived-enriched.js\"\ndef roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "INPUT_DPD_VOCAB",
+        "kind": 5,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "INPUT_DPD_VOCAB = r\"d:\\pali-theonlyone\\data\\vocab-dpd.js\"\nOUTPUT_ENRICHED = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived-enriched.js\"\ndef roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_ENRICHED",
+        "kind": 5,
+        "importPath": "scripts.enrich_dpd_derived",
+        "description": "scripts.enrich_dpd_derived",
+        "peekOfCode": "OUTPUT_ENRICHED = r\"d:\\pali-dhatu-app\\src\\data\\vocab-roots-dpd-derived-enriched.js\"\ndef roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',",
+        "detail": "scripts.enrich_dpd_derived",
+        "documentation": {}
+    },
+    {
         "label": "roman_to_thai",
         "kind": 2,
         "importPath": "scripts.extract_derived_meanings",
@@ -1285,6 +1642,141 @@
         "documentation": {}
     },
     {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map",
+        "description": "scripts.generate_tananunto_map",
+        "peekOfCode": "def main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Read Tananunto\n    print(f\"Reading {TANANUNTO_PATH}...\")",
+        "detail": "scripts.generate_tananunto_map",
+        "documentation": {}
+    },
+    {
+        "label": "TANANUNTO_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map",
+        "description": "scripts.generate_tananunto_map",
+        "peekOfCode": "TANANUNTO_PATH = r'd:\\pali-theonlyone\\data\\vocab-tananunto.js'\nROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))",
+        "detail": "scripts.generate_tananunto_map",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map",
+        "description": "scripts.generate_tananunto_map",
+        "peekOfCode": "ROOTS_PATH = r'd:\\pali-theonlyone\\data\\vocab-roots.js'\nOUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")",
+        "detail": "scripts.generate_tananunto_map",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_PATH",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map",
+        "description": "scripts.generate_tananunto_map",
+        "peekOfCode": "OUTPUT_PATH = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef main():\n    # 1. Load available roots from vocab-roots.js\n    print(f\"Reading {ROOTS_PATH}...\")\n    with open(ROOTS_PATH, 'r', encoding='utf-8') as f:\n        roots_content = f.read()\n    # Extract keys: \"key\": [ ... ]\n    available_keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', roots_content))\n    print(f\"Loaded {len(available_keys)} available roots.\")\n    # 2. Read Tananunto",
+        "detail": "scripts.generate_tananunto_map",
+        "documentation": {}
+    },
+    {
+        "label": "load_available_roots",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def load_available_roots():\n    \"\"\"Loads root keys from vocab-roots.js\"\"\"\n    print(f\"Reading {ROOTS_FILE}...\")\n    with open(ROOTS_FILE, 'r', encoding='utf-8') as f:\n        content = f.read()\n    keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', content))\n    print(f\"Loaded {len(keys)} available root keys.\")\n    return keys\ndef normalize_root(thai_root, available_keys):\n    \"\"\"",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_root",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def normalize_root(thai_root, available_keys):\n    \"\"\"\n    Normalizes a Tananunto root string to a vocab-roots.js key.\n    Returns the key if found, otherwise None.\n    \"\"\"\n    thai_root = thai_root.strip()\n    garbage = {\n        \"ซึ่ง\", \"ตามหนังสือสัททนีติ\", \"ต้น\", \"ถือเอาซึ่งพระ\", \"ทีฆะต้น\", \"ที่สุด\",\n        \"นิพพาน\", \"นิพฺพาน\", \"ผู้มี\", \"พระ\", \"มาจากญา\", \"มีธาตุเหมือนกับ\", \"มีเตโช\",\n        \"สักว่าขันธ์และ\", \"สัททนีติ\", \"อันมี\", \"อันมีโสต\", \"อาคมหลัง\", \"อุปสัคสังหาร\",",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "load_js_object",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def load_js_object(filepath):\n    \"\"\"\n    Naively parses a JS object definition file (const x = { ... }) into a Python dict.\n    Assumes keys are quoted or unquoted strings, values are strings.\n    \"\"\"\n    with open(filepath, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Strip \"const vocabTananunto = \" and trailing \"};\" roughly\n    start = content.find('{')\n    end = content.rfind('}')",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "clean_meaning",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def clean_meaning(meaning):\n    \"\"\"Removes 'ความ' prefix and whitespace.\"\"\"\n    if not meaning:\n        return \"\"\n    m = meaning.replace(\"ความ\", \"\").strip()\n    return m\ndef map_paccaya_to_roman(thai_paccaya):\n    if not thai_paccaya: return None\n    p = thai_paccaya.strip()\n    mapping = {",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "map_paccaya_to_roman",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def map_paccaya_to_roman(thai_paccaya):\n    if not thai_paccaya: return None\n    p = thai_paccaya.strip()\n    mapping = {\n        \"อ\": \"a\",\n        \"ย\": \"ya\",\n        \"นุ\": \"nu\",\n        \"ณุ\": \"ṇu\",\n        \"นา\": \"nā\",\n        \"ณหา\": \"nhā\",",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "extract_root_info",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def extract_root_info(definition):\n    \"\"\"\n    Parses definition to extract root info.\n    Format: \"... RootName ธาตุ ใน Meaning + Paccaya ปัจจัย...\"\n    \"\"\"\n    # Normalized definition for easier regex\n    # Replace newlines with space\n    def_norm = definition.replace('\\n', ' ')\n    # Regex to find root analysis\n    # Group 1: Root Name",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "def main():\n    available_keys = load_available_roots()\n    print(f\"Reading {VOCAB_FILE}...\")\n    entries = load_js_object(VOCAB_FILE)\n    print(f\"Found {len(entries)} entries.\")\n    mapped_data = {}\n    matched_count = 0\n    for word, definition in entries:\n        info = extract_root_info(definition)\n        if info:",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "BASE_DIR = r'd:\\pali-theonlyone\\data'\nVOCAB_FILE = os.path.join(BASE_DIR, 'vocab-tananunto.js')\nROOTS_FILE = os.path.join(BASE_DIR, 'vocab-roots.js')\nOUTPUT_FILE = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef load_available_roots():\n    \"\"\"Loads root keys from vocab-roots.js\"\"\"\n    print(f\"Reading {ROOTS_FILE}...\")\n    with open(ROOTS_FILE, 'r', encoding='utf-8') as f:\n        content = f.read()\n    keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', content))",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "VOCAB_FILE",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "VOCAB_FILE = os.path.join(BASE_DIR, 'vocab-tananunto.js')\nROOTS_FILE = os.path.join(BASE_DIR, 'vocab-roots.js')\nOUTPUT_FILE = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef load_available_roots():\n    \"\"\"Loads root keys from vocab-roots.js\"\"\"\n    print(f\"Reading {ROOTS_FILE}...\")\n    with open(ROOTS_FILE, 'r', encoding='utf-8') as f:\n        content = f.read()\n    keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', content))\n    print(f\"Loaded {len(keys)} available root keys.\")",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "ROOTS_FILE",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "ROOTS_FILE = os.path.join(BASE_DIR, 'vocab-roots.js')\nOUTPUT_FILE = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef load_available_roots():\n    \"\"\"Loads root keys from vocab-roots.js\"\"\"\n    print(f\"Reading {ROOTS_FILE}...\")\n    with open(ROOTS_FILE, 'r', encoding='utf-8') as f:\n        content = f.read()\n    keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', content))\n    print(f\"Loaded {len(keys)} available root keys.\")\n    return keys",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_FILE",
+        "kind": 5,
+        "importPath": "scripts.generate_tananunto_map_v2",
+        "description": "scripts.generate_tananunto_map_v2",
+        "peekOfCode": "OUTPUT_FILE = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\ndef load_available_roots():\n    \"\"\"Loads root keys from vocab-roots.js\"\"\"\n    print(f\"Reading {ROOTS_FILE}...\")\n    with open(ROOTS_FILE, 'r', encoding='utf-8') as f:\n        content = f.read()\n    keys = set(re.findall(r'\"([^\"]+)\":\\s*\\[', content))\n    print(f\"Loaded {len(keys)} available root keys.\")\n    return keys\ndef normalize_root(thai_root, available_keys):",
+        "detail": "scripts.generate_tananunto_map_v2",
+        "documentation": {}
+    },
+    {
         "label": "thai_to_roman",
         "kind": 2,
         "importPath": "scripts.generate_tananunto_root_index",
@@ -1375,21 +1867,21 @@
         "documentation": {}
     },
     {
-        "label": "inspect_db",
+        "label": "main",
         "kind": 2,
-        "importPath": "scripts.inspect_db",
-        "description": "scripts.inspect_db",
-        "peekOfCode": "def inspect_db():\n    if not os.path.exists(db_path):\n        print(f\"Error: Database file not found at {db_path}\")\n        print(\"Please copy 'palitothai_newgen' to 'd:\\\\pali-theonlyone\\\\data\\\\'\")\n        return\n    try:\n        conn = sqlite3.connect(db_path)\n        cursor = conn.cursor()\n        # Get all tables\n        cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table';\")",
-        "detail": "scripts.inspect_db",
+        "importPath": "scripts.inspect_dpd_db",
+        "description": "scripts.inspect_dpd_db",
+        "peekOfCode": "def main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    print(\"Listing tables...\")\n    c.execute(\"SELECT name FROM sqlite_master WHERE type='table';\")\n    tables = c.fetchall()\n    for t in tables:",
+        "detail": "scripts.inspect_dpd_db",
         "documentation": {}
     },
     {
-        "label": "db_path",
+        "label": "DB_PATH",
         "kind": 5,
-        "importPath": "scripts.inspect_db",
-        "description": "scripts.inspect_db",
-        "peekOfCode": "db_path = r'd:\\pali-theonlyone\\data\\DB\\palitothai_newgen.db'\ndef inspect_db():\n    if not os.path.exists(db_path):\n        print(f\"Error: Database file not found at {db_path}\")\n        print(\"Please copy 'palitothai_newgen' to 'd:\\\\pali-theonlyone\\\\data\\\\'\")\n        return\n    try:\n        conn = sqlite3.connect(db_path)\n        cursor = conn.cursor()\n        # Get all tables",
-        "detail": "scripts.inspect_db",
+        "importPath": "scripts.inspect_dpd_db",
+        "description": "scripts.inspect_dpd_db",
+        "peekOfCode": "DB_PATH = r\"d:\\pali-theonlyone\\data\\dpd-db-repo\\dpd.db\"\ndef main():\n    if not os.path.exists(DB_PATH):\n        print(f\"DB not found at {DB_PATH}\")\n        return\n    conn = sqlite3.connect(DB_PATH)\n    c = conn.cursor()\n    print(\"Listing tables...\")\n    c.execute(\"SELECT name FROM sqlite_master WHERE type='table';\")\n    tables = c.fetchall()",
+        "detail": "scripts.inspect_dpd_db",
         "documentation": {}
     },
     {
@@ -1744,47 +2236,74 @@
         "documentation": {}
     },
     {
-        "label": "thai_to_roman",
+        "label": "is_compatible",
+        "kind": 2,
+        "importPath": "scripts.test_compatibility_logic",
+        "description": "scripts.test_compatibility_logic",
+        "peekOfCode": "def is_compatible(dhatu_group, vocab_ending):\n    # Logic ported from TananuntoRootsPage.js\n    if vocab_ending == \"o\" and \"โอ\" not in dhatu_group:\n        return False\n    if (vocab_ending == \"e\" or vocab_ending == \"aya\") and \"เณ\" not in dhatu_group:\n        return False\n    if vocab_ending == \"ṇā\" and (\"ณุ\" not in dhatu_group and \"นา\" not in dhatu_group):\n        return False\n    if vocab_ending == \"a\":\n        # Strict exclusion: If root is Tan/Cur/Ki/Su, 'a' ending is likely wrong",
+        "detail": "scripts.test_compatibility_logic",
+        "documentation": {}
+    },
+    {
+        "label": "test_cases",
+        "kind": 5,
+        "importPath": "scripts.test_compatibility_logic",
+        "description": "scripts.test_compatibility_logic",
+        "peekOfCode": "test_cases = [\n    # DPD word: karoti (o), Our Dict: Tan (โอ) -> Should Pass\n    {\"dhatu_group\": \"ตน (โอ)\", \"vocab_ending\": \"o\", \"expected\": True, \"desc\": \"karoti (o) vs Tan (O)\"},\n    # DPD word: karoti (o), Our Dict: Bhu (อ) -> Should Fail\n    {\"dhatu_group\": \"ภู (อ)\", \"vocab_ending\": \"o\", \"expected\": False, \"desc\": \"karoti (o) vs Bhu (A)\"},\n    # DPD word: deseti (e), Our Dict: Cur (เณ) -> Should Pass\n    {\"dhatu_group\": \"จุร (เณ)\", \"vocab_ending\": \"e\", \"expected\": True, \"desc\": \"deseti (e) vs Cur (Ne)\"},\n    # DPD word: deseti (e), Our Dict: Tan (โอ) -> Should Fail\n    {\"dhatu_group\": \"ตน (โอ)\", \"vocab_ending\": \"e\", \"expected\": False, \"desc\": \"deseti (e) vs Tan (O)\"},\n    # DPD word: agghati (a), Our Dict: Bhu (อ) -> Should Pass",
+        "detail": "scripts.test_compatibility_logic",
+        "documentation": {}
+    },
+    {
+        "label": "all_passed",
+        "kind": 5,
+        "importPath": "scripts.test_compatibility_logic",
+        "description": "scripts.test_compatibility_logic",
+        "peekOfCode": "all_passed = True\nfor case in test_cases:\n    result = is_compatible(case[\"dhatu_group\"], case[\"vocab_ending\"])\n    status = \"PASS\" if result == case[\"expected\"] else \"FAIL\"\n    if status == \"FAIL\": all_passed = False\n    print(f\"Test: {case['desc']} | Group: {case['dhatu_group']} | Ending: {case['vocab_ending']} -> Result: {result} ({status})\")\nif all_passed:\n    print(\"\\nAll tests passed! Logic confirms strict matching against Our Dictionary.\")\nelse:\n    print(\"\\nSome tests failed.\")",
+        "detail": "scripts.test_compatibility_logic",
+        "documentation": {}
+    },
+    {
+        "label": "load_vocab_dpd",
+        "kind": 2,
+        "importPath": "scripts.test_dpd_paccaya",
+        "description": "scripts.test_dpd_paccaya",
+        "peekOfCode": "def load_vocab_dpd(path):\n    with open(path, 'r', encoding='utf-8') as f:\n        content = f.read()\n        # Remove \"const vocabDPD = \" and \";\"\n        json_str = content.replace(\"const vocabDPD = \", \"\").strip().rstrip(\";\")\n        return json.loads(json_str)\ndef extract_paccaya(construction):\n    # Pattern: Look for the element after the root\n    # e.g., [na > a + √kaṅkh + a] -> root is kaṅkh, next is 'a'\n    # e.g., [√aggh + a + ti] -> root is aggh, next is 'a'",
+        "detail": "scripts.test_dpd_paccaya",
+        "documentation": {}
+    },
+    {
+        "label": "extract_paccaya",
+        "kind": 2,
+        "importPath": "scripts.test_dpd_paccaya",
+        "description": "scripts.test_dpd_paccaya",
+        "peekOfCode": "def extract_paccaya(construction):\n    # Pattern: Look for the element after the root\n    # e.g., [na > a + √kaṅkh + a] -> root is kaṅkh, next is 'a'\n    # e.g., [√aggh + a + ti] -> root is aggh, next is 'a'\n    if not construction:\n        return None\n    # Clean up brackets\n    inner = construction.strip(\"[]\")\n    parts = [p.strip() for p in inner.split(\"+\")]\n    # Find the part with √",
+        "detail": "scripts.test_dpd_paccaya",
+        "documentation": {}
+    },
+    {
+        "label": "extract_construction",
         "kind": 2,
         "importPath": "scripts.test_extraction",
         "description": "scripts.test_extraction",
-        "peekOfCode": "def thai_to_roman(text):\n    if not text: return \"\"\n    s = text\n    # Move pre-positioned vowels\n    s = re.sub(r'([เโไใ])((?:[ก-ฮ]ฺ)*[ก-ฮ])', r'\\2\\1', s)\n    map_char = {\n        'ก': 'k', 'ข': 'kh', 'ค': 'g', 'ฆ': 'gh', 'ง': 'ṅ',\n        'จ': 'c', 'ฉ': 'ch', 'ช': 'j', 'ฌ': 'jh', 'ญ': 'ñ',\n        'ฏ': 'ṭ', 'ฐ': 'ṭh', 'ฑ': 'ḍ', 'ฒ': 'ḍh', 'ณ': 'ṇ',\n        'ต': 't', 'ถ': 'th', 'ท': 'd', 'ธ': 'dh', 'น': 'n',",
+        "peekOfCode": "def extract_construction(defn):\n    match = re.search(r'\\[(.*?)\\]', defn)\n    return match.group(1) if match else None\ndef extract_first_suffix(construction):\n    if not construction:\n        return None\n    # Clean up: take the first line if multiple lines (e.g. [A + B\\nC + D])\n    construction = construction.split('\\n')[0]\n    # Split by +\n    parts = construction.split('+')",
         "detail": "scripts.test_extraction",
         "documentation": {}
     },
     {
-        "label": "definition",
-        "kind": 5,
+        "label": "extract_first_suffix",
+        "kind": 2,
         "importPath": "scripts.test_extraction",
         "description": "scripts.test_extraction",
-        "peekOfCode": "definition = \"ก. (เช่น ชโน อ. ชน) จักกระทำ กร ธาตุ ใน ความทำ + โอ ปัจจัยในกัตตุวาจก + สฺสติ ภวิสสันติ วิภัต                ตติ ลง อิ อาคม ลบ โอ ปัจจัย สำเร็จรูปเป็น กริสฺสติ\"\nmatch = re.search(r'(?:[+\\s]|^)([ก-ฮ]+)\\s*ธาตุ', definition)\nprint(f\"Definition: {definition}\")\nif match:\n    thai_root = match.group(1)\n    print(f\"Found Thai Root: {thai_root}\")\n    roman_root = thai_to_roman(thai_root)\n    print(f\"Roman Root: {roman_root}\")\nelse:\n    print(\"No root match found\")",
+        "peekOfCode": "def extract_first_suffix(construction):\n    if not construction:\n        return None\n    # Clean up: take the first line if multiple lines (e.g. [A + B\\nC + D])\n    construction = construction.split('\\n')[0]\n    # Split by +\n    parts = construction.split('+')\n    parts = [p.strip() for p in parts]\n    for i, p in enumerate(parts):\n        # Check for root symbol",
         "detail": "scripts.test_extraction",
         "documentation": {}
     },
     {
-        "label": "match",
+        "label": "test_cases",
         "kind": 5,
         "importPath": "scripts.test_extraction",
         "description": "scripts.test_extraction",
-        "peekOfCode": "match = re.search(r'(?:[+\\s]|^)([ก-ฮ]+)\\s*ธาตุ', definition)\nprint(f\"Definition: {definition}\")\nif match:\n    thai_root = match.group(1)\n    print(f\"Found Thai Root: {thai_root}\")\n    roman_root = thai_to_roman(thai_root)\n    print(f\"Roman Root: {roman_root}\")\nelse:\n    print(\"No root match found\")\nthai_word = \"กริสฺสติ\"",
-        "detail": "scripts.test_extraction",
-        "documentation": {}
-    },
-    {
-        "label": "thai_word",
-        "kind": 5,
-        "importPath": "scripts.test_extraction",
-        "description": "scripts.test_extraction",
-        "peekOfCode": "thai_word = \"กริสฺสติ\"\nroman_word = thai_to_roman(thai_word)\nprint(f\"Thai Word: {thai_word} -> Roman: {roman_word}\")",
-        "detail": "scripts.test_extraction",
-        "documentation": {}
-    },
-    {
-        "label": "roman_word",
-        "kind": 5,
-        "importPath": "scripts.test_extraction",
-        "description": "scripts.test_extraction",
-        "peekOfCode": "roman_word = thai_to_roman(thai_word)\nprint(f\"Thai Word: {thai_word} -> Roman: {roman_word}\")",
+        "peekOfCode": "test_cases = [\n    \"(adj) with a flame [√acc + i + ikā + a\\naccikā + a]\",\n    \"(fem) flame [√acc + i]\",\n    \"(adj) eating [√ad + a]\",\n    \"[na > a + √kaṅkh + a]\"\n]\nfor t in test_cases:\n    const = extract_construction(t)\n    suffix = extract_first_suffix(const)\n    print(f\"'{t}' -> Const: '{const}' -> Suffix: '{suffix}'\")",
         "detail": "scripts.test_extraction",
         "documentation": {}
     },
@@ -3211,6 +3730,186 @@
         "documentation": {}
     },
     {
+        "label": "TARGET_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page",
+        "description": "scripts.update_tananunto_page",
+        "peekOfCode": "TARGET_PATH = r'd:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js'\nCONTENT = r'''import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "CONTENT",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page",
+        "description": "scripts.update_tananunto_page",
+        "peekOfCode": "CONTENT = r'''import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
+        "detail": "scripts.update_tananunto_page",
+        "documentation": {}
+    },
+    {
+        "label": "TARGET_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v2",
+        "description": "scripts.update_tananunto_page_v2",
+        "peekOfCode": "TARGET_PATH = r'd:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js'\nCONTENT = r'''import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);",
+        "detail": "scripts.update_tananunto_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "CONTENT",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v2",
+        "description": "scripts.update_tananunto_page_v2",
+        "peekOfCode": "CONTENT = r'''import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nfunction TananuntoRootsPage() {\n    const [allDhatus, setAllDhatus] = useState([]);\n    const [loading, setLoading] = useState(true);\n    const [searchText, setSearchText] = useState('');",
+        "detail": "scripts.update_tananunto_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v3",
+        "description": "scripts.update_tananunto_page_v3",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\nnew_is_compatible = \"\"\"    // Helper to check if a vocab entry is compatible with a root entry (resolving homonyms)\n    const isCompatible = (dhatu, vocab) => {\n        // If vocab has no specific root info, assume it's compatible (legacy behavior)\n        if (!vocab.root_info) return true;\n        const info = vocab.root_info;\n        // 1. Check Meaning Compatibility\n        if (info.meaning && dhatu.arth_thai) {\n             const dMean = dhatu.arth_thai.replace(/[.,\\s]/g, '');\n             const vMean = info.meaning.replace(/[.,\\s]/g, '');",
+        "detail": "scripts.update_tananunto_page_v3",
+        "documentation": {}
+    },
+    {
+        "label": "new_is_compatible",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v3",
+        "description": "scripts.update_tananunto_page_v3",
+        "peekOfCode": "new_is_compatible = \"\"\"    // Helper to check if a vocab entry is compatible with a root entry (resolving homonyms)\n    const isCompatible = (dhatu, vocab) => {\n        // If vocab has no specific root info, assume it's compatible (legacy behavior)\n        if (!vocab.root_info) return true;\n        const info = vocab.root_info;\n        // 1. Check Meaning Compatibility\n        if (info.meaning && dhatu.arth_thai) {\n             const dMean = dhatu.arth_thai.replace(/[.,\\s]/g, '');\n             const vMean = info.meaning.replace(/[.,\\s]/g, '');\n             // Check if either contains the other",
+        "detail": "scripts.update_tananunto_page_v3",
+        "documentation": {}
+    },
+    {
+        "label": "start_marker",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v3",
+        "description": "scripts.update_tananunto_page_v3",
+        "peekOfCode": "start_marker = \"const isCompatible = (dhatu, vocab) => {\"\nend_marker = \"return true;\\n    };\"\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing brace of the function. \n    # Since we know the structure from previous read, we can target the end block.\n    # The previous read showed it ends with:\n    #        return true;\n    #    };\n    # We'll search for the next \"};\" after \"return true;\"",
+        "detail": "scripts.update_tananunto_page_v3",
+        "documentation": {}
+    },
+    {
+        "label": "end_marker",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v3",
+        "description": "scripts.update_tananunto_page_v3",
+        "peekOfCode": "end_marker = \"return true;\\n    };\"\nstart_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing brace of the function. \n    # Since we know the structure from previous read, we can target the end block.\n    # The previous read showed it ends with:\n    #        return true;\n    #    };\n    # We'll search for the next \"};\" after \"return true;\"\n    end_idx = content.find(end_marker, start_idx)",
+        "detail": "scripts.update_tananunto_page_v3",
+        "documentation": {}
+    },
+    {
+        "label": "start_idx",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v3",
+        "description": "scripts.update_tananunto_page_v3",
+        "peekOfCode": "start_idx = content.find(start_marker)\nif start_idx != -1:\n    # Find the closing brace of the function. \n    # Since we know the structure from previous read, we can target the end block.\n    # The previous read showed it ends with:\n    #        return true;\n    #    };\n    # We'll search for the next \"};\" after \"return true;\"\n    end_idx = content.find(end_marker, start_idx)\n    if end_idx != -1:",
+        "detail": "scripts.update_tananunto_page_v3",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v4",
+        "description": "scripts.update_tananunto_page_v4",
+        "peekOfCode": "def main():\n    with open(TARGET_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # We need to replace the existing getDpdVocab function.\n    # It starts with \"const getDpdVocab = (thaiRoot) => {\"\n    # And ends before \"const isCompatible =\"\n    start_marker = \"const getDpdVocab = (thaiRoot) => {\"\n    end_marker = \"const isCompatible =\"\n    start_idx = content.find(start_marker)\n    end_idx = content.find(end_marker)",
+        "detail": "scripts.update_tananunto_page_v4",
+        "documentation": {}
+    },
+    {
+        "label": "TARGET_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v4",
+        "description": "scripts.update_tananunto_page_v4",
+        "peekOfCode": "TARGET_PATH = r'd:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js'\nNEW_GET_DPD_VOCAB = r'''    // Helper to find DPD vocab for a Thai root\n    const getDpdVocab = (thaiRoot) => {\n        if (!thaiRoot) return [];\n        // 1. Transliterate to Roman\n        const roman = PaliScript.thaiToRoman(thaiRoot);\n        if (!roman) return [];\n        // 2. Try exact match (e.g. bhū, jī)\n        if (vocabRootsDpdDerivedEnriched[roman]) return vocabRootsDpdDerivedEnriched[roman];\n        // 3. Try removing final 'a' (common convention: kara -> kar)",
+        "detail": "scripts.update_tananunto_page_v4",
+        "documentation": {}
+    },
+    {
+        "label": "NEW_GET_DPD_VOCAB",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v4",
+        "description": "scripts.update_tananunto_page_v4",
+        "peekOfCode": "NEW_GET_DPD_VOCAB = r'''    // Helper to find DPD vocab for a Thai root\n    const getDpdVocab = (thaiRoot) => {\n        if (!thaiRoot) return [];\n        // 1. Transliterate to Roman\n        const roman = PaliScript.thaiToRoman(thaiRoot);\n        if (!roman) return [];\n        // 2. Try exact match (e.g. bhū, jī)\n        if (vocabRootsDpdDerivedEnriched[roman]) return vocabRootsDpdDerivedEnriched[roman];\n        // 3. Try removing final 'a' (common convention: kara -> kar)\n        if (roman.endsWith('a')) {",
+        "detail": "scripts.update_tananunto_page_v4",
+        "documentation": {}
+    },
+    {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v5",
+        "description": "scripts.update_tananunto_page_v5",
+        "peekOfCode": "def update_file():\n    if not os.path.exists(file_path):\n        print(f\"File not found: {file_path}\")\n        return\n    with open(file_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Locate the start of the function\n    start_marker = \"    // Helper to find DPD vocab for a Thai root\"\n    end_marker = \"    };\"\n    start_index = content.find(start_marker)",
+        "detail": "scripts.update_tananunto_page_v5",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v5",
+        "description": "scripts.update_tananunto_page_v5",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\nnew_function = r'''    // Helper to find DPD vocab for a Thai root\n    const getDpdVocab = (thaiRoot) => {\n        if (!thaiRoot) return [];\n        // 1. Transliterate to Roman\n        const roman = PaliScript.thaiToRoman(thaiRoot);\n        if (!roman) return [];\n        // 2. Try exact match (e.g. bhū, jī)\n        if (vocabRootsDpdDerivedEnriched[roman]) return vocabRootsDpdDerivedEnriched[roman];\n        // 3. Try removing final 'a' (common convention: kara -> kar)",
+        "detail": "scripts.update_tananunto_page_v5",
+        "documentation": {}
+    },
+    {
+        "label": "new_function",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v5",
+        "description": "scripts.update_tananunto_page_v5",
+        "peekOfCode": "new_function = r'''    // Helper to find DPD vocab for a Thai root\n    const getDpdVocab = (thaiRoot) => {\n        if (!thaiRoot) return [];\n        // 1. Transliterate to Roman\n        const roman = PaliScript.thaiToRoman(thaiRoot);\n        if (!roman) return [];\n        // 2. Try exact match (e.g. bhū, jī)\n        if (vocabRootsDpdDerivedEnriched[roman]) return vocabRootsDpdDerivedEnriched[roman];\n        // 3. Try removing final 'a' (common convention: kara -> kar)\n        if (roman.endsWith('a')) {",
+        "detail": "scripts.update_tananunto_page_v5",
+        "documentation": {}
+    },
+    {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v6",
+        "description": "scripts.update_tananunto_page_v6",
+        "peekOfCode": "def update_file():\n    if not os.path.exists(file_path):\n        print(f\"File not found: {file_path}\")\n        return\n    with open(file_path, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Find the existing isCompatible function (it might be incomplete)\n    # It starts with: const isCompatible = (dhatu, vocab) => {\n    # and ends... well, we need to be careful.\n    start_marker = \"    const isCompatible = (dhatu, vocab) => {\"",
+        "detail": "scripts.update_tananunto_page_v6",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v6",
+        "description": "scripts.update_tananunto_page_v6",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\n# We will replace the entire isCompatible function and add the VIKARANA_MAP logic.\nnew_is_compatible = r'''    // Helper to check if a vocab entry is compatible with a root entry (resolving homonyms)\n    const isCompatible = (dhatu, vocab) => {\n        // If vocab doesn't have ending info, show it (safe default)\n        if (!vocab.e) return true;\n        const ending = vocab.e.toLowerCase(); \n        const group = dhatu.mawat_dhatu; // e.g. \"ภู (อ)\", \"ทิว (ย)\"\n        // Extract group sign from parenthesis\n        // \"ภู (อ)\" -> \"อ\"",
+        "detail": "scripts.update_tananunto_page_v6",
+        "documentation": {}
+    },
+    {
+        "label": "new_is_compatible",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v6",
+        "description": "scripts.update_tananunto_page_v6",
+        "peekOfCode": "new_is_compatible = r'''    // Helper to check if a vocab entry is compatible with a root entry (resolving homonyms)\n    const isCompatible = (dhatu, vocab) => {\n        // If vocab doesn't have ending info, show it (safe default)\n        if (!vocab.e) return true;\n        const ending = vocab.e.toLowerCase(); \n        const group = dhatu.mawat_dhatu; // e.g. \"ภู (อ)\", \"ทิว (ย)\"\n        // Extract group sign from parenthesis\n        // \"ภู (อ)\" -> \"อ\"\n        // \"รุธ (อ-นิคคหิต)\" -> \"อ\"\n        const match = group.match(/\\((.*?)\\)/);",
+        "detail": "scripts.update_tananunto_page_v6",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v7",
+        "description": "scripts.update_tananunto_page_v7",
+        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\nnew_content = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nimport vocabRootsDpdDerivedEnriched from '../data/vocab-roots-dpd-derived-enriched';\n// PaliScript is still useful for other things, though less needed for DPD lookup now\nimport PaliScript from '../utils/paliScript';",
+        "detail": "scripts.update_tananunto_page_v7",
+        "documentation": {}
+    },
+    {
+        "label": "new_content",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v7",
+        "description": "scripts.update_tananunto_page_v7",
+        "peekOfCode": "new_content = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nimport vocabRootsDpdDerivedEnriched from '../data/vocab-roots-dpd-derived-enriched';\n// PaliScript is still useful for other things, though less needed for DPD lookup now\nimport PaliScript from '../utils/paliScript';\nfunction TananuntoRootsPage() {",
+        "detail": "scripts.update_tananunto_page_v7",
+        "documentation": {}
+    },
+    {
         "label": "APP_CSS_PATH",
         "kind": 5,
         "importPath": "scripts.update_ui_modern",
@@ -3445,6 +4144,87 @@
         "documentation": {}
     },
     {
+        "label": "roman_to_thai_robust",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',\n        'y': 'ย', 'r': 'ร', 'l': 'ล', 'v': 'ว', 's': 'ส', 'h': 'ห', 'ḷ': 'ฬ',",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_dpd_root",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def normalize_dpd_root(root_str):\n    # 1. Strip √\n    s = root_str.replace(\"√\", \"\").strip()\n    # 2. Strip numbers and spaces (e.g., \"gam 1\" -> \"gam\")\n    s = re.sub(r'\\s+\\d+$', '', s)\n    s = s.strip()\n    # 3. Transliterate\n    thai = roman_to_thai_robust(s)\n    # 4. Strip final Pinthu if present\n    # But only if it's the very last character",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "map_sign",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def map_sign(dpd_sign):\n    m = {\n        \"a\": \"อ\",\n        \"ya\": \"ย\",\n        \"nu\": \"ณุ\",\n        \"nā\": \"นา\",\n        \"o\": \"โอ\",\n        \"e\": \"เณ\",\n        \"aya\": \"ณย\"\n    }",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "map_group",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def map_group(dpd_group):\n    # DPD: bhū, rudh, div, sw, kī, gah, tan, cur\n    m = {\n        \"bhū\": \"ภู\",\n        \"rudh\": \"รุธ\",\n        \"div\": \"ทิว\",\n        \"sv\": \"สุ\", # sw? check DPD\n        \"sw\": \"สุ\",\n        \"ki\": \"กี\", # kī\n        \"kī\": \"กี\",",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "load_vocab_roots",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def load_vocab_roots():\n    path = os.path.join(\"data\", \"vocab-roots.js\")\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        content = f.read()\n        # Strip \"const vocabRoots = \" and \";\"\n        json_str = content.replace(\"const vocabRoots = \", \"\").strip().rstrip(\";\")\n        return json.loads(json_str)\ndef save_vocab_roots(data):\n    path = os.path.join(\"data\", \"vocab-roots.js\")\n    with open(path, \"w\", encoding=\"utf-8\") as f:",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "save_vocab_roots",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def save_vocab_roots(data):\n    path = os.path.join(\"data\", \"vocab-roots.js\")\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(\"const vocabRoots = \" + json.dumps(data, ensure_ascii=False, indent=2) + \";\")\ndef main():\n    print(\"Loading vocab-roots.js...\")\n    vocab_roots = load_vocab_roots()\n    print(f\"Loaded {len(vocab_roots)} roots from vocab-roots.js\")\n    print(\"Connecting to DPD DB...\")\n    engine = create_engine(f\"sqlite:///{DB_PATH}\")",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "def main():\n    print(\"Loading vocab-roots.js...\")\n    vocab_roots = load_vocab_roots()\n    print(f\"Loaded {len(vocab_roots)} roots from vocab-roots.js\")\n    print(\"Connecting to DPD DB...\")\n    engine = create_engine(f\"sqlite:///{DB_PATH}\")\n    Session = sessionmaker(bind=engine)\n    session = Session()\n    try:\n        dpd_roots = session.query(DpdRoot).all()",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "repo_path",
+        "kind": 5,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "repo_path = os.path.join(os.path.dirname(__file__), \"data\", \"dpd-db-repo\")\nsys.path.append(repo_path)\nfrom sqlalchemy import create_engine\nfrom sqlalchemy.orm import sessionmaker\nfrom db.models import DpdRoot\n# DB Path\nDB_PATH = os.path.join(repo_path, \"dpd.db\")\ndef roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "DB_PATH",
+        "kind": 5,
+        "importPath": "enrich_roots_from_dpd",
+        "description": "enrich_roots_from_dpd",
+        "peekOfCode": "DB_PATH = os.path.join(repo_path, \"dpd.db\")\ndef roman_to_thai_robust(text):\n    text = text.replace(\"√\", \"\").strip()\n    # Mapping\n    cons = {\n        'k': 'ก', 'kh': 'ข', 'g': 'ค', 'gh': 'ฆ', 'ṅ': 'ง',\n        'c': 'จ', 'ch': 'ฉ', 'j': 'ช', 'jh': 'ฌ', 'ñ': 'ญ',\n        'ṭ': 'ฏ', 'ṭh': 'ฐ', 'ḍ': 'ฑ', 'ḍh': 'ฒ', 'ṇ': 'ณ',\n        't': 'ต', 'th': 'ถ', 'd': 'ท', 'dh': 'ธ', 'n': 'น',\n        'p': 'ป', 'ph': 'ผ', 'b': 'พ', 'bh': 'ภ', 'm': 'ม',",
+        "detail": "enrich_roots_from_dpd",
+        "documentation": {}
+    },
+    {
         "label": "db_path",
         "kind": 5,
         "importPath": "extract_dpd",
@@ -3523,6 +4303,24 @@
         "description": "extract_dpd",
         "peekOfCode": "final_dict = {}\nfor k, v in dictionary.items():\n    final_dict[k] = \"<br>\".join(v)\nprint(\"Writing to file...\")\nwith open(output_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(\"const vocabDPD = \")\n    json.dump(final_dict, f, ensure_ascii=False)\n    f.write(\";\")\nprint(f\"Done. Saved to {output_path}\")",
         "detail": "extract_dpd",
+        "documentation": {}
+    },
+    {
+        "label": "base_url",
+        "kind": 5,
+        "importPath": "list_assets",
+        "description": "list_assets",
+        "peekOfCode": "base_url = \"https://github.com/digitalpalidictionary/dpd-db/releases/download/v0.2.20251105\"\nfilenames = [\"dpd.db\", \"dpd.db.zip\", \"dpd-db.zip\", \"dpd-sqlite.zip\", \"dpd.zip\"]\nfor name in filenames:\n    url = f\"{base_url}/{name}\"\n    print(f\"Checking {url}...\")\n    try:\n        request = urllib.request.Request(url, method='HEAD')\n        with urllib.request.urlopen(request) as response:\n            print(f\"  [SUCCESS] {name} exists! (Status: {response.status})\")\n    except urllib.error.HTTPError as e:",
+        "detail": "list_assets",
+        "documentation": {}
+    },
+    {
+        "label": "filenames",
+        "kind": 5,
+        "importPath": "list_assets",
+        "description": "list_assets",
+        "peekOfCode": "filenames = [\"dpd.db\", \"dpd.db.zip\", \"dpd-db.zip\", \"dpd-sqlite.zip\", \"dpd.zip\"]\nfor name in filenames:\n    url = f\"{base_url}/{name}\"\n    print(f\"Checking {url}...\")\n    try:\n        request = urllib.request.Request(url, method='HEAD')\n        with urllib.request.urlopen(request) as response:\n            print(f\"  [SUCCESS] {name} exists! (Status: {response.status})\")\n    except urllib.error.HTTPError as e:\n        print(f\"  [FAILED] {name}: {e.code} {e.reason}\")",
+        "detail": "list_assets",
         "documentation": {}
     }
 ]
