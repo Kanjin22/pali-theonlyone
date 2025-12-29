@@ -1192,7 +1192,81 @@
     <script src="data/content-visuddhi02.js"></script>
     <script src="data/content-visuddhi03.js"></script>
     <script src="data/content-abhidhamma01.js"></script>
-    <script src="data/vocab-roots.js"></script>
+    <script>window.vocabRoots = {};</script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
+            authDomain: "pali-dhatu-app.firebaseapp.com",
+            projectId: "pali-dhatu-app",
+            storageBucket: "pali-dhatu-app.firebasestorage.app",
+            messagingSenderId: "188304412939",
+            appId: "1:188304412939:web:22a6bd82480f40a909120e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function fetchRootsData() {
+            // Cache handling
+            const CACHE_KEY = 'dhatu_cache_v3'; 
+            const TIME_KEY = 'dhatu_cache_time_v3';
+            const cachedData = localStorage.getItem(CACHE_KEY);
+            const cachedTime = localStorage.getItem(TIME_KEY);
+            const NOW = new Date().getTime();
+            const ONE_DAY = 24 * 60 * 60 * 1000;
+
+            let data = [];
+            if (cachedData && cachedTime && (NOW - cachedTime < ONE_DAY)) {
+                console.log("Using cached roots data for Presentation");
+                data = JSON.parse(cachedData);
+            } else {
+                try {
+                    console.log("Fetching roots from Firestore for Presentation...");
+                    const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
+                    const snapshot = await getDocs(q);
+                    data = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        dhatu_word: doc.data().dhatu_word,
+                        arth_thai: doc.data().arth_thai,
+                        arth_pali: doc.data().arth_pali,
+                        mawat_dhatu: doc.data().mawat_dhatu,
+                        anukrom_dhatu: doc.data().anukrom_dhatu,
+                        udaharana: doc.data().udaharana,
+                        page: doc.data().page || "",
+                        source: doc.data().source || ""
+                    }));
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+                    localStorage.setItem(TIME_KEY, NOW);
+                } catch (err) {
+                    console.error("Error fetching roots:", err);
+                    return;
+                }
+            }
+
+            const grouped = {};
+            data.forEach(item => {
+                const key = item.dhatu_word;
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push({
+                    root: item.dhatu_word,
+                    meaning_pali: item.arth_pali,
+                    meaning_thai: item.arth_thai,
+                    example: item.udaharana,
+                    group: item.mawat_dhatu,
+                    page: item.page,
+                    source: item.source
+                });
+            });
+            
+            Object.assign(window.vocabRoots, grouped);
+            console.log("Roots loaded:", Object.keys(grouped).length);
+        }
+        
+        fetchRootsData();
+    </script>
     <script src="data/vocab-sandhi.js"></script>
 
     <script>
