@@ -2103,6 +2103,42 @@
     {
         "label": "file_path",
         "kind": 5,
+        "importPath": "scripts.remove_unused_loading",
+        "description": "scripts.remove_unused_loading",
+        "peekOfCode": "file_path = r\"D:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js\"\nwith open(file_path, \"r\", encoding=\"utf-8\") as f:\n    content = f.read()\n# 1. Remove `const [loading, setLoading] = useState(true);`\ncontent = content.replace(\"    const [loading, setLoading] = useState(true);\", \"\")\n# 2. Remove `setLoading(false);`\ncontent = content.replace(\"            setLoading(false);\", \"\")\n# 3. Clean up empty lines if any (simple approach)\ncontent = re.sub(r'\\n\\s*\\n\\s*\\n', '\\n\\n', content)\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:",
+        "detail": "scripts.remove_unused_loading",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.remove_unused_loading",
+        "description": "scripts.remove_unused_loading",
+        "peekOfCode": "content = content.replace(\"    const [loading, setLoading] = useState(true);\", \"\")\n# 2. Remove `setLoading(false);`\ncontent = content.replace(\"            setLoading(false);\", \"\")\n# 3. Clean up empty lines if any (simple approach)\ncontent = re.sub(r'\\n\\s*\\n\\s*\\n', '\\n\\n', content)\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)\nprint(\"Removed unused loading state.\")",
+        "detail": "scripts.remove_unused_loading",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.remove_unused_loading",
+        "description": "scripts.remove_unused_loading",
+        "peekOfCode": "content = content.replace(\"            setLoading(false);\", \"\")\n# 3. Clean up empty lines if any (simple approach)\ncontent = re.sub(r'\\n\\s*\\n\\s*\\n', '\\n\\n', content)\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)\nprint(\"Removed unused loading state.\")",
+        "detail": "scripts.remove_unused_loading",
+        "documentation": {}
+    },
+    {
+        "label": "content",
+        "kind": 5,
+        "importPath": "scripts.remove_unused_loading",
+        "description": "scripts.remove_unused_loading",
+        "peekOfCode": "content = re.sub(r'\\n\\s*\\n\\s*\\n', '\\n\\n', content)\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)\nprint(\"Removed unused loading state.\")",
+        "detail": "scripts.remove_unused_loading",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
         "importPath": "scripts.restore_dhatu_tags",
         "description": "scripts.restore_dhatu_tags",
         "peekOfCode": "file_path = r'd:\\pali-dhatu-app\\src\\components\\DhatuDetail.js'\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# We need to insert the missing closing tags before the next section.\n# The next section starts with <div className=\"detail-card full-width\"> containing \"อุทาหรณ์ (ตัวอย่างการใช้)\"\ntarget = '<div className=\"detail-card full-width\">\\n              <h2>อุทาหรณ์ (ตัวอย่างการใช้)</h2>'\nmissing_tags = \"\"\"                            </div>\n                        </div>\n                    );\n                  })}",
@@ -4276,6 +4312,60 @@
         "description": "scripts.update_verse_page",
         "peekOfCode": "new_str = '<h2 className=\"nowrap-title\">ธาตุในคาถาที่ {id}</h2>'\nif old_str in content:\n    content = content.replace(old_str, new_str)\n    with open(VERSE_DETAIL_PATH, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\n    print(\"VerseDetailPage updated.\")\nelse:\n    print(\"Target string not found.\")",
         "detail": "scripts.update_verse_page",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "scripts.update_vocab_search_page_v2",
+        "description": "scripts.update_vocab_search_page_v2",
+        "peekOfCode": "file_path = r\"D:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js\"\nwith open(file_path, \"r\", encoding=\"utf-8\") as f:\n    content = f.read()\n# 1. Add formatContent function\nformat_function = \"\"\"\nconst formatContent = (text) => {\n    if (!text) return null;\n    // Replace <br> tags with newlines\n    let cleanText = text.replace(/<br\\s*\\/?>/gi, '\\\\n');\n    // Split into lines",
+        "detail": "scripts.update_vocab_search_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "format_function",
+        "kind": 5,
+        "importPath": "scripts.update_vocab_search_page_v2",
+        "description": "scripts.update_vocab_search_page_v2",
+        "peekOfCode": "format_function = \"\"\"\nconst formatContent = (text) => {\n    if (!text) return null;\n    // Replace <br> tags with newlines\n    let cleanText = text.replace(/<br\\s*\\/?>/gi, '\\\\n');\n    // Split into lines\n    const lines = cleanText.split('\\\\n');\n    return lines.map((line, index) => {\n        const trimmed = line.trim();\n        if (!trimmed) return <div key={index} style={{ height: '8px' }}></div>;",
+        "detail": "scripts.update_vocab_search_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "old_render",
+        "kind": 5,
+        "importPath": "scripts.update_vocab_search_page_v2",
+        "description": "scripts.update_vocab_search_page_v2",
+        "peekOfCode": "old_render = '<div className=\"meaning-text\">{group.content}</div>'\nnew_render = '<div className=\"meaning-text\">{formatContent(group.content)}</div>'\nif old_render in content:\n    content = content.replace(old_render, new_render)\n    print(\"Updated render to use formatContent.\")\nelse:\n    print(\"Render target not found (or already updated).\")\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)\nprint(\"Done.\")",
+        "detail": "scripts.update_vocab_search_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "new_render",
+        "kind": 5,
+        "importPath": "scripts.update_vocab_search_page_v2",
+        "description": "scripts.update_vocab_search_page_v2",
+        "peekOfCode": "new_render = '<div className=\"meaning-text\">{formatContent(group.content)}</div>'\nif old_render in content:\n    content = content.replace(old_render, new_render)\n    print(\"Updated render to use formatContent.\")\nelse:\n    print(\"Render target not found (or already updated).\")\nwith open(file_path, \"w\", encoding=\"utf-8\") as f:\n    f.write(content)\nprint(\"Done.\")",
+        "detail": "scripts.update_vocab_search_page_v2",
+        "documentation": {}
+    },
+    {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_vocab_search_remove_newgen",
+        "description": "scripts.update_vocab_search_remove_newgen",
+        "peekOfCode": "def update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Replacement 1: sourceMapping\n    old_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#d35400', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },\n    'Palidict': { label: 'Palidict.com', color: '#2980b9', icon: 'fas fa-globe' }",
+        "detail": "scripts.update_vocab_search_remove_newgen",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_vocab_search_remove_newgen",
+        "description": "scripts.update_vocab_search_remove_newgen",
+        "peekOfCode": "FILE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\VocabSearchPage.js'\ndef update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Replacement 1: sourceMapping\n    old_mapping = \"\"\"const sourceMapping = {\n    'Etipitaka': { label: 'พจนานุกรมพระไตรปิฎก', color: '#8e44ad', icon: 'fas fa-book' },\n    'Tananunto': { label: 'พจนานุกรมธรรมบทภาค ๑-๘', color: '#d35400', icon: 'fas fa-bookmark' },\n    'NewGen': { label: 'พจนานุกรมบาลี-ไทย (รุ่นใหม่)', color: '#27ae60', icon: 'fas fa-leaf' },",
+        "detail": "scripts.update_vocab_search_remove_newgen",
         "documentation": {}
     },
     {
