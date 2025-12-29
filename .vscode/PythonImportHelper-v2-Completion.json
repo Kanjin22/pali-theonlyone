@@ -643,6 +643,42 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "kind": 5,
+        "importPath": "scripts.check_map_keys",
+        "description": "scripts.check_map_keys",
+        "peekOfCode": "path = r'd:\\pali-dhatu-app\\src\\data\\tananunto-vocab-map.js'\nwith open(path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# Naive parse since it's \"const x = {...}\"\nstart = content.find('{')\nend = content.rfind('}')\njson_str = content[start:end+1]\n# It might be valid JSON if keys are quoted.\ntry:\n    data = json.loads(json_str)",
+        "detail": "scripts.check_map_keys",
+        "documentation": {}
+    },
+    {
+        "label": "start",
+        "kind": 5,
+        "importPath": "scripts.check_map_keys",
+        "description": "scripts.check_map_keys",
+        "peekOfCode": "start = content.find('{')\nend = content.rfind('}')\njson_str = content[start:end+1]\n# It might be valid JSON if keys are quoted.\ntry:\n    data = json.loads(json_str)\n    print(f\"Key count: {len(data)}\")\nexcept:\n    print(\"JSON load failed, counting keys via regex\")\n    keys = re.findall(r'\"([^\"]+)\":\\s*\\[', json_str)",
+        "detail": "scripts.check_map_keys",
+        "documentation": {}
+    },
+    {
+        "label": "end",
+        "kind": 5,
+        "importPath": "scripts.check_map_keys",
+        "description": "scripts.check_map_keys",
+        "peekOfCode": "end = content.rfind('}')\njson_str = content[start:end+1]\n# It might be valid JSON if keys are quoted.\ntry:\n    data = json.loads(json_str)\n    print(f\"Key count: {len(data)}\")\nexcept:\n    print(\"JSON load failed, counting keys via regex\")\n    keys = re.findall(r'\"([^\"]+)\":\\s*\\[', json_str)\n    print(f\"Key count (regex): {len(keys)}\")",
+        "detail": "scripts.check_map_keys",
+        "documentation": {}
+    },
+    {
+        "label": "json_str",
+        "kind": 5,
+        "importPath": "scripts.check_map_keys",
+        "description": "scripts.check_map_keys",
+        "peekOfCode": "json_str = content[start:end+1]\n# It might be valid JSON if keys are quoted.\ntry:\n    data = json.loads(json_str)\n    print(f\"Key count: {len(data)}\")\nexcept:\n    print(\"JSON load failed, counting keys via regex\")\n    keys = re.findall(r'\"([^\"]+)\":\\s*\\[', json_str)\n    print(f\"Key count (regex): {len(keys)}\")",
+        "detail": "scripts.check_map_keys",
+        "documentation": {}
+    },
+    {
         "label": "thai_to_roman",
         "kind": 2,
         "importPath": "scripts.check_root_matches",
@@ -2785,65 +2821,38 @@
         "documentation": {}
     },
     {
-        "label": "file_path",
-        "kind": 5,
+        "label": "main",
+        "kind": 2,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "file_path = r\"d:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nwith open(file_path, 'r', encoding='utf-8') as f:\n    content = f.read()\n# 1. Add Imports\nold_import = \"import LoadingSpinner from '../components/LoadingSpinner';\"\nnew_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"",
+        "peekOfCode": "def main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)\n        print(\"Successfully updated DhatuDetail.js\")\n    else:\n        print(\"Could not find code block to replace\")",
         "detail": "scripts.update_dhatu_detail",
         "documentation": {}
     },
     {
-        "label": "old_import",
+        "label": "FILE_PATH",
         "kind": 5,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "old_import = \"import LoadingSpinner from '../components/LoadingSpinner';\"\nnew_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX",
+        "peekOfCode": "FILE_PATH = r\"d:\\pali-dhatu-app\\src\\components\\DhatuDetail.js\"\nOLD_CODE = \"\"\"                            <div className=\"derived-word-header\">\n                                <span className=\"derived-word-thai\">{thaiWord}</span>\n                                <span className=\"derived-word-roman\">{word}</span>\n                            </div>\"\"\"\nNEW_CODE = \"\"\"                            <div className=\"derived-word-header\">\n                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>\n                                    <span className=\"derived-word-thai\">{thaiWord}</span>\n                                    <span className=\"derived-word-roman\">{word}</span>\n                                </div>",
         "detail": "scripts.update_dhatu_detail",
         "documentation": {}
     },
     {
-        "label": "new_import",
+        "label": "OLD_CODE",
         "kind": 5,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "new_import = \"import LoadingSpinner from '../components/LoadingSpinner';\\nimport vocabRootsDPDDerived from '../data/vocab-roots-dpd-derived';\\nimport PaliScript from '../utils/paliScript';\"\nif \"vocabRootsDPDDerived\" not in content:\n    content = content.replace(old_import, new_import)\n# 2. Add Logic\nold_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}",
+        "peekOfCode": "OLD_CODE = \"\"\"                            <div className=\"derived-word-header\">\n                                <span className=\"derived-word-thai\">{thaiWord}</span>\n                                <span className=\"derived-word-roman\">{word}</span>\n                            </div>\"\"\"\nNEW_CODE = \"\"\"                            <div className=\"derived-word-header\">\n                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>\n                                    <span className=\"derived-word-thai\">{thaiWord}</span>\n                                    <span className=\"derived-word-roman\">{word}</span>\n                                </div>\n                                <a ",
         "detail": "scripts.update_dhatu_detail",
         "documentation": {}
     },
     {
-        "label": "old_logic",
+        "label": "NEW_CODE",
         "kind": 5,
         "importPath": "scripts.update_dhatu_detail",
         "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "old_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\"\nnew_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>",
-        "detail": "scripts.update_dhatu_detail",
-        "documentation": {}
-    },
-    {
-        "label": "new_logic",
-        "kind": 5,
-        "importPath": "scripts.update_dhatu_detail",
-        "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "new_logic = \"const groupCode = dhatu ? getGroupCode(dhatu.mawat_dhatu) : null;\\n  const derivedWords = dhatu ? vocabRootsDPDDerived[PaliScript.thaiToRoman(dhatu.dhatu_word)] : null;\"\nif \"derivedWords\" not in content:\n    content = content.replace(old_logic, new_logic)\n# 3. Add JSX\nold_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>",
-        "detail": "scripts.update_dhatu_detail",
-        "documentation": {}
-    },
-    {
-        "label": "old_jsx",
-        "kind": 5,
-        "importPath": "scripts.update_dhatu_detail",
-        "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "old_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>\n            )}\n            <div className=\"detail-card full-width\">\"\"\"\nnew_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (",
-        "detail": "scripts.update_dhatu_detail",
-        "documentation": {}
-    },
-    {
-        "label": "new_jsx",
-        "kind": 5,
-        "importPath": "scripts.update_dhatu_detail",
-        "description": "scripts.update_dhatu_detail",
-        "peekOfCode": "new_jsx = \"\"\"            {/* School Examples Section */}\n            {dhatu.udaharana_school && (\n                <div className=\"detail-card full-width\" style={{ backgroundColor: '#fff8e1', borderLeft: '5px solid #f39c12' }}>\n                    <h2 style={{ color: '#d35400' }}>อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</h2>\n                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{dhatu.udaharana_school}</p>\n                </div>\n            )}\n            {/* Derived Words Section (DPD) */}\n            {derivedWords && derivedWords.length > 0 && (\n              <div className=\"detail-card full-width\">",
+        "peekOfCode": "NEW_CODE = \"\"\"                            <div className=\"derived-word-header\">\n                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>\n                                    <span className=\"derived-word-thai\">{thaiWord}</span>\n                                    <span className=\"derived-word-roman\">{word}</span>\n                                </div>\n                                <a \n                                    href={`https://www.dpdict.net/gd?search=${word}`} \n                                    target=\"_blank\" \n                                    rel=\"noopener noreferrer\"\n                                    title=\"ดูใน dpdict.net\"",
         "detail": "scripts.update_dhatu_detail",
         "documentation": {}
     },
@@ -3487,6 +3496,24 @@
         "documentation": {}
     },
     {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_search_page_gap",
+        "description": "scripts.update_search_page_gap",
+        "peekOfCode": "def update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Target the container div\n    old_container = '<div style={{ marginBottom: \"20px\" }}>'\n    new_container = '<div style={{ marginBottom: \"20px\", display: \"flex\", flexWrap: \"wrap\", gap: \"15px\", justifyContent: \"center\" }}>'\n    # Target the second button's style to remove marginLeft\n    # We need to be careful with matching multi-line strings.\n    # Let's try to match the specific line with marginLeft: '10px'",
+        "detail": "scripts.update_search_page_gap",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_search_page_gap",
+        "description": "scripts.update_search_page_gap",
+        "peekOfCode": "FILE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\SearchPage.js'\ndef update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Target the container div\n    old_container = '<div style={{ marginBottom: \"20px\" }}>'\n    new_container = '<div style={{ marginBottom: \"20px\", display: \"flex\", flexWrap: \"wrap\", gap: \"15px\", justifyContent: \"center\" }}>'\n    # Target the second button's style to remove marginLeft\n    # We need to be careful with matching multi-line strings.",
+        "detail": "scripts.update_search_page_gap",
+        "documentation": {}
+    },
+    {
         "label": "file_path",
         "kind": 5,
         "importPath": "scripts.update_search_page_title_and_button",
@@ -3748,6 +3775,42 @@
         "documentation": {}
     },
     {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v10",
+        "description": "scripts.update_tananunto_page_v10",
+        "peekOfCode": "def update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Replacement 1: Reading logic and cleanup\n    old_read = \"\"\"            // Try to load from localStorage first to save reads\n            const cachedData = localStorage.getItem('dhatu_cache_v2');\n            const cachedTime = localStorage.getItem('dhatu_cache_time_v2');\"\"\"\n    new_read = \"\"\"            // Clean up old cache\n            localStorage.removeItem('dhatu_cache_v2');",
+        "detail": "scripts.update_tananunto_page_v10",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v10",
+        "description": "scripts.update_tananunto_page_v10",
+        "peekOfCode": "FILE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js'\ndef update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    # Replacement 1: Reading logic and cleanup\n    old_read = \"\"\"            // Try to load from localStorage first to save reads\n            const cachedData = localStorage.getItem('dhatu_cache_v2');\n            const cachedTime = localStorage.getItem('dhatu_cache_time_v2');\"\"\"\n    new_read = \"\"\"            // Clean up old cache",
+        "detail": "scripts.update_tananunto_page_v10",
+        "documentation": {}
+    },
+    {
+        "label": "update_file",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v11",
+        "description": "scripts.update_tananunto_page_v11",
+        "peekOfCode": "def update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        lines = f.readlines()\n    new_lines = []\n    found = False\n    for line in lines:\n        if \"พบธาตุจำนวน {allDhatus.length} ตัว ที่ปรากฏในพจนานุกรมธรรมบท\" in line:\n            print(f\"Removing line: {line.strip()}\")\n            found = True",
+        "detail": "scripts.update_tananunto_page_v11",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v11",
+        "description": "scripts.update_tananunto_page_v11",
+        "peekOfCode": "FILE_PATH = r'd:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js'\ndef update_file():\n    print(f\"Reading {FILE_PATH}...\")\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        lines = f.readlines()\n    new_lines = []\n    found = False\n    for line in lines:\n        if \"พบธาตุจำนวน {allDhatus.length} ตัว ที่ปรากฏในพจนานุกรมธรรมบท\" in line:\n            print(f\"Removing line: {line.strip()}\")",
+        "detail": "scripts.update_tananunto_page_v11",
+        "documentation": {}
+    },
+    {
         "label": "TARGET_PATH",
         "kind": 5,
         "importPath": "scripts.update_tananunto_page_v2",
@@ -3907,6 +3970,78 @@
         "description": "scripts.update_tananunto_page_v7",
         "peekOfCode": "new_content = \"\"\"import React, { useState, useEffect, useMemo } from 'react';\nimport { collection, getDocs, query, orderBy } from 'firebase/firestore';\nimport { db } from '../firebaseConfig';\nimport { Link } from 'react-router-dom';\nimport LoadingSpinner from '../components/LoadingSpinner';\nimport tananuntoVocabMap from '../data/tananunto-vocab-map';\nimport vocabRootsDpdDerivedEnriched from '../data/vocab-roots-dpd-derived-enriched';\n// PaliScript is still useful for other things, though less needed for DPD lookup now\nimport PaliScript from '../utils/paliScript';\nfunction TananuntoRootsPage() {",
         "detail": "scripts.update_tananunto_page_v7",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v8",
+        "description": "scripts.update_tananunto_page_v8",
+        "peekOfCode": "def main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)\n        print(\"Successfully updated TananuntoRootsPage.js\")\n    else:\n        print(\"Could not find code block to replace\")",
+        "detail": "scripts.update_tananunto_page_v8",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v8",
+        "description": "scripts.update_tananunto_page_v8",
+        "peekOfCode": "FILE_PATH = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\nOLD_CODE = \"\"\"                                            {dpdList.map((v, idx) => (\n                                                <li key={idx} style={{ marginBottom: '5px', paddingBottom: '5px', borderBottom: '1px dashed #bdc3c7' }}>\n                                                    <strong style={{ color: '#c0392b' }}>{v.w}</strong>\n                                                    {v.e && <span style={{ fontSize: '0.8em', color: '#7f8c8d', marginLeft: '5px' }}>[{v.e}]</span>}\n                                                    <span style={{ color: '#34495e', marginLeft: '5px' }}>\n                                                        {v.d ? v.d.replace(/<[^>]*>/g, '') : ''}\n                                                    </span>\n                                                </li>\n                                            ))}\"\"\"",
+        "detail": "scripts.update_tananunto_page_v8",
+        "documentation": {}
+    },
+    {
+        "label": "OLD_CODE",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v8",
+        "description": "scripts.update_tananunto_page_v8",
+        "peekOfCode": "OLD_CODE = \"\"\"                                            {dpdList.map((v, idx) => (\n                                                <li key={idx} style={{ marginBottom: '5px', paddingBottom: '5px', borderBottom: '1px dashed #bdc3c7' }}>\n                                                    <strong style={{ color: '#c0392b' }}>{v.w}</strong>\n                                                    {v.e && <span style={{ fontSize: '0.8em', color: '#7f8c8d', marginLeft: '5px' }}>[{v.e}]</span>}\n                                                    <span style={{ color: '#34495e', marginLeft: '5px' }}>\n                                                        {v.d ? v.d.replace(/<[^>]*>/g, '') : ''}\n                                                    </span>\n                                                </li>\n                                            ))}\"\"\"\nNEW_CODE = \"\"\"                                            {dpdList.map((v, idx) => (",
+        "detail": "scripts.update_tananunto_page_v8",
+        "documentation": {}
+    },
+    {
+        "label": "NEW_CODE",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v8",
+        "description": "scripts.update_tananunto_page_v8",
+        "peekOfCode": "NEW_CODE = \"\"\"                                            {dpdList.map((v, idx) => (\n                                                <li key={idx} style={{ marginBottom: '5px', paddingBottom: '5px', borderBottom: '1px dashed #bdc3c7' }}>\n                                                    <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap' }}>\n                                                        <strong style={{ color: '#c0392b' }}>{v.w}</strong>\n                                                        {v.e && <span style={{ fontSize: '0.8em', color: '#7f8c8d', marginLeft: '5px' }}>[{v.e}]</span>}\n                                                        <a \n                                                            href={`https://www.dpdict.net/gd?search=${v.w}`} \n                                                            target=\"_blank\" \n                                                            rel=\"noopener noreferrer\"\n                                                            title=\"ดูใน dpdict.net\"",
+        "detail": "scripts.update_tananunto_page_v8",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scripts.update_tananunto_page_v9",
+        "description": "scripts.update_tananunto_page_v9",
+        "peekOfCode": "def main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)\n        print(\"Successfully updated TananuntoRootsPage.js\")\n    else:\n        print(\"Could not find code block to replace\")",
+        "detail": "scripts.update_tananunto_page_v9",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v9",
+        "description": "scripts.update_tananunto_page_v9",
+        "peekOfCode": "FILE_PATH = r\"d:\\pali-dhatu-app\\src\\pages\\TananuntoRootsPage.js\"\nOLD_CODE = \"{v.def.replace(v.word, '').trim().replace(/^:\\s*/, '')}\"\nNEW_CODE = \"{v.def.replace(v.word, '').trim().replace(/^:\\s*/, '').replace(/สำเร็จรูปเป็น\\\\s*$/, '')}\"\ndef main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)",
+        "detail": "scripts.update_tananunto_page_v9",
+        "documentation": {}
+    },
+    {
+        "label": "OLD_CODE",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v9",
+        "description": "scripts.update_tananunto_page_v9",
+        "peekOfCode": "OLD_CODE = \"{v.def.replace(v.word, '').trim().replace(/^:\\s*/, '')}\"\nNEW_CODE = \"{v.def.replace(v.word, '').trim().replace(/^:\\s*/, '').replace(/สำเร็จรูปเป็น\\\\s*$/, '')}\"\ndef main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)\n        print(\"Successfully updated TananuntoRootsPage.js\")",
+        "detail": "scripts.update_tananunto_page_v9",
+        "documentation": {}
+    },
+    {
+        "label": "NEW_CODE",
+        "kind": 5,
+        "importPath": "scripts.update_tananunto_page_v9",
+        "description": "scripts.update_tananunto_page_v9",
+        "peekOfCode": "NEW_CODE = \"{v.def.replace(v.word, '').trim().replace(/^:\\s*/, '').replace(/สำเร็จรูปเป็น\\\\s*$/, '')}\"\ndef main():\n    with open(FILE_PATH, 'r', encoding='utf-8') as f:\n        content = f.read()\n    if OLD_CODE in content:\n        new_content = content.replace(OLD_CODE, NEW_CODE)\n        with open(FILE_PATH, 'w', encoding='utf-8') as f:\n            f.write(new_content)\n        print(\"Successfully updated TananuntoRootsPage.js\")\n    else:",
+        "detail": "scripts.update_tananunto_page_v9",
         "documentation": {}
     },
     {
