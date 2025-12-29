@@ -199,8 +199,8 @@
             text-decoration: none;
             font-weight: 600;
             transition: color 0.2s;
+            .back-btn:hover { color: #2c3e50; }
         }
-        .back-btn:hover { color: #2c3e50; }
 
         .stats-text {
             text-align: center;
@@ -304,7 +304,7 @@
                 </select>
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
             </div>
-            <div class="stats-text" id="statsDisplay">กำลังโหลดฐานข้อมูล...</div>
+            <div class="stats-text" id="statsDisplay">กำลังโหลดฐานข้อมูลจาก Cloud...</div>
         </div>
 
         <div class="spinner" id="spinner"></div>
@@ -315,30 +315,31 @@
         </div>
     </div>
 
-    <!-- Load Roots Data -->
-    <script src="data/vocab-roots.js"></script>
+    <!-- Load Roots Data (Derived Words only) -->
     <script src="data/vocab-roots-dpd-derived.js"></script>
 
-    <script>
-        // --- Helper: Format Example Text (Fix spacing issues) ---
-        function formatExampleText(text) {
-            if (!text) return "";
-            let formatted = text;
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-            // 1. Space after punctuation
-            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
-            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
+            authDomain: "pali-dhatu-app.firebaseapp.com",
+            projectId: "pali-dhatu-app",
+            storageBucket: "pali-dhatu-app.firebasestorage.app",
+            messagingSenderId: "188304412939",
+            appId: "1:188304412939:web:22a6bd82480f40a909120e"
+        };
 
-            // 2. Common Pali endings/sandhi separation heuristics
-            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
-            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
-            
-            // 3. Clean up multiple spaces
-            formatted = formatted.replace(/\s+/g, ' ');
-            
-            return formatted;
-        }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
+        // Global variables for UI
+        window.allRoots = [];
+        
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
         const groupFilter = document.getElementById('groupFilter');
@@ -346,62 +347,124 @@
         const statsDisplay = document.getElementById('statsDisplay');
         const spinner = document.getElementById('spinner');
 
-        let allRoots = []; // Array of { key: "กก", ...data }
-
         // Initialize
         window.addEventListener('load', () => {
-            if (typeof vocabRoots !== 'undefined') {
-                processData();
-            } else {
-                statsDisplay.innerText = "ไม่พบฐานข้อมูลธาตุ (vocab-roots.js)";
-            }
+            fetchData();
         });
 
-        function processData() {
+        async function fetchData() {
             spinner.style.display = 'block';
             
-            // Convert object to searchable array
-            // vocabRoots = { "root": [ {meaning, example, group}, ... ] }
-            setTimeout(() => {
-                const keys = Object.keys(vocabRoots);
-                const uniqueGroups = new Set();
+            // Cache handling
+            const CACHE_KEY = 'dhatu_cache_v3'; 
+            const TIME_KEY = 'dhatu_cache_time_v3';
+            
+            const cachedData = localStorage.getItem(CACHE_KEY);
+            const cachedTime = localStorage.getItem(TIME_KEY);
+            const NOW = new Date().getTime();
+            const ONE_DAY = 24 * 60 * 60 * 1000;
 
-                allRoots = keys.map(key => {
-                    const entries = vocabRoots[key];
-                    // Collect groups
-                    entries.forEach(e => {
-                        if (e.group) uniqueGroups.add(e.group);
-                    });
+            let data = [];
 
-                    return {
-                        root: key,
-                        entries: entries
-                    };
-                });
-
-                // Populate Filter
-                const sortedGroups = Array.from(uniqueGroups).sort();
-                sortedGroups.forEach(g => {
-                    const option = document.createElement('option');
-                    option.value = g;
-                    option.textContent = g;
-                    groupFilter.appendChild(option);
-                });
-                
-                statsDisplay.innerText = `มีข้อมูลธาตุทั้งหมด ${allRoots.length} คำ (รวม ${keys.reduce((acc, k) => acc + vocabRoots[k].length, 0)} ความหมาย)`;
-                spinner.style.display = 'none';
-                
-                // Check URL params
-                const params = new URLSearchParams(window.location.search);
-                const q = params.get('q');
-                if (q) {
-                    searchInput.value = q;
-                    performSearch(q);
-                } else {
-                    displayResults(allRoots.slice(0, 5));
+            if (cachedData && cachedTime && (NOW - cachedTime < ONE_DAY)) {
+                console.log("Using cached data");
+                data = JSON.parse(cachedData);
+            } else {
+                try {
+                    console.log("Fetching from Firestore...");
+                    const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
+                    const snapshot = await getDocs(q);
+                    
+                    data = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        dhatu_word: doc.data().dhatu_word,
+                        arth_thai: doc.data().arth_thai,
+                        arth_pali: doc.data().arth_pali,
+                        mawat_dhatu: doc.data().mawat_dhatu,
+                        anukrom_dhatu: doc.data().anukrom_dhatu,
+                        udaharana: doc.data().udaharana,
+                        // Additional fields if they exist in Firestore
+                        page: doc.data().page || "",
+                        source: doc.data().source || ""
+                    }));
+                    
+                    // Cache it
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+                    localStorage.setItem(TIME_KEY, NOW);
+                } catch (err) {
+                    console.error("Error fetching data:", err);
+                    statsDisplay.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล: " + err.message;
+                    spinner.style.display = 'none';
+                    return;
                 }
-            }, 10);
+            }
+
+            processData(data);
         }
+
+        function processData(rawData) {
+            // Group by Root Word to match UI expectations
+            // rawData is array of entries. We need to group them if they have same root.
+            // Actually, in Firestore, each doc is likely an entry. 
+            // The UI expects { root: "key", entries: [...] }
+            
+            const grouped = {};
+            
+            rawData.forEach(item => {
+                const key = item.dhatu_word;
+                if (!grouped[key]) {
+                    grouped[key] = [];
+                }
+                
+                // Map Firestore fields to UI entry fields
+                grouped[key].push({
+                    group: item.mawat_dhatu,
+                    meaning_thai: item.arth_thai,
+                    meaning_pali: item.arth_pali,
+                    page: item.page,
+                    source: item.source,
+                    // If udaharana is needed in detail page, we might need to pass it or it's handled in detail page
+                    // But here we just show list
+                });
+            });
+
+            // Convert to array
+            window.allRoots = Object.keys(grouped).map(key => ({
+                root: key,
+                entries: grouped[key]
+            }));
+
+            // Populate Filter
+            const uniqueGroups = new Set();
+            rawData.forEach(item => {
+                if (item.mawat_dhatu) uniqueGroups.add(item.mawat_dhatu);
+            });
+            
+            const sortedGroups = Array.from(uniqueGroups).sort();
+            sortedGroups.forEach(g => {
+                const option = document.createElement('option');
+                option.value = g;
+                option.textContent = g;
+                groupFilter.appendChild(option);
+            });
+            
+            statsDisplay.innerText = `มีข้อมูลธาตุทั้งหมด ${window.allRoots.length} คำ (รวม ${rawData.length} ความหมาย)`;
+            spinner.style.display = 'none';
+            
+            // Check URL params
+            const params = new URLSearchParams(window.location.search);
+            const q = params.get('q');
+            if (q) {
+                searchInput.value = q;
+                performSearch(q);
+            } else {
+                displayResults(window.allRoots.slice(0, 5));
+            }
+        }
+
+        // Expose functions to global scope for event listeners if needed, 
+        // though we attached listeners in module scope which is fine for DOM elements selected there.
+        // But the input event listeners need to be attached.
 
         searchInput.addEventListener('input', (e) => {
             performSearch(e.target.value);
@@ -417,12 +480,12 @@
 
             if (query.length < 1 && group === "") {
                 resultsContainer.innerHTML = '';
-                displayResults(allRoots.slice(0, 5));
+                displayResults(window.allRoots.slice(0, 5));
                 return;
             }
 
             // Filter logic
-            const results = allRoots.filter(item => {
+            const results = window.allRoots.filter(item => {
                 // 1. Group Filter
                 if (group) {
                     const hasGroup = item.entries.some(e => e.group === group);
@@ -439,10 +502,9 @@
                 return item.entries.some(entry => {
                     const matchPali = entry.meaning_pali && entry.meaning_pali.toLowerCase().includes(query);
                     const matchThai = entry.meaning_thai && entry.meaning_thai.toLowerCase().includes(query);
-                    const matchOldMeaning = entry.meaning && entry.meaning.toLowerCase().includes(query); // Fallback
                     const matchGroup = entry.group && entry.group.toLowerCase().includes(query);
                     
-                    return matchPali || matchThai || matchOldMeaning || matchGroup;
+                    return matchPali || matchThai || matchGroup;
                 });
             });
 
@@ -495,10 +557,12 @@
                     
                     const groupHtml = entry.group ? `<span class="root-group"><i class="fa-solid fa-layer-group"></i> ${entry.group}</span>` : '';
                     
-                    const uniqueId = `${item.root}-${index}`;
+                    // We need to pass the root name and potentially the index or ID to detail page
+                    // Since we are using Firebase, detail page (root_detail.html) might ALSO need update to read from Firebase
+                    // For now, we keep the link format but `root_detail.html` will need to be checked next.
                     const exampleHtml = `
                         <div style="text-align:right; margin-top:15px;">
-                            <a href="root_detail.html?r=${encodeURIComponent(item.root)}&i=${index}" class="detail-btn" style="text-decoration:none; display:inline-block;" target="_blank">
+                            <a href="root_detail.html?id=${entry.id}" class="detail-btn" style="text-decoration:none; display:inline-block;" target="_blank">
                                 <i class="fa-solid fa-eye"></i> ดูรายละเอียด/อุทาหรณ์
                             </a>
                         </div>
@@ -565,7 +629,6 @@
             const regex = new RegExp(`(${query})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
-
     </script>
 </body>
 </html>
