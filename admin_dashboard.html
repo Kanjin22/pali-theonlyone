@@ -1420,7 +1420,7 @@
             }
             try {
                 const token = await user.getIdToken(true);
-                const res = await fetch('http://localhost:3001/api/is-admin', {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/is-admin', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const data = await res.json();
@@ -1441,7 +1441,7 @@
                     return;
                 }
                 const token = await user.getIdToken();
-                const res = await fetch('http://localhost:3001/api/dpd-update', {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/dpd-update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1471,7 +1471,7 @@
                 const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
                 const token = await user.getIdToken();
-                const res = await fetch('http://localhost:3001/api/dpd-update', {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/dpd-update', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify({ skip: true })
@@ -1498,7 +1498,7 @@
                     return;
                 }
                 const token = await user.getIdToken();
-                const res = await fetch('http://localhost:3001/api/dpd-update-report', {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/dpd-update-report', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1535,7 +1535,7 @@
                 const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
                 const token = await user.getIdToken();
-                const res = await fetch('http://localhost:3001/api/dpd-update-report', {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/dpd-update-report', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify({ skip: true })
@@ -1559,7 +1559,7 @@
             s.textContent = 'กำลังตรวจสอบ...';
             s.style.color = '#888';
             try {
-                const r = await fetch('http://localhost:3001/api/ping');
+                const r = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/ping');
                 const d = await r.json();
                 if (d && d.ok) {
                     s.textContent = 'ออนไลน์';

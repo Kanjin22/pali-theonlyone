@@ -12,7 +12,7 @@ try {
 
 // Load Service Account
 // Use the key from the main app directory to avoid duplicating secrets
-const serviceAccountPath = 'D:/pali-dhatu-app/service-account-key.json';
+const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH || 'D:/pali-dhatu-app/service-account-key.json';
 
 if (!fs.existsSync(serviceAccountPath)) {
     console.error(`Service account key not found at ${serviceAccountPath}`);

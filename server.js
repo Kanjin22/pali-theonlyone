@@ -10,7 +10,7 @@ try {
   process.exit(1);
 }
 
-const serviceAccountPath = 'D:/pali-dhatu-app/service-account-key.json';
+const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH || 'D:/pali-dhatu-app/service-account-key.json';
 if (!fs.existsSync(serviceAccountPath)) {
   process.exit(1);
 }
@@ -23,10 +23,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const allowedAdminEmails = new Set([
-  'pali.theonlyone@gmail.com',
-  'setthachayo@gmail.com'
-]);
+const defaultAdmins = ['pali.theonlyone@gmail.com','setthachayo@gmail.com'];
+const envAdmins = (process.env.ALLOWLIST_ADMINS || '').split(',').map(s => s.trim()).filter(Boolean);
+const allowedAdminEmails = new Set([...defaultAdmins, ...envAdmins]);
 
 let isRunning = false;
 
