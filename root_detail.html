@@ -551,8 +551,11 @@
             formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
             formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
             formatted = formatted.replace(/\s+/g, ' ');
-            
-            return formatted;
+            formatted = formatted.trim();
+
+            const parts = formatted.split(/[;\r\n]+/).map(p => p.trim()).filter(p => p.length > 0);
+            if (parts.length <= 1) return formatted;
+            return parts.join('<br>');
         }
         
         function showError(msg) {
