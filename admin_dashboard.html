@@ -1419,7 +1419,7 @@
                 return;
             }
             try {
-                const token = await user.getIdToken();
+                const token = await user.getIdToken(true);
                 const res = await fetch('http://localhost:3001/api/is-admin', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
@@ -1492,7 +1492,7 @@
             btn.disabled = true;
             btn.textContent = 'กำลังตรวจสอบ...';
             try {
-                const user = auth.currentUser;
+                const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) {
                     alert('กรุณาล็อกอินแอดมินก่อน');
                     return;
@@ -1532,7 +1532,7 @@
             btn.disabled = true;
             btn.textContent = 'กำลังตรวจสอบ...';
             try {
-                const user = auth.currentUser;
+                const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
                 const token = await user.getIdToken();
                 const res = await fetch('http://localhost:3001/api/dpd-update-report', {
@@ -1542,9 +1542,10 @@
                 });
                 const data = await res.json();
                 if (!data.ok) { alert('ไม่สามารถสร้างรายงานได้: ' + (data.error || 'unknown')); return; }
-                const pre = document.getElementById('dpdReportContentTab');
+                const pre = document.getElementById('dpdReportContent');
                 const summary = { dpd: data.dpd, roots: data.roots, firestore: data.firestore };
                 pre.textContent = JSON.stringify(summary, null, 2);
+                document.getElementById('dpdReportModal').style.display = 'block';
             } catch (e) {
                 alert('เกิดข้อผิดพลาด: ' + e.message);
             } finally {

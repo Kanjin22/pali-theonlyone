@@ -24,7 +24,8 @@ app.use(cors());
 app.use(express.json());
 
 const allowedAdminEmails = new Set([
-  'pali.theonlyone@gmail.com'
+  'pali.theonlyone@gmail.com',
+  'setthachayo@gmail.com'
 ]);
 
 let isRunning = false;
