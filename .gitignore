@@ -1,5 +1,8 @@
 dpd_data/
 *.db
+temp_download/
+*.tar.bz2
+*.zip
 *.pyc
 __pycache__/
 .env
