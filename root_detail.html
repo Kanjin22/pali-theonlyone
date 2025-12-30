@@ -558,7 +558,7 @@
             });
 
             if (parts.length <= 1) return formatted;
-            return parts.join('<br>');
+            return `<ul>${parts.map(x => `<li>${x}</li>`).join('')}</ul>`;
         }
         
         function showError(msg) {
