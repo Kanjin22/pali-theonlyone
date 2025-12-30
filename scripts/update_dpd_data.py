@@ -125,9 +125,7 @@ def main():
         
     # 5. Run scripts
     scripts_to_run = [
-        [sys.executable, "extract_dpd.py"],
-        [sys.executable, "enrich_roots_from_dpd.py"],
-        ["node", "scripts/update_roots_firestore.js"]
+        [sys.executable, "extract_dpd.py"]
     ]
     
     print("\n=== Running Data Generation Scripts ===")
