@@ -515,7 +515,6 @@
             <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
-            <a class="nav-link" onclick="switchTab('roots')">จัดการธาตุ</a>
             <a class="nav-link" onclick="switchTab('dpdupdate')">อัปเดต DPD</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
@@ -523,58 +522,8 @@
 
     <div class="container">
 
-        <!-- Tab: Roots -->
-        <div id="tab-roots" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <span><i class="fa-solid fa-leaf"></i> จัดการธาตุ (Roots)</span>
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
-                        style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
-                    <button id="dpdUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPD()">อัปเดตพจนานุกรม DPD</button>
-                    <button id="dpdUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReport()">ตรวจสอบและอัปเดต DPD</button>
-                        
-                        <div id="dhatuAuthSection" style="display:none; align-items:center; gap:5px;">
-                             <input type="email" id="dhatuEmail" placeholder="Email (Dhatu Admin)" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 150px;">
-                             <input type="password" id="dhatuPass" placeholder="Password" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 100px;">
-                             <button class="btn btn-success" onclick="loginDhatu()">Login</button>
-                        </div>
-                        <div id="dhatuUserSection" style="display:none; align-items:center; gap:5px;">
-                            <span id="dhatuUserEmail" style="font-size:0.8rem; color:green;"></span>
-                            <button class="btn btn-secondary btn-small" onclick="logoutDhatu()">Logout</button>
-                        </div>
-
-                        <button class="btn btn-primary" onclick="openRootModal()">
-                            <i class="fa-solid fa-plus"></i> เพิ่มธาตุ
-                        </button>
-                        <button class="btn btn-secondary" onclick="loadRoots()">
-                            <i class="fa-solid fa-rotate"></i> รีเฟรช
-                        </button>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table id="rootTable">
-                        <thead>
-                            <tr>
-                                <th>ธาตุ</th>
-                                <th>หมวด</th>
-                                <th>คำแปล</th>
-                                <th>ที่มา</th>
-                                <th>จัดการ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rootList">
-                            <tr>
-                                <td colspan="5" class="loading">กดรีเฟรชเพื่อโหลดข้อมูล...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="text-align: center; margin-top: 15px;">
-                     <button id="loadMoreRootsBtn" class="btn btn-secondary hidden" onclick="loadMoreRoots()">โหลดเพิ่มเติม...</button>
-                </div>
-            </div>
-        </div>
+        <!-- Tab: Roots (Deleted) -->
+        <div id="tab-roots" class="hidden" style="display:none !important;"></div>
 
         <!-- Tab: DPD Update -->
         <div id="tab-dpdupdate" class="hidden">
@@ -598,9 +547,8 @@
                         </ul>
                         <div style="font-weight:600; margin-top:6px;">รายละเอียด:</div>
                         <ul style="margin:0 0 0 18px; padding:0; line-height:1.7;">
-                            <li>อัปเดต DPD: ดึงฐาน DPD ล่าสุด → สร้าง vocab-dpd.js → รวมธาตุเข้า vocab-roots.js → ซิงค์ขึ้น Firestore</li>
+                            <li>อัปเดต DPD: ดึงฐาน DPD ล่าสุด → สร้าง vocab-dpd.js (สำหรับพจนานุกรมศัพท์ทั่วไป)</li>
                             <li>ตรวจสอบและอัปเดต DPD: ดำเนินการเหมือนด้านบน พร้อมสรุปรายงานความเปลี่ยนแปลง</li>
-                            <li>ต้องมีคีย์บริการที่ D:/pali-dhatu-app/service-account-key.json</li>
                         </ul>
                     </div>
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
