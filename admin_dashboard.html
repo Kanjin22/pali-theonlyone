@@ -1584,24 +1584,65 @@
                 if (d && d.ok) {
                     s.textContent = 'ออนไลน์';
                     s.style.color = '#2e7d32';
+                    return true;
                 } else {
                     s.textContent = 'ออฟไลน์';
                     s.style.color = '#c0392b';
+                    return false;
                 }
             } catch {
                 s.textContent = 'ออฟไลน์';
                 s.style.color = '#c0392b';
+                return false;
             }
         }
 
         async function refreshDPDStats() {
-            await pingServer();
-            // Clear Checking... status
-            const ids = ['dpd-latest-version', 'dpd-local-date', 'dpd-vocab-count', 'dpd-roots-count'];
-            ids.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && el.textContent === 'Checking...') el.textContent = '-';
-            });
+            const isOnline = await pingServer();
+            
+            if (!isOnline) {
+                const ids = ['dpd-latest-version', 'dpd-local-date', 'dpd-vocab-count', 'dpd-roots-count'];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '-';
+                });
+                return;
+            }
+
+            // Fetch Stats from local server
+            try {
+                const res = await fetch((window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001') + '/api/dpd-stats');
+                const data = await res.json();
+                
+                if (data.vocab) {
+                    document.getElementById('dpd-vocab-count').textContent = data.vocab.count ? data.vocab.count.toLocaleString() : '-';
+                    if (data.vocab.mtime) {
+                        const d = new Date(data.vocab.mtime);
+                        document.getElementById('dpd-local-date').textContent = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    }
+                }
+                if (data.roots) {
+                    document.getElementById('dpd-roots-count').textContent = data.roots.count ? data.roots.count.toLocaleString() : '-';
+                }
+            } catch (e) {
+                console.error('Failed to fetch DPD stats:', e);
+                document.getElementById('dpd-vocab-count').textContent = 'Error';
+                document.getElementById('dpd-roots-count').textContent = 'Error';
+            }
+
+            // Fetch GitHub Version
+            try {
+                const ghRes = await fetch('https://api.github.com/repos/digitalpalidictionary/digitalpalidictionary/releases/latest');
+                const ghData = await ghRes.json();
+                if (ghData.tag_name) {
+                    document.getElementById('dpd-latest-version').textContent = ghData.tag_name;
+                } else {
+                    document.getElementById('dpd-latest-version').textContent = '-';
+                }
+            } catch (e) {
+                console.error('Failed to fetch GitHub version:', e);
+                document.getElementById('dpd-latest-version').textContent = '-';
+            }
         }
 
         function copyRunCommand() {
