@@ -3,7 +3,7 @@ import json
 import re
 
 db_path = "dpd_data/dpd.db"
-output_path = "data/vocab-dpd.js"
+output_path = "data/raw/vocab-dpd.js"
 
 print(f"Connecting to {db_path}...")
 conn = sqlite3.connect(db_path)

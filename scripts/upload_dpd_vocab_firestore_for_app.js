@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const admin = require('firebase-admin');
 
-// 1. Load Data (Adjusted for pali-dhatu-app structure: src/data)
-const dataPath = path.join(__dirname, '../src/data/vocab-general-dpd.js');
+// 1. Load Data (Adjusted for pali-dhatu-app structure: data/raw)
+const dataPath = path.join(__dirname, '../data/raw/vocab-general-dpd.js');
 if (!fs.existsSync(dataPath)) {
     console.error("Data file not found:", dataPath);
-    console.error("Please ensure vocab-general-dpd.js is in src/data/");
+    console.error("Please ensure vocab-general-dpd.js is in data/raw/");
     process.exit(1);
 }
 

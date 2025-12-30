@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/vocab-roots-dpd.js');
+const dataPath = path.join(__dirname, '../data/raw/vocab-roots-dpd.js');
 let fileContent = fs.readFileSync(dataPath, 'utf8');
 fileContent = fileContent.replace('const vocabRootsDPD = ', '').trim();
 if (fileContent.endsWith(';')) fileContent = fileContent.slice(0, -1);

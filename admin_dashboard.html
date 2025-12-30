@@ -605,6 +605,49 @@
                             <button id="dpdTabUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReportFromTab()">
                                 <i class="fa-solid fa-clipboard-check"></i> ตรวจสอบความเปลี่ยนแปลง (Check Diff)
                             </button>
+                            <button class="btn btn-info" onclick="showManualUpdateGuide()">
+                                <i class="fa-solid fa-book"></i> คู่มือการอัปเดต (Manual Guide)
+                            </button>
+                        </div>
+
+                        <!-- Manual Update Guide Modal -->
+                        <div id="manualUpdateModal" class="modal">
+                            <div class="modal-content" style="max-width: 800px;">
+                                <span class="close" onclick="closeManualUpdateGuide()">&times;</span>
+                                <h2>ขั้นตอนการอัปเดตข้อมูล DPD (Manual Workflow)</h2>
+                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
+                                    <p>หากต้องทำการอัปเดตด้วยตนเอง (กรณีระบบอัตโนมัติไม่ทำงาน หรือต้องการตรวจสอบทุกขั้นตอน) ให้ทำตามลำดับดังนี้:</p>
+                                    
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. ฝั่ง PaliDict (เตรียมไฟล์ข้อมูล)</h3>
+                                    <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-theonlyone</code> เพื่อสร้างไฟล์ทั้ง 4:</p>
+                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                        # 1. ดาวน์โหลด DPD ล่าสุดและสร้างไฟล์พื้นฐาน (vocab-dpd.js, vocab-roots-dpd.js)<br>
+                                        python scripts/update_dpd_data.py<br><br>
+                                        # 2. สร้างไฟล์พจนานุกรมศัพท์ทั่วไป (vocab-general-dpd.js)<br>
+                                        python extract_dpd_vocab.py<br><br>
+                                        # 3. สร้างไฟล์ศัพท์ที่แตกจากธาตุ (vocab-roots-dpd-derived.js)<br>
+                                        python generate_sync_files.py
+                                    </div>
+                                    <p><strong>ผลลัพธ์:</strong> จะได้ไฟล์ใหม่ 4 ไฟล์ในโฟลเดอร์ <code>data/raw/</code> พร้อมส่งต่อ</p>
+
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. ฝั่ง Pali Dhatu App (นำเข้าข้อมูล)</h3>
+                                    <p>นำไฟล์ที่ได้จากขั้นตอนที่ 1 ไปดำเนินการต่อในโปรเจกต์ <code>pali-dhatu-app</code>:</p>
+                                    <ol>
+                                        <li>คัดลอกไฟล์ทั้ง 4 ไปไว้ที่โฟลเดอร์ <code>src/data/raw/</code> ของโปรเจกต์แอป</li>
+                                        <li>รันคำสั่งเพื่ออัปโหลดข้อมูลขึ้น Firestore (ต้องมีไฟล์ <code>service-account-key.json</code>):</li>
+                                    </ol>
+                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                        # อัปโหลดข้อมูลธาตุ (Roots)<br>
+                                        node scripts/upload_dpd_roots_firestore_for_app.js<br><br>
+                                        # อัปโหลดข้อมูลศัพท์ทั่วไป (Vocab)<br>
+                                        node scripts/upload_dpd_vocab_firestore_for_app.js
+                                    </div>
+                                    <p style="color: red; font-size: 0.9em; margin-top: 10px;">* หมายเหตุ: ตรวจสอบให้แน่ใจว่า Key ของธาตุในไฟล์ Derived ตรงกับไฟล์ Roots ก่อนอัปโหลด</p>
+                                </div>
+                                <div style="margin-top: 20px; text-align: right;">
+                                    <button class="btn btn-secondary" onclick="closeManualUpdateGuide()">ปิด</button>
+                                </div>
+                            </div>
                         </div>
                         
                         <div style="margin-top:10px; font-size:0.9rem; color:#666;">
@@ -1572,6 +1615,14 @@
                 btn.disabled = false;
                 btn.textContent = 'ตรวจสอบและอัปเดต DPD';
             }
+        }
+
+        function showManualUpdateGuide() {
+            document.getElementById('manualUpdateModal').style.display = 'block';
+        }
+
+        function closeManualUpdateGuide() {
+            document.getElementById('manualUpdateModal').style.display = 'none';
         }
 
         async function pingServer() {

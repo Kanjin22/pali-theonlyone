@@ -169,8 +169,8 @@ app.post('/api/dpd-update-report', async (req, res) => {
     return res.status(409).json({ ok: false, error: 'busy' });
   }
   isRunning = true;
-  const oldDPD = readJsonFromJs('data/vocab-dpd.js', 'const vocabDPD = ');
-  const oldRoots = readJsonFromJs('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
+  const oldDPD = readJsonFromJs('data/raw/vocab-dpd.js', 'const vocabDPD = ');
+  const oldRoots = readJsonFromJs('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
   const args = ['scripts/update_dpd_data.py'];
   const skip = req.body && req.body.skip === true;
   if (skip) args.push('--skip-download');
@@ -180,8 +180,8 @@ app.post('/api/dpd-update-report', async (req, res) => {
   py.stdout.on('data', d => (out += d.toString()));
   py.stderr.on('data', d => (err += d.toString()));
   py.on('close', code => {
-    const newDPD = readJsonFromJs('data/vocab-dpd.js', 'const vocabDPD = ');
-    const newRoots = readJsonFromJs('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
+    const newDPD = readJsonFromJs('data/raw/vocab-dpd.js', 'const vocabDPD = ');
+    const newRoots = readJsonFromJs('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
     const dpdDiff = computeDPDDiff(oldDPD || {}, newDPD || {});
     const rootsDiff = computeRootsDiff(oldRoots || {}, newRoots || {});
     
@@ -222,8 +222,8 @@ app.get('/api/dpd-stats', (_req, res) => {
     return { mtime: s.mtime, size: s.size, count };
   };
   res.json({
-    vocab: getStats('data/vocab-dpd.js', 'const vocabDPD = '),
-    roots: getStats('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ')
+    vocab: getStats('data/raw/vocab-dpd.js', 'const vocabDPD = '),
+    roots: getStats('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ')
   });
 });
 

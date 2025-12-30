@@ -16,9 +16,10 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // 2. Load DPD Data
-const dataPath = path.join(__dirname, '../data/vocab-roots-dpd.js');
+const dataPath = path.join(__dirname, '../data/raw/vocab-roots-dpd.js');
 if (!fs.existsSync(dataPath)) {
     console.error(`Data file not found at ${dataPath}`);
+    console.error("Please ensure vocab-roots-dpd.js is in data/raw/");
     process.exit(1);
 }
 

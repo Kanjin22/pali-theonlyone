@@ -3,9 +3,10 @@ const path = require('path');
 const admin = require('firebase-admin');
 
 // 1. Load Data
-const dataPath = path.join(__dirname, '../data/vocab-roots-dpd.js');
+const dataPath = path.join(__dirname, '../data/raw/vocab-roots-dpd.js');
 if (!fs.existsSync(dataPath)) {
     console.error("Data file not found:", dataPath);
+    console.error("Please ensure vocab-roots-dpd.js is in data/raw/");
     process.exit(1);
 }
 

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/vocab-roots-dpd.js');
+const dataPath = path.join(__dirname, '../data/raw/vocab-roots-dpd.js');
 if (!fs.existsSync(dataPath)) {
     console.error(`Data file not found at ${dataPath}`);
     process.exit(1);
