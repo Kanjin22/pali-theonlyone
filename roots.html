@@ -514,16 +514,15 @@
                         const baseRoot = normalizeRootThaiPali(item.root).toLowerCase();
                         textMatch = baseRoot === baseInput || item.root.toLowerCase() === query;
                     } else {
-                        // meaning mode: search across meanings and group text
-                        // direct root hit also allowed for convenience
-                        const rootHit = item.root.toLowerCase().includes(query);
-                        const entryHit = item.entries.some(entry => {
+                        // meaning mode: search ONLY across meanings
+                        textMatch = item.entries.some(entry => {
                             const matchPali = entry.meaning_pali && entry.meaning_pali.toLowerCase().includes(query);
                             const matchThai = entry.meaning_thai && entry.meaning_thai.toLowerCase().includes(query);
-                            const matchGroup = entry.group && entry.group.toLowerCase().includes(query);
-                            return matchPali || matchThai || matchGroup;
+                            // Fallback for generic meaning field if present
+                            const matchGeneric = entry.meaning && typeof entry.meaning === 'string' && entry.meaning.toLowerCase().includes(query);
+                            
+                            return matchPali || matchThai || matchGeneric;
                         });
-                        textMatch = rootHit || entryHit;
                     }
                 }
 
