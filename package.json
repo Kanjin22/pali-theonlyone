@@ -9,5 +9,6 @@
     "dpd:update:skip": "python scripts/update_dpd_data.py --skip-download",
     "dpd:sync": "node scripts/update_roots_firestore.js",
     "dpd:server": "node server.js"
+    ,"admin:grant": "node scripts/set_admin_claim.js"
   }
 }
