@@ -197,16 +197,16 @@ const PaliLookup = {
         if (dbs.newgen && dbs.newgen[key]) return { ...dbs.newgen[key], source: 'Thai New Gen', word: key };
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         
-        // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
+        // 2. Roman Dictionaries (Ordered: DPD, PTS, SC, Others)
         if (dbs.dpd || dbs.sc || dbs.pts || dbs.dppn || dbs.dhammika || dbs.dpdInflected) {
              let romanKey = key;
              if (/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
                  romanKey = PaliScript.thaiToRoman(key);
              }
              
-             if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
              if (dbs.dpd && dbs.dpd[romanKey]) return { details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key };
              if (dbs.pts && dbs.pts[romanKey]) return { source: 'pts', data: dbs.pts[romanKey], word: key };
+             if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
              
              // Others
              if (dbs.dppn && dbs.dppn[romanKey]) return { source: 'dppn', data: dbs.dppn[romanKey], word: key };

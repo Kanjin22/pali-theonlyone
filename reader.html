@@ -351,8 +351,8 @@
 
     async function fetchRootsData() {
         // Cache handling
-        const CACHE_KEY = 'dhatu_cache_v3'; 
-        const TIME_KEY = 'dhatu_cache_time_v3';
+        const CACHE_KEY = 'dhatu_cache_v4'; 
+        const TIME_KEY = 'dhatu_cache_time_v4';
         const cachedData = localStorage.getItem(CACHE_KEY);
         const cachedTime = localStorage.getItem(TIME_KEY);
         const NOW = new Date().getTime();
@@ -921,10 +921,10 @@
             `;
         }
 
-        // --- 2. Roman Dictionary Section ---
+        // Roman Dictionary Section
         const romanHeader = document.createElement('div');
         romanHeader.className = 'sec-title';
-        romanHeader.innerText = '📖 พจนานุกรมบาลี - โรมัน (SuttaCentral)';
+        romanHeader.innerText = '📖 พจนานุกรมบาลี - อังกฤษ (DPD/PTS)';
         romanHeader.style.marginTop = '15px';
         content.appendChild(romanHeader);
 
