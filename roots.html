@@ -356,8 +356,8 @@
             spinner.style.display = 'block';
             
             // Cache handling
-            const CACHE_KEY = 'dhatu_cache_v4'; 
-            const TIME_KEY = 'dhatu_cache_time_v4';
+            const CACHE_KEY = 'dhatu_cache_v5'; 
+            const TIME_KEY = 'dhatu_cache_time_v5';
             
             const cachedData = localStorage.getItem(CACHE_KEY);
             const cachedTime = localStorage.getItem(TIME_KEY);
@@ -541,7 +541,15 @@
                     };
                     // Default color if not matched (or partial match)
                     let headerColor = "#7f8c8d"; // Grey
-                    if (entry.group) {
+                    
+                    let isAneka = false;
+                    if (entry.group && (entry.group.includes(",") || entry.group.includes(" และ "))) {
+                        isAneka = true;
+                    }
+
+                    if (isAneka) {
+                         headerColor = "#607d8b"; // Blue Grey for Aneka Dhatu
+                    } else if (entry.group) {
                          // Simple substring match for flexibility
                          if (entry.group.includes("ภู")) headerColor = groupColors["ภู (อ)"];
                          else if (entry.group.includes("รุธ")) headerColor = groupColors["รุธ (อ-เอ)"];
