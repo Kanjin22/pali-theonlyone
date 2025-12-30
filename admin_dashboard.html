@@ -530,6 +530,17 @@
                     <div style="display:flex; gap:10px;">
                         <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
                             style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
+                        
+                        <div id="dhatuAuthSection" style="display:none; align-items:center; gap:5px;">
+                             <input type="email" id="dhatuEmail" placeholder="Email (Dhatu Admin)" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 150px;">
+                             <input type="password" id="dhatuPass" placeholder="Password" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 100px;">
+                             <button class="btn btn-success" onclick="loginDhatu()">Login</button>
+                        </div>
+                        <div id="dhatuUserSection" style="display:none; align-items:center; gap:5px;">
+                            <span id="dhatuUserEmail" style="font-size:0.8rem; color:green;"></span>
+                            <button class="btn btn-secondary btn-small" onclick="logoutDhatu()">Logout</button>
+                        </div>
+
                         <button class="btn btn-primary" onclick="openRootModal()">
                             <i class="fa-solid fa-plus"></i> เพิ่มธาตุ
                         </button>
@@ -1165,6 +1176,7 @@
     </div>
 
     <script>
+        // 1. Main App Config (palitest-generator) - For Members, Enrollments, Classes
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
             authDomain: "palitest-generator.firebaseapp.com",
@@ -1174,9 +1186,31 @@
             storageBucket: "palitest-generator.firebasestorage.app",
             measurementId: "G-RKML6H6EX7"
         };
-        firebase.initializeApp(window.firebaseConfig);
+        firebase.initializeApp(window.firebaseConfig); // Default App
         const auth = firebase.auth();
         const db = firebase.firestore();
+
+        // 2. Dhatu App Config (pali-dhatu-app) - For Roots
+        const dhatuConfig = {
+            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
+            authDomain: "pali-dhatu-app.firebaseapp.com",
+            projectId: "pali-dhatu-app",
+            storageBucket: "pali-dhatu-app.firebasestorage.app",
+            messagingSenderId: "188304412939",
+            appId: "1:188304412939:web:22a6bd82480f40a909120e"
+        };
+        
+        let dhatuApp;
+        let dhatuDb;
+        let dhatuAuth;
+
+        try {
+            dhatuApp = firebase.initializeApp(dhatuConfig, "dhatuApp");
+            dhatuDb = dhatuApp.firestore();
+            dhatuAuth = dhatuApp.auth();
+        } catch (e) {
+            console.error("Error initializing Dhatu App:", e);
+        }
 
         // Level Names Mapping
         const LEVEL_NAMES = {
@@ -1282,16 +1316,55 @@
         let lastRootSnapshot = null;
         let isRootsLoading = false;
 
+        // Dhatu Auth Listener
+        if (dhatuAuth) {
+            dhatuAuth.onAuthStateChanged(user => {
+                if (user) {
+                    document.getElementById('dhatuAuthSection').style.display = 'none';
+                    document.getElementById('dhatuUserSection').style.display = 'flex';
+                    document.getElementById('dhatuUserEmail').textContent = user.email;
+                    // If roots tab active, reload
+                    if (!document.getElementById('tab-roots').classList.contains('hidden')) {
+                        loadRoots();
+                    }
+                } else {
+                    document.getElementById('dhatuAuthSection').style.display = 'flex';
+                    document.getElementById('dhatuUserSection').style.display = 'none';
+                }
+            });
+        }
+
+        function loginDhatu() {
+            const email = document.getElementById('dhatuEmail').value;
+            const pass = document.getElementById('dhatuPass').value;
+            if(!email || !pass) return alert('Please enter email and password');
+            
+            dhatuAuth.signInWithEmailAndPassword(email, pass)
+                .then(() => alert('Logged in to Dhatu App'))
+                .catch(e => alert('Login failed: ' + e.message));
+        }
+
+        function logoutDhatu() {
+            dhatuAuth.signOut();
+        }
+
         async function loadRoots(isLoadMore = false) {
              if (isRootsLoading) return;
              isRootsLoading = true;
              
+             // Check which DB to use
+             if (!dhatuDb) {
+                 alert("Dhatu Database not initialized.");
+                 isRootsLoading = false;
+                 return;
+             }
+
              const tbody = document.getElementById('rootList');
              const loadMoreBtn = document.getElementById('loadMoreRootsBtn');
              const searchVal = document.getElementById('rootSearch').value.trim();
 
              if (!isLoadMore) {
-                 tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+                 tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลดข้อมูลจาก Pali Dhatu App...</td></tr>';
                  lastRootSnapshot = null;
                  loadMoreBtn.classList.add('hidden');
              } else {
@@ -1299,7 +1372,8 @@
              }
 
              try {
-                 let query = db.collection('dhatu');
+                 // Use dhatuDb instead of db
+                 let query = dhatuDb.collection('dhatu');
                  
                  if (searchVal) {
                      // Basic prefix search on dhatu_word
@@ -1319,7 +1393,7 @@
                  if (!isLoadMore) {
                      tbody.innerHTML = '';
                      if (snapshot.empty) {
-                         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบข้อมูล</td></tr>';
+                         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบข้อมูล (อาจต้อง Login หากสิทธิ์ไม่เพียงพอ)</td></tr>';
                          isRootsLoading = false;
                          return;
                      }
@@ -1351,7 +1425,7 @@
 
              } catch (e) {
                  console.error(e);
-                 if (!isLoadMore) tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">Error: ${e.message}</td></tr>`;
+                 if (!isLoadMore) tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">Error: ${e.message}<br><small>กรุณา Login เข้า Pali Dhatu App ด้านบน</small></td></tr>`;
              } finally {
                  isRootsLoading = false;
              }
@@ -1367,6 +1441,11 @@
         });
 
         function openRootModal(rootId = null) {
+            if (!dhatuDb) {
+                alert("Dhatu Database not initialized. Please refresh or check connection.");
+                return;
+            }
+
             const modal = document.getElementById('rootModal');
             const form = document.getElementById('rootForm');
             const title = document.getElementById('rootModalTitle');
@@ -1377,7 +1456,7 @@
             if (rootId) {
                 title.textContent = 'แก้ไขธาตุ';
                 // Fetch data
-                db.collection('dhatu').doc(rootId).get().then(doc => {
+                dhatuDb.collection('dhatu').doc(rootId).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
                         document.getElementById('rootId').value = doc.id;
@@ -1389,6 +1468,8 @@
                         document.getElementById('rootExamples').value = data.udaharana || '';
                         modal.style.display = 'block';
                     }
+                }).catch(e => {
+                    alert('Error fetching root: ' + e.message);
                 });
             } else {
                 title.textContent = 'เพิ่มธาตุใหม่';
@@ -1402,6 +1483,12 @@
 
         async function saveRoot(event) {
             event.preventDefault();
+            
+            if (!dhatuDb) {
+                alert("Dhatu Database not initialized.");
+                return;
+            }
+            
             const id = document.getElementById('rootId').value;
             const data = {
                 dhatu_word: document.getElementById('rootWord').value,
@@ -1415,13 +1502,13 @@
 
             try {
                 if (id) {
-                    await db.collection('dhatu').doc(id).update(data);
+                    await dhatuDb.collection('dhatu').doc(id).update(data);
                     alert('อัปเดตเรียบร้อย');
                 } else {
                     // Simple fetch max for ordering if needed, or just add.
                     // Assuming anukrom_dhatu is not strictly required for now or handled elsewhere.
                     // If we want to maintain order, we might need to query max.
-                    const maxSnap = await db.collection('dhatu').orderBy('anukrom_dhatu', 'desc').limit(1).get();
+                    const maxSnap = await dhatuDb.collection('dhatu').orderBy('anukrom_dhatu', 'desc').limit(1).get();
                     let nextId = 1;
                     if (!maxSnap.empty) {
                         nextId = (maxSnap.docs[0].data().anukrom_dhatu || 0) + 1;
@@ -1429,23 +1516,29 @@
                     data.anukrom_dhatu = nextId;
 
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                    await db.collection('dhatu').add(data);
+                    await dhatuDb.collection('dhatu').add(data);
                     alert('บันทึกเรียบร้อย');
                 }
                 closeRootModal();
                 loadRoots();
             } catch (e) {
-                alert('Error: ' + e.message);
+                alert('Error: ' + e.message + '\n(คุณอาจต้อง Login เข้า Pali Dhatu App ก่อน)');
             }
         }
         
         async function deleteRoot(id, word) {
             if (!confirm(`ต้องการลบธาตุ "${word}" ใช่หรือไม่?`)) return;
+            
+            if (!dhatuDb) {
+                alert("Dhatu Database not initialized.");
+                return;
+            }
+
             try {
-                await db.collection('dhatu').doc(id).delete();
+                await dhatuDb.collection('dhatu').doc(id).delete();
                 loadRoots();
             } catch (e) {
-                alert('Error: ' + e.message);
+                alert('Error: ' + e.message + '\n(คุณอาจต้อง Login เข้า Pali Dhatu App ก่อน)');
             }
         }
 
