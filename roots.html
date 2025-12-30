@@ -519,10 +519,22 @@
                 let textMatch = true;
                 if (query) {
                     if (mode === 'root') {
-                        // Exact match (with flexibility): treat trailing 'ุ' and 'ฺ' as equivalent
-                        const baseInput = normalizeRootThaiPali(query);
-                        const baseRoot = normalizeRootThaiPali(item.root).toLowerCase();
-                        textMatch = baseRoot === baseInput || item.root.toLowerCase() === query;
+                        // Logic Update:
+                        // 1. If query ends with 'ฺ' (Phinthu), treat as Wildcard (Consonant Skeleton Prefix).
+                        // 2. Otherwise, treat as Strict Exact Match.
+                        
+                        const isWildcard = query.endsWith('ฺ');
+                        
+                        if (isWildcard) {
+                            const cleanQuery = query.replace(/ฺ$/, '');
+                            const querySkel = getConsonantSkeleton(cleanQuery);
+                            const rootSkel = getConsonantSkeleton(item.root);
+                            // Prevent empty match
+                            textMatch = querySkel.length > 0 && rootSkel.startsWith(querySkel);
+                        } else {
+                            // Exact match (Strict)
+                            textMatch = item.root === query;
+                        }
                     } else {
                         // meaning mode: search ONLY across meanings
                         textMatch = item.entries.some(entry => {
@@ -687,6 +699,13 @@
             if (typeof text !== 'string') return String(text);
             const regex = new RegExp(`(${query})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Helper to extract consonant skeleton for wildcard search
+        function getConsonantSkeleton(text) {
+            if (!text) return '';
+            // Remove vowels (\u0E30-\u0E39, \u0E40-\u0E44) and marks (\u0E3A, \u0E47-\u0E4E)
+            return String(text).replace(/[\u0E30-\u0E3A\u0E40-\u0E4E]/g, '');
         }
 
         // Normalize Thai-Pali root spelling for strict matching with flexibility
