@@ -1,8274 +1,11444 @@
-const vocabRootsDPD = {
-  "√akkh": [
-    {
-      "root": "√akkh",
-      "meaning_pali": "see",
-      "meaning_thai": "",
-      "example": "akkhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√agg": [
-    {
-      "root": "√agg",
-      "meaning_pali": "move crookedly",
-      "meaning_thai": "",
-      "example": "aggi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aggh": [
-    {
-      "root": "√aggh",
-      "meaning_pali": "be worth",
-      "meaning_thai": "",
-      "example": "agghati, agghīyati, aggha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aṅg": [
-    {
-      "root": "√aṅg",
-      "meaning_pali": "walk",
-      "meaning_thai": "",
-      "example": "aṅgaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√acc 1": [
-    {
-      "root": "√acc 1",
-      "meaning_pali": "shine, praise",
-      "meaning_thai": "",
-      "example": "accha, acci, accī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√acc 2": [
-    {
-      "root": "√acc 2",
-      "meaning_pali": "worship",
-      "meaning_thai": "",
-      "example": "acceti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aj": [
-    {
-      "root": "√aj",
-      "meaning_pali": "go, drive",
-      "meaning_thai": "",
-      "example": "samajja, pājana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√añc": [
-    {
-      "root": "√añc",
-      "meaning_pali": "bend",
-      "meaning_thai": "",
-      "example": "aṅka, aṅga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√añch": [
-    {
-      "root": "√añch",
-      "meaning_pali": "extend, draw along",
-      "meaning_thai": "",
-      "example": "añchanti, āviñchati, aṅka, pallaṅka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√añj 1": [
-    {
-      "root": "√añj 1",
-      "meaning_pali": "distinguish",
-      "meaning_thai": "",
-      "example": "vyañjayati, byañjana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√añj 2": [
-    {
-      "root": "√añj 2",
-      "meaning_pali": "smear, anoint",
-      "meaning_thai": "",
-      "example": "anjati, anaṅgaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√añj 3": [
-    {
-      "root": "√añj 3",
-      "meaning_pali": "pay respect",
-      "meaning_thai": "",
-      "example": "añjali",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aṭ": [
-    {
-      "root": "√aṭ",
-      "meaning_pali": "roam, wander",
-      "meaning_thai": "",
-      "example": "aṭana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aḍḍ": [
-    {
-      "root": "√aḍḍ",
-      "meaning_pali": "judge",
-      "meaning_thai": "",
-      "example": "aḍḍa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aṇ": [
-    {
-      "root": "√aṇ",
-      "meaning_pali": "recite",
-      "meaning_thai": "",
-      "example": "aṇati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√atth": [
-    {
-      "root": "√atth",
-      "meaning_pali": "wish for",
-      "meaning_thai": "",
-      "example": "abhipatthayati, attha, atthika",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ad": [
-    {
-      "root": "√ad",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "adati, anna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√add": [
-    {
-      "root": "√add",
-      "meaning_pali": "afflict",
-      "meaning_thai": "",
-      "example": "addita, aṭṭita, aṭṭa, aṭṭīyamāna",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√an": [
-    {
-      "root": "√an",
-      "meaning_pali": "breathe, blow",
-      "meaning_thai": "",
-      "example": "udāneti, āna, pāṇa, āṇāpāṇa, anila, udāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ap": [
-    {
-      "root": "√ap",
-      "meaning_pali": "reach, attain",
-      "meaning_thai": "",
-      "example": "pāpuṇāti, pattuṃ, patta, sotāpatti",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ar": [
-    {
-      "root": "√ar",
-      "meaning_pali": "move, attain",
-      "meaning_thai": "",
-      "example": "appeti, attha, appanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√arah": [
-    {
-      "root": "√arah",
-      "meaning_pali": "deserve, be worthy",
-      "meaning_thai": "",
-      "example": "arahati, araha, arahanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√as 1": [
-    {
-      "root": "√as 1",
-      "meaning_pali": "be",
-      "meaning_thai": "",
-      "example": "atthi, asmi, santa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√as 2": [
-    {
-      "root": "√as 2",
-      "meaning_pali": "throw, hurl",
-      "meaning_thai": "",
-      "example": "pāsa, asana",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√as 3": [
-    {
-      "root": "√as 3",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "asati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√as 4": [
-    {
-      "root": "√as 4",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "asnāti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ah": [
-    {
-      "root": "√ah",
-      "meaning_pali": "speak",
-      "meaning_thai": "",
-      "example": "āha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√aṃs": [
-    {
-      "root": "√aṃs",
-      "meaning_pali": "divide, distribute",
-      "meaning_thai": "",
-      "example": "aṃsa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√āgam": [
-    {
-      "root": "√āgam",
-      "meaning_pali": "wait",
-      "meaning_thai": "",
-      "example": "āgameti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ādā": [
-    {
-      "root": "√ādā",
-      "meaning_pali": "take, seize",
-      "meaning_thai": "",
-      "example": "ādiyati, samādapeti, anupādiya, samādāna, upādāna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√āp": [
-    {
-      "root": "√āp",
-      "meaning_pali": "be wet",
-      "meaning_thai": "",
-      "example": "āpo, dīpa",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ās": [
-    {
-      "root": "√ās",
-      "meaning_pali": "sit",
-      "meaning_thai": "",
-      "example": "payirupāsati, acchati, āsana, upāsaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√i 1": [
-    {
-      "root": "√i 1",
-      "meaning_pali": "come, go",
-      "meaning_thai": "",
-      "example": "eti, ehi, vīta, paccaya, accayena, abhisamecca",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√i 2": [
-    {
-      "root": "√i 2",
-      "meaning_pali": "study, recite",
-      "meaning_thai": "",
-      "example": "ajjhāyaka, ajjhayana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ikkh": [
-    {
-      "root": "√ikkh",
-      "meaning_pali": "see, mark",
-      "meaning_thai": "",
-      "example": "paccavekkhati, anupekkhati, upekkhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√iñj": [
-    {
-      "root": "√iñj",
-      "meaning_pali": "move, shake",
-      "meaning_thai": "",
-      "example": "samiñjati, āviñjati, samiñjita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√idh": [
-    {
-      "root": "√idh",
-      "meaning_pali": "succeed, accomplish",
-      "meaning_thai": "",
-      "example": "samijjhati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√indh": [
-    {
-      "root": "√indh",
-      "meaning_pali": "fire, burn",
-      "meaning_thai": "",
-      "example": "iṭṭhakā",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√is": [
-    {
-      "root": "√is",
-      "meaning_pali": "wish for",
-      "meaning_thai": "",
-      "example": "icchati, icchā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√iss": [
-    {
-      "root": "√iss",
-      "meaning_pali": "be envious, be jealous",
-      "meaning_thai": "",
-      "example": "issā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√īr 1": [
-    {
-      "root": "√īr 1",
-      "meaning_pali": "move, shake",
-      "meaning_thai": "",
-      "example": "īrati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√īr 2": [
-    {
-      "root": "√īr 2",
-      "meaning_pali": "speak",
-      "meaning_thai": "",
-      "example": "īreti, udīraṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√īs": [
-    {
-      "root": "√īs",
-      "meaning_pali": "have power",
-      "meaning_thai": "",
-      "example": "issara",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√īh": [
-    {
-      "root": "√īh",
-      "meaning_pali": "strive",
-      "meaning_thai": "",
-      "example": "īhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√uc": [
-    {
-      "root": "√uc",
-      "meaning_pali": "comfort",
-      "meaning_thai": "",
-      "example": "oka",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√uj": [
-    {
-      "root": "√uj",
-      "meaning_pali": "be straight",
-      "meaning_thai": "",
-      "example": "uju",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ujjh": [
-    {
-      "root": "√ujjh",
-      "meaning_pali": "leave, discard",
-      "meaning_thai": "",
-      "example": "ujjhati, ujjhita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√uñch": [
-    {
-      "root": "√uñch",
-      "meaning_pali": "glean",
-      "meaning_thai": "",
-      "example": "uñchati, uñcha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ud": [
-    {
-      "root": "√ud",
-      "meaning_pali": "be wet",
-      "meaning_thai": "",
-      "example": "samudda, udaka, odana",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√udrabh": [
-    {
-      "root": "√udrabh",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "udrabheyyuṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√us": [
-    {
-      "root": "√us",
-      "meaning_pali": "be hot",
-      "meaning_thai": "",
-      "example": "uṇha",
-      "group": 6,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√usūy": [
-    {
-      "root": "√usūy",
-      "meaning_pali": "be irritated, be jealous",
-      "meaning_thai": "",
-      "example": "usūyati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ej": [
-    {
-      "root": "√ej",
-      "meaning_pali": "move, shake",
-      "meaning_thai": "",
-      "example": "aneja, ejati, ejā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√edh": [
-    {
-      "root": "√edh",
-      "meaning_pali": "flourish, prosper",
-      "meaning_thai": "",
-      "example": "edhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√es": [
-    {
-      "root": "√es",
-      "meaning_pali": "seek, search",
-      "meaning_thai": "",
-      "example": "esati, esinī, anvesaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√op": [
-    {
-      "root": "√op",
-      "meaning_pali": "placing",
-      "meaning_thai": "",
-      "example": "opiya, opeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṅkh 1": [
-    {
-      "root": "√kaṅkh 1",
-      "meaning_pali": "wish for",
-      "meaning_thai": "",
-      "example": "abhikaṅkhati, ākaṅkamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṅkh 2": [
-    {
-      "root": "√kaṅkh 2",
-      "meaning_pali": "doubt",
-      "meaning_thai": "",
-      "example": "kaṅkhati, kaṅkhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kac": [
-    {
-      "root": "√kac",
-      "meaning_pali": "shine, bind",
-      "meaning_thai": "",
-      "example": "ukkācita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kañc 1": [
-    {
-      "root": "√kañc 1",
-      "meaning_pali": "bind, cover",
-      "meaning_thai": "",
-      "example": "kañcuka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kañc 2": [
-    {
-      "root": "√kañc 2",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "kañcana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṭh 1": [
-    {
-      "root": "√kaṭh 1",
-      "meaning_pali": "live in distress",
-      "meaning_thai": "",
-      "example": "ukkaṇṭhati",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṭh 2": [
-    {
-      "root": "√kaṭh 2",
-      "meaning_pali": "boil, burn",
-      "meaning_thai": "",
-      "example": "kaṭhita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaḍḍh": [
-    {
-      "root": "√kaḍḍh",
-      "meaning_pali": "drag, plough",
-      "meaning_thai": "",
-      "example": "upakaḍḍhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṇ": [
-    {
-      "root": "√kaṇ",
-      "meaning_pali": "make sound",
-      "meaning_thai": "",
-      "example": "kaṇṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kaṇḍ": [
-    {
-      "root": "√kaṇḍ",
-      "meaning_pali": "break, pierce",
-      "meaning_thai": "",
-      "example": "kaṇḍa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kat": [
-    {
-      "root": "√kat",
-      "meaning_pali": "cut",
-      "meaning_thai": "",
-      "example": "kantati, kaṇṭaka",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√katth": [
-    {
-      "root": "√katth",
-      "meaning_pali": "boast",
-      "meaning_thai": "",
-      "example": "akatthamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kath": [
-    {
-      "root": "√kath",
-      "meaning_pali": "speak, narrate",
-      "meaning_thai": "",
-      "example": "katheti, kathayati, kathā, kacchamāna",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kan": [
-    {
-      "root": "√kan",
-      "meaning_pali": "shine, like",
-      "meaning_thai": "",
-      "example": "kaññā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kand": [
-    {
-      "root": "√kand",
-      "meaning_pali": "wail, cry out",
-      "meaning_thai": "",
-      "example": "kandati, kandana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kap": [
-    {
-      "root": "√kap",
-      "meaning_pali": "take pity",
-      "meaning_thai": "",
-      "example": "kapaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kapp 1": [
-    {
-      "root": "√kapp 1",
-      "meaning_pali": "be fit, be suitable",
-      "meaning_thai": "",
-      "example": "kappati, kappa, kappiya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kapp 2": [
-    {
-      "root": "√kapp 2",
-      "meaning_pali": "think",
-      "meaning_thai": "",
-      "example": "saṅkappa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kam 1": [
-    {
-      "root": "√kam 1",
-      "meaning_pali": "go",
-      "meaning_thai": "",
-      "example": "pakkamati, upasaṅkamitvā, caṅkamati, kanta, caṅkama",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kam 2": [
-    {
-      "root": "√kam 2",
-      "meaning_pali": "desire",
-      "meaning_thai": "",
-      "example": "kāmeti, kāma, kanta",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kamp": [
-    {
-      "root": "√kamp",
-      "meaning_pali": "shake, tremble",
-      "meaning_thai": "",
-      "example": "kampati, kampita, okampetvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kar": [
-    {
-      "root": "√kar",
-      "meaning_pali": "do, make",
-      "meaning_thai": "",
-      "example": "karoti, kara, kamma",
-      "group": 7,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kal 1": [
-    {
-      "root": "√kal 1",
-      "meaning_pali": "spend time",
-      "meaning_thai": "",
-      "example": "kāla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kal 2": [
-    {
-      "root": "√kal 2",
-      "meaning_pali": "accomplish",
-      "meaning_thai": "",
-      "example": "kalla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kal 3": [
-    {
-      "root": "√kal 3",
-      "meaning_pali": "calculate, add",
-      "meaning_thai": "",
-      "example": "kalā, sakala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kalah": [
-    {
-      "root": "√kalah",
-      "meaning_pali": "argue",
-      "meaning_thai": "",
-      "example": "kalaha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kas 1": [
-    {
-      "root": "√kas 1",
-      "meaning_pali": "drag, draw",
-      "meaning_thai": "",
-      "example": "kasati, kasanta, kaṭṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kas 2": [
-    {
-      "root": "√kas 2",
-      "meaning_pali": "hurt, trouble",
-      "meaning_thai": "",
-      "example": "kasira",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kass": [
-    {
-      "root": "√kass",
-      "meaning_pali": "drag, draw along",
-      "meaning_thai": "",
-      "example": "kassati, kassaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kā": [
-    {
-      "root": "√kā",
-      "meaning_pali": "makes sound",
-      "meaning_thai": "",
-      "example": "kāyati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kās 1": [
-    {
-      "root": "√kās 1",
-      "meaning_pali": "shine, be visible",
-      "meaning_thai": "",
-      "example": "pakāsati, pakāseti, pakāsita, ākāsa, okāsa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kās 2": [
-    {
-      "root": "√kās 2",
-      "meaning_pali": "cough",
-      "meaning_thai": "",
-      "example": "ukkāsati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kit 1": [
-    {
-      "root": "√kit 1",
-      "meaning_pali": "heal, cure",
-      "meaning_thai": "",
-      "example": "tikicchati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kit 2": [
-    {
-      "root": "√kit 2",
-      "meaning_pali": "live",
-      "meaning_thai": "",
-      "example": "ketati, niketa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kit 3": [
-    {
-      "root": "√kit 3",
-      "meaning_pali": "know, doubt",
-      "meaning_thai": "",
-      "example": "sanketa, vicikicchā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kitt": [
-    {
-      "root": "√kitt",
-      "meaning_pali": "make known",
-      "meaning_thai": "",
-      "example": "kitteti, kitti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kir": [
-    {
-      "root": "√kir",
-      "meaning_pali": "scatter, sprinkle",
-      "meaning_thai": "",
-      "example": "kirati, abhippakirati, ākiṇṇa ākiritvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kilam": [
-    {
-      "root": "√kilam",
-      "meaning_pali": "be weary",
-      "meaning_thai": "",
-      "example": "kilamati, kilanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kilid": [
-    {
-      "root": "√kilid",
-      "meaning_pali": "be wet",
-      "meaning_thai": "",
-      "example": "kilinna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kilis 1": [
-    {
-      "root": "√kilis 1",
-      "meaning_pali": "be dirty, be molested",
-      "meaning_thai": "",
-      "example": "kilissati, kilesa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kilis 2": [
-    {
-      "root": "√kilis 2",
-      "meaning_pali": "trouble",
-      "meaning_thai": "",
-      "example": "kilisnāti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kis": [
-    {
-      "root": "√kis",
-      "meaning_pali": "be thin",
-      "meaning_thai": "",
-      "example": "kisa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kī": [
-    {
-      "root": "√kī",
-      "meaning_pali": "buy",
-      "meaning_thai": "",
-      "example": "kiṇāti, kaya, kīta, kayavikkaya",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kīḷ": [
-    {
-      "root": "√kīḷ",
-      "meaning_pali": "play",
-      "meaning_thai": "",
-      "example": "kīḷati, kīḷāpeti, kīḷā, kīḷanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ku": [
-    {
-      "root": "√ku",
-      "meaning_pali": "sing, sound",
-      "meaning_thai": "",
-      "example": "kavi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuc": [
-    {
-      "root": "√kuc",
-      "meaning_pali": "contract",
-      "meaning_thai": "",
-      "example": "saṅkoceti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kucch": [
-    {
-      "root": "√kucch",
-      "meaning_pali": "revile",
-      "meaning_thai": "",
-      "example": "kucchita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kujj": [
-    {
-      "root": "√kujj",
-      "meaning_pali": "turn",
-      "meaning_thai": "",
-      "example": "ukkujjeti, nikkujjita, nikkujjitvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuñc": [
-    {
-      "root": "√kuñc",
-      "meaning_pali": "be crooked, be bent",
-      "meaning_thai": "",
-      "example": "kuñcati, kuṇḍala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṭ 1": [
-    {
-      "root": "√kuṭ 1",
-      "meaning_pali": "be crooked, be bent",
-      "meaning_thai": "",
-      "example": "paṭikuṭati, kūṭa, kuṭila, ukkuṭikaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṭ 2": [
-    {
-      "root": "√kuṭ 2",
-      "meaning_pali": "knock, beat",
-      "meaning_thai": "",
-      "example": "ākoṭeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṭ 3": [
-    {
-      "root": "√kuṭ 3",
-      "meaning_pali": "cut",
-      "meaning_thai": "",
-      "example": "koṭayati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṭṭ": [
-    {
-      "root": "√kuṭṭ",
-      "meaning_pali": "smash, powder",
-      "meaning_thai": "",
-      "example": "koṭṭeti, koṭṭana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṇ": [
-    {
-      "root": "√kuṇ",
-      "meaning_pali": "be crooked, be bent",
-      "meaning_thai": "",
-      "example": "kuṇī",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṇṭh": [
-    {
-      "root": "√kuṇṭh",
-      "meaning_pali": "be blunt, be lame",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√kuṇṭh<sup>･</sup>1 bhūvādigaṇa + a (be blunt, be lame)</td></tr><tr><th>Base:</th><td>kuṇṭhe (caus)</td></tr><tr><th>Dhātupātha:</th><td>-</td></tr><tr><th>Dhātumañjūsa:</th><td>-</td></tr><tr><th>Saddanīti:</th><td>-</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√kuṇṭh 1 (dull)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td>-</td></tr><tr><th>Notes:</th><td>Not found in classical Pāḷi grammars. A denominative root from <i>kuṇṭha</i></td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuṇḍ": [
-    {
-      "root": "√kuṇḍ",
-      "meaning_pali": "bend, mutilate",
-      "meaning_thai": "",
-      "example": "kuṇḍala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuth": [
-    {
-      "root": "√kuth",
-      "meaning_pali": "boil, burn",
-      "meaning_thai": "",
-      "example": "pakuthita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kudh": [
-    {
-      "root": "√kudh",
-      "meaning_pali": "be angry",
-      "meaning_thai": "",
-      "example": "kujjhati, kodha, kudha, kuddha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kunth": [
-    {
-      "root": "√kunth",
-      "meaning_pali": "hurt, cause pain",
-      "meaning_thai": "",
-      "example": "kuntha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kup": [
-    {
-      "root": "√kup",
-      "meaning_pali": "shake, be angry",
-      "meaning_thai": "",
-      "example": "kuppati, akuppa, pakopa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kumār": [
-    {
-      "root": "√kumār",
-      "meaning_pali": "play",
-      "meaning_thai": "",
-      "example": "kumāra, kumārī",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kur": [
-    {
-      "root": "√kur",
-      "meaning_pali": "sound",
-      "meaning_thai": "",
-      "example": "kurara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kul": [
-    {
-      "root": "√kul",
-      "meaning_pali": "be close",
-      "meaning_thai": "",
-      "example": "kula",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kus 1": [
-    {
-      "root": "√kus 1",
-      "meaning_pali": "call, insult",
-      "meaning_thai": "",
-      "example": "akkosati, pakkositvā, pakkosāpetvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kus 2": [
-    {
-      "root": "√kus 2",
-      "meaning_pali": "fill, enfold",
-      "meaning_thai": "",
-      "example": "koṭṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kus 3": [
-    {
-      "root": "√kus 3",
-      "meaning_pali": "cut, tear",
-      "meaning_thai": "",
-      "example": "kuṭṭha kuṭṭhī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kuh": [
-    {
-      "root": "√kuh",
-      "meaning_pali": "deceive",
-      "meaning_thai": "",
-      "example": "kuheti, kuhaka",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kūj": [
-    {
-      "root": "√kūj",
-      "meaning_pali": "make sound",
-      "meaning_thai": "",
-      "example": "vikūjati, vikūjanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kūl": [
-    {
-      "root": "√kūl",
-      "meaning_pali": "obstruct, embank",
-      "meaning_thai": "",
-      "example": "kūla, paṭikūla, ukkūla",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kūḷ": [
-    {
-      "root": "√kūḷ",
-      "meaning_pali": "burn",
-      "meaning_thai": "",
-      "example": "upakūlita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kel": [
-    {
-      "root": "√kel",
-      "meaning_pali": "care, cherish",
-      "meaning_thai": "",
-      "example": "kelāyana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khac": [
-    {
-      "root": "√khac",
-      "meaning_pali": "adorn, inlay",
-      "meaning_thai": "",
-      "example": "khacita, khacitvā, khacetvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khañj": [
-    {
-      "root": "√khañj",
-      "meaning_pali": "limp",
-      "meaning_thai": "",
-      "example": "khañjati, khañja",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khaṇ": [
-    {
-      "root": "√khaṇ",
-      "meaning_pali": "dig",
-      "meaning_thai": "",
-      "example": "khanati, khaṇati, khata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khaṇḍ": [
-    {
-      "root": "√khaṇḍ",
-      "meaning_pali": "break",
-      "meaning_thai": "",
-      "example": "khandeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khan": [
-    {
-      "root": "√khan",
-      "meaning_pali": "hurt, break",
-      "meaning_thai": "",
-      "example": "khata, akkhata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khand": [
-    {
-      "root": "√khand",
-      "meaning_pali": "jump",
-      "meaning_thai": "",
-      "example": "pakkhandati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kham": [
-    {
-      "root": "√kham",
-      "meaning_pali": "tolerate, endure",
-      "meaning_thai": "",
-      "example": "khamati, khanti, khama, khamita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khambh": [
-    {
-      "root": "√khambh",
-      "meaning_pali": "prop, be stiff",
-      "meaning_thai": "",
-      "example": "vikkhambheti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khar": [
-    {
-      "root": "√khar",
-      "meaning_pali": "perish, break apart",
-      "meaning_thai": "",
-      "example": "akkhara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khal 1": [
-    {
-      "root": "√khal 1",
-      "meaning_pali": "stumble, make mistake",
-      "meaning_thai": "",
-      "example": "khalati, pakkhalitvā, khalita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khal 2": [
-    {
-      "root": "√khal 2",
-      "meaning_pali": "clean, rinse",
-      "meaning_thai": "",
-      "example": "pakkhāleti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khal 3": [
-    {
-      "root": "√khal 3",
-      "meaning_pali": "accumulate",
-      "meaning_thai": "",
-      "example": "saṅkhalikā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khā": [
-    {
-      "root": "√khā",
-      "meaning_pali": "tell, announce",
-      "meaning_thai": "",
-      "example": "akkhāti, khāyati, saṅkhā, saṅkhāya, paṭisaṅkhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khād": [
-    {
-      "root": "√khād",
-      "meaning_pali": "chew",
-      "meaning_thai": "",
-      "example": "khādati, khādanīya, khajjamāna, khāyita, khādita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khi": [
-    {
-      "root": "√khi",
-      "meaning_pali": "live, abide peacefully",
-      "meaning_thai": "",
-      "example": "khetta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khiṭ": [
-    {
-      "root": "√khiṭ",
-      "meaning_pali": "frighten, scare",
-      "meaning_thai": "",
-      "example": "ukkheṭita samukkheṭita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khip 1": [
-    {
-      "root": "√khip 1",
-      "meaning_pali": "throw",
-      "meaning_thai": "",
-      "example": "khipati, khipita, khitta, parikkhipitvā, nikkhepa, saṃkhittena, vikkhitta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khip 2": [
-    {
-      "root": "√khip 2",
-      "meaning_pali": "sneeze",
-      "meaning_thai": "",
-      "example": "khipati, khipanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khī": [
-    {
-      "root": "√khī",
-      "meaning_pali": "exhaust, destroy",
-      "meaning_thai": "",
-      "example": "khaya, saṅkhaya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khud": [
-    {
-      "root": "√khud",
-      "meaning_pali": "be hungry",
-      "meaning_thai": "",
-      "example": "khoda, khudā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khubh": [
-    {
-      "root": "√khubh",
-      "meaning_pali": "shake, agitate",
-      "meaning_thai": "",
-      "example": "khobeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khur": [
-    {
-      "root": "√khur",
-      "meaning_pali": "cut",
-      "meaning_thai": "",
-      "example": "khura",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khuṃs": [
-    {
-      "root": "√khuṃs",
-      "meaning_pali": "insult",
-      "meaning_thai": "",
-      "example": "khuṃseti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khyā": [
-    {
-      "root": "√khyā",
-      "meaning_pali": "announce",
-      "meaning_thai": "",
-      "example": "vyākhyāti, saṅkhyā, ākhyā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gaj": [
-    {
-      "root": "√gaj",
-      "meaning_pali": "roar, make sound",
-      "meaning_thai": "",
-      "example": "gaja",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gajj": [
-    {
-      "root": "√gajj",
-      "meaning_pali": "roar, thunder",
-      "meaning_thai": "",
-      "example": "gajjati, gajjamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gaṇ": [
-    {
-      "root": "√gaṇ",
-      "meaning_pali": "calculate, group",
-      "meaning_thai": "",
-      "example": "gaṇeti, gaṇana, gaṇaka, gaṇa, ganī, gaṇika, saṅgaṇikā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gad": [
-    {
-      "root": "√gad",
-      "meaning_pali": "speak",
-      "meaning_thai": "",
-      "example": "gadati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gadh": [
-    {
-      "root": "√gadh",
-      "meaning_pali": "bind, tie",
-      "meaning_thai": "",
-      "example": "gaddula, gadhita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ganth": [
-    {
-      "root": "√ganth",
-      "meaning_pali": "tie, bind",
-      "meaning_thai": "",
-      "example": "gantheti, gathita, gantha, gaṇṭhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gabbh": [
-    {
-      "root": "√gabbh",
-      "meaning_pali": "be bold, be daring",
-      "meaning_thai": "",
-      "example": "apagabbha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gam": [
-    {
-      "root": "√gam",
-      "meaning_pali": "go",
-      "meaning_thai": "",
-      "example": "gacchati, gamika, gati, sugata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gar 1": [
-    {
-      "root": "√gar 1",
-      "meaning_pali": "esteem, be heavy",
-      "meaning_thai": "",
-      "example": "garu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gar 2": [
-    {
-      "root": "√gar 2",
-      "meaning_pali": "drip, swallow",
-      "meaning_thai": "",
-      "example": "sāgara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√garah": [
-    {
-      "root": "√garah",
-      "meaning_pali": "blame",
-      "meaning_thai": "",
-      "example": "garahati, garahā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gal 1": [
-    {
-      "root": "√gal 1",
-      "meaning_pali": "drip, flow",
-      "meaning_thai": "",
-      "example": "galati, gaḷati, gala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gal 2": [
-    {
-      "root": "√gal 2",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "gala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gas": [
-    {
-      "root": "√gas",
-      "meaning_pali": "eat, swallow",
-      "meaning_thai": "",
-      "example": "gasa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gaves": [
-    {
-      "root": "√gaves",
-      "meaning_pali": "seek, search",
-      "meaning_thai": "",
-      "example": "gavesati, gavesaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gah": [
-    {
-      "root": "√gah",
-      "meaning_pali": "grasp",
-      "meaning_thai": "",
-      "example": "gaṇhāti, gahetvā, gaha, paṭiggahaṇa, anuggaha",
-      "group": 6,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gā": [
-    {
-      "root": "√gā",
-      "meaning_pali": "sing",
-      "meaning_thai": "",
-      "example": "gāyati, gātha, gīta, saṅgīta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gādh": [
-    {
-      "root": "√gādh",
-      "meaning_pali": "stand firmly",
-      "meaning_thai": "",
-      "example": "gādhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gāh": [
-    {
-      "root": "√gāh",
-      "meaning_pali": "dive, plunge",
-      "meaning_thai": "",
-      "example": "pagāhati, ogadha, pariyogāhetvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gidh": [
-    {
-      "root": "√gidh",
-      "meaning_pali": "be greedy",
-      "meaning_thai": "",
-      "example": "gijjhati, giddha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gir 1": [
-    {
-      "root": "√gir 1",
-      "meaning_pali": "raise",
-      "meaning_thai": "",
-      "example": "uggirati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gir 2": [
-    {
-      "root": "√gir 2",
-      "meaning_pali": "call, speak",
-      "meaning_thai": "",
-      "example": "girā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gil": [
-    {
-      "root": "√gil",
-      "meaning_pali": "eat, swallow",
-      "meaning_thai": "",
-      "example": "gilati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gilā": [
-    {
-      "root": "√gilā",
-      "meaning_pali": "be sick, be tired",
-      "meaning_thai": "",
-      "example": "gilāna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√guṇ": [
-    {
-      "root": "√guṇ",
-      "meaning_pali": "repeat, multiply",
-      "meaning_thai": "",
-      "example": "guṇita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√guṇṭh": [
-    {
-      "root": "√guṇṭh",
-      "meaning_pali": "enclose, envelope",
-      "meaning_thai": "",
-      "example": "paḷiguṇṭheti, paḷiguṇṭhita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gup 1": [
-    {
-      "root": "√gup 1",
-      "meaning_pali": "dislike",
-      "meaning_thai": "",
-      "example": "jigucchati, jigucchā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gup 2": [
-    {
-      "root": "√gup 2",
-      "meaning_pali": "guard",
-      "meaning_thai": "",
-      "example": "gopeti, gutta, gopako",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gumph": [
-    {
-      "root": "√gumph",
-      "meaning_pali": "tie, string together",
-      "meaning_thai": "",
-      "example": "gumpheti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√guh": [
-    {
-      "root": "√guh",
-      "meaning_pali": "hide, conceal",
-      "meaning_thai": "",
-      "example": "gūhati, guhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√guḷ": [
-    {
-      "root": "√guḷ",
-      "meaning_pali": "roll around, protect",
-      "meaning_thai": "",
-      "example": "guḷa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gū": [
-    {
-      "root": "√gū",
-      "meaning_pali": "excrete",
-      "meaning_thai": "",
-      "example": "gūtha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṭ 1": [
-    {
-      "root": "√ghaṭ 1",
-      "meaning_pali": "strike, kill",
-      "meaning_thai": "",
-      "example": "ghaṭeti, ghātetu, saṃghāta, upaghātī, anūpaghāta",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṭ 2": [
-    {
-      "root": "√ghaṭ 2",
-      "meaning_pali": "join together",
-      "meaning_thai": "",
-      "example": "ghaṭa, saṅgha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṭ 3": [
-    {
-      "root": "√ghaṭ 3",
-      "meaning_pali": "be busy with, strive",
-      "meaning_thai": "",
-      "example": "ghaṭati, ghaṭanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṭṭ 1": [
-    {
-      "root": "√ghaṭṭ 1",
-      "meaning_pali": "hit, strike",
-      "meaning_thai": "",
-      "example": "ghaṭṭeti, ghaṭṭana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṭṭ 2": [
-    {
-      "root": "√ghaṭṭ 2",
-      "meaning_pali": "join together",
-      "meaning_thai": "",
-      "example": "ghaṭṭeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghar 1": [
-    {
-      "root": "√ghar 1",
-      "meaning_pali": "drip",
-      "meaning_thai": "",
-      "example": "paggharati, paggharaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghar 2": [
-    {
-      "root": "√ghar 2",
-      "meaning_pali": "burn, be hot",
-      "meaning_thai": "",
-      "example": "ghamma, ghammani",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghas": [
-    {
-      "root": "√ghas",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "ghasati, jighacchati, jighacchā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghaṃs": [
-    {
-      "root": "√ghaṃs",
-      "meaning_pali": "rub, grind, pound",
-      "meaning_thai": "",
-      "example": "appaṭighaṃsanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghā": [
-    {
-      "root": "√ghā",
-      "meaning_pali": "smell",
-      "meaning_thai": "",
-      "example": "ghāyati, ghāna, gandha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghur": [
-    {
-      "root": "√ghur",
-      "meaning_pali": "scream, be awful",
-      "meaning_thai": "",
-      "example": "ghora",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ghus": [
-    {
-      "root": "√ghus",
-      "meaning_pali": "shout, make noise",
-      "meaning_thai": "",
-      "example": "ghosa, ghosita, appanigghosa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cakkh": [
-    {
-      "root": "√cakkh",
-      "meaning_pali": "see",
-      "meaning_thai": "",
-      "example": "cakkhu, vicakkhaṇa, apacakkha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√caj": [
-    {
-      "root": "√caj",
-      "meaning_pali": "give up, let go",
-      "meaning_thai": "",
-      "example": "cajati, cajita, cāga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√caṇḍ": [
-    {
-      "root": "√caṇḍ",
-      "meaning_pali": "be fierce, be violent",
-      "meaning_thai": "",
-      "example": "caṇḍa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cand": [
-    {
-      "root": "√cand",
-      "meaning_pali": "glow, be bright",
-      "meaning_thai": "",
-      "example": "canda, candana, candimā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cabb": [
-    {
-      "root": "√cabb",
-      "meaning_pali": "chew, spit out",
-      "meaning_thai": "",
-      "example": "cabbetvā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cam": [
-    {
-      "root": "√cam",
-      "meaning_pali": "wash, rinse",
-      "meaning_thai": "",
-      "example": "ācameti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√car 1": [
-    {
-      "root": "√car 1",
-      "meaning_pali": "move, walk",
-      "meaning_thai": "",
-      "example": "carati, cārikā, paricāraka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√car 2": [
-    {
-      "root": "√car 2",
-      "meaning_pali": "act, behave",
-      "meaning_thai": "",
-      "example": "anucarati, duccarita, samudācarati, suciṇṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cal": [
-    {
-      "root": "√cal",
-      "meaning_pali": "shake, tremble",
-      "meaning_thai": "",
-      "example": "calati, pacalāyati, calana, cañcala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cāy": [
-    {
-      "root": "√cāy",
-      "meaning_pali": "honour",
-      "meaning_thai": "",
-      "example": "apacāyati, apacāyamāna, apacita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ci 1": [
-    {
-      "root": "√ci 1",
-      "meaning_pali": "gather, accumulate",
-      "meaning_thai": "",
-      "example": "cināti, vicaya, cīvara",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ci 2": [
-    {
-      "root": "√ci 2",
-      "meaning_pali": "note, observe",
-      "meaning_thai": "",
-      "example": "apacinati",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cikkh": [
-    {
-      "root": "√cikkh",
-      "meaning_pali": "show, tell",
-      "meaning_thai": "",
-      "example": "ācikkhati, paṭisañcikkhati, ācikkhāpetvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ciṭ": [
-    {
-      "root": "√ciṭ",
-      "meaning_pali": "send, abuse",
-      "meaning_thai": "",
-      "example": "ceṭaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cit 1": [
-    {
-      "root": "√cit 1",
-      "meaning_pali": "think, intend",
-      "meaning_thai": "",
-      "example": "ceteti, cetayati, sañcetanā, cetasika, citta",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cit 2": [
-    {
-      "root": "√cit 2",
-      "meaning_pali": "mark",
-      "meaning_thai": "",
-      "example": "cita, citra, vicitta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√citt": [
-    {
-      "root": "√citt",
-      "meaning_pali": "paint, design",
-      "meaning_thai": "",
-      "example": "citteti, cittita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cint": [
-    {
-      "root": "√cint",
-      "meaning_pali": "think",
-      "meaning_thai": "",
-      "example": "vicinteti, cintā, sañcicca",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cil": [
-    {
-      "root": "√cil",
-      "meaning_pali": "clothe",
-      "meaning_thai": "",
-      "example": "cela, acelaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cu": [
-    {
-      "root": "√cu",
-      "meaning_pali": "shift, fall away, die",
-      "meaning_thai": "",
-      "example": "cavati, cuta, cavana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cuṇṇ": [
-    {
-      "root": "√cuṇṇ",
-      "meaning_pali": "grind, crush, powder",
-      "meaning_thai": "",
-      "example": "cuṇṇa, cuṇṇavicuṇṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cud": [
-    {
-      "root": "√cud",
-      "meaning_pali": "impel, accuse",
-      "meaning_thai": "",
-      "example": "codeti, codaka, cujjamāna",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cup": [
-    {
-      "root": "√cup",
-      "meaning_pali": "move",
-      "meaning_thai": "",
-      "example": "uddcopeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cumb": [
-    {
-      "root": "√cumb",
-      "meaning_pali": "kiss",
-      "meaning_thai": "",
-      "example": "cumbati, paricumbati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√cur": [
-    {
-      "root": "√cur",
-      "meaning_pali": "steal",
-      "meaning_thai": "",
-      "example": "coreti, cora, corī",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chaḍḍ": [
-    {
-      "root": "√chaḍḍ",
-      "meaning_pali": "discard, abandon",
-      "meaning_thai": "",
-      "example": "chaḍḍeti, chaḍḍita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chad": [
-    {
-      "root": "√chad",
-      "meaning_pali": "cover, conceal",
-      "meaning_thai": "",
-      "example": "chādeti, chatta, paṭicchanna, chada",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chand": [
-    {
-      "root": "√chand",
-      "meaning_pali": "desire, please",
-      "meaning_thai": "",
-      "example": "chādeti, channa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chā": [
-    {
-      "root": "√chā",
-      "meaning_pali": "be hungry",
-      "meaning_thai": "",
-      "example": "chāta, nicchāta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chid": [
-    {
-      "root": "√chid",
-      "meaning_pali": "cut, divide",
-      "meaning_thai": "",
-      "example": "chindati, ucchinna, acchecchi, uccheda",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chuṭ": [
-    {
-      "root": "√chuṭ",
-      "meaning_pali": "cut off",
-      "meaning_thai": "",
-      "example": "nicchoṭeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chup": [
-    {
-      "root": "√chup",
-      "meaning_pali": "touch",
-      "meaning_thai": "",
-      "example": "chupati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√chubh": [
-    {
-      "root": "√chubh",
-      "meaning_pali": "throw out",
-      "meaning_thai": "",
-      "example": "chuddha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jakkh": [
-    {
-      "root": "√jakkh",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "ajaddhuka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jagg": [
-    {
-      "root": "√jagg",
-      "meaning_pali": "look after",
-      "meaning_thai": "",
-      "example": "paṭijaggati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jaggh": [
-    {
-      "root": "√jaggh",
-      "meaning_pali": "laugh",
-      "meaning_thai": "",
-      "example": "jaggati, sañjagghana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jaṭ": [
-    {
-      "root": "√jaṭ",
-      "meaning_pali": "twist, tangle",
-      "meaning_thai": "",
-      "example": "vijaṭeti, jaṭā, jaṭila",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jan": [
-    {
-      "root": "√jan",
-      "meaning_pali": "be born, produce",
-      "meaning_thai": "",
-      "example": "vijāyati, jāyati, jāta, janeti, janaka",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√japp": [
-    {
-      "root": "√japp",
-      "meaning_pali": "mutter, pray",
-      "meaning_thai": "",
-      "example": "pajappati, pajappā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jambh": [
-    {
-      "root": "√jambh",
-      "meaning_pali": "yawn, stretch, wake up",
-      "meaning_thai": "",
-      "example": "jambhati, vijambhikā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jar": [
-    {
-      "root": "√jar",
-      "meaning_pali": "age",
-      "meaning_thai": "",
-      "example": "jarati, jara, jarā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jal 1": [
-    {
-      "root": "√jal 1",
-      "meaning_pali": "shine, blaze",
-      "meaning_thai": "",
-      "example": "pajalati, jāleti, jalita daddallamānā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jal 2": [
-    {
-      "root": "√jal 2",
-      "meaning_pali": "hide, conceal",
-      "meaning_thai": "",
-      "example": "jāla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jāgar 1": [
-    {
-      "root": "√jāgar 1",
-      "meaning_pali": "be awake, be watchful",
-      "meaning_thai": "",
-      "example": "jāgarati, jāgara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jāgar 2": [
-    {
-      "root": "√jāgar 2",
-      "meaning_pali": "be awake, be watchful",
-      "meaning_thai": "",
-      "example": "paṭijāgaroti",
-      "group": 7,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ji 1": [
-    {
-      "root": "√ji 1",
-      "meaning_pali": "conquer",
-      "meaning_thai": "",
-      "example": "jeti, jigiṃsati, jeṭṭha, aparājita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ji 2": [
-    {
-      "root": "√ji 2",
-      "meaning_pali": "conquer",
-      "meaning_thai": "",
-      "example": "vijināti, jina, vijita",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jī": [
-    {
-      "root": "√jī",
-      "meaning_pali": "age, decay",
-      "meaning_thai": "",
-      "example": "jīyati, jiyyati, jīna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jīr": [
-    {
-      "root": "√jīr",
-      "meaning_pali": "grow old, decay",
-      "meaning_thai": "",
-      "example": "jīrati, jīrīyati, jiṇṇa, nijjiṇṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jīv": [
-    {
-      "root": "√jīv",
-      "meaning_pali": "live",
-      "meaning_thai": "",
-      "example": "jīvati, jīva",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ju": [
-    {
-      "root": "√ju",
-      "meaning_pali": "be fast",
-      "meaning_thai": "",
-      "example": "javati, java",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jut": [
-    {
-      "root": "√jut",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "jotati, pajjota, vijju",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jus": [
-    {
-      "root": "√jus",
-      "meaning_pali": "like, please",
-      "meaning_thai": "",
-      "example": "juṇha",
-      "group": 6,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jhap": [
-    {
-      "root": "√jhap",
-      "meaning_pali": "burn, blaze",
-      "meaning_thai": "",
-      "example": "jhāpeti, jhatta",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jhā": [
-    {
-      "root": "√jhā",
-      "meaning_pali": "think, meditate",
-      "meaning_thai": "",
-      "example": "jhāyati, jhāna, abhijjhā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√jhe": [
-    {
-      "root": "√jhe",
-      "meaning_pali": "burn, blaze",
-      "meaning_thai": "",
-      "example": "jhāyati, jhāyana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ñā": [
-    {
-      "root": "√ñā",
-      "meaning_pali": "know",
-      "meaning_thai": "",
-      "example": "pajānāti, ñāyati, jāna, paṭiññā, viññāya",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ṭhā": [
-    {
-      "root": "√ṭhā",
-      "meaning_pali": "stand",
-      "meaning_thai": "",
-      "example": "tiṭṭhati, ṭhāna, ṭhiti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ṭhubh": [
-    {
-      "root": "√ṭhubh",
-      "meaning_pali": "spit",
-      "meaning_thai": "",
-      "example": "oṭṭhubhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ḍah": [
-    {
-      "root": "√ḍah",
-      "meaning_pali": "burn",
-      "meaning_thai": "",
-      "example": "uḍḍahati, daḍḍha anuḍahana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ḍaṃs": [
-    {
-      "root": "√ḍaṃs",
-      "meaning_pali": "bite, sting",
-      "meaning_thai": "",
-      "example": "ḍaṃsa, ḍaṃsati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ḍi 1": [
-    {
-      "root": "√ḍi 1",
-      "meaning_pali": "fly",
-      "meaning_thai": "",
-      "example": "ḍeti, uḍḍeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ḍi 2": [
-    {
-      "root": "√ḍi 2",
-      "meaning_pali": "trap",
-      "meaning_thai": "",
-      "example": "uḍḍeti, uḍḍita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√takk": [
-    {
-      "root": "√takk",
-      "meaning_pali": "think",
-      "meaning_thai": "",
-      "example": "vitakketi, vitakka",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tacch": [
-    {
-      "root": "√tacch",
-      "meaning_pali": "cut, chop",
-      "meaning_thai": "",
-      "example": "tacchati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tajj": [
-    {
-      "root": "√tajj",
-      "meaning_pali": "frighten, threaten",
-      "meaning_thai": "",
-      "example": "tajjeti, tajjita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tan": [
-    {
-      "root": "√tan",
-      "meaning_pali": "stretch, extend",
-      "meaning_thai": "",
-      "example": "tanoti, tantu, tanu, uttāna",
-      "group": 7,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tand": [
-    {
-      "root": "√tand",
-      "meaning_pali": "be slow, be lazy",
-      "meaning_thai": "",
-      "example": "tandī, atandita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tap": [
-    {
-      "root": "√tap",
-      "meaning_pali": "burn, radiate heat",
-      "meaning_thai": "",
-      "example": "tapati, ātāpī, ātapa, tapanīya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tapp 1": [
-    {
-      "root": "√tapp 1",
-      "meaning_pali": "regret",
-      "meaning_thai": "",
-      "example": "ottappati, ottapa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tapp 2": [
-    {
-      "root": "√tapp 2",
-      "meaning_pali": "satisfy",
-      "meaning_thai": "",
-      "example": "santappeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tam": [
-    {
-      "root": "√tam",
-      "meaning_pali": "faint",
-      "meaning_thai": "",
-      "example": "patameyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tar 1": [
-    {
-      "root": "√tar 1",
-      "meaning_pali": "cross",
-      "meaning_thai": "",
-      "example": "nittharati, uttara, nitthiṇṇa, taruna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tar 2": [
-    {
-      "root": "√tar 2",
-      "meaning_pali": "hurry",
-      "meaning_thai": "",
-      "example": "tarati, turaṅga, turito",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tal": [
-    {
-      "root": "√tal",
-      "meaning_pali": "support, rest on",
-      "meaning_thai": "",
-      "example": "tala, tāla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tas 1": [
-    {
-      "root": "√tas 1",
-      "meaning_pali": "tremble, fear",
-      "meaning_thai": "",
-      "example": "tasati, tasa, paritassati, paritassā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tas 2": [
-    {
-      "root": "√tas 2",
-      "meaning_pali": "thirst",
-      "meaning_thai": "",
-      "example": "taṇha, tasinā",
-      "group": 6,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tas 3": [
-    {
-      "root": "√tas 3",
-      "meaning_pali": "be agitated",
-      "meaning_thai": "",
-      "example": "paritassati, paritassanā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tas 4": [
-    {
-      "root": "√tas 4",
-      "meaning_pali": "decorate, impale",
-      "meaning_thai": "",
-      "example": "uttāsenti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√taḷ": [
-    {
-      "root": "√taḷ",
-      "meaning_pali": "beat",
-      "meaning_thai": "",
-      "example": "tāḷeti, urattāḷiṃ",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tā": [
-    {
-      "root": "√tā",
-      "meaning_pali": "protect, preserve",
-      "meaning_thai": "",
-      "example": "tāṇa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tij 1": [
-    {
-      "root": "√tij 1",
-      "meaning_pali": "be sharp, be hot",
-      "meaning_thai": "",
-      "example": "tejeti, teja, tejo",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tij 2": [
-    {
-      "root": "√tij 2",
-      "meaning_pali": "be sharp, be bitter",
-      "meaning_thai": "",
-      "example": "tittaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tij 3": [
-    {
-      "root": "√tij 3",
-      "meaning_pali": "endure",
-      "meaning_thai": "",
-      "example": "titikkhati, titikkhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tim": [
-    {
-      "root": "√tim",
-      "meaning_pali": "be wet",
-      "meaning_thai": "",
-      "example": "temana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tir": [
-    {
-      "root": "√tir",
-      "meaning_pali": "cross",
-      "meaning_thai": "",
-      "example": "tīra, tiracchāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tis": [
-    {
-      "root": "√tis",
-      "meaning_pali": "satisfy",
-      "meaning_thai": "",
-      "example": "titti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tīr": [
-    {
-      "root": "√tīr",
-      "meaning_pali": "investigate, complete",
-      "meaning_thai": "",
-      "example": "tīreti, tīrayamāna, santīraṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tuḍ": [
-    {
-      "root": "√tuḍ",
-      "meaning_pali": "prick, stab",
-      "meaning_thai": "",
-      "example": "tuṇḍa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tud": [
-    {
-      "root": "√tud",
-      "meaning_pali": "prick, stab",
-      "meaning_thai": "",
-      "example": "tudita, tunna, tutta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tur 1": [
-    {
-      "root": "√tur 1",
-      "meaning_pali": "hurt, be sick",
-      "meaning_thai": "",
-      "example": "ātura, āturīyati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tur 2": [
-    {
-      "root": "√tur 2",
-      "meaning_pali": "hurry, be quick",
-      "meaning_thai": "",
-      "example": "turitaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tul": [
-    {
-      "root": "√tul",
-      "meaning_pali": "weigh",
-      "meaning_thai": "",
-      "example": "tuleti, tulita, atula, tulā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tus": [
-    {
-      "root": "√tus",
-      "meaning_pali": "be content, be pleased",
-      "meaning_thai": "",
-      "example": "santussaka, santuṭṭhi, asantuṭṭhitā, tuṇhī",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tuvaṭṭ": [
-    {
-      "root": "√tuvaṭṭ",
-      "meaning_pali": "lie down",
-      "meaning_thai": "",
-      "example": "-",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tūl": [
-    {
-      "root": "√tūl",
-      "meaning_pali": "be light",
-      "meaning_thai": "",
-      "example": "tūla",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tras": [
-    {
-      "root": "√tras",
-      "meaning_pali": "fear, shake",
-      "meaning_thai": "",
-      "example": "utrasta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thak": [
-    {
-      "root": "√thak",
-      "meaning_pali": "close",
-      "meaning_thai": "",
-      "example": "thaketi",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√than": [
-    {
-      "root": "√than",
-      "meaning_pali": "roar, thunder",
-      "meaning_thai": "",
-      "example": "thaneti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√tham": [
-    {
-      "root": "√tham",
-      "meaning_pali": "hang",
-      "meaning_thai": "",
-      "example": "thamati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thambh": [
-    {
-      "root": "√thambh",
-      "meaning_pali": "support, be stiff",
-      "meaning_thai": "",
-      "example": "santhambhati, thambha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thar": [
-    {
-      "root": "√thar",
-      "meaning_pali": "spread, expand",
-      "meaning_thai": "",
-      "example": "santharati, santhata, vitthārena, atthata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thal": [
-    {
-      "root": "√thal",
-      "meaning_pali": "be firm",
-      "meaning_thai": "",
-      "example": "thala, thalati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thī": [
-    {
-      "root": "√thī",
-      "meaning_pali": "stiffen, be compact",
-      "meaning_thai": "",
-      "example": "vithāyati, patitthīyati, thīna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thu 1": [
-    {
-      "root": "√thu 1",
-      "meaning_pali": "moan, groan",
-      "meaning_thai": "",
-      "example": "thunāti, anutthuni",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thu 2": [
-    {
-      "root": "√thu 2",
-      "meaning_pali": "be familiar, praise",
-      "meaning_thai": "",
-      "example": "thavati, santhava",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thu 3": [
-    {
-      "root": "√thu 3",
-      "meaning_pali": "praise",
-      "meaning_thai": "",
-      "example": "abhitthunāti, thuta",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thūl": [
-    {
-      "root": "√thūl",
-      "meaning_pali": "be fat, be coarse",
-      "meaning_thai": "",
-      "example": "thūla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√then": [
-    {
-      "root": "√then",
-      "meaning_pali": "steal",
-      "meaning_thai": "",
-      "example": "theneti, thena, theyya",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√thom": [
-    {
-      "root": "√thom",
-      "meaning_pali": "praise",
-      "meaning_thai": "",
-      "example": "thometi, thoma, thomayati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dakkh": [
-    {
-      "root": "√dakkh",
-      "meaning_pali": "be able, please",
-      "meaning_thai": "",
-      "example": "dakkha, dakkhiṇa, padakkhiṇā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dandh": [
-    {
-      "root": "√dandh",
-      "meaning_pali": "be slow",
-      "meaning_thai": "",
-      "example": "dandhati, dandha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dap": [
-    {
-      "root": "√dap",
-      "meaning_pali": "be arrogant",
-      "meaning_thai": "",
-      "example": "dappa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dam": [
-    {
-      "root": "√dam",
-      "meaning_pali": "be tame",
-      "meaning_thai": "",
-      "example": "dameti, danta, damma",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√day": [
-    {
-      "root": "√day",
-      "meaning_pali": "be kind, have pity",
-      "meaning_thai": "",
-      "example": "dayati, dayā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dar 1": [
-    {
-      "root": "√dar 1",
-      "meaning_pali": "break, split apart",
-      "meaning_thai": "",
-      "example": "dāreti, undrīyati, udariya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dar 2": [
-    {
-      "root": "√dar 2",
-      "meaning_pali": "fear",
-      "meaning_thai": "",
-      "example": "dara, daratha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dar 3": [
-    {
-      "root": "√dar 3",
-      "meaning_pali": "respect, have affection",
-      "meaning_thai": "",
-      "example": "ādara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dal": [
-    {
-      "root": "√dal",
-      "meaning_pali": "split, tear apart",
-      "meaning_thai": "",
-      "example": "padāḷeti, sampadāḷeti, uddālitvā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dah": [
-    {
-      "root": "√dah",
-      "meaning_pali": "be strong",
-      "meaning_thai": "",
-      "example": "daḷha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dā 1": [
-    {
-      "root": "√dā 1",
-      "meaning_pali": "give",
-      "meaning_thai": "",
-      "example": "dadāti, dāna, dāyaka, dinna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dā 2": [
-    {
-      "root": "√dā 2",
-      "meaning_pali": "be pure, be clean",
-      "meaning_thai": "",
-      "example": "pariyodapeti, pariyodāta, vodāyati, odāta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dā 3": [
-    {
-      "root": "√dā 3",
-      "meaning_pali": "tie, bind",
-      "meaning_thai": "",
-      "example": "nidāna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dā 4": [
-    {
-      "root": "√dā 4",
-      "meaning_pali": "cut, break apart",
-      "meaning_thai": "",
-      "example": "apadāna, paritta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dā 5": [
-    {
-      "root": "√dā 5",
-      "meaning_pali": "sleep",
-      "meaning_thai": "",
-      "example": "niddāyati, niddā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dikkh": [
-    {
-      "root": "√dikkh",
-      "meaning_pali": "consecrate",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√dikkh<sup>･</sup>1 bhūvādigaṇa + a (consecrate)</td></tr><tr><th>Base:</th><td>-</td></tr><tr><th>Dhātupātha:</th><td>dikkha <i>muṇḍiyopanayana-niyama-vatādesesu</i> (shaving the head, restraining, religious duty etc) #14</td></tr><tr><th>Dhātumañjūsa:</th><td>dikkha <i>upanaya-muṇḍiya-vatādesesu-niyame</i> (shaving the head, religious duties and restraining) #24</td></tr><tr><th>Saddanīti:</th><td>dikkha <i>muṇḍiyôpanayana-niyamabbat’-ādesesu</i> (shaving the head, initiating, restraining, practice and pointing out)</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√dīkṣ a (consecrate)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td><span class='gray'>dīkṣ a <i>mauṇḍyejyopanayana-niyama-vrat’ādeśeṣu</i> (shaving the head, initiating, restraining, practice and instruction)</span></td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dis 1": [
-    {
-      "root": "√dis 1",
-      "meaning_pali": "see",
-      "meaning_thai": "",
-      "example": "uddisati, dissati, passati, dakkhati, dakkhiti, vipassī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dis 2": [
-    {
-      "root": "√dis 2",
-      "meaning_pali": "point out, explain",
-      "meaning_thai": "",
-      "example": "uddisati, uddesa, padesa, disā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dis 3": [
-    {
-      "root": "√dis 3",
-      "meaning_pali": "dislike, hate",
-      "meaning_thai": "",
-      "example": "dessati, disa, dessī",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√div": [
-    {
-      "root": "√div",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "dibbati, devā, dibba, divasa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dih": [
-    {
-      "root": "√dih",
-      "meaning_pali": "accumulate, smear",
-      "meaning_thai": "",
-      "example": "deha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dī": [
-    {
-      "root": "√dī",
-      "meaning_pali": "be afflicted",
-      "meaning_thai": "",
-      "example": "dīna, ādīnava",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dīp": [
-    {
-      "root": "√dīp",
-      "meaning_pali": "shine, explain",
-      "meaning_thai": "",
-      "example": "dippati, dīpeti, dīpa, padīpa, ādicca",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√du": [
-    {
-      "root": "√du",
-      "meaning_pali": "burn, torment",
-      "meaning_thai": "",
-      "example": "anupaddava",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dukkh": [
-    {
-      "root": "√dukkh",
-      "meaning_pali": "be painful",
-      "meaning_thai": "",
-      "example": "dukkha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dubbh": [
-    {
-      "root": "√dubbh",
-      "meaning_pali": "deceive, be treacherous",
-      "meaning_thai": "",
-      "example": "dubbhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dul": [
-    {
-      "root": "√dul",
-      "meaning_pali": "swing",
-      "meaning_thai": "",
-      "example": "dolā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dus 1": [
-    {
-      "root": "√dus 1",
-      "meaning_pali": "be angry, be corrupt",
-      "meaning_thai": "",
-      "example": "padussati, dussati, duṭṭha, dūsaka",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dus 2": [
-    {
-      "root": "√dus 2",
-      "meaning_pali": "hate, dislike",
-      "meaning_thai": "",
-      "example": "dussati, dosa, dessī, dussanīya",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√duh": [
-    {
-      "root": "√duh",
-      "meaning_pali": "milk a cow",
-      "meaning_thai": "",
-      "example": "gadduhana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dū": [
-    {
-      "root": "√dū",
-      "meaning_pali": "go, run",
-      "meaning_thai": "",
-      "example": "dūta, dūteyya, avidūra, dava",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dev": [
-    {
-      "root": "√dev",
-      "meaning_pali": "lament",
-      "meaning_thai": "",
-      "example": "paridevati, ādeva",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dru": [
-    {
-      "root": "√dru",
-      "meaning_pali": "run, flow",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√dru<sup>×</sup>1 bhūvādigaṇa + a (run, flow)</td></tr><tr><th>Base:</th><td>-</td></tr><tr><th>Dhātupātha:</th><td>-</td></tr><tr><th>Dhātumañjūsa:</th><td>-</td></tr><tr><th>Saddanīti:</th><td>-</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√dru 1 (run)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td>-</td></tr><tr><th>Notes:</th><td>Not found in classical Pāḷi grammars. Related to <i>√dhāv</i></td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dvar": [
-    {
-      "root": "√dvar",
-      "meaning_pali": "obstruct, prohibit",
-      "meaning_thai": "",
-      "example": "dvāra",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhaj": [
-    {
-      "root": "√dhaj",
-      "meaning_pali": "move, flap",
-      "meaning_thai": "",
-      "example": "dhaja",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhan 1": [
-    {
-      "root": "√dhan 1",
-      "meaning_pali": "be rich",
-      "meaning_thai": "",
-      "example": "dhana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhan 2": [
-    {
-      "root": "√dhan 2",
-      "meaning_pali": "sound",
-      "meaning_thai": "",
-      "example": "dhanita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dham": [
-    {
-      "root": "√dham",
-      "meaning_pali": "blow, sound",
-      "meaning_thai": "",
-      "example": "niddhamati, dhanta, uddhumātaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhar 1": [
-    {
-      "root": "√dhar 1",
-      "meaning_pali": "hold, carry, endure",
-      "meaning_thai": "",
-      "example": "dharati, dhīra, dhuva",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhar 2": [
-    {
-      "root": "√dhar 2",
-      "meaning_pali": "wear, hold, carry",
-      "meaning_thai": "",
-      "example": "dhāreti, dhamma, ādhāra",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhaṃs": [
-    {
-      "root": "√dhaṃs",
-      "meaning_pali": "fall down, destroy",
-      "meaning_thai": "",
-      "example": "dhaṃsati, uddhaṃseti, viddhaṃsana, uddhasta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhā": [
-    {
-      "root": "√dhā",
-      "meaning_pali": "place, support",
-      "meaning_thai": "",
-      "example": "saddahati, dhātu, samādhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhāv 1": [
-    {
-      "root": "√dhāv 1",
-      "meaning_pali": "run, flow",
-      "meaning_thai": "",
-      "example": "dhāvati, sandhāvati, vidhāvana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhāv 2": [
-    {
-      "root": "√dhāv 2",
-      "meaning_pali": "polish, sharpen",
-      "meaning_thai": "",
-      "example": "dhārā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhī": [
-    {
-      "root": "√dhī",
-      "meaning_pali": "think",
-      "meaning_thai": "",
-      "example": "dhīra",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhur": [
-    {
-      "root": "√dhur",
-      "meaning_pali": "be crooked, be corrupt",
-      "meaning_thai": "",
-      "example": "dhutta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhuv": [
-    {
-      "root": "√dhuv",
-      "meaning_pali": "be firm, be solid",
-      "meaning_thai": "",
-      "example": "dhuva",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhū": [
-    {
-      "root": "√dhū",
-      "meaning_pali": "shake, smoke",
-      "meaning_thai": "",
-      "example": "dhunāti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhūp": [
-    {
-      "root": "√dhūp",
-      "meaning_pali": "smoke",
-      "meaning_thai": "",
-      "example": "dhūpa, dhūpana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhe": [
-    {
-      "root": "√dhe",
-      "meaning_pali": "drink, suck",
-      "meaning_thai": "",
-      "example": "dhayati, dhītu, dhenu, dhāta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√dhov": [
-    {
-      "root": "√dhov",
-      "meaning_pali": "wash, sharpen",
-      "meaning_thai": "",
-      "example": "dhovati, dhona",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nakkh": [
-    {
-      "root": "√nakkh",
-      "meaning_pali": "attain, arrive",
-      "meaning_thai": "",
-      "example": "nakkhata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√naṭ": [
-    {
-      "root": "√naṭ",
-      "meaning_pali": "bend, dance",
-      "meaning_thai": "",
-      "example": "naṭaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nat": [
-    {
-      "root": "√nat",
-      "meaning_pali": "dance, act",
-      "meaning_thai": "",
-      "example": "natta, naccati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nad": [
-    {
-      "root": "√nad",
-      "meaning_pali": "roar",
-      "meaning_thai": "",
-      "example": "nadati, nāda, nadī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nadh": [
-    {
-      "root": "√nadh",
-      "meaning_pali": "wrap, twist",
-      "meaning_thai": "",
-      "example": "nandhati, pariyonaddha",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nand": [
-    {
-      "root": "√nand",
-      "meaning_pali": "delight, enjoy",
-      "meaning_thai": "",
-      "example": "nandati, nandita, nanda, abhinandī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nabh": [
-    {
-      "root": "√nabh",
-      "meaning_pali": "burst, split",
-      "meaning_thai": "",
-      "example": "nābhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nam": [
-    {
-      "root": "√nam",
-      "meaning_pali": "bend",
-      "meaning_thai": "",
-      "example": "namati, nata, namita, abhininnāmeti, paṇāmetvā, vipariṇāma",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√namass": [
-    {
-      "root": "√namass",
-      "meaning_pali": "bow, worship",
-      "meaning_thai": "",
-      "example": "namassati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nar": [
-    {
-      "root": "√nar",
-      "meaning_pali": "lead",
-      "meaning_thai": "",
-      "example": "narati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nas": [
-    {
-      "root": "√nas",
-      "meaning_pali": "be lost, disappear",
-      "meaning_thai": "",
-      "example": "nassati, nāsa, naṭṭha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nah": [
-    {
-      "root": "√nah",
-      "meaning_pali": "bind, arm",
-      "meaning_thai": "",
-      "example": "sannayhati, upanayhati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nāth": [
-    {
-      "root": "√nāth",
-      "meaning_pali": "have power, protect",
-      "meaning_thai": "",
-      "example": "nātha, anātha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nind": [
-    {
-      "root": "√nind",
-      "meaning_pali": "blame, abuse",
-      "meaning_thai": "",
-      "example": "nindati, nindiya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nī": [
-    {
-      "root": "√nī",
-      "meaning_pali": "lead, carry",
-      "meaning_thai": "",
-      "example": "neti, nīta, āneti, udāneti, apanīyati, paṇīta, vineyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nīl": [
-    {
-      "root": "√nīl",
-      "meaning_pali": "be blue",
-      "meaning_thai": "",
-      "example": "nīla, vinīlaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nud": [
-    {
-      "root": "√nud",
-      "meaning_pali": "drive out, reject",
-      "meaning_thai": "",
-      "example": "nudati, nuṇṇa, paṭivinodetvā, panudana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ness": [
-    {
-      "root": "√ness",
-      "meaning_pali": "take away",
-      "meaning_thai": "",
-      "example": "nessati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nhā": [
-    {
-      "root": "√nhā",
-      "meaning_pali": "bathe",
-      "meaning_thai": "",
-      "example": "nahāyati, nhāpetvā, nhāniya",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pac": [
-    {
-      "root": "√pac",
-      "meaning_pali": "cook, mature, ripen",
-      "meaning_thai": "",
-      "example": "pāka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pañc": [
-    {
-      "root": "√pañc",
-      "meaning_pali": "expand, spread",
-      "meaning_thai": "",
-      "example": "papañca, papañceti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pañh": [
-    {
-      "root": "√pañh",
-      "meaning_pali": "ask, question",
-      "meaning_thai": "",
-      "example": "pañha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√paṭ 1": [
-    {
-      "root": "√paṭ 1",
-      "meaning_pali": "split, tear",
-      "meaning_thai": "",
-      "example": "uppāṭeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√paṭ 2": [
-    {
-      "root": "√paṭ 2",
-      "meaning_pali": "go",
-      "meaning_thai": "",
-      "example": "paṭipāṭi, paṭipāṭiyā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√paṭh": [
-    {
-      "root": "√paṭh",
-      "meaning_pali": "read, recite",
-      "meaning_thai": "",
-      "example": "paṭhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√paṇ": [
-    {
-      "root": "√paṇ",
-      "meaning_pali": "trade, barter",
-      "meaning_thai": "",
-      "example": "āpaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√paṇḍ": [
-    {
-      "root": "√paṇḍ",
-      "meaning_pali": "mock, tease",
-      "meaning_thai": "",
-      "example": "paṇḍeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pat 1": [
-    {
-      "root": "√pat 1",
-      "meaning_pali": "fall",
-      "meaning_thai": "",
-      "example": "patati, sannipāta, papāta, atipāta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pat 2": [
-    {
-      "root": "√pat 2",
-      "meaning_pali": "command, control",
-      "meaning_thai": "",
-      "example": "pati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√path 1": [
-    {
-      "root": "√path 1",
-      "meaning_pali": "go, move",
-      "meaning_thai": "",
-      "example": "patha, pathika, vipatha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√path 2": [
-    {
-      "root": "√path 2",
-      "meaning_pali": "expand",
-      "meaning_thai": "",
-      "example": "pathavī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pad": [
-    {
-      "root": "√pad",
-      "meaning_pali": "go, step",
-      "meaning_thai": "",
-      "example": "uppajjati, patti, pāduka",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√panth": [
-    {
-      "root": "√panth",
-      "meaning_pali": "go, move",
-      "meaning_thai": "",
-      "example": "paripantha, panthaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pabb": [
-    {
-      "root": "√pabb",
-      "meaning_pali": "grow",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√pabb<sup>･</sup>1 bhūvādigaṇa + a (grow)</td></tr><tr><th>Base:</th><td>pabba</td></tr><tr><th>Dhātupātha:</th><td>-</td></tr><tr><th>Dhātumañjūsa:</th><td>-</td></tr><tr><th>Saddanīti:</th><td>pabba <i>gatiyaṃ</i> (going)</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√parv 1 (fill)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td><span class='gray'>parb a <i>gatau</i> (going)</span></td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√par": [
-    {
-      "root": "√par",
-      "meaning_pali": "be active",
-      "meaning_thai": "",
-      "example": "byāvaṭa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√palā": [
-    {
-      "root": "√palā",
-      "meaning_pali": "run away, flee",
-      "meaning_thai": "",
-      "example": "paleti, palāyati, palāpetvā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√palus": [
-    {
-      "root": "√palus",
-      "meaning_pali": "burn",
-      "meaning_thai": "",
-      "example": "paluṭṭha, palosati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pas": [
-    {
-      "root": "√pas",
-      "meaning_pali": "tie, bind",
-      "meaning_thai": "",
-      "example": "pāsa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pā 2": [
-    {
-      "root": "√pā 2",
-      "meaning_pali": "protect, guard",
-      "meaning_thai": "",
-      "example": "pa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pā 1": [
-    {
-      "root": "√pā 1",
-      "meaning_pali": "drink",
-      "meaning_thai": "",
-      "example": "pivati, pīta, pivana, pānīya, udapāna, pipāsā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pāy": [
-    {
-      "root": "√pāy",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "appāyati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pāl": [
-    {
-      "root": "√pāl",
-      "meaning_pali": "protect",
-      "meaning_thai": "",
-      "example": "pāleti, pālayati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√piṭ": [
-    {
-      "root": "√piṭ",
-      "meaning_pali": "collect",
-      "meaning_thai": "",
-      "example": "piṭaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√piṇḍ": [
-    {
-      "root": "√piṇḍ",
-      "meaning_pali": "collect",
-      "meaning_thai": "",
-      "example": "piṇḍeti, piṇḍi, piṇḍāya",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pis 1": [
-    {
-      "root": "√pis 1",
-      "meaning_pali": "send",
-      "meaning_thai": "",
-      "example": "peseti, pessika",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pis 2": [
-    {
-      "root": "√pis 2",
-      "meaning_pali": "grind, hurt",
-      "meaning_thai": "",
-      "example": "pisuna",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pis 3": [
-    {
-      "root": "√pis 3",
-      "meaning_pali": "speak ill",
-      "meaning_thai": "",
-      "example": "pisuṇa, pisāca",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pih": [
-    {
-      "root": "√pih",
-      "meaning_pali": "desire, envy",
-      "meaning_thai": "",
-      "example": "pihayati, piheti, apihālu",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pī": [
-    {
-      "root": "√pī",
-      "meaning_pali": "love, please",
-      "meaning_thai": "",
-      "example": "pīti, pema, piyāyati",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pīṇ": [
-    {
-      "root": "√pīṇ",
-      "meaning_pali": "please, swell",
-      "meaning_thai": "",
-      "example": "pīṇeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pīḷ": [
-    {
-      "root": "√pīḷ",
-      "meaning_pali": "press, crush",
-      "meaning_thai": "",
-      "example": "pīḷeti, pīḷita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pu": [
-    {
-      "root": "√pu",
-      "meaning_pali": "purify, cleanse",
-      "meaning_thai": "",
-      "example": "punāti, puñña, putta, dantapoṇa",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pucch": [
-    {
-      "root": "√pucch",
-      "meaning_pali": "ask, question",
-      "meaning_thai": "",
-      "example": "pucchati, abhipuṭṭha, pucchā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√puñch": [
-    {
-      "root": "√puñch",
-      "meaning_pali": "wipe",
-      "meaning_thai": "",
-      "example": "puñchanaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√puṭ": [
-    {
-      "root": "√puṭ",
-      "meaning_pali": "wrap, envelop",
-      "meaning_thai": "",
-      "example": "puṭa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√puṭh": [
-    {
-      "root": "√puṭh",
-      "meaning_pali": "beat, hurt",
-      "meaning_thai": "",
-      "example": "poṭheti, poṭhetvā, poṭhita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√puṇ": [
-    {
-      "root": "√puṇ",
-      "meaning_pali": "be skilful, be precise",
-      "meaning_thai": "",
-      "example": "nipuṇa, puñña",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√puth": [
-    {
-      "root": "√puth",
-      "meaning_pali": "expand",
-      "meaning_thai": "",
-      "example": "puthu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pupph": [
-    {
-      "root": "√pupph",
-      "meaning_pali": "flower, expand",
-      "meaning_thai": "",
-      "example": "saṃpupphita, puppa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pul": [
-    {
-      "root": "√pul",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "vepulla",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pus": [
-    {
-      "root": "√pus",
-      "meaning_pali": "nourish, take care",
-      "meaning_thai": "",
-      "example": "posati, posa, poseti, posana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pūj": [
-    {
-      "root": "√pūj",
-      "meaning_pali": "honour, venerate",
-      "meaning_thai": "",
-      "example": "pūjeti, pūjita, pūja",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pūy": [
-    {
-      "root": "√pūy",
-      "meaning_pali": "rot, fester",
-      "meaning_thai": "",
-      "example": "pūti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pūr": [
-    {
-      "root": "√pūr",
-      "meaning_pali": "fill, fulfil",
-      "meaning_thai": "",
-      "example": "pūrati, paripūreti, pūreti, paripūrayati, pūra, paripuṇṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√pel": [
-    {
-      "root": "√pel",
-      "meaning_pali": "move, propel",
-      "meaning_thai": "",
-      "example": "pellana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√plu 1": [
-    {
-      "root": "√plu 1",
-      "meaning_pali": "float, swim",
-      "meaning_thai": "",
-      "example": "plavati, opilāpeti, plava, plavana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√plu 2": [
-    {
-      "root": "√plu 2",
-      "meaning_pali": "spring, swing",
-      "meaning_thai": "",
-      "example": "plavati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phaṇ": [
-    {
-      "root": "√phaṇ",
-      "meaning_pali": "skim",
-      "meaning_thai": "",
-      "example": "pheṇu, phāṇita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phand": [
-    {
-      "root": "√phand",
-      "meaning_pali": "shake, quiver",
-      "meaning_thai": "",
-      "example": "phandati, vipphandana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phar": [
-    {
-      "root": "√phar",
-      "meaning_pali": "suffuse, pervade",
-      "meaning_thai": "",
-      "example": "pharati, pharaṇa, paripphuṭa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phal 1": [
-    {
-      "root": "√phal 1",
-      "meaning_pali": "split open",
-      "meaning_thai": "",
-      "example": "phalati, phāleti, phāla, vipphālita, phulla",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phal 2": [
-    {
-      "root": "√phal 2",
-      "meaning_pali": "fruit, ripen",
-      "meaning_thai": "",
-      "example": "phalī, phalaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phā": [
-    {
-      "root": "√phā",
-      "meaning_pali": "swell, get fat",
-      "meaning_thai": "",
-      "example": "phīta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phuṭ 1": [
-    {
-      "root": "√phuṭ 1",
-      "meaning_pali": "beat, smash",
-      "meaning_thai": "",
-      "example": "nipphoṭeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phuṭ 2": [
-    {
-      "root": "√phuṭ 2",
-      "meaning_pali": "swell, burst",
-      "meaning_thai": "",
-      "example": "phoṭa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phull": [
-    {
-      "root": "√phull",
-      "meaning_pali": "expand, bloom",
-      "meaning_thai": "",
-      "example": "phulla",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phus 1": [
-    {
-      "root": "√phus 1",
-      "meaning_pali": "touch",
-      "meaning_thai": "",
-      "example": "phusitvā, phuṭṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phus 2": [
-    {
-      "root": "√phus 2",
-      "meaning_pali": "sprinkle, splash",
-      "meaning_thai": "",
-      "example": "paripphosakaṃ, phoseti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√badh": [
-    {
-      "root": "√badh",
-      "meaning_pali": "bind, tie",
-      "meaning_thai": "",
-      "example": "vinibaddha, paṭibaddha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bandh": [
-    {
-      "root": "√bandh",
-      "meaning_pali": "bind, tie",
-      "meaning_thai": "",
-      "example": "bandhati, sambandha, bandhu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bal": [
-    {
-      "root": "√bal",
-      "meaning_pali": "be strong, live",
-      "meaning_thai": "",
-      "example": "balati, bala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bah 1": [
-    {
-      "root": "√bah 1",
-      "meaning_pali": "be outside",
-      "meaning_thai": "",
-      "example": "paṭibāhati, bāhira",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bah 2": [
-    {
-      "root": "√bah 2",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "bahu, bāhulika, bāḷha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bādh": [
-    {
-      "root": "√bādh",
-      "meaning_pali": "press, oppress",
-      "meaning_thai": "",
-      "example": "bādhati, ābādheti, ābādhika, bavhābādha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bil": [
-    {
-      "root": "√bil",
-      "meaning_pali": "break, chop",
-      "meaning_thai": "",
-      "example": "bilati, bila",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√budh": [
-    {
-      "root": "√budh",
-      "meaning_pali": "know, wake up",
-      "meaning_thai": "",
-      "example": "bujjhati, buddha, sambodhi",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√buh": [
-    {
-      "root": "√buh",
-      "meaning_pali": "pluck out, uproot",
-      "meaning_thai": "",
-      "example": "abbuhati, abbuyha, abbūḷha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√brah": [
-    {
-      "root": "√brah",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "brahati, brahā, brahanta, brahma",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√brū": [
-    {
-      "root": "√brū",
-      "meaning_pali": "say",
-      "meaning_thai": "",
-      "example": "brūti, abravi, bravanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√brūh": [
-    {
-      "root": "√brūh",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "brūheti, brūhana, brūhetu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhakkh": [
-    {
-      "root": "√bhakkh",
-      "meaning_pali": "eat",
-      "meaning_thai": "",
-      "example": "bhakkhati, bhakkha, bhatta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhaj 1": [
-    {
-      "root": "√bhaj 1",
-      "meaning_pali": "divide, distribute",
-      "meaning_thai": "",
-      "example": "vibhajati, suvibhatta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhaj 2": [
-    {
-      "root": "√bhaj 2",
-      "meaning_pali": "associate, keep company",
-      "meaning_thai": "",
-      "example": "bhajati, bhajanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhajj": [
-    {
-      "root": "√bhajj",
-      "meaning_pali": "cook",
-      "meaning_thai": "",
-      "example": "bhajjati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhañj": [
-    {
-      "root": "√bhañj",
-      "meaning_pali": "break, destroy",
-      "meaning_thai": "",
-      "example": "bhañjati, bhaṅga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhaṇ": [
-    {
-      "root": "√bhaṇ",
-      "meaning_pali": "talk, speak",
-      "meaning_thai": "",
-      "example": "bhaṇati, bhaññamāna, paṭibhāṇavantu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhaṇḍ": [
-    {
-      "root": "√bhaṇḍ",
-      "meaning_pali": "blame, accuse",
-      "meaning_thai": "",
-      "example": "bhaṇḍati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhad": [
-    {
-      "root": "√bhad",
-      "meaning_pali": "be good, be lucky",
-      "meaning_thai": "",
-      "example": "bhadra, bhante, bhadanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bham": [
-    {
-      "root": "√bham",
-      "meaning_pali": "turn, revolve, buzz",
-      "meaning_thai": "",
-      "example": "bhamara, bhamakāra, vibhanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhar": [
-    {
-      "root": "√bhar",
-      "meaning_pali": "carry, support",
-      "meaning_thai": "",
-      "example": "bharati, bhariyā, subhara, bhattā, bhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhas 1": [
-    {
-      "root": "√bhas 1",
-      "meaning_pali": "fall down",
-      "meaning_thai": "",
-      "example": "bhassati, bhaṭṭha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhā": [
-    {
-      "root": "√bhā",
-      "meaning_pali": "shine, speak",
-      "meaning_thai": "",
-      "example": "paṭibhāti, abhāsi, bhānu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhās 1": [
-    {
-      "root": "√bhās 1",
-      "meaning_pali": "speak",
-      "meaning_thai": "",
-      "example": "bhāsati, bhāsā samanubhāsanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhās 2": [
-    {
-      "root": "√bhās 2",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "pabhāsati, obhāsa, pabhassara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhikkh": [
-    {
-      "root": "√bhikkh",
-      "meaning_pali": "beg",
-      "meaning_thai": "",
-      "example": "bhikkhati, bhikkhu, subhikkha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhid": [
-    {
-      "root": "√bhid",
-      "meaning_pali": "break, split",
-      "meaning_thai": "",
-      "example": "bhindati, bhinna, paṭisambhidā",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhis": [
-    {
-      "root": "√bhis",
-      "meaning_pali": "fear",
-      "meaning_thai": "",
-      "example": "vibhiṃsana",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhī": [
-    {
-      "root": "√bhī",
-      "meaning_pali": "fear",
-      "meaning_thai": "",
-      "example": "bhāyati, bhaya, bhīma, bherava",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhuj 1": [
-    {
-      "root": "√bhuj 1",
-      "meaning_pali": "use, eat, enjoy",
-      "meaning_thai": "",
-      "example": "bhuñjati, bubhukkhati, bhutta, bhoga, bhojetvā",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhuj 2": [
-    {
-      "root": "√bhuj 2",
-      "meaning_pali": "bend",
-      "meaning_thai": "",
-      "example": "ābhujati, ābhujitvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhus": [
-    {
-      "root": "√bhus",
-      "meaning_pali": "fall heavily",
-      "meaning_thai": "",
-      "example": "bhusa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhuss": [
-    {
-      "root": "√bhuss",
-      "meaning_pali": "bark",
-      "meaning_thai": "",
-      "example": "bhussati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhū": [
-    {
-      "root": "√bhū",
-      "meaning_pali": "be, become",
-      "meaning_thai": "",
-      "example": "bhavati, bhava, vibhava, bhūmi, bhāviyamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√bhūs": [
-    {
-      "root": "√bhūs",
-      "meaning_pali": "adorn, decorate",
-      "meaning_thai": "",
-      "example": "vibhūsana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√makkh": [
-    {
-      "root": "√makkh",
-      "meaning_pali": "rub, erase",
-      "meaning_thai": "",
-      "example": "makkheti, makkha, makkhaṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√magg": [
-    {
-      "root": "√magg",
-      "meaning_pali": "seek, search",
-      "meaning_thai": "",
-      "example": "maggeti, magga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√maṅg": [
-    {
-      "root": "√maṅg",
-      "meaning_pali": "be auspicious",
-      "meaning_thai": "",
-      "example": "maṅgalaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√majj": [
-    {
-      "root": "√majj",
-      "meaning_pali": "rub, polish",
-      "meaning_thai": "",
-      "example": "anumajjati, parimajjati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mañc": [
-    {
-      "root": "√mañc",
-      "meaning_pali": "hold up, support",
-      "meaning_thai": "",
-      "example": "mañca",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√maṇ": [
-    {
-      "root": "√maṇ",
-      "meaning_pali": "abandon",
-      "meaning_thai": "",
-      "example": "maṇati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√maṇḍ": [
-    {
-      "root": "√maṇḍ",
-      "meaning_pali": "adorn",
-      "meaning_thai": "",
-      "example": "maṇḍa, maṇḍana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√math": [
-    {
-      "root": "√math",
-      "meaning_pali": "churn, stir",
-      "meaning_thai": "",
-      "example": "mathita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mad": [
-    {
-      "root": "√mad",
-      "meaning_pali": "be mad, be intoxicated",
-      "meaning_thai": "",
-      "example": "pamajjati, pamatta, pamāda",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√madd": [
-    {
-      "root": "√madd",
-      "meaning_pali": "crush, grind",
-      "meaning_thai": "",
-      "example": "maddati, parimaddana, maddava",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√man": [
-    {
-      "root": "√man",
-      "meaning_pali": "think",
-      "meaning_thai": "",
-      "example": "maññati, atimānī, mano, mata, maññita",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mant": [
-    {
-      "root": "√mant",
-      "meaning_pali": "counsel, invite",
-      "meaning_thai": "",
-      "example": "mantayati, āmanteti, āmantetvā, manta",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√manth": [
-    {
-      "root": "√manth",
-      "meaning_pali": "churn, crush",
-      "meaning_thai": "",
-      "example": "abhimantheti, abhimatthati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mar": [
-    {
-      "root": "√mar",
-      "meaning_pali": "die",
-      "meaning_thai": "",
-      "example": "marati, mīyati, māretvā, maraṇa, amata, mata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√maris": [
-    {
-      "root": "√maris",
-      "meaning_pali": "be patient",
-      "meaning_thai": "",
-      "example": "marsayati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mal": [
-    {
-      "root": "√mal",
-      "meaning_pali": "dirty, stain",
-      "meaning_thai": "",
-      "example": "mala",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mas 1": [
-    {
-      "root": "√mas 1",
-      "meaning_pali": "touch, rub",
-      "meaning_thai": "",
-      "example": "āmasati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mas 2": [
-    {
-      "root": "√mas 2",
-      "meaning_pali": "buzz, hum",
-      "meaning_thai": "",
-      "example": "makasa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mah 1": [
-    {
-      "root": "√mah 1",
-      "meaning_pali": "increase",
-      "meaning_thai": "",
-      "example": "mahā, mahanta, mahisa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mah 2": [
-    {
-      "root": "√mah 2",
-      "meaning_pali": "venerate",
-      "meaning_thai": "",
-      "example": "mahati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mā": [
-    {
-      "root": "√mā",
-      "meaning_pali": "measure",
-      "meaning_thai": "",
-      "example": "mināti, mita",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mi": [
-    {
-      "root": "√mi",
-      "meaning_pali": "exchange, barter",
-      "meaning_thai": "",
-      "example": "mināti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√migh": [
-    {
-      "root": "√migh",
-      "meaning_pali": "sprinkle, shower",
-      "meaning_thai": "",
-      "example": "megha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mitt": [
-    {
-      "root": "√mitt",
-      "meaning_pali": "be friendly",
-      "meaning_thai": "",
-      "example": "mitta, mettā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mith": [
-    {
-      "root": "√mith",
-      "meaning_pali": "pair",
-      "meaning_thai": "",
-      "example": "methuna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mid": [
-    {
-      "root": "√mid",
-      "meaning_pali": "be fat",
-      "meaning_thai": "",
-      "example": "meda, medeti",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√milā": [
-    {
-      "root": "√milā",
-      "meaning_pali": "shrink, wither",
-      "meaning_thai": "",
-      "example": "sammilāta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mis": [
-    {
-      "root": "√mis",
-      "meaning_pali": "wink, blink",
-      "meaning_thai": "",
-      "example": "nimisati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√miss": [
-    {
-      "root": "√miss",
-      "meaning_pali": "mix, mingle",
-      "meaning_thai": "",
-      "example": "missa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mih 1": [
-    {
-      "root": "√mih 1",
-      "meaning_pali": "urinate, excrete",
-      "meaning_thai": "",
-      "example": "mīḷha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mih 2": [
-    {
-      "root": "√mih 2",
-      "meaning_pali": "smile, chuckle",
-      "meaning_thai": "",
-      "example": "mihita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mīl": [
-    {
-      "root": "√mīl",
-      "meaning_pali": "close eyes",
-      "meaning_thai": "",
-      "example": "ummīleti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√muc": [
-    {
-      "root": "√muc",
-      "meaning_pali": "release, free",
-      "meaning_thai": "",
-      "example": "muñcati, muñcita, mutti, āmutta",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mucch": [
-    {
-      "root": "√mucch",
-      "meaning_pali": "thicken, fixate",
-      "meaning_thai": "",
-      "example": "mucchati, mucchita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mujj": [
-    {
-      "root": "√mujj",
-      "meaning_pali": "dive, sink, submerge",
-      "meaning_thai": "",
-      "example": "mujjati, nimugga, ummagga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√muṇḍ": [
-    {
-      "root": "√muṇḍ",
-      "meaning_pali": "be bald, shave",
-      "meaning_thai": "",
-      "example": "muṇḍati, muṇḍaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mud": [
-    {
-      "root": "√mud",
-      "meaning_pali": "be soft, be happy",
-      "meaning_thai": "",
-      "example": "modati, mudita, sammodamāna, mudu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mun": [
-    {
-      "root": "√mun",
-      "meaning_pali": "think, know",
-      "meaning_thai": "",
-      "example": "munāti, muta, muni",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mus 1": [
-    {
-      "root": "√mus 1",
-      "meaning_pali": "lie, forget",
-      "meaning_thai": "",
-      "example": "mussati, muṭṭha, sammosa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mus 2": [
-    {
-      "root": "√mus 2",
-      "meaning_pali": "steal",
-      "meaning_thai": "",
-      "example": "mosa, mosana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√muh": [
-    {
-      "root": "√muh",
-      "meaning_pali": "be deluded, be confused",
-      "meaning_thai": "",
-      "example": "muyhati, moha, mūḷha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mūl": [
-    {
-      "root": "√mūl",
-      "meaning_pali": "support",
-      "meaning_thai": "",
-      "example": "mūla, mūlika, mūlya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√medh 1": [
-    {
-      "root": "√medh 1",
-      "meaning_pali": "be wise",
-      "meaning_thai": "",
-      "example": "medhā, sumedha, medhāvī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√medh 2": [
-    {
-      "root": "√medh 2",
-      "meaning_pali": "hurt, harm",
-      "meaning_thai": "",
-      "example": "medhaga, assamedha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mokkh": [
-    {
-      "root": "√mokkh",
-      "meaning_pali": "be freed",
-      "meaning_thai": "",
-      "example": "vimokkha, pātimokkha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mhi": [
-    {
-      "root": "√mhi",
-      "meaning_pali": "smile",
-      "meaning_thai": "",
-      "example": "vimhāpayati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yakkh": [
-    {
-      "root": "√yakkh",
-      "meaning_pali": "worship",
-      "meaning_thai": "",
-      "example": "yakkha",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yaj": [
-    {
-      "root": "√yaj",
-      "meaning_pali": "honour, sacrifice",
-      "meaning_thai": "",
-      "example": "yajati, yiṭṭha, yañña, yāga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yat 1": [
-    {
-      "root": "√yat 1",
-      "meaning_pali": "arrange, hand over",
-      "meaning_thai": "",
-      "example": "niyyāteti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yat 2": [
-    {
-      "root": "√yat 2",
-      "meaning_pali": "stretch, strive",
-      "meaning_thai": "",
-      "example": "yatati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yam 1": [
-    {
-      "root": "√yam 1",
-      "meaning_pali": "control, strive, end",
-      "meaning_thai": "",
-      "example": "yama, saññata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yam 2": [
-    {
-      "root": "√yam 2",
-      "meaning_pali": "support, stretch",
-      "meaning_thai": "",
-      "example": "yamati, anuppavecchati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yas": [
-    {
-      "root": "√yas",
-      "meaning_pali": "strive, struggle",
-      "meaning_thai": "",
-      "example": "āyāsa, upāyāsa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yā": [
-    {
-      "root": "√yā",
-      "meaning_pali": "go",
-      "meaning_thai": "",
-      "example": "niyyāti, upayāti, pariyāya, yātrā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yāc": [
-    {
-      "root": "√yāc",
-      "meaning_pali": "beg",
-      "meaning_thai": "",
-      "example": "yācati, yācaka, atiyācanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yu": [
-    {
-      "root": "√yu",
-      "meaning_pali": "unite, fasten",
-      "meaning_thai": "",
-      "example": "yuta, payuta, yoni",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yuj": [
-    {
-      "root": "√yuj",
-      "meaning_pali": "yoke, join",
-      "meaning_thai": "",
-      "example": "yuñjati, saṃyoga, saññojana",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yudh": [
-    {
-      "root": "√yudh",
-      "meaning_pali": "fight",
-      "meaning_thai": "",
-      "example": "yujjhati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yūh": [
-    {
-      "root": "√yūh",
-      "meaning_pali": "carry, bring",
-      "meaning_thai": "",
-      "example": "saṃyūhitvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rakkh": [
-    {
-      "root": "√rakkh",
-      "meaning_pali": "protect",
-      "meaning_thai": "",
-      "example": "rakkhati, rakkhita, ārakkhā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rac": [
-    {
-      "root": "√rac",
-      "meaning_pali": "prepare, arrange",
-      "meaning_thai": "",
-      "example": "racayitvā",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√raj 1": [
-    {
-      "root": "√raj 1",
-      "meaning_pali": "desire",
-      "meaning_thai": "",
-      "example": "rāga, virāga, abhivirājetvā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√raj 2": [
-    {
-      "root": "√raj 2",
-      "meaning_pali": "colour",
-      "meaning_thai": "",
-      "example": "rajata, viraja",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rañj": [
-    {
-      "root": "√rañj",
-      "meaning_pali": "dye, desire",
-      "meaning_thai": "",
-      "example": "raṅga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√raṇ": [
-    {
-      "root": "√raṇ",
-      "meaning_pali": "conflict, make war",
-      "meaning_thai": "",
-      "example": "saraṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√randh 1": [
-    {
-      "root": "√randh 1",
-      "meaning_pali": "cook",
-      "meaning_thai": "",
-      "example": "randhayi, randha",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√randh 2": [
-    {
-      "root": "√randh 2",
-      "meaning_pali": "hurt, wound",
-      "meaning_thai": "",
-      "example": "randhayi, randha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rabh 1": [
-    {
-      "root": "√rabh 1",
-      "meaning_pali": "begin",
-      "meaning_thai": "",
-      "example": "ārabhati, ārambha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rabh 2": [
-    {
-      "root": "√rabh 2",
-      "meaning_pali": "be aroused, be violent",
-      "meaning_thai": "",
-      "example": "sārambha, upārambha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ram 1": [
-    {
-      "root": "√ram 1",
-      "meaning_pali": "delight, please",
-      "meaning_thai": "",
-      "example": "ramati, ramaṇīya, ārāma",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ram 2": [
-    {
-      "root": "√ram 2",
-      "meaning_pali": "stop, abstain",
-      "meaning_thai": "",
-      "example": "viramati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ras": [
-    {
-      "root": "√ras",
-      "meaning_pali": "taste",
-      "meaning_thai": "",
-      "example": "rasa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rah": [
-    {
-      "root": "√rah",
-      "meaning_pali": "leave, desert",
-      "meaning_thai": "",
-      "example": "rahati, raho",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rāj": [
-    {
-      "root": "√rāj",
-      "meaning_pali": "rule, shine",
-      "meaning_thai": "",
-      "example": "rājati, rāja, rajja, raṭṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rādh": [
-    {
-      "root": "√rādh",
-      "meaning_pali": "succeed, please",
-      "meaning_thai": "",
-      "example": "virajjhati, ārādheti, ārādhetuṃ, ārādhana",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ric": [
-    {
-      "root": "√ric",
-      "meaning_pali": "empty",
-      "meaning_thai": "",
-      "example": "riñcati, ritta",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ris": [
-    {
-      "root": "√ris",
-      "meaning_pali": "hurt",
-      "meaning_thai": "",
-      "example": "ariṭṭḥa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ru": [
-    {
-      "root": "√ru",
-      "meaning_pali": "cry, howl",
-      "meaning_thai": "",
-      "example": "ravati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ruc": [
-    {
-      "root": "√ruc",
-      "meaning_pali": "shine, like",
-      "meaning_thai": "",
-      "example": "virocati, ruci",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ruj": [
-    {
-      "root": "√ruj",
-      "meaning_pali": "hurt, be painful",
-      "meaning_thai": "",
-      "example": "rujati, roga, rujā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rud": [
-    {
-      "root": "√rud",
-      "meaning_pali": "cry",
-      "meaning_thai": "",
-      "example": "rudati, rodati, ruṇṇa, ārodanā, viruta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rudh 1": [
-    {
-      "root": "√rudh 1",
-      "meaning_pali": "obstruct",
-      "meaning_thai": "",
-      "example": "rundhati, nirodha, nirujjhati, virujjhati",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rudh 2": [
-    {
-      "root": "√rudh 2",
-      "meaning_pali": "please, accept",
-      "meaning_thai": "",
-      "example": "anuruddha, anurujjhati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rup": [
-    {
-      "root": "√rup",
-      "meaning_pali": "be broken apart, hurt",
-      "meaning_thai": "",
-      "example": "ruppati, rupanna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rus": [
-    {
-      "root": "√rus",
-      "meaning_pali": "be angry",
-      "meaning_thai": "",
-      "example": "rosati, roseti, rosana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ruh": [
-    {
-      "root": "√ruh",
-      "meaning_pali": "ascend, grow",
-      "meaning_thai": "",
-      "example": "rūhati, oruhya, rukkha, ārohanīya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√rūp": [
-    {
-      "root": "√rūp",
-      "meaning_pali": "form, produce",
-      "meaning_thai": "",
-      "example": "rūpeti, rūpa, sarūpa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lakkh": [
-    {
-      "root": "√lakkh",
-      "meaning_pali": "mark",
-      "meaning_thai": "",
-      "example": "lakkheti, lakkhaṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lag": [
-    {
-      "root": "√lag",
-      "meaning_pali": "stick, adhere",
-      "meaning_thai": "",
-      "example": "olaggeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lagg": [
-    {
-      "root": "√lagg",
-      "meaning_pali": "stick, adhere",
-      "meaning_thai": "",
-      "example": "olaggeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lagh": [
-    {
-      "root": "√lagh",
-      "meaning_pali": "lift up, jump",
-      "meaning_thai": "",
-      "example": "laṅghati",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lajj": [
-    {
-      "root": "√lajj",
-      "meaning_pali": "be ashamed",
-      "meaning_thai": "",
-      "example": "lajjati, lajjāpeti, lajjī, nagga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lañch": [
-    {
-      "root": "√lañch",
-      "meaning_pali": "mark",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√lañch<sup>･</sup>1 bhūvādigaṇa + a (mark)</td></tr><tr><th>Bases:</th><td>lañcha, lañche (caus), lacche (caus, irreg)</td></tr><tr><th>Dhātupātha:</th><td>lañcha <i>lakkhaṇe</i> (marking, distinguishing) #54</td></tr><tr><th>Dhātumañjūsa:</th><td>lañcha <i>lakkhaṇe</i> (marking, distinguishing) #63</td></tr><tr><th>Saddanīti:</th><td>-</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√lach 1 (mark)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td>-</td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lap": [
-    {
-      "root": "√lap",
-      "meaning_pali": "speak, chat",
-      "meaning_thai": "",
-      "example": "lapati, ālapati, lapanā, palāpa, lapita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√labh": [
-    {
-      "root": "√labh",
-      "meaning_pali": "get",
-      "meaning_thai": "",
-      "example": "labhati, lacchati, alattha, paṭilābha, suladdha, laddha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lamb": [
-    {
-      "root": "√lamb",
-      "meaning_pali": "hang",
-      "meaning_thai": "",
-      "example": "lambati, olambaka, ārammaṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√las": [
-    {
-      "root": "√las",
-      "meaning_pali": "shine, be active",
-      "meaning_thai": "",
-      "example": "alasa, alasatā, ālasiya, anālasya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√laḷ": [
-    {
-      "root": "√laḷ",
-      "meaning_pali": "play, move about",
-      "meaning_thai": "",
-      "example": "nillāḷetvā, palaḷita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√likh": [
-    {
-      "root": "√likh",
-      "meaning_pali": "scratch, write",
-      "meaning_thai": "",
-      "example": "likhati, lekhana, likhita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√liṅg 1": [
-    {
-      "root": "√liṅg 1",
-      "meaning_pali": "embrace",
-      "meaning_thai": "",
-      "example": "āliṅgati, lingiya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√liṅg 2": [
-    {
-      "root": "√liṅg 2",
-      "meaning_pali": "differentiate sexually",
-      "meaning_thai": "",
-      "example": "liṅga",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lip": [
-    {
-      "root": "√lip",
-      "meaning_pali": "coat, smear",
-      "meaning_thai": "",
-      "example": "lipati, limpati, lippati, lipi, ullitta, palipa, avalitta",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lis": [
-    {
-      "root": "√lis",
-      "meaning_pali": "be small",
-      "meaning_thai": "",
-      "example": "lesa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lih": [
-    {
-      "root": "√lih",
-      "meaning_pali": "lick, lap",
-      "meaning_thai": "",
-      "example": "apalekhana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lī 1": [
-    {
-      "root": "√lī 1",
-      "meaning_pali": "stick, hide",
-      "meaning_thai": "",
-      "example": "sallīnaṃ, paṭisallīna, līna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lī 2": [
-    {
-      "root": "√lī 2",
-      "meaning_pali": "stick, hide",
-      "meaning_thai": "",
-      "example": "lināti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lu": [
-    {
-      "root": "√lu",
-      "meaning_pali": "cut, reap, mow",
-      "meaning_thai": "",
-      "example": "lunāti, lūyi, lavana, lāyaka",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√luj": [
-    {
-      "root": "√luj",
-      "meaning_pali": "be broken apart",
-      "meaning_thai": "",
-      "example": "palujjati, lugga, paloka",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√luñc": [
-    {
-      "root": "√luñc",
-      "meaning_pali": "pluck out, tear",
-      "meaning_thai": "",
-      "example": "luñcati, locaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lup": [
-    {
-      "root": "√lup",
-      "meaning_pali": "cut off, rob",
-      "meaning_thai": "",
-      "example": "lumpati, ālopa, lopa, nilopa, vilopaka",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lubh 1": [
-    {
-      "root": "√lubh 1",
-      "meaning_pali": "be greedy",
-      "meaning_thai": "",
-      "example": "lubbhati, luddha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lubh 2": [
-    {
-      "root": "√lubh 2",
-      "meaning_pali": "fool, bewilder",
-      "meaning_thai": "",
-      "example": "palobhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√luḷ": [
-    {
-      "root": "√luḷ",
-      "meaning_pali": "agitate, be greedy",
-      "meaning_thai": "",
-      "example": "loḷeti, loḷa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lok": [
-    {
-      "root": "√lok",
-      "meaning_pali": "look",
-      "meaning_thai": "",
-      "example": "viloketi, ālokita, āloka",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√loc": [
-    {
-      "root": "√loc",
-      "meaning_pali": "see, illuminate",
-      "meaning_thai": "",
-      "example": "locita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sak": [
-    {
-      "root": "√sak",
-      "meaning_pali": "be able, be powerful",
-      "meaning_thai": "",
-      "example": "sakkuṇāti, sakkoti, asakkonta, sakka, sakkā",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sakk": [
-    {
-      "root": "√sakk",
-      "meaning_pali": "move",
-      "meaning_thai": "",
-      "example": "osakkati, apasakkana, paccosakkanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṅk": [
-    {
-      "root": "√saṅk",
-      "meaning_pali": "doubt, suspect",
-      "meaning_thai": "",
-      "example": "saṅkati, saṅkā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saj 1": [
-    {
-      "root": "√saj 1",
-      "meaning_pali": "stick, cling",
-      "meaning_thai": "",
-      "example": "sajjati, visattikā, paṭinissagga, asajjamāna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saj 2": [
-    {
-      "root": "√saj 2",
-      "meaning_pali": "relinquish, let loose",
-      "meaning_thai": "",
-      "example": "sajati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saj 3": [
-    {
-      "root": "√saj 3",
-      "meaning_pali": "embrace",
-      "meaning_thai": "",
-      "example": "sajati, sajantaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sajj 1": [
-    {
-      "root": "√sajj 1",
-      "meaning_pali": "relinquish, let loose",
-      "meaning_thai": "",
-      "example": "vissajjeti, vissajjaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sajj 2": [
-    {
-      "root": "√sajj 2",
-      "meaning_pali": "prepare, decorate",
-      "meaning_thai": "",
-      "example": "sajjeti, sajjiya",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sañj": [
-    {
-      "root": "√sañj",
-      "meaning_pali": "clasp, embrace",
-      "meaning_thai": "",
-      "example": "sañjati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṭ": [
-    {
-      "root": "√saṭ",
-      "meaning_pali": "split",
-      "meaning_thai": "",
-      "example": "sāṭetar",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṭh": [
-    {
-      "root": "√saṭh",
-      "meaning_pali": "deceive",
-      "meaning_thai": "",
-      "example": "saṭha, sāṭheyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṇ": [
-    {
-      "root": "√saṇ",
-      "meaning_pali": "make sound",
-      "meaning_thai": "",
-      "example": "saṇati, saṇanta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sad": [
-    {
-      "root": "√sad",
-      "meaning_pali": "sink, sit, settle",
-      "meaning_thai": "",
-      "example": "nisīdati, nisajja, nisinna, pāsāda",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sadd": [
-    {
-      "root": "√sadd",
-      "meaning_pali": "sound",
-      "meaning_thai": "",
-      "example": "sadda, saddita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√san": [
-    {
-      "root": "√san",
-      "meaning_pali": "like, love",
-      "meaning_thai": "",
-      "example": "sāta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sand": [
-    {
-      "root": "√sand",
-      "meaning_pali": "flow",
-      "meaning_thai": "",
-      "example": "sandati, parisandeti, nissanda 1",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sap": [
-    {
-      "root": "√sap",
-      "meaning_pali": "curse",
-      "meaning_thai": "",
-      "example": "sapati, abhisapita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sapp": [
-    {
-      "root": "√sapp",
-      "meaning_pali": "crawl",
-      "meaning_thai": "",
-      "example": "sappati, sappa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sam 1": [
-    {
-      "root": "√sam 1",
-      "meaning_pali": "be calm, be tired",
-      "meaning_thai": "",
-      "example": "sammati, paṭisāmeti, samaṇa, vūpasanta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sam 2": [
-    {
-      "root": "√sam 2",
-      "meaning_pali": "exert, strive",
-      "meaning_thai": "",
-      "example": "samaṇa",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sambh 1": [
-    {
-      "root": "√sambh 1",
-      "meaning_pali": "be calm, be confident",
-      "meaning_thai": "",
-      "example": "passambhati, passaddha, paṭippassaddhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sambh 2": [
-    {
-      "root": "√sambh 2",
-      "meaning_pali": "reach, attain",
-      "meaning_thai": "",
-      "example": "abhisambhunāti",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sar 1": [
-    {
-      "root": "√sar 1",
-      "meaning_pali": "go, flow",
-      "meaning_thai": "",
-      "example": "anusarati, sara, saṃsāra",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sar 2": [
-    {
-      "root": "√sar 2",
-      "meaning_pali": "remember",
-      "meaning_thai": "",
-      "example": "anussarati, vippaṭisāra",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sar 3": [
-    {
-      "root": "√sar 3",
-      "meaning_pali": "make sound",
-      "meaning_thai": "",
-      "example": "sara",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sar 4": [
-    {
-      "root": "√sar 4",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "sagga",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sar 5": [
-    {
-      "root": "√sar 5",
-      "meaning_pali": "hurt, injure",
-      "meaning_thai": "",
-      "example": "sarabha, sara, sarita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sas 1": [
-    {
-      "root": "√sas 1",
-      "meaning_pali": "breath",
-      "meaning_thai": "",
-      "example": "passasati, samassāseti, assāso",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sas 2": [
-    {
-      "root": "√sas 2",
-      "meaning_pali": "slaughter",
-      "meaning_thai": "",
-      "example": "sasati, sasattha, sattha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sah 1": [
-    {
-      "root": "√sah 1",
-      "meaning_pali": "overcome, prevail",
-      "meaning_thai": "",
-      "example": "sahati, visahati, saha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sah 2": [
-    {
-      "root": "√sah 2",
-      "meaning_pali": "be able",
-      "meaning_thai": "",
-      "example": "visahati, visayha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṃs 1": [
-    {
-      "root": "√saṃs 1",
-      "meaning_pali": "proclaim, praise",
-      "meaning_thai": "",
-      "example": "pasaṃsati, pāsaṃsa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√saṃs 2": [
-    {
-      "root": "√saṃs 2",
-      "meaning_pali": "wish, desire",
-      "meaning_thai": "",
-      "example": "āsaṃsa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sā": [
-    {
-      "root": "√sā",
-      "meaning_pali": "complete, accomplish",
-      "meaning_thai": "",
-      "example": "pariyosāpeti, sāyaṃ, pariyosāna, susāna, vivasāna, vosita, vusita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sād": [
-    {
-      "root": "√sād",
-      "meaning_pali": "taste, relish",
-      "meaning_thai": "",
-      "example": "assādeti, sādiyati, assāda",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sādh": [
-    {
-      "root": "√sādh",
-      "meaning_pali": "accomplish",
-      "meaning_thai": "",
-      "example": "sādhu, sādhukaṃ, sajjhu",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sāy": [
-    {
-      "root": "√sāy",
-      "meaning_pali": "taste",
-      "meaning_thai": "",
-      "example": "sāyati, sāyitvā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sās": [
-    {
-      "root": "√sās",
-      "meaning_pali": "order, instruct",
-      "meaning_thai": "",
-      "example": "sāsati, anusāsanī, satthu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√si 1": [
-    {
-      "root": "√si 1",
-      "meaning_pali": "depend on, associate with",
-      "meaning_thai": "",
-      "example": "upasevati, upanisā, nissāya, nisevita, ussāpeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√si 2": [
-    {
-      "root": "√si 2",
-      "meaning_pali": "bind",
-      "meaning_thai": "",
-      "example": "sināti, visineti, simā",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√si 3": [
-    {
-      "root": "√si 3",
-      "meaning_pali": "sharpen",
-      "meaning_thai": "",
-      "example": "nisita",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√si 4": [
-    {
-      "root": "√si 4",
-      "meaning_pali": "smile",
-      "meaning_thai": "",
-      "example": "sita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sikkh": [
-    {
-      "root": "√sikkh",
-      "meaning_pali": "learn, train",
-      "meaning_thai": "",
-      "example": "sikkhati, sikkhā, sikkhāpeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√siṅgh": [
-    {
-      "root": "√siṅgh",
-      "meaning_pali": "sniff, smell",
-      "meaning_thai": "",
-      "example": "siṅghati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sic": [
-    {
-      "root": "√sic",
-      "meaning_pali": "sprinkle, pour",
-      "meaning_thai": "",
-      "example": "siñcati, asecanaka, sitvā abhisecana",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sit": [
-    {
-      "root": "√sit",
-      "meaning_pali": "be white",
-      "meaning_thai": "",
-      "example": "sita, seta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sid 1": [
-    {
-      "root": "√sid 1",
-      "meaning_pali": "sweat, steam",
-      "meaning_thai": "",
-      "example": "sijjati, parisedeti",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sid 2": [
-    {
-      "root": "√sid 2",
-      "meaning_pali": "be cool",
-      "meaning_thai": "",
-      "example": "sīta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sidh 1": [
-    {
-      "root": "√sidh 1",
-      "meaning_pali": "prevent, prohibit",
-      "meaning_thai": "",
-      "example": "nisedha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sidh 2": [
-    {
-      "root": "√sidh 2",
-      "meaning_pali": "succeed, be accomplished",
-      "meaning_thai": "",
-      "example": "siddhi",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sinā": [
-    {
-      "root": "√sinā",
-      "meaning_pali": "bathe",
-      "meaning_thai": "",
-      "example": "sināti, sināta, sināna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√silāgh": [
-    {
-      "root": "√silāgh",
-      "meaning_pali": "boast",
-      "meaning_thai": "",
-      "example": "<table class='root_info'><tbody><tr><th>Pāḷi Root:</th><td>√silāgh<sup>･</sup>1 bhūvādigaṇa + a (boast)</td></tr><tr><th>Base:</th><td>silāgha</td></tr><tr><th>Dhātupātha:</th><td>silāgha <i>katthane  / kathane</i> (boasting, telling) #30</td></tr><tr><th>Dhātumañjūsa:</th><td>silāgha <i>katthane</i> (boasting) #37</td></tr><tr><th>Saddanīti:</th><td>silāgha <i>katthane</i> (praising (pasaṃsana))</td></tr><tr><th>Sanskrit Root:</th><td><span class='gray'>√ślāgh 1 (extol)</span></td></tr><tr><th>Pāṇinīya Dhātupāṭha:</th><td><span class='gray'>ślāgh ṛ <i>katthane</i> (boasting)</span></td></tr></tbody></table>",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√silis": [
-    {
-      "root": "√silis",
-      "meaning_pali": "embrace, cling",
-      "meaning_thai": "",
-      "example": "siliṭṭha, siliṭṭhatā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√silok": [
-    {
-      "root": "√silok",
-      "meaning_pali": "be famous",
-      "meaning_thai": "",
-      "example": "siloka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sis": [
-    {
-      "root": "√sis",
-      "meaning_pali": "remain, distinguish",
-      "meaning_thai": "",
-      "example": "seseti, sesa, avasesa, avasiṭṭha",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√siv 1": [
-    {
-      "root": "√siv 1",
-      "meaning_pali": "sew",
-      "meaning_thai": "",
-      "example": "sutta",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√siv 2": [
-    {
-      "root": "√siv 2",
-      "meaning_pali": "warm",
-      "meaning_thai": "",
-      "example": "visibbana",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√siḷ": [
-    {
-      "root": "√siḷ",
-      "meaning_pali": "whistle",
-      "meaning_thai": "",
-      "example": "seḷeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√siṃs": [
-    {
-      "root": "√siṃs",
-      "meaning_pali": "hope, wish",
-      "meaning_thai": "",
-      "example": "āsiṃsati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sī": [
-    {
-      "root": "√sī",
-      "meaning_pali": "lie, sleep",
-      "meaning_thai": "",
-      "example": "seti, sayati, sena, sayana, anusaya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sīl": [
-    {
-      "root": "√sīl",
-      "meaning_pali": "conduct oneself",
-      "meaning_thai": "",
-      "example": "sīla, sīlana, sīlavantu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√su 1": [
-    {
-      "root": "√su 1",
-      "meaning_pali": "hear",
-      "meaning_thai": "",
-      "example": "suṇāti, sota, suta, sāvaka, sāvetu",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√su 2": [
-    {
-      "root": "√su 2",
-      "meaning_pali": "flow",
-      "meaning_thai": "",
-      "example": "savati, sota, āsava, passāva",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√su 3": [
-    {
-      "root": "√su 3",
-      "meaning_pali": "extract, distil",
-      "meaning_thai": "",
-      "example": "surā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√su 4": [
-    {
-      "root": "√su 4",
-      "meaning_pali": "generate, beget",
-      "meaning_thai": "",
-      "example": "sutā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sukh": [
-    {
-      "root": "√sukh",
-      "meaning_pali": "please, be comfortable",
-      "meaning_thai": "",
-      "example": "sukhī, sukha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√suc 1": [
-    {
-      "root": "√suc 1",
-      "meaning_pali": "grieve",
-      "meaning_thai": "",
-      "example": "socati, suci, parisoka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√suc 2": [
-    {
-      "root": "√suc 2",
-      "meaning_pali": "be pure, be bright",
-      "meaning_thai": "",
-      "example": "suci, soceyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sudh": [
-    {
-      "root": "√sudh",
-      "meaning_pali": "be pure",
-      "meaning_thai": "",
-      "example": "parisujjhati, visuddha, sodhāpetvā",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sup": [
-    {
-      "root": "√sup",
-      "meaning_pali": "lie down, sleep",
-      "meaning_thai": "",
-      "example": "supati, supina, sutta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√subh": [
-    {
-      "root": "√subh",
-      "meaning_pali": "shine, adorn",
-      "meaning_thai": "",
-      "example": "sobhati, sobhana, asubha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sumbh": [
-    {
-      "root": "√sumbh",
-      "meaning_pali": "throw, strike",
-      "meaning_thai": "",
-      "example": "upasumbhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sur": [
-    {
-      "root": "√sur",
-      "meaning_pali": "shine, be supreme",
-      "meaning_thai": "",
-      "example": "sūra, asura",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sus": [
-    {
-      "root": "√sus",
-      "meaning_pali": "dry, wither",
-      "meaning_thai": "",
-      "example": "sukkha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sūc": [
-    {
-      "root": "√sūc",
-      "meaning_pali": "indicate",
-      "meaning_thai": "",
-      "example": "sūcayati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sūd": [
-    {
-      "root": "√sūd",
-      "meaning_pali": "set in order",
-      "meaning_thai": "",
-      "example": "sūdanī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sev": [
-    {
-      "root": "√sev",
-      "meaning_pali": "serve, associate",
-      "meaning_thai": "",
-      "example": "sevanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√snih": [
-    {
-      "root": "√snih",
-      "meaning_pali": "love, be moist",
-      "meaning_thai": "",
-      "example": "sneha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vagg": [
-    {
-      "root": "√vagg",
-      "meaning_pali": "dance, jump",
-      "meaning_thai": "",
-      "example": "vaggu?",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vac": [
-    {
-      "root": "√vac",
-      "meaning_pali": "say, speak",
-      "meaning_thai": "",
-      "example": "pavuccati, avoca, vāca, avacanīya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaj": [
-    {
-      "root": "√vaj",
-      "meaning_pali": "go on",
-      "meaning_thai": "",
-      "example": "pabbajati, pabbajā, pabbajita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vajj": [
-    {
-      "root": "√vajj",
-      "meaning_pali": "turn, avoid",
-      "meaning_thai": "",
-      "example": "vajjeti, vajja, parivajjati",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vañc 1": [
-    {
-      "root": "√vañc 1",
-      "meaning_pali": "be bent, deceive",
-      "meaning_thai": "",
-      "example": "vañceti, vañcana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vañc 2": [
-    {
-      "root": "√vañc 2",
-      "meaning_pali": "go around",
-      "meaning_thai": "",
-      "example": "vañcati, avañcana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaṭ": [
-    {
-      "root": "√vaṭ",
-      "meaning_pali": "divide",
-      "meaning_thai": "",
-      "example": "vaṭa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaṭṭ": [
-    {
-      "root": "√vaṭṭ",
-      "meaning_pali": "turn",
-      "meaning_thai": "",
-      "example": "vaṭṭati, vivaṭṭa, anāvattī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaḍḍh": [
-    {
-      "root": "√vaḍḍh",
-      "meaning_pali": "grow, increase",
-      "meaning_thai": "",
-      "example": "pavaḍḍhati, saṃvaḍḍha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaṇ": [
-    {
-      "root": "√vaṇ",
-      "meaning_pali": "injure, wound",
-      "meaning_thai": "",
-      "example": "vaṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaṇṇ": [
-    {
-      "root": "√vaṇṇ",
-      "meaning_pali": "praise",
-      "meaning_thai": "",
-      "example": "saṃvaṇṇeti, vaṇṇita, vaṇṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vat": [
-    {
-      "root": "√vat",
-      "meaning_pali": "be, proceed",
-      "meaning_thai": "",
-      "example": "vata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vatt": [
-    {
-      "root": "√vatt",
-      "meaning_pali": "be, proceed",
-      "meaning_thai": "",
-      "example": "saṃvattati, samativattati, pavattati, abhinibbatti, nibbattetvā, upavattana, vatta",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vad 1": [
-    {
-      "root": "√vad 1",
-      "meaning_pali": "say, speak",
-      "meaning_thai": "",
-      "example": "vādaka, vattu, vākkaraṇa, upavādaka, vādayati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vad 2": [
-    {
-      "root": "√vad 2",
-      "meaning_pali": "salute, praise",
-      "meaning_thai": "",
-      "example": "abhivādeti, visaṃvādana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaddh": [
-    {
-      "root": "√vaddh",
-      "meaning_pali": "grow, increase",
-      "meaning_thai": "",
-      "example": "vuddhi",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vadh": [
-    {
-      "root": "√vadh",
-      "meaning_pali": "hurt, slaughter",
-      "meaning_thai": "",
-      "example": "attharaṇa",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√van": [
-    {
-      "root": "√van",
-      "meaning_pali": "like, desire",
-      "meaning_thai": "",
-      "example": "vanatha",
-      "group": 7,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vand": [
-    {
-      "root": "√vand",
-      "meaning_pali": "bow, honour",
-      "meaning_thai": "",
-      "example": "vandati, vandana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vap": [
-    {
-      "root": "√vap",
-      "meaning_pali": "sow, shave",
-      "meaning_thai": "",
-      "example": "vapati, uddāpa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vam": [
-    {
-      "root": "√vam",
-      "meaning_pali": "eject, vomit",
-      "meaning_thai": "",
-      "example": "vamati, vamathu",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vambh": [
-    {
-      "root": "√vambh",
-      "meaning_pali": "despise",
-      "meaning_thai": "",
-      "example": "vambheti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√var 1": [
-    {
-      "root": "√var 1",
-      "meaning_pali": "cover, dress, restrain",
-      "meaning_thai": "",
-      "example": "saṃvarati, vivarati, avāpurīyati, saṃvara, vaṇṇa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√var 2": [
-    {
-      "root": "√var 2",
-      "meaning_pali": "wish, choose",
-      "meaning_thai": "",
-      "example": "pavāreti, pavāraṇā, varaṃ",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√val": [
-    {
-      "root": "√val",
-      "meaning_pali": "turn",
-      "meaning_thai": "",
-      "example": "vallī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vall": [
-    {
-      "root": "√vall",
-      "meaning_pali": "turn",
-      "meaning_thai": "",
-      "example": "vallī",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vas 1": [
-    {
-      "root": "√vas 1",
-      "meaning_pali": "live",
-      "meaning_thai": "",
-      "example": "vasati, ajjhāvasati, nivāsa, vāsī, vatthu 2",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vas 2": [
-    {
-      "root": "√vas 2",
-      "meaning_pali": "wear, dress",
-      "meaning_thai": "",
-      "example": "nivāseti, vattha, nivāsana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vas 3": [
-    {
-      "root": "√vas 3",
-      "meaning_pali": "want, control",
-      "meaning_thai": "",
-      "example": "vasa, avassaṃ",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vass 1": [
-    {
-      "root": "√vass 1",
-      "meaning_pali": "rain",
-      "meaning_thai": "",
-      "example": "vassati, vassāna, vuṭṭha",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vass 2": [
-    {
-      "root": "√vass 2",
-      "meaning_pali": "howl, roar, bark",
-      "meaning_thai": "",
-      "example": "vassati, vassamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vah": [
-    {
-      "root": "√vah",
-      "meaning_pali": "carry, bring",
-      "meaning_thai": "",
-      "example": "vahati, vuyhati, vārivaho",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vaḷañj": [
-    {
-      "root": "√vaḷañj",
-      "meaning_pali": "use",
-      "meaning_thai": "",
-      "example": "vaḷañjanaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vā": [
-    {
-      "root": "√vā",
-      "meaning_pali": "blow, emit odour",
-      "meaning_thai": "",
-      "example": "pavāti, vāya, vāta, paṭivāpetvā, nibbāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vās": [
-    {
-      "root": "√vās",
-      "meaning_pali": "perfume",
-      "meaning_thai": "",
-      "example": "vāsita",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vi": [
-    {
-      "root": "√vi",
-      "meaning_pali": "weave",
-      "meaning_thai": "",
-      "example": "vināti",
-      "group": 5,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vic": [
-    {
-      "root": "√vic",
-      "meaning_pali": "separate",
-      "meaning_thai": "",
-      "example": "vivitta, viveka, vivicca",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vij": [
-    {
-      "root": "√vij",
-      "meaning_pali": "shake, be afraid, be in awe",
-      "meaning_thai": "",
-      "example": "saṃvijjati, saṃvega",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 1": [
-    {
-      "root": "√vid 1",
-      "meaning_pali": "know, sense, feel",
-      "meaning_thai": "",
-      "example": "vedeti, vedanā, paṭisaṃvedī",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 2": [
-    {
-      "root": "√vid 2",
-      "meaning_pali": "know",
-      "meaning_thai": "",
-      "example": "vidū, pavedeti, pavedita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 3": [
-    {
-      "root": "√vid 3",
-      "meaning_pali": "feel, like",
-      "meaning_thai": "",
-      "example": "vindati, nibbidā, vitta",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 4": [
-    {
-      "root": "√vid 4",
-      "meaning_pali": "get, find",
-      "meaning_thai": "",
-      "example": "vindati, vitta",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 5": [
-    {
-      "root": "√vid 5",
-      "meaning_pali": "know, understand",
-      "meaning_thai": "",
-      "example": "anuvijjati, vijjā, tevijja",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vid 6": [
-    {
-      "root": "√vid 6",
-      "meaning_pali": "be found, exist",
-      "meaning_thai": "",
-      "example": "vijjati, saṃvijjamāna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vidh": [
-    {
-      "root": "√vidh",
-      "meaning_pali": "throw, pierce",
-      "meaning_thai": "",
-      "example": "abhinibbijjhati, paṭivedha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vis 1": [
-    {
-      "root": "√vis 1",
-      "meaning_pali": "enter",
-      "meaning_thai": "",
-      "example": "pavisati, nibbisati, nivesana, anibbisanta, pavesetu, pavekkhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vis 2": [
-    {
-      "root": "√vis 2",
-      "meaning_pali": "be active, serve",
-      "meaning_thai": "",
-      "example": "visa",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vī": [
-    {
-      "root": "√vī",
-      "meaning_pali": "go",
-      "meaning_thai": "",
-      "example": "paṭivāpeti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vīj": [
-    {
-      "root": "√vīj",
-      "meaning_pali": "fan",
-      "meaning_thai": "",
-      "example": "bījiyamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vīr": [
-    {
-      "root": "√vīr",
-      "meaning_pali": "be heroic, be hostile",
-      "meaning_thai": "",
-      "example": "vīra, vīriya",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vu": [
-    {
-      "root": "√vu",
-      "meaning_pali": "weave, cover",
-      "meaning_thai": "",
-      "example": "āvuṇāti",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ve": [
-    {
-      "root": "√ve",
-      "meaning_pali": "weave",
-      "meaning_thai": "",
-      "example": "vāyati, āveṇika",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√veṭh": [
-    {
-      "root": "√veṭh",
-      "meaning_pali": "wind, twist",
-      "meaning_thai": "",
-      "example": "paliveṭheti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vedh": [
-    {
-      "root": "√vedh",
-      "meaning_pali": "shake, fear",
-      "meaning_thai": "",
-      "example": "pavedhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vell": [
-    {
-      "root": "√vell",
-      "meaning_pali": "shake, sway",
-      "meaning_thai": "",
-      "example": "paveliyamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vyath": [
-    {
-      "root": "√vyath",
-      "meaning_pali": "fear, shake",
-      "meaning_thai": "",
-      "example": "pavedhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vyadh": [
-    {
-      "root": "√vyadh",
-      "meaning_pali": "strike, pierce",
-      "meaning_thai": "",
-      "example": "vyādha",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√vhe": [
-    {
-      "root": "√vhe",
-      "meaning_pali": "call, name",
-      "meaning_thai": "",
-      "example": "avhayati, avhāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√had": [
-    {
-      "root": "√had",
-      "meaning_pali": "excrete",
-      "meaning_thai": "",
-      "example": "hadati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√han": [
-    {
-      "root": "√han",
-      "meaning_pali": "strike, kill",
-      "meaning_thai": "",
-      "example": "hanati, haññati, upahata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√har 1": [
-    {
-      "root": "√har 1",
-      "meaning_pali": "carry",
-      "meaning_thai": "",
-      "example": "nīharati, āharati, uddharati, pāṭihāriya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√har 2": [
-    {
-      "root": "√har 2",
-      "meaning_pali": "take, seize",
-      "meaning_thai": "",
-      "example": "paharati, hara, uddhata",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√har 3": [
-    {
-      "root": "√har 3",
-      "meaning_pali": "live",
-      "meaning_thai": "",
-      "example": "viharati, vihāra, pariharati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√har 4": [
-    {
-      "root": "√har 4",
-      "meaning_pali": "be ashamed",
-      "meaning_thai": "",
-      "example": "harāyati",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√has": [
-    {
-      "root": "√has",
-      "meaning_pali": "elate, laugh",
-      "meaning_thai": "",
-      "example": "pahasati, , hassati, hāsa, hāsakāle",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√haṃs": [
-    {
-      "root": "√haṃs",
-      "meaning_pali": "rise, elate",
-      "meaning_thai": "",
-      "example": "pahaṃsati, sampahaṃsana",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hā 1": [
-    {
-      "root": "√hā 1",
-      "meaning_pali": "abandon",
-      "meaning_thai": "",
-      "example": "jahati, vihāyati, hitvā, hāni, pahīna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hā 2": [
-    {
-      "root": "√hā 2",
-      "meaning_pali": "decrease",
-      "meaning_thai": "",
-      "example": "hāyati, hāni, saṃhāni, hīna",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hi 1": [
-    {
-      "root": "√hi 1",
-      "meaning_pali": "send",
-      "meaning_thai": "",
-      "example": "pahiṇāti, pahiṇana",
-      "group": 4,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hi 2": [
-    {
-      "root": "√hi 2",
-      "meaning_pali": "impel",
-      "meaning_thai": "",
-      "example": "hetu",
-      "group": 7,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hiṇḍ": [
-    {
-      "root": "√hiṇḍ",
-      "meaning_pali": "roam, wander",
-      "meaning_thai": "",
-      "example": "āhiṇḍati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hir": [
-    {
-      "root": "√hir",
-      "meaning_pali": "be ashamed",
-      "meaning_thai": "",
-      "example": "hiri",
-      "group": 3,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√his": [
-    {
-      "root": "√his",
-      "meaning_pali": "hurt, harm",
-      "meaning_thai": "",
-      "example": "hiṃsati, ahiṃsa, vihiṃsā",
-      "group": 2,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hīḷ": [
-    {
-      "root": "√hīḷ",
-      "meaning_pali": "scorn",
-      "meaning_thai": "",
-      "example": "hīḷeti",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hu": [
-    {
-      "root": "√hu",
-      "meaning_pali": "pour, offer as oblation",
-      "meaning_thai": "",
-      "example": "juhati, huta, āhuti, āhuneyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hū": [
-    {
-      "root": "√hū",
-      "meaning_pali": "be",
-      "meaning_thai": "",
-      "example": "hoti, ahu, hupeyya",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√heṭh": [
-    {
-      "root": "√heṭh",
-      "meaning_pali": "harass, annoy",
-      "meaning_thai": "",
-      "example": "viheṭheti, viheṭha, heṭhaka",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√sadh": [
-    {
-      "root": "√sadh",
-      "meaning_pali": "mock, ridicule",
-      "meaning_thai": "",
-      "example": "sadhāyamāna",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√gandh": [
-    {
-      "root": "√gandh",
-      "meaning_pali": "hurt, harm",
-      "meaning_thai": "",
-      "example": "gandhana",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√yant": [
-    {
-      "root": "√yant",
-      "meaning_pali": "bind",
-      "meaning_thai": "",
-      "example": "yantra",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√ukkh": [
-    {
-      "root": "√ukkh",
-      "meaning_pali": "sprinkle, pour",
-      "meaning_thai": "",
-      "example": "okkhita",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√khandh": [
-    {
-      "root": "√khandh",
-      "meaning_pali": "collect, accumulate",
-      "meaning_thai": "",
-      "example": "khandha",
-      "group": 8,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√hikk": [
-    {
-      "root": "√hikk",
-      "meaning_pali": "hiccup",
-      "meaning_thai": "",
-      "example": "hikkā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√lā": [
-    {
-      "root": "√lā",
-      "meaning_pali": "take",
-      "meaning_thai": "",
-      "example": "lāti",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√haṭ": [
-    {
-      "root": "√haṭ",
-      "meaning_pali": "shine",
-      "meaning_thai": "",
-      "example": "haṭaka",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√nādh": [
-    {
-      "root": "√nādh",
-      "meaning_pali": "beg",
-      "meaning_thai": "",
-      "example": "nādhati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√mas 3": [
-    {
-      "root": "√mas 3",
-      "meaning_pali": "harm, destroy",
-      "meaning_thai": "",
-      "example": "masanā",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√phuṇ": [
-    {
-      "root": "√phuṇ",
-      "meaning_pali": "suffers",
-      "meaning_thai": "",
-      "example": "phuṇati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ],
-  "√kiñc": [
-    {
-      "root": "√kiñc",
-      "meaning_pali": "crush",
-      "meaning_thai": "",
-      "example": "kiñcati",
-      "group": 1,
-      "page": "",
-      "source": "DPD"
-    }
-  ]
-};
+export const dpdRoots = [
+  {
+    "root_pali": "อกฺขฺ",
+    "root_roman": "akkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "see",
+    "meaning_pali": "พฺยตฺติ-สงฺขาเตสุ",
+    "udaharana": [
+      "อกฺขิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อคฺคฺ",
+    "root_roman": "agg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move crookedly",
+    "meaning_pali": "คติ-โกฏิลฺเล",
+    "udaharana": [
+      "อคฺคิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อคฺฆฺ",
+    "root_roman": "aggh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be worth",
+    "meaning_pali": "อคฺฆเน",
+    "udaharana": [
+      "อคฺฆติ",
+      "อคฺฆียติ",
+      "อคฺฆ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "องฺคฺ",
+    "root_roman": "aṅg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "walk",
+    "meaning_pali": "คมนตฺถา",
+    "udaharana": [
+      "องฺคณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อจฺจฺ 1",
+    "root_roman": "acc 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, praise",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "อจฺฉ",
+      "อจฺจิ",
+      "อจฺจี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อจฺจฺ 2",
+    "root_roman": "acc 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "worship",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "อจฺเจติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อชฺ",
+    "root_roman": "aj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go, drive",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "สมชฺช",
+      "ปาชน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อญฺจฺ",
+    "root_roman": "añc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bend",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "องฺก",
+      "องฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อญฺฉฺ",
+    "root_roman": "añch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "extend, draw along",
+    "meaning_pali": "อายาเม",
+    "udaharana": [
+      "อญฺฉนฺติ",
+      "อาวิญฺฉติ",
+      "องฺก",
+      "ปลฺลงฺก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อญฺชฺ 1",
+    "root_roman": "añj 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "distinguish",
+    "meaning_pali": "<พฺ>วฺยตฺติ</พฺ>-มกฺขน-คติ-กนฺติสุ",
+    "udaharana": [
+      "วฺยญฺชยติ",
+      "พฺยญฺชน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อญฺชฺ 2",
+    "root_roman": "añj 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "smear, anoint",
+    "meaning_pali": "วฺยตฺติ-<พฺ>มกฺขน</พฺ>-คติ-กนฺติสุ",
+    "udaharana": [
+      "อนฺชติ",
+      "อนงฺคณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อญฺชฺ 3",
+    "root_roman": "añj 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "pay respect",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "อญฺชลิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อฏฺ",
+    "root_roman": "aṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roam, wander",
+    "meaning_pali": "คมนตฺถา",
+    "udaharana": [
+      "อฏน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อฑฺฑฺ",
+    "root_roman": "aḍḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "judge",
+    "meaning_pali": "อภิโยเค",
+    "udaharana": [
+      "อฑฺฑ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อณฺ",
+    "root_roman": "aṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "recite",
+    "meaning_pali": "สทฺทตฺถา",
+    "udaharana": [
+      "อณติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อตฺถฺ",
+    "root_roman": "atth",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wish for",
+    "meaning_pali": "ยาจเน",
+    "udaharana": [
+      "อภิปตฺถยติ",
+      "อตฺถ",
+      "อตฺถิก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อทฺ",
+    "root_roman": "ad",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "ภกฺขเณ",
+    "udaharana": [
+      "อทติ",
+      "อนฺน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อทฺทฺ",
+    "root_roman": "add",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "afflict",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "อทฺทิต",
+      "อฏฺฏิต",
+      "อฏฺฏ",
+      "อฏฺฏียมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อนฺ",
+    "root_roman": "an",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "breathe, blow",
+    "meaning_pali": "ปาณเน",
+    "udaharana": [
+      "อุทาเนติ",
+      "อาน",
+      "ปาณ",
+      "อาณาปาณ",
+      "อนิล",
+      "อุทาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อปฺ",
+    "root_roman": "ap",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "reach, attain",
+    "meaning_pali": "ปาปุณเน",
+    "udaharana": [
+      "ปาปุณาติ",
+      "ปตฺตุํ",
+      "ปตฺต",
+      "โสตาปตฺติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อรฺ",
+    "root_roman": "ar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, attain",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "อปฺเปติ",
+      "อตฺถ",
+      "อปฺปนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อรหฺ",
+    "root_roman": "arah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "deserve, be worthy",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "อรหติ",
+      "อรห",
+      "อรหนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อสฺ 1",
+    "root_roman": "as 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be",
+    "meaning_pali": "ภุวิ",
+    "udaharana": [
+      "อตฺถิ",
+      "อสฺมิ",
+      "สนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อสฺ 2",
+    "root_roman": "as 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "throw, hurl",
+    "meaning_pali": "เขปเน",
+    "udaharana": [
+      "ปาส",
+      "อสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อสฺ 3",
+    "root_roman": "as 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "อสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อสฺ 4",
+    "root_roman": "as 4",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "โภชเน",
+    "udaharana": [
+      "อสฺนาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อหฺ",
+    "root_roman": "ah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "speak",
+    "meaning_pali": "",
+    "udaharana": [
+      "อาห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อํสฺ",
+    "root_roman": "aṃs",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "divide, distribute",
+    "meaning_pali": "สงฺฆาเต",
+    "udaharana": [
+      "อํส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อาคมฺ",
+    "root_roman": "āgam",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wait",
+    "meaning_pali": "อีสมฺ'อธิวาสเน",
+    "udaharana": [
+      "อาคเมติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อาทา",
+    "root_roman": "ādā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "take, seize",
+    "meaning_pali": "คหเณ",
+    "udaharana": [
+      "อาทิยติ",
+      "สมาทเปติ",
+      "อนุปาทิย",
+      "สมาทาน",
+      "อุปาทาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อาปฺ",
+    "root_roman": "āp",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "be wet",
+    "meaning_pali": "พฺยาปเน",
+    "udaharana": [
+      "อาโป",
+      "ทีป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อาสฺ",
+    "root_roman": "ās",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sit",
+    "meaning_pali": "อุปเวสเน",
+    "udaharana": [
+      "ปยิรุปาสติ",
+      "อจฺฉติ",
+      "อาสน",
+      "อุปาสก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิ 1",
+    "root_roman": "i 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "come, go",
+    "meaning_pali": "อชฺเฌน-<พฺ>คติ</พฺ>-กนฺติสุ",
+    "udaharana": [
+      "เอติ",
+      "เอหิ",
+      "วีต",
+      "ปจฺจย",
+      "อจฺจเยน",
+      "อภิสเมจฺจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิ 2",
+    "root_roman": "i 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "study, recite",
+    "meaning_pali": "<พฺ>อชฺเฌน</พฺ>-คติ-กนฺติสุ",
+    "udaharana": [
+      "อชฺฌายก",
+      "อชฺฌยน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิกฺขฺ",
+    "root_roman": "ikkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "see, mark",
+    "meaning_pali": "ทสฺสเน",
+    "udaharana": [
+      "ปจฺจเวกฺขติ",
+      "อนุเปกฺขติ",
+      "อุเปกฺขา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิญฺชฺ",
+    "root_roman": "iñj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, shake",
+    "meaning_pali": "กมฺปเน",
+    "udaharana": [
+      "สมิญฺชติ",
+      "อาวิญฺชติ",
+      "สมิญฺชิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิธฺ",
+    "root_roman": "idh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "succeed, accomplish",
+    "meaning_pali": "สํสิทฺธิยํ",
+    "udaharana": [
+      "สมิชฺฌติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อินฺธฺ",
+    "root_roman": "indh",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "fire, burn",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "อิฏฺฐกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิสฺ",
+    "root_roman": "is",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wish for",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "อิจฺฉติ",
+      "อิจฺฉา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อิสฺสฺ",
+    "root_roman": "iss",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be envious, be jealous",
+    "meaning_pali": "อิสฺสายํ",
+    "udaharana": [
+      "อิสฺสา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อีรฺ 1",
+    "root_roman": "īr 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, shake",
+    "meaning_pali": "วตฺตเน",
+    "udaharana": [
+      "อีรติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อีรฺ 2",
+    "root_roman": "īr 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "speak",
+    "meaning_pali": "วาจา-ปกมฺปเน",
+    "udaharana": [
+      "อีเรติ",
+      "อุทีรณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อีสฺ",
+    "root_roman": "īs",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "have power",
+    "meaning_pali": "อิสฺสริเย",
+    "udaharana": [
+      "อิสฺสร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อีหฺ",
+    "root_roman": "īh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "strive",
+    "meaning_pali": "ฆฏเน",
+    "udaharana": [
+      "อีหติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุจฺ",
+    "root_roman": "uc",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "comfort",
+    "meaning_pali": "",
+    "udaharana": [
+      "โอก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุชฺ",
+    "root_roman": "uj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be straight",
+    "meaning_pali": "อชฺชเว",
+    "udaharana": [
+      "อุชุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุชฺฌฺ",
+    "root_roman": "ujjh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "leave, discard",
+    "meaning_pali": "อุสฺสคฺเค",
+    "udaharana": [
+      "อุชฺฌติ",
+      "อุชฺฌิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุญฺฉฺ",
+    "root_roman": "uñch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "glean",
+    "meaning_pali": "อุญฺเฉ",
+    "udaharana": [
+      "อุญฺฉติ",
+      "อุญฺฉ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุทฺ",
+    "root_roman": "ud",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "be wet",
+    "meaning_pali": "สว-กิเลทเน",
+    "udaharana": [
+      "สมุทฺท",
+      "อุทก",
+      "โอทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุทฺรภฺ",
+    "root_roman": "udrabh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "อุทฺรเภยฺยุํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุสฺ",
+    "root_roman": "us",
+    "group_pali": "คห (ณฺหา ปฺป)",
+    "group_roman": "gahādigaṇa",
+    "meaning_thai": "be hot",
+    "meaning_pali": "ทาเห",
+    "udaharana": [
+      "อุณฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุสูยฺ",
+    "root_roman": "usūy",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be irritated, be jealous",
+    "meaning_pali": "โทสาวิกรเณ",
+    "udaharana": [
+      "อุสูยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เอชฺ",
+    "root_roman": "ej",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, shake",
+    "meaning_pali": "กมฺปเน",
+    "udaharana": [
+      "อเนช",
+      "เอชติ",
+      "เอชา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เอธฺ",
+    "root_roman": "edh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "flourish, prosper",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "เอธติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เอสฺ",
+    "root_roman": "es",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "seek, search",
+    "meaning_pali": "มคฺคเน",
+    "udaharana": [
+      "เอสติ",
+      "เอสินี",
+      "อนฺเวสํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โอปฺ",
+    "root_roman": "op",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "placing",
+    "meaning_pali": "ถปเน",
+    "udaharana": [
+      "โอปิย",
+      "โอเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กงฺขฺ 1",
+    "root_roman": "kaṅkh 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wish for",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "อภิกงฺขติ",
+      "อากงฺกมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กงฺขฺ 2",
+    "root_roman": "kaṅkh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "doubt",
+    "meaning_pali": "กงฺขายํ",
+    "udaharana": [
+      "กงฺขติ",
+      "กงฺขา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กจฺ",
+    "root_roman": "kac",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "shine, bind",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "อุกฺกาจิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กญฺจฺ 1",
+    "root_roman": "kañc 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bind, cover",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "กญฺจุก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กญฺจฺ 2",
+    "root_roman": "kañc 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "กญฺจน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กฐฺ 1",
+    "root_roman": "kaṭh 1",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "live in distress",
+    "meaning_pali": "โสเก",
+    "udaharana": [
+      "อุกฺกณฺฐติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กฐฺ 2",
+    "root_roman": "kaṭh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "boil, burn",
+    "meaning_pali": "โสสน-ปาเกสุ",
+    "udaharana": [
+      "กฐิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กฑฺฒฺ",
+    "root_roman": "kaḍḍh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drag, plough",
+    "meaning_pali": "กฑฺฒเน",
+    "udaharana": [
+      "อุปกฑฺฒติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กณฺ",
+    "root_roman": "kaṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "make sound",
+    "meaning_pali": "สทฺทตฺถา",
+    "udaharana": [
+      "กณฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กณฺฑฺ",
+    "root_roman": "kaṇḍ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "break, pierce",
+    "meaning_pali": "เภทเน",
+    "udaharana": [
+      "กณฺฑ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กตฺ",
+    "root_roman": "kat",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "cut",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "กนฺตติ",
+      "กณฺฏก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กตฺถฺ",
+    "root_roman": "katth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "boast",
+    "meaning_pali": "สิลาฆายํ",
+    "udaharana": [
+      "อกตฺถมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กถฺ",
+    "root_roman": "kath",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "speak, narrate",
+    "meaning_pali": "วากฺยปฺปพนฺธเน",
+    "udaharana": [
+      "กเถติ",
+      "กถยติ",
+      "กถา",
+      "กจฺฉมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กนฺ",
+    "root_roman": "kan",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, like",
+    "meaning_pali": "ทิตฺติ-คติ-กนฺติสุ",
+    "udaharana": [
+      "กญฺญา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กนฺทฺ",
+    "root_roman": "kand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wail, cry out",
+    "meaning_pali": "อวฺหาน-โรทเนสุ",
+    "udaharana": [
+      "กนฺทติ",
+      "กนฺทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กปฺ",
+    "root_roman": "kap",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "take pity",
+    "meaning_pali": "กรุณายํ",
+    "udaharana": [
+      "กปณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กปฺปฺ 1",
+    "root_roman": "kapp 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be fit, be suitable",
+    "meaning_pali": "สามตฺถิเย",
+    "udaharana": [
+      "กปฺปติ",
+      "กปฺป",
+      "กปฺปิย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กปฺปฺ 2",
+    "root_roman": "kapp 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "think",
+    "meaning_pali": "วิตกฺเก",
+    "udaharana": [
+      "สงฺกปฺป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กมฺ 1",
+    "root_roman": "kam 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go",
+    "meaning_pali": "ปทวิกฺเขเป",
+    "udaharana": [
+      "ปกฺกมติ",
+      "อุปสงฺกมิตฺวา",
+      "จงฺกมติ",
+      "กนฺต",
+      "จงฺกม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กมฺ 2",
+    "root_roman": "kam 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "desire",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "กาเมติ",
+      "กาม",
+      "กนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กมฺปฺ",
+    "root_roman": "kamp",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, tremble",
+    "meaning_pali": "จลเน",
+    "udaharana": [
+      "กมฺปติ",
+      "กมฺปิต",
+      "โอกมฺเปตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กรฺ",
+    "root_roman": "kar",
+    "group_pali": "ตน (โอ ยิร)",
+    "group_roman": "tanādigaṇa",
+    "meaning_thai": "do, make",
+    "meaning_pali": "กรเณ",
+    "udaharana": [
+      "กโรติ",
+      "กร",
+      "กมฺม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กลฺ 1",
+    "root_roman": "kal 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "spend time",
+    "meaning_pali": "เขเป",
+    "udaharana": [
+      "กาล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กลฺ 2",
+    "root_roman": "kal 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "accomplish",
+    "meaning_pali": "สํขฺยาเน",
+    "udaharana": [
+      "กลฺล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กลฺ 3",
+    "root_roman": "kal 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "calculate, add",
+    "meaning_pali": "กลิเล",
+    "udaharana": [
+      "กลา",
+      "สกล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กลหฺ",
+    "root_roman": "kalah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "argue",
+    "meaning_pali": "กุจฺฉเน",
+    "udaharana": [
+      "กลห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กสฺ 1",
+    "root_roman": "kas 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drag, draw",
+    "meaning_pali": "คติ-หิํสา-<พฺ>วิเลขเนสุ</พฺ>",
+    "udaharana": [
+      "กสติ",
+      "กสนฺต",
+      "กฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กสฺ 2",
+    "root_roman": "kas 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, trouble",
+    "meaning_pali": "คติ-<พฺ>หิํสา</พฺ>-วิเลขเนสุ",
+    "udaharana": [
+      "กสิร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กสฺสฺ",
+    "root_roman": "kass",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drag, draw along",
+    "meaning_pali": "กสฺสเน",
+    "udaharana": [
+      "กสฺสติ",
+      "กสฺสก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กา",
+    "root_roman": "kā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "makes sound",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "กายติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กาสฺ 1",
+    "root_roman": "kās 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, be visible",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ปกาสติ",
+      "ปกาเสติ",
+      "ปกาสิต",
+      "อากาส",
+      "โอกาส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กาสฺ 2",
+    "root_roman": "kās 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cough",
+    "meaning_pali": "ทิตฺติมฺหิ <พฺ>สทฺทเน</พฺ>",
+    "udaharana": [
+      "อุกฺกาสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิตฺ 1",
+    "root_roman": "kit 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "heal, cure",
+    "meaning_pali": "วาส-<พฺ>อาโท</พฺ>",
+    "udaharana": [
+      "ติกิจฺฉติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิตฺ 2",
+    "root_roman": "kit 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "live",
+    "meaning_pali": "นิวาสเน",
+    "udaharana": [
+      "เกตติ",
+      "นิเกต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิตฺ 3",
+    "root_roman": "kit 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "know, doubt",
+    "meaning_pali": "ญาเณ",
+    "udaharana": [
+      "สนฺเกต",
+      "วิจิกิจฺฉา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิตฺตฺ",
+    "root_roman": "kitt",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "make known",
+    "meaning_pali": "สํสทฺเท",
+    "udaharana": [
+      "กิตฺเตติ",
+      "กิตฺติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิรฺ",
+    "root_roman": "kir",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "scatter, sprinkle",
+    "meaning_pali": "วิกิรเณ",
+    "udaharana": [
+      "กิรติ",
+      "อภิปฺปกิรติ",
+      "อากิณฺณ อากิริตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิลมฺ",
+    "root_roman": "kilam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be weary",
+    "meaning_pali": "คิลาเน",
+    "udaharana": [
+      "กิลมติ",
+      "กิลนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิลิทฺ",
+    "root_roman": "kilid",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be wet",
+    "meaning_pali": "ปริเทวาโท",
+    "udaharana": [
+      "กิลินฺน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิลิสฺ 1",
+    "root_roman": "kilis 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be dirty, be molested",
+    "meaning_pali": "อุปตาเป",
+    "udaharana": [
+      "กิลิสฺสติ",
+      "กิเลส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิลิสฺ 2",
+    "root_roman": "kilis 2",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "trouble",
+    "meaning_pali": "วิพาธเน",
+    "udaharana": [
+      "กิลิสฺนาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิสฺ",
+    "root_roman": "kis",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be thin",
+    "meaning_pali": "",
+    "udaharana": [
+      "กิส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กี",
+    "root_roman": "kī",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "buy",
+    "meaning_pali": "ทพฺพวินิมเย",
+    "udaharana": [
+      "กิณาติ",
+      "กย",
+      "กีต",
+      "กยวิกฺกย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กีฬฺ",
+    "root_roman": "kīḷ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "play",
+    "meaning_pali": "วิหาเร",
+    "udaharana": [
+      "กีฬติ",
+      "กีฬาเปติ",
+      "กีฬา",
+      "กีฬนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุ",
+    "root_roman": "ku",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sing, sound",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "กวิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุจฺ",
+    "root_roman": "kuc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "contract",
+    "meaning_pali": "สํโกเจ",
+    "udaharana": [
+      "สงฺโกเจติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุจฺฉฺ",
+    "root_roman": "kucch",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "revile",
+    "meaning_pali": "อวกฺเขเป",
+    "udaharana": [
+      "กุจฺฉิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุชฺชฺ",
+    "root_roman": "kujj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "turn",
+    "meaning_pali": "อโธมุขีกรเณ",
+    "udaharana": [
+      "อุกฺกุชฺเชติ",
+      "นิกฺกุชฺชิต",
+      "นิกฺกุชฺชิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุญฺจฺ",
+    "root_roman": "kuñc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be crooked, be bent",
+    "meaning_pali": "โกฏิลฺลฺ’อปฺปีภาเวสุ",
+    "udaharana": [
+      "กุญฺจติ",
+      "กุณฺฑล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุฏฺ 1",
+    "root_roman": "kuṭ 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be crooked, be bent",
+    "meaning_pali": "โกฏิลฺเย",
+    "udaharana": [
+      "ปฏิกุฏติ",
+      "กูฏ",
+      "กุฏิล",
+      "อุกฺกุฏิกํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุฏฺ 2",
+    "root_roman": "kuṭ 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "knock, beat",
+    "meaning_pali": "อาโกฏเน",
+    "udaharana": [
+      "อาโกเฏติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุฏฺ 3",
+    "root_roman": "kuṭ 3",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "cut",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "โกฏยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุฏฺฏฺ",
+    "root_roman": "kuṭṭ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "smash, powder",
+    "meaning_pali": "อาโกฏเน",
+    "udaharana": [
+      "โกฏฺเฏติ",
+      "โกฏฺฏน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุณฺ",
+    "root_roman": "kuṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be crooked, be bent",
+    "meaning_pali": "สงฺโกจเน",
+    "udaharana": [
+      "กุณี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุณฺฐฺ",
+    "root_roman": "kuṇṭh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be blunt, be lame",
+    "meaning_pali": "",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>กุณฺฐฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (เพ พฺลุนฺตฺ",
+      "เพ ลเม)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>กุณฺเฐ (จอุสฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>กุณฺฐฺ 1 (ทุลฺลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>โนเตสฺ:</ถฺ><ตฺทฺ>โนตฺ fโออุนฺทฺ อินฺ จฺลสฺสิจลฺ ปาฬิ คฺรมฺมรฺสฺ. อ เทโนมินติเว โรโอตฺ fโรมฺ <อิ>กุณฺฐ</อิ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุณฺฑฺ",
+    "root_roman": "kuṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bend, mutilate",
+    "meaning_pali": "",
+    "udaharana": [
+      "กุณฺฑล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุถฺ",
+    "root_roman": "kuth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "boil, burn",
+    "meaning_pali": "ปาเก ปูติภาเว",
+    "udaharana": [
+      "ปกุถิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุธฺ",
+    "root_roman": "kudh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be angry",
+    "meaning_pali": "โกเธ",
+    "udaharana": [
+      "กุชฺฌติ",
+      "โกธ",
+      "กุธ",
+      "กุทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุนฺถฺ",
+    "root_roman": "kunth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, cause pain",
+    "meaning_pali": "สํกฺเลสเน",
+    "udaharana": [
+      "กุนฺถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุปฺ",
+    "root_roman": "kup",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "shake, be angry",
+    "meaning_pali": "โกเป",
+    "udaharana": [
+      "กุปฺปติ",
+      "อกุปฺป",
+      "ปโกป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุมารฺ",
+    "root_roman": "kumār",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "play",
+    "meaning_pali": "กีฬายํ",
+    "udaharana": [
+      "กุมาร",
+      "กุมารี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุรฺ",
+    "root_roman": "kur",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sound",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "กุรร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุลฺ",
+    "root_roman": "kul",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be close",
+    "meaning_pali": "สงฺขาเน พนฺธุมฺหิ จ",
+    "udaharana": [
+      "กุล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุสฺ 1",
+    "root_roman": "kus 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "call, insult",
+    "meaning_pali": "อกฺโกเส อวฺหาเน จ",
+    "udaharana": [
+      "อกฺโกสติ",
+      "ปกฺโกสิตฺวา",
+      "ปกฺโกสาเปตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุสฺ 2",
+    "root_roman": "kus 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fill, enfold",
+    "meaning_pali": "เฉทน-<พฺ>ปูรเณ</พฺ>",
+    "udaharana": [
+      "โกฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุสฺ 3",
+    "root_roman": "kus 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cut, tear",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "กุฏฺฐ กุฏฺฐี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กุหฺ",
+    "root_roman": "kuh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "deceive",
+    "meaning_pali": "วิมฺหาปเน",
+    "udaharana": [
+      "กุเหติ",
+      "กุหก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กูชฺ",
+    "root_roman": "kūj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "make sound",
+    "meaning_pali": "อวฺยตฺเต สทฺเท",
+    "udaharana": [
+      "วิกูชติ",
+      "วิกูชนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กูลฺ",
+    "root_roman": "kūl",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "obstruct, embank",
+    "meaning_pali": "อาวรเณ",
+    "udaharana": [
+      "กูล",
+      "ปฏิกูล",
+      "อุกฺกูล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กูฬฺ",
+    "root_roman": "kūḷ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "burn",
+    "meaning_pali": "ทาเห",
+    "udaharana": [
+      "อุปกูลิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เกลฺ",
+    "root_roman": "kel",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "care, cherish",
+    "meaning_pali": "มมายเน",
+    "udaharana": [
+      "เกลายน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขจฺ",
+    "root_roman": "khac",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "adorn, inlay",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "ขจิต",
+      "ขจิตฺวา",
+      "ขเจตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขญฺชฺ",
+    "root_roman": "khañj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "limp",
+    "meaning_pali": "คติเวกลฺเย",
+    "udaharana": [
+      "ขญฺชติ",
+      "ขญฺช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขณฺ",
+    "root_roman": "khaṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dig",
+    "meaning_pali": "อวทารเณ",
+    "udaharana": [
+      "ขนติ",
+      "ขณติ",
+      "ขต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขณฺฑฺ",
+    "root_roman": "khaṇḍ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "break",
+    "meaning_pali": "เภทเน",
+    "udaharana": [
+      "ขนฺเทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขนฺ",
+    "root_roman": "khan",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, break",
+    "meaning_pali": "อวทารเณ",
+    "udaharana": [
+      "ขต",
+      "อกฺขต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขนฺทฺ",
+    "root_roman": "khand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "jump",
+    "meaning_pali": "ปกฺขนฺทนาทิสุ",
+    "udaharana": [
+      "ปกฺขนฺทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขมฺ",
+    "root_roman": "kham",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tolerate, endure",
+    "meaning_pali": "สหเน",
+    "udaharana": [
+      "ขมติ",
+      "ขนฺติ",
+      "ขม",
+      "ขมิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขมฺภฺ",
+    "root_roman": "khambh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "prop, be stiff",
+    "meaning_pali": "ปฏิพนฺเธ",
+    "udaharana": [
+      "วิกฺขมฺเภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขรฺ",
+    "root_roman": "khar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "perish, break apart",
+    "meaning_pali": "วินาเส",
+    "udaharana": [
+      "อกฺขร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขลฺ 1",
+    "root_roman": "khal 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stumble, make mistake",
+    "meaning_pali": "กมฺปเน",
+    "udaharana": [
+      "ขลติ",
+      "ปกฺขลิตฺวา",
+      "ขลิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขลฺ 2",
+    "root_roman": "khal 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "clean, rinse",
+    "meaning_pali": "โสเจยฺเย",
+    "udaharana": [
+      "ปกฺขาเลติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขลฺ 3",
+    "root_roman": "khal 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "accumulate",
+    "meaning_pali": "โสเจ <พฺ>สญฺจเย 8</พฺ>",
+    "udaharana": [
+      "สงฺขลิกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขา",
+    "root_roman": "khā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tell, announce",
+    "meaning_pali": "กถเน",
+    "udaharana": [
+      "อกฺขาติ",
+      "ขายติ",
+      "สงฺขา",
+      "สงฺขาย",
+      "ปฏิสงฺขา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขาทฺ",
+    "root_roman": "khād",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "chew",
+    "meaning_pali": "ภกฺขเณ",
+    "udaharana": [
+      "ขาทติ",
+      "ขาทนีย",
+      "ขชฺชมาน",
+      "ขายิต",
+      "ขาทิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขิ",
+    "root_roman": "khi",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "live, abide peacefully",
+    "meaning_pali": "นิวาเส",
+    "udaharana": [
+      "เขตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขิฏฺ",
+    "root_roman": "khiṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "frighten, scare",
+    "meaning_pali": "อุตฺตาสเน",
+    "udaharana": [
+      "อุกฺเขฏิต สมุกฺเขฏิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขิปฺ 1",
+    "root_roman": "khip 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "throw",
+    "meaning_pali": "ฉฑฺฑโน",
+    "udaharana": [
+      "ขิปติ",
+      "ขิปิต",
+      "ขิตฺต",
+      "ปริกฺขิปิตฺวา",
+      "นิกฺเขป",
+      "สํขิตฺเตน",
+      "วิกฺขิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขิปฺ 2",
+    "root_roman": "khip 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sneeze",
+    "meaning_pali": "อพฺยตฺตสทฺเท",
+    "udaharana": [
+      "ขิปติ",
+      "ขิปนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขี",
+    "root_roman": "khī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "exhaust, destroy",
+    "meaning_pali": "ขเย",
+    "udaharana": [
+      "ขย",
+      "สงฺขย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขุทฺ",
+    "root_roman": "khud",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be hungry",
+    "meaning_pali": "ชิฆจฺฉายํ",
+    "udaharana": [
+      "โขท",
+      "ขุทา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขุภฺ",
+    "root_roman": "khubh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, agitate",
+    "meaning_pali": "สญฺจลเน",
+    "udaharana": [
+      "โขเพติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขุรฺ",
+    "root_roman": "khur",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cut",
+    "meaning_pali": "เฉทน-วิเลขเงสุ",
+    "udaharana": [
+      "ขุร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขุํสฺ",
+    "root_roman": "khuṃs",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "insult",
+    "meaning_pali": "อกฺโกสเน",
+    "udaharana": [
+      "ขุํเสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขฺยา",
+    "root_roman": "khyā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "announce",
+    "meaning_pali": "กถเน",
+    "udaharana": [
+      "วฺยาขฺยาติ",
+      "สงฺขฺยา",
+      "อาขฺยา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คชฺ",
+    "root_roman": "gaj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roar, make sound",
+    "meaning_pali": "สทฺทตฺเถ",
+    "udaharana": [
+      "คช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คชฺชฺ",
+    "root_roman": "gajj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roar, thunder",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "คชฺชติ",
+      "คชฺชมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คณฺ",
+    "root_roman": "gaṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "calculate, group",
+    "meaning_pali": "สํขายฺเน",
+    "udaharana": [
+      "คเณติ",
+      "คณน",
+      "คณก",
+      "คณ",
+      "คนี",
+      "คณิก",
+      "สงฺคณิกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คทฺ",
+    "root_roman": "gad",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "speak",
+    "meaning_pali": "วฺยตฺตวจเน",
+    "udaharana": [
+      "คทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คธฺ",
+    "root_roman": "gadh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bind, tie",
+    "meaning_pali": "ปติฏฺฐา-นิสฺสย-<พฺ>คนฺเถสุ</พฺ>",
+    "udaharana": [
+      "คทฺทุล",
+      "คธิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คนฺถฺ",
+    "root_roman": "ganth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tie, bind",
+    "meaning_pali": "คนฺถเน",
+    "udaharana": [
+      "คนฺเถติ",
+      "คถิต",
+      "คนฺถ",
+      "คณฺฐิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คพฺภฺ",
+    "root_roman": "gabbh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be bold, be daring",
+    "meaning_pali": "ปาคพฺภิเย",
+    "udaharana": [
+      "อปคพฺภ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คมฺ",
+    "root_roman": "gam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go",
+    "meaning_pali": "คติมฺหิ",
+    "udaharana": [
+      "คจฺฉติ",
+      "คมิก",
+      "คติ",
+      "สุคต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ครฺ 1",
+    "root_roman": "gar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "esteem, be heavy",
+    "meaning_pali": "อุคฺคเม",
+    "udaharana": [
+      "ครุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ครฺ 2",
+    "root_roman": "gar 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drip, swallow",
+    "meaning_pali": "เสจเน",
+    "udaharana": [
+      "สาคร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ครหฺ",
+    "root_roman": "garah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "blame",
+    "meaning_pali": "นินฺทายํ",
+    "udaharana": [
+      "ครหติ",
+      "ครหา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คลฺ 1",
+    "root_roman": "gal 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drip, flow",
+    "meaning_pali": "",
+    "udaharana": [
+      "คลติ",
+      "คฬติ",
+      "คล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คลฺ 2",
+    "root_roman": "gal 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "คล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คสฺ",
+    "root_roman": "gas",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat, swallow",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "คส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คเวสฺ",
+    "root_roman": "gaves",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "seek, search",
+    "meaning_pali": "มคฺคเน",
+    "udaharana": [
+      "คเวสติ",
+      "คเวสก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คหฺ",
+    "root_roman": "gah",
+    "group_pali": "คห (ณฺหา ปฺป)",
+    "group_roman": "gahādigaṇa",
+    "meaning_thai": "grasp",
+    "meaning_pali": "อุปาทาเน",
+    "udaharana": [
+      "คณฺหาติ",
+      "คเหตฺวา",
+      "คห",
+      "ปฏิคฺคหณ",
+      "อนุคฺคห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คา",
+    "root_roman": "gā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "sing",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "คายติ",
+      "คาถ",
+      "คีต",
+      "สงฺคีต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คาธฺ",
+    "root_roman": "gādh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stand firmly",
+    "meaning_pali": "ปติฏฺฐายํ",
+    "udaharana": [
+      "คาธติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คาหฺ",
+    "root_roman": "gāh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dive, plunge",
+    "meaning_pali": "วิโลฬเน",
+    "udaharana": [
+      "ปคาหติ",
+      "โอคธ",
+      "ปริโยคาเหตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คิธฺ",
+    "root_roman": "gidh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be greedy",
+    "meaning_pali": "อภิกํขายํ",
+    "udaharana": [
+      "คิชฺฌติ",
+      "คิทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คิรฺ 1",
+    "root_roman": "gir 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "raise",
+    "meaning_pali": "",
+    "udaharana": [
+      "อุคฺคิรติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คิรฺ 2",
+    "root_roman": "gir 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "call, speak",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "คิรา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คิลฺ",
+    "root_roman": "gil",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat, swallow",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "คิลติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คิลา",
+    "root_roman": "gilā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be sick, be tired",
+    "meaning_pali": "หาสกฺขเย",
+    "udaharana": [
+      "คิลาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุณฺ",
+    "root_roman": "guṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "repeat, multiply",
+    "meaning_pali": "อภฺยาเส",
+    "udaharana": [
+      "คุณิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุณฺฐฺ",
+    "root_roman": "guṇṭh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "enclose, envelope",
+    "meaning_pali": "เวฐเน",
+    "udaharana": [
+      "ปฬิคุณฺเฐติ",
+      "ปฬิคุณฺฐิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุปฺ 1",
+    "root_roman": "gup 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dislike",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "ชิคุจฺฉติ",
+      "ชิคุจฺฉา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุปฺ 2",
+    "root_roman": "gup 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "guard",
+    "meaning_pali": "รกฺขเณ",
+    "udaharana": [
+      "โคเปติ",
+      "คุตฺต",
+      "โคปโก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุมฺผฺ",
+    "root_roman": "gumph",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tie, string together",
+    "meaning_pali": "คนฺเถ",
+    "udaharana": [
+      "คุมฺเผติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุหฺ",
+    "root_roman": "guh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hide, conceal",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "คูหติ",
+      "คุหา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คุฬฺ",
+    "root_roman": "guḷ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roll around, protect",
+    "meaning_pali": "ปริวตฺตนมฺหิ",
+    "udaharana": [
+      "คุฬ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คู",
+    "root_roman": "gū",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "excrete",
+    "meaning_pali": "กรีสุสฺสคฺเค",
+    "udaharana": [
+      "คูถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆฏฺ 1",
+    "root_roman": "ghaṭ 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "strike, kill",
+    "meaning_pali": "ฆาฏเน",
+    "udaharana": [
+      "ฆเฏติ",
+      "ฆาเตตุ",
+      "สํฆาต",
+      "อุปฆาตี",
+      "อนูปฆาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆฏฺ 2",
+    "root_roman": "ghaṭ 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "join together",
+    "meaning_pali": "ฆฏฺฏเน",
+    "udaharana": [
+      "ฆฏ",
+      "สงฺฆ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆฏฺ 3",
+    "root_roman": "ghaṭ 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be busy with, strive",
+    "meaning_pali": "อีหายํ",
+    "udaharana": [
+      "ฆฏติ",
+      "ฆฏนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆฏฺฏฺ 1",
+    "root_roman": "ghaṭṭ 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "hit, strike",
+    "meaning_pali": "จลเน",
+    "udaharana": [
+      "ฆฏฺเฏติ",
+      "ฆฏฺฏน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆฏฺฏฺ 2",
+    "root_roman": "ghaṭṭ 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "join together",
+    "meaning_pali": "ฆฏฺฏเน",
+    "udaharana": [
+      "ฆฏฺเฏติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆรฺ 1",
+    "root_roman": "ghar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drip",
+    "meaning_pali": "เสจเน",
+    "udaharana": [
+      "ปคฺฆรติ",
+      "ปคฺฆรณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆรฺ 2",
+    "root_roman": "ghar 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn, be hot",
+    "meaning_pali": "",
+    "udaharana": [
+      "ฆมฺม",
+      "ฆมฺมนิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆสฺ",
+    "root_roman": "ghas",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "ฆสติ",
+      "ชิฆจฺฉติ",
+      "ชิฆจฺฉา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆํสฺ",
+    "root_roman": "ghaṃs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rub, grind, pound",
+    "meaning_pali": "ฆํสเน",
+    "udaharana": [
+      "อปฺปฏิฆํสนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆา",
+    "root_roman": "ghā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "smell",
+    "meaning_pali": "คนฺโธปาทาเน",
+    "udaharana": [
+      "ฆายติ",
+      "ฆาน",
+      "คนฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆุรฺ",
+    "root_roman": "ghur",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "scream, be awful",
+    "meaning_pali": "ภีเม",
+    "udaharana": [
+      "โฆร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฆุสฺ",
+    "root_roman": "ghus",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shout, make noise",
+    "meaning_pali": "สทฺทสฺมิํ",
+    "udaharana": [
+      "โฆส",
+      "โฆสิต",
+      "อปฺปนิคฺโฆส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จกฺขฺ",
+    "root_roman": "cakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "see",
+    "meaning_pali": "ทสฺสเน",
+    "udaharana": [
+      "จกฺขุ",
+      "วิจกฺขณ",
+      "อปจกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จชฺ",
+    "root_roman": "caj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "give up, let go",
+    "meaning_pali": "หานิยํ",
+    "udaharana": [
+      "จชติ",
+      "จชิต",
+      "จาค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จณฺฑฺ",
+    "root_roman": "caṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be fierce, be violent",
+    "meaning_pali": "จณฺฑิกฺเก",
+    "udaharana": [
+      "จณฺฑ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จนฺทฺ",
+    "root_roman": "cand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "glow, be bright",
+    "meaning_pali": "ทิตฺติ-หิลาทเนสุ",
+    "udaharana": [
+      "จนฺท",
+      "จนฺทน",
+      "จนฺทิมา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จพฺพฺ",
+    "root_roman": "cabb",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "chew, spit out",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "จพฺเพตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จมฺ",
+    "root_roman": "cam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wash, rinse",
+    "meaning_pali": "โธวเน",
+    "udaharana": [
+      "อาจเมติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จรฺ 1",
+    "root_roman": "car 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, walk",
+    "meaning_pali": "คติ-ภกฺขเณสุ",
+    "udaharana": [
+      "จรติ",
+      "จาริกา",
+      "ปริจารก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จรฺ 2",
+    "root_roman": "car 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "act, behave",
+    "meaning_pali": "จรเณ",
+    "udaharana": [
+      "อนุจรติ",
+      "ทุจฺจริต",
+      "สมุทาจรติ",
+      "สุจิณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จลฺ",
+    "root_roman": "cal",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, tremble",
+    "meaning_pali": "กมฺปเน",
+    "udaharana": [
+      "จลติ",
+      "ปจลายติ",
+      "จลน",
+      "จญฺจล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จายฺ",
+    "root_roman": "cāy",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "honour",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "อปจายติ",
+      "อปจายมาน",
+      "อปจิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิ 1",
+    "root_roman": "ci 1",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "gather, accumulate",
+    "meaning_pali": "จเย",
+    "udaharana": [
+      "จินาติ",
+      "วิจย",
+      "จีวร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิ 2",
+    "root_roman": "ci 2",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "note, observe",
+    "meaning_pali": "",
+    "udaharana": [
+      "อปจินติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิกฺขฺ",
+    "root_roman": "cikkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "show, tell",
+    "meaning_pali": "วจเน",
+    "udaharana": [
+      "อาจิกฺขติ",
+      "ปฏิสญฺจิกฺขติ",
+      "อาจิกฺขาเปตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิฏฺ",
+    "root_roman": "ciṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "send, abuse",
+    "meaning_pali": "อกฺโกเส จ เปสเน",
+    "udaharana": [
+      "เจฏก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิตฺ 1",
+    "root_roman": "cit 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "think, intend",
+    "meaning_pali": "สญฺเจตนาทีสุ",
+    "udaharana": [
+      "เจเตติ",
+      "เจตยติ",
+      "สญฺเจตนา",
+      "เจตสิก",
+      "จิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิตฺ 2",
+    "root_roman": "cit 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "mark",
+    "meaning_pali": "สญฺญาเณ",
+    "udaharana": [
+      "จิต",
+      "จิตฺร",
+      "วิจิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิตฺตฺ",
+    "root_roman": "citt",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "paint, design",
+    "meaning_pali": "จิตฺตกรเณ",
+    "udaharana": [
+      "จิตฺเตติ",
+      "จิตฺติต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จินฺตฺ",
+    "root_roman": "cint",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "think",
+    "meaning_pali": "จินฺตายํ",
+    "udaharana": [
+      "วิจินฺเตติ",
+      "จินฺตา",
+      "สญฺจิจฺจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จิลฺ",
+    "root_roman": "cil",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "clothe",
+    "meaning_pali": "วสเน",
+    "udaharana": [
+      "เจล",
+      "อเจลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุ",
+    "root_roman": "cu",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shift, fall away, die",
+    "meaning_pali": "จวเน",
+    "udaharana": [
+      "จวติ",
+      "จุต",
+      "จวน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุณฺณฺ",
+    "root_roman": "cuṇṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "grind, crush, powder",
+    "meaning_pali": "สํจุณฺณเน",
+    "udaharana": [
+      "จุณฺณ",
+      "จุณฺณวิจุณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุทฺ",
+    "root_roman": "cud",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "impel, accuse",
+    "meaning_pali": "โจทเน",
+    "udaharana": [
+      "โจเทติ",
+      "โจทก",
+      "จุชฺชมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุปฺ",
+    "root_roman": "cup",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move",
+    "meaning_pali": "มนฺทคมเน",
+    "udaharana": [
+      "อุทฺทฺโจเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุมฺพฺ",
+    "root_roman": "cumb",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "kiss",
+    "meaning_pali": "วทน-สํโยเค",
+    "udaharana": [
+      "จุมฺพติ",
+      "ปริจุมฺพติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "จุรฺ",
+    "root_roman": "cur",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "steal",
+    "meaning_pali": "เถยฺเย",
+    "udaharana": [
+      "โจเรติ",
+      "โจร",
+      "โจรี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉฑฺฑฺ",
+    "root_roman": "chaḍḍ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "discard, abandon",
+    "meaning_pali": "ฉฑฺฑเน",
+    "udaharana": [
+      "ฉฑฺเฑติ",
+      "ฉฑฺฑิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉทฺ",
+    "root_roman": "chad",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "cover, conceal",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "ฉาเทติ",
+      "ฉตฺต",
+      "ปฏิจฺฉนฺน",
+      "ฉท"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉนฺทฺ",
+    "root_roman": "chand",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "desire, please",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "ฉาเทติ",
+      "ฉนฺน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉา",
+    "root_roman": "chā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be hungry",
+    "meaning_pali": "",
+    "udaharana": [
+      "ฉาต",
+      "นิจฺฉาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉิทฺ",
+    "root_roman": "chid",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "cut, divide",
+    "meaning_pali": "ทฺเวธากรเณ",
+    "udaharana": [
+      "ฉินฺทติ",
+      "อุจฺฉินฺน",
+      "อจฺเฉจฺฉิ",
+      "อุจฺเฉท"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉุฏฺ",
+    "root_roman": "chuṭ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "cut off",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "นิจฺโฉเฏติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉุปฺ",
+    "root_roman": "chup",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "touch",
+    "meaning_pali": "สมฺผสฺเส",
+    "udaharana": [
+      "ฉุปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฉุภฺ",
+    "root_roman": "chubh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "throw out",
+    "meaning_pali": "นิจฺฉุเภ",
+    "udaharana": [
+      "ฉุทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชกฺขฺ",
+    "root_roman": "jakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "ภกฺขเณ หสเน จ",
+    "udaharana": [
+      "อชทฺธุก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชคฺคฺ",
+    "root_roman": "jagg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "look after",
+    "meaning_pali": "นิทฺทาขเย",
+    "udaharana": [
+      "ปฏิชคฺคติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชคฺฆฺ",
+    "root_roman": "jaggh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "laugh",
+    "meaning_pali": "หสเน",
+    "udaharana": [
+      "ชคฺคติ",
+      "สญฺชคฺฆน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชฏฺ",
+    "root_roman": "jaṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "twist, tangle",
+    "meaning_pali": "สํฆาเต",
+    "udaharana": [
+      "วิชเฏติ",
+      "ชฏา",
+      "ชฏิล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชนฺ",
+    "root_roman": "jan",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be born, produce",
+    "meaning_pali": "ชนเน",
+    "udaharana": [
+      "วิชายติ",
+      "ชายติ",
+      "ชาต",
+      "ชเนติ",
+      "ชนก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชปฺปฺ",
+    "root_roman": "japp",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "mutter, pray",
+    "meaning_pali": "วจเน",
+    "udaharana": [
+      "ปชปฺปติ",
+      "ปชปฺปา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชมฺภฺ",
+    "root_roman": "jambh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "yawn, stretch, wake up",
+    "meaning_pali": "คตฺตวินาเม",
+    "udaharana": [
+      "ชมฺภติ",
+      "วิชมฺภิกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชรฺ",
+    "root_roman": "jar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "age",
+    "meaning_pali": "ชีรเณ",
+    "udaharana": [
+      "ชรติ",
+      "ชร",
+      "ชรา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชลฺ 1",
+    "root_roman": "jal 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, blaze",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ปชลติ",
+      "ชาเลติ",
+      "ชลิต ททฺทลฺลมานา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชลฺ 2",
+    "root_roman": "jal 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "hide, conceal",
+    "meaning_pali": "อปวารเณ",
+    "udaharana": [
+      "ชาล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชาครฺ 1",
+    "root_roman": "jāgar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be awake, be watchful",
+    "meaning_pali": "นิทฺทาขเย",
+    "udaharana": [
+      "ชาครติ",
+      "ชาคร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชาครฺ 2",
+    "root_roman": "jāgar 2",
+    "group_pali": "ตน (โอ ยิร)",
+    "group_roman": "tanādigaṇa",
+    "meaning_thai": "be awake, be watchful",
+    "meaning_pali": "นิทฺทขเย",
+    "udaharana": [
+      "ปฏิชาคโรติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชิ 1",
+    "root_roman": "ji 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "conquer",
+    "meaning_pali": "ชเย",
+    "udaharana": [
+      "เชติ",
+      "ชิคิํสติ",
+      "เชฏฺฐ",
+      "อปราชิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชิ 2",
+    "root_roman": "ji 2",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "conquer",
+    "meaning_pali": "ชเย",
+    "udaharana": [
+      "วิชินาติ",
+      "ชิน",
+      "วิชิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชี",
+    "root_roman": "jī",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "age, decay",
+    "meaning_pali": "ชานิยํ",
+    "udaharana": [
+      "ชียติ",
+      "ชิยฺยติ",
+      "ชีน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชีรฺ",
+    "root_roman": "jīr",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "grow old, decay",
+    "meaning_pali": "พฺรูหเน",
+    "udaharana": [
+      "ชีรติ",
+      "ชีรียติ",
+      "ชิณฺณ",
+      "นิชฺชิณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชีวฺ",
+    "root_roman": "jīv",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "live",
+    "meaning_pali": "ปาณธารเณ",
+    "udaharana": [
+      "ชีวติ",
+      "ชีว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชุ",
+    "root_roman": "ju",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be fast",
+    "meaning_pali": "ชเว",
+    "udaharana": [
+      "ชวติ",
+      "ชว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชุตฺ",
+    "root_roman": "jut",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "โชตติ",
+      "ปชฺโชต",
+      "วิชฺชุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ชุสฺ",
+    "root_roman": "jus",
+    "group_pali": "คห (ณฺหา ปฺป)",
+    "group_roman": "gahādigaṇa",
+    "meaning_thai": "like, please",
+    "meaning_pali": "ปีติ-เสวเนสุ",
+    "udaharana": [
+      "ชุณฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฌปฺ",
+    "root_roman": "jhap",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "burn, blaze",
+    "meaning_pali": "ทาเห",
+    "udaharana": [
+      "ฌาเปติ",
+      "ฌตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฌา",
+    "root_roman": "jhā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "think, meditate",
+    "meaning_pali": "จินฺตายํ",
+    "udaharana": [
+      "ฌายติ",
+      "ฌาน",
+      "อภิชฺฌา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เฌ",
+    "root_roman": "jhe",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn, blaze",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ฌายติ",
+      "ฌายน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ญา",
+    "root_roman": "ñā",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "know",
+    "meaning_pali": "อวโพธเน",
+    "udaharana": [
+      "ปชานาติ",
+      "ญายติ",
+      "ชาน",
+      "ปฏิญฺญา",
+      "วิญฺญาย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฐา",
+    "root_roman": "ṭhā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stand",
+    "meaning_pali": "คตินิวุตฺติยํ",
+    "udaharana": [
+      "ติฏฺฐติ",
+      "ฐาน",
+      "ฐิติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฐุภฺ",
+    "root_roman": "ṭhubh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "spit",
+    "meaning_pali": "นิฏฺฐุพฺพเน",
+    "udaharana": [
+      "โอฏฺฐุภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฑหฺ",
+    "root_roman": "ḍah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn",
+    "meaning_pali": "ภสฺมีกรเณ",
+    "udaharana": [
+      "อุฑฺฑหติ",
+      "ทฑฺฒ อนุฑหน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฑํสฺ",
+    "root_roman": "ḍaṃs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bite, sting",
+    "meaning_pali": "ทํสเน",
+    "udaharana": [
+      "ฑํส",
+      "ฑํสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฑิ 1",
+    "root_roman": "ḍi 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fly",
+    "meaning_pali": "อากาสคมเน",
+    "udaharana": [
+      "เฑติ",
+      "อุฑฺเฑติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ฑิ 2",
+    "root_roman": "ḍi 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "trap",
+    "meaning_pali": "ขิปนฺ-อุฑฺฑเนสุ",
+    "udaharana": [
+      "อุฑฺเฑติ",
+      "อุฑฺฑิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตกฺกฺ",
+    "root_roman": "takk",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "think",
+    "meaning_pali": "วิตกฺเก",
+    "udaharana": [
+      "วิตกฺเกติ",
+      "วิตกฺก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตจฺฉฺ",
+    "root_roman": "tacch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cut, chop",
+    "meaning_pali": "ตนุกรเณ",
+    "udaharana": [
+      "ตจฺฉติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตชฺชฺ",
+    "root_roman": "tajj",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "frighten, threaten",
+    "meaning_pali": "ตชฺชเน",
+    "udaharana": [
+      "ตชฺเชติ",
+      "ตชฺชิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตนฺ",
+    "root_roman": "tan",
+    "group_pali": "ตน (โอ ยิร)",
+    "group_roman": "tanādigaṇa",
+    "meaning_thai": "stretch, extend",
+    "meaning_pali": "วิตฺถาเร",
+    "udaharana": [
+      "ตโนติ",
+      "ตนฺตุ",
+      "ตนุ",
+      "อุตฺตาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตนฺทฺ",
+    "root_roman": "tand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be slow, be lazy",
+    "meaning_pali": "อาลสิเย",
+    "udaharana": [
+      "ตนฺที",
+      "อตนฺทิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตปฺ",
+    "root_roman": "tap",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn, radiate heat",
+    "meaning_pali": "สนฺตาเป",
+    "udaharana": [
+      "ตปติ",
+      "อาตาปี",
+      "อาตป",
+      "ตปนีย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตปฺปฺ 1",
+    "root_roman": "tapp 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "regret",
+    "meaning_pali": "สนฺตปฺปเน",
+    "udaharana": [
+      "โอตฺตปฺปติ",
+      "โอตฺตป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตปฺปฺ 2",
+    "root_roman": "tapp 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "satisfy",
+    "meaning_pali": "ปีณเน",
+    "udaharana": [
+      "สนฺตปฺเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตมฺ",
+    "root_roman": "tam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "faint",
+    "meaning_pali": "สานฺตฺเว อวสาทิเย",
+    "udaharana": [
+      "ปตเมยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตรฺ 1",
+    "root_roman": "tar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cross",
+    "meaning_pali": "ตรเณ",
+    "udaharana": [
+      "นิตฺถรติ",
+      "อุตฺตร",
+      "นิตฺถิณฺณ",
+      "ตรุน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตรฺ 2",
+    "root_roman": "tar 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurry",
+    "meaning_pali": "สมฺภเม",
+    "udaharana": [
+      "ตรติ",
+      "ตุรงฺค",
+      "ตุริโต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตลฺ",
+    "root_roman": "tal",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "support, rest on",
+    "meaning_pali": "ปติฏฺฐายํ",
+    "udaharana": [
+      "ตล",
+      "ตาล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตสฺ 1",
+    "root_roman": "tas 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tremble, fear",
+    "meaning_pali": "อุพฺเพเค",
+    "udaharana": [
+      "ตสติ",
+      "ตส",
+      "ปริตสฺสติ",
+      "ปริตสฺสา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตสฺ 2",
+    "root_roman": "tas 2",
+    "group_pali": "คห (ณฺหา ปฺป)",
+    "group_roman": "gahādigaṇa",
+    "meaning_thai": "thirst",
+    "meaning_pali": "ปิปาสายํ",
+    "udaharana": [
+      "ตณฺห",
+      "ตสินา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตสฺ 3",
+    "root_roman": "tas 3",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be agitated",
+    "meaning_pali": "ปิปาสายํ",
+    "udaharana": [
+      "ปริตสฺสติ",
+      "ปริตสฺสนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตสฺ 4",
+    "root_roman": "tas 4",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "decorate, impale",
+    "meaning_pali": "",
+    "udaharana": [
+      "อุตฺตาเสนฺติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตฬฺ",
+    "root_roman": "taḷ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "beat",
+    "meaning_pali": "อาฆาเต",
+    "udaharana": [
+      "ตาเฬติ",
+      "อุรตฺตาฬิํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตา",
+    "root_roman": "tā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "protect, preserve",
+    "meaning_pali": "ปาลเน",
+    "udaharana": [
+      "ตาณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติชฺ 1",
+    "root_roman": "tij 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be sharp, be hot",
+    "meaning_pali": "นิสาเน",
+    "udaharana": [
+      "เตเชติ",
+      "เตช",
+      "เตโช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติชฺ 2",
+    "root_roman": "tij 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be sharp, be bitter",
+    "meaning_pali": "นิสาเน",
+    "udaharana": [
+      "ติตฺตก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติชฺ 3",
+    "root_roman": "tij 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "endure",
+    "meaning_pali": "<พฺ>ขมา</พฺ>-นิสาเนสุ พนฺเธ ปิ",
+    "udaharana": [
+      "ติติกฺขติ",
+      "ติติกฺขา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติมฺ",
+    "root_roman": "tim",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be wet",
+    "meaning_pali": "เตมน-สํกาสุ",
+    "udaharana": [
+      "เตมน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติรฺ",
+    "root_roman": "tir",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cross",
+    "meaning_pali": "อโธคติยํ",
+    "udaharana": [
+      "ตีร",
+      "ติรจฺฉาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ติสฺ",
+    "root_roman": "tis",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "satisfy",
+    "meaning_pali": "ติตฺติยํ",
+    "udaharana": [
+      "ติตฺติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตีรฺ",
+    "root_roman": "tīr",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "investigate, complete",
+    "meaning_pali": "กมฺม-สมตฺติยํ",
+    "udaharana": [
+      "ตีเรติ",
+      "ตีรยมาน",
+      "สนฺตีรณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุฑฺ",
+    "root_roman": "tuḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "prick, stab",
+    "meaning_pali": "โตฑเน",
+    "udaharana": [
+      "ตุณฺฑ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุทฺ",
+    "root_roman": "tud",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "prick, stab",
+    "meaning_pali": "วฺยถเน",
+    "udaharana": [
+      "ตุทิต",
+      "ตุนฺน",
+      "ตุตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุรฺ 1",
+    "root_roman": "tur 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, be sick",
+    "meaning_pali": "",
+    "udaharana": [
+      "อาตุร",
+      "อาตุรียติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุรฺ 2",
+    "root_roman": "tur 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurry, be quick",
+    "meaning_pali": "",
+    "udaharana": [
+      "ตุริตํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุลฺ",
+    "root_roman": "tul",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "weigh",
+    "meaning_pali": "อุมฺมาเน",
+    "udaharana": [
+      "ตุเลติ",
+      "ตุลิต",
+      "อตุล",
+      "ตุลา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุสฺ",
+    "root_roman": "tus",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be content, be pleased",
+    "meaning_pali": "ตุฏฺฐิมฺหิ",
+    "udaharana": [
+      "สนฺตุสฺสก",
+      "สนฺตุฏฺฐิ",
+      "อสนฺตุฏฺฐิตา",
+      "ตุณฺหี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตุวฏฺฏฺ",
+    "root_roman": "tuvaṭṭ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "lie down",
+    "meaning_pali": "เอกสยเน",
+    "udaharana": [
+      "-"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตูลฺ",
+    "root_roman": "tūl",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be light",
+    "meaning_pali": "นิกฺกรีเส",
+    "udaharana": [
+      "ตูล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ตฺรสฺ",
+    "root_roman": "tras",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fear, shake",
+    "meaning_pali": "อุพฺเพเค",
+    "udaharana": [
+      "อุตฺรสฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถกฺ",
+    "root_roman": "thak",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "close",
+    "meaning_pali": "ปฏิฆาเต",
+    "udaharana": [
+      "ถเกติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถนฺ",
+    "root_roman": "than",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roar, thunder",
+    "meaning_pali": "เทวสทฺเท",
+    "udaharana": [
+      "ถเนติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถมฺ",
+    "root_roman": "tham",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hang",
+    "meaning_pali": "เวลมฺเพ",
+    "udaharana": [
+      "ถมติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถมฺภฺ",
+    "root_roman": "thambh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "support, be stiff",
+    "meaning_pali": "ปฏิพนฺเธ",
+    "udaharana": [
+      "สนฺถมฺภติ",
+      "ถมฺภ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถรฺ",
+    "root_roman": "thar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "spread, expand",
+    "meaning_pali": "สนฺถรเณ ปาทิปุพฺโพ ว",
+    "udaharana": [
+      "สนฺถรติ",
+      "สนฺถต",
+      "วิตฺถาเรน",
+      "อตฺถต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถลฺ",
+    "root_roman": "thal",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be firm",
+    "meaning_pali": "ฐาเน",
+    "udaharana": [
+      "ถล",
+      "ถลติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถี",
+    "root_roman": "thī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stiffen, be compact",
+    "meaning_pali": "สทฺท-สงฺฆาเตสุ",
+    "udaharana": [
+      "วิถายติ",
+      "ปติตฺถียติ",
+      "ถีน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถุ 1",
+    "root_roman": "thu 1",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "moan, groan",
+    "meaning_pali": "นิตฺถุนเน",
+    "udaharana": [
+      "ถุนาติ",
+      "อนุตฺถุนิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถุ 2",
+    "root_roman": "thu 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be familiar, praise",
+    "meaning_pali": "อภิตฺถเว",
+    "udaharana": [
+      "ถวติ",
+      "สนฺถว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถุ 3",
+    "root_roman": "thu 3",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "praise",
+    "meaning_pali": "อภิตฺถเว",
+    "udaharana": [
+      "อภิตฺถุนาติ",
+      "ถุต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ถูลฺ",
+    "root_roman": "thūl",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be fat, be coarse",
+    "meaning_pali": "กสฺสเน",
+    "udaharana": [
+      "ถูล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เถนฺ",
+    "root_roman": "then",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "steal",
+    "meaning_pali": "โจริเย",
+    "udaharana": [
+      "เถเนติ",
+      "เถน",
+      "เถยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โถมฺ",
+    "root_roman": "thom",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "praise",
+    "meaning_pali": "สิลาฆายํ",
+    "udaharana": [
+      "โถเมติ",
+      "โถม",
+      "โถมยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทกฺขฺ",
+    "root_roman": "dakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be able, please",
+    "meaning_pali": "วุทฺธิยํ สีฆตฺเต จ",
+    "udaharana": [
+      "ทกฺข",
+      "ทกฺขิณ",
+      "ปทกฺขิณา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทนฺธฺ",
+    "root_roman": "dandh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be slow",
+    "meaning_pali": "อสีฆจาเร",
+    "udaharana": [
+      "ทนฺธติ",
+      "ทนฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทปฺ",
+    "root_roman": "dap",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be arrogant",
+    "meaning_pali": "หาเส",
+    "udaharana": [
+      "ทปฺป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทมฺ",
+    "root_roman": "dam",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be tame",
+    "meaning_pali": "ทเม",
+    "udaharana": [
+      "ทเมติ",
+      "ทนฺต",
+      "ทมฺม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทยฺ",
+    "root_roman": "day",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be kind, have pity",
+    "meaning_pali": "ทาน-คติ-หิํสาทาเนสุ",
+    "udaharana": [
+      "ทยติ",
+      "ทยา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทรฺ 1",
+    "root_roman": "dar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "break, split apart",
+    "meaning_pali": "ทารเณ",
+    "udaharana": [
+      "ทาเรติ",
+      "อุนฺทฺรียติ",
+      "อุทริย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทรฺ 2",
+    "root_roman": "dar 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fear",
+    "meaning_pali": "ภเย",
+    "udaharana": [
+      "ทร",
+      "ทรถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทรฺ 3",
+    "root_roman": "dar 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "respect, have affection",
+    "meaning_pali": "อาทรานาทเรสุ",
+    "udaharana": [
+      "อาทร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทลฺ",
+    "root_roman": "dal",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "split, tear apart",
+    "meaning_pali": "วิทารเณ",
+    "udaharana": [
+      "ปทาเฬติ",
+      "สมฺปทาเฬติ",
+      "อุทฺทาลิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทหฺ",
+    "root_roman": "dah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be strong",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "ทฬฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทา 1",
+    "root_roman": "dā 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "give",
+    "meaning_pali": "ทาเน",
+    "udaharana": [
+      "ททาติ",
+      "ทาน",
+      "ทายก",
+      "ทินฺน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทา 2",
+    "root_roman": "dā 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be pure, be clean",
+    "meaning_pali": "โสธเน",
+    "udaharana": [
+      "ปริโยทเปติ",
+      "ปริโยทาต",
+      "โวทายติ",
+      "โอทาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทา 3",
+    "root_roman": "dā 3",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "tie, bind",
+    "meaning_pali": "",
+    "udaharana": [
+      "นิทาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทา 4",
+    "root_roman": "dā 4",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "cut, break apart",
+    "meaning_pali": "อวขณฺฑเน",
+    "udaharana": [
+      "อปทาน",
+      "ปริตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทา 5",
+    "root_roman": "dā 5",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "sleep",
+    "meaning_pali": "สุปเน",
+    "udaharana": [
+      "นิทฺทายติ",
+      "นิทฺทา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิกฺขฺ",
+    "root_roman": "dikkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "consecrate",
+    "meaning_pali": "มุณฺฑิโยปนยน-นิยม-วตาเทเสสุ",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ทิกฺขฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (โจนฺเสจฺรเต)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>ทิกฺข <อิ>มุณฺฑิโยปนยน-นิยม-วตาเทเสสุ</อิ> (สฺหวินฺคฺ เถ เหอทฺ",
+      "เรสฺตฺรอินินฺคฺ",
+      "เรลิคิโออุสฺ ทุตฺยฺ เอตฺจฺ) #14</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>ทิกฺข <อิ>อุปนย-มุณฺฑิย-วตาเทเสสุ-นิยเม</อิ> (สฺหวินฺคฺ เถ เหอทฺ",
+      "เรลิคิโออุสฺ ทุติเอสฺ อนฺทฺ เรสฺตฺรอินินฺคฺ) #24</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>ทิกฺข <อิ>มุณฺฑิยฺôปนยน-นิยมพฺพตฺ’-อาเทเสสุ</อิ> (สฺหวินฺคฺ เถ เหอทฺ",
+      "อินิติอตินฺคฺ",
+      "เรสฺตฺรอินินฺคฺ",
+      "ปฺรจฺติเจ อนฺทฺ โปอินฺตินฺคฺ โออุตฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ทีกฺṣ อ (โจนฺเสจฺรเต)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ทีกฺṣ อ <อิ>มอุณฺฑฺเยชฺโยปนยน-นิยม-วฺรตฺ’อาเทśเอṣอุ</อิ> (สฺหวินฺคฺ เถ เหอทฺ",
+      "อินิติอตินฺคฺ",
+      "เรสฺตฺรอินินฺคฺ",
+      "ปฺรจฺติเจ อนฺทฺ อินฺสฺตฺรุจฺติโอนฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิสฺ 1",
+    "root_roman": "dis 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "see",
+    "meaning_pali": "เปกฺขเน",
+    "udaharana": [
+      "อุทฺทิสติ",
+      "ทิสฺสติ",
+      "ปสฺสติ",
+      "ทกฺขติ",
+      "ทกฺขิติ",
+      "วิปสฺสี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิสฺ 2",
+    "root_roman": "dis 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "point out, explain",
+    "meaning_pali": "อติสชฺชเน",
+    "udaharana": [
+      "อุทฺทิสติ",
+      "อุทฺเทส",
+      "ปเทส",
+      "ทิสา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิสฺ 3",
+    "root_roman": "dis 3",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "dislike, hate",
+    "meaning_pali": "อปฺปีติยํ",
+    "udaharana": [
+      "เทสฺสติ",
+      "ทิส",
+      "เทสฺสี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิวฺ",
+    "root_roman": "div",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "กีฬา-วิชิคิํสา-โวหาร-<พฺ>ชฺชุติ</พฺ>-ตฺถุติ-คติสุ",
+    "udaharana": [
+      "ทิพฺพติ",
+      "เทวา",
+      "ทิพฺพ",
+      "ทิวส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทิหฺ",
+    "root_roman": "dih",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "accumulate, smear",
+    "meaning_pali": "อุปจเย",
+    "udaharana": [
+      "เทห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ที",
+    "root_roman": "dī",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be afflicted",
+    "meaning_pali": "ขเย",
+    "udaharana": [
+      "ทีน",
+      "อาทีนว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทีปฺ",
+    "root_roman": "dīp",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "shine, explain",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ทิปฺปติ",
+      "ทีเปติ",
+      "ทีป",
+      "ปทีป",
+      "อาทิจฺจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุ",
+    "root_roman": "du",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn, torment",
+    "meaning_pali": "ปริตาเป",
+    "udaharana": [
+      "อนุปทฺทว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุกฺขฺ",
+    "root_roman": "dukkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be painful",
+    "meaning_pali": "ตกฺริเย",
+    "udaharana": [
+      "ทุกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุพฺภฺ",
+    "root_roman": "dubbh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "deceive, be treacherous",
+    "meaning_pali": "",
+    "udaharana": [
+      "ทุพฺภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุลฺ",
+    "root_roman": "dul",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "swing",
+    "meaning_pali": "อุกฺเขปเน",
+    "udaharana": [
+      "โทลา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุสฺ 1",
+    "root_roman": "dus 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be angry, be corrupt",
+    "meaning_pali": "โทสเน",
+    "udaharana": [
+      "ปทุสฺสติ",
+      "ทุสฺสติ",
+      "ทุฏฺฐ",
+      "ทูสก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุสฺ 2",
+    "root_roman": "dus 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "hate, dislike",
+    "meaning_pali": "อปฺปีติยํ",
+    "udaharana": [
+      "ทุสฺสติ",
+      "โทส",
+      "เทสฺสี",
+      "ทุสฺสนีย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทุหฺ",
+    "root_roman": "duh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "milk a cow",
+    "meaning_pali": "ปปูรเณ",
+    "udaharana": [
+      "คทฺทุหน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทู",
+    "root_roman": "dū",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go, run",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ทูต",
+      "ทูเตยฺย",
+      "อวิทูร",
+      "ทว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เทวฺ",
+    "root_roman": "dev",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lament",
+    "meaning_pali": "เทวเน",
+    "udaharana": [
+      "ปริเทวติ",
+      "อาเทว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทฺรุ",
+    "root_roman": "dru",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "run, flow",
+    "meaning_pali": "",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ทฺรุ<สุปฺ>×</สุปฺ>1 ภูวาทิคณ + อ (รุนฺ",
+      "fโลw)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ทฺรุ 1 (รุนฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>โนเตสฺ:</ถฺ><ตฺทฺ>โนตฺ fโออุนฺทฺ อินฺ จฺลสฺสิจลฺ ปาฬิ คฺรมฺมรฺสฺ. เรลเตทฺ โต <อิ>ธาวฺ</อิ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ทฺวรฺ",
+    "root_roman": "dvar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "obstruct, prohibit",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "ทฺวาร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธชฺ",
+    "root_roman": "dhaj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, flap",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "ธช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธนฺ 1",
+    "root_roman": "dhan 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be rich",
+    "meaning_pali": "ธญฺเญ",
+    "udaharana": [
+      "ธน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธนฺ 2",
+    "root_roman": "dhan 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "sound",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "ธนิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธมฺ",
+    "root_roman": "dham",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "blow, sound",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "นิทฺธมติ",
+      "ธนฺต",
+      "อุทฺธุมาตก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธรฺ 1",
+    "root_roman": "dhar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hold, carry, endure",
+    "meaning_pali": "ธารเณ",
+    "udaharana": [
+      "ธรติ",
+      "ธีร",
+      "ธุว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธรฺ 2",
+    "root_roman": "dhar 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wear, hold, carry",
+    "meaning_pali": "ธารเน",
+    "udaharana": [
+      "ธาเรติ",
+      "ธมฺม",
+      "อาธาร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธํสฺ",
+    "root_roman": "dhaṃs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fall down, destroy",
+    "meaning_pali": "ธํสเน",
+    "udaharana": [
+      "ธํสติ",
+      "อุทฺธํเสติ",
+      "วิทฺธํสน",
+      "อุทฺธสฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธา",
+    "root_roman": "dhā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "place, support",
+    "meaning_pali": "ธารเณ",
+    "udaharana": [
+      "สทฺทหติ",
+      "ธาตุ",
+      "สมาธิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธาวฺ 1",
+    "root_roman": "dhāv 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "run, flow",
+    "meaning_pali": "คติสุทฺธิยํ",
+    "udaharana": [
+      "ธาวติ",
+      "สนฺธาวติ",
+      "วิธาวน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธาวฺ 2",
+    "root_roman": "dhāv 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "polish, sharpen",
+    "meaning_pali": "",
+    "udaharana": [
+      "ธารา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธี",
+    "root_roman": "dhī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "think",
+    "meaning_pali": "",
+    "udaharana": [
+      "ธีร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธุรฺ",
+    "root_roman": "dhur",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be crooked, be corrupt",
+    "meaning_pali": "หุจฺฉเน",
+    "udaharana": [
+      "ธุตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธุวฺ",
+    "root_roman": "dhuv",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be firm, be solid",
+    "meaning_pali": "ยาตฺรา-<พฺ>ถิเรสุ</พฺ> จ",
+    "udaharana": [
+      "ธุว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธู",
+    "root_roman": "dhū",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "shake, smoke",
+    "meaning_pali": "กมฺปเน",
+    "udaharana": [
+      "ธุนาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ธูปฺ",
+    "root_roman": "dhūp",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "smoke",
+    "meaning_pali": "สนฺตาเป",
+    "udaharana": [
+      "ธูป",
+      "ธูปน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เธ",
+    "root_roman": "dhe",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drink, suck",
+    "meaning_pali": "ปาเน",
+    "udaharana": [
+      "ธยติ",
+      "ธีตุ",
+      "เธนุ",
+      "ธาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โธวฺ",
+    "root_roman": "dhov",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wash, sharpen",
+    "meaning_pali": "โธวเน",
+    "udaharana": [
+      "โธวติ",
+      "โธน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นกฺขฺ",
+    "root_roman": "nakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "attain, arrive",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "นกฺขต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นฏฺ",
+    "root_roman": "naṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bend, dance",
+    "meaning_pali": "นาฏฺเย",
+    "udaharana": [
+      "นฏก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นตฺ",
+    "root_roman": "nat",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "dance, act",
+    "meaning_pali": "คตวินาเม",
+    "udaharana": [
+      "นตฺต",
+      "นจฺจติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นทฺ",
+    "root_roman": "nad",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roar",
+    "meaning_pali": "อวฺยตฺตสทฺเท",
+    "udaharana": [
+      "นทติ",
+      "นาท",
+      "นที"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นธฺ",
+    "root_roman": "nadh",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "wrap, twist",
+    "meaning_pali": "วินนฺธเน",
+    "udaharana": [
+      "นนฺธติ",
+      "ปริโยนทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นนฺทฺ",
+    "root_roman": "nand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "delight, enjoy",
+    "meaning_pali": "สมิทฺธิยํ",
+    "udaharana": [
+      "นนฺทติ",
+      "นนฺทิต",
+      "นนฺท",
+      "อภินนฺที"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นภฺ",
+    "root_roman": "nabh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burst, split",
+    "meaning_pali": "วิหิํสายํ",
+    "udaharana": [
+      "นาภิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นมฺ",
+    "root_roman": "nam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bend",
+    "meaning_pali": "นมเน",
+    "udaharana": [
+      "นมติ",
+      "นต",
+      "นมิต",
+      "อภินินฺนาเมติ",
+      "ปณาเมตฺวา",
+      "วิปริณาม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นมสฺสฺ",
+    "root_roman": "namass",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bow, worship",
+    "meaning_pali": "วนฺทนานติยํ",
+    "udaharana": [
+      "นมสฺสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นรฺ",
+    "root_roman": "nar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lead",
+    "meaning_pali": "นเย",
+    "udaharana": [
+      "นรติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นสฺ",
+    "root_roman": "nas",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be lost, disappear",
+    "meaning_pali": "อทสฺสเน",
+    "udaharana": [
+      "นสฺสติ",
+      "นาส",
+      "นฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นหฺ",
+    "root_roman": "nah",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "bind, arm",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "สนฺนยฺหติ",
+      "อุปนยฺหติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นาถฺ",
+    "root_roman": "nāth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "have power, protect",
+    "meaning_pali": "ยาจโนป-ตาปฺ’-อิสฺสริยาสิํสาสุ",
+    "udaharana": [
+      "นาถ",
+      "อนาถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นินฺทฺ",
+    "root_roman": "nind",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "blame, abuse",
+    "meaning_pali": "ครหายํ",
+    "udaharana": [
+      "นินฺทติ",
+      "นินฺทิย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นี",
+    "root_roman": "nī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lead, carry",
+    "meaning_pali": "ปาปเณ",
+    "udaharana": [
+      "เนติ",
+      "นีต",
+      "อาเนติ",
+      "อุทาเนติ",
+      "อปนียติ",
+      "ปณีต",
+      "วิเนยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นีลฺ",
+    "root_roman": "nīl",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be blue",
+    "meaning_pali": "วณฺเณ",
+    "udaharana": [
+      "นีล",
+      "วินีลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นุทฺ",
+    "root_roman": "nud",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drive out, reject",
+    "meaning_pali": "เขเป",
+    "udaharana": [
+      "นุทติ",
+      "นุณฺณ",
+      "ปฏิวิโนเทตฺวา",
+      "ปนุทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เนสฺสฺ",
+    "root_roman": "ness",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "take away",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "เนสฺสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นฺหา",
+    "root_roman": "nhā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "bathe",
+    "meaning_pali": "โสเจยฺเย",
+    "udaharana": [
+      "นหายติ",
+      "นฺหาเปตฺวา",
+      "นฺหานิย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปจฺ",
+    "root_roman": "pac",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cook, mature, ripen",
+    "meaning_pali": "ปาเก",
+    "udaharana": [
+      "ปาก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปญฺจฺ",
+    "root_roman": "pañc",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "expand, spread",
+    "meaning_pali": "วิตฺถาเร",
+    "udaharana": [
+      "ปปญฺจ",
+      "ปปญฺเจติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปญฺหฺ",
+    "root_roman": "pañh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "ask, question",
+    "meaning_pali": "ปุจฺฉายํ",
+    "udaharana": [
+      "ปญฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปฏฺ 1",
+    "root_roman": "paṭ 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "split, tear",
+    "meaning_pali": "",
+    "udaharana": [
+      "อุปฺปาเฏติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปฏฺ 2",
+    "root_roman": "paṭ 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go",
+    "meaning_pali": "คมนตฺถา",
+    "udaharana": [
+      "ปฏิปาฏิ",
+      "ปฏิปาฏิยา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปฐฺ",
+    "root_roman": "paṭh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "read, recite",
+    "meaning_pali": "อุจฺจารเณ",
+    "udaharana": [
+      "ปฐติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปณฺ",
+    "root_roman": "paṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "trade, barter",
+    "meaning_pali": "วฺยวหาร-ตฺถุติสุ",
+    "udaharana": [
+      "อาปณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปณฺฑฺ",
+    "root_roman": "paṇḍ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "mock, tease",
+    "meaning_pali": "ปริภาเส",
+    "udaharana": [
+      "ปณฺเฑติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปตฺ 1",
+    "root_roman": "pat 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fall",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ปตติ",
+      "สนฺนิปาต",
+      "ปปาต",
+      "อติปาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปตฺ 2",
+    "root_roman": "pat 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "command, control",
+    "meaning_pali": "",
+    "udaharana": [
+      "ปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปถฺ 1",
+    "root_roman": "path 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go, move",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ปถ",
+      "ปถิก",
+      "วิปถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปถฺ 2",
+    "root_roman": "path 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "expand",
+    "meaning_pali": "วิตฺถาเร",
+    "udaharana": [
+      "ปถวี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปทฺ",
+    "root_roman": "pad",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "go, step",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "อุปฺปชฺชติ",
+      "ปตฺติ",
+      "ปาทุก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปนฺถฺ",
+    "root_roman": "panth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go, move",
+    "meaning_pali": "คเต",
+    "udaharana": [
+      "ปริปนฺถ",
+      "ปนฺถก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปพฺพฺ",
+    "root_roman": "pabb",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "grow",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ปพฺพฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (คฺโรw)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>ปพฺพ</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>ปพฺพ <อิ>คติยํ</อิ> (โคอินฺคฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ปรฺวฺ 1 (fอิลฺลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ปรฺพฺ อ <อิ>คตอุ</อิ> (โคอินฺคฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปรฺ",
+    "root_roman": "par",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be active",
+    "meaning_pali": "",
+    "udaharana": [
+      "พฺยาวฏ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปลา",
+    "root_roman": "palā",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "run away, flee",
+    "meaning_pali": "คมนตฺถา",
+    "udaharana": [
+      "ปเลติ",
+      "ปลายติ",
+      "ปลาเปตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปลุสฺ",
+    "root_roman": "palus",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "burn",
+    "meaning_pali": "อุปทาเห",
+    "udaharana": [
+      "ปลุฏฺฐ",
+      "ปโลสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปสฺ",
+    "root_roman": "pas",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "tie, bind",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "ปาส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปา 2",
+    "root_roman": "pā 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "protect, guard",
+    "meaning_pali": "รกฺขเณ",
+    "udaharana": [
+      "ป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปา 1",
+    "root_roman": "pā 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "drink",
+    "meaning_pali": "ปาเน",
+    "udaharana": [
+      "ปิวติ",
+      "ปีต",
+      "ปิวน",
+      "ปานีย",
+      "อุทปาน",
+      "ปิปาสา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปายฺ",
+    "root_roman": "pāy",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "อปฺปายติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปาลฺ",
+    "root_roman": "pāl",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "protect",
+    "meaning_pali": "รกฺขเณ",
+    "udaharana": [
+      "ปาเลติ",
+      "ปาลยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิฏฺ",
+    "root_roman": "piṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "collect",
+    "meaning_pali": "สํฆาเต",
+    "udaharana": [
+      "ปิฏก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิณฺฑฺ",
+    "root_roman": "piṇḍ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "collect",
+    "meaning_pali": "สํฆาเต",
+    "udaharana": [
+      "ปิณฺเฑติ",
+      "ปิณฺฑิ",
+      "ปิณฺฑาย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิสฺ 1",
+    "root_roman": "pis 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "send",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "เปเสติ",
+      "เปสฺสิก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิสฺ 2",
+    "root_roman": "pis 2",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "grind, hurt",
+    "meaning_pali": "สํจุณฺณเน",
+    "udaharana": [
+      "ปิสุน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิสฺ 3",
+    "root_roman": "pis 3",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "speak ill",
+    "meaning_pali": "ภาสายํ",
+    "udaharana": [
+      "ปิสุณ",
+      "ปิสาจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปิหฺ",
+    "root_roman": "pih",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "desire, envy",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "ปิหยติ",
+      "ปิเหติ",
+      "อปิหาลุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปี",
+    "root_roman": "pī",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "love, please",
+    "meaning_pali": "ตปฺปเน",
+    "udaharana": [
+      "ปีติ",
+      "เปม",
+      "ปิยายติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปีณฺ",
+    "root_roman": "pīṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "please, swell",
+    "meaning_pali": "ปีณเน",
+    "udaharana": [
+      "ปีเณติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปีฬฺ",
+    "root_roman": "pīḷ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "press, crush",
+    "meaning_pali": "พาธายํ",
+    "udaharana": [
+      "ปีเฬติ",
+      "ปีฬิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุ",
+    "root_roman": "pu",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "purify, cleanse",
+    "meaning_pali": "ปวเน",
+    "udaharana": [
+      "ปุนาติ",
+      "ปุญฺญ",
+      "ปุตฺต",
+      "ทนฺตโปณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุจฺฉฺ",
+    "root_roman": "pucch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "ask, question",
+    "meaning_pali": "ปุจฺฉเน",
+    "udaharana": [
+      "ปุจฺฉติ",
+      "อภิปุฏฺฐ",
+      "ปุจฺฉา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุญฺฉฺ",
+    "root_roman": "puñch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wipe",
+    "meaning_pali": "ปุญฺฉเน",
+    "udaharana": [
+      "ปุญฺฉนก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุฏฺ",
+    "root_roman": "puṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wrap, envelop",
+    "meaning_pali": "",
+    "udaharana": [
+      "ปุฏ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุฐฺ",
+    "root_roman": "puṭh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "beat, hurt",
+    "meaning_pali": "ปหาเร",
+    "udaharana": [
+      "โปเฐติ",
+      "โปเฐตฺวา",
+      "โปฐิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุณฺ",
+    "root_roman": "puṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be skilful, be precise",
+    "meaning_pali": "กมฺมนิ สุเภ",
+    "udaharana": [
+      "นิปุณ",
+      "ปุญฺญ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุถฺ",
+    "root_roman": "puth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "expand",
+    "meaning_pali": "วิตฺถาเร",
+    "udaharana": [
+      "ปุถุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุปฺผฺ",
+    "root_roman": "pupph",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "flower, expand",
+    "meaning_pali": "วิกสเน",
+    "udaharana": [
+      "สํปุปฺผิต",
+      "ปุปฺป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุลฺ",
+    "root_roman": "pul",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "สมุสฺสเย",
+    "udaharana": [
+      "เวปุลฺล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปุสฺ",
+    "root_roman": "pus",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "nourish, take care",
+    "meaning_pali": "โปสเน",
+    "udaharana": [
+      "โปสติ",
+      "โปส",
+      "โปเสติ",
+      "โปสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปูชฺ",
+    "root_roman": "pūj",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "honour, venerate",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "ปูเชติ",
+      "ปูชิต",
+      "ปูช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปูยฺ",
+    "root_roman": "pūy",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rot, fester",
+    "meaning_pali": "วิสรเณ ทุคฺคนฺเธ",
+    "udaharana": [
+      "ปูติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปูรฺ",
+    "root_roman": "pūr",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fill, fulfil",
+    "meaning_pali": "ปูรเณ",
+    "udaharana": [
+      "ปูรติ",
+      "ปริปูเรติ",
+      "ปูเรติ",
+      "ปริปูรยติ",
+      "ปูร",
+      "ปริปุณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เปลฺ",
+    "root_roman": "pel",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move, propel",
+    "meaning_pali": "จลเน",
+    "udaharana": [
+      "เปลฺลน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปฺลุ 1",
+    "root_roman": "plu 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "float, swim",
+    "meaning_pali": "คเต",
+    "udaharana": [
+      "ปฺลวติ",
+      "โอปิลาเปติ",
+      "ปฺลว",
+      "ปฺลวน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ปฺลุ 2",
+    "root_roman": "plu 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "spring, swing",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "ปฺลวติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผณฺ",
+    "root_roman": "phaṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "skim",
+    "meaning_pali": "",
+    "udaharana": [
+      "เผณุ",
+      "ผาณิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผนฺทฺ",
+    "root_roman": "phand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, quiver",
+    "meaning_pali": "กิญฺจิจลเน",
+    "udaharana": [
+      "ผนฺทติ",
+      "วิปฺผนฺทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผรฺ",
+    "root_roman": "phar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "suffuse, pervade",
+    "meaning_pali": "สมฺผรเณ",
+    "udaharana": [
+      "ผรติ",
+      "ผรณ",
+      "ปริปฺผุฏ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผลฺ 1",
+    "root_roman": "phal 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "split open",
+    "meaning_pali": "เภเท",
+    "udaharana": [
+      "ผลติ",
+      "ผาเลติ",
+      "ผาล",
+      "วิปฺผาลิต",
+      "ผุลฺล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผลฺ 2",
+    "root_roman": "phal 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fruit, ripen",
+    "meaning_pali": "นิปฺผตฺติยํ",
+    "udaharana": [
+      "ผลี",
+      "ผลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผา",
+    "root_roman": "phā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "swell, get fat",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "ผีต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุฏฺ 1",
+    "root_roman": "phuṭ 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "beat, smash",
+    "meaning_pali": "วิเภเท",
+    "udaharana": [
+      "นิปฺโผเฏติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุฏฺ 2",
+    "root_roman": "phuṭ 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "swell, burst",
+    "meaning_pali": "วิกสนฺ’อาทีสุ",
+    "udaharana": [
+      "โผฏ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุลฺลฺ",
+    "root_roman": "phull",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "expand, bloom",
+    "meaning_pali": "วิกสเน",
+    "udaharana": [
+      "ผุลฺล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุสฺ 1",
+    "root_roman": "phus 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "touch",
+    "meaning_pali": "สมฺผสฺเส",
+    "udaharana": [
+      "ผุสิตฺวา",
+      "ผุฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุสฺ 2",
+    "root_roman": "phus 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sprinkle, splash",
+    "meaning_pali": "สิเนห-สวน-ปูรเณสุ",
+    "udaharana": [
+      "ปริปฺโผสกํ",
+      "โผเสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พธฺ",
+    "root_roman": "badh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bind, tie",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "วินิพทฺธ",
+      "ปฏิพทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พนฺธฺ",
+    "root_roman": "bandh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bind, tie",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "พนฺธติ",
+      "สมฺพนฺธ",
+      "พนฺธุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พลฺ",
+    "root_roman": "bal",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be strong, live",
+    "meaning_pali": "ปาณเน",
+    "udaharana": [
+      "พลติ",
+      "พล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พหฺ 1",
+    "root_roman": "bah 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be outside",
+    "meaning_pali": "",
+    "udaharana": [
+      "ปฏิพาหติ",
+      "พาหิร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พหฺ 2",
+    "root_roman": "bah 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "พหุ",
+      "พาหุลิก",
+      "พาฬฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พาธฺ",
+    "root_roman": "bādh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "press, oppress",
+    "meaning_pali": "วิพาธายํ",
+    "udaharana": [
+      "พาธติ",
+      "อาพาเธติ",
+      "อาพาธิก",
+      "พวฺหาพาธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พิลฺ",
+    "root_roman": "bil",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "break, chop",
+    "meaning_pali": "เภทเน",
+    "udaharana": [
+      "พิลติ",
+      "พิล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พุธฺ",
+    "root_roman": "budh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "know, wake up",
+    "meaning_pali": "อวคมเน",
+    "udaharana": [
+      "พุชฺฌติ",
+      "พุทฺธ",
+      "สมฺโพธิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พุหฺ",
+    "root_roman": "buh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "pluck out, uproot",
+    "meaning_pali": "",
+    "udaharana": [
+      "อพฺพุหติ",
+      "อพฺพุยฺห",
+      "อพฺพูฬฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พฺรหฺ",
+    "root_roman": "brah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "พฺรหติ",
+      "พฺรหา",
+      "พฺรหนฺต",
+      "พฺรหฺม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พฺรู",
+    "root_roman": "brū",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "say",
+    "meaning_pali": "วจเน",
+    "udaharana": [
+      "พฺรูติ",
+      "อพฺรวิ",
+      "พฺรวนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "พฺรูหฺ",
+    "root_roman": "brūh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "พฺรูเหติ",
+      "พฺรูหน",
+      "พฺรูเหตุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภกฺขฺ",
+    "root_roman": "bhakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eat",
+    "meaning_pali": "อทเน",
+    "udaharana": [
+      "ภกฺขติ",
+      "ภกฺข",
+      "ภตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภชฺ 1",
+    "root_roman": "bhaj 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "divide, distribute",
+    "meaning_pali": "เสวา-<พฺ>ปุถกฺกาเร</พฺ>",
+    "udaharana": [
+      "วิภชติ",
+      "สุวิภตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภชฺ 2",
+    "root_roman": "bhaj 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "associate, keep company",
+    "meaning_pali": "เสวายํ",
+    "udaharana": [
+      "ภชติ",
+      "ภชนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภชฺชฺ",
+    "root_roman": "bhajj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cook",
+    "meaning_pali": "ปาเก",
+    "udaharana": [
+      "ภชฺชติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภญฺชฺ",
+    "root_roman": "bhañj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "break, destroy",
+    "meaning_pali": "โอมทฺทเน",
+    "udaharana": [
+      "ภญฺชติ",
+      "ภงฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภณฺ",
+    "root_roman": "bhaṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "talk, speak",
+    "meaning_pali": "ภณเน",
+    "udaharana": [
+      "ภณติ",
+      "ภญฺญมาน",
+      "ปฏิภาณวนฺตุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภณฺฑฺ",
+    "root_roman": "bhaṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "blame, accuse",
+    "meaning_pali": "ภณฺฑเน",
+    "udaharana": [
+      "ภณฺฑติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภทฺ",
+    "root_roman": "bhad",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be good, be lucky",
+    "meaning_pali": "กลฺยาเณ",
+    "udaharana": [
+      "ภทฺร",
+      "ภนฺเต",
+      "ภทนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภมฺ",
+    "root_roman": "bham",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "turn, revolve, buzz",
+    "meaning_pali": "อนวฏฺฐาเน",
+    "udaharana": [
+      "ภมร",
+      "ภมการ",
+      "วิภนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภรฺ",
+    "root_roman": "bhar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "carry, support",
+    "meaning_pali": "ภรณสฺมิํ",
+    "udaharana": [
+      "ภรติ",
+      "ภริยา",
+      "สุภร",
+      "ภตฺตา",
+      "ภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภสฺ 1",
+    "root_roman": "bhas 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "fall down",
+    "meaning_pali": "อโธปตเน",
+    "udaharana": [
+      "ภสฺสติ",
+      "ภฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภา",
+    "root_roman": "bhā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, speak",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ปฏิภาติ",
+      "อภาสิ",
+      "ภานุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภาสฺ 1",
+    "root_roman": "bhās 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "speak",
+    "meaning_pali": "ทิตฺติยํ วจเน จ",
+    "udaharana": [
+      "ภาสติ",
+      "ภาสา สมนุภาสนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภาสฺ 2",
+    "root_roman": "bhās 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "ทิตฺติยํ วจเน จ",
+    "udaharana": [
+      "ปภาสติ",
+      "โอภาส",
+      "ปภสฺสร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภิกฺขฺ",
+    "root_roman": "bhikkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "beg",
+    "meaning_pali": "ยาจเน",
+    "udaharana": [
+      "ภิกฺขติ",
+      "ภิกฺขุ",
+      "สุภิกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภิทฺ",
+    "root_roman": "bhid",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "break, split",
+    "meaning_pali": "วิทารเณ",
+    "udaharana": [
+      "ภินฺทติ",
+      "ภินฺน",
+      "ปฏิสมฺภิทา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภิสฺ",
+    "root_roman": "bhis",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "fear",
+    "meaning_pali": "ภเย",
+    "udaharana": [
+      "วิภิํสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภี",
+    "root_roman": "bhī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fear",
+    "meaning_pali": "ภเย",
+    "udaharana": [
+      "ภายติ",
+      "ภย",
+      "ภีม",
+      "เภรว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภุชฺ 1",
+    "root_roman": "bhuj 1",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "use, eat, enjoy",
+    "meaning_pali": "ปาลนฺ’-อชฺโฌหาเรสุ",
+    "udaharana": [
+      "ภุญฺชติ",
+      "พุภุกฺขติ",
+      "ภุตฺต",
+      "โภค",
+      "โภเชตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภุชฺ 2",
+    "root_roman": "bhuj 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bend",
+    "meaning_pali": "โกฏิลฺเย",
+    "udaharana": [
+      "อาภุชติ",
+      "อาภุชิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภุสฺ",
+    "root_roman": "bhus",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "fall heavily",
+    "meaning_pali": "",
+    "udaharana": [
+      "ภุส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภุสฺสฺ",
+    "root_roman": "bhuss",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bark",
+    "meaning_pali": "",
+    "udaharana": [
+      "ภุสฺสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภู",
+    "root_roman": "bhū",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be, become",
+    "meaning_pali": "สตฺตายํ",
+    "udaharana": [
+      "ภวติ",
+      "ภว",
+      "วิภว",
+      "ภูมิ",
+      "ภาวิยมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ภูสฺ",
+    "root_roman": "bhūs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "adorn, decorate",
+    "meaning_pali": "อลํกาเร",
+    "udaharana": [
+      "วิภูสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มกฺขฺ",
+    "root_roman": "makkh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "rub, erase",
+    "meaning_pali": "มกฺขเณ",
+    "udaharana": [
+      "มกฺเขติ",
+      "มกฺข",
+      "มกฺขณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มคฺคฺ",
+    "root_roman": "magg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "seek, search",
+    "meaning_pali": "อนฺเวสเน",
+    "udaharana": [
+      "มคฺเคติ",
+      "มคฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มงฺคฺ",
+    "root_roman": "maṅg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be auspicious",
+    "meaning_pali": "มงฺคลฺเย",
+    "udaharana": [
+      "มงฺคลํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มชฺชฺ",
+    "root_roman": "majj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rub, polish",
+    "meaning_pali": "สํสุทฺธิยํ",
+    "udaharana": [
+      "อนุมชฺชติ",
+      "ปริมชฺชติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มญฺจฺ",
+    "root_roman": "mañc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hold up, support",
+    "meaning_pali": "ธารเณ",
+    "udaharana": [
+      "มญฺจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มณฺ",
+    "root_roman": "maṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "abandon",
+    "meaning_pali": "จาเค",
+    "udaharana": [
+      "มณติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มณฺฑฺ",
+    "root_roman": "maṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "adorn",
+    "meaning_pali": "ภูสเน",
+    "udaharana": [
+      "มณฺฑ",
+      "มณฺฑน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มถฺ",
+    "root_roman": "math",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "churn, stir",
+    "meaning_pali": "วิโลฬเน",
+    "udaharana": [
+      "มถิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มทฺ",
+    "root_roman": "mad",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be mad, be intoxicated",
+    "meaning_pali": "อุมฺมาเท",
+    "udaharana": [
+      "ปมชฺชติ",
+      "ปมตฺต",
+      "ปมาท"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มทฺทฺ",
+    "root_roman": "madd",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "crush, grind",
+    "meaning_pali": "มทฺทเน",
+    "udaharana": [
+      "มทฺทติ",
+      "ปริมทฺทน",
+      "มทฺทว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มนฺ",
+    "root_roman": "man",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "think",
+    "meaning_pali": "ญาเณ",
+    "udaharana": [
+      "มญฺญติ",
+      "อติมานี",
+      "มโน",
+      "มต",
+      "มญฺญิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มนฺตฺ",
+    "root_roman": "mant",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "counsel, invite",
+    "meaning_pali": "คุตฺตภาสเน",
+    "udaharana": [
+      "มนฺตยติ",
+      "อามนฺเตติ",
+      "อามนฺเตตฺวา",
+      "มนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มนฺถฺ",
+    "root_roman": "manth",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "churn, crush",
+    "meaning_pali": "วิโลฬเน",
+    "udaharana": [
+      "อภิมนฺเถติ",
+      "อภิมตฺถติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มรฺ",
+    "root_roman": "mar",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "die",
+    "meaning_pali": "ปาณจาเค",
+    "udaharana": [
+      "มรติ",
+      "มียติ",
+      "มาเรตฺวา",
+      "มรณ",
+      "อมต",
+      "มต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มริสฺ",
+    "root_roman": "maris",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be patient",
+    "meaning_pali": "ติติกฺขายํ",
+    "udaharana": [
+      "มรฺสยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มลฺ",
+    "root_roman": "mal",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dirty, stain",
+    "meaning_pali": "",
+    "udaharana": [
+      "มล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มสฺ 1",
+    "root_roman": "mas 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "touch, rub",
+    "meaning_pali": "อามสเน",
+    "udaharana": [
+      "อามสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มสฺ 2",
+    "root_roman": "mas 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "buzz, hum",
+    "meaning_pali": "สทฺเท โรเส จ",
+    "udaharana": [
+      "มกส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มหฺ 1",
+    "root_roman": "mah 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "increase",
+    "meaning_pali": "สตฺตายํ",
+    "udaharana": [
+      "มหา",
+      "มหนฺต",
+      "มหิส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มหฺ 2",
+    "root_roman": "mah 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "venerate",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "มหติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มา",
+    "root_roman": "mā",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "measure",
+    "meaning_pali": "ปมาเณ",
+    "udaharana": [
+      "มินาติ",
+      "มิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิ",
+    "root_roman": "mi",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "exchange, barter",
+    "meaning_pali": "",
+    "udaharana": [
+      "มินาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิฆฺ",
+    "root_roman": "migh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sprinkle, shower",
+    "meaning_pali": "",
+    "udaharana": [
+      "เมฆ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิตฺตฺ",
+    "root_roman": "mitt",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be friendly",
+    "meaning_pali": "",
+    "udaharana": [
+      "มิตฺต",
+      "เมตฺตา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิถฺ",
+    "root_roman": "mith",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "pair",
+    "meaning_pali": "",
+    "udaharana": [
+      "เมถุน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิทฺ",
+    "root_roman": "mid",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be fat",
+    "meaning_pali": "สฺเนหเน",
+    "udaharana": [
+      "เมท",
+      "เมเทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิลา",
+    "root_roman": "milā",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "shrink, wither",
+    "meaning_pali": "คตฺตวินาเม",
+    "udaharana": [
+      "สมฺมิลาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิสฺ",
+    "root_roman": "mis",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wink, blink",
+    "meaning_pali": "มีลเน",
+    "udaharana": [
+      "นิมิสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิสฺสฺ",
+    "root_roman": "miss",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "mix, mingle",
+    "meaning_pali": "สมฺมิสฺเส",
+    "udaharana": [
+      "มิสฺส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิหฺ 1",
+    "root_roman": "mih 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "urinate, excrete",
+    "meaning_pali": "เสจเน",
+    "udaharana": [
+      "มีฬฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มิหฺ 2",
+    "root_roman": "mih 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "smile, chuckle",
+    "meaning_pali": "อีสหสเน",
+    "udaharana": [
+      "มิหิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มีลฺ",
+    "root_roman": "mīl",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "close eyes",
+    "meaning_pali": "นิมีลเน",
+    "udaharana": [
+      "อุมฺมีเลติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุจฺ",
+    "root_roman": "muc",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "release, free",
+    "meaning_pali": "โมจเน",
+    "udaharana": [
+      "มุญฺจติ",
+      "มุญฺจิต",
+      "มุตฺติ",
+      "อามุตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุจฺฉฺ",
+    "root_roman": "mucch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "thicken, fixate",
+    "meaning_pali": "โมเห",
+    "udaharana": [
+      "มุจฺฉติ",
+      "มุจฺฉิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุชฺชฺ",
+    "root_roman": "mujj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dive, sink, submerge",
+    "meaning_pali": "มุชฺชเน",
+    "udaharana": [
+      "มุชฺชติ",
+      "นิมุคฺค",
+      "อุมฺมคฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุณฺฑฺ",
+    "root_roman": "muṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be bald, shave",
+    "meaning_pali": "ขณฺฑเน",
+    "udaharana": [
+      "มุณฺฑติ",
+      "มุณฺฑก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุทฺ",
+    "root_roman": "mud",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be soft, be happy",
+    "meaning_pali": "โตเส",
+    "udaharana": [
+      "โมทติ",
+      "มุทิต",
+      "สมฺโมทมาน",
+      "มุทุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุนฺ",
+    "root_roman": "mun",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "think, know",
+    "meaning_pali": "ญาเณ",
+    "udaharana": [
+      "มุนาติ",
+      "มุต",
+      "มุนิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุสฺ 1",
+    "root_roman": "mus 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "lie, forget",
+    "meaning_pali": "สมฺโมเส",
+    "udaharana": [
+      "มุสฺสติ",
+      "มุฏฺฐ",
+      "สมฺโมส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุสฺ 2",
+    "root_roman": "mus 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "steal",
+    "meaning_pali": "เถยฺเย",
+    "udaharana": [
+      "โมส",
+      "โมสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มุหฺ",
+    "root_roman": "muh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be deluded, be confused",
+    "meaning_pali": "เวจิตฺเต",
+    "udaharana": [
+      "มุยฺหติ",
+      "โมห",
+      "มูฬฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มูลฺ",
+    "root_roman": "mūl",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "support",
+    "meaning_pali": "ปติฏฺฐายํ",
+    "udaharana": [
+      "มูล",
+      "มูลิก",
+      "มูลฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เมธฺ 1",
+    "root_roman": "medh 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be wise",
+    "meaning_pali": "หิํสายํ <พฺ>สงฺคเม</พฺ> จ",
+    "udaharana": [
+      "เมธา",
+      "สุเมธ",
+      "เมธาวี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เมธฺ 2",
+    "root_roman": "medh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, harm",
+    "meaning_pali": "<พฺ>หิํสายํ</พฺ> สงฺคเม จ",
+    "udaharana": [
+      "เมธค",
+      "อสฺสเมธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โมกฺขฺ",
+    "root_roman": "mokkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be freed",
+    "meaning_pali": "โมจเน",
+    "udaharana": [
+      "วิโมกฺข",
+      "ปาติโมกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มฺหิ",
+    "root_roman": "mhi",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "smile",
+    "meaning_pali": "อีสํหสเน",
+    "udaharana": [
+      "วิมฺหาปยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยกฺขฺ",
+    "root_roman": "yakkh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "worship",
+    "meaning_pali": "ปูชายํ",
+    "udaharana": [
+      "ยกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยชฺ",
+    "root_roman": "yaj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "honour, sacrifice",
+    "meaning_pali": "เทว-ปูช-สงฺคติกรณ-ทาเนสุ",
+    "udaharana": [
+      "ยชติ",
+      "ยิฏฺฐ",
+      "ยญฺญ",
+      "ยาค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยตฺ 1",
+    "root_roman": "yat 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "arrange, hand over",
+    "meaning_pali": "นิยฺยาตเน",
+    "udaharana": [
+      "นิยฺยาเตติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยตฺ 2",
+    "root_roman": "yat 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stretch, strive",
+    "meaning_pali": "ยตเน",
+    "udaharana": [
+      "ยตติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยมฺ 1",
+    "root_roman": "yam 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "control, strive, end",
+    "meaning_pali": "อุปรเม",
+    "udaharana": [
+      "ยม",
+      "สญฺญต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยมฺ 2",
+    "root_roman": "yam 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "support, stretch",
+    "meaning_pali": "ปริเวสเน",
+    "udaharana": [
+      "ยมติ",
+      "อนุปฺปเวจฺฉติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยสฺ",
+    "root_roman": "yas",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "strive, struggle",
+    "meaning_pali": "ปยตเน",
+    "udaharana": [
+      "อายาส",
+      "อุปายาส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยา",
+    "root_roman": "yā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go",
+    "meaning_pali": "ปาปุณเน",
+    "udaharana": [
+      "นิยฺยาติ",
+      "อุปยาติ",
+      "ปริยาย",
+      "ยาตฺรา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยาจฺ",
+    "root_roman": "yāc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "beg",
+    "meaning_pali": "ยาจเน",
+    "udaharana": [
+      "ยาจติ",
+      "ยาจก",
+      "อติยาจนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยุ",
+    "root_roman": "yu",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "unite, fasten",
+    "meaning_pali": "มิสฺสเน",
+    "udaharana": [
+      "ยุต",
+      "ปยุต",
+      "โยนิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยุชฺ",
+    "root_roman": "yuj",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "yoke, join",
+    "meaning_pali": "โยเค",
+    "udaharana": [
+      "ยุญฺชติ",
+      "สํโยค",
+      "สญฺโญชน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยุธฺ",
+    "root_roman": "yudh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "fight",
+    "meaning_pali": "สมฺปหาเร",
+    "udaharana": [
+      "ยุชฺฌติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยูหฺ",
+    "root_roman": "yūh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "carry, bring",
+    "meaning_pali": "",
+    "udaharana": [
+      "สํยูหิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รกฺขฺ",
+    "root_roman": "rakkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "protect",
+    "meaning_pali": "ปาลเน",
+    "udaharana": [
+      "รกฺขติ",
+      "รกฺขิต",
+      "อารกฺขา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รจฺ",
+    "root_roman": "rac",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "prepare, arrange",
+    "meaning_pali": "ปติยตเน",
+    "udaharana": [
+      "รจยิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รชฺ 1",
+    "root_roman": "raj 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "desire",
+    "meaning_pali": "ราเค",
+    "udaharana": [
+      "ราค",
+      "วิราค",
+      "อภิวิราเชตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รชฺ 2",
+    "root_roman": "raj 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "colour",
+    "meaning_pali": "ราเค",
+    "udaharana": [
+      "รชต",
+      "วิรช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รญฺชฺ",
+    "root_roman": "rañj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dye, desire",
+    "meaning_pali": "ราเค",
+    "udaharana": [
+      "รงฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รณฺ",
+    "root_roman": "raṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "conflict, make war",
+    "meaning_pali": "",
+    "udaharana": [
+      "สรณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รนฺธฺ 1",
+    "root_roman": "randh 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "cook",
+    "meaning_pali": "ปาเก",
+    "udaharana": [
+      "รนฺธยิ",
+      "รนฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รนฺธฺ 2",
+    "root_roman": "randh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, wound",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "รนฺธยิ",
+      "รนฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รภฺ 1",
+    "root_roman": "rabh 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "begin",
+    "meaning_pali": "อารมฺเภ",
+    "udaharana": [
+      "อารภติ",
+      "อารมฺภ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รภฺ 2",
+    "root_roman": "rabh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be aroused, be violent",
+    "meaning_pali": "<พฺ>ราภสฺเส</พฺ> จ อรมฺเภ",
+    "udaharana": [
+      "สารมฺภ",
+      "อุปารมฺภ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รมฺ 1",
+    "root_roman": "ram 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "delight, please",
+    "meaning_pali": "กีฬายํ",
+    "udaharana": [
+      "รมติ",
+      "รมณีย",
+      "อาราม"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รมฺ 2",
+    "root_roman": "ram 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stop, abstain",
+    "meaning_pali": "",
+    "udaharana": [
+      "วิรมติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รสฺ",
+    "root_roman": "ras",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "taste",
+    "meaning_pali": "อสฺสาทเน",
+    "udaharana": [
+      "รส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รหฺ",
+    "root_roman": "rah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "leave, desert",
+    "meaning_pali": "จาเค",
+    "udaharana": [
+      "รหติ",
+      "รโห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ราชฺ",
+    "root_roman": "rāj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rule, shine",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "ราชติ",
+      "ราช",
+      "รชฺช",
+      "รฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ราธฺ",
+    "root_roman": "rādh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "succeed, please",
+    "meaning_pali": "สํสิทฺธิยํ",
+    "udaharana": [
+      "วิรชฺฌติ",
+      "อาราเธติ",
+      "อาราเธตุํ",
+      "อาราธน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ริจฺ",
+    "root_roman": "ric",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "empty",
+    "meaning_pali": "ริญฺจเน",
+    "udaharana": [
+      "ริญฺจติ",
+      "ริตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ริสฺ",
+    "root_roman": "ris",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "อริฏฺฏฺḥอ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุ",
+    "root_roman": "ru",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cry, howl",
+    "meaning_pali": "สทฺเท",
+    "udaharana": [
+      "รวติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุจฺ",
+    "root_roman": "ruc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, like",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "วิโรจติ",
+      "รุจิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุชฺ",
+    "root_roman": "ruj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, be painful",
+    "meaning_pali": "ภงฺเค",
+    "udaharana": [
+      "รุชติ",
+      "โรค",
+      "รุชา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุทฺ",
+    "root_roman": "rud",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cry",
+    "meaning_pali": "โรทเน",
+    "udaharana": [
+      "รุทติ",
+      "โรทติ",
+      "รุณฺณ",
+      "อาโรทนา",
+      "วิรุต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุธฺ 1",
+    "root_roman": "rudh 1",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "obstruct",
+    "meaning_pali": "อาวรเณ",
+    "udaharana": [
+      "รุนฺธติ",
+      "นิโรธ",
+      "นิรุชฺฌติ",
+      "วิรุชฺฌติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุธฺ 2",
+    "root_roman": "rudh 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "please, accept",
+    "meaning_pali": "กาเม",
+    "udaharana": [
+      "อนุรุทฺธ",
+      "อนุรุชฺฌติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุปฺ",
+    "root_roman": "rup",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be broken apart, hurt",
+    "meaning_pali": "<พฺ>นาเส</พฺ> ปกาเส",
+    "udaharana": [
+      "รุปฺปติ",
+      "รุปนฺน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุสฺ",
+    "root_roman": "rus",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be angry",
+    "meaning_pali": "โรเส",
+    "udaharana": [
+      "โรสติ",
+      "โรเสติ",
+      "โรสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รุหฺ",
+    "root_roman": "ruh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "ascend, grow",
+    "meaning_pali": "ชนเน",
+    "udaharana": [
+      "รูหติ",
+      "โอรุหฺย",
+      "รุกฺข",
+      "อาโรหนีย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "รูปฺ",
+    "root_roman": "rūp",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "form, produce",
+    "meaning_pali": "โรปน อาทิสุ",
+    "udaharana": [
+      "รูเปติ",
+      "รูป",
+      "สรูป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลกฺขฺ",
+    "root_roman": "lakkh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "mark",
+    "meaning_pali": "ลกฺขเณ ทสฺสเน จ",
+    "udaharana": [
+      "ลกฺเขติ",
+      "ลกฺขณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลคฺ",
+    "root_roman": "lag",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stick, adhere",
+    "meaning_pali": "สงฺเค",
+    "udaharana": [
+      "โอลคฺเคติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลคฺคฺ",
+    "root_roman": "lagg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "stick, adhere",
+    "meaning_pali": "สงฺเค",
+    "udaharana": [
+      "โอลคฺเคติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลฆฺ",
+    "root_roman": "lagh",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "lift up, jump",
+    "meaning_pali": "คติ-โสสเนสุ",
+    "udaharana": [
+      "ลงฺฆติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลชฺชฺ",
+    "root_roman": "lajj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be ashamed",
+    "meaning_pali": "ลชฺชเน",
+    "udaharana": [
+      "ลชฺชติ",
+      "ลชฺชาเปติ",
+      "ลชฺชี",
+      "นคฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลญฺฉฺ",
+    "root_roman": "lañch",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "mark",
+    "meaning_pali": "ลกฺขเณ",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ลญฺฉฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (มรฺกฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเสสฺ:</ถฺ><ตฺทฺ>ลญฺฉ",
+      "ลญฺเฉ (จอุสฺ)",
+      "ลจฺเฉ (จอุสฺ",
+      "อิรฺเรคฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>ลญฺฉ <อิ>ลกฺขเณ</อิ> (มรฺกินฺคฺ",
+      "ทิสฺตินฺคุอิสฺหินฺคฺ) #54</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>ลญฺฉ <อิ>ลกฺขเณ</อิ> (มรฺกินฺคฺ",
+      "ทิสฺตินฺคุอิสฺหินฺคฺ) #63</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ลฉฺ 1 (มรฺกฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลปฺ",
+    "root_roman": "lap",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "speak, chat",
+    "meaning_pali": "วจเน",
+    "udaharana": [
+      "ลปติ",
+      "อาลปติ",
+      "ลปนา",
+      "ปลาป",
+      "ลปิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลภฺ",
+    "root_roman": "labh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "get",
+    "meaning_pali": "ลาเภ",
+    "udaharana": [
+      "ลภติ",
+      "ลจฺฉติ",
+      "อลตฺถ",
+      "ปฏิลาภ",
+      "สุลทฺธ",
+      "ลทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลมฺพฺ",
+    "root_roman": "lamb",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hang",
+    "meaning_pali": "อวสํสเน",
+    "udaharana": [
+      "ลมฺพติ",
+      "โอลมฺพก",
+      "อารมฺมณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลสฺ",
+    "root_roman": "las",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, be active",
+    "meaning_pali": "สิเลสน-<พฺ>กีฬเนสุ</พฺ>",
+    "udaharana": [
+      "อลส",
+      "อลสตา",
+      "อาลสิย",
+      "อนาลสฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลฬฺ",
+    "root_roman": "laḷ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "play, move about",
+    "meaning_pali": "วิลาเส",
+    "udaharana": [
+      "นิลฺลาเฬตฺวา",
+      "ปลฬิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิขฺ",
+    "root_roman": "likh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "scratch, write",
+    "meaning_pali": "เลขเน",
+    "udaharana": [
+      "ลิขติ",
+      "เลขน",
+      "ลิขิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิงฺคฺ 1",
+    "root_roman": "liṅg 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "embrace",
+    "meaning_pali": "คตฺยฺ-อตฺถธาตโว",
+    "udaharana": [
+      "อาลิงฺคติ",
+      "ลินฺคิย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิงฺคฺ 2",
+    "root_roman": "liṅg 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "differentiate sexually",
+    "meaning_pali": "<พฺ>จิตฺตกฺริยฺ</พฺ>-อาทีสุ",
+    "udaharana": [
+      "ลิงฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิปฺ",
+    "root_roman": "lip",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "coat, smear",
+    "meaning_pali": "ลิมฺปเน",
+    "udaharana": [
+      "ลิปติ",
+      "ลิมฺปติ",
+      "ลิปฺปติ",
+      "ลิปิ",
+      "อุลฺลิตฺต",
+      "ปลิป",
+      "อวลิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิสฺ",
+    "root_roman": "lis",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be small",
+    "meaning_pali": "เลเส",
+    "udaharana": [
+      "เลส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลิหฺ",
+    "root_roman": "lih",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lick, lap",
+    "meaning_pali": "อสฺสาทเน",
+    "udaharana": [
+      "อปเลขน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลี 1",
+    "root_roman": "lī 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "stick, hide",
+    "meaning_pali": "สิเลสน-ทฺรวีกรเณสุ",
+    "udaharana": [
+      "สลฺลีนํ",
+      "ปฏิสลฺลีน",
+      "ลีน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลี 2",
+    "root_roman": "lī 2",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "stick, hide",
+    "meaning_pali": "สิเลเส",
+    "udaharana": [
+      "ลินาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุ",
+    "root_roman": "lu",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "cut, reap, mow",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "ลุนาติ",
+      "ลูยิ",
+      "ลวน",
+      "ลายก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุชฺ",
+    "root_roman": "luj",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be broken apart",
+    "meaning_pali": "วินาเส",
+    "udaharana": [
+      "ปลุชฺชติ",
+      "ลุคฺค",
+      "ปโลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุญฺจฺ",
+    "root_roman": "luñc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "pluck out, tear",
+    "meaning_pali": "อปนยเน",
+    "udaharana": [
+      "ลุญฺจติ",
+      "โลจก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุปฺ",
+    "root_roman": "lup",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "cut off, rob",
+    "meaning_pali": "เฉทเน",
+    "udaharana": [
+      "ลุมฺปติ",
+      "อาโลป",
+      "โลป",
+      "นิโลป",
+      "วิโลปก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุภฺ 1",
+    "root_roman": "lubh 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be greedy",
+    "meaning_pali": "โลเภ",
+    "udaharana": [
+      "ลุพฺภติ",
+      "ลุทฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุภฺ 2",
+    "root_roman": "lubh 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fool, bewilder",
+    "meaning_pali": "วิโมหเน",
+    "udaharana": [
+      "ปโลภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลุฬฺ",
+    "root_roman": "luḷ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "agitate, be greedy",
+    "meaning_pali": "มนฺถเน",
+    "udaharana": [
+      "โลเฬติ",
+      "โลฬ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โลกฺ",
+    "root_roman": "lok",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "look",
+    "meaning_pali": "ทสฺสเน",
+    "udaharana": [
+      "วิโลเกติ",
+      "อาโลกิต",
+      "อาโลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "โลจฺ",
+    "root_roman": "loc",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "see, illuminate",
+    "meaning_pali": "ทสฺสเน",
+    "udaharana": [
+      "โลจิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สกฺ",
+    "root_roman": "sak",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "be able, be powerful",
+    "meaning_pali": "สตฺติยํ",
+    "udaharana": [
+      "สกฺกุณาติ",
+      "สกฺโกติ",
+      "อสกฺโกนฺต",
+      "สกฺก",
+      "สกฺกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สกฺกฺ",
+    "root_roman": "sakk",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "move",
+    "meaning_pali": "คมนตฺถา",
+    "udaharana": [
+      "โอสกฺกติ",
+      "อปสกฺกน",
+      "ปจฺโจสกฺกนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สงฺกฺ",
+    "root_roman": "saṅk",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "doubt, suspect",
+    "meaning_pali": "สํกายํ",
+    "udaharana": [
+      "สงฺกติ",
+      "สงฺกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สชฺ 1",
+    "root_roman": "saj 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "stick, cling",
+    "meaning_pali": "สงฺเค",
+    "udaharana": [
+      "สชฺชติ",
+      "วิสตฺติกา",
+      "ปฏินิสฺสคฺค",
+      "อสชฺชมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สชฺ 2",
+    "root_roman": "saj 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "relinquish, let loose",
+    "meaning_pali": "<พฺ>วิสฺสชฺชนฺ</พฺ>-อาลิงฺคน-นิมฺมาเนสุ",
+    "udaharana": [
+      "สชติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สชฺ 3",
+    "root_roman": "saj 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "embrace",
+    "meaning_pali": "วิสฺสชฺชนฺ-<พฺ>อาลิงฺคน</พฺ>-นิมฺมาเนสุ",
+    "udaharana": [
+      "สชติ",
+      "สชนฺตํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สชฺชฺ 1",
+    "root_roman": "sajj 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "relinquish, let loose",
+    "meaning_pali": "<พฺ>วิสฺสชฺชนฺ</พฺ>-อาลิงฺคน-นิมฺมาเนสุ",
+    "udaharana": [
+      "วิสฺสชฺเชติ",
+      "วิสฺสชฺชก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สชฺชฺ 2",
+    "root_roman": "sajj 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "prepare, decorate",
+    "meaning_pali": "สชฺชเน",
+    "udaharana": [
+      "สชฺเชติ",
+      "สชฺชิย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สญฺชฺ",
+    "root_roman": "sañj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "clasp, embrace",
+    "meaning_pali": "วิสฺสชฺชนฺ-<พฺ>อาลิงฺคน</พฺ>-นิมฺมาเนสุ",
+    "udaharana": [
+      "สญฺชติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สฏฺ",
+    "root_roman": "saṭ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "split",
+    "meaning_pali": "วิสรเณ",
+    "udaharana": [
+      "สาเฏตรฺ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สฐฺ",
+    "root_roman": "saṭh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "deceive",
+    "meaning_pali": "เกตเว",
+    "udaharana": [
+      "สฐ",
+      "สาเฐยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สณฺ",
+    "root_roman": "saṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "make sound",
+    "meaning_pali": "อพฺยตฺตสทฺเท",
+    "udaharana": [
+      "สณติ",
+      "สณนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สทฺ",
+    "root_roman": "sad",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sink, sit, settle",
+    "meaning_pali": "วิสรณ-<พฺ>คตฺยฺ-อวสาทเนสุ</พฺ>",
+    "udaharana": [
+      "นิสีทติ",
+      "นิสชฺช",
+      "นิสินฺน",
+      "ปาสาท"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สทฺทฺ",
+    "root_roman": "sadd",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "sound",
+    "meaning_pali": "สทฺทเน",
+    "udaharana": [
+      "สทฺท",
+      "สทฺทิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สนฺ",
+    "root_roman": "san",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "like, love",
+    "meaning_pali": "สมฺภตฺติยํ",
+    "udaharana": [
+      "สาต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สนฺทฺ",
+    "root_roman": "sand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "flow",
+    "meaning_pali": "ปสฺสวเน",
+    "udaharana": [
+      "สนฺทติ",
+      "ปริสนฺเทติ",
+      "นิสฺสนฺท 1"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สปฺ",
+    "root_roman": "sap",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "curse",
+    "meaning_pali": "อกฺโกเส",
+    "udaharana": [
+      "สปติ",
+      "อภิสปิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สปฺปฺ",
+    "root_roman": "sapp",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "crawl",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "สปฺปติ",
+      "สปฺป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สมฺ 1",
+    "root_roman": "sam 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be calm, be tired",
+    "meaning_pali": "<พฺ>อุปสม</พฺ>-เขเทสุ",
+    "udaharana": [
+      "สมฺมติ",
+      "ปฏิสาเมติ",
+      "สมณ",
+      "วูปสนฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สมฺ 2",
+    "root_roman": "sam 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "exert, strive",
+    "meaning_pali": "อุปสม-<พฺ>เขเทสุ</พฺ>",
+    "udaharana": [
+      "สมณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สมฺภฺ 1",
+    "root_roman": "sambh 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be calm, be confident",
+    "meaning_pali": "วิสฺสาเส",
+    "udaharana": [
+      "ปสฺสมฺภติ",
+      "ปสฺสทฺธ",
+      "ปฏิปฺปสฺสทฺธิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สมฺภฺ 2",
+    "root_roman": "sambh 2",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "reach, attain",
+    "meaning_pali": "ปาปุณเน",
+    "udaharana": [
+      "อภิสมฺภุนาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สรฺ 1",
+    "root_roman": "sar 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go, flow",
+    "meaning_pali": "<พฺ>คติ</พฺ>-หิํส-จินฺตาสุ",
+    "udaharana": [
+      "อนุสรติ",
+      "สร",
+      "สํสาร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สรฺ 2",
+    "root_roman": "sar 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "remember",
+    "meaning_pali": "คติ-หิํส-<พฺ>จินฺตาสุ</พฺ>",
+    "udaharana": [
+      "อนุสฺสรติ",
+      "วิปฺปฏิสาร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สรฺ 3",
+    "root_roman": "sar 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "make sound",
+    "meaning_pali": "คติ-จินฺตา-หิํสา-<พฺ>สทฺเท</พฺ>",
+    "udaharana": [
+      "สร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สรฺ 4",
+    "root_roman": "sar 4",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "",
+    "udaharana": [
+      "สคฺค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สรฺ 5",
+    "root_roman": "sar 5",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hurt, injure",
+    "meaning_pali": "คติ-<พฺ>หิํส</พฺ>-จินฺตาสุ",
+    "udaharana": [
+      "สรภ",
+      "สร",
+      "สริต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สสฺ 1",
+    "root_roman": "sas 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "breath",
+    "meaning_pali": "คติ-หิํสา-<พฺ>ปาณเนสุ</พฺ>",
+    "udaharana": [
+      "ปสฺสสติ",
+      "สมสฺสาเสติ",
+      "อสฺสาโส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สสฺ 2",
+    "root_roman": "sas 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "slaughter",
+    "meaning_pali": "คติ-<พฺ>หิํสา</พฺ>-ปาณเนสุ",
+    "udaharana": [
+      "สสติ",
+      "สสตฺถ",
+      "สตฺถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สหฺ 1",
+    "root_roman": "sah 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "overcome, prevail",
+    "meaning_pali": "มริสเน",
+    "udaharana": [
+      "สหติ",
+      "วิสหติ",
+      "สห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สหฺ 2",
+    "root_roman": "sah 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be able",
+    "meaning_pali": "สตฺติยํ",
+    "udaharana": [
+      "วิสหติ",
+      "วิสยฺห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สํสฺ 1",
+    "root_roman": "saṃs 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "proclaim, praise",
+    "meaning_pali": "ปสํสเน",
+    "udaharana": [
+      "ปสํสติ",
+      "ปาสํส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สํสฺ 2",
+    "root_roman": "saṃs 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "wish, desire",
+    "meaning_pali": "",
+    "udaharana": [
+      "อาสํส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สา",
+    "root_roman": "sā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "complete, accomplish",
+    "meaning_pali": "สมตฺติยํ",
+    "udaharana": [
+      "ปริโยสาเปติ",
+      "สายํ",
+      "ปริโยสาน",
+      "สุสาน",
+      "วิวสาน",
+      "โวสิต",
+      "วุสิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สาทฺ",
+    "root_roman": "sād",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "taste, relish",
+    "meaning_pali": "อสฺสาทเน",
+    "udaharana": [
+      "อสฺสาเทติ",
+      "สาทิยติ",
+      "อสฺสาท"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สาธฺ",
+    "root_roman": "sādh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "accomplish",
+    "meaning_pali": "สํสิทฺธิยํ",
+    "udaharana": [
+      "สาธุ",
+      "สาธุกํ",
+      "สชฺฌุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สายฺ",
+    "root_roman": "sāy",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "taste",
+    "meaning_pali": "สายเน",
+    "udaharana": [
+      "สายติ",
+      "สายิตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สาสฺ",
+    "root_roman": "sās",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "order, instruct",
+    "meaning_pali": "อนุสิฏฺฐิยํ",
+    "udaharana": [
+      "สาสติ",
+      "อนุสาสนี",
+      "สตฺถุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิ 1",
+    "root_roman": "si 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "depend on, associate with",
+    "meaning_pali": "เสวายํ",
+    "udaharana": [
+      "อุปเสวติ",
+      "อุปนิสา",
+      "นิสฺสาย",
+      "นิเสวิต",
+      "อุสฺสาเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิ 2",
+    "root_roman": "si 2",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "bind",
+    "meaning_pali": "พนฺธเน",
+    "udaharana": [
+      "สินาติ",
+      "วิสิเนติ",
+      "สิมา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิ 3",
+    "root_roman": "si 3",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "sharpen",
+    "meaning_pali": "นิสาเน",
+    "udaharana": [
+      "นิสิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิ 4",
+    "root_roman": "si 4",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "smile",
+    "meaning_pali": "",
+    "udaharana": [
+      "สิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิกฺขฺ",
+    "root_roman": "sikkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "learn, train",
+    "meaning_pali": "วิชฺโชปาทาเน",
+    "udaharana": [
+      "สิกฺขติ",
+      "สิกฺขา",
+      "สิกฺขาเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิงฺฆฺ",
+    "root_roman": "siṅgh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sniff, smell",
+    "meaning_pali": "ฆายเน",
+    "udaharana": [
+      "สิงฺฆติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิจฺ",
+    "root_roman": "sic",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "sprinkle, pour",
+    "meaning_pali": "ขรเณ / ฆรเณ",
+    "udaharana": [
+      "สิญฺจติ",
+      "อเสจนก",
+      "สิตฺวา อภิเสจน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิตฺ",
+    "root_roman": "sit",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be white",
+    "meaning_pali": "วณฺเณ",
+    "udaharana": [
+      "สิต",
+      "เสต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิทฺ 1",
+    "root_roman": "sid 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "sweat, steam",
+    "meaning_pali": "ปาเก",
+    "udaharana": [
+      "สิชฺชติ",
+      "ปริเสเทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิทฺ 2",
+    "root_roman": "sid 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be cool",
+    "meaning_pali": "สีติเย",
+    "udaharana": [
+      "สีต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิธฺ 1",
+    "root_roman": "sidh 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "prevent, prohibit",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "นิเสธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิธฺ 2",
+    "root_roman": "sidh 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "succeed, be accomplished",
+    "meaning_pali": "สํสิทฺธิยํ",
+    "udaharana": [
+      "สิทฺธิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สินา",
+    "root_roman": "sinā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bathe",
+    "meaning_pali": "โสเจยฺเย",
+    "udaharana": [
+      "สินาติ",
+      "สินาต",
+      "สินาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิลาฆฺ",
+    "root_roman": "silāgh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "boast",
+    "meaning_pali": "กตฺถเน  / กถเน",
+    "udaharana": [
+      "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>สิลาฆฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (โพอสฺตฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>สิลาฆ</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน  / กถเน</อิ> (โพอสฺตินฺคฺ",
+      "เตลฺลินฺคฺ) #30</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน</อิ> (โพอสฺตินฺคฺ) #37</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน</อิ> (ปฺรอิสินฺคฺ (ปสํสน))</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>śลาฆฺ 1 (เอxโตลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>śลาฆฺ ṛ <อิ>กตฺถเน</อิ> (โพอสฺตินฺคฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิลิสฺ",
+    "root_roman": "silis",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "embrace, cling",
+    "meaning_pali": "อาลิงฺคเน",
+    "udaharana": [
+      "สิลิฏฺฐ",
+      "สิลิฏฺฐตา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิโลกฺ",
+    "root_roman": "silok",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be famous",
+    "meaning_pali": "สํฆาเต",
+    "udaharana": [
+      "สิโลก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิสฺ",
+    "root_roman": "sis",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "remain, distinguish",
+    "meaning_pali": "อสพฺพปฺปโยเค",
+    "udaharana": [
+      "เสเสติ",
+      "เสส",
+      "อวเสส",
+      "อวสิฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิวฺ 1",
+    "root_roman": "siv 1",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "sew",
+    "meaning_pali": "ตนฺตุสนฺตาเน",
+    "udaharana": [
+      "สุตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิวฺ 2",
+    "root_roman": "siv 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "warm",
+    "meaning_pali": "คติ-โสสเนสุ",
+    "udaharana": [
+      "วิสิพฺพน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิฬฺ",
+    "root_roman": "siḷ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "whistle",
+    "meaning_pali": "เสฬเน",
+    "udaharana": [
+      "เสเฬติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สิํสฺ",
+    "root_roman": "siṃs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hope, wish",
+    "meaning_pali": "อิจฺฉายํ",
+    "udaharana": [
+      "อาสิํสติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สี",
+    "root_roman": "sī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lie, sleep",
+    "meaning_pali": "สเย",
+    "udaharana": [
+      "เสติ",
+      "สยติ",
+      "เสน",
+      "สยน",
+      "อนุสย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สีลฺ",
+    "root_roman": "sīl",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "conduct oneself",
+    "meaning_pali": "สมาธิมฺหิ",
+    "udaharana": [
+      "สีล",
+      "สีลน",
+      "สีลวนฺตุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุ 1",
+    "root_roman": "su 1",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "hear",
+    "meaning_pali": "สวเน",
+    "udaharana": [
+      "สุณาติ",
+      "โสต",
+      "สุต",
+      "สาวก",
+      "สาเวตุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุ 2",
+    "root_roman": "su 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "flow",
+    "meaning_pali": "ปสฺสวเน",
+    "udaharana": [
+      "สวติ",
+      "โสต",
+      "อาสว",
+      "ปสฺสาว"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุ 3",
+    "root_roman": "su 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "extract, distil",
+    "meaning_pali": "",
+    "udaharana": [
+      "สุรา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุ 4",
+    "root_roman": "su 4",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "generate, beget",
+    "meaning_pali": "ปสเว",
+    "udaharana": [
+      "สุตา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุขฺ",
+    "root_roman": "sukh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "please, be comfortable",
+    "meaning_pali": "ตกฺริเย",
+    "udaharana": [
+      "สุขี",
+      "สุข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุจฺ 1",
+    "root_roman": "suc 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "grieve",
+    "meaning_pali": "โสเก",
+    "udaharana": [
+      "โสจติ",
+      "สุจิ",
+      "ปริโสก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุจฺ 2",
+    "root_roman": "suc 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be pure, be bright",
+    "meaning_pali": "",
+    "udaharana": [
+      "สุจิ",
+      "โสเจยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุธฺ",
+    "root_roman": "sudh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be pure",
+    "meaning_pali": "โสเจยฺเย",
+    "udaharana": [
+      "ปริสุชฺฌติ",
+      "วิสุทฺธ",
+      "โสธาเปตฺวา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุปฺ",
+    "root_roman": "sup",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "lie down, sleep",
+    "meaning_pali": "สเย",
+    "udaharana": [
+      "สุปติ",
+      "สุปิน",
+      "สุตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุภฺ",
+    "root_roman": "subh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, adorn",
+    "meaning_pali": "โสภเน",
+    "udaharana": [
+      "โสภติ",
+      "โสภน",
+      "อสุภ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุมฺภฺ",
+    "root_roman": "sumbh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "throw, strike",
+    "meaning_pali": "สํสุมฺภเน",
+    "udaharana": [
+      "อุปสุมฺภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุรฺ",
+    "root_roman": "sur",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine, be supreme",
+    "meaning_pali": "อิสฺสริย-ทิตฺตีสุ",
+    "udaharana": [
+      "สูร",
+      "อสุร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สุสฺ",
+    "root_roman": "sus",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "dry, wither",
+    "meaning_pali": "โสสเน",
+    "udaharana": [
+      "สุกฺข"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สูจฺ",
+    "root_roman": "sūc",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "indicate",
+    "meaning_pali": "เปสุญฺเญ",
+    "udaharana": [
+      "สูจยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สูทฺ",
+    "root_roman": "sūd",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "set in order",
+    "meaning_pali": "ขรเณ / ฆรเณ",
+    "udaharana": [
+      "สูทนี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เสวฺ",
+    "root_roman": "sev",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "serve, associate",
+    "meaning_pali": "เสวเน",
+    "udaharana": [
+      "เสวนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สฺนิหฺ",
+    "root_roman": "snih",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "love, be moist",
+    "meaning_pali": "ปีณเน",
+    "udaharana": [
+      "สฺเนห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วคฺคฺ",
+    "root_roman": "vagg",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "dance, jump",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "วคฺคุ?"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วจฺ",
+    "root_roman": "vac",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "say, speak",
+    "meaning_pali": "วฺยตฺตวจเน",
+    "udaharana": [
+      "ปวุจฺจติ",
+      "อโวจ",
+      "วาจ",
+      "อวจนีย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วชฺ",
+    "root_roman": "vaj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go on",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ปพฺพชติ",
+      "ปพฺพชา",
+      "ปพฺพชิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วชฺชฺ",
+    "root_roman": "vajj",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "turn, avoid",
+    "meaning_pali": "วชฺชเน",
+    "udaharana": [
+      "วชฺเชติ",
+      "วชฺช",
+      "ปริวชฺชติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วญฺจฺ 1",
+    "root_roman": "vañc 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be bent, deceive",
+    "meaning_pali": "ปลมฺภเน",
+    "udaharana": [
+      "วญฺเจติ",
+      "วญฺจน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วญฺจฺ 2",
+    "root_roman": "vañc 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go around",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "วญฺจติ",
+      "อวญฺจน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฏฺ",
+    "root_roman": "vaṭ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "divide",
+    "meaning_pali": "วิภชเน",
+    "udaharana": [
+      "วฏ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฏฺฏฺ",
+    "root_roman": "vaṭṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "turn",
+    "meaning_pali": "วฏฺฏเน",
+    "udaharana": [
+      "วฏฺฏติ",
+      "วิวฏฺฏ",
+      "อนาวตฺตี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฑฺฒฺ",
+    "root_roman": "vaḍḍh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "grow, increase",
+    "meaning_pali": "วฑฺฒเน",
+    "udaharana": [
+      "ปวฑฺฒติ",
+      "สํวฑฺฒ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วณฺ",
+    "root_roman": "vaṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "injure, wound",
+    "meaning_pali": "คตฺตวิจุณฺณเน",
+    "udaharana": [
+      "วณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วณฺณฺ",
+    "root_roman": "vaṇṇ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "praise",
+    "meaning_pali": "วณฺณเน",
+    "udaharana": [
+      "สํวณฺเณติ",
+      "วณฺณิต",
+      "วณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วตฺ",
+    "root_roman": "vat",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be, proceed",
+    "meaning_pali": "วตฺตเน",
+    "udaharana": [
+      "วต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วตฺตฺ",
+    "root_roman": "vatt",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be, proceed",
+    "meaning_pali": "วตฺตเน",
+    "udaharana": [
+      "สํวตฺตติ",
+      "สมติวตฺตติ",
+      "ปวตฺตติ",
+      "อภินิพฺพตฺติ",
+      "นิพฺพตฺเตตฺวา",
+      "อุปวตฺตน",
+      "วตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วทฺ 1",
+    "root_roman": "vad 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "say, speak",
+    "meaning_pali": "วจเน",
+    "udaharana": [
+      "วาทก",
+      "วตฺตุ",
+      "วากฺกรณ",
+      "อุปวาทก",
+      "วาทยติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วทฺ 2",
+    "root_roman": "vad 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "salute, praise",
+    "meaning_pali": "อภิวาท โถเมสุ",
+    "udaharana": [
+      "อภิวาเทติ",
+      "วิสํวาทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วทฺธฺ",
+    "root_roman": "vaddh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "grow, increase",
+    "meaning_pali": "วุทฺธิยํ",
+    "udaharana": [
+      "วุทฺธิ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วธฺ",
+    "root_roman": "vadh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "hurt, slaughter",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "อตฺถรณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วนฺ",
+    "root_roman": "van",
+    "group_pali": "ตน (โอ ยิร)",
+    "group_roman": "tanādigaṇa",
+    "meaning_thai": "like, desire",
+    "meaning_pali": "ยาจเน",
+    "udaharana": [
+      "วนถ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วนฺทฺ",
+    "root_roman": "vand",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "bow, honour",
+    "meaning_pali": "อภิวาทน-ตฺถุติสุ",
+    "udaharana": [
+      "วนฺทติ",
+      "วนฺทน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วปฺ",
+    "root_roman": "vap",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sow, shave",
+    "meaning_pali": "พีชนิกฺเขเป",
+    "udaharana": [
+      "วปติ",
+      "อุทฺทาป"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วมฺ",
+    "root_roman": "vam",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "eject, vomit",
+    "meaning_pali": "อุคฺคิรเน",
+    "udaharana": [
+      "วมติ",
+      "วมถุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วมฺภฺ",
+    "root_roman": "vambh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "despise",
+    "meaning_pali": "ครหายํ",
+    "udaharana": [
+      "วมฺเภติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วรฺ 1",
+    "root_roman": "var 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "cover, dress, restrain",
+    "meaning_pali": "วรณ-สมฺภตฺติสุ",
+    "udaharana": [
+      "สํวรติ",
+      "วิวรติ",
+      "อวาปุรียติ",
+      "สํวร",
+      "วณฺณ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วรฺ 2",
+    "root_roman": "var 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wish, choose",
+    "meaning_pali": "อาวรณฺ’-<พฺ>อิจฺฉาสุ</พฺ>",
+    "udaharana": [
+      "ปวาเรติ",
+      "ปวารณา",
+      "วรํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วลฺ",
+    "root_roman": "val",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "turn",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "วลฺลี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วลฺลฺ",
+    "root_roman": "vall",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "turn",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "วลฺลี"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วสฺ 1",
+    "root_roman": "vas 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "live",
+    "meaning_pali": "กนฺติ-<พฺ>นิวาเสสุ</พฺ>",
+    "udaharana": [
+      "วสติ",
+      "อชฺฌาวสติ",
+      "นิวาส",
+      "วาสี",
+      "วตฺถุ 2"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วสฺ 2",
+    "root_roman": "vas 2",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wear, dress",
+    "meaning_pali": "อจฺฉาทเน",
+    "udaharana": [
+      "นิวาเสติ",
+      "วตฺถ",
+      "นิวาสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วสฺ 3",
+    "root_roman": "vas 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "want, control",
+    "meaning_pali": "<พฺ>กนฺติ</พฺ>-นิวาเสสุ",
+    "udaharana": [
+      "วส",
+      "อวสฺสํ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วสฺสฺ 1",
+    "root_roman": "vass 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rain",
+    "meaning_pali": "<พฺ>เสจน</พฺ>-สทฺทเน",
+    "udaharana": [
+      "วสฺสติ",
+      "วสฺสาน",
+      "วุฏฺฐ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วสฺสฺ 2",
+    "root_roman": "vass 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "howl, roar, bark",
+    "meaning_pali": "เสจน-สทฺทเน",
+    "udaharana": [
+      "วสฺสติ",
+      "วสฺสมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วหฺ",
+    "root_roman": "vah",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "carry, bring",
+    "meaning_pali": "ปาปุณเน",
+    "udaharana": [
+      "วหติ",
+      "วุยฺหติ",
+      "วาริวโห"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฬญฺชฺ",
+    "root_roman": "vaḷañj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "use",
+    "meaning_pali": "วลญฺชเน",
+    "udaharana": [
+      "วฬญฺชนก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วา",
+    "root_roman": "vā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "blow, emit odour",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ปวาติ",
+      "วาย",
+      "วาต",
+      "ปฏิวาเปตฺวา",
+      "นิพฺพาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วาสฺ",
+    "root_roman": "vās",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "perfume",
+    "meaning_pali": "อลงฺกาเร",
+    "udaharana": [
+      "วาสิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิ",
+    "root_roman": "vi",
+    "group_pali": "กี (นา)",
+    "group_roman": "kiyādigaṇa",
+    "meaning_thai": "weave",
+    "meaning_pali": "ตนฺตุสนฺตาเน",
+    "udaharana": [
+      "วินาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิจฺ",
+    "root_roman": "vic",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "separate",
+    "meaning_pali": "วิเจจเน",
+    "udaharana": [
+      "วิวิตฺต",
+      "วิเวก",
+      "วิวิจฺจ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิชฺ",
+    "root_roman": "vij",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "shake, be afraid, be in awe",
+    "meaning_pali": "<พฺ>ภย</พฺ>-จลเนสุ",
+    "udaharana": [
+      "สํวิชฺชติ",
+      "สํเวค"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 1",
+    "root_roman": "vid 1",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "know, sense, feel",
+    "meaning_pali": "ญาเณ",
+    "udaharana": [
+      "เวเทติ",
+      "เวทนา",
+      "ปฏิสํเวที"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 2",
+    "root_roman": "vid 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "know",
+    "meaning_pali": "ญาเณ",
+    "udaharana": [
+      "วิทู",
+      "ปเวเทติ",
+      "ปเวทิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 3",
+    "root_roman": "vid 3",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "feel, like",
+    "meaning_pali": "ตุฏฺฐิยํ",
+    "udaharana": [
+      "วินฺทติ",
+      "นิพฺพิทา",
+      "วิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 4",
+    "root_roman": "vid 4",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "get, find",
+    "meaning_pali": "ลาเภ",
+    "udaharana": [
+      "วินฺทติ",
+      "วิตฺต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 5",
+    "root_roman": "vid 5",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "know, understand",
+    "meaning_pali": "สตฺตา-<พฺ>วิจินนฺเต</พฺ>",
+    "udaharana": [
+      "อนุวิชฺชติ",
+      "วิชฺชา",
+      "เตวิชฺช"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิทฺ 6",
+    "root_roman": "vid 6",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be found, exist",
+    "meaning_pali": "สตฺตายํ",
+    "udaharana": [
+      "วิชฺชติ",
+      "สํวิชฺชมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิธฺ",
+    "root_roman": "vidh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "throw, pierce",
+    "meaning_pali": "เวธเน",
+    "udaharana": [
+      "อภินิพฺพิชฺฌติ",
+      "ปฏิเวธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิสฺ 1",
+    "root_roman": "vis 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "enter",
+    "meaning_pali": "ปเวสเน",
+    "udaharana": [
+      "ปวิสติ",
+      "นิพฺพิสติ",
+      "นิเวสน",
+      "อนิพฺพิสนฺต",
+      "ปเวเสตุ",
+      "ปเวกฺขติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วิสฺ 2",
+    "root_roman": "vis 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be active, serve",
+    "meaning_pali": "ปเวส-<พฺ>ผรเณ</พฺ>",
+    "udaharana": [
+      "วิส"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วี",
+    "root_roman": "vī",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "go",
+    "meaning_pali": "คมเน",
+    "udaharana": [
+      "ปฏิวาเปติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วีชฺ",
+    "root_roman": "vīj",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fan",
+    "meaning_pali": "วีชเน",
+    "udaharana": [
+      "พีชิยมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วีรฺ",
+    "root_roman": "vīr",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "be heroic, be hostile",
+    "meaning_pali": "วิกฺกนฺติยํ",
+    "udaharana": [
+      "วีร",
+      "วีริย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วุ",
+    "root_roman": "vu",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "weave, cover",
+    "meaning_pali": "สํวรเณ",
+    "udaharana": [
+      "อาวุณาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เว",
+    "root_roman": "ve",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "weave",
+    "meaning_pali": "ตนฺตุสนฺตาเน",
+    "udaharana": [
+      "วายติ",
+      "อาเวณิก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เวฐฺ",
+    "root_roman": "veṭh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "wind, twist",
+    "meaning_pali": "เวฐเน",
+    "udaharana": [
+      "ปลิเวเฐติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เวธฺ",
+    "root_roman": "vedh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, fear",
+    "meaning_pali": "",
+    "udaharana": [
+      "ปเวธติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เวลฺลฺ",
+    "root_roman": "vell",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shake, sway",
+    "meaning_pali": "จลเน",
+    "udaharana": [
+      "ปเวลิยมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฺยถฺ",
+    "root_roman": "vyath",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "fear, shake",
+    "meaning_pali": "ทุกฺข-ภย-จลเนสุ",
+    "udaharana": [
+      "ปเวธติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฺยธฺ",
+    "root_roman": "vyadh",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "strike, pierce",
+    "meaning_pali": "ตาฬเน",
+    "udaharana": [
+      "วฺยาธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "วฺเห",
+    "root_roman": "vhe",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "call, name",
+    "meaning_pali": "อวฺหาเน",
+    "udaharana": [
+      "อวฺหยติ",
+      "อวฺหาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หทฺ",
+    "root_roman": "had",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "excrete",
+    "meaning_pali": "<พฺ>อุจฺจาร อุสฺสคฺเค</พฺ> จินฺตายํ",
+    "udaharana": [
+      "หทติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หนฺ",
+    "root_roman": "han",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "strike, kill",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "หนติ",
+      "หญฺญติ",
+      "อุปหต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หรฺ 1",
+    "root_roman": "har 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "carry",
+    "meaning_pali": "หรณมฺหิ",
+    "udaharana": [
+      "นีหรติ",
+      "อาหรติ",
+      "อุทฺธรติ",
+      "ปาฏิหาริย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หรฺ 2",
+    "root_roman": "har 2",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "take, seize",
+    "meaning_pali": "หรณมฺหิ",
+    "udaharana": [
+      "ปหรติ",
+      "หร",
+      "อุทฺธต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หรฺ 3",
+    "root_roman": "har 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "live",
+    "meaning_pali": "หรเณ",
+    "udaharana": [
+      "วิหรติ",
+      "วิหาร",
+      "ปริหรติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หรฺ 4",
+    "root_roman": "har 4",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be ashamed",
+    "meaning_pali": "ลชฺชายํ",
+    "udaharana": [
+      "หรายติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หสฺ",
+    "root_roman": "has",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "elate, laugh",
+    "meaning_pali": "หสเน",
+    "udaharana": [
+      "ปหสติ",
+      "หสฺสติ",
+      "หาส",
+      "หาสกาเล"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หํสฺ",
+    "root_roman": "haṃs",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "rise, elate",
+    "meaning_pali": "ตุฏฺฐิยํ",
+    "udaharana": [
+      "ปหํสติ",
+      "สมฺปหํสน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หา 1",
+    "root_roman": "hā 1",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "abandon",
+    "meaning_pali": "จาเค",
+    "udaharana": [
+      "ชหติ",
+      "วิหายติ",
+      "หิตฺวา",
+      "หานิ",
+      "ปหีน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หา 2",
+    "root_roman": "hā 2",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "decrease",
+    "meaning_pali": "ปริหาเน",
+    "udaharana": [
+      "หายติ",
+      "หานิ",
+      "สํหานิ",
+      "หีน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิ 1",
+    "root_roman": "hi 1",
+    "group_pali": "สุ (ณุ ณา อุณา)",
+    "group_roman": "svādigaṇa",
+    "meaning_thai": "send",
+    "meaning_pali": "คติมฺหิ",
+    "udaharana": [
+      "ปหิณาติ",
+      "ปหิณน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิ 2",
+    "root_roman": "hi 2",
+    "group_pali": "ตน (โอ ยิร)",
+    "group_roman": "tanādigaṇa",
+    "meaning_thai": "impel",
+    "meaning_pali": "คติยํ",
+    "udaharana": [
+      "เหตุ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิณฺฑฺ",
+    "root_roman": "hiṇḍ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "roam, wander",
+    "meaning_pali": "อาหิณฺฑเน",
+    "udaharana": [
+      "อาหิณฺฑติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิรฺ",
+    "root_roman": "hir",
+    "group_pali": "ทิว (ย)",
+    "group_roman": "divādigaṇa",
+    "meaning_thai": "be ashamed",
+    "meaning_pali": "ลชฺชายํ",
+    "udaharana": [
+      "หิริ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิสฺ",
+    "root_roman": "his",
+    "group_pali": "รุธ (ํอ)",
+    "group_roman": "rudhādigaṇa",
+    "meaning_thai": "hurt, harm",
+    "meaning_pali": "หิํสายํ",
+    "udaharana": [
+      "หิํสติ",
+      "อหิํส",
+      "วิหิํสา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หีฬฺ",
+    "root_roman": "hīḷ",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "scorn",
+    "meaning_pali": "นินฺทายํ",
+    "udaharana": [
+      "หีเฬติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หุ",
+    "root_roman": "hu",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "pour, offer as oblation",
+    "meaning_pali": "ทาเน อปิ จ อาทาเน <พฺ>หวฺยทาเน</พฺ>",
+    "udaharana": [
+      "ชุหติ",
+      "หุต",
+      "อาหุติ",
+      "อาหุเนยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หู",
+    "root_roman": "hū",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "be",
+    "meaning_pali": "สตฺตายํ",
+    "udaharana": [
+      "โหติ",
+      "อหุ",
+      "หุเปยฺย"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "เหฐฺ",
+    "root_roman": "heṭh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "harass, annoy",
+    "meaning_pali": "พาธายํ",
+    "udaharana": [
+      "วิเหเฐติ",
+      "วิเหฐ",
+      "เหฐก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "สธฺ",
+    "root_roman": "sadh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "mock, ridicule",
+    "meaning_pali": "ปหสเน",
+    "udaharana": [
+      "สธายมาน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "คนฺธฺ",
+    "root_roman": "gandh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "hurt, harm",
+    "meaning_pali": "สูจเน <พฺ>อทฺทเน<พฺ>",
+    "udaharana": [
+      "คนฺธน"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ยนฺตฺ",
+    "root_roman": "yant",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "bind",
+    "meaning_pali": "สํโกจเน",
+    "udaharana": [
+      "ยนฺตฺร"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "อุกฺขฺ",
+    "root_roman": "ukkh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "sprinkle, pour",
+    "meaning_pali": "เสจเน",
+    "udaharana": [
+      "โอกฺขิต"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ขนฺธฺ",
+    "root_roman": "khandh",
+    "group_pali": "จุร (เณ ณย)",
+    "group_roman": "curādigaṇa",
+    "meaning_thai": "collect, accumulate",
+    "meaning_pali": "",
+    "udaharana": [
+      "ขนฺธ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หิกฺกฺ",
+    "root_roman": "hikk",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "hiccup",
+    "meaning_pali": "อพฺยตฺตสทฺเท",
+    "udaharana": [
+      "หิกฺกา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ลา",
+    "root_roman": "lā",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "take",
+    "meaning_pali": "อาทาเน",
+    "udaharana": [
+      "ลาติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "หฏฺ",
+    "root_roman": "haṭ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "shine",
+    "meaning_pali": "ทิตฺติยํ",
+    "udaharana": [
+      "หฏก"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "นาธฺ",
+    "root_roman": "nādh",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "beg",
+    "meaning_pali": "ยาจนาทีสุ",
+    "udaharana": [
+      "นาธติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "มสฺ 3",
+    "root_roman": "mas 3",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "harm, destroy",
+    "meaning_pali": "หิํสตฺเถ",
+    "udaharana": [
+      "มสนา"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "ผุณฺ",
+    "root_roman": "phuṇ",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "suffers",
+    "meaning_pali": "วิกิรเณ วิธุนเน จ",
+    "udaharana": [
+      "ผุณติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  },
+  {
+    "root_pali": "กิญฺจฺ",
+    "root_roman": "kiñc",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "crush",
+    "meaning_pali": "มทฺทเน",
+    "udaharana": [
+      "กิญฺจติ"
+    ],
+    "source": "DPD",
+    "page": "",
+    "katha": ""
+  }
+];
