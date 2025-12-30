@@ -448,17 +448,27 @@
                 entries: grouped[key]
             }));
 
-            // Populate Filter
-            const uniqueGroups = new Set();
-            rawData.forEach(item => {
-                if (item.mawat_dhatu) uniqueGroups.add(item.mawat_dhatu);
-            });
+            // Populate Filter (Fixed List)
+            const groups = [
+                { value: '', label: 'ทุกหมวดธาตุ' }, // Changed value from 'all' to '' to match existing logic
+                { value: 'ภู', label: 'ภูวาทิคณะ (หมวด ภู)' },
+                { value: 'รุธ', label: 'รุธาทิคณะ (หมวด รุธ)' },
+                { value: 'ทิว', label: 'ทิวาทิคณะ (หมวด ทิว)' },
+                { value: 'สุ', label: 'สวาทิคณะ (หมวด สุ)' },
+                { value: 'กี', label: 'กิยาทิคณะ (หมวด กี)' },
+                { value: 'คห', label: 'คหาทิคณะ (หมวด คห)' },
+                { value: 'ตน', label: 'ตนาทิคณะ (หมวด ตน)' },
+                { value: 'จุร', label: 'จุราทิคณะ (หมวด จุร)' },
+                { value: 'aneka', label: 'อเนกคณิกธาตุ (Aneka)' }
+            ];
+
+            // Clear existing options first (except the first one if it was hardcoded, but here we replace all)
+            groupFilter.innerHTML = '';
             
-            const sortedGroups = Array.from(uniqueGroups).sort();
-            sortedGroups.forEach(g => {
+            groups.forEach(g => {
                 const option = document.createElement('option');
-                option.value = g;
-                option.textContent = g;
+                option.value = g.value;
+                option.textContent = g.label;
                 groupFilter.appendChild(option);
             });
             
@@ -530,8 +540,14 @@
 
                 // 2. Group Filter
                 if (group) {
-                    const hasGroup = item.entries.some(e => e.group === group);
-                    if (!hasGroup) return false;
+                    if (group === 'aneka') {
+                        // Special check for Aneka
+                        const isAneka = item.entries.some(e => e.group && (e.group.includes(",") || e.group.includes(" และ ")));
+                        if (!isAneka) return false;
+                    } else {
+                        const hasGroup = item.entries.some(e => e.group && e.group.includes(group));
+                        if (!hasGroup) return false;
+                    }
                 }
 
                 return true;
@@ -592,7 +608,11 @@
                     const card = document.createElement('div');
                     card.className = 'root-card';
                     
-                    const groupHtml = entry.group ? `<span class="root-group"><i class="fa-solid fa-layer-group"></i> ${entry.group}</span>` : '';
+                    let displayGroupText = entry.group;
+                    if (isAneka) {
+                        displayGroupText = "อเนกคณิกธาตุ";
+                    }
+                    const groupHtml = displayGroupText ? `<span class="root-group"><i class="fa-solid fa-layer-group"></i> ${displayGroupText}</span>` : '';
                     
                     // We need to pass the root name and potentially the index or ID to detail page
                     // Since we are using Firebase, detail page (root_detail.html) might ALSO need update to read from Firebase
