@@ -1447,7 +1447,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + token
                     },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({ skip: true })
                 });
                 const data = await res.json();
                 if (!data.ok) {
@@ -1474,7 +1474,7 @@
                 const res = await fetch('http://localhost:3001/api/dpd-update', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({ skip: true })
                 });
                 const data = await res.json();
                 if (!data.ok) { alert('อัปเดตไม่สำเร็จ: ' + (data.error || 'unknown')); }
@@ -1504,7 +1504,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + token
                     },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({ skip: true })
                 });
                 const data = await res.json();
                 if (!data.ok) {
@@ -1538,7 +1538,7 @@
                 const res = await fetch('http://localhost:3001/api/dpd-update-report', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({ skip: true })
                 });
                 const data = await res.json();
                 if (!data.ok) { alert('ไม่สามารถสร้างรายงานได้: ' + (data.error || 'unknown')); return; }

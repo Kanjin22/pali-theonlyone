@@ -185,17 +185,28 @@ app.post('/api/dpd-update-report', async (req, res) => {
     const newRoots = readJsonFromJs('data/vocab-roots.js', 'const vocabRoots = ');
     const dpdDiff = computeDPDDiff(oldDPD || {}, newDPD || {});
     const rootsDiff = computeRootsDiff(oldRoots || {}, newRoots || {});
-    const m = out.match(/Done\. Created:\s*(\d+), Updated:\s*(\d+)/);
+    const m = out.match(/Done\. Created:\s*(\\d+), Updated:\s*(\\d+)/);
     const created = m ? parseInt(m[1], 10) : null;
     const updated = m ? parseInt(m[2], 10) : null;
     isRunning = false;
-    res.json({
-      ok: code === 0,
-      dpd: dpdDiff,
-      roots: rootsDiff,
-      firestore: { created, updated },
-      logTail: out.slice(-1000)
-    });
+    if (code !== 0) {
+      res.status(500).json({
+        ok: false,
+        error: (err && err.toString()) || 'script_failed',
+        dpd: dpdDiff,
+        roots: rootsDiff,
+        firestore: { created, updated },
+        logTail: (out || '').slice(-1000)
+      });
+    } else {
+      res.json({
+        ok: true,
+        dpd: dpdDiff,
+        roots: rootsDiff,
+        firestore: { created, updated },
+        logTail: (out || '').slice(-1000)
+      });
+    }
   });
 });
 

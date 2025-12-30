@@ -300,7 +300,7 @@ const vocabRoots = {
     },
     {
       "root": "กฐ",
-      "meaning_pali": "kicchajīvane, soke",
+      "meaning_pali": "soke, kicchajīvane",
       "meaning_thai": "(DPD) live in distress",
       "example": "ukkaṇṭhati",
       "group": "2 (ṃa)",
@@ -378,7 +378,7 @@ const vocabRoots = {
     },
     {
       "root": "กฑฺฒ",
-      "meaning_pali": "kaḍḍhane, ākaḍḍhane",
+      "meaning_pali": "ākaḍḍhane, kaḍḍhane",
       "meaning_thai": "(DPD) drag, plough",
       "example": "upakaḍḍhati",
       "group": "1 (อ)",
@@ -425,7 +425,7 @@ const vocabRoots = {
     },
     {
       "root": "กณ",
-      "meaning_pali": "saddatthā, sadde",
+      "meaning_pali": "sadde, saddatthā",
       "meaning_thai": "(DPD) make sound",
       "example": "kaṇṭha",
       "group": "1 (อ)",
@@ -456,7 +456,7 @@ const vocabRoots = {
     },
     {
       "root": "กณฺฑ",
-      "meaning_pali": "chede, bhedane",
+      "meaning_pali": "bhedane, chede",
       "meaning_thai": "(DPD) break, pierce",
       "example": "kaṇḍa",
       "group": "8 (e, aya)",
@@ -886,7 +886,7 @@ const vocabRoots = {
     },
     {
       "root": "กน",
-      "meaning_pali": "ditti-gati-kantīsu, ditti-kantīsu, ditti-gati-kantisu",
+      "meaning_pali": "ditti-gati-kantīsu, ditti-gati-kantisu, ditti-kantīsu",
       "meaning_thai": "(DPD) shine, like",
       "example": "kaññā",
       "group": "1 (อ)",
@@ -1176,7 +1176,7 @@ const vocabRoots = {
     },
     {
       "root": "กร",
-      "meaning_pali": "karaṇe, karaṇasmiṃ",
+      "meaning_pali": "karaṇasmiṃ, karaṇe",
       "meaning_thai": "(DPD) do, make",
       "example": "karoti, kara, kamma",
       "group": "7 (o, yira)",
@@ -1270,7 +1270,7 @@ const vocabRoots = {
     },
     {
       "root": "กล",
-      "meaning_pali": "<b>gati</b>-saṅkhyānesu, saṃkalanādisu, saṃkhyāne",
+      "meaning_pali": "saṃkhyāne, <b>gati</b>-saṅkhyānesu, saṃkalanādisu",
       "meaning_thai": "(DPD) accomplish",
       "example": "kalla",
       "group": "8 (e, aya)",
@@ -1448,7 +1448,7 @@ const vocabRoots = {
     },
     {
       "root": "กส",
-      "meaning_pali": "gati-hiṃsā-<b>vilekhanesu</b>, vilekhane, hiṃsā-<b>vilekhane</b>",
+      "meaning_pali": "vilekhane, hiṃsā-<b>vilekhane</b>, gati-hiṃsā-<b>vilekhanesu</b>",
       "meaning_thai": "(DPD) drag, draw",
       "example": "kasati, kasanta, kaṭṭha",
       "group": "1 (อ)",
@@ -1457,7 +1457,7 @@ const vocabRoots = {
     },
     {
       "root": "กส",
-      "meaning_pali": "<b>hiṃsā</b>-vilekhane, gati-<b>hiṃsā</b>-vilekhanesu, hiṃsāyaṃ",
+      "meaning_pali": "<b>hiṃsā</b>-vilekhane, hiṃsāyaṃ, gati-<b>hiṃsā</b>-vilekhanesu",
       "meaning_thai": "(DPD) hurt, trouble",
       "example": "kasira",
       "group": "1 (อ)",
@@ -1517,7 +1517,7 @@ const vocabRoots = {
     },
     {
       "root": "กสฺส",
-      "meaning_pali": "gatiyaṃ, kassane",
+      "meaning_pali": "kassane, gatiyaṃ",
       "meaning_thai": "(DPD) drag, draw along",
       "example": "kassati, kassaka",
       "group": "1 (อ)",
@@ -1655,7 +1655,7 @@ const vocabRoots = {
     },
     {
       "root": "กาส",
-      "meaning_pali": "dittiyaṃ, <b>dittimhi</b> saddane",
+      "meaning_pali": "<b>dittimhi</b> saddane, dittiyaṃ",
       "meaning_thai": "(DPD) shine, be visible",
       "example": "pakāsati, pakāseti, pakāsita, ākāsa, okāsa",
       "group": "1 (อ)",
@@ -1791,7 +1791,7 @@ const vocabRoots = {
     },
     {
       "root": "กิต",
-      "meaning_pali": "nivāsane, <b>nivāse</b> rogāpanayane ca, <b>vāsa</b>-ādo",
+      "meaning_pali": "<b>nivāse</b> rogāpanayane ca, <b>vāsa</b>-ādo, nivāsane",
       "meaning_thai": "(DPD) live",
       "example": "ketati, niketa",
       "group": "1 (อ)",
@@ -2119,7 +2119,7 @@ const vocabRoots = {
     },
     {
       "root": "กี",
-      "meaning_pali": "vinimaye, dabbavinimaye",
+      "meaning_pali": "dabbavinimaye, vinimaye",
       "meaning_thai": "(DPD) buy",
       "example": "kiṇāti, kaya, kīta, kayavikkaya",
       "group": "5 (นา)",
@@ -2494,7 +2494,7 @@ const vocabRoots = {
     },
     {
       "root": "กุฏ",
-      "meaning_pali": "chede ca <b>koṭille</b> agā sajjhāyanādisu, koṭille, koṭilye",
+      "meaning_pali": "chede ca <b>koṭille</b> agā sajjhāyanādisu, koṭilye, koṭille",
       "meaning_thai": "(DPD) be crooked, be bent",
       "example": "paṭikuṭati, kūṭa, kuṭila, ukkuṭikaṃ",
       "group": "1 (อ)",
@@ -2503,7 +2503,7 @@ const vocabRoots = {
     },
     {
       "root": "กุฏ",
-      "meaning_pali": "ākoṭanādisu, ākoṭane",
+      "meaning_pali": "ākoṭane, ākoṭanādisu",
       "meaning_thai": "(DPD) knock, beat",
       "example": "ākoṭeti",
       "group": "8 (e, aya)",
@@ -2590,7 +2590,7 @@ const vocabRoots = {
     },
     {
       "root": "กุฏฺฏ",
-      "meaning_pali": "ākoṭanādisu, chedane, ākoṭane",
+      "meaning_pali": "ākoṭane, chedane, ākoṭanādisu",
       "meaning_thai": "(DPD) smash, powder",
       "example": "koṭṭeti, koṭṭana",
       "group": "8 (e, aya)",
@@ -2851,7 +2851,7 @@ const vocabRoots = {
     },
     {
       "root": "กุธ",
-      "meaning_pali": "kope, kodhe",
+      "meaning_pali": "kodhe, kope",
       "meaning_thai": "(DPD) be angry",
       "example": "kujjhati, kodha, kudha, kuddha",
       "group": "3 (ย)",
@@ -2958,7 +2958,7 @@ const vocabRoots = {
     },
     {
       "root": "กุร",
-      "meaning_pali": "<b>sadda</b> adanesu ca, sadde akkose ca, sadde",
+      "meaning_pali": "sadde akkose ca, sadde, <b>sadda</b> adanesu ca",
       "meaning_thai": "(DPD) sound",
       "example": "kurara",
       "group": "1 (อ)",
@@ -3257,7 +3257,7 @@ const vocabRoots = {
     },
     {
       "root": "กูช",
-      "meaning_pali": "sadde avyatte, avyatte sadde, abyattasadde",
+      "meaning_pali": "avyatte sadde, abyattasadde, sadde avyatte",
       "meaning_thai": "(DPD) make sound",
       "example": "vikūjati, vikūjanta",
       "group": "1 (อ)",
@@ -3608,7 +3608,7 @@ const vocabRoots = {
     },
     {
       "root": "ขณ",
-      "meaning_pali": "āvadāraṇe, avadāraṇe",
+      "meaning_pali": "avadāraṇe, āvadāraṇe",
       "meaning_thai": "(DPD) dig",
       "example": "khanati, khaṇati, khata",
       "group": "1 (อ)",
@@ -3886,7 +3886,7 @@ const vocabRoots = {
     },
     {
       "root": "ขมฺภ",
-      "meaning_pali": "paṭibaddhe, patibandhe, paṭibandhe",
+      "meaning_pali": "patibandhe, paṭibaddhe, paṭibandhe",
       "meaning_thai": "(DPD) prop, be stiff",
       "example": "vikkhambheti",
       "group": "1 (อ)",
@@ -3948,7 +3948,7 @@ const vocabRoots = {
     },
     {
       "root": "ขร",
-      "meaning_pali": "vināse, khaye, sekanāse",
+      "meaning_pali": "khaye, sekanāse, vināse",
       "meaning_thai": "(DPD) perish, break apart",
       "example": "akkhara",
       "group": "1 (อ)",
@@ -4004,7 +4004,7 @@ const vocabRoots = {
     },
     {
       "root": "ขล",
-      "meaning_pali": "kampane, sañcalane, calane",
+      "meaning_pali": "sañcalane, kampane, calane",
       "meaning_thai": "(DPD) stumble, make mistake",
       "example": "khalati, pakkhalitvā, khalita",
       "group": "1 (อ)",
@@ -4022,7 +4022,7 @@ const vocabRoots = {
     },
     {
       "root": "ขล",
-      "meaning_pali": "soce <b>sañcaye 8</b>, sañcinane",
+      "meaning_pali": "sañcinane, soce <b>sañcaye 8</b>",
       "meaning_thai": "(DPD) accumulate",
       "example": "saṅkhalikā",
       "group": "1 (อ)",
@@ -4060,7 +4060,7 @@ const vocabRoots = {
     },
     {
       "root": "ขา",
-      "meaning_pali": "kathane, pakathane",
+      "meaning_pali": "pakathane, kathane",
       "meaning_thai": "(DPD) tell, announce",
       "example": "akkhāti, khāyati, saṅkhā, saṅkhāya, paṭisaṅkhā",
       "group": "1 (อ)",
@@ -4129,7 +4129,7 @@ const vocabRoots = {
     },
     {
       "root": "ขาท",
-      "meaning_pali": "bhakkhane, bhakkhaṇe",
+      "meaning_pali": "bhakkhaṇe, bhakkhane",
       "meaning_thai": "(DPD) chew",
       "example": "khādati, khādanīya, khajjamāna, khāyita, khādita",
       "group": "1 (อ)",
@@ -4815,7 +4815,7 @@ const vocabRoots = {
     },
     {
       "root": "ขุภ",
-      "meaning_pali": "sañcale, sañcalane",
+      "meaning_pali": "sañcalane, sañcale",
       "meaning_thai": "(DPD) shake, agitate",
       "example": "khobeti",
       "group": "1 (อ)",
@@ -4886,7 +4886,7 @@ const vocabRoots = {
     },
     {
       "root": "ขุร",
-      "meaning_pali": "chidasmiṃ, chedana-vilekhaṅesu, chedane vilekhane ca",
+      "meaning_pali": "chidasmiṃ, chedane vilekhane ca, chedana-vilekhaṅesu",
       "meaning_thai": "(DPD) cut",
       "example": "khura",
       "group": "1 (อ)",
@@ -4937,7 +4937,7 @@ const vocabRoots = {
     },
     {
       "root": "ขฺยา",
-      "meaning_pali": "kathane, pakathane",
+      "meaning_pali": "pakathane, kathane",
       "meaning_thai": "(DPD) announce",
       "example": "vyākhyāti, saṅkhyā, ākhyā",
       "group": "1 (อ)",
@@ -5035,7 +5035,7 @@ const vocabRoots = {
     },
     {
       "root": "คชฺช",
-      "meaning_pali": "saddattha, saddane, sadde",
+      "meaning_pali": "sadde, saddane, saddattha",
       "meaning_thai": "(DPD) roar, thunder",
       "example": "gajjati, gajjamāna",
       "group": "1 (อ)",
@@ -5124,7 +5124,7 @@ const vocabRoots = {
     },
     {
       "root": "คณ",
-      "meaning_pali": "saṅkhyāne, saṃkalane, saṃkhāyne",
+      "meaning_pali": "saṃkalane, saṃkhāyne, saṅkhyāne",
       "meaning_thai": "(DPD) calculate, group",
       "example": "gaṇeti, gaṇana, gaṇaka, gaṇa, ganī, gaṇika, saṅgaṇikā",
       "group": "8 (e, aya)",
@@ -5193,7 +5193,7 @@ const vocabRoots = {
     },
     {
       "root": "คท",
-      "meaning_pali": "vyattavace, vyattavacane, viyattiyaṃ vācāyaṃ",
+      "meaning_pali": "vyattavacane, vyattavace, viyattiyaṃ vācāyaṃ",
       "meaning_thai": "(DPD) speak",
       "example": "gadati",
       "group": "1 (อ)",
@@ -5255,7 +5255,7 @@ const vocabRoots = {
     },
     {
       "root": "คนฺถ",
-      "meaning_pali": "sandabbhe, santhambhe, ganthane",
+      "meaning_pali": "sandabbhe, ganthane, santhambhe",
       "meaning_thai": "(DPD) tie, bind",
       "example": "gantheti, gathita, gantha, gaṇṭhi",
       "group": "1 (อ)",
@@ -5399,7 +5399,7 @@ const vocabRoots = {
     },
     {
       "root": "คพฺภ",
-      "meaning_pali": "dhāraṇe, pāgabbhiye, pāgabbhiye vadhe",
+      "meaning_pali": "pāgabbhiye, dhāraṇe, pāgabbhiye vadhe",
       "meaning_thai": "(DPD) be bold, be daring",
       "example": "apagabbha",
       "group": "1 (อ)",
@@ -5473,7 +5473,7 @@ const vocabRoots = {
     },
     {
       "root": "คร",
-      "meaning_pali": "secane, nigaraṇe seke",
+      "meaning_pali": "nigaraṇe seke, secane",
       "meaning_thai": "(DPD) drip, swallow",
       "example": "sāgara",
       "group": "1 (อ)",
@@ -5569,7 +5569,7 @@ const vocabRoots = {
     },
     {
       "root": "ครห",
-      "meaning_pali": "kucchane, nindāyaṃ",
+      "meaning_pali": "nindāyaṃ, kucchane",
       "meaning_thai": "(DPD) blame",
       "example": "garahati, garahā",
       "group": "1 (อ)",
@@ -5745,7 +5745,7 @@ const vocabRoots = {
     },
     {
       "root": "คาธ",
-      "meaning_pali": "patiṭṭhāyaṃ, <b>patiṭṭhā</b>-nissaya-ganthesu",
+      "meaning_pali": "<b>patiṭṭhā</b>-nissaya-ganthesu, patiṭṭhāyaṃ",
       "meaning_thai": "(DPD) stand firmly",
       "example": "gādhati",
       "group": "1 (อ)",
@@ -5827,7 +5827,7 @@ const vocabRoots = {
     },
     {
       "root": "คิร",
-      "meaning_pali": "saddane, sadde",
+      "meaning_pali": "sadde, saddane",
       "meaning_thai": "(DPD) call, speak",
       "example": "girā",
       "group": "1 (อ)",
@@ -5856,7 +5856,7 @@ const vocabRoots = {
     },
     {
       "root": "คิล",
-      "meaning_pali": "adane, ajjhoharaṇe",
+      "meaning_pali": "ajjhoharaṇe, adane",
       "meaning_thai": "(DPD) eat, swallow",
       "example": "gilati",
       "group": "1 (อ)",
@@ -6027,7 +6027,7 @@ const vocabRoots = {
     },
     {
       "root": "คุณฺฐ",
-      "meaning_pali": "oguṇṭhane, pariveṭhane, veṭhane",
+      "meaning_pali": "pariveṭhane, veṭhane, oguṇṭhane",
       "meaning_thai": "(DPD) enclose, envelope",
       "example": "paḷiguṇṭheti, paḷiguṇṭhita",
       "group": "8 (e, aya)",
@@ -6228,7 +6228,7 @@ const vocabRoots = {
     },
     {
       "root": "คุป",
-      "meaning_pali": "gopanake, rakkhaṇe",
+      "meaning_pali": "rakkhaṇe, gopanake",
       "meaning_thai": "(DPD) guard",
       "example": "gopeti, gutta, gopako",
       "group": "1 (อ)",
@@ -6328,7 +6328,7 @@ const vocabRoots = {
     },
     {
       "root": "คุฬ",
-      "meaning_pali": "parivattanamhi, rakkhāyaṃ",
+      "meaning_pali": "rakkhāyaṃ, parivattanamhi",
       "meaning_thai": "(DPD) roll around, protect",
       "example": "guḷa",
       "group": "1 (อ)",
@@ -6517,7 +6517,7 @@ const vocabRoots = {
     },
     {
       "root": "ฆฏ",
-      "meaning_pali": "saṅghāṭe hantyatthe ca, ghāṭane, ghaṭana-saṃghāte",
+      "meaning_pali": "ghaṭana-saṃghāte, ghāṭane, saṅghāṭe hantyatthe ca",
       "meaning_thai": "(DPD) strike, kill",
       "example": "ghaṭeti, ghātetu, saṃghāta, upaghātī, anūpaghāta",
       "group": "8 (e, aya)",
@@ -6535,7 +6535,7 @@ const vocabRoots = {
     },
     {
       "root": "ฆฏ",
-      "meaning_pali": "cetāyaṃ, īhane, īhāyaṃ",
+      "meaning_pali": "īhane, cetāyaṃ, īhāyaṃ",
       "meaning_thai": "(DPD) be busy with, strive",
       "example": "ghaṭati, ghaṭanta",
       "group": "1 (อ)",
@@ -6731,7 +6731,7 @@ const vocabRoots = {
     },
     {
       "root": "ฆร",
-      "meaning_pali": "secane, secanamhi",
+      "meaning_pali": "secanamhi, secane",
       "meaning_thai": "(DPD) drip",
       "example": "paggharati, paggharaṇa",
       "group": "1 (อ)",
@@ -6949,7 +6949,7 @@ const vocabRoots = {
     },
     {
       "root": "ฆุส",
-      "meaning_pali": "saddasmiṃ, sadde",
+      "meaning_pali": "sadde, saddasmiṃ",
       "meaning_thai": "(DPD) shout, make noise",
       "example": "ghosa, ghosita, appanigghosa",
       "group": "1 (อ)",
@@ -7100,7 +7100,7 @@ const vocabRoots = {
     },
     {
       "root": "ฆํส",
-      "meaning_pali": "ghaṃsane, saṃharise",
+      "meaning_pali": "saṃharise, ghaṃsane",
       "meaning_thai": "(DPD) rub, grind, pound",
       "example": "appaṭighaṃsanta",
       "group": "1 (อ)",
@@ -7289,7 +7289,7 @@ const vocabRoots = {
     },
     {
       "root": "จช",
-      "meaning_pali": "cāge, hāniyaṃ",
+      "meaning_pali": "hāniyaṃ, cāge",
       "meaning_thai": "(DPD) give up, let go",
       "example": "cajati, cajita, cāga",
       "group": "1 (อ)",
@@ -7478,7 +7478,7 @@ const vocabRoots = {
     },
     {
       "root": "จณฺฑ",
-      "meaning_pali": "caṇḍikke, kope",
+      "meaning_pali": "kope, caṇḍikke",
       "meaning_thai": "(DPD) be fierce, be violent",
       "example": "caṇḍa",
       "group": "1 (อ)",
@@ -7777,7 +7777,7 @@ const vocabRoots = {
     },
     {
       "root": "จาย",
-      "meaning_pali": "pūjāyaṃ, saṃpūjane, pūjā-nisāmanesu",
+      "meaning_pali": "pūjā-nisāmanesu, saṃpūjane, pūjāyaṃ",
       "meaning_thai": "(DPD) honour",
       "example": "apacāyati, apacāyamāna, apacita",
       "group": "1 (อ)",
@@ -7895,7 +7895,7 @@ const vocabRoots = {
     },
     {
       "root": "จิกฺข",
-      "meaning_pali": "vāce, vacane, viyattiyaṃ vācāyaṃ",
+      "meaning_pali": "viyattiyaṃ vācāyaṃ, vacane, vāce",
       "meaning_thai": "(DPD) show, tell",
       "example": "ācikkhati, paṭisañcikkhati, ācikkhāpetvā",
       "group": "1 (อ)",
@@ -8078,7 +8078,7 @@ const vocabRoots = {
     },
     {
       "root": "จินฺต",
-      "meaning_pali": "cintane, cintāyaṃ",
+      "meaning_pali": "cintāyaṃ, cintane",
       "meaning_thai": "(DPD) think",
       "example": "vicinteti, cintā, sañcicca",
       "group": "8 (e, aya)",
@@ -8476,7 +8476,7 @@ const vocabRoots = {
     },
     {
       "root": "จุณฺณ",
-      "meaning_pali": "peraṇe, cuṇṇane, saṃcuṇṇane",
+      "meaning_pali": "cuṇṇane, saṃcuṇṇane, peraṇe",
       "meaning_thai": "(DPD) grind, crush, powder",
       "example": "cuṇṇa, cuṇṇavicuṇṇa",
       "group": "8 (e, aya)",
@@ -8554,7 +8554,7 @@ const vocabRoots = {
     },
     {
       "root": "จุป",
-      "meaning_pali": "mandagamane, mandagatiyaṃ, mandagate",
+      "meaning_pali": "mandagatiyaṃ, mandagamane, mandagate",
       "meaning_thai": "(DPD) move",
       "example": "uddcopeti",
       "group": "1 (อ)",
@@ -8594,7 +8594,7 @@ const vocabRoots = {
     },
     {
       "root": "จุมฺพ",
-      "meaning_pali": "vadana-saṃyoge, vadadaṃyoge",
+      "meaning_pali": "vadadaṃyoge, vadana-saṃyoge",
       "meaning_thai": "(DPD) kiss",
       "example": "cumbati, paricumbati",
       "group": "1 (อ)",
@@ -9473,7 +9473,7 @@ const vocabRoots = {
     },
     {
       "root": "ชน",
-      "meaning_pali": "janane, uppāde",
+      "meaning_pali": "uppāde, janane",
       "meaning_thai": "(DPD) be born, produce",
       "example": "vijāyati, jāyati, jāta, janeti, janaka",
       "group": "3 (ย)",
@@ -9533,7 +9533,7 @@ const vocabRoots = {
     },
     {
       "root": "ชปฺป",
-      "meaning_pali": "vace vyatte, vacane",
+      "meaning_pali": "vacane, vace vyatte",
       "meaning_thai": "(DPD) mutter, pray",
       "example": "pajappati, pajappā",
       "group": "1 (อ)",
@@ -9658,7 +9658,7 @@ const vocabRoots = {
     },
     {
       "root": "ชร",
-      "meaning_pali": "jīraṇatthe, jīraṇe, roge",
+      "meaning_pali": "jīraṇe, jīraṇatthe, roge",
       "meaning_thai": "(DPD) age",
       "example": "jarati, jara, jarā",
       "group": "1 (อ)",
@@ -10155,7 +10155,7 @@ const vocabRoots = {
     },
     {
       "root": "ชุต",
-      "meaning_pali": "dittiyaṃ, dittimhi",
+      "meaning_pali": "dittimhi, dittiyaṃ",
       "meaning_thai": "(DPD) shine",
       "example": "jotati, pajjota, vijju",
       "group": "1 (*a)",
@@ -10706,7 +10706,7 @@ const vocabRoots = {
     },
     {
       "root": "ฐา",
-      "meaning_pali": "gatinivuttiyaṃ, gatinivattiyaṃ, gatīvinivuttiyaṃ",
+      "meaning_pali": "gatinivuttiyaṃ, gatīvinivuttiyaṃ, gatinivattiyaṃ",
       "meaning_thai": "(DPD) stand",
       "example": "tiṭṭhati, ṭhāna, ṭhiti",
       "group": "1 (อ)",
@@ -10806,7 +10806,7 @@ const vocabRoots = {
     },
     {
       "root": "ฑิ",
-      "meaning_pali": "vehāsagamane, vihāyasagatiyaṃ gamanamatte ca, ākāsagamane",
+      "meaning_pali": "vehāsagamane, ākāsagamane, vihāyasagatiyaṃ gamanamatte ca",
       "meaning_thai": "(DPD) fly",
       "example": "ḍeti, uḍḍeti",
       "group": "1 (อ)",
@@ -11131,7 +11131,7 @@ const vocabRoots = {
     },
     {
       "root": "ตชฺช",
-      "meaning_pali": "tajjane, santajjane",
+      "meaning_pali": "santajjane, tajjane",
       "meaning_thai": "(DPD) frighten, threaten",
       "example": "tajjeti, tajjita",
       "group": "8 (e, aya)",
@@ -11160,7 +11160,7 @@ const vocabRoots = {
     },
     {
       "root": "ตจฺฉ",
-      "meaning_pali": "tanukriya, tanukaraṇe",
+      "meaning_pali": "tanukaraṇe, tanukriya",
       "meaning_thai": "(DPD) cut, chop",
       "example": "tacchati",
       "group": "1 (อ)",
@@ -11675,7 +11675,7 @@ const vocabRoots = {
     },
     {
       "root": "ตร",
-      "meaning_pali": "plavana-taraṇesu, taraṇasmiṃ, taraṇe",
+      "meaning_pali": "plavana-taraṇesu, taraṇe, taraṇasmiṃ",
       "meaning_thai": "(DPD) cross",
       "example": "nittharati, uttara, nitthiṇṇa, taruna",
       "group": "1 (อ)",
@@ -11796,7 +11796,7 @@ const vocabRoots = {
     },
     {
       "root": "ตส",
-      "meaning_pali": "pipāsayaṃ, pipāsāyaṃ",
+      "meaning_pali": "pipāsāyaṃ, pipāsayaṃ",
       "meaning_thai": "(DPD) be agitated",
       "example": "paritassati, paritassanā",
       "group": "3 (ย)",
@@ -12092,7 +12092,7 @@ const vocabRoots = {
     },
     {
       "root": "ติช",
-      "meaning_pali": "nisāne <b>khamāyañca</b>, <b>khamā</b>-nisānesu bandhe pi",
+      "meaning_pali": "<b>khamā</b>-nisānesu bandhe pi, nisāne <b>khamāyañca</b>",
       "meaning_thai": "(DPD) endure",
       "example": "titikkhati, titikkhā",
       "group": "1 (อ)",
@@ -12152,7 +12152,7 @@ const vocabRoots = {
     },
     {
       "root": "ติม",
-      "meaning_pali": "addabhāve, temana-saṃkāsu",
+      "meaning_pali": "temana-saṃkāsu, addabhāve",
       "meaning_thai": "(DPD) be wet",
       "example": "temana",
       "group": "1 (อ)",
@@ -12328,7 +12328,7 @@ const vocabRoots = {
     },
     {
       "root": "ตีร",
-      "meaning_pali": "kamma-samattimhi, kamma-samattiyaṃ, kammasampattiyaṃ",
+      "meaning_pali": "kamma-samattiyaṃ, kammasampattiyaṃ, kamma-samattimhi",
       "meaning_thai": "(DPD) investigate, complete",
       "example": "tīreti, tīrayamāna, santīraṇa",
       "group": "8 (e, aya)",
@@ -12479,7 +12479,7 @@ const vocabRoots = {
     },
     {
       "root": "ตุฑ",
-      "meaning_pali": "toḷane, toḍane",
+      "meaning_pali": "toḍane, toḷane",
       "meaning_thai": "(DPD) prick, stab",
       "example": "tuṇḍa",
       "group": "1 (อ)",
@@ -12588,7 +12588,7 @@ const vocabRoots = {
     },
     {
       "root": "ตุท",
-      "meaning_pali": "byathane, vyathāyan, vyathane",
+      "meaning_pali": "byathane, vyathane, vyathāyan",
       "meaning_thai": "(DPD) prick, stab",
       "example": "tudita, tunna, tutta",
       "group": "1 (อ)",
@@ -12781,7 +12781,7 @@ const vocabRoots = {
     },
     {
       "root": "ตุวฏฺฏ",
-      "meaning_pali": "nipajjāyaṃ, ekasayane",
+      "meaning_pali": "ekasayane, nipajjāyaṃ",
       "meaning_thai": "(DPD) lie down",
       "example": "-",
       "group": "8 (e, aya)",
@@ -12848,7 +12848,7 @@ const vocabRoots = {
     },
     {
       "root": "ตุส",
-      "meaning_pali": "tuṭṭhimhi, tuṭṭhiyaṃ, tose",
+      "meaning_pali": "tuṭṭhimhi, tose, tuṭṭhiyaṃ",
       "meaning_thai": "(DPD) be content, be pleased",
       "example": "santussaka, santuṭṭhi, asantuṭṭhitā, tuṇhī",
       "group": "3 (ย)",
@@ -13039,7 +13039,7 @@ const vocabRoots = {
     },
     {
       "root": "ถก",
-      "meaning_pali": "patīghāte, paṭighāte",
+      "meaning_pali": "paṭighāte, patīghāte",
       "meaning_thai": "(DPD) close",
       "example": "thaketi",
       "group": "8 (e, aya)",
@@ -13117,7 +13117,7 @@ const vocabRoots = {
     },
     {
       "root": "ถน",
-      "meaning_pali": "devasaddane, devasadde, sadde",
+      "meaning_pali": "devasaddane, sadde, devasadde",
       "meaning_thai": "(DPD) roar, thunder",
       "example": "thaneti",
       "group": "1 (อ)",
@@ -13224,7 +13224,7 @@ const vocabRoots = {
     },
     {
       "root": "ถร",
-      "meaning_pali": "santharaṇe pādipubbo va, santharaṇe",
+      "meaning_pali": "santharaṇe, santharaṇe pādipubbo va",
       "meaning_thai": "(DPD) spread, expand",
       "example": "santharati, santhata, vitthārena, atthata",
       "group": "1 (อ)",
@@ -13244,7 +13244,7 @@ const vocabRoots = {
     },
     {
       "root": "ถมฺภ",
-      "meaning_pali": "paṭibaddhe, patibandhe, paṭibandhe",
+      "meaning_pali": "patibandhe, paṭibaddhe, paṭibandhe",
       "meaning_thai": "(DPD) support, be stiff",
       "example": "santhambhati, thambha",
       "group": "1 (อ)",
@@ -13382,7 +13382,7 @@ const vocabRoots = {
     },
     {
       "root": "ถุ",
-      "meaning_pali": "thutiyaṃ, abhitthave",
+      "meaning_pali": "abhitthave, thutiyaṃ",
       "meaning_thai": "(DPD) be familiar, praise",
       "example": "thavati, santhava",
       "group": "1 (อ)",
@@ -13391,7 +13391,7 @@ const vocabRoots = {
     },
     {
       "root": "ถุ",
-      "meaning_pali": "thave, abhitthave",
+      "meaning_pali": "abhitthave, thave",
       "meaning_thai": "(DPD) praise",
       "example": "abhitthunāti, thuta",
       "group": "5 (นา)",
@@ -13624,7 +13624,7 @@ const vocabRoots = {
     },
     {
       "root": "ถูล",
-      "meaning_pali": "paribrūhane, kassane",
+      "meaning_pali": "kassane, paribrūhane",
       "meaning_thai": "(DPD) be fat, be coarse",
       "example": "thūla",
       "group": "8 (e, aya)",
@@ -14106,7 +14106,7 @@ const vocabRoots = {
     },
     {
       "root": "ทร",
-      "meaning_pali": "dāraṇe, dāhe <b>vidāraṇe</b>, vidāraṇe",
+      "meaning_pali": "dāhe <b>vidāraṇe</b>, dāraṇe, vidāraṇe",
       "meaning_thai": "(DPD) break, split apart",
       "example": "dāreti, undrīyati, udariya",
       "group": "1 (อ)",
@@ -14164,7 +14164,7 @@ const vocabRoots = {
     },
     {
       "root": "ทย",
-      "meaning_pali": "dāna-gati-hiṃsādānesu, dāna-gati-hiṃs’-ādāna- rakkhāsu, dāna-gatī-rakkhā-hiṃsādisu",
+      "meaning_pali": "dāna-gatī-rakkhā-hiṃsādisu, dāna-gati-hiṃs’-ādāna- rakkhāsu, dāna-gati-hiṃsādānesu",
       "meaning_thai": "(DPD) be kind, have pity",
       "example": "dayati, dayā",
       "group": "1 (อ)",
@@ -14746,7 +14746,7 @@ const vocabRoots = {
     },
     {
       "root": "ทิกฺข",
-      "meaning_pali": "muṇḍiyôpanayana-niyamabbat’-ādesesu, upanaya-muṇḍiya-vatādesesu-niyame, muṇḍiyopanayana-niyama-vatādesesu",
+      "meaning_pali": "muṇḍiyopanayana-niyama-vatādesesu, muṇḍiyôpanayana-niyamabbat’-ādesesu, upanaya-muṇḍiya-vatādesesu-niyame",
       "meaning_thai": "(DPD) consecrate",
       "example": "",
       "group": "1 (อ)",
@@ -14815,7 +14815,7 @@ const vocabRoots = {
     },
     {
       "root": "ทิว",
-      "meaning_pali": "kīḷā-vijigisā-byavahāra-<b>juti</b>-thuti-kanti-gati-sattīsu, kīḷā-vigigiṃsā-vohāra-<b>jjuti</b>-thomite, kīḷā-vijigiṃsā-vohāra-<b>jjuti</b>-tthuti-gatisu",
+      "meaning_pali": "kīḷā-vijigiṃsā-vohāra-<b>jjuti</b>-tthuti-gatisu, kīḷā-vijigisā-byavahāra-<b>juti</b>-thuti-kanti-gati-sattīsu, kīḷā-vigigiṃsā-vohāra-<b>jjuti</b>-thomite",
       "meaning_thai": "(DPD) shine",
       "example": "dibbati, devā, dibba, divasa",
       "group": "3 (ย)",
@@ -14973,7 +14973,7 @@ const vocabRoots = {
     },
     {
       "root": "ทิส",
-      "meaning_pali": "appītiyaṃ, appītimhi",
+      "meaning_pali": "appītimhi, appītiyaṃ",
       "meaning_thai": "(DPD) dislike, hate",
       "example": "dessati, disa, dessī",
       "group": "3 (ย)",
@@ -15354,7 +15354,7 @@ const vocabRoots = {
     },
     {
       "root": "ทุส",
-      "meaning_pali": "appītiyaṃ, appītimhi",
+      "meaning_pali": "appītimhi, appītiyaṃ",
       "meaning_thai": "(DPD) hate, dislike",
       "example": "dussati, dosa, dessī, dussanīya",
       "group": "3 (ย)",
@@ -15383,7 +15383,7 @@ const vocabRoots = {
     },
     {
       "root": "ทู",
-      "meaning_pali": "gatīvuddhyaṃ, gamane, gatiyaṃ",
+      "meaning_pali": "gamane, gatiyaṃ, gatīvuddhyaṃ",
       "meaning_thai": "(DPD) go, run",
       "example": "dūta, dūteyya, avidūra, dava",
       "group": "1 (อ)",
@@ -15412,7 +15412,7 @@ const vocabRoots = {
     },
     {
       "root": "ทุห",
-      "meaning_pali": "papūraṇe nāse, papūraṇe",
+      "meaning_pali": "papūraṇe, papūraṇe nāse",
       "meaning_thai": "(DPD) milk a cow",
       "example": "gadduhana",
       "group": "1 (อ)",
@@ -15730,7 +15730,7 @@ const vocabRoots = {
     },
     {
       "root": "ธม",
-      "meaning_pali": "saddaggisaṃ yogesu, sadde, dhamane",
+      "meaning_pali": "sadde, saddaggisaṃ yogesu, dhamane",
       "meaning_thai": "(DPD) blow, sound",
       "example": "niddhamati, dhanta, uddhumātaka",
       "group": "1 (อ)",
@@ -15806,7 +15806,7 @@ const vocabRoots = {
     },
     {
       "root": "ธร",
-      "meaning_pali": "dhāraṇe, dhārane",
+      "meaning_pali": "dhārane, dhāraṇe",
       "meaning_thai": "(DPD) wear, hold, carry",
       "example": "dhāreti, dhamma, ādhāra",
       "group": "8 (e, aya)",
@@ -16295,7 +16295,7 @@ const vocabRoots = {
     },
     {
       "root": "ธู",
-      "meaning_pali": "pakampāyaṃ, kampane",
+      "meaning_pali": "kampane, pakampāyaṃ",
       "meaning_thai": "(DPD) shake, smoke",
       "example": "dhunāti",
       "group": "5 (นา)",
@@ -16326,7 +16326,7 @@ const vocabRoots = {
     },
     {
       "root": "ธุว",
-      "meaning_pali": "yātrā-<b>thiresu</b> ca, gati-theriyesu",
+      "meaning_pali": "gati-theriyesu, yātrā-<b>thiresu</b> ca",
       "meaning_thai": "(DPD) be firm, be solid",
       "example": "dhuva",
       "group": "1 (*a)",
@@ -16384,7 +16384,7 @@ const vocabRoots = {
     },
     {
       "root": "ธูป",
-      "meaning_pali": "santāpane, santāpe",
+      "meaning_pali": "santāpe, santāpane",
       "meaning_thai": "(DPD) smoke",
       "example": "dhūpa, dhūpana",
       "group": "1 (อ)",
@@ -16444,7 +16444,7 @@ const vocabRoots = {
     },
     {
       "root": "ธํส",
-      "meaning_pali": "gatiyaṃ, dhaṃsane, padhaṃsane",
+      "meaning_pali": "gatiyaṃ, padhaṃsane, dhaṃsane",
       "meaning_thai": "(DPD) fall down, destroy",
       "example": "dhaṃsati, uddhaṃseti, viddhaṃsana, uddhasta",
       "group": "1 (อ)",
@@ -16678,7 +16678,7 @@ const vocabRoots = {
     },
     {
       "root": "นท",
-      "meaning_pali": "avyattasadde, abyattasadde",
+      "meaning_pali": "abyattasadde, avyattasadde",
       "meaning_thai": "(DPD) roar",
       "example": "nadati, nāda, nadī",
       "group": "1 (อ)",
@@ -16796,7 +16796,7 @@ const vocabRoots = {
     },
     {
       "root": "นภ",
-      "meaning_pali": "vihiṃsāyaṃ, hiṃsāyaṃ",
+      "meaning_pali": "hiṃsāyaṃ, vihiṃsāyaṃ",
       "meaning_thai": "(DPD) burst, split",
       "example": "nābhi",
       "group": "1 (อ)",
@@ -17032,7 +17032,7 @@ const vocabRoots = {
     },
     {
       "root": "นาถ",
-      "meaning_pali": "yācana-santāpa-isserāsiṃsanesu, yācanopa-tāp’-issariyāsiṃsāsu, yācanôpatāp’-issariyāsīsāsu",
+      "meaning_pali": "yācanôpatāp’-issariyāsīsāsu, yācana-santāpa-isserāsiṃsanesu, yācanopa-tāp’-issariyāsiṃsāsu",
       "meaning_thai": "(DPD) have power, protect",
       "example": "nātha, anātha",
       "group": "1 (อ)",
@@ -17482,7 +17482,7 @@ const vocabRoots = {
     },
     {
       "root": "นุท",
-      "meaning_pali": "peraṇe, khepane, khepe",
+      "meaning_pali": "khepe, khepane, peraṇe",
       "meaning_thai": "(DPD) drive out, reject",
       "example": "nudati, nuṇṇa, paṭivinodetvā, panudana",
       "group": "1 (อ)",
@@ -17533,7 +17533,7 @@ const vocabRoots = {
     },
     {
       "root": "นฺหา",
-      "meaning_pali": "soce, soceyye",
+      "meaning_pali": "soceyye, soce",
       "meaning_thai": "(DPD) bathe",
       "example": "nahāyati, nhāpetvā, nhāniya",
       "group": "3 (ย)",
@@ -17807,7 +17807,7 @@ const vocabRoots = {
     },
     {
       "root": "ปฐ",
-      "meaning_pali": "vyattavace, uccāraṇe, viyattiyaṃ vācāyaṃ",
+      "meaning_pali": "uccāraṇe, vyattavace, viyattiyaṃ vācāyaṃ",
       "meaning_thai": "(DPD) read, recite",
       "example": "paṭhati",
       "group": "1 (อ)",
@@ -17892,7 +17892,7 @@ const vocabRoots = {
     },
     {
       "root": "ปณ",
-      "meaning_pali": "vohāra-thomesu, vyavahāra-tthutisu, byavahāre thutiyañ ca",
+      "meaning_pali": "vyavahāra-tthutisu, byavahāre thutiyañ ca, vohāra-thomesu",
       "meaning_thai": "(DPD) trade, barter",
       "example": "āpaṇa",
       "group": "1 (อ)",
@@ -17959,7 +17959,7 @@ const vocabRoots = {
     },
     {
       "root": "ปต",
-      "meaning_pali": "gatiyaṃ, gamane",
+      "meaning_pali": "gamane, gatiyaṃ",
       "meaning_thai": "(DPD) fall",
       "example": "patati, sannipāta, papāta, atipāta",
       "group": "1 (อ)",
@@ -18024,7 +18024,7 @@ const vocabRoots = {
     },
     {
       "root": "ปถ",
-      "meaning_pali": "gatiyaṃ, gamane, gate",
+      "meaning_pali": "gamane, gatiyaṃ, gate",
       "meaning_thai": "(DPD) go, move",
       "example": "patha, pathika, vipatha",
       "group": "1 (อ)",
@@ -18111,7 +18111,7 @@ const vocabRoots = {
     },
     {
       "root": "ปท",
-      "meaning_pali": "gatiyaṃ, gamane, gate",
+      "meaning_pali": "gamane, gatiyaṃ, gate",
       "meaning_thai": "(DPD) go, step",
       "example": "uppajjati, patti, pāduka",
       "group": "3 (ย)",
@@ -18632,7 +18632,7 @@ const vocabRoots = {
     },
     {
       "root": "ปา",
-      "meaning_pali": "rakkhaṇamhi, rakkhaṇe",
+      "meaning_pali": "rakkhaṇe, rakkhaṇamhi",
       "meaning_thai": "(DPD) protect, guard",
       "example": "pa",
       "group": "1 (อ)",
@@ -18801,7 +18801,7 @@ const vocabRoots = {
     },
     {
       "root": "ปิฏ",
-      "meaning_pali": "saṃghāte, sadda-<b>saṅghāṭesu</b>",
+      "meaning_pali": "sadda-<b>saṅghāṭesu</b>, saṃghāte",
       "meaning_thai": "(DPD) collect",
       "example": "piṭaka",
       "group": "1 (อ)",
@@ -19010,7 +19010,7 @@ const vocabRoots = {
     },
     {
       "root": "ปิส",
-      "meaning_pali": "pesane, gamane, pese",
+      "meaning_pali": "gamane, pese, pesane",
       "meaning_thai": "(DPD) send",
       "example": "peseti, pessika",
       "group": "8 (e, aya)",
@@ -19019,7 +19019,7 @@ const vocabRoots = {
     },
     {
       "root": "ปิส",
-      "meaning_pali": "sañcuṇṇane, cuṇṇane, saṃcuṇṇane",
+      "meaning_pali": "cuṇṇane, saṃcuṇṇane, sañcuṇṇane",
       "meaning_thai": "(DPD) grind, hurt",
       "example": "pisuna",
       "group": "2 (ṃa)",
@@ -19153,7 +19153,7 @@ const vocabRoots = {
     },
     {
       "root": "ปี",
-      "meaning_pali": "tappane, tappana-kantīsu",
+      "meaning_pali": "tappana-kantīsu, tappane",
       "meaning_thai": "(DPD) love, please",
       "example": "pīti, pema, piyāyati",
       "group": "5 (นา)",
@@ -19235,7 +19235,7 @@ const vocabRoots = {
     },
     {
       "root": "ปีฬ",
-      "meaning_pali": "bādhāyaṃ, avagāhane",
+      "meaning_pali": "avagāhane, bādhāyaṃ",
       "meaning_thai": "(DPD) press, crush",
       "example": "pīḷeti, pīḷita",
       "group": "8 (e, aya)",
@@ -19378,7 +19378,7 @@ const vocabRoots = {
     },
     {
       "root": "ปุจฺฉ",
-      "meaning_pali": "pañhe, sampucchane, pucchane",
+      "meaning_pali": "sampucchane, pucchane, pañhe",
       "meaning_thai": "(DPD) ask, question",
       "example": "pucchati, abhipuṭṭha, pucchā",
       "group": "1 (อ)",
@@ -19485,7 +19485,7 @@ const vocabRoots = {
     },
     {
       "root": "ปุณ",
-      "meaning_pali": "nipuṇe, kammani subhe, subhakriye",
+      "meaning_pali": "nipuṇe, subhakriye, kammani subhe",
       "meaning_thai": "(DPD) be skilful, be precise",
       "example": "nipuṇa, puñña",
       "group": "1 (อ)",
@@ -19808,7 +19808,7 @@ const vocabRoots = {
     },
     {
       "root": "ปุล",
-      "meaning_pali": "saṅghāte, samussaye, mahatte samussaye",
+      "meaning_pali": "samussaye, saṅghāte, mahatte samussaye",
       "meaning_thai": "(DPD) increase",
       "example": "vepulla",
       "group": "8 (e, aya)",
@@ -20266,7 +20266,7 @@ const vocabRoots = {
     },
     {
       "root": "ผล",
-      "meaning_pali": "nipphattiyaṃ, nibbattiyaṃ",
+      "meaning_pali": "nibbattiyaṃ, nipphattiyaṃ",
       "meaning_thai": "(DPD) fruit, ripen",
       "example": "phalī, phalaka",
       "group": "1 (อ)",
@@ -20346,7 +20346,7 @@ const vocabRoots = {
     },
     {
       "root": "ผร",
-      "meaning_pali": "pharaṇe, sampharaṇe",
+      "meaning_pali": "sampharaṇe, pharaṇe",
       "meaning_thai": "(DPD) suffuse, pervade",
       "example": "pharati, pharaṇa, paripphuṭa",
       "group": "1 (อ)",
@@ -20548,7 +20548,7 @@ const vocabRoots = {
     },
     {
       "root": "ผุฏ",
-      "meaning_pali": "visaraṇe, vikasan’ādīsu",
+      "meaning_pali": "vikasan’ādīsu, visaraṇe",
       "meaning_thai": "(DPD) swell, burst",
       "example": "phoṭa",
       "group": "1 (อ)",
@@ -20688,7 +20688,7 @@ const vocabRoots = {
     },
     {
       "root": "ผุลฺล",
-      "meaning_pali": "vikasane, vikasana-bhedesu, vikāse",
+      "meaning_pali": "vikasane, vikāse, vikasana-bhedesu",
       "meaning_thai": "(DPD) expand, bloom",
       "example": "phulla",
       "group": "1 (อ)",
@@ -20986,7 +20986,7 @@ const vocabRoots = {
     },
     {
       "root": "พาธ",
-      "meaning_pali": "viloḷane, bādhāyaṃ, vibādhāyaṃ",
+      "meaning_pali": "vibādhāyaṃ, viloḷane, bādhāyaṃ",
       "meaning_thai": "(DPD) press, oppress",
       "example": "bādhati, ābādheti, ābādhika, bavhābādha",
       "group": "1 (อ)",
@@ -21576,7 +21576,7 @@ const vocabRoots = {
     },
     {
       "root": "พฺรห",
-      "meaning_pali": "vuddhiyaṃ, uggame",
+      "meaning_pali": "uggame, vuddhiyaṃ",
       "meaning_thai": "(DPD) increase",
       "example": "brahati, brahā, brahanta, brahma",
       "group": "1 (อ)",
@@ -21605,7 +21605,7 @@ const vocabRoots = {
     },
     {
       "root": "พฺรู",
-      "meaning_pali": "vācāyaṃ viyattiyaṃ, vacane, viyattiyaṃ vācāyaṃ",
+      "meaning_pali": "vacane, vācāyaṃ viyattiyaṃ, viyattiyaṃ vācāyaṃ",
       "meaning_thai": "(DPD) say",
       "example": "brūti, abravi, bravanta",
       "group": "1 (อ)",
@@ -21672,7 +21672,7 @@ const vocabRoots = {
     },
     {
       "root": "พฺรูห",
-      "meaning_pali": "vuddhiyaṃ, vaḍḍhane",
+      "meaning_pali": "vaḍḍhane, vuddhiyaṃ",
       "meaning_thai": "(DPD) increase",
       "example": "brūheti, brūhana, brūhetu",
       "group": "1 (อ)",
@@ -21777,7 +21777,7 @@ const vocabRoots = {
     },
     {
       "root": "ภช",
-      "meaning_pali": "sevāyaṃ, saṃsevane",
+      "meaning_pali": "saṃsevane, sevāyaṃ",
       "meaning_thai": "(DPD) associate, keep company",
       "example": "bhajati, bhajanā",
       "group": "1 (อ)",
@@ -21942,7 +21942,7 @@ const vocabRoots = {
     },
     {
       "root": "ภณ",
-      "meaning_pali": "bhaṇane, bhāsane",
+      "meaning_pali": "bhāsane, bhaṇane",
       "meaning_thai": "(DPD) talk, speak",
       "example": "bhaṇati, bhaññamāna, paṭibhāṇavantu",
       "group": "1 (อ)",
@@ -22053,7 +22053,7 @@ const vocabRoots = {
     },
     {
       "root": "ภร",
-      "meaning_pali": "posane, bharaṇasmiṃ",
+      "meaning_pali": "bharaṇasmiṃ, posane",
       "meaning_thai": "(DPD) carry, support",
       "example": "bharati, bhariyā, subhara, bhattā, bhati",
       "group": "1 (อ)",
@@ -22140,7 +22140,7 @@ const vocabRoots = {
     },
     {
       "root": "ภส",
-      "meaning_pali": "adhopatane, avasaṃsane, adhopāte",
+      "meaning_pali": "adhopāte, avasaṃsane, adhopatane",
       "meaning_thai": "(DPD) fall down",
       "example": "bhassati, bhaṭṭha",
       "group": "3 (ย)",
@@ -22296,7 +22296,7 @@ const vocabRoots = {
     },
     {
       "root": "ภาส",
-      "meaning_pali": "<b>vācāya</b> dittiyaṃ, byattāyaṃ vācāyaṃ, dittiyaṃ vacane ca",
+      "meaning_pali": "dittiyaṃ vacane ca, <b>vācāya</b> dittiyaṃ, byattāyaṃ vācāyaṃ",
       "meaning_thai": "(DPD) speak",
       "example": "bhāsati, bhāsā samanubhāsanā",
       "group": "1 (อ)",
@@ -22305,7 +22305,7 @@ const vocabRoots = {
     },
     {
       "root": "ภาส",
-      "meaning_pali": "dittiyaṃ, vācāya <b>dittiyaṃ</b>, dittiyaṃ vacane ca",
+      "meaning_pali": "dittiyaṃ vacane ca, vācāya <b>dittiyaṃ</b>, dittiyaṃ",
       "meaning_thai": "(DPD) shine",
       "example": "pabhāsati, obhāsa, pabhassara",
       "group": "1 (อ)",
@@ -22334,7 +22334,7 @@ const vocabRoots = {
     },
     {
       "root": "ภิกฺข",
-      "meaning_pali": "yācane, yāce",
+      "meaning_pali": "yāce, yācane",
       "meaning_thai": "(DPD) beg",
       "example": "bhikkhati, bhikkhu, subhikkha",
       "group": "1 (อ)",
@@ -22539,7 +22539,7 @@ const vocabRoots = {
     },
     {
       "root": "ภุช",
-      "meaning_pali": "pālana-bhojane, pālana-byavaharaṇesu, pālan’-ajjhohāresu",
+      "meaning_pali": "pālana-bhojane, pālan’-ajjhohāresu, pālana-byavaharaṇesu",
       "meaning_thai": "(DPD) use, eat, enjoy",
       "example": "bhuñjati, bubhukkhati, bhutta, bhoga, bhojetvā",
       "group": "2 (ṃa)",
@@ -22548,7 +22548,7 @@ const vocabRoots = {
     },
     {
       "root": "ภุช",
-      "meaning_pali": "koṭille, koṭilye",
+      "meaning_pali": "koṭilye, koṭille",
       "meaning_thai": "(DPD) bend",
       "example": "ābhujati, ābhujitvā",
       "group": "1 (อ)",
@@ -22698,7 +22698,7 @@ const vocabRoots = {
     },
     {
       "root": "ภูส",
-      "meaning_pali": "alaṃkāre, alaṅkāre",
+      "meaning_pali": "alaṅkāre, alaṃkāre",
       "meaning_thai": "(DPD) adorn, decorate",
       "example": "vibhūsana",
       "group": "1 (อ)",
@@ -22818,7 +22818,7 @@ const vocabRoots = {
     },
     {
       "root": "มกฺข",
-      "meaning_pali": "makkhaṇe, makkhane",
+      "meaning_pali": "makkhane, makkhaṇe",
       "meaning_thai": "(DPD) rub, erase",
       "example": "makkheti, makkha, makkhaṇa",
       "group": "8 (e, aya)",
@@ -22965,7 +22965,7 @@ const vocabRoots = {
     },
     {
       "root": "มคฺค",
-      "meaning_pali": "gavesane, anvesane",
+      "meaning_pali": "anvesane, gavesane",
       "meaning_thai": "(DPD) seek, search",
       "example": "maggeti, magga",
       "group": "1 (อ)",
@@ -23326,7 +23326,7 @@ const vocabRoots = {
     },
     {
       "root": "มท",
-      "meaning_pali": "ummāde, ummāda",
+      "meaning_pali": "ummāda, ummāde",
       "meaning_thai": "(DPD) be mad, be intoxicated",
       "example": "pamajjati, pamatta, pamāda",
       "group": "3 (ย)",
@@ -23375,7 +23375,7 @@ const vocabRoots = {
     },
     {
       "root": "มถ",
-      "meaning_pali": "viloṭane, vilothane, viloḷane",
+      "meaning_pali": "viloṭane, viloḷane, vilothane",
       "meaning_thai": "(DPD) churn, stir",
       "example": "mathita",
       "group": "1 (อ)",
@@ -24031,7 +24031,7 @@ const vocabRoots = {
     },
     {
       "root": "มา",
-      "meaning_pali": "parimāṇe, pamāṇe",
+      "meaning_pali": "pamāṇe, parimāṇe",
       "meaning_thai": "(DPD) measure",
       "example": "mināti, mita",
       "group": "5 (นา)",
@@ -24641,7 +24641,7 @@ const vocabRoots = {
     },
     {
       "root": "มีล",
-      "meaning_pali": "nimelane, nimīlane",
+      "meaning_pali": "nimīlane, nimelane",
       "meaning_thai": "(DPD) close eyes",
       "example": "ummīleti",
       "group": "8 (e, aya)",
@@ -24777,7 +24777,7 @@ const vocabRoots = {
     },
     {
       "root": "มุจฺฉ",
-      "meaning_pali": "moha-mucchāsu, mohe, mohasmiṃ",
+      "meaning_pali": "mohe, moha-mucchāsu, mohasmiṃ",
       "meaning_thai": "(DPD) thicken, fixate",
       "example": "mucchati, mucchita",
       "group": "1 (อ)",
@@ -24826,7 +24826,7 @@ const vocabRoots = {
     },
     {
       "root": "มุชฺช",
-      "meaning_pali": "mujjane, osīdane",
+      "meaning_pali": "osīdane, mujjane",
       "meaning_thai": "(DPD) dive, sink, submerge",
       "example": "mujjati, nimugga, ummagga",
       "group": "1 (อ)",
@@ -25033,7 +25033,7 @@ const vocabRoots = {
     },
     {
       "root": "มุท",
-      "meaning_pali": "santose, hāse, tose",
+      "meaning_pali": "hāse, santose, tose",
       "meaning_thai": "(DPD) be soft, be happy",
       "example": "modati, mudita, sammodamāna, mudu",
       "group": "1 (*a)",
@@ -25064,7 +25064,7 @@ const vocabRoots = {
     },
     {
       "root": "มุณฺฑ",
-      "meaning_pali": "kaṇḍane, khaṇḍane",
+      "meaning_pali": "khaṇḍane, kaṇḍane",
       "meaning_thai": "(DPD) be bald, shave",
       "example": "muṇḍati, muṇḍaka",
       "group": "1 (อ)",
@@ -25412,7 +25412,7 @@ const vocabRoots = {
     },
     {
       "root": "ยช",
-      "meaning_pali": "devaccane dāna-saṅgatīkaraṇesu ca, deva-pūja-saṅgatikaraṇa-dānesu, devapūja-saṅgatakaraṇa-dānadhammesu",
+      "meaning_pali": "devaccane dāna-saṅgatīkaraṇesu ca, devapūja-saṅgatakaraṇa-dānadhammesu, deva-pūja-saṅgatikaraṇa-dānesu",
       "meaning_thai": "(DPD) honour, sacrifice",
       "example": "yajati, yiṭṭha, yañña, yāga",
       "group": "1 (อ)",
@@ -25521,7 +25521,7 @@ const vocabRoots = {
     },
     {
       "root": "ยต",
-      "meaning_pali": "nikāro-<b>pakāresu</b>, nīyyātane, niyyātane",
+      "meaning_pali": "niyyātane, nikāro-<b>pakāresu</b>, nīyyātane",
       "meaning_thai": "(DPD) arrange, hand over",
       "example": "niyyāteti",
       "group": "8 (e, aya)",
@@ -25530,7 +25530,7 @@ const vocabRoots = {
     },
     {
       "root": "ยต",
-      "meaning_pali": "yatane, patiyatane",
+      "meaning_pali": "patiyatane, yatane",
       "meaning_thai": "(DPD) stretch, strive",
       "example": "yatati",
       "group": "1 (อ)",
@@ -25677,7 +25677,7 @@ const vocabRoots = {
     },
     {
       "root": "ยม",
-      "meaning_pali": "uparame nāse, uparame",
+      "meaning_pali": "uparame, uparame nāse",
       "meaning_thai": "(DPD) control, strive, end",
       "example": "yama, saññata",
       "group": "1 (อ)",
@@ -25800,7 +25800,7 @@ const vocabRoots = {
     },
     {
       "root": "ยาจ",
-      "meaning_pali": "yācane, yācanāyaṃ",
+      "meaning_pali": "yācanāyaṃ, yācane",
       "meaning_thai": "(DPD) beg",
       "example": "yācati, yācaka, atiyācanā",
       "group": "1 (อ)",
@@ -26079,7 +26079,7 @@ const vocabRoots = {
     },
     {
       "root": "ยุธ",
-      "meaning_pali": "yujjhane, sampahāre",
+      "meaning_pali": "sampahāre, yujjhane",
       "meaning_thai": "(DPD) fight",
       "example": "yujjhati",
       "group": "3 (ย)",
@@ -26181,7 +26181,7 @@ const vocabRoots = {
     },
     {
       "root": "รกฺข",
-      "meaning_pali": "rakkhaṇamhi, pālane",
+      "meaning_pali": "pālane, rakkhaṇamhi",
       "meaning_thai": "(DPD) protect",
       "example": "rakkhati, rakkhita, ārakkhā",
       "group": "1 (อ)",
@@ -26484,7 +26484,7 @@ const vocabRoots = {
     },
     {
       "root": "รนฺธ",
-      "meaning_pali": "hiṃsāyāṃ, hiṃsāyaṃ",
+      "meaning_pali": "hiṃsāyaṃ, hiṃsāyāṃ",
       "meaning_thai": "(DPD) hurt, wound",
       "example": "randhayi, randha",
       "group": "1 (อ)",
@@ -26653,7 +26653,7 @@ const vocabRoots = {
     },
     {
       "root": "รภ",
-      "meaning_pali": "rābhasse, <b>rābhasse</b> ca arambhe",
+      "meaning_pali": "<b>rābhasse</b> ca arambhe, rābhasse",
       "meaning_thai": "(DPD) be aroused, be violent",
       "example": "sārambha, upārambha",
       "group": "1 (อ)",
@@ -26863,7 +26863,7 @@ const vocabRoots = {
     },
     {
       "root": "รห",
-      "meaning_pali": "cāge, cāgasmiṃ",
+      "meaning_pali": "cāgasmiṃ, cāge",
       "meaning_thai": "(DPD) leave, desert",
       "example": "rahati, raho",
       "group": "1 (อ)",
@@ -27008,7 +27008,7 @@ const vocabRoots = {
     },
     {
       "root": "ราธ",
-      "meaning_pali": "hiṃsāya <b>siddhiyaṃ</b>, saṃsiddhiyaṃ",
+      "meaning_pali": "saṃsiddhiyaṃ, hiṃsāya <b>siddhiyaṃ</b>",
       "meaning_thai": "(DPD) succeed, please",
       "example": "virajjhati, ārādheti, ārādhetuṃ, ārādhana",
       "group": "3 (ย)",
@@ -27153,7 +27153,7 @@ const vocabRoots = {
     },
     {
       "root": "ริจ",
-      "meaning_pali": "recane, riñcane, virecane",
+      "meaning_pali": "virecane, recane, riñcane",
       "meaning_thai": "(DPD) empty",
       "example": "riñcati, ritta",
       "group": "2 (ṃa)",
@@ -27465,7 +27465,7 @@ const vocabRoots = {
     },
     {
       "root": "รุจ",
-      "meaning_pali": "dittiyaṃ, dittiyaṃ rocane ca",
+      "meaning_pali": "dittiyaṃ rocane ca, dittiyaṃ",
       "meaning_thai": "(DPD) shine, like",
       "example": "virocati, ruci",
       "group": "1 (*a)",
@@ -27621,7 +27621,7 @@ const vocabRoots = {
     },
     {
       "root": "รุท",
-      "meaning_pali": "assuvimocane, rodane",
+      "meaning_pali": "rodane, assuvimocane",
       "meaning_thai": "(DPD) cry",
       "example": "rudati, rodati, ruṇṇa, ārodanā, viruta",
       "group": "1 (*a)",
@@ -27813,7 +27813,7 @@ const vocabRoots = {
     },
     {
       "root": "รุส",
-      "meaning_pali": "rose, hiṃsāyaṃ",
+      "meaning_pali": "hiṃsāyaṃ, rose",
       "meaning_thai": "(DPD) be angry",
       "example": "rosati, roseti, rosana",
       "group": "1 (อ)",
@@ -27860,7 +27860,7 @@ const vocabRoots = {
     },
     {
       "root": "รุห",
-      "meaning_pali": "sañjanane, cammani pātubhāve, janane",
+      "meaning_pali": "cammani pātubhāve, sañjanane, janane",
       "meaning_thai": "(DPD) ascend, grow",
       "example": "rūhati, oruhya, rukkha, ārohanīya",
       "group": "1 (อ)",
@@ -27889,7 +27889,7 @@ const vocabRoots = {
     },
     {
       "root": "รูป",
-      "meaning_pali": "rūpakriyāyaṃ, ropana ādisu",
+      "meaning_pali": "ropana ādisu, rūpakriyāyaṃ",
       "meaning_thai": "(DPD) form, produce",
       "example": "rūpeti, rūpa, sarūpa",
       "group": "8 (e, aya)",
@@ -27958,7 +27958,7 @@ const vocabRoots = {
     },
     {
       "root": "ลกฺข",
-      "meaning_pali": "dassan-aṅkesu, lakkhaṇe dassane ca, dassana-aṃkesu",
+      "meaning_pali": "dassana-aṃkesu, lakkhaṇe dassane ca, dassan-aṅkesu",
       "meaning_thai": "(DPD) mark",
       "example": "lakkheti, lakkhaṇa",
       "group": "8 (e, aya)",
@@ -28076,7 +28076,7 @@ const vocabRoots = {
     },
     {
       "root": "ลฆ",
-      "meaning_pali": "gati-sosanesu, gatyakkhepe, sosa-gatīsu",
+      "meaning_pali": "gatyakkhepe, sosa-gatīsu, gati-sosanesu",
       "meaning_thai": "(DPD) lift up, jump",
       "example": "laṅghati",
       "group": "2 (ṃa)",
@@ -28997,7 +28997,7 @@ const vocabRoots = {
     },
     {
       "root": "ลิงฺค",
-      "meaning_pali": "gaty-atthadhātavo, gamane",
+      "meaning_pali": "gamane, gaty-atthadhātavo",
       "meaning_thai": "(DPD) embrace",
       "example": "āliṅgati, lingiya",
       "group": "1 (อ)",
@@ -29006,7 +29006,7 @@ const vocabRoots = {
     },
     {
       "root": "ลิงฺค",
-      "meaning_pali": "<b>cittakriy</b>-ādīsu, cittīkaraṇe",
+      "meaning_pali": "cittīkaraṇe, <b>cittakriy</b>-ādīsu",
       "meaning_thai": "(DPD) differentiate sexually",
       "example": "liṅga",
       "group": "8 (e, aya)",
@@ -29461,7 +29461,7 @@ const vocabRoots = {
     },
     {
       "root": "ลุป",
-      "meaning_pali": "chede vināse, chedane, acchedane",
+      "meaning_pali": "chede vināse, acchedane, chedane",
       "meaning_thai": "(DPD) cut off, rob",
       "example": "lumpati, ālopa, lopa, nilopa, vilopaka",
       "group": "2 (ṃa)",
@@ -29548,7 +29548,7 @@ const vocabRoots = {
     },
     {
       "root": "ลุภ",
-      "meaning_pali": "giddhiyaṃ, gedhe, lobhe",
+      "meaning_pali": "gedhe, giddhiyaṃ, lobhe",
       "meaning_thai": "(DPD) be greedy",
       "example": "lubbhati, luddha",
       "group": "3 (ย)",
@@ -29895,7 +29895,7 @@ const vocabRoots = {
     },
     {
       "root": "วจ",
-      "meaning_pali": "vyattavace, vyattavacane, viyattiyaṃ vācāyaṃ",
+      "meaning_pali": "vyattavacane, vyattavace, viyattiyaṃ vācāyaṃ",
       "meaning_thai": "(DPD) say, speak",
       "example": "pavuccati, avoca, vāca, avacanīya",
       "group": "1 (อ)",
@@ -29984,7 +29984,7 @@ const vocabRoots = {
     },
     {
       "root": "วช",
-      "meaning_pali": "gatiyaṃ, gamane",
+      "meaning_pali": "gamane, gatiyaṃ",
       "meaning_thai": "(DPD) go on",
       "example": "pabbajati, pabbajā, pabbajita",
       "group": "1 (อ)",
@@ -30024,7 +30024,7 @@ const vocabRoots = {
     },
     {
       "root": "วญฺจ",
-      "meaning_pali": "gatiyaṃ, gamane",
+      "meaning_pali": "gamane, gatiyaṃ",
       "meaning_thai": "(DPD) go around",
       "example": "vañcati, avañcana",
       "group": "1 (อ)",
@@ -30372,7 +30372,7 @@ const vocabRoots = {
     },
     {
       "root": "วณฺณ",
-      "meaning_pali": "vaṇṇa-kriyā-vitthāra-guṇa-vacanesu, vaṇṇane, saṃvaṇṇane",
+      "meaning_pali": "vaṇṇane, saṃvaṇṇane, vaṇṇa-kriyā-vitthāra-guṇa-vacanesu",
       "meaning_thai": "(DPD) praise",
       "example": "saṃvaṇṇeti, vaṇṇita, vaṇṇa",
       "group": "8 (e, aya)",
@@ -30470,7 +30470,7 @@ const vocabRoots = {
     },
     {
       "root": "วท",
-      "meaning_pali": "abhivādana-thutīsu, abhivāda thomesu",
+      "meaning_pali": "abhivāda thomesu, abhivādana-thutīsu",
       "meaning_thai": "(DPD) salute, praise",
       "example": "abhivādeti, visaṃvādana",
       "group": "8 (e, aya)",
@@ -30617,7 +30617,7 @@ const vocabRoots = {
     },
     {
       "root": "วทฺธ",
-      "meaning_pali": "vuddhiyaṃ, vaddhane",
+      "meaning_pali": "vaddhane, vuddhiyaṃ",
       "meaning_thai": "(DPD) grow, increase",
       "example": "vuddhi",
       "group": "1 (อ)",
@@ -30664,7 +30664,7 @@ const vocabRoots = {
     },
     {
       "root": "วน",
-      "meaning_pali": "yācane, yācāyaṃ",
+      "meaning_pali": "yācāyaṃ, yācane",
       "meaning_thai": "(DPD) like, desire",
       "example": "vanatha",
       "group": "7 (โอ)",
@@ -30704,7 +30704,7 @@ const vocabRoots = {
     },
     {
       "root": "วนฺท",
-      "meaning_pali": "abhivādana-tthutisu, abhivādana-thutīsu, abhivāda-thomsesu",
+      "meaning_pali": "abhivādana-tthutisu, abhivāda-thomsesu, abhivādana-thutīsu",
       "meaning_thai": "(DPD) bow, honour",
       "example": "vandati, vandana",
       "group": "1 (อ)",
@@ -30762,7 +30762,7 @@ const vocabRoots = {
     },
     {
       "root": "วป",
-      "meaning_pali": "bījavinikkhepe, bīja-nikkhepe, bījanikkhepe",
+      "meaning_pali": "bījanikkhepe, bījavinikkhepe, bīja-nikkhepe",
       "meaning_thai": "(DPD) sow, shave",
       "example": "vapati, uddāpa",
       "group": "1 (อ)",
@@ -30913,7 +30913,7 @@ const vocabRoots = {
     },
     {
       "root": "วมฺภ",
-      "meaning_pali": "garahāyaṃ, viddhaṃsane",
+      "meaning_pali": "viddhaṃsane, garahāyaṃ",
       "meaning_thai": "(DPD) despise",
       "example": "vambheti",
       "group": "8 (e, aya)",
@@ -30989,7 +30989,7 @@ const vocabRoots = {
     },
     {
       "root": "วร",
-      "meaning_pali": "saṃvaraṇādisu, varaṇa-sambhattisu, varaṇe",
+      "meaning_pali": "varaṇe, varaṇa-sambhattisu, saṃvaraṇādisu",
       "meaning_thai": "(DPD) cover, dress, restrain",
       "example": "saṃvarati, vivarati, avāpurīyati, saṃvara, vaṇṇa",
       "group": "1 (อ)",
@@ -30998,7 +30998,7 @@ const vocabRoots = {
     },
     {
       "root": "วร",
-      "meaning_pali": "āvaraṇa <b>icchāsu</b> <b>yācāyaṃ</b>, āvaraṇ’-<b>icchāsu</b>, icchāyaṃ",
+      "meaning_pali": "icchāyaṃ, āvaraṇ’-<b>icchāsu</b>, āvaraṇa <b>icchāsu</b> <b>yācāyaṃ</b>",
       "meaning_thai": "(DPD) wish, choose",
       "example": "pavāreti, pavāraṇā, varaṃ",
       "group": "8 (e, aya)",
@@ -31152,7 +31152,7 @@ const vocabRoots = {
     },
     {
       "root": "วลฺล",
-      "meaning_pali": "saṃvaraṇe, calane <b>saṃvaraṇe</b> ca, nivāraṇe",
+      "meaning_pali": "saṃvaraṇe, nivāraṇe, calane <b>saṃvaraṇe</b> ca",
       "meaning_thai": "(DPD) turn",
       "example": "vallī",
       "group": "1 (อ)",
@@ -31262,7 +31262,7 @@ const vocabRoots = {
     },
     {
       "root": "วส",
-      "meaning_pali": "acchādanādisu, acchādane",
+      "meaning_pali": "acchādane, acchādanādisu",
       "meaning_thai": "(DPD) wear, dress",
       "example": "nivāseti, vattha, nivāsana",
       "group": "8 (e, aya)",
@@ -31309,7 +31309,7 @@ const vocabRoots = {
     },
     {
       "root": "วสฺส",
-      "meaning_pali": "secane, <b>secana</b>-saddane",
+      "meaning_pali": "<b>secana</b>-saddane, secane",
       "meaning_thai": "(DPD) rain",
       "example": "vassati, vassāna, vuṭṭha",
       "group": "1 (อ)",
@@ -31629,7 +31629,7 @@ const vocabRoots = {
     },
     {
       "root": "วิ",
-      "meaning_pali": "tantasantāne, tantusantāne",
+      "meaning_pali": "tantusantāne, tantasantāne",
       "meaning_thai": "(DPD) weave",
       "example": "vināti",
       "group": "5 (นา)",
@@ -31890,7 +31890,7 @@ const vocabRoots = {
     },
     {
       "root": "วิท",
-      "meaning_pali": "<b>cehanā</b>-ākhyāna-nivāsesu, ñāṇe",
+      "meaning_pali": "ñāṇe, <b>cehanā</b>-ākhyāna-nivāsesu",
       "meaning_thai": "(DPD) know, sense, feel",
       "example": "vedeti, vedanā, paṭisaṃvedī",
       "group": "8 (e, aya)",
@@ -31899,7 +31899,7 @@ const vocabRoots = {
     },
     {
       "root": "วิท",
-      "meaning_pali": "jānane, ñāṇe",
+      "meaning_pali": "ñāṇe, jānane",
       "meaning_thai": "(DPD) know",
       "example": "vidū, pavedeti, pavedita",
       "group": "1 (อ)",
@@ -32254,7 +32254,7 @@ const vocabRoots = {
     },
     {
       "root": "วี",
-      "meaning_pali": "pajana-kanti-asana-khādana-<b>gatīsu</b>, gamane",
+      "meaning_pali": "gamane, pajana-kanti-asana-khādana-<b>gatīsu</b>",
       "meaning_thai": "(DPD) go",
       "example": "paṭivāpeti",
       "group": "1 (อ)",
@@ -32374,7 +32374,7 @@ const vocabRoots = {
     },
     {
       "root": "วุ",
-      "meaning_pali": "saṃvare, saṃvaraṇe",
+      "meaning_pali": "saṃvaraṇe, saṃvare",
       "meaning_thai": "(DPD) weave, cover",
       "example": "āvuṇāti",
       "group": "4 (ṇo, ṇā)",
@@ -32516,7 +32516,7 @@ const vocabRoots = {
     },
     {
       "root": "สก",
-      "meaning_pali": "sattimhi, sattiyaṃ, sāmatthiye",
+      "meaning_pali": "sattimhi, sāmatthiye, sattiyaṃ",
       "meaning_thai": "(DPD) be able, be powerful",
       "example": "sakkuṇāti, sakkoti, asakkonta, sakka, sakkā",
       "group": "4 (ṇo, uṇā)",
@@ -32623,7 +32623,7 @@ const vocabRoots = {
     },
     {
       "root": "สกฺก",
-      "meaning_pali": "gamanatthā, gatyatthe, gate",
+      "meaning_pali": "gatyatthe, gate, gamanatthā",
       "meaning_thai": "(DPD) move",
       "example": "osakkati, apasakkana, paccosakkanā",
       "group": "1 (อ)",
@@ -32752,7 +32752,7 @@ const vocabRoots = {
     },
     {
       "root": "สช",
-      "meaning_pali": "saṅge khalane, saṅge",
+      "meaning_pali": "saṅge, saṅge khalane",
       "meaning_thai": "(DPD) stick, cling",
       "example": "sajjati, visattikā, paṭinissagga, asajjamāna",
       "group": "3 (ย)",
@@ -32761,7 +32761,7 @@ const vocabRoots = {
     },
     {
       "root": "สช",
-      "meaning_pali": "<b>vissagga</b>-parissajjana-abbhukkiraṇesu, <b>vissajjan</b>-āliṅgana-nimmānesu",
+      "meaning_pali": "<b>vissajjan</b>-āliṅgana-nimmānesu, <b>vissagga</b>-parissajjana-abbhukkiraṇesu",
       "meaning_thai": "(DPD) relinquish, let loose",
       "example": "sajati",
       "group": "1 (อ)",
@@ -32853,7 +32853,7 @@ const vocabRoots = {
     },
     {
       "root": "สชฺช",
-      "meaning_pali": "<b>vissagga</b>-parissajjana-abbhukkiraṇesu, āliṅgana-<b>visagga</b>-nimmāne, <b>vissajjan</b>-āliṅgana-nimmānesu",
+      "meaning_pali": "āliṅgana-<b>visagga</b>-nimmāne, <b>vissajjan</b>-āliṅgana-nimmānesu, <b>vissagga</b>-parissajjana-abbhukkiraṇesu",
       "meaning_thai": "(DPD) relinquish, let loose",
       "example": "vissajjeti, vissajjaka",
       "group": "1 (อ)",
@@ -32920,7 +32920,7 @@ const vocabRoots = {
     },
     {
       "root": "สญฺช",
-      "meaning_pali": "parissage, vissajjan-<b>āliṅgana</b>-nimmānesu, saṅge",
+      "meaning_pali": "saṅge, parissage, vissajjan-<b>āliṅgana</b>-nimmānesu",
       "meaning_thai": "(DPD) clasp, embrace",
       "example": "sañjati",
       "group": "1 (อ)",
@@ -33309,7 +33309,7 @@ const vocabRoots = {
     },
     {
       "root": "สท",
-      "meaning_pali": "visaraṇa-<b>gaty-avasādanesu</b>, visaraṇa-<b>gatyāvasānesu</b>, visaraṇ-<b>ādānagamane ca avasādāne</b>",
+      "meaning_pali": "visaraṇ-<b>ādānagamane ca avasādāne</b>, visaraṇa-<b>gaty-avasādanesu</b>, visaraṇa-<b>gatyāvasānesu</b>",
       "meaning_thai": "(DPD) sink, sit, settle",
       "example": "nisīdati, nisajja, nisinna, pāsāda",
       "group": "1 (อ)",
@@ -33621,7 +33621,7 @@ const vocabRoots = {
     },
     {
       "root": "สนฺท",
-      "meaning_pali": "pasavane, passavan-ādisu, passavane",
+      "meaning_pali": "passavane, pasavane, passavan-ādisu",
       "meaning_thai": "(DPD) flow",
       "example": "sandati, parisandeti, nissanda 1",
       "group": "1 (อ)",
@@ -33661,7 +33661,7 @@ const vocabRoots = {
     },
     {
       "root": "สปฺป",
-      "meaning_pali": "gatimhi, gamane, gatiyaṃ",
+      "meaning_pali": "gamane, gatiyaṃ, gatimhi",
       "meaning_thai": "(DPD) crawl",
       "example": "sappati, sappa",
       "group": "1 (อ)",
@@ -33880,7 +33880,7 @@ const vocabRoots = {
     },
     {
       "root": "สม",
-      "meaning_pali": "khede nirodhe ca, upasama-<b>khedesu</b>",
+      "meaning_pali": "upasama-<b>khedesu</b>, khede nirodhe ca",
       "meaning_thai": "(DPD) exert, strive",
       "example": "samaṇa",
       "group": "3 (ย)",
@@ -34088,7 +34088,7 @@ const vocabRoots = {
     },
     {
       "root": "สร",
-      "meaning_pali": "<b>gati</b>-hiṃsa-cintāsu, gatiyaṃ, <b>gati</b>-cintā-hiṃsā-sadde",
+      "meaning_pali": "<b>gati</b>-hiṃsa-cintāsu, <b>gati</b>-cintā-hiṃsā-sadde, gatiyaṃ",
       "meaning_thai": "(DPD) go, flow",
       "example": "anusarati, sara, saṃsāra",
       "group": "1 (อ)",
@@ -34097,7 +34097,7 @@ const vocabRoots = {
     },
     {
       "root": "สร",
-      "meaning_pali": "gati-hiṃsa-<b>cintāsu</b>, gati-<b>cintā</b>-hiṃsā-sadde, cintāyaṃ",
+      "meaning_pali": "gati-<b>cintā</b>-hiṃsā-sadde, gati-hiṃsa-<b>cintāsu</b>, cintāyaṃ",
       "meaning_thai": "(DPD) remember",
       "example": "anussarati, vippaṭisāra",
       "group": "1 (อ)",
@@ -34124,7 +34124,7 @@ const vocabRoots = {
     },
     {
       "root": "สร",
-      "meaning_pali": "gati-<b>hiṃsa</b>-cintāsu, gati-cintā-<b>hiṃsā</b>-sadde, saddo-<b>patāpesu</b>",
+      "meaning_pali": "saddo-<b>patāpesu</b>, gati-cintā-<b>hiṃsā</b>-sadde, gati-<b>hiṃsa</b>-cintāsu",
       "meaning_thai": "(DPD) hurt, injure",
       "example": "sarabha, sara, sarita",
       "group": "1 (อ)",
@@ -34209,7 +34209,7 @@ const vocabRoots = {
     },
     {
       "root": "สส",
-      "meaning_pali": "pāṇane, gati-hiṃsā-<b>pāṇanesu</b>, <b>pāṇana</b>-gati-hiṃsādyatthe",
+      "meaning_pali": "gati-hiṃsā-<b>pāṇanesu</b>, pāṇane, <b>pāṇana</b>-gati-hiṃsādyatthe",
       "meaning_thai": "(DPD) breath",
       "example": "passasati, samassāseti, assāso",
       "group": "1 (อ)",
@@ -34218,7 +34218,7 @@ const vocabRoots = {
     },
     {
       "root": "สส",
-      "meaning_pali": "gati-<b>hiṃsā</b>-pāṇanesu, pāṇana-gati-<b>hiṃsādyatthe</b>, hiṃsāyaṃ",
+      "meaning_pali": "hiṃsāyaṃ, gati-<b>hiṃsā</b>-pāṇanesu, pāṇana-gati-<b>hiṃsādyatthe</b>",
       "meaning_thai": "(DPD) slaughter",
       "example": "sasati, sasattha, sattha",
       "group": "1 (อ)",
@@ -34376,7 +34376,7 @@ const vocabRoots = {
     },
     {
       "root": "สห",
-      "meaning_pali": "parisahane, khame, marisane",
+      "meaning_pali": "marisane, khame, parisahane",
       "meaning_thai": "(DPD) overcome, prevail",
       "example": "sahati, visahati, saha",
       "group": "1 (อ)",
@@ -34561,7 +34561,7 @@ const vocabRoots = {
     },
     {
       "root": "สาท",
-      "meaning_pali": "assādanādīsu, assādane",
+      "meaning_pali": "assādane, assādanādīsu",
       "meaning_thai": "(DPD) taste, relish",
       "example": "assādeti, sādiyati, assāda",
       "group": "8 (e, aya)",
@@ -34795,7 +34795,7 @@ const vocabRoots = {
     },
     {
       "root": "สิ",
-      "meaning_pali": "sevāyaṃ, sevane",
+      "meaning_pali": "sevane, sevāyaṃ",
       "meaning_thai": "(DPD) depend on, associate with",
       "example": "upasevati, upanisā, nissāya, nisevita, ussāpeti",
       "group": "1 (อ)",
@@ -34920,7 +34920,7 @@ const vocabRoots = {
     },
     {
       "root": "สิจ",
-      "meaning_pali": "kharaṇe / gharaṇe, paggharaṇe, seke",
+      "meaning_pali": "seke, paggharaṇe, kharaṇe / gharaṇe",
       "meaning_thai": "(DPD) sprinkle, pour",
       "example": "siñcati, asecanaka, sitvā abhisecana",
       "group": "2 (ṃa)",
@@ -35065,7 +35065,7 @@ const vocabRoots = {
     },
     {
       "root": "สิธ",
-      "meaning_pali": "gatimhi, gamane, gatiyaṃ",
+      "meaning_pali": "gamane, gatiyaṃ, gatimhi",
       "meaning_thai": "(DPD) prevent, prohibit",
       "example": "nisedha",
       "group": "1 (อ)",
@@ -35074,7 +35074,7 @@ const vocabRoots = {
     },
     {
       "root": "สิธ",
-      "meaning_pali": "saṃrādhane, saṃsiddhiyaṃ, siddhiyaṃ",
+      "meaning_pali": "saṃsiddhiyaṃ, saṃrādhane, siddhiyaṃ",
       "meaning_thai": "(DPD) succeed, be accomplished",
       "example": "siddhi",
       "group": "3 (ย)",
@@ -35179,7 +35179,7 @@ const vocabRoots = {
     },
     {
       "root": "สินา",
-      "meaning_pali": "soce, soceyye",
+      "meaning_pali": "soceyye, soce",
       "meaning_thai": "(DPD) bathe",
       "example": "sināti, sināta, sināna",
       "group": "1 (อ)",
@@ -35361,7 +35361,7 @@ const vocabRoots = {
     },
     {
       "root": "สิลิส",
-      "meaning_pali": "aliṅganādisu, āliṅgane",
+      "meaning_pali": "āliṅgane, aliṅganādisu",
       "meaning_thai": "(DPD) embrace, cling",
       "example": "siliṭṭha, siliṭṭhatā",
       "group": "3 (ย)",
@@ -35526,7 +35526,7 @@ const vocabRoots = {
     },
     {
       "root": "สิโลก",
-      "meaning_pali": "saṃghāte, saṅghāte",
+      "meaning_pali": "saṅghāte, saṃghāte",
       "meaning_thai": "(DPD) be famous",
       "example": "siloka",
       "group": "1 (อ)",
@@ -35763,7 +35763,7 @@ const vocabRoots = {
     },
     {
       "root": "สุ",
-      "meaning_pali": "savane, pasavane, passavane",
+      "meaning_pali": "passavane, savane, pasavane",
       "meaning_thai": "(DPD) flow",
       "example": "savati, sota, āsava, passāva",
       "group": "1 (อ)",
@@ -35781,7 +35781,7 @@ const vocabRoots = {
     },
     {
       "root": "สุ",
-      "meaning_pali": "pasavane, pasave",
+      "meaning_pali": "pasave, pasavane",
       "meaning_thai": "(DPD) generate, beget",
       "example": "sutā",
       "group": "1 (อ)",
@@ -36106,7 +36106,7 @@ const vocabRoots = {
     },
     {
       "root": "สุธ",
-      "meaning_pali": "soce, soceyye",
+      "meaning_pali": "soceyye, soce",
       "meaning_thai": "(DPD) be pure",
       "example": "parisujjhati, visuddha, sodhāpetvā",
       "group": "3 (ย)",
@@ -36213,7 +36213,7 @@ const vocabRoots = {
     },
     {
       "root": "สุป",
-      "meaning_pali": "sayane, saye, saya",
+      "meaning_pali": "saya, sayane, saye",
       "meaning_thai": "(DPD) lie down, sleep",
       "example": "supati, supina, sutta",
       "group": "1 (อ)",
@@ -36320,7 +36320,7 @@ const vocabRoots = {
     },
     {
       "root": "สุส",
-      "meaning_pali": "sosane, sose",
+      "meaning_pali": "sose, sosane",
       "meaning_thai": "(DPD) dry, wither",
       "example": "sukkha",
       "group": "3 (ย)",
@@ -36503,7 +36503,7 @@ const vocabRoots = {
     },
     {
       "root": "สูท",
-      "meaning_pali": "kharaṇe, kharaṇe / gharaṇe, paggharaṇe",
+      "meaning_pali": "kharaṇe, paggharaṇe, kharaṇe / gharaṇe",
       "meaning_thai": "(DPD) set in order",
       "example": "sūdanī",
       "group": "1 (อ)",
@@ -36826,7 +36826,7 @@ const vocabRoots = {
     },
     {
       "root": "หน",
-      "meaning_pali": "hiṃsā-gatīsu, hiṃsāyaṃ, hiṃsāgatīsu",
+      "meaning_pali": "hiṃsāyaṃ, hiṃsā-gatīsu, hiṃsāgatīsu",
       "meaning_thai": "(DPD) strike, kill",
       "example": "hanati, haññati, upahata",
       "group": "1 (อ)",
@@ -37005,7 +37005,7 @@ const vocabRoots = {
     },
     {
       "root": "หร",
-      "meaning_pali": "lajjane, lajjāyaṃ",
+      "meaning_pali": "lajjāyaṃ, lajjane",
       "meaning_thai": "(DPD) be ashamed",
       "example": "harāyati",
       "group": "3 (ย)",
@@ -37154,7 +37154,7 @@ const vocabRoots = {
     },
     {
       "root": "หา",
-      "meaning_pali": "parihāne, hāne, parihāniyaṃ",
+      "meaning_pali": "hāne, parihāniyaṃ, parihāne",
       "meaning_thai": "(DPD) decrease",
       "example": "hāyati, hāni, saṃhāni, hīna",
       "group": "3 (ย)",
@@ -37674,7 +37674,7 @@ const vocabRoots = {
     },
     {
       "root": "หํส",
-      "meaning_pali": "tuṭṭhiyaṃ, pītiyaṃ",
+      "meaning_pali": "pītiyaṃ, tuṭṭhiyaṃ",
       "meaning_thai": "(DPD) rise, elate",
       "example": "pahaṃsati, sampahaṃsana",
       "group": "1 (อ)",
@@ -37943,7 +37943,7 @@ const vocabRoots = {
     },
     {
       "root": "องฺค",
-      "meaning_pali": "gamane, gaty-atthadhātavo, gamanatthā",
+      "meaning_pali": "gaty-atthadhātavo, gamane, gamanatthā",
       "meaning_thai": "(DPD) walk",
       "example": "aṅgaṇa",
       "group": "1 (อ)",
@@ -38021,7 +38021,7 @@ const vocabRoots = {
     },
     {
       "root": "อจฺจ",
-      "meaning_pali": "pūjāyaṃ, accane",
+      "meaning_pali": "accane, pūjāyaṃ",
       "meaning_thai": "(DPD) shine, praise",
       "example": "accha, acci, accī",
       "group": "1 (อ)",
@@ -38150,7 +38150,7 @@ const vocabRoots = {
     },
     {
       "root": "อญฺจ",
-      "meaning_pali": "gamane, pūjā-<b>gate</b>, <b>gati</b>-pūjanāsu",
+      "meaning_pali": "pūjā-<b>gate</b>, gamane, <b>gati</b>-pūjanāsu",
       "meaning_thai": "(DPD) bend",
       "example": "aṅka, aṅga",
       "group": "1 (อ)",
@@ -38199,7 +38199,7 @@ const vocabRoots = {
     },
     {
       "root": "อญฺฉ",
-      "meaning_pali": "āyāme, āyāme bhave",
+      "meaning_pali": "āyāme bhave, āyāme",
       "meaning_thai": "(DPD) extend, draw along",
       "example": "añchanti, āviñchati, aṅka, pallaṅka",
       "group": "1 (อ)",
@@ -38228,7 +38228,7 @@ const vocabRoots = {
     },
     {
       "root": "อญฺช",
-      "meaning_pali": "<b>vyatti</b>-makkhana-gati-kantisu, <b>vyatti</b>-gatī-kanti-makkhaṇesu, visesane",
+      "meaning_pali": "<b>vyatti</b>-makkhana-gati-kantisu, visesane, <b>vyatti</b>-gatī-kanti-makkhaṇesu",
       "meaning_thai": "(DPD) distinguish",
       "example": "vyañjayati, byañjana",
       "group": "8 (e, aya)",
@@ -38246,7 +38246,7 @@ const vocabRoots = {
     },
     {
       "root": "อญฺช",
-      "meaning_pali": "pūjāyaṃ, gati-pūjanāsu, pūjā-gate",
+      "meaning_pali": "pūjā-gate, gati-pūjanāsu, pūjāyaṃ",
       "meaning_thai": "(DPD) pay respect",
       "example": "añjali",
       "group": "1 (อ)",
@@ -38413,7 +38413,7 @@ const vocabRoots = {
     },
     {
       "root": "อณ",
-      "meaning_pali": "saddatthā, sadde",
+      "meaning_pali": "sadde, saddatthā",
       "meaning_thai": "(DPD) recite",
       "example": "aṇati",
       "group": "1 (อ)",
@@ -38533,7 +38533,7 @@ const vocabRoots = {
     },
     {
       "root": "อตฺถ",
-      "meaning_pali": "yācane, yācanāyaṃ",
+      "meaning_pali": "yācanāyaṃ, yācane",
       "meaning_thai": "(DPD) wish for",
       "example": "abhipatthayati, attha, atthika",
       "group": "8 (e, aya)",
@@ -38947,7 +38947,7 @@ const vocabRoots = {
     },
     {
       "root": "อร",
-      "meaning_pali": "gatiyaṃ, nāse gate ca, gamane",
+      "meaning_pali": "nāse gate ca, gamane, gatiyaṃ",
       "meaning_thai": "(DPD) move, attain",
       "example": "appeti, attha, appanā",
       "group": "1 (อ)",
@@ -39137,7 +39137,7 @@ const vocabRoots = {
     },
     {
       "root": "อส",
-      "meaning_pali": "khepane, khepe",
+      "meaning_pali": "khepe, khepane",
       "meaning_thai": "(DPD) throw, hurl",
       "example": "pāsa, asana",
       "group": "3 (ย)",
@@ -39464,7 +39464,7 @@ const vocabRoots = {
     },
     {
       "root": "อิ",
-      "meaning_pali": "<b>ajjhāne</b> gatimhi ca, <b>ajjhena</b>-gati-kantisu, ajjhayane",
+      "meaning_pali": "ajjhayane, <b>ajjhāne</b> gatimhi ca, <b>ajjhena</b>-gati-kantisu",
       "meaning_thai": "(DPD) study, recite",
       "example": "ajjhāyaka, ajjhayana",
       "group": "1 (อ)",
@@ -39493,7 +39493,7 @@ const vocabRoots = {
     },
     {
       "root": "อิกฺข",
-      "meaning_pali": "dassan-aṅkesu, dassana-aṃkesu, dassane",
+      "meaning_pali": "dassana-aṃkesu, dassane, dassan-aṅkesu",
       "meaning_thai": "(DPD) see, mark",
       "example": "paccavekkhati, anupekkhati, upekkhā",
       "group": "1 (อ)",
@@ -39704,7 +39704,7 @@ const vocabRoots = {
     },
     {
       "root": "อิธ",
-      "meaning_pali": "vuddhiyaṃ, saṃsiddhiyaṃ, siddhimhi",
+      "meaning_pali": "saṃsiddhiyaṃ, siddhimhi, vuddhiyaṃ",
       "meaning_thai": "(DPD) succeed, accomplish",
       "example": "samijjhati",
       "group": "3 (ย)",
@@ -40065,7 +40065,7 @@ const vocabRoots = {
     },
     {
       "root": "อีร",
-      "meaning_pali": "vācā-pakampane, khepane gatiyaṃ ca",
+      "meaning_pali": "khepane gatiyaṃ ca, vācā-pakampane",
       "meaning_thai": "(DPD) speak",
       "example": "īreti, udīraṇa",
       "group": "8 (e, aya)",
@@ -40448,7 +40448,7 @@ const vocabRoots = {
     },
     {
       "root": "อุท",
-      "meaning_pali": "pasava-kiledanesu, sava-kiledane",
+      "meaning_pali": "sava-kiledane, pasava-kiledanesu",
       "meaning_thai": "(DPD) be wet",
       "example": "samudda, udaka, odana",
       "group": "2 (ṃa)",
@@ -41887,7 +41887,7 @@ const vocabRoots = {
     },
     {
       "root": "เปล",
-      "meaning_pali": "gatiyaṃ, calane, sañcalanādisu",
+      "meaning_pali": "calane, gatiyaṃ, sañcalanādisu",
       "meaning_thai": "(DPD) move, propel",
       "example": "pellana",
       "group": "1 (อ)",
@@ -42359,7 +42359,7 @@ const vocabRoots = {
     },
     {
       "root": "เว",
-      "meaning_pali": "tantasantāne, tantusantāne",
+      "meaning_pali": "tantusantāne, tantasantāne",
       "meaning_thai": "(DPD) weave",
       "example": "vāyati, āveṇika",
       "group": "1 (อ)",
@@ -42592,7 +42592,7 @@ const vocabRoots = {
     },
     {
       "root": "เวลฺล",
-      "meaning_pali": "gatiyaṃ, calane, sañcalanādisu",
+      "meaning_pali": "calane, gatiyaṃ, sañcalanādisu",
       "meaning_thai": "(DPD) shake, sway",
       "example": "paveliyamāna",
       "group": "1 (อ)",
@@ -42967,7 +42967,7 @@ const vocabRoots = {
     },
     {
       "root": "เอธ",
-      "meaning_pali": "vuddhiyaṃ, vuddhiyaṃ lābhe ca",
+      "meaning_pali": "vuddhiyaṃ lābhe ca, vuddhiyaṃ",
       "meaning_thai": "(DPD) flourish, prosper",
       "example": "edhati",
       "group": "1 (อ)",
@@ -43025,7 +43025,7 @@ const vocabRoots = {
     },
     {
       "root": "เอส",
-      "meaning_pali": "gatiyaṃ, maggane",
+      "meaning_pali": "maggane, gatiyaṃ",
       "meaning_thai": "(DPD) seek, search",
       "example": "esati, esinī, anvesaṃ",
       "group": "1 (อ)",
@@ -43242,7 +43242,7 @@ const vocabRoots = {
     },
     {
       "root": "โถม",
-      "meaning_pali": "silāghayaṃ, silāghāyaṃ",
+      "meaning_pali": "silāghāyaṃ, silāghayaṃ",
       "meaning_thai": "(DPD) praise",
       "example": "thometi, thoma, thomayati",
       "group": "8 (e, aya)",
@@ -43329,7 +43329,7 @@ const vocabRoots = {
     },
     {
       "root": "โมกฺข",
-      "meaning_pali": "muccane, mocane, moce",
+      "meaning_pali": "mocane, moce, muccane",
       "meaning_thai": "(DPD) be freed",
       "example": "vimokkha, pātimokkha",
       "group": "1 (อ)",
@@ -43962,7 +43962,7 @@ const vocabRoots = {
   "กต": [
     {
       "root": "กต",
-      "meaning_pali": "chede, chedane",
+      "meaning_pali": "chedane, chede",
       "meaning_thai": "(DPD) cut",
       "example": "kantati, kaṇṭaka",
       "group": "2 (ṃa)",
@@ -43982,7 +43982,7 @@ const vocabRoots = {
     },
     {
       "root": "กม",
-      "meaning_pali": "icchāyaṃ, icchāya-kantimhi, icchā-kantīsu",
+      "meaning_pali": "icchāyaṃ, icchā-kantīsu, icchāya-kantimhi",
       "meaning_thai": "(DPD) desire",
       "example": "kāmeti, kāma, kanta",
       "group": "8 (e, aya)",
@@ -44048,7 +44048,7 @@ const vocabRoots = {
   "ขญฺช": [
     {
       "root": "ขญฺช",
-      "meaning_pali": "gamanavekalle, gativekalle, gativekalye",
+      "meaning_pali": "gativekalle, gamanavekalle, gativekalye",
       "meaning_thai": "(DPD) limp",
       "example": "khañjati, khañja",
       "group": "1 (อ)",
@@ -44059,7 +44059,7 @@ const vocabRoots = {
   "ขณฺฑ": [
     {
       "root": "ขณฺฑ",
-      "meaning_pali": "chede, bhedane",
+      "meaning_pali": "bhedane, chede",
       "meaning_thai": "(DPD) break",
       "example": "khandeti",
       "group": "8 (e, aya)",
@@ -44070,7 +44070,7 @@ const vocabRoots = {
   "ขน": [
     {
       "root": "ขน",
-      "meaning_pali": "āvadāraṇe, avadāraṇe",
+      "meaning_pali": "avadāraṇe, āvadāraṇe",
       "meaning_thai": "(DPD) hurt, break",
       "example": "khata, akkhata",
       "group": "1 (อ)",
@@ -44092,7 +44092,7 @@ const vocabRoots = {
   "คม": [
     {
       "root": "คม",
-      "meaning_pali": "gatimhi, gatiyaṃ",
+      "meaning_pali": "gatiyaṃ, gatimhi",
       "meaning_thai": "(DPD) go",
       "example": "gacchati, gamika, gati, sugata",
       "group": "1 (อ)",
@@ -44114,7 +44114,7 @@ const vocabRoots = {
   "คิธ": [
     {
       "root": "คิธ",
-      "meaning_pali": "abhikaṅkhāyaṃ, gedhe, abhikaṃkhāyaṃ",
+      "meaning_pali": "abhikaṃkhāyaṃ, gedhe, abhikaṅkhāyaṃ",
       "meaning_thai": "(DPD) be greedy",
       "example": "gijjhati, giddha",
       "group": "3 (ย)",
@@ -44125,7 +44125,7 @@ const vocabRoots = {
   "คิลา": [
     {
       "root": "คิลา",
-      "meaning_pali": "pītikkhaye, hāsakkhaye pi ca, hāsakkhaye",
+      "meaning_pali": "hāsakkhaye, hāsakkhaye pi ca, pītikkhaye",
       "meaning_thai": "(DPD) be sick, be tired",
       "example": "gilāna",
       "group": "3 (ย)",
@@ -44158,7 +44158,7 @@ const vocabRoots = {
   "จนฺท": [
     {
       "root": "จนฺท",
-      "meaning_pali": "hilādane dittiyañca, kanti-hilādane, ditti-hilādanesu",
+      "meaning_pali": "kanti-hilādane, ditti-hilādanesu, hilādane dittiyañca",
       "meaning_thai": "(DPD) glow, be bright",
       "example": "canda, candana, candimā",
       "group": "1 (อ)",
@@ -44213,7 +44213,7 @@ const vocabRoots = {
   "ฑห": [
     {
       "root": "ฑห",
-      "meaning_pali": "bhasmīkaraṇe, <b>bhasmīkaraṇe</b> ca patiṭṭhāyaṃ, <b>bhasmīkaraṇe</b> dhāraṇe ca",
+      "meaning_pali": "<b>bhasmīkaraṇe</b> ca patiṭṭhāyaṃ, <b>bhasmīkaraṇe</b> dhāraṇe ca, bhasmīkaraṇe",
       "meaning_thai": "(DPD) burn",
       "example": "uḍḍahati, daḍḍha anuḍahana",
       "group": "1 (อ)",
@@ -44279,7 +44279,7 @@ const vocabRoots = {
   "ธาว": [
     {
       "root": "ธาว",
-      "meaning_pali": "gatisuddhiyaṃ, gamanavuddhimhi, gati-suddhiyaṃ",
+      "meaning_pali": "gamanavuddhimhi, gatisuddhiyaṃ, gati-suddhiyaṃ",
       "meaning_thai": "(DPD) run, flow",
       "example": "dhāvati, sandhāvati, vidhāvana",
       "group": "1 (อ)",
@@ -44321,7 +44321,7 @@ const vocabRoots = {
   "นินฺท": [
     {
       "root": "นินฺท",
-      "meaning_pali": "garahāyaṃ, kucchāyaṃ",
+      "meaning_pali": "kucchāyaṃ, garahāyaṃ",
       "meaning_thai": "(DPD) blame, abuse",
       "example": "nindati, nindiya",
       "group": "1 (อ)",
@@ -44343,7 +44343,7 @@ const vocabRoots = {
   "ปญฺจ": [
     {
       "root": "ปญฺจ",
-      "meaning_pali": "vitthāre klese, vitthāre",
+      "meaning_pali": "vitthāre, vitthāre klese",
       "meaning_thai": "(DPD) expand, spread",
       "example": "papañca, papañceti",
       "group": "8 (e, aya)",
@@ -44354,7 +44354,7 @@ const vocabRoots = {
   "ปณฺฑ": [
     {
       "root": "ปณฺฑ",
-      "meaning_pali": "parihāse, paribhāse",
+      "meaning_pali": "paribhāse, parihāse",
       "meaning_thai": "(DPD) mock, tease",
       "example": "paṇḍeti",
       "group": "8 (e, aya)",
@@ -44376,7 +44376,7 @@ const vocabRoots = {
   "ปลา": [
     {
       "root": "ปลา",
-      "meaning_pali": "gatyatthā, gamanatthā, gatiyaṃ",
+      "meaning_pali": "gatiyaṃ, gatyatthā, gamanatthā",
       "meaning_thai": "(DPD) run away, flee",
       "example": "paleti, palāyati, palāpetvā",
       "group": "8 (e, aya)",
@@ -44398,7 +44398,7 @@ const vocabRoots = {
   "ปิณฺฑ": [
     {
       "root": "ปิณฺฑ",
-      "meaning_pali": "saṃghāte, saṅghāte",
+      "meaning_pali": "saṅghāte, saṃghāte",
       "meaning_thai": "(DPD) collect",
       "example": "piṇḍeti, piṇḍi, piṇḍāya",
       "group": "8 (e, aya)",
@@ -44464,7 +44464,7 @@ const vocabRoots = {
   "ภชฺช": [
     {
       "root": "ภชฺช",
-      "meaning_pali": "bhajjane, pāke",
+      "meaning_pali": "pāke, bhajjane",
       "meaning_thai": "(DPD) cook",
       "example": "bhajjati",
       "group": "1 (อ)",
@@ -44475,7 +44475,7 @@ const vocabRoots = {
   "ภณฺฑ": [
     {
       "root": "ภณฺฑ",
-      "meaning_pali": "bhaṇḍane, paribhāsane",
+      "meaning_pali": "paribhāsane, bhaṇḍane",
       "meaning_thai": "(DPD) blame, accuse",
       "example": "bhaṇḍati",
       "group": "1 (อ)",
@@ -44486,7 +44486,7 @@ const vocabRoots = {
   "ภท": [
     {
       "root": "ภท",
-      "meaning_pali": "kallāṇe sokkhiye ca, kalyāṇe, kalyāṇakammani",
+      "meaning_pali": "kalyāṇakammani, kallāṇe sokkhiye ca, kalyāṇe",
       "meaning_thai": "(DPD) be good, be lucky",
       "example": "bhadra, bhante, bhadanta",
       "group": "1 (อ)",
@@ -44541,7 +44541,7 @@ const vocabRoots = {
   "มณฺฑ": [
     {
       "root": "มณฺฑ",
-      "meaning_pali": "bhūsane, veṭhane, vibhūsane",
+      "meaning_pali": "veṭhane, bhūsane, vibhūsane",
       "meaning_thai": "(DPD) adorn",
       "example": "maṇḍa, maṇḍana",
       "group": "1 (อ)",
@@ -44669,7 +44669,7 @@ const vocabRoots = {
   "สงฺก": [
     {
       "root": "สงฺก",
-      "meaning_pali": "saṅkāyaṃ, saṃkāyaṃ, saṃkāya",
+      "meaning_pali": "saṅkāyaṃ, saṃkāya, saṃkāyaṃ",
       "meaning_thai": "(DPD) doubt, suspect",
       "example": "saṅkati, saṅkā",
       "group": "1 (อ)",
@@ -44680,7 +44680,7 @@ const vocabRoots = {
   "สาย": [
     {
       "root": "สาย",
-      "meaning_pali": "assādane, sāyane",
+      "meaning_pali": "sāyane, assādane",
       "meaning_thai": "(DPD) taste",
       "example": "sāyati, sāyitvā",
       "group": "1 (อ)",
@@ -44702,7 +44702,7 @@ const vocabRoots = {
   "สิว": [
     {
       "root": "สิว",
-      "meaning_pali": "tantasantāne, tantusantāne, tantūna santāne",
+      "meaning_pali": "tantusantāne, tantasantāne, tantūna santāne",
       "meaning_thai": "(DPD) sew",
       "example": "sutta",
       "group": "3 (ย)",
@@ -44733,7 +44733,7 @@ const vocabRoots = {
   "สฺนิห": [
     {
       "root": "สฺนิห",
-      "meaning_pali": "pīṇane, pītiyaṃ",
+      "meaning_pali": "pītiyaṃ, pīṇane",
       "meaning_thai": "(DPD) love, be moist",
       "example": "sneha",
       "group": "3 (ย)",
@@ -44755,7 +44755,7 @@ const vocabRoots = {
   "วฬญฺช": [
     {
       "root": "วฬญฺช",
-      "meaning_pali": "valañjane, paribhoge",
+      "meaning_pali": "paribhoge, valañjane",
       "meaning_thai": "(DPD) use",
       "example": "vaḷañjanaka",
       "group": "1 (อ)",
@@ -44788,7 +44788,7 @@ const vocabRoots = {
   "วฺยถ": [
     {
       "root": "วฺยถ",
-      "meaning_pali": "bhīti-calesu, dukkha-bhaya-calanesu",
+      "meaning_pali": "dukkha-bhaya-calanesu, bhīti-calesu",
       "meaning_thai": "(DPD) fear, shake",
       "example": "pavedhati",
       "group": "1 (อ)",
@@ -44810,7 +44810,7 @@ const vocabRoots = {
   "หิณฺฑ": [
     {
       "root": "หิณฺฑ",
-      "meaning_pali": "gatiyaṃ, āhiṇḍane",
+      "meaning_pali": "āhiṇḍane, gatiyaṃ",
       "meaning_thai": "(DPD) roam, wander",
       "example": "āhiṇḍati",
       "group": "1 (อ)",
@@ -44821,7 +44821,7 @@ const vocabRoots = {
   "หิร": [
     {
       "root": "หิร",
-      "meaning_pali": "lajjane, lajjāyaṃ",
+      "meaning_pali": "lajjāyaṃ, lajjane",
       "meaning_thai": "(DPD) be ashamed",
       "example": "hiri",
       "group": "3 (ย)",
@@ -44832,7 +44832,7 @@ const vocabRoots = {
   "หิส": [
     {
       "root": "หิส",
-      "meaning_pali": "vihiṃsāyaṃ, hiṃsāyaṃ",
+      "meaning_pali": "hiṃsāyaṃ, vihiṃsāyaṃ",
       "meaning_thai": "(DPD) hurt, harm",
       "example": "hiṃsati, ahiṃsa, vihiṃsā",
       "group": "2 (ṃa)",
@@ -44854,7 +44854,7 @@ const vocabRoots = {
   "กิญฺจ": [
     {
       "root": "กิญฺจ",
-      "meaning_pali": "maddane, avamaddane",
+      "meaning_pali": "avamaddane, maddane",
       "meaning_thai": "(DPD) crush",
       "example": "kiñcati",
       "group": "1 (อ)",
