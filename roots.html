@@ -530,10 +530,13 @@
                             const querySkel = getConsonantSkeleton(cleanQuery);
                             const rootSkel = getConsonantSkeleton(item.root);
                             // Prevent empty match
+                            // querySkel "กร" matches rootSkel "กร" (from กร, กริ, กรุ, กรฺ, etc.)
                             textMatch = querySkel.length > 0 && rootSkel.startsWith(querySkel);
                         } else {
                             // Exact match (Strict)
-                            textMatch = item.root === query;
+                            // "กร" matches only "กร"
+                            // "กรุ" matches only "กรุ"
+                            textMatch = item.root.trim() === query;
                         }
                     } else {
                         // meaning mode: search ONLY across meanings
@@ -704,8 +707,8 @@
         // Helper to extract consonant skeleton for wildcard search
         function getConsonantSkeleton(text) {
             if (!text) return '';
-            // Remove vowels (\u0E30-\u0E39, \u0E40-\u0E44) and marks (\u0E3A, \u0E47-\u0E4E)
-            return String(text).replace(/[\u0E30-\u0E3A\u0E40-\u0E4E]/g, '');
+            // Remove vowels (\u0E30-\u0E3A, \u0E40-\u0E44) and marks (\u0E3A, \u0E47-\u0E4E) and spaces
+            return String(text).replace(/[\u0E30-\u0E3A\u0E40-\u0E4E\s]/g, '');
         }
 
         // Normalize Thai-Pali root spelling for strict matching with flexibility
