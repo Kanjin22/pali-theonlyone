@@ -74,7 +74,7 @@ async function main() {
     
     // Save to file
     const content = `const vocabTananunto = ${JSON.stringify(vocabData, null, 2)};`;
-    const outputPath = path.join(__dirname, 'data', 'vocab-tananunto.js');
+    const outputPath = path.join(__dirname, 'data/raw', 'vocab-tananunto.js');
     
     fs.writeFileSync(outputPath, content, 'utf8');
     console.log(`Saved to ${outputPath}`);
