@@ -531,6 +531,7 @@
                         <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
                             style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
                         <button id="dpdUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPD()">อัปเดตพจนานุกรม DPD</button>
+                        <button id="dpdUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReport()">ตรวจสอบและอัปเดต DPD</button>
                         
                         <div id="dhatuAuthSection" style="display:none; align-items:center; gap:5px;">
                              <input type="email" id="dhatuEmail" placeholder="Email (Dhatu Admin)" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 150px;">
@@ -1174,6 +1175,18 @@
             </div>
         </div>
 
+        <div id="dpdReportModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>รายงานการอัปเดต DPD</h2>
+                    <span class="close" onclick="document.getElementById('dpdReportModal').style.display='none'">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <pre id="dpdReportContent" style="max-height:400px; overflow:auto; background:#f8f9fa; padding:12px; border-radius:8px;"></pre>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1354,6 +1367,8 @@
         async function toggleDPDButton(show) {
             const btn = document.getElementById('dpdUpdateBtn');
             btn.style.display = show ? 'inline-block' : 'none';
+            const btn2 = document.getElementById('dpdUpdateReportBtn');
+            btn2.style.display = show ? 'inline-block' : 'none';
         }
 
         async function checkServerAdmin() {
@@ -1404,6 +1419,46 @@
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'อัปเดตพจนานุกรม DPD';
+            }
+        }
+
+        async function updateDPDWithReport() {
+            const btn = document.getElementById('dpdUpdateReportBtn');
+            btn.disabled = true;
+            btn.textContent = 'กำลังตรวจสอบ...';
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('กรุณาล็อกอินแอดมินก่อน');
+                    return;
+                }
+                const token = await user.getIdToken();
+                const res = await fetch('http://localhost:3001/api/dpd-update-report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+                if (!data.ok) {
+                    alert('ไม่สามารถสร้างรายงานได้: ' + (data.error || 'unknown'));
+                    return;
+                }
+                const pre = document.getElementById('dpdReportContent');
+                const summary = {
+                    dpd: data.dpd,
+                    roots: data.roots,
+                    firestore: data.firestore
+                };
+                pre.textContent = JSON.stringify(summary, null, 2);
+                document.getElementById('dpdReportModal').style.display = 'block';
+            } catch (e) {
+                alert('เกิดข้อผิดพลาด: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'ตรวจสอบและอัปเดต DPD';
             }
         }
         async function loadRoots(isLoadMore = false) {
