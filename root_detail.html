@@ -379,31 +379,40 @@
             if (activeTab === 'dpd' || /^\d/.test(rawGroup)) {
                 // Try to map known DPD group formats
                 if (rawGroup.includes("1") && (rawGroup.includes("อ") || rawGroup.includes("a"))) displayGroup = "ภู (อ)";
-                else if (rawGroup.includes("2") && (rawGroup.includes("อ-เอ") || rawGroup.includes("m-a"))) displayGroup = "รุธ (อ-เอ)";
+                else if (rawGroup.includes("2") && (rawGroup.includes("อ") || rawGroup.includes("ma"))) displayGroup = "รุธ (ํอ)";
                 else if (rawGroup.includes("3") && (rawGroup.includes("ย") || rawGroup.includes("ya"))) displayGroup = "ทิว (ย)";
-                else if (rawGroup.includes("4") && (rawGroup.includes("ณุ") || rawGroup.includes("nu"))) displayGroup = "สุ (ณุ ณา)";
+                else if (rawGroup.includes("4") && (rawGroup.includes("ณุ") || rawGroup.includes("nu"))) displayGroup = "สุ (ณุ ณา อุณา)";
                 else if (rawGroup.includes("5") && (rawGroup.includes("นา") || rawGroup.includes("na"))) displayGroup = "กี (นา)";
-                else if (rawGroup.includes("6") && (rawGroup.includes("ณฺหา") || rawGroup.includes("nha"))) displayGroup = "คห (ณฺหา)";
-                else if (rawGroup.includes("7") && (rawGroup.includes("โอ") || rawGroup.includes("o"))) displayGroup = "ตน (โอ)";
+                else if (rawGroup.includes("6") && (rawGroup.includes("ณฺหา") || rawGroup.includes("nha"))) displayGroup = "คห (ณฺหา ปฺป)";
+                else if (rawGroup.includes("7") && (rawGroup.includes("โอ") || rawGroup.includes("o"))) displayGroup = "ตน (โอ ยิร)";
                 else if (rawGroup.includes("8") && (rawGroup.includes("เณ") || rawGroup.includes("ne"))) displayGroup = "จุร (เณ ณย)";
             }
 
             // Color Logic based on Group (using mapped displayGroup)
             const groupColors = {
                 "ภู (อ)": ["#27ae60", "#2ecc71"],
-                "รุธ (อ-เอ)": ["#c0392b", "#e74c3c"],
+                "รุธ (ํอ)": ["#c0392b", "#e74c3c"],
                 "ทิว (ย)": ["#2980b9", "#3498db"],
-                "สุ (ณุ ณา)": ["#8e44ad", "#9b59b6"],
+                "สุ (ณุ ณา อุณา)": ["#8e44ad", "#9b59b6"],
                 "กี (นา)": ["#d35400", "#e67e22"],
-                "คห (ณฺหา)": ["#16a085", "#1abc9c"],
-                "ตน (โอ)": ["#f39c12", "#f1c40f"],
+                "คห (ณฺหา ปฺป)": ["#16a085", "#1abc9c"],
+                "ตน (โอ ยิร)": ["#f39c12", "#f1c40f"],
                 "จุร (เณ ณย)": ["#2c3e50", "#34495e"]
             };
 
             let colors = ["#7f8c8d", "#95a5a6"]; // Default Grey
             let groupLink = "";
             
-            if (displayGroup) {
+            let isAneka = false;
+
+            if (displayGroup && (displayGroup.includes(",") || displayGroup.includes(" และ "))) {
+                 isAneka = true;
+            }
+
+            if (isAneka) {
+                 colors = ["#607d8b", "#455a64"]; // Blue Grey theme for Aneka Dhatu
+                 groupLink = `<a href="grammar_aneka.html" target="_blank" class="grammar-link" style="color:#607d8b;"><i class="fa-solid fa-graduation-cap"></i> หลักการอเนกคณิกธาตุ</a>`;
+            } else if (displayGroup) {
                 const g = displayGroup;
                 if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "#27ae60"); }
                 else if (g.includes("รุธ")) { colors = groupColors["รุธ (อ-เอ)"]; groupLink = getGrammarLink("rudha", "#c0392b"); }
@@ -462,6 +471,18 @@
             }
 
             // Final Assembly
+            
+            let anekaFooterHtml = '';
+            if (isAneka) {
+                anekaFooterHtml = `
+                    <div style="text-align: right; margin-top: 20px; margin-bottom: 10px;">
+                        <a href="grammar_aneka.html" target="_blank" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
+                            <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
+                        </a>
+                    </div>
+                `;
+            }
+
             container.innerHTML = `
                 <div class="detail-card">
                     <div class="card-header" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
@@ -476,11 +497,7 @@
                         ${contentHtml}
                         ${derivedHtml}
                         
-                        <div style="text-align: right; margin-top: 20px; margin-bottom: 10px;">
-                            <a href="grammar_aneka.html" target="_blank" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
-                                <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
-                            </a>
-                        </div>
+                        ${anekaFooterHtml}
                     </div>
                 </div>
             `;
