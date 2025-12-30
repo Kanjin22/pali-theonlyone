@@ -62,7 +62,7 @@
         .search-input {
             width: 100%;
             padding: 15px 20px;
-            padding-right: 220px;
+            padding-right: 380px;
             font-size: 1.1rem;
             border: 2px solid #bdc3c7;
             border-radius: 30px;
@@ -87,6 +87,11 @@
             cursor: pointer;
             outline: none;
             max-width: 150px;
+        }
+        /* Second select (search mode) positioning */
+        #searchMode.search-select {
+            right: 210px;
+            max-width: 180px;
         }
 
         .search-input:focus {
@@ -299,6 +304,10 @@
         <div class="search-box-container">
             <div class="search-input-group">
                 <input type="text" id="searchInput" class="search-input" placeholder="พิมพ์ชื่อธาตุ หรือ ความหมาย (เช่น กก, ไป, ถึง)..." autocomplete="off">
+                <select id="searchMode" class="search-select">
+                    <option value="root">ค้นหาตามตัวธาตุ</option>
+                    <option value="meaning">ค้นหาตามคำแปล</option>
+                </select>
                 <select id="groupFilter" class="search-select">
                     <option value="">ทุกหมวดธาตุ</option>
                 </select>
@@ -342,6 +351,7 @@
         
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
+        const searchMode = document.getElementById('searchMode');
         const groupFilter = document.getElementById('groupFilter');
         const resultsContainer = document.getElementById('resultsContainer');
         const statsDisplay = document.getElementById('statsDisplay');
@@ -471,6 +481,10 @@
             performSearch(e.target.value);
         });
 
+        searchMode.addEventListener('change', () => {
+            performSearch(searchInput.value);
+        });
+
         groupFilter.addEventListener('change', () => {
             performSearch(searchInput.value);
         });
@@ -478,6 +492,7 @@
         function performSearch(queryInput) {
             const query = queryInput.trim().toLowerCase();
             const group = groupFilter.value;
+            const mode = searchMode.value;
 
             if (query.length < 1 && group === "") {
                 resultsContainer.innerHTML = '';
@@ -487,26 +502,37 @@
 
             // Filter logic
             const results = window.allRoots.filter(item => {
-                // 1. Group Filter
+                // 1. Mode-specific text filter
+                let textMatch = true;
+                if (query) {
+                    if (mode === 'root') {
+                        // Exact match (with flexibility): treat trailing 'ุ' and 'ฺ' as equivalent
+                        const baseInput = normalizeRootThaiPali(query);
+                        const baseRoot = normalizeRootThaiPali(item.root).toLowerCase();
+                        textMatch = baseRoot === baseInput || item.root.toLowerCase() === query;
+                    } else {
+                        // meaning mode: search across meanings and group text
+                        // direct root hit also allowed for convenience
+                        const rootHit = item.root.toLowerCase().includes(query);
+                        const entryHit = item.entries.some(entry => {
+                            const matchPali = entry.meaning_pali && entry.meaning_pali.toLowerCase().includes(query);
+                            const matchThai = entry.meaning_thai && entry.meaning_thai.toLowerCase().includes(query);
+                            const matchGroup = entry.group && entry.group.toLowerCase().includes(query);
+                            return matchPali || matchThai || matchGroup;
+                        });
+                        textMatch = rootHit || entryHit;
+                    }
+                }
+
+                if (!textMatch) return false;
+
+                // 2. Group Filter
                 if (group) {
                     const hasGroup = item.entries.some(e => e.group === group);
                     if (!hasGroup) return false;
                 }
 
-                // 2. Text Filter
-                if (!query) return true;
-
-                // Match Root Name
-                if (item.root.includes(query)) return true;
-                
-                // Match inside entries (meaning, group)
-                return item.entries.some(entry => {
-                    const matchPali = entry.meaning_pali && entry.meaning_pali.toLowerCase().includes(query);
-                    const matchThai = entry.meaning_thai && entry.meaning_thai.toLowerCase().includes(query);
-                    const matchGroup = entry.group && entry.group.toLowerCase().includes(query);
-                    
-                    return matchPali || matchThai || matchGroup;
-                });
+                return true;
             });
 
             displayResults(results.slice(0, 50)); // Limit 50 results
@@ -639,6 +665,16 @@
             if (typeof text !== 'string') return String(text);
             const regex = new RegExp(`(${query})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Normalize Thai-Pali root spelling for strict matching with flexibility
+        function normalizeRootThaiPali(text) {
+            if (!text) return '';
+            // remove trailing pinthu (ฺ) and short u vowel (ุ)
+            let t = String(text).trim();
+            t = t.replace(/ฺ$/u, '');
+            t = t.replace(/ุ$/u, '');
+            return t.toLowerCase();
         }
     </script>
 </body>
