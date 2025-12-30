@@ -4,25 +4,18 @@ const path = require('path');
 // Initialize Firebase Admin
 let admin;
 try {
-    // Try using local module first
     admin = require('firebase-admin');
 } catch (e) {
-    try {
-        // Fallback to absolute path from the other project
-        admin = require('D:/pali-dhatu-app/node_modules/firebase-admin');
-    } catch (e2) {
-        console.error("Could not load firebase-admin.");
-        process.exit(1);
-    }
+    console.error("Could not load firebase-admin module.");
+    process.exit(1);
 }
 
 // Load Service Account
-// Expecting it in the same directory as this script
-const serviceAccountPath = path.join(__dirname, 'service-account-key.json');
+// Use the key from the main app directory to avoid duplicating secrets
+const serviceAccountPath = 'D:/pali-dhatu-app/service-account-key.json';
 
 if (!fs.existsSync(serviceAccountPath)) {
     console.error(`Service account key not found at ${serviceAccountPath}`);
-    console.error("Please place 'service-account-key.json' in the 'scripts' folder.");
     process.exit(1);
 }
 const serviceAccount = require(serviceAccountPath);

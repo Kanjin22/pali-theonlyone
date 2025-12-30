@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-// Try to load firebase-admin from the other project
+// Initialize Firebase Admin
 let admin;
 try {
-    admin = require('D:/pali-dhatu-app/node_modules/firebase-admin');
+    admin = require('firebase-admin');
 } catch (e) {
-    console.error("Could not load firebase-admin from D:/pali-dhatu-app/node_modules");
-    console.error(e);
+    console.error("Could not load firebase-admin module.");
     process.exit(1);
 }
 

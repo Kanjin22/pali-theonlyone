@@ -6,6 +6,7 @@
     <title>รายละเอียดธาตุ - พจนานุกรมธาตุ</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="data/pali-script.js"></script>
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f4f6f9; margin: 0; padding: 40px 20px; color: #333; line-height: 1.6; }
         .container { max-width: 800px; margin: 0 auto; }
@@ -362,7 +363,33 @@
 
             if (!headerEntry) return; // Should not happen
 
-            // Color Logic based on Group
+            // Determine Root Name (Thai or Roman) and add Prefix
+            let displayRoot = currentRootWord;
+            if (activeTab === 'dpd') {
+                // Transliterate to Roman if in DPD tab
+                displayRoot = PaliScript.thaiToRoman(currentRootWord);
+            }
+            // Add Root Symbol
+            displayRoot = `√${displayRoot}`;
+
+            // Group Mapping Logic
+            let displayGroup = headerEntry.group;
+            let rawGroup = headerEntry.group || "";
+            
+            // Map DPD groups to Thai names if in DPD tab or if group looks like "1 (..)"
+            if (activeTab === 'dpd' || /^\d/.test(rawGroup)) {
+                // Try to map known DPD group formats
+                if (rawGroup.includes("1") && (rawGroup.includes("อ") || rawGroup.includes("a"))) displayGroup = "ภู (อ)";
+                else if (rawGroup.includes("2") && (rawGroup.includes("อ-เอ") || rawGroup.includes("m-a"))) displayGroup = "รุธ (อ-เอ)";
+                else if (rawGroup.includes("3") && (rawGroup.includes("ย") || rawGroup.includes("ya"))) displayGroup = "ทิว (ย)";
+                else if (rawGroup.includes("4") && (rawGroup.includes("ณุ") || rawGroup.includes("nu"))) displayGroup = "สุ (ณุ ณา)";
+                else if (rawGroup.includes("5") && (rawGroup.includes("นา") || rawGroup.includes("na"))) displayGroup = "กี (นา)";
+                else if (rawGroup.includes("6") && (rawGroup.includes("ณฺหา") || rawGroup.includes("nha"))) displayGroup = "คห (ณฺหา)";
+                else if (rawGroup.includes("7") && (rawGroup.includes("โอ") || rawGroup.includes("o"))) displayGroup = "ตน (โอ)";
+                else if (rawGroup.includes("8") && (rawGroup.includes("เณ") || rawGroup.includes("ne"))) displayGroup = "จุร (เณ ณย)";
+            }
+
+            // Color Logic based on Group (using mapped displayGroup)
             const groupColors = {
                 "ภู (อ)": ["#27ae60", "#2ecc71"],
                 "รุธ (อ-เอ)": ["#c0392b", "#e74c3c"],
@@ -377,9 +404,8 @@
             let colors = ["#7f8c8d", "#95a5a6"]; // Default Grey
             let groupLink = "";
             
-            if (headerEntry.group) {
-                // Simple inclusion check
-                const g = headerEntry.group;
+            if (displayGroup) {
+                const g = displayGroup;
                 if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "#27ae60"); }
                 else if (g.includes("รุธ")) { colors = groupColors["รุธ (อ-เอ)"]; groupLink = getGrammarLink("rudha", "#c0392b"); }
                 else if (g.includes("ทิว")) { colors = groupColors["ทิว (ย)"]; groupLink = getGrammarLink("divu", "#2980b9"); }
@@ -389,6 +415,7 @@
                 else if (g.includes("ตน")) { colors = groupColors["ตน (โอ)"]; groupLink = getGrammarLink("tana", "#f39c12"); }
                 else if (g.includes("จุร")) { colors = groupColors["จุร (เณ ณย)"]; groupLink = getGrammarLink("cura", "#2c3e50"); }
             }
+
 
             function getGrammarLink(file, color) {
                 return `<a href="grammar_${file}.html" target="_blank" class="grammar-link" style="color:${color};"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
@@ -439,8 +466,8 @@
             container.innerHTML = `
                 <div class="detail-card">
                     <div class="card-header" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
-                        <h1 class="root-title-large" style="position:relative; z-index:1;">${currentRootWord}</h1>
-                        ${headerEntry.group ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${headerEntry.group}</div>` : ''}
+                        <h1 class="root-title-large" style="position:relative; z-index:1;">${displayRoot}</h1>
+                        ${displayGroup ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${displayGroup}</div>` : ''}
                         ${groupLink ? `<div style="margin-top:15px; position:relative; z-index:1;">${groupLink}</div>` : ''}
                     </div>
                     
