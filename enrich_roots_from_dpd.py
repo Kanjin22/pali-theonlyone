@@ -2,17 +2,10 @@ import json
 import re
 import sys
 import os
-
-# Add repo path to sys.path to import internal modules
-repo_path = os.path.join(os.path.dirname(__file__), "data", "dpd-db-repo")
-sys.path.append(repo_path)
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from db.models import DpdRoot
+import sqlite3
 
 # DB Path
-DB_PATH = os.path.join(repo_path, "dpd.db")
+DB_PATH = "dpd_data/dpd.db"
 
 def roman_to_thai_robust(text):
     text = text.replace("√", "").strip()
@@ -120,6 +113,7 @@ def normalize_dpd_root(root_str):
     return thai
 
 def map_sign(dpd_sign):
+    if not dpd_sign: return ""
     m = {
         "a": "อ",
         "ya": "ย",
@@ -132,6 +126,7 @@ def map_sign(dpd_sign):
     return m.get(dpd_sign, dpd_sign)
 
 def map_group(dpd_group):
+    if not dpd_group: return ""
     # DPD: bhū, rudh, div, sw, kī, gah, tan, cur
     m = {
         "bhū": "ภู",
@@ -145,7 +140,7 @@ def map_group(dpd_group):
         "tan": "ตน",
         "cur": "จุร"
     }
-    return m.get(dpd_group, dpd_group)
+    return m.get(str(dpd_group), str(dpd_group)) # ensure string
 
 def load_vocab_roots():
     path = os.path.join("data", "vocab-roots.js")
@@ -166,12 +161,13 @@ def main():
     print(f"Loaded {len(vocab_roots)} roots from vocab-roots.js")
     
     print("Connecting to DPD DB...")
-    engine = create_engine(f"sqlite:///{DB_PATH}")
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     
     try:
-        dpd_roots = session.query(DpdRoot).all()
+        cursor.execute("SELECT * FROM dpd_roots")
+        dpd_roots = cursor.fetchall()
         print(f"Loaded {len(dpd_roots)} roots from DPD DB")
         
         matched_count = 0
@@ -180,24 +176,24 @@ def main():
         
         for r in dpd_roots:
             # Normalize key
-            thai_key = normalize_dpd_root(r.root)
+            thai_key = normalize_dpd_root(r['root'])
             
-            if "phand" in r.root or "siṃs" in r.root:
-                print(f"DEBUG: Processing {r.root} -> {thai_key}. In vocab? {thai_key in vocab_roots}")
+            if "phand" in r['root'] or "siṃs" in r['root']:
+                print(f"DEBUG: Processing {r['root']} -> {thai_key}. In vocab? {thai_key in vocab_roots}")
 
             pali_meanings = []
-            if r.dhatupatha_pali and r.dhatupatha_pali != "-": pali_meanings.append(r.dhatupatha_pali)
-            if r.dhatumanjusa_pali and r.dhatumanjusa_pali != "-": pali_meanings.append(r.dhatumanjusa_pali)
-            if r.dhatumala_pali and r.dhatumala_pali != "-": pali_meanings.append(r.dhatumala_pali)
+            if r['dhatupatha_pali'] and r['dhatupatha_pali'] != "-": pali_meanings.append(r['dhatupatha_pali'])
+            if r['dhatumanjusa_pali'] and r['dhatumanjusa_pali'] != "-": pali_meanings.append(r['dhatumanjusa_pali'])
+            if r['dhatumala_pali'] and r['dhatumala_pali'] != "-": pali_meanings.append(r['dhatumala_pali'])
             
             pali_meaning_str = ", ".join(list(set(pali_meanings))) # Dedupe
             
             new_entry = {
                 "root": thai_key,
-                "meaning_pali": pali_meaning_str if pali_meaning_str else r.root_meaning,
-                "meaning_thai": f"(DPD) {r.root_meaning}",
-                "example": r.root_example if r.root_example else "", 
-                "group": f"{map_group(r.root_group)} ({map_sign(r.root_sign)})",
+                "meaning_pali": pali_meaning_str if pali_meaning_str else r['root_meaning'],
+                "meaning_thai": f"(DPD) {r['root_meaning']}",
+                "example": r['root_example'] if r['root_example'] else "", 
+                "group": f"{map_group(r['root_group'])} ({map_sign(r['root_sign'])})",
                 "page": "", 
                 "source": "DPD"
             }
@@ -235,7 +231,7 @@ def main():
         print("Saved updated vocab-roots.js")
         
     finally:
-        session.close()
+        conn.close()
 
 if __name__ == "__main__":
     main()

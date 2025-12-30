@@ -1,19 +1,28 @@
 const fs = require('fs');
 const path = require('path');
 
-// Try to load firebase-admin from the other project
+// Initialize Firebase Admin
 let admin;
 try {
-    admin = require('D:/pali-dhatu-app/node_modules/firebase-admin');
+    // Try using local module first
+    admin = require('firebase-admin');
 } catch (e) {
-    console.error("Could not load firebase-admin from D:/pali-dhatu-app/node_modules");
-    process.exit(1);
+    try {
+        // Fallback to absolute path from the other project
+        admin = require('D:/pali-dhatu-app/node_modules/firebase-admin');
+    } catch (e2) {
+        console.error("Could not load firebase-admin.");
+        process.exit(1);
+    }
 }
 
 // Load Service Account
-const serviceAccountPath = 'D:/pali-dhatu-app/service-account-key.json';
+// Expecting it in the same directory as this script
+const serviceAccountPath = path.join(__dirname, 'service-account-key.json');
+
 if (!fs.existsSync(serviceAccountPath)) {
     console.error(`Service account key not found at ${serviceAccountPath}`);
+    console.error("Please place 'service-account-key.json' in the 'scripts' folder.");
     process.exit(1);
 }
 const serviceAccount = require(serviceAccountPath);
@@ -34,78 +43,105 @@ async function updateRoots() {
   if (content.endsWith(';')) content = content.slice(0, -1);
   const vocabRoots = JSON.parse(content);
 
-  // 2. Identify entries with example_school
-  const updates = [];
+  // 2. Process Entries
+  const batchSize = 400;
+  let batch = db.batch();
+  let count = 0;
+  let totalUpdated = 0;
+  let totalCreated = 0;
   
-  Object.keys(vocabRoots).forEach(key => {
-      const entries = vocabRoots[key];
-      entries.forEach(entry => {
-          if (entry.example_school) {
-              updates.push({
-                  root: key,
-                  group: entry.group,
-                  example_school: entry.example_school
-              });
-          }
-      });
-  });
-  
-  console.log(`Found ${updates.length} entries to update with example_school.`);
-  
-  if (updates.length === 0) {
-      console.log("No updates found.");
-      return;
-  }
+  const rootKeys = Object.keys(vocabRoots);
+  console.log(`Processing ${rootKeys.length} roots...`);
 
-  // 3. Process Updates
-  let updatedCount = 0;
-  
-  for (const item of updates) {
-      console.log(`Processing ${item.root} (${item.group})...`);
-      
-      const snapshot = await db.collection('dhatu')
-          .where('dhatu_word', '==', item.root)
-          .get();
+  for (const rootKey of rootKeys) {
+      const entries = vocabRoots[rootKey];
+      for (const entry of entries) {
           
-      if (snapshot.empty) {
-          console.log(`  - No document found for ${item.root}`);
-          continue;
-      }
-      
-      const batch = db.batch();
-      let matchFound = false;
-      
-      snapshot.forEach(doc => {
-          const data = doc.data();
-          // Heuristic to match group (mawat_dhatu)
-          // Data in Firestore might be "ภู (อ)" or just "ภู"
-          // We check if Firestore group includes our group keyword or vice versa
+          // We mainly want to sync DPD entries to ensure daily updates are reflected.
+          // For other entries (Palidict/Manual), we sync if we find a match to update example_school.
           
-          const dbGroup = data.mawat_dhatu || "";
-          const localGroup = item.group || "";
+          // Query by root word
+          const snapshot = await db.collection('dhatu')
+              .where('dhatu_word', '==', entry.root)
+              .get();
           
-          // Simple inclusion check
-          if (dbGroup === localGroup || (dbGroup && localGroup.includes(dbGroup.split(' ')[0]))) {
-              // Update
-              batch.update(doc.ref, { 
-                  udaharana_school: item.example_school,
-                  updated_at: admin.firestore.FieldValue.serverTimestamp()
-              });
-              matchFound = true;
+          let docRef = null;
+          let isNew = true;
+
+          // Try to find a matching document
+          snapshot.forEach(doc => {
+              const data = doc.data();
+              
+              // Match Logic:
+              // 1. DPD Source: Match word + group + source="DPD". 
+              if (entry.source === 'DPD') {
+                  if (data.source === 'DPD' && data.mawat_dhatu === entry.group) {
+                      // Found existing DPD entry for this root/group
+                      docRef = doc.ref;
+                      isNew = false;
+                  }
+              } 
+              // 2. Legacy/Other Sources: Match word + group (fuzzy)
+              else {
+                   const dbGroup = data.mawat_dhatu || "";
+                   const localGroup = entry.group || "";
+                   // If groups match or one contains the other (e.g. "ภู (อ)" vs "ภู")
+                   // And NOT a DPD entry in DB (don't overwrite DPD with non-DPD)
+                   if (data.source !== 'DPD' && (dbGroup === localGroup || (dbGroup && localGroup.includes(dbGroup.split(' ')[0])))) {
+                       docRef = doc.ref;
+                       isNew = false;
+                   }
+              }
+          });
+
+          // Policy: 
+          // - If DPD entry and not found -> Create New
+          // - If Non-DPD entry and not found -> Skip (don't auto-create manual entries from script yet, safety first)
+          // - If Found -> Update
+          
+          if (!docRef) {
+              if (entry.source === 'DPD') {
+                  docRef = db.collection('dhatu').doc();
+                  isNew = true;
+              } else {
+                  continue; 
+              }
           }
-      });
-      
-      if (matchFound) {
-          await batch.commit();
-          console.log(`  - Updated.`);
-          updatedCount++;
-      } else {
-          console.log(`  - No matching group found for ${item.root} (Local: ${item.group})`);
+
+          const dataToSave = {
+              dhatu_word: entry.root,
+              mawat_dhatu: entry.group,
+              arth_pali: entry.meaning_pali,
+              arth_thai: entry.meaning_thai,
+              udaharana: entry.example,
+              udaharana_school: entry.example_school || null,
+              page: entry.page || "",
+              source: entry.source || "",
+              updated_at: admin.firestore.FieldValue.serverTimestamp()
+          };
+          
+          if (isNew) {
+               batch.set(docRef, dataToSave);
+               totalCreated++;
+          } else {
+               batch.update(docRef, dataToSave);
+               totalUpdated++;
+          }
+          
+          count++;
+          if (count >= batchSize) {
+              await batch.commit();
+              batch = db.batch();
+              count = 0;
+              console.log(`Committed batch...`);
+          }
       }
   }
   
-  console.log(`Update Complete. Total roots updated: ${updatedCount}`);
-  process.exit(0);
+  if (count > 0) {
+      await batch.commit();
+  }
+  console.log(`Done. Created: ${totalCreated}, Updated: ${totalUpdated}`);
 }
 
 updateRoots().catch(err => {

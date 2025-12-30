@@ -183,6 +183,48 @@
             font-size: 1.2rem;
             margin-top: 50px;
         }
+
+        /* Tabs */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: none;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #95a5a6;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            max-width: 200px;
+        }
+        .tab-btn:hover {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.05);
+        }
+        .tab-btn.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+            background: white;
+        }
+        
+        .entry-container {
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+        .entry-container:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -208,7 +250,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -224,43 +266,27 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // State
+        let currentRootWord = "";
+        let thaiEntries = [];
+        let dpdEntries = [];
+        let activeTab = 'thai'; // 'thai' or 'dpd'
+
         document.addEventListener('DOMContentLoaded', async () => {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
-            const rootKey = params.get('r'); // Backward compatibility/Fallback if needed
 
             if (!id) {
-                if (rootKey) {
-                    // Fallback for old links (though we can't easily fetch by root+index without querying all)
-                    // Better to just show error or redirect
-                    showError("รูปแบบลิงก์ไม่ถูกต้อง (กรุณาเข้าผ่านหน้า roots.html ใหม่)");
-                } else {
-                    showError("ไม่พบรหัสข้อมูล (Missing ID)");
-                }
+                showError("ไม่พบรหัสข้อมูล (Missing ID)");
                 return;
             }
 
             try {
+                // 1. Fetch the requested document first
                 const docRef = doc(db, "dhatu", id);
                 const docSnap = await getDoc(docRef);
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    
-                    // Map Firestore data to UI entry format
-                    const entry = {
-                        group: data.mawat_dhatu,
-                        meaning_thai: data.arth_thai,
-                        meaning_pali: data.arth_pali,
-                        page: data.page,
-                        source: data.source,
-                        example: data.udaharana,
-                        example_school: data.example_school
-                    };
-                    
-                    // renderDetail expects rootKey and entry
-                    renderDetail(data.dhatu_word, entry);
-                } else {
+                if (!docSnap.exists()) {
                     showError(`
                         <div>ไม่พบข้อมูลในฐานข้อมูล (Document not found)</div>
                         <div style="margin-top:20px;">
@@ -269,49 +295,74 @@
                             </a>
                         </div>
                     `);
+                    return;
                 }
+
+                const currentData = docSnap.data();
+                currentRootWord = currentData.dhatu_word;
+                
+                // Determine initial tab based on current document's source
+                if (currentData.source === 'DPD') {
+                    activeTab = 'dpd';
+                } else {
+                    activeTab = 'thai';
+                }
+
+                // 2. Fetch all entries for this root word (to populate tabs)
+                const q = query(collection(db, "dhatu"), where("dhatu_word", "==", currentRootWord));
+                const querySnapshot = await getDocs(q);
+
+                thaiEntries = [];
+                dpdEntries = [];
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const entry = {
+                        id: doc.id,
+                        group: data.mawat_dhatu,
+                        meaning_thai: data.arth_thai,
+                        meaning_pali: data.arth_pali,
+                        page: data.page,
+                        source: data.source,
+                        example: data.udaharana,
+                        example_school: data.example_school
+                    };
+
+                    if (data.source === 'DPD') {
+                        dpdEntries.push(entry);
+                    } else {
+                        thaiEntries.push(entry);
+                    }
+                });
+
+                // Render the page
+                renderPage();
+
             } catch (err) {
                 console.error("Error fetching document:", err);
                 showError("เกิดข้อผิดพลาดในการโหลดข้อมูล: " + err.message);
             }
         });
-    </script>
 
-    <script>
-        // Helper functions
-        function getFullSourceName(code) {
-            if (!code) return "";
-            if (code.includes("ธป")) return "ธาตุปฺปทีปิกา";
-            if (code.includes("พธ")) return "พจนานุกรมธาตุ (พ.ม.ปราโมทย์)";
-            if (code.includes("DPD")) return "Digital Pāḷi Dictionary (DPD)";
-            return code;
-        }
+        // Expose tab switching to global scope
+        window.switchTab = (tabName) => {
+            activeTab = tabName;
+            renderPage();
+        };
 
-        function formatExampleText(text) {
-            if (!text) return "";
-            // Ensure text is a string to avoid "replace is not a function" error
-            let formatted = typeof text === 'string' ? text : String(text);
-
-            // 1. Space after punctuation
-            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
-            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
-
-            // 2. Common Pali endings/sandhi separation heuristics
-            // ...ตีติ (ti + iti) is a very common sentence/definition ending
-            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
-            // ...นฺติ (nti + iti)
-            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
-            
-            // 3. Clean up multiple spaces
-            formatted = formatted.replace(/\s+/g, ' ');
-            
-            return formatted;
-        }
-
-        function renderDetail(rootKey, entry) {
+        function renderPage() {
             const container = document.getElementById('contentArea');
             
-            // Color Logic (Same as roots.html)
+            // Determine which entry to use for Header info (Group, etc.)
+            // Prefer current tab's first entry, fallback to other tab
+            let headerEntry = null;
+            if (activeTab === 'thai' && thaiEntries.length > 0) headerEntry = thaiEntries[0];
+            else if (activeTab === 'dpd' && dpdEntries.length > 0) headerEntry = dpdEntries[0];
+            else headerEntry = thaiEntries[0] || dpdEntries[0];
+
+            if (!headerEntry) return; // Should not happen
+
+            // Color Logic based on Group
             const groupColors = {
                 "ภู (อ)": ["#27ae60", "#2ecc71"],
                 "รุธ (อ-เอ)": ["#c0392b", "#e74c3c"],
@@ -326,48 +377,55 @@
             let colors = ["#7f8c8d", "#95a5a6"]; // Default Grey
             let groupLink = "";
             
-            if (entry.group) {
-                if (entry.group.includes("ภู")) {
-                    colors = groupColors["ภู (อ)"];
-                    groupLink = `<a href="grammar_bhu.html" target="_blank" class="grammar-link"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ภู)</a>`;
-                }
-                else if (entry.group.includes("รุธ")) {
-                    colors = groupColors["รุธ (อ-เอ)"];
-                    groupLink = `<a href="grammar_rudha.html" target="_blank" class="grammar-link" style="color:#c0392b;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด รุธ)</a>`;
-                }
-                else if (entry.group.includes("ทิว")) {
-                    colors = groupColors["ทิว (ย)"];
-                    groupLink = `<a href="grammar_divu.html" target="_blank" class="grammar-link" style="color:#2980b9;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ทิว)</a>`;
-                }
-                else if (entry.group.includes("สุ")) {
-                    colors = groupColors["สุ (ณุ ณา)"];
-                    groupLink = `<a href="grammar_su.html" target="_blank" class="grammar-link" style="color:#8e44ad;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด สุ)</a>`;
-                }
-                else if (entry.group.includes("กี")) {
-                    colors = groupColors["กี (นา)"];
-                    groupLink = `<a href="grammar_ki.html" target="_blank" class="grammar-link" style="color:#d35400;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด กี)</a>`;
-                }
-                else if (entry.group.includes("คห")) {
-                    colors = groupColors["คห (ณฺหา)"];
-                    groupLink = `<a href="grammar_gaha.html" target="_blank" class="grammar-link" style="color:#16a085;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด คห)</a>`;
-                }
-                else if (entry.group.includes("ตน")) {
-                    colors = groupColors["ตน (โอ)"];
-                    groupLink = `<a href="grammar_tana.html" target="_blank" class="grammar-link" style="color:#f39c12;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด ตน)</a>`;
-                }
-                else if (entry.group.includes("จุร")) {
-                    colors = groupColors["จุร (เณ ณย)"];
-                    groupLink = `<a href="grammar_cura.html" target="_blank" class="grammar-link" style="color:#2c3e50;"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์ (หมวด จุร)</a>`;
-                }
+            if (headerEntry.group) {
+                // Simple inclusion check
+                const g = headerEntry.group;
+                if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "#27ae60"); }
+                else if (g.includes("รุธ")) { colors = groupColors["รุธ (อ-เอ)"]; groupLink = getGrammarLink("rudha", "#c0392b"); }
+                else if (g.includes("ทิว")) { colors = groupColors["ทิว (ย)"]; groupLink = getGrammarLink("divu", "#2980b9"); }
+                else if (g.includes("สุ")) { colors = groupColors["สุ (ณุ ณา)"]; groupLink = getGrammarLink("su", "#8e44ad"); }
+                else if (g.includes("กี")) { colors = groupColors["กี (นา)"]; groupLink = getGrammarLink("ki", "#d35400"); }
+                else if (g.includes("คห")) { colors = groupColors["คห (ณฺหา)"]; groupLink = getGrammarLink("gaha", "#16a085"); }
+                else if (g.includes("ตน")) { colors = groupColors["ตน (โอ)"]; groupLink = getGrammarLink("tana", "#f39c12"); }
+                else if (g.includes("จุร")) { colors = groupColors["จุร (เณ ณย)"]; groupLink = getGrammarLink("cura", "#2c3e50"); }
             }
 
-            // Derived Words
-            let dpdHtml = '';
-            if (typeof vocabRootsDPDDerived !== 'undefined' && vocabRootsDPDDerived[rootKey]) {
-                const words = vocabRootsDPDDerived[rootKey];
+            function getGrammarLink(file, color) {
+                return `<a href="grammar_${file}.html" target="_blank" class="grammar-link" style="color:${color};"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
+            }
+
+            // Tabs HTML
+            let tabsHtml = '';
+            if (thaiEntries.length > 0 && dpdEntries.length > 0) {
+                tabsHtml = `
+                    <div class="tab-container">
+                        <button onclick="switchTab('thai')" class="tab-btn ${activeTab === 'thai' ? 'active' : ''}">
+                            <i class="fa-solid fa-book-journal-whills"></i> ข้อมูลธาตุ (ไทย)
+                        </button>
+                        <button onclick="switchTab('dpd')" class="tab-btn ${activeTab === 'dpd' ? 'active' : ''}">
+                            <i class="fa-solid fa-globe"></i> DPD (English)
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Content HTML
+            let contentHtml = '';
+            const targetEntries = activeTab === 'thai' ? thaiEntries : dpdEntries;
+            
+            if (targetEntries.length === 0) {
+                contentHtml = `<div style="padding:40px; text-align:center; color:#95a5a6;">ไม่พบข้อมูลในส่วนนี้</div>`;
+            } else {
+                contentHtml = targetEntries.map(entry => renderEntryItem(entry)).join('');
+            }
+
+            // Derived Words (Footer) - Show on both tabs? Yes.
+            let derivedHtml = '';
+            if (typeof vocabRootsDPDDerived !== 'undefined' && vocabRootsDPDDerived[currentRootWord]) {
+                const words = vocabRootsDPDDerived[currentRootWord];
                 if (words.length > 0) {
-                     dpdHtml = `
-                        <div class="derived-section">
+                     derivedHtml = `
+                        <div class="derived-section" style="margin-top: 30px;">
                             <div class="section-title" style="border:none; color:#d35400;">
                                 <i class="fa-solid fa-tree" style="color:#d35400;"></i> ศัพท์ที่มาจากธาตุนี้ (DPD)
                             </div>
@@ -377,70 +435,100 @@
                 }
             }
 
-            // Determine Source Name
-            const sourceName = getFullSourceName(entry.source);
-            
-            // Construct HTML
+            // Final Assembly
             container.innerHTML = `
                 <div class="detail-card">
                     <div class="card-header" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
-                        <h1 class="root-title-large" style="position:relative; z-index:1;">${rootKey}</h1>
-                        ${entry.group ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${entry.group}</div>` : ''}
+                        <h1 class="root-title-large" style="position:relative; z-index:1;">${currentRootWord}</h1>
+                        ${headerEntry.group ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${headerEntry.group}</div>` : ''}
                         ${groupLink ? `<div style="margin-top:15px; position:relative; z-index:1;">${groupLink}</div>` : ''}
                     </div>
                     
+                    ${tabsHtml}
+
                     <div class="card-body">
+                        ${contentHtml}
+                        ${derivedHtml}
                         
-                        <div class="meaning-box">
-                            ${entry.meaning_pali ? `<span class="meaning-pali">${entry.meaning_pali}</span>` : ''}
-                            ${entry.meaning_thai ? `<span class="meaning-thai">${entry.meaning_thai}</span>` : (entry.meaning || '')}
-                        </div>
-
-                        <div class="info-grid">
-                            ${sourceName ? `
-                            <div class="info-item">
-                                <span class="info-label"><i class="fa-solid fa-book-open"></i> ที่มา</span>
-                                <span class="info-value">${sourceName}</span>
-                            </div>` : ''}
-                            
-                            ${entry.page ? `
-                            <div class="info-item">
-                                <span class="info-label"><i class="fa-regular fa-file-lines"></i> อ้างอิงหน้า/คาถา</span>
-                                <span class="info-value">${entry.page}</span>
-                            </div>` : ''}
-                        </div>
-
-                        ${entry.example_school ? `
-                        <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12;">
-                            <i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)
-                        </div>
-                        <div class="example-box" style="background-color: #fff8e1; border-left: 4px solid #f39c12;">
-                            ${formatExampleText(entry.example_school)}
-                        </div>
-                        ` : ''}
-
-                        ${entry.example ? `
-                        <div class="section-title">
-                            <i class="fa-solid fa-quote-left"></i> อุทาหรณ์ (ตัวอย่างการใช้)
-                        </div>
-                        <div class="example-box">
-                            ${formatExampleText(entry.example)}
-                        </div>
-                        ` : ''}
-
-                        ${dpdHtml}
-
                         <div style="text-align: right; margin-top: 20px; margin-bottom: 10px;">
                             <a href="grammar_aneka.html" target="_blank" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
                                 <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
                             </a>
                         </div>
-
                     </div>
                 </div>
             `;
         }
 
+        function renderEntryItem(entry) {
+            const sourceName = getFullSourceName(entry.source);
+            
+            return `
+                <div class="entry-container">
+                    <div class="meaning-box">
+                        ${entry.meaning_pali ? `<span class="meaning-pali">${entry.meaning_pali}</span>` : ''}
+                        ${entry.meaning_thai ? `<span class="meaning-thai">${entry.meaning_thai}</span>` : (entry.meaning || '')}
+                    </div>
+
+                    <div class="info-grid">
+                        ${sourceName ? `
+                        <div class="info-item">
+                            <span class="info-label"><i class="fa-solid fa-book-open"></i> ที่มา</span>
+                            <span class="info-value">${sourceName}</span>
+                        </div>` : ''}
+                        
+                        ${entry.page ? `
+                        <div class="info-item">
+                            <span class="info-label"><i class="fa-regular fa-file-lines"></i> อ้างอิงหน้า/คาถา</span>
+                            <span class="info-value">${entry.page}</span>
+                        </div>` : ''}
+                    </div>
+
+                    ${entry.example_school ? `
+                    <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12;">
+                        <i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)
+                    </div>
+                    <div class="example-box" style="background-color: #fff8e1; border-left: 4px solid #f39c12;">
+                        ${formatExampleText(entry.example_school)}
+                    </div>
+                    ` : ''}
+
+                    ${entry.example ? `
+                    <div class="section-title">
+                        <i class="fa-solid fa-quote-left"></i> อุทาหรณ์ (ตัวอย่างการใช้)
+                    </div>
+                    <div class="example-box">
+                        ${formatExampleText(entry.example)}
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+    </script>
+
+    <script>
+        // Helper functions (Global)
+        function getFullSourceName(code) {
+            if (!code) return "";
+            if (code.includes("ธป")) return "ธาตุปฺปทีปิกา";
+            if (code.includes("พธ")) return "พจนานุกรมธาตุ (พ.ม.ปราโมทย์)";
+            if (code.includes("DPD")) return "Digital Pāḷi Dictionary (DPD)";
+            return code;
+        }
+
+        function formatExampleText(text) {
+            if (!text) return "";
+            let formatted = typeof text === 'string' ? text : String(text);
+
+            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
+            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
+            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
+            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
+            formatted = formatted.replace(/\s+/g, ' ');
+            
+            return formatted;
+        }
+        
         function showError(msg) {
             document.getElementById('contentArea').innerHTML = `<div class="error-msg"><i class="fa-solid fa-triangle-exclamation"></i> ${msg}</div>`;
         }
