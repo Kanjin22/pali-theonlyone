@@ -515,11 +515,52 @@
             <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
+            <a class="nav-link" onclick="switchTab('roots')">จัดการธาตุ</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
     </nav>
 
     <div class="container">
+
+        <!-- Tab: Roots -->
+        <div id="tab-roots" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-leaf"></i> จัดการธาตุ (Roots)</span>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
+                            style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
+                        <button class="btn btn-primary" onclick="openRootModal()">
+                            <i class="fa-solid fa-plus"></i> เพิ่มธาตุ
+                        </button>
+                        <button class="btn btn-secondary" onclick="loadRoots()">
+                            <i class="fa-solid fa-rotate"></i> รีเฟรช
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="rootTable">
+                        <thead>
+                            <tr>
+                                <th>ธาตุ</th>
+                                <th>หมวด</th>
+                                <th>คำแปล</th>
+                                <th>ที่มา</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rootList">
+                            <tr>
+                                <td colspan="5" class="loading">กดรีเฟรชเพื่อโหลดข้อมูล...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                     <button id="loadMoreRootsBtn" class="btn btn-secondary hidden" onclick="loadMoreRoots()">โหลดเพิ่มเติม...</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Tab: Enrollments -->
         <div id="tab-enrollments">
@@ -1066,6 +1107,61 @@
                 </form>
             </div>
         </div>
+
+        <!-- Root Modal -->
+        <div id="rootModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="rootModalTitle">เพิ่ม/แก้ไข ธาตุ</h2>
+                    <span class="close" onclick="closeRootModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="rootForm" onsubmit="saveRoot(event)">
+                        <input type="hidden" id="rootId">
+                        
+                        <div class="form-group">
+                            <label>ธาตุ (Root Word)</label>
+                            <input type="text" id="rootWord" required placeholder="เช่น ภุ">
+                        </div>
+
+                        <div class="form-group">
+                            <label>หมวดธาตุ (Group)</label>
+                            <input type="text" id="rootGroup" placeholder="เช่น ภู (อ) หรือ 1 (a)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>ความหมาย (Thai Meaning)</label>
+                            <input type="text" id="rootMeaning" required placeholder="เช่น ความมี, ความเป็น">
+                        </div>
+
+                        <div class="form-group">
+                            <label>ที่มา (Source)</label>
+                            <select id="rootSource">
+                                <option value="Thai">Thai (ธาตุไทย)</option>
+                                <option value="DPD">DPD (Pali Roots)</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>อุทาหรณ์จากแบบเรียน (School Examples)</label>
+                            <textarea id="rootExampleSchool" rows="3" placeholder="เช่น ภวติ ย่อมมี ย่อมเป็น"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>คำอธิบายเพิ่มเติม/อุทาหรณ์ (Examples/Notes)</label>
+                            <textarea id="rootExamples" rows="3" placeholder=""></textarea>
+                        </div>
+
+                        <div style="text-align: right; margin-top: 20px;">
+                            <button type="button" class="btn-danger" onclick="closeRootModal()">ยกเลิก</button>
+                            <button type="submit" class="btn-success">บันทึก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1125,6 +1221,8 @@
                 loadClassConfig();
                 loadClassrooms();
                 fetchTeachers(); // Fetch teachers for classroom config
+                // loadRoots(); // Lazy load or manual refresh preferred for large datasets, but can uncomment if needed.
+                
                 // Check if system_config.js is loaded and migrate if needed
                 if (typeof systemConfig !== 'undefined' && systemConfig.classrooms) {
                     checkAndMigrateClassrooms();
@@ -1167,8 +1265,188 @@
             document.getElementById('tab-members').classList.add('hidden');
             document.getElementById('tab-classes').classList.add('hidden');
             document.getElementById('tab-pins').classList.add('hidden');
+            document.getElementById('tab-roots').classList.add('hidden');
 
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            
+            // Auto load roots if switching to roots tab and empty
+            if (tab === 'roots') {
+                const rootList = document.getElementById('rootList');
+                if (rootList.children.length === 1 && rootList.children[0].classList.contains('loading')) {
+                    loadRoots();
+                }
+            }
+        }
+
+        // --- Roots Logic ---
+        let lastRootSnapshot = null;
+        let isRootsLoading = false;
+
+        async function loadRoots(isLoadMore = false) {
+             if (isRootsLoading) return;
+             isRootsLoading = true;
+             
+             const tbody = document.getElementById('rootList');
+             const loadMoreBtn = document.getElementById('loadMoreRootsBtn');
+             const searchVal = document.getElementById('rootSearch').value.trim();
+
+             if (!isLoadMore) {
+                 tbody.innerHTML = '<tr><td colspan="5" class="loading">กำลังโหลด...</td></tr>';
+                 lastRootSnapshot = null;
+                 loadMoreBtn.classList.add('hidden');
+             } else {
+                 loadMoreBtn.textContent = 'กำลังโหลด...';
+             }
+
+             try {
+                 let query = db.collection('dhatu');
+                 
+                 if (searchVal) {
+                     // Basic prefix search on dhatu_word
+                     query = query.where('dhatu_word', '>=', searchVal).where('dhatu_word', '<=', searchVal + '\uf8ff');
+                 } else {
+                     query = query.orderBy('dhatu_word', 'asc'); // Changed to order by word for now
+                 }
+
+                 query = query.limit(20);
+
+                 if (isLoadMore && lastRootSnapshot) {
+                     query = query.startAfter(lastRootSnapshot);
+                 }
+
+                 const snapshot = await query.get();
+                 
+                 if (!isLoadMore) {
+                     tbody.innerHTML = '';
+                     if (snapshot.empty) {
+                         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบข้อมูล</td></tr>';
+                         isRootsLoading = false;
+                         return;
+                     }
+                 }
+
+                 if (!snapshot.empty) {
+                     lastRootSnapshot = snapshot.docs[snapshot.docs.length - 1];
+                     loadMoreBtn.classList.remove('hidden');
+                     loadMoreBtn.textContent = 'โหลดเพิ่มเติม...';
+                 } else {
+                     loadMoreBtn.classList.add('hidden');
+                 }
+
+                 snapshot.forEach(doc => {
+                     const data = doc.data();
+                     const tr = document.createElement('tr');
+                     tr.innerHTML = `
+                         <td><b>${data.dhatu_word || '-'}</b></td>
+                         <td>${data.mawat_dhatu || '-'}</td>
+                         <td>${data.arth_thai || '-'}</td>
+                         <td><span class="badge" style="background:${data.source === 'DPD' ? '#e1f5fe' : '#e8f5e9'}; color:${data.source === 'DPD' ? '#0288d1' : '#2e7d32'};">${data.source || 'Thai'}</span></td>
+                         <td>
+                             <button class="btn btn-warning btn-small" onclick="openRootModal('${doc.id}')"><i class="fa-solid fa-pen"></i></button>
+                             <button class="btn btn-danger btn-small" onclick="deleteRoot('${doc.id}', '${data.dhatu_word}')"><i class="fa-solid fa-trash"></i></button>
+                         </td>
+                     `;
+                     tbody.appendChild(tr);
+                 });
+
+             } catch (e) {
+                 console.error(e);
+                 if (!isLoadMore) tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">Error: ${e.message}</td></tr>`;
+             } finally {
+                 isRootsLoading = false;
+             }
+        }
+
+        async function loadMoreRoots() {
+            loadRoots(true);
+        }
+
+        // Search trigger
+        document.getElementById('rootSearch').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') loadRoots();
+        });
+
+        function openRootModal(rootId = null) {
+            const modal = document.getElementById('rootModal');
+            const form = document.getElementById('rootForm');
+            const title = document.getElementById('rootModalTitle');
+            
+            form.reset();
+            document.getElementById('rootId').value = '';
+
+            if (rootId) {
+                title.textContent = 'แก้ไขธาตุ';
+                // Fetch data
+                db.collection('dhatu').doc(rootId).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById('rootId').value = doc.id;
+                        document.getElementById('rootWord').value = data.dhatu_word || '';
+                        document.getElementById('rootGroup').value = data.mawat_dhatu || '';
+                        document.getElementById('rootMeaning').value = data.arth_thai || '';
+                        document.getElementById('rootSource').value = data.source || 'Thai';
+                        document.getElementById('rootExampleSchool').value = data.example_school || '';
+                        document.getElementById('rootExamples').value = data.udaharana || '';
+                        modal.style.display = 'block';
+                    }
+                });
+            } else {
+                title.textContent = 'เพิ่มธาตุใหม่';
+                modal.style.display = 'block';
+            }
+        }
+
+        function closeRootModal() {
+            document.getElementById('rootModal').style.display = 'none';
+        }
+
+        async function saveRoot(event) {
+            event.preventDefault();
+            const id = document.getElementById('rootId').value;
+            const data = {
+                dhatu_word: document.getElementById('rootWord').value,
+                mawat_dhatu: document.getElementById('rootGroup').value,
+                arth_thai: document.getElementById('rootMeaning').value,
+                source: document.getElementById('rootSource').value,
+                example_school: document.getElementById('rootExampleSchool').value,
+                udaharana: document.getElementById('rootExamples').value,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                if (id) {
+                    await db.collection('dhatu').doc(id).update(data);
+                    alert('อัปเดตเรียบร้อย');
+                } else {
+                    // Simple fetch max for ordering if needed, or just add.
+                    // Assuming anukrom_dhatu is not strictly required for now or handled elsewhere.
+                    // If we want to maintain order, we might need to query max.
+                    const maxSnap = await db.collection('dhatu').orderBy('anukrom_dhatu', 'desc').limit(1).get();
+                    let nextId = 1;
+                    if (!maxSnap.empty) {
+                        nextId = (maxSnap.docs[0].data().anukrom_dhatu || 0) + 1;
+                    }
+                    data.anukrom_dhatu = nextId;
+
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('dhatu').add(data);
+                    alert('บันทึกเรียบร้อย');
+                }
+                closeRootModal();
+                loadRoots();
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+        
+        async function deleteRoot(id, word) {
+            if (!confirm(`ต้องการลบธาตุ "${word}" ใช่หรือไม่?`)) return;
+            try {
+                await db.collection('dhatu').doc(id).delete();
+                loadRoots();
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
         }
 
         // --- Enrollments Logic ---
