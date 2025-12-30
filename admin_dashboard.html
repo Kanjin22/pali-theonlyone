@@ -1273,6 +1273,9 @@
             console.error("Error initializing Dhatu App:", e);
         }
 
+        // --- Class Config Logic ---
+        let currentClasses = [];
+
         // Level Names Mapping
         const LEVEL_NAMES = {
             'pt12': 'ประโยค ๑-๒',
@@ -1383,17 +1386,24 @@
         // Dhatu Auth Listener
         if (dhatuAuth) {
             dhatuAuth.onAuthStateChanged(user => {
+                const authSection = document.getElementById('dhatuAuthSection');
+                const userSection = document.getElementById('dhatuUserSection');
+                
                 if (user) {
-                    document.getElementById('dhatuAuthSection').style.display = 'none';
-                    document.getElementById('dhatuUserSection').style.display = 'flex';
-                    document.getElementById('dhatuUserEmail').textContent = user.email;
+                    if (authSection) authSection.style.display = 'none';
+                    if (userSection) {
+                        userSection.style.display = 'flex';
+                        const emailEl = document.getElementById('dhatuUserEmail');
+                        if (emailEl) emailEl.textContent = user.email;
+                    }
                     // If roots tab active, reload
-                    if (!document.getElementById('tab-roots').classList.contains('hidden')) {
+                    const tabRoots = document.getElementById('tab-roots');
+                    if (tabRoots && !tabRoots.classList.contains('hidden')) {
                         loadRoots();
                     }
                 } else {
-                    document.getElementById('dhatuAuthSection').style.display = 'flex';
-                    document.getElementById('dhatuUserSection').style.display = 'none';
+                    if (authSection) authSection.style.display = 'flex';
+                    if (userSection) userSection.style.display = 'none';
                 }
             });
         }
@@ -1682,9 +1692,12 @@
         }
 
         // Search trigger
-        document.getElementById('rootSearch').addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') loadRoots();
-        });
+        const rootSearchInput = document.getElementById('rootSearch');
+        if (rootSearchInput) {
+            rootSearchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') loadRoots();
+            });
+        }
 
         function openRootModal(rootId = null) {
             if (!dhatuDb) {
@@ -2694,7 +2707,6 @@
         }
 
         // --- Class Config Logic ---
-        let currentClasses = [];
         const ALL_LEVELS = [
             { id: 'pt12', label: 'ประโยค ๑-๒' },
             { id: 'pt3', label: 'ป.ธ. ๓' },
