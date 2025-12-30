@@ -226,6 +226,91 @@
             padding-bottom: 0;
             margin-bottom: 0;
         }
+
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%; 
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header h2 { margin-top: 0; color: #2c3e50; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #34495e; }
+        .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 1rem; resize: vertical; box-sizing: border-box; }
+
+        .btn-save {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-save:hover { background-color: #2ecc71; }
+        
+        .btn-cancel {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: background 0.2s;
+        }
+        .btn-cancel:hover { background-color: #ff6b6b; }
+
+        .admin-edit-btn {
+            background: none;
+            border: none;
+            color: #f39c12;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+        .admin-edit-btn:hover { transform: scale(1.1); color: #d35400; }
     </style>
 </head>
 <body>
@@ -244,6 +329,30 @@
         </div>
     </div>
 
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-graduation-cap"></i> แก้ไขอุทาหรณ์จากแบบเรียน</h2>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editEntryId">
+                <div class="form-group">
+                    <label>อุทาหรณ์ (School Examples)</label>
+                    <textarea id="editSchoolExample" rows="8" placeholder="ใส่ข้อมูลที่นี่..."></textarea>
+                    <small style="color:#7f8c8d; display:block; margin-top:5px;">
+                        สามารถใช้เครื่องหมาย ; เพื่อขึ้นบรรทัดใหม่
+                    </small>
+                </div>
+                <div style="text-align: right;">
+                    <button class="btn-cancel" onclick="closeEditModal()">ยกเลิก</button>
+                    <button class="btn-save" onclick="saveSchoolExample()"><i class="fa-solid fa-save"></i> บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Load Data -->
     <!-- Removed vocab-roots.js (migrated to Firebase) -->
     <script src="data/vocab-roots-dpd-derived.js"></script>
@@ -251,7 +360,8 @@
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -266,6 +376,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
         // State
         let currentRootWord = "";
@@ -273,6 +384,27 @@
         let thaiEntries = [];
         let dpdEntries = [];
         let activeTab = 'thai'; // 'thai' or 'dpd'
+        let isAdmin = false;
+
+        // Fallback Admin List
+        const FALLBACK_ADMIN_EMAILS = [
+            'admin@example.com',
+            'pali.theonlyone@gmail.com',
+            'admin1234@hotmail.com'
+        ];
+
+        // Check Auth
+        onAuthStateChanged(auth, (user) => {
+            if (user && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                isAdmin = true;
+                console.log("Admin Access Granted");
+                if (thaiEntries.length > 0 || dpdEntries.length > 0) {
+                    renderPage();
+                }
+            } else {
+                isAdmin = false;
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', async () => {
             const params = new URLSearchParams(window.location.search);
@@ -353,6 +485,62 @@
             activeTab = tabName;
             renderPage();
         };
+
+        // Edit Modal Logic
+        window.openEditModal = (id) => {
+            const entry = [...thaiEntries, ...dpdEntries].find(e => e.id === id);
+            if (!entry) return;
+            
+            document.getElementById('editEntryId').value = id;
+            document.getElementById('editSchoolExample').value = entry.example_school || "";
+            document.getElementById('editModal').style.display = "block";
+        };
+
+        window.closeEditModal = () => {
+             document.getElementById('editModal').style.display = "none";
+        };
+
+        window.saveSchoolExample = async () => {
+            const id = document.getElementById('editEntryId').value;
+            const text = document.getElementById('editSchoolExample').value;
+            
+            if (!id) return;
+
+            // Show loading or disable button here if needed
+            const btn = document.querySelector('.btn-save');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> บันทึก...';
+            btn.disabled = true;
+
+            try {
+                const docRef = doc(db, "dhatu", id);
+                await updateDoc(docRef, {
+                    example_school: text
+                });
+                
+                // Update local data
+                const entry = [...thaiEntries, ...dpdEntries].find(e => e.id === id);
+                if (entry) {
+                    entry.example_school = text;
+                }
+                
+                closeEditModal();
+                renderPage();
+            } catch (err) {
+                console.error("Error updating document:", err);
+                alert("เกิดข้อผิดพลาด: " + err.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target == modal) {
+                closeEditModal();
+            }
+        }
 
         function renderPage() {
             const container = document.getElementById('contentArea');
@@ -529,12 +717,18 @@
 
                     ${entry.example_school ? `
                     <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12;">
-                        <i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)
+                        <span><i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</span>
+                        ${isAdmin ? `<button class="admin-edit-btn" onclick="openEditModal('${entry.id}')" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
                     </div>
                     <div class="example-box" style="background-color: #fff8e1; border-left: 4px solid #f39c12;">
                         ${formatExampleText(entry.example_school)}
                     </div>
-                    ` : ''}
+                    ` : (isAdmin ? `
+                    <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12; border-bottom-style: dashed;">
+                        <span><i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</span>
+                        <button class="admin-edit-btn" onclick="openEditModal('${entry.id}')" title="เพิ่มข้อมูล"><i class="fa-solid fa-plus-circle"></i> เพิ่ม</button>
+                    </div>
+                    ` : '')}
 
                     ${entry.example ? `
                     <div class="section-title">

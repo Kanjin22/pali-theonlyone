@@ -125,7 +125,8 @@ def main():
         
     # 5. Run scripts
     scripts_to_run = [
-        [sys.executable, "extract_dpd.py"]
+        [sys.executable, "extract_dpd.py"],
+        [sys.executable, "extract_dpd_roots.py"]
     ]
     
     print("\n=== Running Data Generation Scripts ===")

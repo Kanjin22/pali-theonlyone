@@ -529,35 +529,95 @@
         <div id="tab-dpdupdate" class="hidden">
             <div class="card">
                 <div class="card-header">
-                    <span><i class="fa-solid fa-database"></i> อัปเดตพจนานุกรม DPD</span>
+                    <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
                     <div style="display:flex; gap:10px;">
-                        <button id="dpdTabUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPDFromTab()">อัปเดต DPD</button>
-                        <button id="dpdTabUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReportFromTab()">ตรวจสอบและอัปเดต DPD</button>
+                        <button class="btn btn-secondary" onclick="refreshDPDStats()">
+                            <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div style="background:#fff8e1; border:1px solid #ffe0b2; border-radius:10px; padding:14px; margin-bottom:14px; color:#5d4037;">
-                        <div style="font-weight:600; margin-bottom:8px;"><i class="fa-solid fa-circle-info" style="color:#e67e22;"></i> ขั้นตอนการใช้งาน</div>
-                        <ul style="margin:0 0 10px 18px; padding:0; line-height:1.7;">
-                            <li>เปิด PowerShell แล้วไปที่โฟลเดอร์โปรเจกต์: cd /d D:\pali-theonlyone</li>
-                            <li>(ครั้งแรก) ติดตั้งแพ็กเกจ: npm install</li>
-                            <li>เปิดเซิร์ฟเวอร์ในเครื่อง: npm run dpd:server</li>
-                            <li>ล็อกอิน “Dhatu Admin” ที่แท็บ จัดการธาตุ (Email/Password)</li>
-                            <li>กลับมาที่แท็บ อัปเดต DPD แล้วกดปุ่มด้านบน</li>
-                        </ul>
-                        <div style="font-weight:600; margin-top:6px;">รายละเอียด:</div>
-                        <ul style="margin:0 0 0 18px; padding:0; line-height:1.7;">
-                            <li>อัปเดต DPD: ดึงฐาน DPD ล่าสุด → สร้าง vocab-dpd.js (สำหรับพจนานุกรมศัพท์ทั่วไป)</li>
-                            <li>ตรวจสอบและอัปเดต DPD: ดำเนินการเหมือนด้านบน พร้อมสรุปรายงานความเปลี่ยนแปลง</li>
-                        </ul>
+                    <!-- 1. Status Grid -->
+                    <div class="stat-grid" style="margin-bottom:20px;">
+                        <!-- Latest Version (GitHub) -->
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
+                                <i class="fa-brands fa-github"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>เวอร์ชันล่าสุด (GitHub)</div>
+                                <div id="dpd-latest-version">Checking...</div>
+                                <div id="dpd-latest-date" style="font-size:0.8rem; color:#7f8c8d;">-</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Local Update Status -->
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>อัปเดตล่าสุด (ในเครื่อง)</div>
+                                <div id="dpd-local-date">Checking...</div>
+                            </div>
+                        </div>
+
+                        <!-- Vocab Count -->
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>จำนวนศัพท์ (ทั่วไป)</div>
+                                <div id="dpd-vocab-count">Loading...</div>
+                            </div>
+                        </div>
+
+                        <!-- Roots Count -->
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fce4ec; color:#e91e63;">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>จำนวนธาตุ (Roots)</div>
+                                <div id="dpd-roots-count">Loading...</div>
+                            </div>
+                        </div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                        <div>สถานะเซิร์ฟเวอร์:</div>
-                        <span id="serverStatus" style="font-weight:600; color:#888;">กำลังตรวจสอบ...</span>
-                        <button class="btn btn-secondary" onclick="pingServer()">ตรวจสอบ</button>
-                        <button class="btn btn-primary" onclick="copyRunCommand()">คัดลอกคำสั่งเริ่มเซิร์ฟเวอร์</button>
+
+                    <!-- 2. Actions & Server Status -->
+                    <div style="background:#f8f9fa; padding:20px; border-radius:10px; border:1px solid #eee;">
+                        <h3 style="margin-top:0; font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:10px;">
+                            <i class="fa-solid fa-gears"></i> การจัดการ (Actions)
+                        </h3>
+                        
+                        <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:15px;">
+                            <div>สถานะเซิร์ฟเวอร์อัปเดต:</div>
+                            <span id="serverStatus" style="font-weight:600; color:#888;">กำลังตรวจสอบ...</span>
+                            <button class="btn btn-secondary btn-small" onclick="pingServer()">ตรวจสอบ</button>
+                            <button class="btn btn-primary btn-small" onclick="copyRunCommand()">คำสั่งเริ่มเซิร์ฟเวอร์</button>
+                        </div>
+
+                        <div style="display:flex; gap:10px;">
+                            <button id="dpdTabUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPDFromTab()">
+                                <i class="fa-solid fa-cloud-arrow-down"></i> อัปเดตข้อมูลเดี๋ยวนี้ (Update Now)
+                            </button>
+                            <button id="dpdTabUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReportFromTab()">
+                                <i class="fa-solid fa-clipboard-check"></i> ตรวจสอบความเปลี่ยนแปลง (Check Diff)
+                            </button>
+                        </div>
+                        
+                        <div style="margin-top:10px; font-size:0.9rem; color:#666;">
+                            * การอัปเดตจะทำการดาวน์โหลดฐานข้อมูล DPD ล่าสุดและสร้างไฟล์ข้อมูลใหม่เก็บไว้ในเครื่องเท่านั้น
+                        </div>
                     </div>
-                    <pre id="dpdReportContentTab" style="max-height:420px; overflow:auto; background:#f8f9fa; padding:12px; border-radius:8px;"></pre>
+
+                    <!-- 3. Logs/Report -->
+                    <div style="margin-top:20px;">
+                        <h3 style="font-size:1.1rem;">รายงานผล (Logs)</h3>
+                        <pre id="dpdReportContentTab" style="max-height:400px; overflow:auto; background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; font-family:monospace; white-space: pre-wrap;">ยังไม่มีรายงาน</pre>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -170,7 +170,7 @@ app.post('/api/dpd-update-report', async (req, res) => {
   }
   isRunning = true;
   const oldDPD = readJsonFromJs('data/vocab-dpd.js', 'const vocabDPD = ');
-  const oldRoots = readJsonFromJs('data/vocab-roots.js', 'const vocabRoots = ');
+  const oldRoots = readJsonFromJs('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
   const args = ['scripts/update_dpd_data.py'];
   const skip = req.body && req.body.skip === true;
   if (skip) args.push('--skip-download');
@@ -181,12 +181,10 @@ app.post('/api/dpd-update-report', async (req, res) => {
   py.stderr.on('data', d => (err += d.toString()));
   py.on('close', code => {
     const newDPD = readJsonFromJs('data/vocab-dpd.js', 'const vocabDPD = ');
-    const newRoots = readJsonFromJs('data/vocab-roots.js', 'const vocabRoots = ');
+    const newRoots = readJsonFromJs('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
     const dpdDiff = computeDPDDiff(oldDPD || {}, newDPD || {});
     const rootsDiff = computeRootsDiff(oldRoots || {}, newRoots || {});
-    const m = out.match(/Done\. Created:\s*(\\d+), Updated:\s*(\\d+)/);
-    const created = m ? parseInt(m[1], 10) : null;
-    const updated = m ? parseInt(m[2], 10) : null;
+    
     isRunning = false;
     if (code !== 0) {
       res.status(500).json({
@@ -194,7 +192,6 @@ app.post('/api/dpd-update-report', async (req, res) => {
         error: (err && err.toString()) || 'script_failed',
         dpd: dpdDiff,
         roots: rootsDiff,
-        firestore: { created, updated },
         logTail: (out || '').slice(-1000)
       });
     } else {
@@ -202,10 +199,31 @@ app.post('/api/dpd-update-report', async (req, res) => {
         ok: true,
         dpd: dpdDiff,
         roots: rootsDiff,
-        firestore: { created, updated },
         logTail: (out || '').slice(-1000)
       });
     }
+  });
+});
+
+app.get('/api/dpd-stats', (_req, res) => {
+  const getStats = (p, prefix) => {
+    if (!fs.existsSync(p)) return null;
+    const s = fs.statSync(p);
+    let count = 0;
+    try {
+      // Basic count by reading file and parsing keys
+      const txt = fs.readFileSync(p, 'utf8').trim();
+      let jsonStr = txt;
+      if (prefix) jsonStr = jsonStr.replace(prefix, '').trim();
+      if (jsonStr.endsWith(';')) jsonStr = jsonStr.slice(0, -1);
+      const obj = JSON.parse(jsonStr);
+      count = Object.keys(obj).length;
+    } catch {}
+    return { mtime: s.mtime, size: s.size, count };
+  };
+  res.json({
+    vocab: getStats('data/vocab-dpd.js', 'const vocabDPD = '),
+    roots: getStats('data/vocab-roots-dpd.js', 'const vocabRootsDPD = ')
   });
 });
 
