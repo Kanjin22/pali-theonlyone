@@ -169,6 +169,7 @@ async function syncData() {
             arth_pali: entry.meaning_pali || "",
             mawat_dhatu: thaiGroup,
             udaharana: entry.example || "",
+            paccaya: entry.root_sign_thai || "", // Add Paccaya (Root Sign)
             source: "DPD",
             page: entry.page || "",
             updated_at: admin.firestore.FieldValue.serverTimestamp()
@@ -177,70 +178,46 @@ async function syncData() {
         const existingDocs = existingMap.get(cleanRoot);
         
         let docRef;
+        let match = null;
+
         if (existingDocs && existingDocs.length > 0) {
-            // Found existing. Use the first one (or try to match group if possible).
-            // Since we are fixing groups, we might not match by group.
-            // But if there are multiple entries for the same root (homonyms), we need to be careful.
-            // DPD data sample: "√acc 1", "√acc 2". These are distinct keys in the JS object.
-            // But 'root' field in value might be "√acc".
+            // Uniqueness Check Logic: Root + Suffix (Paccaya)
             
-            // Let's look at JS data again.
-            // "√acc 1": [ { root: "√acc 1", ... } ]
-            // So the root field DOES contain the number if it's distinct?
-            // Let's check the previous Read output.
-            // "√acc 1": [ { "root": "√acc 1", ... } ]
-            // So `cleanRoot` will be "acc 1".
-            
-            // If Firestore has "acc" and "acc", we need to know which is which.
-            // If we use "acc 1" as dhatu_word, it resolves ambiguity.
-            
-            // Logic: Just look for a doc with this dhatu_word.
-            // If multiple, maybe we update the one that "matches best"? 
-            // For now, if there is a match, we update the first one. 
-            // If DPD has duplicates in the source file, we might overwrite.
-            
-            // To prevent creating duplicates if we already have them:
-            // We pop from the list so we don't reuse it for another entry?
-            const matchIndex = existingDocs.findIndex(d => d.dhatu_word === cleanRoot);
-            
-            if (matchIndex !== -1) {
-                const match = existingDocs[matchIndex];
-                docRef = db.collection('dhatu').doc(match.id);
-                // Remove from map so we don't update it again?
-                // actually, DPD might have multiple entries for same root word?
-                // The JS structure is Object with keys. Keys are unique.
-                // Value is Array. 
-                // "√akkh": [ { ... } ]
-                // If array has 1 item, fine.
-                
-                // If array has multiple items, they share the root key.
-                // e.g. "√kri": [ { group: 1 }, { group: 8 } ]
-                // Then `cleanRoot` is same "kri".
-                // We need to match existing docs that have `mawat_dhatu` matching the NEW group?
-                // Or if we are changing groups, we can't match by group.
-                
-                // This is tricky. 
-                // Simple approach: Delete all DPD entries and re-upload? 
-                // Pros: Clean. Cons: Writes cost, might break links if IDs change (bookmarks?).
-                
-                // Better approach:
-                // Try to find a doc with same `dhatu_word` AND (`mawat_dhatu` == thaiGroup OR `mawat_dhatu` == oldGroup).
-                
-                // Since we are just one-shot fixing, maybe we just assume if `dhatu_word` matches, it's the candidate.
-                // If there are multiple `dhatu_word` matches (e.g. 2 docs for 'kri'), and we have 2 entries to process.
-                // We should map 1-to-1.
-                
-                existingDocs.splice(matchIndex, 1); // Remove used doc
-            } else {
-                // No exact match for this root word. Create new.
-                docRef = db.collection('dhatu').doc();
+            // 1. Try exact match by Paccaya
+            if (entry.root_sign_thai) {
+                match = existingDocs.find(d => d.paccaya === entry.root_sign_thai);
             }
-        } else {
-            // New
-            docRef = db.collection('dhatu').doc();
+
+            // 2. If not found, try match by Group (mawat_dhatu) - Migration fallback
+            if (!match) {
+                match = existingDocs.find(d => d.mawat_dhatu === thaiGroup);
+            }
+
+            // 3. If still not found and only 1 candidate exists (and it has no paccaya), assume match
+            if (!match && existingDocs.length === 1 && !existingDocs[0].paccaya) {
+                match = existingDocs[0];
+            }
         }
 
-        batch.set(docRef, docData, { merge: true });
+        if (match) {
+            // Found existing. Update it.
+            docRef = db.collection('dhatu').doc(match.id);
+            batch.update(docRef, docData);
+            
+            // Remove used doc from existingDocs so we don't match it again
+            const idx = existingDocs.indexOf(match);
+            if (idx > -1) existingDocs.splice(idx, 1);
+        } else {
+            // Create New
+            docRef = db.collection('dhatu').doc();
+            // Add extra creation fields
+            docData.created_at = admin.firestore.FieldValue.serverTimestamp();
+            // Use global counter + current batch offset for simplistic ID, or just rely on totalUpdated
+            docData.anukrom_dhatu = totalUpdated + 1; 
+            
+            batch.set(docRef, docData);
+        }
+
         count++;
         totalUpdated++;
 

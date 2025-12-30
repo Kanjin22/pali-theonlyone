@@ -7,8 +7,7 @@
   "scripts": {
     "dpd:update": "python scripts/update_dpd_data.py",
     "dpd:update:skip": "python scripts/update_dpd_data.py --skip-download",
-    "dpd:sync": "node scripts/update_roots_firestore.js",
-    "dpd:server": "node server.js"
-    ,"admin:grant": "node scripts/set_admin_claim.js"
+    "dpd:sync": "node scripts/sync_dpd_to_firestore.js",
+    "dpd:server": "node server.js","admin:grant": "node scripts/set_admin_claim.js"
   }
 }

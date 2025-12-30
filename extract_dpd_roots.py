@@ -222,6 +222,10 @@ for row in rows:
     
     # Thai Meaning (English for now)
     meaning_thai = row['root_meaning'] if 'root_meaning' in columns else ""
+
+    # Root Sign (Paccaya)
+    root_sign = row['root_sign'] if 'root_sign' in columns else ""
+    root_sign_thai = roman_to_thai(root_sign)
     
     # 4. Examples (Udaharana)
     example_str = row['root_example'] if 'root_example' in columns else ""
@@ -245,6 +249,7 @@ for row in rows:
         "group_roman": group_roman,
         "meaning_thai": meaning_thai,
         "meaning_pali": meaning_pali,
+        "root_sign_thai": root_sign_thai,
         "udaharana": udaharana,
         "source": "DPD",
         "page": "",
