@@ -156,6 +156,10 @@ app.post('/api/dpd-update', async (req, res) => {
   res.json({ ok: true, started: true });
 });
 
+app.get('/api/ping', (_req, res) => {
+  res.json({ ok: true });
+});
+
 app.post('/api/dpd-update-report', async (req, res) => {
   const ok = await verifyAdmin(req);
   if (!ok) {

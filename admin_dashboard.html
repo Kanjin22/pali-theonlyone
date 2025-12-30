@@ -587,7 +587,26 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div style="color:#777; margin-bottom: 12px;">เฉพาะแอดมินเท่านั้นที่สามารถใช้งานได้</div>
+                    <div style="background:#fff8e1; border:1px solid #ffe0b2; border-radius:10px; padding:14px; margin-bottom:14px; color:#5d4037;">
+                        <div style="font-weight:600; margin-bottom:8px;"><i class="fa-solid fa-circle-info" style="color:#e67e22;"></i> ขั้นตอนการใช้งาน</div>
+                        <ul style="margin:0 0 10px 18px; padding:0; line-height:1.7;">
+                            <li>เปิดเซิร์ฟเวอร์ในเครื่อง: npm run dpd:server</li>
+                            <li>ล็อกอิน “Dhatu Admin” ที่แท็บ จัดการธาตุ (Email/Password)</li>
+                            <li>กลับมาที่แท็บ อัปเดต DPD แล้วกดปุ่มด้านบน</li>
+                        </ul>
+                        <div style="font-weight:600; margin-top:6px;">รายละเอียด:</div>
+                        <ul style="margin:0 0 0 18px; padding:0; line-height:1.7;">
+                            <li>อัปเดต DPD: ดึงฐาน DPD ล่าสุด → สร้าง vocab-dpd.js → รวมธาตุเข้า vocab-roots.js → ซิงค์ขึ้น Firestore</li>
+                            <li>ตรวจสอบและอัปเดต DPD: ดำเนินการเหมือนด้านบน พร้อมสรุปรายงานความเปลี่ยนแปลง</li>
+                            <li>ต้องมีคีย์บริการที่ D:/pali-dhatu-app/service-account-key.json</li>
+                        </ul>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                        <div>สถานะเซิร์ฟเวอร์:</div>
+                        <span id="serverStatus" style="font-weight:600; color:#888;">กำลังตรวจสอบ...</span>
+                        <button class="btn btn-secondary" onclick="pingServer()">ตรวจสอบ</button>
+                        <button class="btn btn-primary" onclick="copyRunCommand()">คัดลอกคำสั่งเริ่มเซิร์ฟเวอร์</button>
+                    </div>
                     <pre id="dpdReportContentTab" style="max-height:420px; overflow:auto; background:#f8f9fa; padding:12px; border-radius:8px;"></pre>
                 </div>
             </div>
@@ -1392,7 +1411,7 @@
         }
 
         async function checkServerAdmin() {
-            const user = auth.currentUser;
+            const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
             if (!user) {
                 toggleDPDButton(false);
                 return;
@@ -1414,7 +1433,7 @@
             btn.disabled = true;
             btn.textContent = 'กำลังอัปเดต...';
             try {
-                const user = auth.currentUser;
+                const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) {
                     alert('กรุณาล็อกอินแอดมินก่อน');
                     return;
@@ -1447,7 +1466,7 @@
             btn.disabled = true;
             btn.textContent = 'กำลังอัปเดต...';
             try {
-                const user = auth.currentUser;
+                const user = (typeof dhatuAuth !== 'undefined' && dhatuAuth && dhatuAuth.currentUser) ? dhatuAuth.currentUser : auth.currentUser;
                 if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
                 const token = await user.getIdToken();
                 const res = await fetch('http://localhost:3001/api/dpd-update', {
@@ -1529,6 +1548,39 @@
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'ตรวจสอบและอัปเดต DPD';
+            }
+        }
+
+        async function pingServer() {
+            const s = document.getElementById('serverStatus');
+            s.textContent = 'กำลังตรวจสอบ...';
+            s.style.color = '#888';
+            try {
+                const r = await fetch('http://localhost:3001/api/ping');
+                const d = await r.json();
+                if (d && d.ok) {
+                    s.textContent = 'ออนไลน์';
+                    s.style.color = '#2e7d32';
+                } else {
+                    s.textContent = 'ออฟไลน์';
+                    s.style.color = '#c0392b';
+                }
+            } catch {
+                s.textContent = 'ออฟไลน์';
+                s.style.color = '#c0392b';
+            }
+        }
+
+        function copyRunCommand() {
+            const cmd = 'npm run dpd:server';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(cmd).then(() => {
+                    alert('คัดลอกคำสั่งแล้ว: ' + cmd);
+                }).catch(() => {
+                    alert('คัดลอกไม่สำเร็จ โปรดคัดลอกด้วยตนเอง: ' + cmd);
+                });
+            } else {
+                alert('โปรดรันคำสั่ง: ' + cmd);
             }
         }
         async function loadRoots(isLoadMore = false) {
