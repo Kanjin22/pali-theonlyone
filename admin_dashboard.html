@@ -516,6 +516,7 @@
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
             <a class="nav-link" onclick="switchTab('roots')">จัดการธาตุ</a>
+            <a class="nav-link" onclick="switchTab('dpdupdate')">อัปเดต DPD</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
     </nav>
@@ -527,11 +528,11 @@
             <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-leaf"></i> จัดการธาตุ (Roots)</span>
-                    <div style="display:flex; gap:10px;">
-                        <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
-                            style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
-                        <button id="dpdUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPD()">อัปเดตพจนานุกรม DPD</button>
-                        <button id="dpdUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReport()">ตรวจสอบและอัปเดต DPD</button>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
+                        style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
+                    <button id="dpdUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPD()">อัปเดตพจนานุกรม DPD</button>
+                    <button id="dpdUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReport()">ตรวจสอบและอัปเดต DPD</button>
                         
                         <div id="dhatuAuthSection" style="display:none; align-items:center; gap:5px;">
                              <input type="email" id="dhatuEmail" placeholder="Email (Dhatu Admin)" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 150px;">
@@ -571,6 +572,23 @@
                 </div>
                 <div style="text-align: center; margin-top: 15px;">
                      <button id="loadMoreRootsBtn" class="btn btn-secondary hidden" onclick="loadMoreRoots()">โหลดเพิ่มเติม...</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: DPD Update -->
+        <div id="tab-dpdupdate" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-database"></i> อัปเดตพจนานุกรม DPD</span>
+                    <div style="display:flex; gap:10px;">
+                        <button id="dpdTabUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPDFromTab()">อัปเดต DPD</button>
+                        <button id="dpdTabUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReportFromTab()">ตรวจสอบและอัปเดต DPD</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="color:#777; margin-bottom: 12px;">เฉพาะแอดมินเท่านั้นที่สามารถใช้งานได้</div>
+                    <pre id="dpdReportContentTab" style="max-height:420px; overflow:auto; background:#f8f9fa; padding:12px; border-radius:8px;"></pre>
                 </div>
             </div>
         </div>
@@ -1316,6 +1334,7 @@
             document.getElementById('tab-classes').classList.add('hidden');
             document.getElementById('tab-pins').classList.add('hidden');
             document.getElementById('tab-roots').classList.add('hidden');
+            document.getElementById('tab-dpdupdate').classList.add('hidden');
 
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
             
@@ -1365,10 +1384,11 @@
         }
 
         async function toggleDPDButton(show) {
-            const btn = document.getElementById('dpdUpdateBtn');
-            btn.style.display = show ? 'inline-block' : 'none';
-            const btn2 = document.getElementById('dpdUpdateReportBtn');
-            btn2.style.display = show ? 'inline-block' : 'none';
+            const ids = ['dpdUpdateBtn','dpdUpdateReportBtn','dpdTabUpdateBtn','dpdTabUpdateReportBtn'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = show ? 'inline-block' : 'none';
+            });
         }
 
         async function checkServerAdmin() {
@@ -1422,6 +1442,30 @@
             }
         }
 
+        async function updateDPDFromTab() {
+            const btn = document.getElementById('dpdTabUpdateBtn');
+            btn.disabled = true;
+            btn.textContent = 'กำลังอัปเดต...';
+            try {
+                const user = auth.currentUser;
+                if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
+                const token = await user.getIdToken();
+                const res = await fetch('http://localhost:3001/api/dpd-update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+                if (!data.ok) { alert('อัปเดตไม่สำเร็จ: ' + (data.error || 'unknown')); }
+                else { alert('เริ่มอัปเดต DPD แล้ว โปรดตรวจสอบสถานะฝั่งเซิร์ฟเวอร์'); }
+            } catch (e) {
+                alert('เกิดข้อผิดพลาด: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'อัปเดต DPD';
+            }
+        }
+
         async function updateDPDWithReport() {
             const btn = document.getElementById('dpdUpdateReportBtn');
             btn.disabled = true;
@@ -1454,6 +1498,32 @@
                 };
                 pre.textContent = JSON.stringify(summary, null, 2);
                 document.getElementById('dpdReportModal').style.display = 'block';
+            } catch (e) {
+                alert('เกิดข้อผิดพลาด: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'ตรวจสอบและอัปเดต DPD';
+            }
+        }
+
+        async function updateDPDWithReportFromTab() {
+            const btn = document.getElementById('dpdTabUpdateReportBtn');
+            btn.disabled = true;
+            btn.textContent = 'กำลังตรวจสอบ...';
+            try {
+                const user = auth.currentUser;
+                if (!user) { alert('กรุณาล็อกอินแอดมินก่อน'); return; }
+                const token = await user.getIdToken();
+                const res = await fetch('http://localhost:3001/api/dpd-update-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+                if (!data.ok) { alert('ไม่สามารถสร้างรายงานได้: ' + (data.error || 'unknown')); return; }
+                const pre = document.getElementById('dpdReportContentTab');
+                const summary = { dpd: data.dpd, roots: data.roots, firestore: data.firestore };
+                pre.textContent = JSON.stringify(summary, null, 2);
             } catch (e) {
                 alert('เกิดข้อผิดพลาด: ' + e.message);
             } finally {
