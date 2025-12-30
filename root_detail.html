@@ -269,6 +269,7 @@
 
         // State
         let currentRootWord = "";
+        let currentGroup = "";
         let thaiEntries = [];
         let dpdEntries = [];
         let activeTab = 'thai'; // 'thai' or 'dpd'
@@ -301,6 +302,7 @@
 
                 const currentData = docSnap.data();
                 currentRootWord = currentData.dhatu_word;
+                currentGroup = currentData.mawat_dhatu || "";
                 
                 // Determine initial tab based on current document's source
                 if (currentData.source === 'DPD') {
@@ -318,6 +320,7 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    if ((data.mawat_dhatu || "") !== currentGroup) return;
                     const entry = {
                         id: doc.id,
                         group: data.mawat_dhatu,
@@ -355,11 +358,7 @@
             const container = document.getElementById('contentArea');
             
             // Determine which entry to use for Header info (Group, etc.)
-            // Prefer current tab's first entry, fallback to other tab
-            let headerEntry = null;
-            if (activeTab === 'thai' && thaiEntries.length > 0) headerEntry = thaiEntries[0];
-            else if (activeTab === 'dpd' && dpdEntries.length > 0) headerEntry = dpdEntries[0];
-            else headerEntry = thaiEntries[0] || dpdEntries[0];
+            let headerEntry = { group: currentGroup };
 
             if (!headerEntry) return; // Should not happen
 

@@ -530,6 +530,7 @@
                     <div style="display:flex; gap:10px;">
                         <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..."
                             style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 200px;">
+                        <button id="dpdUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPD()">อัปเดตพจนานุกรม DPD</button>
                         
                         <div id="dhatuAuthSection" style="display:none; align-items:center; gap:5px;">
                              <input type="email" id="dhatuEmail" placeholder="Email (Dhatu Admin)" style="padding:8px; border:1px solid #ddd; border-radius:6px; width: 150px;">
@@ -1235,6 +1236,7 @@
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 console.log("Admin logged in:", user.email);
+                checkServerAdmin();
 
                 // 1. Attempt to Elevate Privileges in Firestore (Auto-Fix for Fallback Admins)
                 if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
@@ -1283,6 +1285,7 @@
                 });
 
             } else {
+                toggleDPDButton(false);
                 window.location.href = "admin_login.html";
             }
         });
@@ -1348,6 +1351,61 @@
             dhatuAuth.signOut();
         }
 
+        async function toggleDPDButton(show) {
+            const btn = document.getElementById('dpdUpdateBtn');
+            btn.style.display = show ? 'inline-block' : 'none';
+        }
+
+        async function checkServerAdmin() {
+            const user = auth.currentUser;
+            if (!user) {
+                toggleDPDButton(false);
+                return;
+            }
+            try {
+                const token = await user.getIdToken();
+                const res = await fetch('http://localhost:3001/api/is-admin', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await res.json();
+                toggleDPDButton(!!data.isAdmin);
+            } catch {
+                toggleDPDButton(false);
+            }
+        }
+
+        async function updateDPD() {
+            const btn = document.getElementById('dpdUpdateBtn');
+            btn.disabled = true;
+            btn.textContent = 'กำลังอัปเดต...';
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('กรุณาล็อกอินแอดมินก่อน');
+                    return;
+                }
+                const token = await user.getIdToken();
+                const res = await fetch('http://localhost:3001/api/dpd-update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+                if (!data.ok) {
+                    alert('อัปเดตไม่สำเร็จ: ' + (data.error || 'unknown'));
+                } else {
+                    alert('เริ่มอัปเดต DPD แล้ว โปรดตรวจสอบสถานะฝั่งเซิร์ฟเวอร์');
+                }
+            } catch (e) {
+                alert('เกิดข้อผิดพลาด: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'อัปเดตพจนานุกรม DPD';
+            }
+        }
         async function loadRoots(isLoadMore = false) {
              if (isRootsLoading) return;
              isRootsLoading = true;

@@ -1,5 +1,13 @@
 {
   "dependencies": {
-    "firebase-admin": "^13.6.0"
+    "firebase-admin": "^13.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "dpd:update": "python scripts/update_dpd_data.py",
+    "dpd:update:skip": "python scripts/update_dpd_data.py --skip-download",
+    "dpd:sync": "node scripts/update_roots_firestore.js",
+    "dpd:server": "node server.js"
   }
 }
