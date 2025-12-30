@@ -4533,19 +4533,19 @@
     {
         "label": "file_path",
         "kind": 5,
-        "importPath": "git_editor",
-        "description": "git_editor",
+        "importPath": "git_editor_temp",
+        "description": "git_editor_temp",
         "peekOfCode": "file_path = sys.argv[1]\nwith open(file_path, 'r') as f:\n    content = f.read()\n# Replace 'pick' with 'edit' for the commit e557daa\ncontent = content.replace('pick e557daa', 'edit e557daa')\nwith open(file_path, 'w') as f:\n    f.write(content)",
-        "detail": "git_editor",
+        "detail": "git_editor_temp",
         "documentation": {}
     },
     {
         "label": "content",
         "kind": 5,
-        "importPath": "git_editor",
-        "description": "git_editor",
+        "importPath": "git_editor_temp",
+        "description": "git_editor_temp",
         "peekOfCode": "content = content.replace('pick e557daa', 'edit e557daa')\nwith open(file_path, 'w') as f:\n    f.write(content)",
-        "detail": "git_editor",
+        "detail": "git_editor_temp",
         "documentation": {}
     },
     {
