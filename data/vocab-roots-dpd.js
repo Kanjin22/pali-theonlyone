@@ -6,6 +6,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "see",
     "meaning_pali": "พฺยตฺติ-สงฺขาเตสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อกฺขิ"
     ],
@@ -20,6 +21,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move crookedly",
     "meaning_pali": "คติ-โกฏิลฺเล",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อคฺคิ"
     ],
@@ -34,6 +36,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be worth",
     "meaning_pali": "อคฺฆเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อคฺฆติ",
       "อคฺฆียติ",
@@ -50,6 +53,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "walk",
     "meaning_pali": "คมนตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "องฺคณ"
     ],
@@ -64,6 +68,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, praise",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อจฺฉ",
       "อจฺจิ",
@@ -80,6 +85,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "worship",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อจฺเจติ"
     ],
@@ -94,6 +100,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go, drive",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สมชฺช",
       "ปาชน"
@@ -109,6 +116,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bend",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "องฺก",
       "องฺค"
@@ -124,6 +132,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "extend, draw along",
     "meaning_pali": "อายาเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อญฺฉนฺติ",
       "อาวิญฺฉติ",
@@ -141,6 +150,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "distinguish",
     "meaning_pali": "<พฺ>วฺยตฺติ</พฺ>-มกฺขน-คติ-กนฺติสุ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วฺยญฺชยติ",
       "พฺยญฺชน"
@@ -156,6 +166,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "smear, anoint",
     "meaning_pali": "วฺยตฺติ-<พฺ>มกฺขน</พฺ>-คติ-กนฺติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนฺชติ",
       "อนงฺคณ"
@@ -171,6 +182,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "pay respect",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อญฺชลิ"
     ],
@@ -185,6 +197,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roam, wander",
     "meaning_pali": "คมนตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อฏน"
     ],
@@ -199,6 +212,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "judge",
     "meaning_pali": "อภิโยเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อฑฺฑ"
     ],
@@ -213,6 +227,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "recite",
     "meaning_pali": "สทฺทตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อณติ"
     ],
@@ -227,6 +242,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wish for",
     "meaning_pali": "ยาจเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อภิปตฺถยติ",
       "อตฺถ",
@@ -243,6 +259,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "ภกฺขเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อทติ",
       "อนฺน"
@@ -258,6 +275,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "afflict",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อทฺทิต",
       "อฏฺฏิต",
@@ -275,6 +293,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "breathe, blow",
     "meaning_pali": "ปาณเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุทาเนติ",
       "อาน",
@@ -294,6 +313,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "reach, attain",
     "meaning_pali": "ปาปุณเน",
+    "root_sign_thai": "โณ, อุณา",
     "udaharana": [
       "ปาปุณาติ",
       "ปตฺตุํ",
@@ -311,6 +331,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, attain",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อปฺเปติ",
       "อตฺถ",
@@ -327,6 +348,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "deserve, be worthy",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อรหติ",
       "อรห",
@@ -343,6 +365,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be",
     "meaning_pali": "ภุวิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อตฺถิ",
       "อสฺมิ",
@@ -359,6 +382,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "throw, hurl",
     "meaning_pali": "เขปเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปาส",
       "อสน"
@@ -374,6 +398,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อสติ"
     ],
@@ -388,6 +413,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "โภชเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "อสฺนาติ"
     ],
@@ -402,6 +428,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "speak",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาห"
     ],
@@ -416,6 +443,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "divide, distribute",
     "meaning_pali": "สงฺฆาเต",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อํส"
     ],
@@ -430,6 +458,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wait",
     "meaning_pali": "อีสมฺ'อธิวาสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อาคเมติ"
     ],
@@ -444,6 +473,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "take, seize",
     "meaning_pali": "คหเณ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อาทิยติ",
       "สมาทเปติ",
@@ -462,6 +492,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "be wet",
     "meaning_pali": "พฺยาปเน",
+    "root_sign_thai": "โณ, อุณา",
     "udaharana": [
       "อาโป",
       "ทีป"
@@ -477,6 +508,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sit",
     "meaning_pali": "อุปเวสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปยิรุปาสติ",
       "อจฺฉติ",
@@ -494,6 +526,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "come, go",
     "meaning_pali": "อชฺเฌน-<พฺ>คติ</พฺ>-กนฺติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เอติ",
       "เอหิ",
@@ -513,6 +546,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "study, recite",
     "meaning_pali": "<พฺ>อชฺเฌน</พฺ>-คติ-กนฺติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อชฺฌายก",
       "อชฺฌยน"
@@ -528,6 +562,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "see, mark",
     "meaning_pali": "ทสฺสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปจฺจเวกฺขติ",
       "อนุเปกฺขติ",
@@ -544,6 +579,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, shake",
     "meaning_pali": "กมฺปเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สมิญฺชติ",
       "อาวิญฺชติ",
@@ -560,6 +596,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "succeed, accomplish",
     "meaning_pali": "สํสิทฺธิยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สมิชฺฌติ"
     ],
@@ -574,6 +611,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "fire, burn",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "อิฏฺฐกา"
     ],
@@ -588,6 +626,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wish for",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อิจฺฉติ",
       "อิจฺฉา"
@@ -603,6 +642,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be envious, be jealous",
     "meaning_pali": "อิสฺสายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อิสฺสา"
     ],
@@ -617,6 +657,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, shake",
     "meaning_pali": "วตฺตเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อีรติ"
     ],
@@ -631,6 +672,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "speak",
     "meaning_pali": "วาจา-ปกมฺปเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อีเรติ",
       "อุทีรณ"
@@ -646,6 +688,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "have power",
     "meaning_pali": "อิสฺสริเย",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อิสฺสร"
     ],
@@ -660,6 +703,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "strive",
     "meaning_pali": "ฆฏเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อีหติ"
     ],
@@ -674,6 +718,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "comfort",
     "meaning_pali": "",
+    "root_sign_thai": "ย",
     "udaharana": [
       "โอก"
     ],
@@ -688,6 +733,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be straight",
     "meaning_pali": "อชฺชเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุชุ"
     ],
@@ -702,6 +748,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "leave, discard",
     "meaning_pali": "อุสฺสคฺเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุชฺฌติ",
       "อุชฺฌิต"
@@ -717,6 +764,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "glean",
     "meaning_pali": "อุญฺเฉ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุญฺฉติ",
       "อุญฺฉ"
@@ -732,6 +780,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "be wet",
     "meaning_pali": "สว-กิเลทเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "สมุทฺท",
       "อุทก",
@@ -748,6 +797,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุทฺรเภยฺยุํ"
     ],
@@ -762,6 +812,7 @@ export const dpdRoots = [
     "group_roman": "gahādigaṇa",
     "meaning_thai": "be hot",
     "meaning_pali": "ทาเห",
+    "root_sign_thai": "ณฺหา",
     "udaharana": [
       "อุณฺห"
     ],
@@ -776,6 +827,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be irritated, be jealous",
     "meaning_pali": "โทสาวิกรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุสูยติ"
     ],
@@ -790,6 +842,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, shake",
     "meaning_pali": "กมฺปเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อเนช",
       "เอชติ",
@@ -806,6 +859,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "flourish, prosper",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เอธติ"
     ],
@@ -820,6 +874,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "seek, search",
     "meaning_pali": "มคฺคเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เอสติ",
       "เอสินี",
@@ -836,6 +891,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "placing",
     "meaning_pali": "ถปเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โอปิย",
       "โอเปติ"
@@ -851,6 +907,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wish for",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อภิกงฺขติ",
       "อากงฺกมาน"
@@ -866,6 +923,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "doubt",
     "meaning_pali": "กงฺขายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กงฺขติ",
       "กงฺขา"
@@ -881,6 +939,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "shine, bind",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อุกฺกาจิต"
     ],
@@ -895,6 +954,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bind, cover",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กญฺจุก"
     ],
@@ -909,6 +969,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กญฺจน"
     ],
@@ -923,6 +984,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "live in distress",
     "meaning_pali": "โสเก",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "อุกฺกณฺฐติ"
     ],
@@ -937,6 +999,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "boil, burn",
     "meaning_pali": "โสสน-ปาเกสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กฐิต"
     ],
@@ -951,6 +1014,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drag, plough",
     "meaning_pali": "กฑฺฒเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุปกฑฺฒติ"
     ],
@@ -965,6 +1029,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "make sound",
     "meaning_pali": "สทฺทตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กณฺฐ"
     ],
@@ -979,6 +1044,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "break, pierce",
     "meaning_pali": "เภทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กณฺฑ"
     ],
@@ -993,6 +1059,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "cut",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "กนฺตติ",
       "กณฺฏก"
@@ -1008,6 +1075,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "boast",
     "meaning_pali": "สิลาฆายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อกตฺถมาน"
     ],
@@ -1022,6 +1090,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "speak, narrate",
     "meaning_pali": "วากฺยปฺปพนฺธเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กเถติ",
       "กถยติ",
@@ -1039,6 +1108,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, like",
     "meaning_pali": "ทิตฺติ-คติ-กนฺติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กญฺญา"
     ],
@@ -1053,6 +1123,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wail, cry out",
     "meaning_pali": "อวฺหาน-โรทเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กนฺทติ",
       "กนฺทน"
@@ -1068,6 +1139,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "take pity",
     "meaning_pali": "กรุณายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กปณ"
     ],
@@ -1082,6 +1154,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be fit, be suitable",
     "meaning_pali": "สามตฺถิเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กปฺปติ",
       "กปฺป",
@@ -1098,6 +1171,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "think",
     "meaning_pali": "วิตกฺเก",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สงฺกปฺป"
     ],
@@ -1112,6 +1186,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go",
     "meaning_pali": "ปทวิกฺเขเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปกฺกมติ",
       "อุปสงฺกมิตฺวา",
@@ -1130,6 +1205,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "desire",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กาเมติ",
       "กาม",
@@ -1146,6 +1222,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, tremble",
     "meaning_pali": "จลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กมฺปติ",
       "กมฺปิต",
@@ -1162,6 +1239,7 @@ export const dpdRoots = [
     "group_roman": "tanādigaṇa",
     "meaning_thai": "do, make",
     "meaning_pali": "กรเณ",
+    "root_sign_thai": "โอ, ยิร",
     "udaharana": [
       "กโรติ",
       "กร",
@@ -1178,6 +1256,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "spend time",
     "meaning_pali": "เขเป",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กาล"
     ],
@@ -1192,6 +1271,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "accomplish",
     "meaning_pali": "สํขฺยาเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กลฺล"
     ],
@@ -1206,6 +1286,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "calculate, add",
     "meaning_pali": "กลิเล",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กลา",
       "สกล"
@@ -1221,6 +1302,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "argue",
     "meaning_pali": "กุจฺฉเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กลห"
     ],
@@ -1235,6 +1317,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drag, draw",
     "meaning_pali": "คติ-หิํสา-<พฺ>วิเลขเนสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กสติ",
       "กสนฺต",
@@ -1251,6 +1334,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, trouble",
     "meaning_pali": "คติ-<พฺ>หิํสา</พฺ>-วิเลขเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กสิร"
     ],
@@ -1265,6 +1349,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drag, draw along",
     "meaning_pali": "กสฺสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กสฺสติ",
       "กสฺสก"
@@ -1280,6 +1365,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "makes sound",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "ย",
     "udaharana": [
       "กายติ"
     ],
@@ -1294,6 +1380,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, be visible",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปกาสติ",
       "ปกาเสติ",
@@ -1312,6 +1399,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cough",
     "meaning_pali": "ทิตฺติมฺหิ <พฺ>สทฺทเน</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุกฺกาสติ"
     ],
@@ -1326,6 +1414,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "heal, cure",
     "meaning_pali": "วาส-<พฺ>อาโท</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ติกิจฺฉติ"
     ],
@@ -1340,6 +1429,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "live",
     "meaning_pali": "นิวาสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เกตติ",
       "นิเกต"
@@ -1355,6 +1445,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "know, doubt",
     "meaning_pali": "ญาเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สนฺเกต",
       "วิจิกิจฺฉา"
@@ -1370,6 +1461,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "make known",
     "meaning_pali": "สํสทฺเท",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กิตฺเตติ",
       "กิตฺติ"
@@ -1385,6 +1477,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "scatter, sprinkle",
     "meaning_pali": "วิกิรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กิรติ",
       "อภิปฺปกิรติ",
@@ -1401,6 +1494,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be weary",
     "meaning_pali": "คิลาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กิลมติ",
       "กิลนฺต"
@@ -1416,6 +1510,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be wet",
     "meaning_pali": "ปริเทวาโท",
+    "root_sign_thai": "ย",
     "udaharana": [
       "กิลินฺน"
     ],
@@ -1430,6 +1525,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be dirty, be molested",
     "meaning_pali": "อุปตาเป",
+    "root_sign_thai": "ย",
     "udaharana": [
       "กิลิสฺสติ",
       "กิเลส"
@@ -1445,6 +1541,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "trouble",
     "meaning_pali": "วิพาธเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "กิลิสฺนาติ"
     ],
@@ -1459,6 +1556,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be thin",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กิส"
     ],
@@ -1473,6 +1571,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "buy",
     "meaning_pali": "ทพฺพวินิมเย",
+    "root_sign_thai": "นา",
     "udaharana": [
       "กิณาติ",
       "กย",
@@ -1490,6 +1589,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "play",
     "meaning_pali": "วิหาเร",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กีฬติ",
       "กีฬาเปติ",
@@ -1507,6 +1607,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sing, sound",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กวิ"
     ],
@@ -1521,6 +1622,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "contract",
     "meaning_pali": "สํโกเจ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สงฺโกเจติ"
     ],
@@ -1535,6 +1637,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "revile",
     "meaning_pali": "อวกฺเขเป",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กุจฺฉิต"
     ],
@@ -1549,6 +1652,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "turn",
     "meaning_pali": "อโธมุขีกรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุกฺกุชฺเชติ",
       "นิกฺกุชฺชิต",
@@ -1565,6 +1669,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be crooked, be bent",
     "meaning_pali": "โกฏิลฺลฺ’อปฺปีภาเวสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุญฺจติ",
       "กุณฺฑล"
@@ -1580,6 +1685,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be crooked, be bent",
     "meaning_pali": "โกฏิลฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิกุฏติ",
       "กูฏ",
@@ -1597,6 +1703,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "knock, beat",
     "meaning_pali": "อาโกฏเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อาโกเฏติ"
     ],
@@ -1611,6 +1718,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "cut",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โกฏยติ"
     ],
@@ -1625,6 +1733,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "smash, powder",
     "meaning_pali": "อาโกฏเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โกฏฺเฏติ",
       "โกฏฺฏน"
@@ -1640,6 +1749,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be crooked, be bent",
     "meaning_pali": "สงฺโกจเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กุณี"
     ],
@@ -1654,6 +1764,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be blunt, be lame",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>กุณฺฐฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (เพ พฺลุนฺตฺ",
       "เพ ลเม)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>กุณฺเฐ (จอุสฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>กุณฺฐฺ 1 (ทุลฺลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>โนเตสฺ:</ถฺ><ตฺทฺ>โนตฺ fโออุนฺทฺ อินฺ จฺลสฺสิจลฺ ปาฬิ คฺรมฺมรฺสฺ. อ เทโนมินติเว โรโอตฺ fโรมฺ <อิ>กุณฺฐ</อิ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
@@ -1669,6 +1780,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bend, mutilate",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุณฺฑล"
     ],
@@ -1683,6 +1795,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "boil, burn",
     "meaning_pali": "ปาเก ปูติภาเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปกุถิต"
     ],
@@ -1697,6 +1810,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be angry",
     "meaning_pali": "โกเธ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "กุชฺฌติ",
       "โกธ",
@@ -1714,6 +1828,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, cause pain",
     "meaning_pali": "สํกฺเลสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุนฺถ"
     ],
@@ -1728,6 +1843,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "shake, be angry",
     "meaning_pali": "โกเป",
+    "root_sign_thai": "ย",
     "udaharana": [
       "กุปฺปติ",
       "อกุปฺป",
@@ -1744,6 +1860,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "play",
     "meaning_pali": "กีฬายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กุมาร",
       "กุมารี"
@@ -1759,6 +1876,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sound",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุรร"
     ],
@@ -1773,6 +1891,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be close",
     "meaning_pali": "สงฺขาเน พนฺธุมฺหิ จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุล"
     ],
@@ -1787,6 +1906,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "call, insult",
     "meaning_pali": "อกฺโกเส อวฺหาเน จ",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "อกฺโกสติ",
       "ปกฺโกสิตฺวา",
@@ -1803,6 +1923,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fill, enfold",
     "meaning_pali": "เฉทน-<พฺ>ปูรเณ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โกฏฺฐ"
     ],
@@ -1817,6 +1938,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cut, tear",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กุฏฺฐ กุฏฺฐี"
     ],
@@ -1831,6 +1953,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "deceive",
     "meaning_pali": "วิมฺหาปเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "กุเหติ",
       "กุหก"
@@ -1846,6 +1969,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "make sound",
     "meaning_pali": "อวฺยตฺเต สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิกูชติ",
       "วิกูชนฺต"
@@ -1861,6 +1985,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "obstruct, embank",
     "meaning_pali": "อาวรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กูล",
       "ปฏิกูล",
@@ -1877,6 +2002,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "burn",
     "meaning_pali": "ทาเห",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อุปกูลิต"
     ],
@@ -1891,6 +2017,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "care, cherish",
     "meaning_pali": "มมายเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เกลายน"
     ],
@@ -1905,6 +2032,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "adorn, inlay",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขจิต",
       "ขจิตฺวา",
@@ -1921,6 +2049,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "limp",
     "meaning_pali": "คติเวกลฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขญฺชติ",
       "ขญฺช"
@@ -1936,6 +2065,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dig",
     "meaning_pali": "อวทารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขนติ",
       "ขณติ",
@@ -1952,6 +2082,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "break",
     "meaning_pali": "เภทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ขนฺเทติ"
     ],
@@ -1966,6 +2097,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, break",
     "meaning_pali": "อวทารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขต",
       "อกฺขต"
@@ -1981,6 +2113,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "jump",
     "meaning_pali": "ปกฺขนฺทนาทิสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปกฺขนฺทติ"
     ],
@@ -1995,6 +2128,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tolerate, endure",
     "meaning_pali": "สหเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขมติ",
       "ขนฺติ",
@@ -2012,6 +2146,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "prop, be stiff",
     "meaning_pali": "ปฏิพนฺเธ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิกฺขมฺเภติ"
     ],
@@ -2026,6 +2161,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "perish, break apart",
     "meaning_pali": "วินาเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อกฺขร"
     ],
@@ -2040,6 +2176,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stumble, make mistake",
     "meaning_pali": "กมฺปเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขลติ",
       "ปกฺขลิตฺวา",
@@ -2056,6 +2193,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "clean, rinse",
     "meaning_pali": "โสเจยฺเย",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปกฺขาเลติ"
     ],
@@ -2070,6 +2208,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "accumulate",
     "meaning_pali": "โสเจ <พฺ>สญฺจเย 8</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สงฺขลิกา"
     ],
@@ -2084,6 +2223,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tell, announce",
     "meaning_pali": "กถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อกฺขาติ",
       "ขายติ",
@@ -2102,6 +2242,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "chew",
     "meaning_pali": "ภกฺขเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขาทติ",
       "ขาทนีย",
@@ -2120,6 +2261,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "live, abide peacefully",
     "meaning_pali": "นิวาเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เขตฺต"
     ],
@@ -2134,6 +2276,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "frighten, scare",
     "meaning_pali": "อุตฺตาสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุกฺเขฏิต สมุกฺเขฏิต"
     ],
@@ -2148,6 +2291,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "throw",
     "meaning_pali": "ฉฑฺฑโน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขิปติ",
       "ขิปิต",
@@ -2168,6 +2312,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sneeze",
     "meaning_pali": "อพฺยตฺตสทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขิปติ",
       "ขิปนฺต"
@@ -2183,6 +2328,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "exhaust, destroy",
     "meaning_pali": "ขเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขย",
       "สงฺขย"
@@ -2198,6 +2344,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be hungry",
     "meaning_pali": "ชิฆจฺฉายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โขท",
       "ขุทา"
@@ -2213,6 +2360,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, agitate",
     "meaning_pali": "สญฺจลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โขเพติ"
     ],
@@ -2227,6 +2375,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cut",
     "meaning_pali": "เฉทน-วิเลขเงสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ขุร"
     ],
@@ -2241,6 +2390,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "insult",
     "meaning_pali": "อกฺโกสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ขุํเสติ"
     ],
@@ -2255,6 +2405,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "announce",
     "meaning_pali": "กถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วฺยาขฺยาติ",
       "สงฺขฺยา",
@@ -2271,6 +2422,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roar, make sound",
     "meaning_pali": "สทฺทตฺเถ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คช"
     ],
@@ -2285,6 +2437,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roar, thunder",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คชฺชติ",
       "คชฺชมาน"
@@ -2300,6 +2453,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "calculate, group",
     "meaning_pali": "สํขายฺเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "คเณติ",
       "คณน",
@@ -2320,6 +2474,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "speak",
     "meaning_pali": "วฺยตฺตวจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คทติ"
     ],
@@ -2334,6 +2489,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bind, tie",
     "meaning_pali": "ปติฏฺฐา-นิสฺสย-<พฺ>คนฺเถสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คทฺทุล",
       "คธิต"
@@ -2349,6 +2505,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tie, bind",
     "meaning_pali": "คนฺถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คนฺเถติ",
       "คถิต",
@@ -2366,6 +2523,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be bold, be daring",
     "meaning_pali": "ปาคพฺภิเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อปคพฺภ"
     ],
@@ -2380,6 +2538,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go",
     "meaning_pali": "คติมฺหิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คจฺฉติ",
       "คมิก",
@@ -2397,6 +2556,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "esteem, be heavy",
     "meaning_pali": "อุคฺคเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ครุ"
     ],
@@ -2411,6 +2571,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drip, swallow",
     "meaning_pali": "เสจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สาคร"
     ],
@@ -2425,6 +2586,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "blame",
     "meaning_pali": "นินฺทายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ครหติ",
       "ครหา"
@@ -2440,6 +2602,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drip, flow",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คลติ",
       "คฬติ",
@@ -2456,6 +2619,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คล"
     ],
@@ -2470,6 +2634,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat, swallow",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คส"
     ],
@@ -2484,6 +2649,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "seek, search",
     "meaning_pali": "มคฺคเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คเวสติ",
       "คเวสก"
@@ -2499,6 +2665,7 @@ export const dpdRoots = [
     "group_roman": "gahādigaṇa",
     "meaning_thai": "grasp",
     "meaning_pali": "อุปาทาเน",
+    "root_sign_thai": "ณฺหา, ปฺป",
     "udaharana": [
       "คณฺหาติ",
       "คเหตฺวา",
@@ -2517,6 +2684,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "sing",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "ย",
     "udaharana": [
       "คายติ",
       "คาถ",
@@ -2534,6 +2702,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stand firmly",
     "meaning_pali": "ปติฏฺฐายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คาธติ"
     ],
@@ -2548,6 +2717,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dive, plunge",
     "meaning_pali": "วิโลฬเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปคาหติ",
       "โอคธ",
@@ -2564,6 +2734,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be greedy",
     "meaning_pali": "อภิกํขายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "คิชฺฌติ",
       "คิทฺธ"
@@ -2579,6 +2750,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "raise",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุคฺคิรติ"
     ],
@@ -2593,6 +2765,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "call, speak",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คิรา"
     ],
@@ -2607,6 +2780,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat, swallow",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คิลติ"
     ],
@@ -2621,6 +2795,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be sick, be tired",
     "meaning_pali": "หาสกฺขเย",
+    "root_sign_thai": "ย",
     "udaharana": [
       "คิลาน"
     ],
@@ -2635,6 +2810,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "repeat, multiply",
     "meaning_pali": "อภฺยาเส",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "คุณิต"
     ],
@@ -2649,6 +2825,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "enclose, envelope",
     "meaning_pali": "เวฐเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปฬิคุณฺเฐติ",
       "ปฬิคุณฺฐิต"
@@ -2664,6 +2841,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dislike",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชิคุจฺฉติ",
       "ชิคุจฺฉา"
@@ -2679,6 +2857,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "guard",
     "meaning_pali": "รกฺขเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โคเปติ",
       "คุตฺต",
@@ -2695,6 +2874,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tie, string together",
     "meaning_pali": "คนฺเถ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คุมฺเผติ"
     ],
@@ -2709,6 +2889,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hide, conceal",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "คูหติ",
       "คุหา"
@@ -2724,6 +2905,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roll around, protect",
     "meaning_pali": "ปริวตฺตนมฺหิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คุฬ"
     ],
@@ -2738,6 +2920,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "excrete",
     "meaning_pali": "กรีสุสฺสคฺเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คูถ"
     ],
@@ -2752,6 +2935,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "strike, kill",
     "meaning_pali": "ฆาฏเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฆเฏติ",
       "ฆาเตตุ",
@@ -2770,6 +2954,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "join together",
     "meaning_pali": "ฆฏฺฏเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฆฏ",
       "สงฺฆ"
@@ -2785,6 +2970,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be busy with, strive",
     "meaning_pali": "อีหายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฆฏติ",
       "ฆฏนฺต"
@@ -2800,6 +2986,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "hit, strike",
     "meaning_pali": "จลเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฆฏฺเฏติ",
       "ฆฏฺฏน"
@@ -2815,6 +3002,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "join together",
     "meaning_pali": "ฆฏฺฏเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฆฏฺเฏติ"
     ],
@@ -2829,6 +3017,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drip",
     "meaning_pali": "เสจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปคฺฆรติ",
       "ปคฺฆรณ"
@@ -2844,6 +3033,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn, be hot",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฆมฺม",
       "ฆมฺมนิ"
@@ -2859,6 +3049,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฆสติ",
       "ชิฆจฺฉติ",
@@ -2875,6 +3066,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rub, grind, pound",
     "meaning_pali": "ฆํสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อปฺปฏิฆํสนฺต"
     ],
@@ -2889,6 +3081,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "smell",
     "meaning_pali": "คนฺโธปาทาเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ฆายติ",
       "ฆาน",
@@ -2905,6 +3098,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "scream, be awful",
     "meaning_pali": "ภีเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โฆร"
     ],
@@ -2919,6 +3113,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shout, make noise",
     "meaning_pali": "สทฺทสฺมิํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โฆส",
       "โฆสิต",
@@ -2935,6 +3130,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "see",
     "meaning_pali": "ทสฺสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จกฺขุ",
       "วิจกฺขณ",
@@ -2951,6 +3147,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "give up, let go",
     "meaning_pali": "หานิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จชติ",
       "จชิต",
@@ -2967,6 +3164,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be fierce, be violent",
     "meaning_pali": "จณฺฑิกฺเก",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จณฺฑ"
     ],
@@ -2981,6 +3179,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "glow, be bright",
     "meaning_pali": "ทิตฺติ-หิลาทเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จนฺท",
       "จนฺทน",
@@ -2997,6 +3196,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "chew, spit out",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "จพฺเพตฺวา"
     ],
@@ -3011,6 +3211,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wash, rinse",
     "meaning_pali": "โธวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาจเมติ"
     ],
@@ -3025,6 +3226,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, walk",
     "meaning_pali": "คติ-ภกฺขเณสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จรติ",
       "จาริกา",
@@ -3041,6 +3243,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "act, behave",
     "meaning_pali": "จรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนุจรติ",
       "ทุจฺจริต",
@@ -3058,6 +3261,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, tremble",
     "meaning_pali": "กมฺปเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จลติ",
       "ปจลายติ",
@@ -3075,6 +3279,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "honour",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อปจายติ",
       "อปจายมาน",
@@ -3091,6 +3296,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "gather, accumulate",
     "meaning_pali": "จเย",
+    "root_sign_thai": "นา",
     "udaharana": [
       "จินาติ",
       "วิจย",
@@ -3107,6 +3313,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "note, observe",
     "meaning_pali": "",
+    "root_sign_thai": "นา",
     "udaharana": [
       "อปจินติ"
     ],
@@ -3121,6 +3328,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "show, tell",
     "meaning_pali": "วจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาจิกฺขติ",
       "ปฏิสญฺจิกฺขติ",
@@ -3137,6 +3345,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "send, abuse",
     "meaning_pali": "อกฺโกเส จ เปสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เจฏก"
     ],
@@ -3151,6 +3360,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "think, intend",
     "meaning_pali": "สญฺเจตนาทีสุ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เจเตติ",
       "เจตยติ",
@@ -3169,6 +3379,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "mark",
     "meaning_pali": "สญฺญาเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จิต",
       "จิตฺร",
@@ -3185,6 +3396,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "paint, design",
     "meaning_pali": "จิตฺตกรเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "จิตฺเตติ",
       "จิตฺติต"
@@ -3200,6 +3412,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "think",
     "meaning_pali": "จินฺตายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วิจินฺเตติ",
       "จินฺตา",
@@ -3216,6 +3429,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "clothe",
     "meaning_pali": "วสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เจล",
       "อเจลก"
@@ -3231,6 +3445,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shift, fall away, die",
     "meaning_pali": "จวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จวติ",
       "จุต",
@@ -3247,6 +3462,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "grind, crush, powder",
     "meaning_pali": "สํจุณฺณเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "จุณฺณ",
       "จุณฺณวิจุณฺณ"
@@ -3262,6 +3478,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "impel, accuse",
     "meaning_pali": "โจทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โจเทติ",
       "โจทก",
@@ -3278,6 +3495,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move",
     "meaning_pali": "มนฺทคมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุทฺทฺโจเปติ"
     ],
@@ -3292,6 +3510,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "kiss",
     "meaning_pali": "วทน-สํโยเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "จุมฺพติ",
       "ปริจุมฺพติ"
@@ -3307,6 +3526,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "steal",
     "meaning_pali": "เถยฺเย",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โจเรติ",
       "โจร",
@@ -3323,6 +3543,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "discard, abandon",
     "meaning_pali": "ฉฑฺฑเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฉฑฺเฑติ",
       "ฉฑฺฑิต"
@@ -3338,6 +3559,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "cover, conceal",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฉาเทติ",
       "ฉตฺต",
@@ -3355,6 +3577,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "desire, please",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฉาเทติ",
       "ฉนฺน"
@@ -3370,6 +3593,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be hungry",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฉาต",
       "นิจฺฉาต"
@@ -3385,6 +3609,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "cut, divide",
     "meaning_pali": "ทฺเวธากรเณ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ฉินฺทติ",
       "อุจฺฉินฺน",
@@ -3402,6 +3627,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "cut off",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "นิจฺโฉเฏติ"
     ],
@@ -3416,6 +3642,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "touch",
     "meaning_pali": "สมฺผสฺเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฉุปติ"
     ],
@@ -3430,6 +3657,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "throw out",
     "meaning_pali": "นิจฺฉุเภ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฉุทฺธ"
     ],
@@ -3444,6 +3672,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "ภกฺขเณ หสเน จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อชทฺธุก"
     ],
@@ -3458,6 +3687,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "look after",
     "meaning_pali": "นิทฺทาขเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิชคฺคติ"
     ],
@@ -3472,6 +3702,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "laugh",
     "meaning_pali": "หสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชคฺคติ",
       "สญฺชคฺฆน"
@@ -3487,6 +3718,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "twist, tangle",
     "meaning_pali": "สํฆาเต",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิชเฏติ",
       "ชฏา",
@@ -3503,6 +3735,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be born, produce",
     "meaning_pali": "ชนเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "วิชายติ",
       "ชายติ",
@@ -3521,6 +3754,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "mutter, pray",
     "meaning_pali": "วจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปชปฺปติ",
       "ปชปฺปา"
@@ -3536,6 +3770,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "yawn, stretch, wake up",
     "meaning_pali": "คตฺตวินาเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชมฺภติ",
       "วิชมฺภิกา"
@@ -3551,6 +3786,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "age",
     "meaning_pali": "ชีรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชรติ",
       "ชร",
@@ -3567,6 +3803,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, blaze",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปชลติ",
       "ชาเลติ",
@@ -3583,6 +3820,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "hide, conceal",
     "meaning_pali": "อปวารเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ชาล"
     ],
@@ -3597,6 +3835,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be awake, be watchful",
     "meaning_pali": "นิทฺทาขเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชาครติ",
       "ชาคร"
@@ -3612,6 +3851,7 @@ export const dpdRoots = [
     "group_roman": "tanādigaṇa",
     "meaning_thai": "be awake, be watchful",
     "meaning_pali": "นิทฺทขเย",
+    "root_sign_thai": "โอ",
     "udaharana": [
       "ปฏิชาคโรติ"
     ],
@@ -3626,6 +3866,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "conquer",
     "meaning_pali": "ชเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เชติ",
       "ชิคิํสติ",
@@ -3643,6 +3884,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "conquer",
     "meaning_pali": "ชเย",
+    "root_sign_thai": "นา",
     "udaharana": [
       "วิชินาติ",
       "ชิน",
@@ -3659,6 +3901,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "age, decay",
     "meaning_pali": "ชานิยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ชียติ",
       "ชิยฺยติ",
@@ -3675,6 +3918,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "grow old, decay",
     "meaning_pali": "พฺรูหเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชีรติ",
       "ชีรียติ",
@@ -3692,6 +3936,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "live",
     "meaning_pali": "ปาณธารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชีวติ",
       "ชีว"
@@ -3707,6 +3952,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be fast",
     "meaning_pali": "ชเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชวติ",
       "ชว"
@@ -3722,6 +3968,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "โชตติ",
       "ปชฺโชต",
@@ -3738,6 +3985,7 @@ export const dpdRoots = [
     "group_roman": "gahādigaṇa",
     "meaning_thai": "like, please",
     "meaning_pali": "ปีติ-เสวเนสุ",
+    "root_sign_thai": "ณฺหา",
     "udaharana": [
       "ชุณฺห"
     ],
@@ -3752,6 +4000,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "burn, blaze",
     "meaning_pali": "ทาเห",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ฌาเปติ",
       "ฌตฺต"
@@ -3767,6 +4016,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "think, meditate",
     "meaning_pali": "จินฺตายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ฌายติ",
       "ฌาน",
@@ -3783,6 +4033,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn, blaze",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฌายติ",
       "ฌายน"
@@ -3798,6 +4049,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "know",
     "meaning_pali": "อวโพธเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ปชานาติ",
       "ญายติ",
@@ -3816,6 +4068,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stand",
     "meaning_pali": "คตินิวุตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ติฏฺฐติ",
       "ฐาน",
@@ -3832,6 +4085,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "spit",
     "meaning_pali": "นิฏฺฐุพฺพเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอฏฺฐุภติ"
     ],
@@ -3846,6 +4100,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn",
     "meaning_pali": "ภสฺมีกรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุฑฺฑหติ",
       "ทฑฺฒ อนุฑหน"
@@ -3861,6 +4116,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bite, sting",
     "meaning_pali": "ทํสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ฑํส",
       "ฑํสติ"
@@ -3876,6 +4132,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fly",
     "meaning_pali": "อากาสคมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เฑติ",
       "อุฑฺเฑติ"
@@ -3891,6 +4148,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "trap",
     "meaning_pali": "ขิปนฺ-อุฑฺฑเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุฑฺเฑติ",
       "อุฑฺฑิต"
@@ -3906,6 +4164,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "think",
     "meaning_pali": "วิตกฺเก",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วิตกฺเกติ",
       "วิตกฺก"
@@ -3921,6 +4180,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cut, chop",
     "meaning_pali": "ตนุกรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตจฺฉติ"
     ],
@@ -3935,6 +4195,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "frighten, threaten",
     "meaning_pali": "ตชฺชเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ตชฺเชติ",
       "ตชฺชิต"
@@ -3950,6 +4211,7 @@ export const dpdRoots = [
     "group_roman": "tanādigaṇa",
     "meaning_thai": "stretch, extend",
     "meaning_pali": "วิตฺถาเร",
+    "root_sign_thai": "โอ",
     "udaharana": [
       "ตโนติ",
       "ตนฺตุ",
@@ -3967,6 +4229,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be slow, be lazy",
     "meaning_pali": "อาลสิเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตนฺที",
       "อตนฺทิต"
@@ -3982,6 +4245,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn, radiate heat",
     "meaning_pali": "สนฺตาเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตปติ",
       "อาตาปี",
@@ -3999,6 +4263,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "regret",
     "meaning_pali": "สนฺตปฺปเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอตฺตปฺปติ",
       "โอตฺตป"
@@ -4014,6 +4279,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "satisfy",
     "meaning_pali": "ปีณเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สนฺตปฺเปติ"
     ],
@@ -4028,6 +4294,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "faint",
     "meaning_pali": "สานฺตฺเว อวสาทิเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปตเมยฺย"
     ],
@@ -4042,6 +4309,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cross",
     "meaning_pali": "ตรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิตฺถรติ",
       "อุตฺตร",
@@ -4059,6 +4327,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurry",
     "meaning_pali": "สมฺภเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตรติ",
       "ตุรงฺค",
@@ -4075,6 +4344,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "support, rest on",
     "meaning_pali": "ปติฏฺฐายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ตล",
       "ตาล"
@@ -4090,6 +4360,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tremble, fear",
     "meaning_pali": "อุพฺเพเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตสติ",
       "ตส",
@@ -4107,6 +4378,7 @@ export const dpdRoots = [
     "group_roman": "gahādigaṇa",
     "meaning_thai": "thirst",
     "meaning_pali": "ปิปาสายํ",
+    "root_sign_thai": "ณฺหา",
     "udaharana": [
       "ตณฺห",
       "ตสินา"
@@ -4122,6 +4394,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be agitated",
     "meaning_pali": "ปิปาสายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปริตสฺสติ",
       "ปริตสฺสนา"
@@ -4137,6 +4410,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "decorate, impale",
     "meaning_pali": "",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อุตฺตาเสนฺติ"
     ],
@@ -4151,6 +4425,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "beat",
     "meaning_pali": "อาฆาเต",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ตาเฬติ",
       "อุรตฺตาฬิํ"
@@ -4166,6 +4441,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "protect, preserve",
     "meaning_pali": "ปาลเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ตาณ"
     ],
@@ -4180,6 +4456,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be sharp, be hot",
     "meaning_pali": "นิสาเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เตเชติ",
       "เตช",
@@ -4196,6 +4473,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be sharp, be bitter",
     "meaning_pali": "นิสาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ติตฺตก"
     ],
@@ -4210,6 +4488,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "endure",
     "meaning_pali": "<พฺ>ขมา</พฺ>-นิสาเนสุ พนฺเธ ปิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ติติกฺขติ",
       "ติติกฺขา"
@@ -4225,6 +4504,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be wet",
     "meaning_pali": "เตมน-สํกาสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เตมน"
     ],
@@ -4239,6 +4519,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cross",
     "meaning_pali": "อโธคติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตีร",
       "ติรจฺฉาน"
@@ -4254,6 +4535,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "satisfy",
     "meaning_pali": "ติตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ติตฺติ"
     ],
@@ -4268,6 +4550,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "investigate, complete",
     "meaning_pali": "กมฺม-สมตฺติยํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ตีเรติ",
       "ตีรยมาน",
@@ -4284,6 +4567,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "prick, stab",
     "meaning_pali": "โตฑเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตุณฺฑ"
     ],
@@ -4298,6 +4582,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "prick, stab",
     "meaning_pali": "วฺยถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตุทิต",
       "ตุนฺน",
@@ -4314,6 +4599,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, be sick",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาตุร",
       "อาตุรียติ"
@@ -4329,6 +4615,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurry, be quick",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตุริตํ"
     ],
@@ -4343,6 +4630,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "weigh",
     "meaning_pali": "อุมฺมาเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ตุเลติ",
       "ตุลิต",
@@ -4360,6 +4648,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be content, be pleased",
     "meaning_pali": "ตุฏฺฐิมฺหิ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สนฺตุสฺสก",
       "สนฺตุฏฺฐิ",
@@ -4377,6 +4666,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "lie down",
     "meaning_pali": "เอกสยเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "-"
     ],
@@ -4391,6 +4681,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be light",
     "meaning_pali": "นิกฺกรีเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ตูล"
     ],
@@ -4405,6 +4696,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fear, shake",
     "meaning_pali": "อุพฺเพเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุตฺรสฺต"
     ],
@@ -4419,6 +4711,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "close",
     "meaning_pali": "ปฏิฆาเต",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ถเกติ"
     ],
@@ -4433,6 +4726,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roar, thunder",
     "meaning_pali": "เทวสทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ถเนติ"
     ],
@@ -4447,6 +4741,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hang",
     "meaning_pali": "เวลมฺเพ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ถมติ"
     ],
@@ -4461,6 +4756,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "support, be stiff",
     "meaning_pali": "ปฏิพนฺเธ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สนฺถมฺภติ",
       "ถมฺภ"
@@ -4476,6 +4772,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "spread, expand",
     "meaning_pali": "สนฺถรเณ ปาทิปุพฺโพ ว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สนฺถรติ",
       "สนฺถต",
@@ -4493,6 +4790,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be firm",
     "meaning_pali": "ฐาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ถล",
       "ถลติ"
@@ -4508,6 +4806,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stiffen, be compact",
     "meaning_pali": "สทฺท-สงฺฆาเตสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิถายติ",
       "ปติตฺถียติ",
@@ -4524,6 +4823,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "moan, groan",
     "meaning_pali": "นิตฺถุนเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ถุนาติ",
       "อนุตฺถุนิ"
@@ -4539,6 +4839,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be familiar, praise",
     "meaning_pali": "อภิตฺถเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ถวติ",
       "สนฺถว"
@@ -4554,6 +4855,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "praise",
     "meaning_pali": "อภิตฺถเว",
+    "root_sign_thai": "นา",
     "udaharana": [
       "อภิตฺถุนาติ",
       "ถุต"
@@ -4569,6 +4871,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be fat, be coarse",
     "meaning_pali": "กสฺสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ถูล"
     ],
@@ -4583,6 +4886,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "steal",
     "meaning_pali": "โจริเย",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เถเนติ",
       "เถน",
@@ -4599,6 +4903,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "praise",
     "meaning_pali": "สิลาฆายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โถเมติ",
       "โถม",
@@ -4615,6 +4920,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be able, please",
     "meaning_pali": "วุทฺธิยํ สีฆตฺเต จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทกฺข",
       "ทกฺขิณ",
@@ -4631,6 +4937,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be slow",
     "meaning_pali": "อสีฆจาเร",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทนฺธติ",
       "ทนฺธ"
@@ -4646,6 +4953,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be arrogant",
     "meaning_pali": "หาเส",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทปฺป"
     ],
@@ -4660,6 +4968,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be tame",
     "meaning_pali": "ทเม",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทเมติ",
       "ทนฺต",
@@ -4676,6 +4985,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be kind, have pity",
     "meaning_pali": "ทาน-คติ-หิํสาทาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทยติ",
       "ทยา"
@@ -4691,6 +5001,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "break, split apart",
     "meaning_pali": "ทารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทาเรติ",
       "อุนฺทฺรียติ",
@@ -4707,6 +5018,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fear",
     "meaning_pali": "ภเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทร",
       "ทรถ"
@@ -4722,6 +5034,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "respect, have affection",
     "meaning_pali": "อาทรานาทเรสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาทร"
     ],
@@ -4736,6 +5049,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "split, tear apart",
     "meaning_pali": "วิทารเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปทาเฬติ",
       "สมฺปทาเฬติ",
@@ -4752,6 +5066,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be strong",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทฬฺห"
     ],
@@ -4766,6 +5081,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "give",
     "meaning_pali": "ทาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ททาติ",
       "ทาน",
@@ -4783,6 +5099,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be pure, be clean",
     "meaning_pali": "โสธเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปริโยทเปติ",
       "ปริโยทาต",
@@ -4800,6 +5117,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "tie, bind",
     "meaning_pali": "",
+    "root_sign_thai": "ย",
     "udaharana": [
       "นิทาน"
     ],
@@ -4814,6 +5132,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "cut, break apart",
     "meaning_pali": "อวขณฺฑเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อปทาน",
       "ปริตฺต"
@@ -4829,6 +5148,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "sleep",
     "meaning_pali": "สุปเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "นิทฺทายติ",
       "นิทฺทา"
@@ -4844,6 +5164,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "consecrate",
     "meaning_pali": "มุณฺฑิโยปนยน-นิยม-วตาเทเสสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ทิกฺขฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (โจนฺเสจฺรเต)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>ทิกฺข <อิ>มุณฺฑิโยปนยน-นิยม-วตาเทเสสุ</อิ> (สฺหวินฺคฺ เถ เหอทฺ",
       "เรสฺตฺรอินินฺคฺ",
@@ -4867,6 +5188,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "see",
     "meaning_pali": "เปกฺขเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุทฺทิสติ",
       "ทิสฺสติ",
@@ -4886,6 +5208,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "point out, explain",
     "meaning_pali": "อติสชฺชเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุทฺทิสติ",
       "อุทฺเทส",
@@ -4903,6 +5226,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "dislike, hate",
     "meaning_pali": "อปฺปีติยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "เทสฺสติ",
       "ทิส",
@@ -4919,6 +5243,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "กีฬา-วิชิคิํสา-โวหาร-<พฺ>ชฺชุติ</พฺ>-ตฺถุติ-คติสุ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทิพฺพติ",
       "เทวา",
@@ -4936,6 +5261,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "accumulate, smear",
     "meaning_pali": "อุปจเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เทห"
     ],
@@ -4950,6 +5276,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be afflicted",
     "meaning_pali": "ขเย",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทีน",
       "อาทีนว"
@@ -4965,6 +5292,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "shine, explain",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทิปฺปติ",
       "ทีเปติ",
@@ -4983,6 +5311,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn, torment",
     "meaning_pali": "ปริตาเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนุปทฺทว"
     ],
@@ -4997,6 +5326,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be painful",
     "meaning_pali": "ตกฺริเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทุกฺข"
     ],
@@ -5011,6 +5341,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "deceive, be treacherous",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทุพฺภติ"
     ],
@@ -5025,6 +5356,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "swing",
     "meaning_pali": "อุกฺเขปเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โทลา"
     ],
@@ -5039,6 +5371,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be angry, be corrupt",
     "meaning_pali": "โทสเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปทุสฺสติ",
       "ทุสฺสติ",
@@ -5056,6 +5389,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "hate, dislike",
     "meaning_pali": "อปฺปีติยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ทุสฺสติ",
       "โทส",
@@ -5073,6 +5407,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "milk a cow",
     "meaning_pali": "ปปูรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "คทฺทุหน"
     ],
@@ -5087,6 +5422,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go, run",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทูต",
       "ทูเตยฺย",
@@ -5104,6 +5440,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lament",
     "meaning_pali": "เทวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปริเทวติ",
       "อาเทว"
@@ -5119,6 +5456,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "run, flow",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ทฺรุ<สุปฺ>×</สุปฺ>1 ภูวาทิคณ + อ (รุนฺ",
       "fโลw)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ทฺรุ 1 (รุนฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>โนเตสฺ:</ถฺ><ตฺทฺ>โนตฺ fโออุนฺทฺ อินฺ จฺลสฺสิจลฺ ปาฬิ คฺรมฺมรฺสฺ. เรลเตทฺ โต <อิ>ธาวฺ</อิ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
@@ -5134,6 +5472,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "obstruct, prohibit",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ทฺวาร"
     ],
@@ -5148,6 +5487,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, flap",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธช"
     ],
@@ -5162,6 +5502,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be rich",
     "meaning_pali": "ธญฺเญ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธน"
     ],
@@ -5176,6 +5517,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "sound",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ธนิต"
     ],
@@ -5190,6 +5532,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "blow, sound",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิทฺธมติ",
       "ธนฺต",
@@ -5206,6 +5549,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hold, carry, endure",
     "meaning_pali": "ธารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธรติ",
       "ธีร",
@@ -5222,6 +5566,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wear, hold, carry",
     "meaning_pali": "ธารเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ธาเรติ",
       "ธมฺม",
@@ -5238,6 +5583,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fall down, destroy",
     "meaning_pali": "ธํสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธํสติ",
       "อุทฺธํเสติ",
@@ -5255,6 +5601,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "place, support",
     "meaning_pali": "ธารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สทฺทหติ",
       "ธาตุ",
@@ -5271,6 +5618,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "run, flow",
     "meaning_pali": "คติสุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธาวติ",
       "สนฺธาวติ",
@@ -5287,6 +5635,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "polish, sharpen",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธารา"
     ],
@@ -5301,6 +5650,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "think",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธีร"
     ],
@@ -5315,6 +5665,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be crooked, be corrupt",
     "meaning_pali": "หุจฺฉเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธุตฺต"
     ],
@@ -5329,6 +5680,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be firm, be solid",
     "meaning_pali": "ยาตฺรา-<พฺ>ถิเรสุ</พฺ> จ",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "ธุว"
     ],
@@ -5343,6 +5695,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "shake, smoke",
     "meaning_pali": "กมฺปเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ธุนาติ"
     ],
@@ -5357,6 +5710,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "smoke",
     "meaning_pali": "สนฺตาเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธูป",
       "ธูปน"
@@ -5372,6 +5726,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drink, suck",
     "meaning_pali": "ปาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ธยติ",
       "ธีตุ",
@@ -5389,6 +5744,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wash, sharpen",
     "meaning_pali": "โธวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โธวติ",
       "โธน"
@@ -5404,6 +5760,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "attain, arrive",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นกฺขต"
     ],
@@ -5418,6 +5775,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bend, dance",
     "meaning_pali": "นาฏฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นฏก"
     ],
@@ -5432,6 +5790,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "dance, act",
     "meaning_pali": "คตวินาเม",
+    "root_sign_thai": "ย",
     "udaharana": [
       "นตฺต",
       "นจฺจติ"
@@ -5447,6 +5806,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roar",
     "meaning_pali": "อวฺยตฺตสทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นทติ",
       "นาท",
@@ -5463,6 +5823,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "wrap, twist",
     "meaning_pali": "วินนฺธเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "นนฺธติ",
       "ปริโยนทฺธ"
@@ -5478,6 +5839,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "delight, enjoy",
     "meaning_pali": "สมิทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นนฺทติ",
       "นนฺทิต",
@@ -5495,6 +5857,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burst, split",
     "meaning_pali": "วิหิํสายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นาภิ"
     ],
@@ -5509,6 +5872,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bend",
     "meaning_pali": "นมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นมติ",
       "นต",
@@ -5528,6 +5892,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bow, worship",
     "meaning_pali": "วนฺทนานติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นมสฺสติ"
     ],
@@ -5542,6 +5907,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lead",
     "meaning_pali": "นเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นรติ"
     ],
@@ -5556,6 +5922,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be lost, disappear",
     "meaning_pali": "อทสฺสเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "นสฺสติ",
       "นาส",
@@ -5572,6 +5939,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "bind, arm",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สนฺนยฺหติ",
       "อุปนยฺหติ"
@@ -5587,6 +5955,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "have power, protect",
     "meaning_pali": "ยาจโนป-ตาปฺ’-อิสฺสริยาสิํสาสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นาถ",
       "อนาถ"
@@ -5602,6 +5971,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "blame, abuse",
     "meaning_pali": "ครหายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นินฺทติ",
       "นินฺทิย"
@@ -5617,6 +5987,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lead, carry",
     "meaning_pali": "ปาปเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เนติ",
       "นีต",
@@ -5637,6 +6008,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be blue",
     "meaning_pali": "วณฺเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นีล",
       "วินีลก"
@@ -5652,6 +6024,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drive out, reject",
     "meaning_pali": "เขเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นุทติ",
       "นุณฺณ",
@@ -5669,6 +6042,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "take away",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เนสฺสติ"
     ],
@@ -5683,6 +6057,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "bathe",
     "meaning_pali": "โสเจยฺเย",
+    "root_sign_thai": "ย",
     "udaharana": [
       "นหายติ",
       "นฺหาเปตฺวา",
@@ -5699,6 +6074,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cook, mature, ripen",
     "meaning_pali": "ปาเก",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปาก"
     ],
@@ -5713,6 +6089,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "expand, spread",
     "meaning_pali": "วิตฺถาเร",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปปญฺจ",
       "ปปญฺเจติ"
@@ -5728,6 +6105,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "ask, question",
     "meaning_pali": "ปุจฺฉายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปญฺห"
     ],
@@ -5742,6 +6120,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "split, tear",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุปฺปาเฏติ"
     ],
@@ -5756,6 +6135,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go",
     "meaning_pali": "คมนตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิปาฏิ",
       "ปฏิปาฏิยา"
@@ -5771,6 +6151,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "read, recite",
     "meaning_pali": "อุจฺจารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฐติ"
     ],
@@ -5785,6 +6166,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "trade, barter",
     "meaning_pali": "วฺยวหาร-ตฺถุติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาปณ"
     ],
@@ -5799,6 +6181,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "mock, tease",
     "meaning_pali": "ปริภาเส",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปณฺเฑติ"
     ],
@@ -5813,6 +6196,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fall",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปตติ",
       "สนฺนิปาต",
@@ -5830,6 +6214,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "command, control",
     "meaning_pali": "",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปติ"
     ],
@@ -5844,6 +6229,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go, move",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปถ",
       "ปถิก",
@@ -5860,6 +6246,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "expand",
     "meaning_pali": "วิตฺถาเร",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปถวี"
     ],
@@ -5874,6 +6261,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "go, step",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อุปฺปชฺชติ",
       "ปตฺติ",
@@ -5890,6 +6278,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go, move",
     "meaning_pali": "คเต",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปริปนฺถ",
       "ปนฺถก"
@@ -5905,6 +6294,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "grow",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ปพฺพฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (คฺโรw)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>ปพฺพ</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>-</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>ปพฺพ <อิ>คติยํ</อิ> (โคอินฺคฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ปรฺวฺ 1 (fอิลฺลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>ปรฺพฺ อ <อิ>คตอุ</อิ> (โคอินฺคฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
     ],
@@ -5919,6 +6309,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be active",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พฺยาวฏ"
     ],
@@ -5933,6 +6324,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "run away, flee",
     "meaning_pali": "คมนตฺถา",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปเลติ",
       "ปลายติ",
@@ -5949,6 +6341,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "burn",
     "meaning_pali": "อุปทาเห",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปลุฏฺฐ",
       "ปโลสติ"
@@ -5964,6 +6357,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "tie, bind",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปาส"
     ],
@@ -5978,6 +6372,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "protect, guard",
     "meaning_pali": "รกฺขเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ป"
     ],
@@ -5992,6 +6387,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "drink",
     "meaning_pali": "ปาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปิวติ",
       "ปีต",
@@ -6011,6 +6407,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อปฺปายติ"
     ],
@@ -6025,6 +6422,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "protect",
     "meaning_pali": "รกฺขเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปาเลติ",
       "ปาลยติ"
@@ -6040,6 +6438,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "collect",
     "meaning_pali": "สํฆาเต",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปิฏก"
     ],
@@ -6054,6 +6453,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "collect",
     "meaning_pali": "สํฆาเต",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปิณฺเฑติ",
       "ปิณฺฑิ",
@@ -6070,6 +6470,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "send",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เปเสติ",
       "เปสฺสิก"
@@ -6085,6 +6486,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "grind, hurt",
     "meaning_pali": "สํจุณฺณเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ปิสุน"
     ],
@@ -6099,6 +6501,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "speak ill",
     "meaning_pali": "ภาสายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปิสุณ",
       "ปิสาจ"
@@ -6114,6 +6517,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "desire, envy",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปิหยติ",
       "ปิเหติ",
@@ -6130,6 +6534,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "love, please",
     "meaning_pali": "ตปฺปเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ปีติ",
       "เปม",
@@ -6146,6 +6551,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "please, swell",
     "meaning_pali": "ปีณเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปีเณติ"
     ],
@@ -6160,6 +6566,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "press, crush",
     "meaning_pali": "พาธายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปีเฬติ",
       "ปีฬิต"
@@ -6175,6 +6582,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "purify, cleanse",
     "meaning_pali": "ปวเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ปุนาติ",
       "ปุญฺญ",
@@ -6192,6 +6600,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "ask, question",
     "meaning_pali": "ปุจฺฉเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปุจฺฉติ",
       "อภิปุฏฺฐ",
@@ -6208,6 +6617,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wipe",
     "meaning_pali": "ปุญฺฉเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปุญฺฉนก"
     ],
@@ -6222,6 +6632,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wrap, envelop",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปุฏ"
     ],
@@ -6236,6 +6647,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "beat, hurt",
     "meaning_pali": "ปหาเร",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โปเฐติ",
       "โปเฐตฺวา",
@@ -6252,6 +6664,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be skilful, be precise",
     "meaning_pali": "กมฺมนิ สุเภ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิปุณ",
       "ปุญฺญ"
@@ -6267,6 +6680,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "expand",
     "meaning_pali": "วิตฺถาเร",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปุถุ"
     ],
@@ -6281,6 +6695,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "flower, expand",
     "meaning_pali": "วิกสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สํปุปฺผิต",
       "ปุปฺป"
@@ -6296,6 +6711,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "สมุสฺสเย",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เวปุลฺล"
     ],
@@ -6310,6 +6726,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "nourish, take care",
     "meaning_pali": "โปสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โปสติ",
       "โปส",
@@ -6327,6 +6744,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "honour, venerate",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปูเชติ",
       "ปูชิต",
@@ -6343,6 +6761,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rot, fester",
     "meaning_pali": "วิสรเณ ทุคฺคนฺเธ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปูติ"
     ],
@@ -6357,6 +6776,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fill, fulfil",
     "meaning_pali": "ปูรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปูรติ",
       "ปริปูเรติ",
@@ -6376,6 +6796,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move, propel",
     "meaning_pali": "จลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เปลฺลน"
     ],
@@ -6390,6 +6811,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "float, swim",
     "meaning_pali": "คเต",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฺลวติ",
       "โอปิลาเปติ",
@@ -6407,6 +6829,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "spring, swing",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฺลวติ"
     ],
@@ -6421,6 +6844,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "skim",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เผณุ",
       "ผาณิต"
@@ -6436,6 +6860,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, quiver",
     "meaning_pali": "กิญฺจิจลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผนฺทติ",
       "วิปฺผนฺทน"
@@ -6451,6 +6876,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "suffuse, pervade",
     "meaning_pali": "สมฺผรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผรติ",
       "ผรณ",
@@ -6467,6 +6893,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "split open",
     "meaning_pali": "เภเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผลติ",
       "ผาเลติ",
@@ -6485,6 +6912,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fruit, ripen",
     "meaning_pali": "นิปฺผตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผลี",
       "ผลก"
@@ -6500,6 +6928,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "swell, get fat",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผีต"
     ],
@@ -6514,6 +6943,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "beat, smash",
     "meaning_pali": "วิเภเท",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "นิปฺโผเฏติ"
     ],
@@ -6528,6 +6958,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "swell, burst",
     "meaning_pali": "วิกสนฺ’อาทีสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โผฏ"
     ],
@@ -6542,6 +6973,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "expand, bloom",
     "meaning_pali": "วิกสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผุลฺล"
     ],
@@ -6556,6 +6988,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "touch",
     "meaning_pali": "สมฺผสฺเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผุสิตฺวา",
       "ผุฏฺฐ"
@@ -6571,6 +7004,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sprinkle, splash",
     "meaning_pali": "สิเนห-สวน-ปูรเณสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปริปฺโผสกํ",
       "โผเสติ"
@@ -6586,6 +7020,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bind, tie",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วินิพทฺธ",
       "ปฏิพทฺธ"
@@ -6601,6 +7036,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bind, tie",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พนฺธติ",
       "สมฺพนฺธ",
@@ -6617,6 +7053,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be strong, live",
     "meaning_pali": "ปาณเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พลติ",
       "พล"
@@ -6632,6 +7069,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be outside",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิพาหติ",
       "พาหิร"
@@ -6647,6 +7085,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พหุ",
       "พาหุลิก",
@@ -6663,6 +7102,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "press, oppress",
     "meaning_pali": "วิพาธายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พาธติ",
       "อาพาเธติ",
@@ -6680,6 +7120,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "break, chop",
     "meaning_pali": "เภทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พิลติ",
       "พิล"
@@ -6695,6 +7136,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "know, wake up",
     "meaning_pali": "อวคมเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "พุชฺฌติ",
       "พุทฺธ",
@@ -6711,6 +7153,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "pluck out, uproot",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อพฺพุหติ",
       "อพฺพุยฺห",
@@ -6727,6 +7170,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พฺรหติ",
       "พฺรหา",
@@ -6744,6 +7188,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "say",
     "meaning_pali": "วจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พฺรูติ",
       "อพฺรวิ",
@@ -6760,6 +7205,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พฺรูเหติ",
       "พฺรูหน",
@@ -6776,6 +7222,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eat",
     "meaning_pali": "อทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภกฺขติ",
       "ภกฺข",
@@ -6792,6 +7239,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "divide, distribute",
     "meaning_pali": "เสวา-<พฺ>ปุถกฺกาเร</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิภชติ",
       "สุวิภตฺต"
@@ -6807,6 +7255,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "associate, keep company",
     "meaning_pali": "เสวายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภชติ",
       "ภชนา"
@@ -6822,6 +7271,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cook",
     "meaning_pali": "ปาเก",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภชฺชติ"
     ],
@@ -6836,6 +7286,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "break, destroy",
     "meaning_pali": "โอมทฺทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภญฺชติ",
       "ภงฺค"
@@ -6851,6 +7302,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "talk, speak",
     "meaning_pali": "ภณเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภณติ",
       "ภญฺญมาน",
@@ -6867,6 +7319,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "blame, accuse",
     "meaning_pali": "ภณฺฑเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภณฺฑติ"
     ],
@@ -6881,6 +7334,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be good, be lucky",
     "meaning_pali": "กลฺยาเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภทฺร",
       "ภนฺเต",
@@ -6897,6 +7351,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "turn, revolve, buzz",
     "meaning_pali": "อนวฏฺฐาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภมร",
       "ภมการ",
@@ -6913,6 +7368,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "carry, support",
     "meaning_pali": "ภรณสฺมิํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภรติ",
       "ภริยา",
@@ -6931,6 +7387,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "fall down",
     "meaning_pali": "อโธปตเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ภสฺสติ",
       "ภฏฺฐ"
@@ -6946,6 +7403,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, speak",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิภาติ",
       "อภาสิ",
@@ -6962,6 +7420,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "speak",
     "meaning_pali": "ทิตฺติยํ วจเน จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภาสติ",
       "ภาสา สมนุภาสนา"
@@ -6977,6 +7436,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "ทิตฺติยํ วจเน จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปภาสติ",
       "โอภาส",
@@ -6993,6 +7453,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "beg",
     "meaning_pali": "ยาจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภิกฺขติ",
       "ภิกฺขุ",
@@ -7009,6 +7470,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "break, split",
     "meaning_pali": "วิทารเณ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ภินฺทติ",
       "ภินฺน",
@@ -7025,6 +7487,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "fear",
     "meaning_pali": "ภเย",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "วิภิํสน"
     ],
@@ -7039,6 +7502,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fear",
     "meaning_pali": "ภเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภายติ",
       "ภย",
@@ -7056,6 +7520,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "use, eat, enjoy",
     "meaning_pali": "ปาลนฺ’-อชฺโฌหาเรสุ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ภุญฺชติ",
       "พุภุกฺขติ",
@@ -7074,6 +7539,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bend",
     "meaning_pali": "โกฏิลฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาภุชติ",
       "อาภุชิตฺวา"
@@ -7089,6 +7555,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "fall heavily",
     "meaning_pali": "",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ภุส"
     ],
@@ -7103,6 +7570,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bark",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภุสฺสติ"
     ],
@@ -7117,6 +7585,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be, become",
     "meaning_pali": "สตฺตายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ภวติ",
       "ภว",
@@ -7135,6 +7604,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "adorn, decorate",
     "meaning_pali": "อลํกาเร",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิภูสน"
     ],
@@ -7149,6 +7619,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "rub, erase",
     "meaning_pali": "มกฺขเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "มกฺเขติ",
       "มกฺข",
@@ -7165,6 +7636,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "seek, search",
     "meaning_pali": "อนฺเวสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มคฺเคติ",
       "มคฺค"
@@ -7180,6 +7652,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be auspicious",
     "meaning_pali": "มงฺคลฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มงฺคลํ"
     ],
@@ -7194,6 +7667,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rub, polish",
     "meaning_pali": "สํสุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนุมชฺชติ",
       "ปริมชฺชติ"
@@ -7209,6 +7683,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hold up, support",
     "meaning_pali": "ธารเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มญฺจ"
     ],
@@ -7223,6 +7698,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "abandon",
     "meaning_pali": "จาเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มณติ"
     ],
@@ -7237,6 +7713,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "adorn",
     "meaning_pali": "ภูสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มณฺฑ",
       "มณฺฑน"
@@ -7252,6 +7729,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "churn, stir",
     "meaning_pali": "วิโลฬเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มถิต"
     ],
@@ -7266,6 +7744,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be mad, be intoxicated",
     "meaning_pali": "อุมฺมาเท",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปมชฺชติ",
       "ปมตฺต",
@@ -7282,6 +7761,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "crush, grind",
     "meaning_pali": "มทฺทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มทฺทติ",
       "ปริมทฺทน",
@@ -7298,6 +7778,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "think",
     "meaning_pali": "ญาเณ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "มญฺญติ",
       "อติมานี",
@@ -7316,6 +7797,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "counsel, invite",
     "meaning_pali": "คุตฺตภาสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "มนฺตยติ",
       "อามนฺเตติ",
@@ -7333,6 +7815,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "churn, crush",
     "meaning_pali": "วิโลฬเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อภิมนฺเถติ",
       "อภิมตฺถติ"
@@ -7348,6 +7831,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "die",
     "meaning_pali": "ปาณจาเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มรติ",
       "มียติ",
@@ -7367,6 +7851,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be patient",
     "meaning_pali": "ติติกฺขายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "มรฺสยติ"
     ],
@@ -7381,6 +7866,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dirty, stain",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มล"
     ],
@@ -7395,6 +7881,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "touch, rub",
     "meaning_pali": "อามสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อามสติ"
     ],
@@ -7409,6 +7896,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "buzz, hum",
     "meaning_pali": "สทฺเท โรเส จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มกส"
     ],
@@ -7423,6 +7911,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "increase",
     "meaning_pali": "สตฺตายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มหา",
       "มหนฺต",
@@ -7439,6 +7928,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "venerate",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มหติ"
     ],
@@ -7453,6 +7943,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "measure",
     "meaning_pali": "ปมาเณ",
+    "root_sign_thai": "นา",
     "udaharana": [
       "มินาติ",
       "มิต"
@@ -7468,6 +7959,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "exchange, barter",
     "meaning_pali": "",
+    "root_sign_thai": "นา",
     "udaharana": [
       "มินาติ"
     ],
@@ -7482,6 +7974,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sprinkle, shower",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เมฆ"
     ],
@@ -7496,6 +7989,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be friendly",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มิตฺต",
       "เมตฺตา"
@@ -7511,6 +8005,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "pair",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เมถุน"
     ],
@@ -7525,6 +8020,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be fat",
     "meaning_pali": "สฺเนหเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "เมท",
       "เมเทติ"
@@ -7540,6 +8036,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "shrink, wither",
     "meaning_pali": "คตฺตวินาเม",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สมฺมิลาต"
     ],
@@ -7554,6 +8051,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wink, blink",
     "meaning_pali": "มีลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิมิสติ"
     ],
@@ -7568,6 +8066,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "mix, mingle",
     "meaning_pali": "สมฺมิสฺเส",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "มิสฺส"
     ],
@@ -7582,6 +8081,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "urinate, excrete",
     "meaning_pali": "เสจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มีฬฺห"
     ],
@@ -7596,6 +8096,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "smile, chuckle",
     "meaning_pali": "อีสหสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มิหิต"
     ],
@@ -7610,6 +8111,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "close eyes",
     "meaning_pali": "นิมีลเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อุมฺมีเลติ"
     ],
@@ -7624,6 +8126,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "release, free",
     "meaning_pali": "โมจเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "มุญฺจติ",
       "มุญฺจิต",
@@ -7641,6 +8144,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "thicken, fixate",
     "meaning_pali": "โมเห",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มุจฺฉติ",
       "มุจฺฉิต"
@@ -7656,6 +8160,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dive, sink, submerge",
     "meaning_pali": "มุชฺชเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มุชฺชติ",
       "นิมุคฺค",
@@ -7672,6 +8177,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be bald, shave",
     "meaning_pali": "ขณฺฑเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มุณฺฑติ",
       "มุณฺฑก"
@@ -7687,6 +8193,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be soft, be happy",
     "meaning_pali": "โตเส",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "โมทติ",
       "มุทิต",
@@ -7704,6 +8211,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "think, know",
     "meaning_pali": "ญาเณ",
+    "root_sign_thai": "นา",
     "udaharana": [
       "มุนาติ",
       "มุต",
@@ -7720,6 +8228,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "lie, forget",
     "meaning_pali": "สมฺโมเส",
+    "root_sign_thai": "ย",
     "udaharana": [
       "มุสฺสติ",
       "มุฏฺฐ",
@@ -7736,6 +8245,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "steal",
     "meaning_pali": "เถยฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โมส",
       "โมสน"
@@ -7751,6 +8261,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be deluded, be confused",
     "meaning_pali": "เวจิตฺเต",
+    "root_sign_thai": "ย",
     "udaharana": [
       "มุยฺหติ",
       "โมห",
@@ -7767,6 +8278,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "support",
     "meaning_pali": "ปติฏฺฐายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มูล",
       "มูลิก",
@@ -7783,6 +8295,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be wise",
     "meaning_pali": "หิํสายํ <พฺ>สงฺคเม</พฺ> จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เมธา",
       "สุเมธ",
@@ -7799,6 +8312,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, harm",
     "meaning_pali": "<พฺ>หิํสายํ</พฺ> สงฺคเม จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เมธค",
       "อสฺสเมธ"
@@ -7814,6 +8328,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be freed",
     "meaning_pali": "โมจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิโมกฺข",
       "ปาติโมกฺข"
@@ -7829,6 +8344,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "smile",
     "meaning_pali": "อีสํหสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิมฺหาปยติ"
     ],
@@ -7843,6 +8359,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "worship",
     "meaning_pali": "ปูชายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ยกฺข"
     ],
@@ -7857,6 +8374,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "honour, sacrifice",
     "meaning_pali": "เทว-ปูช-สงฺคติกรณ-ทาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยชติ",
       "ยิฏฺฐ",
@@ -7874,6 +8392,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "arrange, hand over",
     "meaning_pali": "นิยฺยาตเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "นิยฺยาเตติ"
     ],
@@ -7888,6 +8407,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stretch, strive",
     "meaning_pali": "ยตเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยตติ"
     ],
@@ -7902,6 +8422,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "control, strive, end",
     "meaning_pali": "อุปรเม",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยม",
       "สญฺญต"
@@ -7917,6 +8438,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "support, stretch",
     "meaning_pali": "ปริเวสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยมติ",
       "อนุปฺปเวจฺฉติ"
@@ -7932,6 +8454,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "strive, struggle",
     "meaning_pali": "ปยตเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อายาส",
       "อุปายาส"
@@ -7947,6 +8470,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go",
     "meaning_pali": "ปาปุณเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิยฺยาติ",
       "อุปยาติ",
@@ -7964,6 +8488,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "beg",
     "meaning_pali": "ยาจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยาจติ",
       "ยาจก",
@@ -7980,6 +8505,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "unite, fasten",
     "meaning_pali": "มิสฺสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ยุต",
       "ปยุต",
@@ -7996,6 +8522,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "yoke, join",
     "meaning_pali": "โยเค",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ยุญฺชติ",
       "สํโยค",
@@ -8012,6 +8539,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "fight",
     "meaning_pali": "สมฺปหาเร",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ยุชฺฌติ"
     ],
@@ -8026,6 +8554,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "carry, bring",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สํยูหิตฺวา"
     ],
@@ -8040,6 +8569,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "protect",
     "meaning_pali": "ปาลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รกฺขติ",
       "รกฺขิต",
@@ -8056,6 +8586,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "prepare, arrange",
     "meaning_pali": "ปติยตเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "รจยิตฺวา"
     ],
@@ -8070,6 +8601,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "desire",
     "meaning_pali": "ราเค",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ราค",
       "วิราค",
@@ -8086,6 +8618,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "colour",
     "meaning_pali": "ราเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รชต",
       "วิรช"
@@ -8101,6 +8634,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dye, desire",
     "meaning_pali": "ราเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รงฺค"
     ],
@@ -8115,6 +8649,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "conflict, make war",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สรณ"
     ],
@@ -8129,6 +8664,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "cook",
     "meaning_pali": "ปาเก",
+    "root_sign_thai": "*เอ",
     "udaharana": [
       "รนฺธยิ",
       "รนฺธ"
@@ -8144,6 +8680,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, wound",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รนฺธยิ",
       "รนฺธ"
@@ -8159,6 +8696,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "begin",
     "meaning_pali": "อารมฺเภ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อารภติ",
       "อารมฺภ"
@@ -8174,6 +8712,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be aroused, be violent",
     "meaning_pali": "<พฺ>ราภสฺเส</พฺ> จ อรมฺเภ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สารมฺภ",
       "อุปารมฺภ"
@@ -8189,6 +8728,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "delight, please",
     "meaning_pali": "กีฬายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รมติ",
       "รมณีย",
@@ -8205,6 +8745,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stop, abstain",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิรมติ"
     ],
@@ -8219,6 +8760,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "taste",
     "meaning_pali": "อสฺสาทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รส"
     ],
@@ -8233,6 +8775,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "leave, desert",
     "meaning_pali": "จาเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รหติ",
       "รโห"
@@ -8248,6 +8791,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rule, shine",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ราชติ",
       "ราช",
@@ -8265,6 +8809,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "succeed, please",
     "meaning_pali": "สํสิทฺธิยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "วิรชฺฌติ",
       "อาราเธติ",
@@ -8282,6 +8827,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "empty",
     "meaning_pali": "ริญฺจเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ริญฺจติ",
       "ริตฺต"
@@ -8297,6 +8843,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อริฏฺฏฺḥอ"
     ],
@@ -8311,6 +8858,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cry, howl",
     "meaning_pali": "สทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รวติ"
     ],
@@ -8325,6 +8873,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, like",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "วิโรจติ",
       "รุจิ"
@@ -8340,6 +8889,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, be painful",
     "meaning_pali": "ภงฺเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รุชติ",
       "โรค",
@@ -8356,6 +8906,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cry",
     "meaning_pali": "โรทเน",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "รุทติ",
       "โรทติ",
@@ -8374,6 +8925,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "obstruct",
     "meaning_pali": "อาวรเณ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "รุนฺธติ",
       "นิโรธ",
@@ -8391,6 +8943,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "please, accept",
     "meaning_pali": "กาเม",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อนุรุทฺธ",
       "อนุรุชฺฌติ"
@@ -8406,6 +8959,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be broken apart, hurt",
     "meaning_pali": "<พฺ>นาเส</พฺ> ปกาเส",
+    "root_sign_thai": "ย",
     "udaharana": [
       "รุปฺปติ",
       "รุปนฺน"
@@ -8421,6 +8975,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be angry",
     "meaning_pali": "โรเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โรสติ",
       "โรเสติ",
@@ -8437,6 +8992,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "ascend, grow",
     "meaning_pali": "ชนเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "รูหติ",
       "โอรุหฺย",
@@ -8454,6 +9010,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "form, produce",
     "meaning_pali": "โรปน อาทิสุ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "รูเปติ",
       "รูป",
@@ -8470,6 +9027,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "mark",
     "meaning_pali": "ลกฺขเณ ทสฺสเน จ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ลกฺเขติ",
       "ลกฺขณ"
@@ -8485,6 +9043,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stick, adhere",
     "meaning_pali": "สงฺเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอลคฺเคติ"
     ],
@@ -8499,6 +9058,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "stick, adhere",
     "meaning_pali": "สงฺเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอลคฺเคติ"
     ],
@@ -8513,6 +9073,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "lift up, jump",
     "meaning_pali": "คติ-โสสเนสุ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ลงฺฆติ"
     ],
@@ -8527,6 +9088,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be ashamed",
     "meaning_pali": "ลชฺชเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลชฺชติ",
       "ลชฺชาเปติ",
@@ -8544,6 +9106,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "mark",
     "meaning_pali": "ลกฺขเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>ลญฺฉฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (มรฺกฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเสสฺ:</ถฺ><ตฺทฺ>ลญฺฉ",
       "ลญฺเฉ (จอุสฺ)",
@@ -8563,6 +9126,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "speak, chat",
     "meaning_pali": "วจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลปติ",
       "อาลปติ",
@@ -8581,6 +9145,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "get",
     "meaning_pali": "ลาเภ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลภติ",
       "ลจฺฉติ",
@@ -8600,6 +9165,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hang",
     "meaning_pali": "อวสํสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลมฺพติ",
       "โอลมฺพก",
@@ -8616,6 +9182,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, be active",
     "meaning_pali": "สิเลสน-<พฺ>กีฬเนสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อลส",
       "อลสตา",
@@ -8633,6 +9200,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "play, move about",
     "meaning_pali": "วิลาเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิลฺลาเฬตฺวา",
       "ปลฬิต"
@@ -8648,6 +9216,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "scratch, write",
     "meaning_pali": "เลขเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลิขติ",
       "เลขน",
@@ -8664,6 +9233,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "embrace",
     "meaning_pali": "คตฺยฺ-อตฺถธาตโว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาลิงฺคติ",
       "ลินฺคิย"
@@ -8679,6 +9249,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "differentiate sexually",
     "meaning_pali": "<พฺ>จิตฺตกฺริยฺ</พฺ>-อาทีสุ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ลิงฺค"
     ],
@@ -8693,6 +9264,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "coat, smear",
     "meaning_pali": "ลิมฺปเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ลิปติ",
       "ลิมฺปติ",
@@ -8713,6 +9285,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be small",
     "meaning_pali": "เลเส",
+    "root_sign_thai": "ย",
     "udaharana": [
       "เลส"
     ],
@@ -8727,6 +9300,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lick, lap",
     "meaning_pali": "อสฺสาทเน",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "อปเลขน"
     ],
@@ -8741,6 +9315,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "stick, hide",
     "meaning_pali": "สิเลสน-ทฺรวีกรเณสุ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สลฺลีนํ",
       "ปฏิสลฺลีน",
@@ -8757,6 +9332,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "stick, hide",
     "meaning_pali": "สิเลเส",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ลินาติ"
     ],
@@ -8771,6 +9347,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "cut, reap, mow",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "ลุนาติ",
       "ลูยิ",
@@ -8788,6 +9365,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be broken apart",
     "meaning_pali": "วินาเส",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปลุชฺชติ",
       "ลุคฺค",
@@ -8804,6 +9382,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "pluck out, tear",
     "meaning_pali": "อปนยเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลุญฺจติ",
       "โลจก"
@@ -8819,6 +9398,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "cut off, rob",
     "meaning_pali": "เฉทเน",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "ลุมฺปติ",
       "อาโลป",
@@ -8837,6 +9417,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be greedy",
     "meaning_pali": "โลเภ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ลุพฺภติ",
       "ลุทฺธ"
@@ -8852,6 +9433,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fool, bewilder",
     "meaning_pali": "วิโมหเน",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "ปโลภติ"
     ],
@@ -8866,6 +9448,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "agitate, be greedy",
     "meaning_pali": "มนฺถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โลเฬติ",
       "โลฬ"
@@ -8881,6 +9464,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "look",
     "meaning_pali": "ทสฺสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วิโลเกติ",
       "อาโลกิต",
@@ -8897,6 +9481,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "see, illuminate",
     "meaning_pali": "ทสฺสเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "โลจิต"
     ],
@@ -8911,6 +9496,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "be able, be powerful",
     "meaning_pali": "สตฺติยํ",
+    "root_sign_thai": "โณ, อุณา",
     "udaharana": [
       "สกฺกุณาติ",
       "สกฺโกติ",
@@ -8929,6 +9515,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "move",
     "meaning_pali": "คมนตฺถา",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอสกฺกติ",
       "อปสกฺกน",
@@ -8945,6 +9532,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "doubt, suspect",
     "meaning_pali": "สํกายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สงฺกติ",
       "สงฺกา"
@@ -8960,6 +9548,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "stick, cling",
     "meaning_pali": "สงฺเค",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สชฺชติ",
       "วิสตฺติกา",
@@ -8977,6 +9566,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "relinquish, let loose",
     "meaning_pali": "<พฺ>วิสฺสชฺชนฺ</พฺ>-อาลิงฺคน-นิมฺมาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สชติ"
     ],
@@ -8991,6 +9581,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "embrace",
     "meaning_pali": "วิสฺสชฺชนฺ-<พฺ>อาลิงฺคน</พฺ>-นิมฺมาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สชติ",
       "สชนฺตํ"
@@ -9006,6 +9597,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "relinquish, let loose",
     "meaning_pali": "<พฺ>วิสฺสชฺชนฺ</พฺ>-อาลิงฺคน-นิมฺมาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิสฺสชฺเชติ",
       "วิสฺสชฺชก"
@@ -9021,6 +9613,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "prepare, decorate",
     "meaning_pali": "สชฺชเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สชฺเชติ",
       "สชฺชิย"
@@ -9036,6 +9629,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "clasp, embrace",
     "meaning_pali": "วิสฺสชฺชนฺ-<พฺ>อาลิงฺคน</พฺ>-นิมฺมาเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สญฺชติ"
     ],
@@ -9050,6 +9644,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "split",
     "meaning_pali": "วิสรเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สาเฏตรฺ"
     ],
@@ -9064,6 +9659,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "deceive",
     "meaning_pali": "เกตเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สฐ",
       "สาเฐยฺย"
@@ -9079,6 +9675,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "make sound",
     "meaning_pali": "อพฺยตฺตสทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สณติ",
       "สณนฺต"
@@ -9094,6 +9691,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sink, sit, settle",
     "meaning_pali": "วิสรณ-<พฺ>คตฺยฺ-อวสาทเนสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิสีทติ",
       "นิสชฺช",
@@ -9111,6 +9709,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "sound",
     "meaning_pali": "สทฺทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สทฺท",
       "สทฺทิต"
@@ -9126,6 +9725,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "like, love",
     "meaning_pali": "สมฺภตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สาต"
     ],
@@ -9140,6 +9740,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "flow",
     "meaning_pali": "ปสฺสวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สนฺทติ",
       "ปริสนฺเทติ",
@@ -9156,6 +9757,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "curse",
     "meaning_pali": "อกฺโกเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สปติ",
       "อภิสปิต"
@@ -9171,6 +9773,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "crawl",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สปฺปติ",
       "สปฺป"
@@ -9186,6 +9789,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be calm, be tired",
     "meaning_pali": "<พฺ>อุปสม</พฺ>-เขเทสุ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สมฺมติ",
       "ปฏิสาเมติ",
@@ -9203,6 +9807,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "exert, strive",
     "meaning_pali": "อุปสม-<พฺ>เขเทสุ</พฺ>",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สมณ"
     ],
@@ -9217,6 +9822,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be calm, be confident",
     "meaning_pali": "วิสฺสาเส",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปสฺสมฺภติ",
       "ปสฺสทฺธ",
@@ -9233,6 +9839,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "reach, attain",
     "meaning_pali": "ปาปุณเน",
+    "root_sign_thai": "อุนา",
     "udaharana": [
       "อภิสมฺภุนาติ"
     ],
@@ -9247,6 +9854,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go, flow",
     "meaning_pali": "<พฺ>คติ</พฺ>-หิํส-จินฺตาสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนุสรติ",
       "สร",
@@ -9263,6 +9871,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "remember",
     "meaning_pali": "คติ-หิํส-<พฺ>จินฺตาสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อนุสฺสรติ",
       "วิปฺปฏิสาร"
@@ -9278,6 +9887,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "make sound",
     "meaning_pali": "คติ-จินฺตา-หิํสา-<พฺ>สทฺเท</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สร"
     ],
@@ -9292,6 +9902,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สคฺค"
     ],
@@ -9306,6 +9917,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hurt, injure",
     "meaning_pali": "คติ-<พฺ>หิํส</พฺ>-จินฺตาสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สรภ",
       "สร",
@@ -9322,6 +9934,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "breath",
     "meaning_pali": "คติ-หิํสา-<พฺ>ปาณเนสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปสฺสสติ",
       "สมสฺสาเสติ",
@@ -9338,6 +9951,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "slaughter",
     "meaning_pali": "คติ-<พฺ>หิํสา</พฺ>-ปาณเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สสติ",
       "สสตฺถ",
@@ -9354,6 +9968,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "overcome, prevail",
     "meaning_pali": "มริสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สหติ",
       "วิสหติ",
@@ -9370,6 +9985,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be able",
     "meaning_pali": "สตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิสหติ",
       "วิสยฺห"
@@ -9385,6 +10001,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "proclaim, praise",
     "meaning_pali": "ปสํสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปสํสติ",
       "ปาสํส"
@@ -9400,6 +10017,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "wish, desire",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาสํส"
     ],
@@ -9414,6 +10032,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "complete, accomplish",
     "meaning_pali": "สมตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปริโยสาเปติ",
       "สายํ",
@@ -9434,6 +10053,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "taste, relish",
     "meaning_pali": "อสฺสาทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อสฺสาเทติ",
       "สาทิยติ",
@@ -9450,6 +10070,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "accomplish",
     "meaning_pali": "สํสิทฺธิยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สาธุ",
       "สาธุกํ",
@@ -9466,6 +10087,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "taste",
     "meaning_pali": "สายเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สายติ",
       "สายิตฺวา"
@@ -9481,6 +10103,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "order, instruct",
     "meaning_pali": "อนุสิฏฺฐิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สาสติ",
       "อนุสาสนี",
@@ -9497,6 +10120,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "depend on, associate with",
     "meaning_pali": "เสวายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุปเสวติ",
       "อุปนิสา",
@@ -9515,6 +10139,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "bind",
     "meaning_pali": "พนฺธเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "สินาติ",
       "วิสิเนติ",
@@ -9531,6 +10156,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "sharpen",
     "meaning_pali": "นิสาเน",
+    "root_sign_thai": "โณ, ณา",
     "udaharana": [
       "นิสิต"
     ],
@@ -9545,6 +10171,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "smile",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สิต"
     ],
@@ -9559,6 +10186,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "learn, train",
     "meaning_pali": "วิชฺโชปาทาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สิกฺขติ",
       "สิกฺขา",
@@ -9575,6 +10203,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sniff, smell",
     "meaning_pali": "ฆายเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สิงฺฆติ"
     ],
@@ -9589,6 +10218,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "sprinkle, pour",
     "meaning_pali": "ขรเณ / ฆรเณ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "สิญฺจติ",
       "อเสจนก",
@@ -9605,6 +10235,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be white",
     "meaning_pali": "วณฺเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สิต",
       "เสต"
@@ -9620,6 +10251,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "sweat, steam",
     "meaning_pali": "ปาเก",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สิชฺชติ",
       "ปริเสเทติ"
@@ -9635,6 +10267,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be cool",
     "meaning_pali": "สีติเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สีต"
     ],
@@ -9649,6 +10282,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "prevent, prohibit",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นิเสธ"
     ],
@@ -9663,6 +10297,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "succeed, be accomplished",
     "meaning_pali": "สํสิทฺธิยํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สิทฺธิ"
     ],
@@ -9677,6 +10312,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bathe",
     "meaning_pali": "โสเจยฺเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สินาติ",
       "สินาต",
@@ -9693,6 +10329,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "boast",
     "meaning_pali": "กตฺถเน  / กถเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "<ตพฺเล จฺลสฺสฺ='โรโอตฺ_อินฺfโอ'><ตฺโพทฺยฺ><ตฺรฺ><ถฺ>ปาฬิ โรโอตฺ:</ถฺ><ตฺทฺ>สิลาฆฺ<สุปฺ>･</สุปฺ>1 ภูวาทิคณ + อ (โพอสฺตฺ)</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>พเส:</ถฺ><ตฺทฺ>สิลาฆ</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุปาถ:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน  / กถเน</อิ> (โพอสฺตินฺคฺ",
       "เตลฺลินฺคฺ) #30</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ธาตุมญฺชูส:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน</อิ> (โพอสฺตินฺคฺ) #37</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สทฺทนีติ:</ถฺ><ตฺทฺ>สิลาฆ <อิ>กตฺถเน</อิ> (ปฺรอิสินฺคฺ (ปสํสน))</ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>สนฺสฺกฺริตฺ โรโอตฺ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>śลาฆฺ 1 (เอxโตลฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ><ตฺรฺ><ถฺ>ปาณินีย ธาตุปาฐ:</ถฺ><ตฺทฺ><สฺปนฺ จฺลสฺสฺ='คฺรยฺ'>śลาฆฺ ṛ <อิ>กตฺถเน</อิ> (โพอสฺตินฺคฺ)</สฺปนฺ></ตฺทฺ></ตฺรฺ></ตฺโพทฺยฺ></ตพฺเล>"
@@ -9708,6 +10345,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "embrace, cling",
     "meaning_pali": "อาลิงฺคเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สิลิฏฺฐ",
       "สิลิฏฺฐตา"
@@ -9723,6 +10361,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be famous",
     "meaning_pali": "สํฆาเต",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สิโลก"
     ],
@@ -9737,6 +10376,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "remain, distinguish",
     "meaning_pali": "อสพฺพปฺปโยเค",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เสเสติ",
       "เสส",
@@ -9754,6 +10394,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "sew",
     "meaning_pali": "ตนฺตุสนฺตาเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สุตฺต"
     ],
@@ -9768,6 +10409,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "warm",
     "meaning_pali": "คติ-โสสเนสุ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "วิสิพฺพน"
     ],
@@ -9782,6 +10424,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "whistle",
     "meaning_pali": "เสฬเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เสเฬติ"
     ],
@@ -9796,6 +10439,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hope, wish",
     "meaning_pali": "อิจฺฉายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาสิํสติ"
     ],
@@ -9810,6 +10454,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lie, sleep",
     "meaning_pali": "สเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เสติ",
       "สยติ",
@@ -9828,6 +10473,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "conduct oneself",
     "meaning_pali": "สมาธิมฺหิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สีล",
       "สีลน",
@@ -9844,6 +10490,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "hear",
     "meaning_pali": "สวเน",
+    "root_sign_thai": "โณ, ณา",
     "udaharana": [
       "สุณาติ",
       "โสต",
@@ -9862,6 +10509,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "flow",
     "meaning_pali": "ปสฺสวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สวติ",
       "โสต",
@@ -9879,6 +10527,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "extract, distil",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สุรา"
     ],
@@ -9893,6 +10542,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "generate, beget",
     "meaning_pali": "ปสเว",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สุตา"
     ],
@@ -9907,6 +10557,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "please, be comfortable",
     "meaning_pali": "ตกฺริเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สุขี",
       "สุข"
@@ -9922,6 +10573,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "grieve",
     "meaning_pali": "โสเก",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "โสจติ",
       "สุจิ",
@@ -9938,6 +10590,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be pure, be bright",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สุจิ",
       "โสเจยฺย"
@@ -9953,6 +10606,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be pure",
     "meaning_pali": "โสเจยฺเย",
+    "root_sign_thai": "ย",
     "udaharana": [
       "ปริสุชฺฌติ",
       "วิสุทฺธ",
@@ -9969,6 +10623,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "lie down, sleep",
     "meaning_pali": "สเย",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สุปติ",
       "สุปิน",
@@ -9985,6 +10640,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, adorn",
     "meaning_pali": "โสภเน",
+    "root_sign_thai": "*อ",
     "udaharana": [
       "โสภติ",
       "โสภน",
@@ -10001,6 +10657,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "throw, strike",
     "meaning_pali": "สํสุมฺภเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อุปสุมฺภติ"
     ],
@@ -10015,6 +10672,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine, be supreme",
     "meaning_pali": "อิสฺสริย-ทิตฺตีสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สูร",
       "อสุร"
@@ -10030,6 +10688,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "dry, wither",
     "meaning_pali": "โสสเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สุกฺข"
     ],
@@ -10044,6 +10703,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "indicate",
     "meaning_pali": "เปสุญฺเญ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สูจยติ"
     ],
@@ -10058,6 +10718,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "set in order",
     "meaning_pali": "ขรเณ / ฆรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สูทนี"
     ],
@@ -10072,6 +10733,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "serve, associate",
     "meaning_pali": "เสวเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "เสวนา"
     ],
@@ -10086,6 +10748,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "love, be moist",
     "meaning_pali": "ปีณเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สฺเนห"
     ],
@@ -10100,6 +10763,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "dance, jump",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วคฺคุ?"
     ],
@@ -10114,6 +10778,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "say, speak",
     "meaning_pali": "วฺยตฺตวจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปวุจฺจติ",
       "อโวจ",
@@ -10131,6 +10796,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go on",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปพฺพชติ",
       "ปพฺพชา",
@@ -10147,6 +10813,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "turn, avoid",
     "meaning_pali": "วชฺชเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วชฺเชติ",
       "วชฺช",
@@ -10163,6 +10830,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be bent, deceive",
     "meaning_pali": "ปลมฺภเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วญฺเจติ",
       "วญฺจน"
@@ -10178,6 +10846,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go around",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วญฺจติ",
       "อวญฺจน"
@@ -10193,6 +10862,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "divide",
     "meaning_pali": "วิภชเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วฏ"
     ],
@@ -10207,6 +10877,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "turn",
     "meaning_pali": "วฏฺฏเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วฏฺฏติ",
       "วิวฏฺฏ",
@@ -10223,6 +10894,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "grow, increase",
     "meaning_pali": "วฑฺฒเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปวฑฺฒติ",
       "สํวฑฺฒ"
@@ -10238,6 +10910,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "injure, wound",
     "meaning_pali": "คตฺตวิจุณฺณเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วณ"
     ],
@@ -10252,6 +10925,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "praise",
     "meaning_pali": "วณฺณเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "สํวณฺเณติ",
       "วณฺณิต",
@@ -10268,6 +10942,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be, proceed",
     "meaning_pali": "วตฺตเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วต"
     ],
@@ -10282,6 +10957,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be, proceed",
     "meaning_pali": "วตฺตเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สํวตฺตติ",
       "สมติวตฺตติ",
@@ -10302,6 +10978,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "say, speak",
     "meaning_pali": "วจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วาทก",
       "วตฺตุ",
@@ -10320,6 +10997,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "salute, praise",
     "meaning_pali": "อภิวาท โถเมสุ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อภิวาเทติ",
       "วิสํวาทน"
@@ -10335,6 +11013,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "grow, increase",
     "meaning_pali": "วุทฺธิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วุทฺธิ"
     ],
@@ -10349,6 +11028,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "hurt, slaughter",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "อตฺถรณ"
     ],
@@ -10363,6 +11043,7 @@ export const dpdRoots = [
     "group_roman": "tanādigaṇa",
     "meaning_thai": "like, desire",
     "meaning_pali": "ยาจเน",
+    "root_sign_thai": "โอ",
     "udaharana": [
       "วนถ"
     ],
@@ -10377,6 +11058,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "bow, honour",
     "meaning_pali": "อภิวาทน-ตฺถุติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วนฺทติ",
       "วนฺทน"
@@ -10392,6 +11074,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sow, shave",
     "meaning_pali": "พีชนิกฺเขเป",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วปติ",
       "อุทฺทาป"
@@ -10407,6 +11090,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "eject, vomit",
     "meaning_pali": "อุคฺคิรเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วมติ",
       "วมถุ"
@@ -10422,6 +11106,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "despise",
     "meaning_pali": "ครหายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วมฺเภติ"
     ],
@@ -10436,6 +11121,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "cover, dress, restrain",
     "meaning_pali": "วรณ-สมฺภตฺติสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สํวรติ",
       "วิวรติ",
@@ -10454,6 +11140,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wish, choose",
     "meaning_pali": "อาวรณฺ’-<พฺ>อิจฺฉาสุ</พฺ>",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปวาเรติ",
       "ปวารณา",
@@ -10470,6 +11157,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "turn",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วลฺลี"
     ],
@@ -10484,6 +11172,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "turn",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วลฺลี"
     ],
@@ -10498,6 +11187,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "live",
     "meaning_pali": "กนฺติ-<พฺ>นิวาเสสุ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วสติ",
       "อชฺฌาวสติ",
@@ -10516,6 +11206,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wear, dress",
     "meaning_pali": "อจฺฉาทเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "นิวาเสติ",
       "วตฺถ",
@@ -10532,6 +11223,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "want, control",
     "meaning_pali": "<พฺ>กนฺติ</พฺ>-นิวาเสสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วส",
       "อวสฺสํ"
@@ -10547,6 +11239,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rain",
     "meaning_pali": "<พฺ>เสจน</พฺ>-สทฺทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วสฺสติ",
       "วสฺสาน",
@@ -10563,6 +11256,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "howl, roar, bark",
     "meaning_pali": "เสจน-สทฺทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วสฺสติ",
       "วสฺสมาน"
@@ -10578,6 +11272,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "carry, bring",
     "meaning_pali": "ปาปุณเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วหติ",
       "วุยฺหติ",
@@ -10594,6 +11289,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "use",
     "meaning_pali": "วลญฺชเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วฬญฺชนก"
     ],
@@ -10608,6 +11304,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "blow, emit odour",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปวาติ",
       "วาย",
@@ -10626,6 +11323,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "perfume",
     "meaning_pali": "อลงฺกาเร",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วาสิต"
     ],
@@ -10640,6 +11338,7 @@ export const dpdRoots = [
     "group_roman": "kiyādigaṇa",
     "meaning_thai": "weave",
     "meaning_pali": "ตนฺตุสนฺตาเน",
+    "root_sign_thai": "นา",
     "udaharana": [
       "วินาติ"
     ],
@@ -10654,6 +11353,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "separate",
     "meaning_pali": "วิเจจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิวิตฺต",
       "วิเวก",
@@ -10670,6 +11370,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "shake, be afraid, be in awe",
     "meaning_pali": "<พฺ>ภย</พฺ>-จลเนสุ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "สํวิชฺชติ",
       "สํเวค"
@@ -10685,6 +11386,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "know, sense, feel",
     "meaning_pali": "ญาเณ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "เวเทติ",
       "เวทนา",
@@ -10701,6 +11403,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "know",
     "meaning_pali": "ญาเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิทู",
       "ปเวเทติ",
@@ -10717,6 +11420,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "feel, like",
     "meaning_pali": "ตุฏฺฐิยํ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "วินฺทติ",
       "นิพฺพิทา",
@@ -10733,6 +11437,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "get, find",
     "meaning_pali": "ลาเภ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "วินฺทติ",
       "วิตฺต"
@@ -10748,6 +11453,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "know, understand",
     "meaning_pali": "สตฺตา-<พฺ>วิจินนฺเต</พฺ>",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อนุวิชฺชติ",
       "วิชฺชา",
@@ -10764,6 +11470,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be found, exist",
     "meaning_pali": "สตฺตายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "วิชฺชติ",
       "สํวิชฺชมาน"
@@ -10779,6 +11486,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "throw, pierce",
     "meaning_pali": "เวธเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "อภินิพฺพิชฺฌติ",
       "ปฏิเวธ"
@@ -10794,6 +11502,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "enter",
     "meaning_pali": "ปเวสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปวิสติ",
       "นิพฺพิสติ",
@@ -10813,6 +11522,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be active, serve",
     "meaning_pali": "ปเวส-<พฺ>ผรเณ</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิส"
     ],
@@ -10827,6 +11537,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "go",
     "meaning_pali": "คมเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปฏิวาเปติ"
     ],
@@ -10841,6 +11552,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fan",
     "meaning_pali": "วีชเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "พีชิยมาน"
     ],
@@ -10855,6 +11567,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "be heroic, be hostile",
     "meaning_pali": "วิกฺกนฺติยํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วีร",
       "วีริย"
@@ -10870,6 +11583,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "weave, cover",
     "meaning_pali": "สํวรเณ",
+    "root_sign_thai": "โณ, ณา",
     "udaharana": [
       "อาวุณาติ"
     ],
@@ -10884,6 +11598,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "weave",
     "meaning_pali": "ตนฺตุสนฺตาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วายติ",
       "อาเวณิก"
@@ -10899,6 +11614,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "wind, twist",
     "meaning_pali": "เวฐเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ปลิเวเฐติ"
     ],
@@ -10913,6 +11629,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, fear",
     "meaning_pali": "",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปเวธติ"
     ],
@@ -10927,6 +11644,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shake, sway",
     "meaning_pali": "จลเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปเวลิยมาน"
     ],
@@ -10941,6 +11659,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "fear, shake",
     "meaning_pali": "ทุกฺข-ภย-จลเนสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปเวธติ"
     ],
@@ -10955,6 +11674,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "strike, pierce",
     "meaning_pali": "ตาฬเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "วฺยาธ"
     ],
@@ -10969,6 +11689,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "call, name",
     "meaning_pali": "อวฺหาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อวฺหยติ",
       "อวฺหาน"
@@ -10984,6 +11705,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "excrete",
     "meaning_pali": "<พฺ>อุจฺจาร อุสฺสคฺเค</พฺ> จินฺตายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "หทติ"
     ],
@@ -10998,6 +11720,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "strike, kill",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "หนติ",
       "หญฺญติ",
@@ -11014,6 +11737,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "carry",
     "meaning_pali": "หรณมฺหิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นีหรติ",
       "อาหรติ",
@@ -11031,6 +11755,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "take, seize",
     "meaning_pali": "หรณมฺหิ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปหรติ",
       "หร",
@@ -11047,6 +11772,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "live",
     "meaning_pali": "หรเณ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "วิหรติ",
       "วิหาร",
@@ -11063,6 +11789,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be ashamed",
     "meaning_pali": "ลชฺชายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "หรายติ"
     ],
@@ -11077,6 +11804,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "elate, laugh",
     "meaning_pali": "หสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปหสติ",
       "หสฺสติ",
@@ -11094,6 +11822,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "rise, elate",
     "meaning_pali": "ตุฏฺฐิยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ปหํสติ",
       "สมฺปหํสน"
@@ -11109,6 +11838,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "abandon",
     "meaning_pali": "จาเค",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชหติ",
       "วิหายติ",
@@ -11127,6 +11857,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "decrease",
     "meaning_pali": "ปริหาเน",
+    "root_sign_thai": "ย",
     "udaharana": [
       "หายติ",
       "หานิ",
@@ -11144,6 +11875,7 @@ export const dpdRoots = [
     "group_roman": "svādigaṇa",
     "meaning_thai": "send",
     "meaning_pali": "คติมฺหิ",
+    "root_sign_thai": "โณ, ณา",
     "udaharana": [
       "ปหิณาติ",
       "ปหิณน"
@@ -11159,6 +11891,7 @@ export const dpdRoots = [
     "group_roman": "tanādigaṇa",
     "meaning_thai": "impel",
     "meaning_pali": "คติยํ",
+    "root_sign_thai": "โอ",
     "udaharana": [
       "เหตุ"
     ],
@@ -11173,6 +11906,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "roam, wander",
     "meaning_pali": "อาหิณฺฑเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "อาหิณฺฑติ"
     ],
@@ -11187,6 +11921,7 @@ export const dpdRoots = [
     "group_roman": "divādigaṇa",
     "meaning_thai": "be ashamed",
     "meaning_pali": "ลชฺชายํ",
+    "root_sign_thai": "ย",
     "udaharana": [
       "หิริ"
     ],
@@ -11201,6 +11936,7 @@ export const dpdRoots = [
     "group_roman": "rudhādigaṇa",
     "meaning_thai": "hurt, harm",
     "meaning_pali": "หิํสายํ",
+    "root_sign_thai": "ํ",
     "udaharana": [
       "หิํสติ",
       "อหิํส",
@@ -11217,6 +11953,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "scorn",
     "meaning_pali": "นินฺทายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "หีเฬติ"
     ],
@@ -11231,6 +11968,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "pour, offer as oblation",
     "meaning_pali": "ทาเน อปิ จ อาทาเน <พฺ>หวฺยทาเน</พฺ>",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ชุหติ",
       "หุต",
@@ -11248,6 +11986,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "be",
     "meaning_pali": "สตฺตายํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โหติ",
       "อหุ",
@@ -11264,6 +12003,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "harass, annoy",
     "meaning_pali": "พาธายํ",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "วิเหเฐติ",
       "วิเหฐ",
@@ -11280,6 +12020,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "mock, ridicule",
     "meaning_pali": "ปหสเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "สธายมาน"
     ],
@@ -11294,6 +12035,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "hurt, harm",
     "meaning_pali": "สูจเน <พฺ>อทฺทเน<พฺ>",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "คนฺธน"
     ],
@@ -11308,6 +12050,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "bind",
     "meaning_pali": "สํโกจเน",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ยนฺตฺร"
     ],
@@ -11322,6 +12065,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "sprinkle, pour",
     "meaning_pali": "เสจเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "โอกฺขิต"
     ],
@@ -11336,6 +12080,7 @@ export const dpdRoots = [
     "group_roman": "curādigaṇa",
     "meaning_thai": "collect, accumulate",
     "meaning_pali": "",
+    "root_sign_thai": "เอ, อย",
     "udaharana": [
       "ขนฺธ"
     ],
@@ -11350,6 +12095,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "hiccup",
     "meaning_pali": "อพฺยตฺตสทฺเท",
+    "root_sign_thai": "อ",
     "udaharana": [
       "หิกฺกา"
     ],
@@ -11364,6 +12110,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "take",
     "meaning_pali": "อาทาเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ลาติ"
     ],
@@ -11378,6 +12125,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "shine",
     "meaning_pali": "ทิตฺติยํ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "หฏก"
     ],
@@ -11392,6 +12140,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "beg",
     "meaning_pali": "ยาจนาทีสุ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "นาธติ"
     ],
@@ -11406,6 +12155,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "harm, destroy",
     "meaning_pali": "หิํสตฺเถ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "มสนา"
     ],
@@ -11420,6 +12170,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "suffers",
     "meaning_pali": "วิกิรเณ วิธุนเน จ",
+    "root_sign_thai": "อ",
     "udaharana": [
       "ผุณติ"
     ],
@@ -11434,6 +12185,7 @@ export const dpdRoots = [
     "group_roman": "bhūvādigaṇa",
     "meaning_thai": "crush",
     "meaning_pali": "มทฺทเน",
+    "root_sign_thai": "อ",
     "udaharana": [
       "กิญฺจติ"
     ],
