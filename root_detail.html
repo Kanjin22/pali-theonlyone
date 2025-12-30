@@ -546,14 +546,17 @@
             if (!text) return "";
             let formatted = typeof text === 'string' ? text : String(text);
 
-            formatted = formatted.replace(/\.(?=[^\s])/g, '. ');
-            formatted = formatted.replace(/,(?=[^\s])/g, ', ');
-            formatted = formatted.replace(/ตีติ(?=[^\s])/g, 'ตีติ ');
-            formatted = formatted.replace(/นฺติ(?=[^\s])/g, 'นฺติ ');
-            formatted = formatted.replace(/\s+/g, ' ');
-            formatted = formatted.trim();
+            formatted = formatted.replace(/\r\n/g, '\n');
+            const partsRaw = formatted.split(/(?:;\s*|\n+)/);
+            const parts = partsRaw.map(p => p.trim()).filter(p => p.length > 0).map(p => {
+                let t = p;
+                t = t.replace(/\.(?=\S)/g, '. ');
+                t = t.replace(/,(?=\S)/g, ', ');
+                t = t.replace(/ตีติ(?=\S)/g, 'ตีติ ');
+                t = t.replace(/นฺติ(?=\S)/g, 'นฺติ ');
+                return t;
+            });
 
-            const parts = formatted.split(/[;\r\n]+/).map(p => p.trim()).filter(p => p.length > 0);
             if (parts.length <= 1) return formatted;
             return parts.join('<br>');
         }
