@@ -136,9 +136,9 @@ def main():
         print(f"Running: {' '.join(cmd)}")
         try:
             subprocess.run(cmd, check=True, shell=True) # shell=True for node/python in some envs
-            print(f"✓ {' '.join(cmd)} completed.")
+            print(f"[OK] {' '.join(cmd)} completed.")
         except subprocess.CalledProcessError as e:
-            print(f"✗ Error running {cmd}: {e}")
+            print(f"[ERROR] Error running {cmd}: {e}")
             success = False
             
     if success:
