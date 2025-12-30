@@ -459,7 +459,7 @@
                 { value: 'คห', label: 'คหาทิคณะ (หมวด คห)' },
                 { value: 'ตน', label: 'ตนาทิคณะ (หมวด ตน)' },
                 { value: 'จุร', label: 'จุราทิคณะ (หมวด จุร)' },
-                { value: 'aneka', label: 'อเนกคณิกธาตุ (Aneka)' }
+                { value: 'aneka', label: 'อเนกคณิกธาตุ' }
             ];
 
             // Clear existing options first (except the first one if it was hardcoded, but here we replace all)
@@ -575,12 +575,12 @@
                     // Group Color Logic
                     const groupColors = {
                         "ภู (อ)": "#27ae60",      // Green
-                        "รุธ (อ-เอ)": "#c0392b",  // Red
+                        "รุธ (ํอ)": "#c0392b",  // Red
                         "ทิว (ย)": "#2980b9",     // Blue
-                        "สุ (ณุ ณา)": "#8e44ad",  // Purple
+                        "สุ (ณุ ณา อุณา)": "#8e44ad",  // Purple
                         "กี (นา)": "#d35400",     // Orange
-                        "คห (ณฺหา)": "#16a085",   // Teal
-                        "ตน (โอ)": "#f39c12",     // Yellow/Gold
+                        "คห (ณฺหา ปฺป)": "#16a085",   // Teal
+                        "ตน (โอ ยิร)": "#f39c12",     // Yellow/Gold
                         "จุร (เณ ณย)": "#2c3e50"  // Dark Blue/Grey
                     };
                     // Default color if not matched (or partial match)
@@ -596,12 +596,12 @@
                     } else if (entry.group) {
                          // Simple substring match for flexibility
                          if (entry.group.includes("ภู")) headerColor = groupColors["ภู (อ)"];
-                         else if (entry.group.includes("รุธ")) headerColor = groupColors["รุธ (อ-เอ)"];
+                         else if (entry.group.includes("รุธ")) headerColor = groupColors["รุธ (ํอ)"];
                          else if (entry.group.includes("ทิว")) headerColor = groupColors["ทิว (ย)"];
-                         else if (entry.group.includes("สุ")) headerColor = groupColors["สุ (ณุ ณา)"];
+                         else if (entry.group.includes("สุ")) headerColor = groupColors["สุ (ณุ ณา อุณา)"];
                          else if (entry.group.includes("กี")) headerColor = groupColors["กี (นา)"];
-                         else if (entry.group.includes("คห")) headerColor = groupColors["คห (ณฺหา)"];
-                         else if (entry.group.includes("ตน")) headerColor = groupColors["ตน (โอ)"];
+                         else if (entry.group.includes("คห")) headerColor = groupColors["คห (ณฺหา ปฺป)"];
+                         else if (entry.group.includes("ตน")) headerColor = groupColors["ตน (โอ ยิร)"];
                          else if (entry.group.includes("จุร")) headerColor = groupColors["จุร (เณ ณย)"];
                     }
 
