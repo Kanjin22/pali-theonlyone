@@ -1715,16 +1715,22 @@
 
         function switchTab(tab) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            event.target.classList.add('active');
+            if (typeof event !== 'undefined' && event.target) {
+                const link = event.target.closest('.nav-link');
+                if (link) link.classList.add('active');
+            }
 
-            document.getElementById('tab-enrollments').classList.add('hidden');
-            document.getElementById('tab-members').classList.add('hidden');
-            document.getElementById('tab-classes').classList.add('hidden');
-            document.getElementById('tab-pins').classList.add('hidden');
-            document.getElementById('tab-roots').classList.add('hidden');
-            document.getElementById('tab-dpdupdate').classList.add('hidden');
+            const tabs = ['enrollments', 'members', 'classes', 'pins', 'roots', 'dpdupdate'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.add('hidden');
+            });
 
-            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tab-${tab}`);
+            if (activeTab) {
+                activeTab.classList.remove('hidden');
+                activeTab.style.display = 'block'; // Ensure visibility
+            }
             
             // Auto load roots if switching to roots tab and empty
             if (tab === 'roots') {
@@ -1733,6 +1739,18 @@
                     loadRoots();
                 }
             } else if (tab === 'dpdupdate') {
+                // Ensure sub-tab visibility
+                const subDash = document.getElementById('subtab-dashboard');
+                if (subDash && !document.getElementById('subtab-system').classList.contains('active-sub')) {
+                    // Default to dashboard if not specified, or just ensure it is shown if system is not active?
+                    // Simpler: Just refresh stats. If subtabs are hidden, the user can click them. 
+                    // But wait, if both are hidden, it's blank.
+                    const dashHidden = subDash.classList.contains('hidden');
+                    const sysHidden = document.getElementById('subtab-system').classList.contains('hidden');
+                    if (dashHidden && sysHidden) {
+                        switchSubTab('dashboard');
+                    }
+                }
                 refreshDPDStats();
                 refreshRawFilesStats();
             }
