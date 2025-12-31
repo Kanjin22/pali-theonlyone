@@ -608,6 +608,59 @@
                             <button class="btn btn-info" onclick="showManualUpdateGuide()">
                                 <i class="fa-solid fa-book"></i> คู่มือการอัปเดต (Manual Guide)
                             </button>
+                            <button class="btn btn-success" onclick="showAutomatedSetupGuide()">
+                                <i class="fa-solid fa-robot"></i> คู่มือระบบอัตโนมัติ (Automated Setup)
+                            </button>
+                        </div>
+
+                        <!-- Automated Setup Guide Modal -->
+                        <div id="automatedSetupModal" class="modal">
+                            <div class="modal-content" style="max-width: 800px;">
+                                <span class="close" onclick="closeAutomatedSetupGuide()">&times;</span>
+                                <h2>การตั้งค่าระบบอัปเดตอัตโนมัติ (GitHub Actions)</h2>
+                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
+                                    <p>ระบบนี้จะทำการอัปเดตแอปโดยอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูลในโฟลเดอร์ <code>data/</code> ของ PaliDict (theonlyone)</p>
+                                    
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. สร้าง Personal Access Token (PAT)</h3>
+                                    <ul>
+                                        <li>ไปที่ GitHub Settings > Developer settings > Personal access tokens > Tokens (classic)</li>
+                                        <li>สร้าง Token ใหม่ เลือก scope <strong>repo</strong> (Full control of private repositories)</li>
+                                        <li>คัดลอก Token นี้เก็บไว้</li>
+                                    </ul>
+
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. เพิ่ม Secret ใน GitHub</h3>
+                                    <p>ต้องเพิ่ม Secret ชื่อ <code>GH_PAT</code> (ค่าคือ Token จากข้อ 1) ในทั้ง 2 Repositories:</p>
+                                    <ul>
+                                        <li><strong>pali-dhatu-app:</strong> Settings > Secrets and variables > Actions > New Repository Secret</li>
+                                        <li><strong>pali-theonlyone:</strong> Settings > Secrets and variables > Actions > New Repository Secret</li>
+                                    </ul>
+
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. การทำงานของระบบ (PaliDict -> App)</h3>
+                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                        1. คุณแก้ไขไฟล์ใน folder data/ ของ pali-theonlyone และ Push ขึ้น GitHub<br>
+                                        2. GitHub Actions ฝั่ง theonlyone จะทำงานและส่งสัญญาณ (Trigger) ไปยัง pali-dhatu-app<br>
+                                        3. pali-dhatu-app จะเริ่มทำงาน:<br>
+                                           - Checkout โค้ดตัวเอง<br>
+                                           - Checkout ข้อมูลจาก pali-theonlyone<br>
+                                           - รัน sync-data (แปลงไฟล์)<br>
+                                           - อัปโหลดขึ้น Firestore<br>
+                                           - Build และ Deploy ขึ้นเว็บทันที
+                                    </div>
+
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. การตั้งค่า Reverse Sync (App -> PaliDict)</h3>
+                                    <p>เพื่อให้ PaliDict รับรู้เมื่อมีการแก้ไขข้อมูลในแอป (ผ่าน Firestore) ต้องตั้งค่า Cloud Functions ฝั่งแอป:</p>
+                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                        firebase functions:config:set github.token="YOUR_GH_PAT" github.owner="YOUR_USERNAME" github.repo="pali-theonlyone"
+                                    </div>
+                                    <p style="font-size: 0.9em; margin-top: 5px;">* ใช้ Token ตัวเดียวกับข้อ 1 ได้เลย (ต้องมีสิทธิ์ repo)</p>
+                                    <p>เมื่อตั้งค่าเสร็จ ระบบจะส่งสัญญาณมาที่ PaliDict ทุกครั้งที่มีการแก้ไขธาตุในแอป</p>
+                                    
+                                    <p style="color: green; font-weight: bold; margin-top: 10px;">* ไม่ต้องเปิดคอมพิวเตอร์ทิ้งไว้ ระบบทำงานบน Cloud ทั้งหมด</p>
+                                </div>
+                                <div style="margin-top: 20px; text-align: right;">
+                                    <button class="btn btn-secondary" onclick="closeAutomatedSetupGuide()">ปิด</button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Manual Update Guide Modal -->
@@ -1625,6 +1678,14 @@
 
         function closeManualUpdateGuide() {
             document.getElementById('manualUpdateModal').style.display = 'none';
+        }
+
+        function showAutomatedSetupGuide() {
+            document.getElementById('automatedSetupModal').style.display = 'block';
+        }
+
+        function closeAutomatedSetupGuide() {
+            document.getElementById('automatedSetupModal').style.display = 'none';
         }
 
         async function pingServer() {

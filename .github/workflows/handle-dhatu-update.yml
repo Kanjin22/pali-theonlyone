@@ -1,0 +1,16 @@
+name: On Dhatu Updated
+on:
+  repository_dispatch:
+    types: [dhatu-updated]
+
+jobs:
+  handle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print payload
+        run: |
+          echo "Dhatu ID: ${{ github.event.client_payload.dhatuId }}"
+          echo "Before: ${{ toJson(github.event.client_payload.before) }}"
+          echo "After: ${{ toJson(github.event.client_payload.after) }}"
+      - name: Log update
+        run: echo "Received dhatu update event"
