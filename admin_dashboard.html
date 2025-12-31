@@ -611,6 +611,9 @@
                             <button class="btn btn-success" onclick="showAutomatedSetupGuide()">
                                 <i class="fa-solid fa-robot"></i> คู่มือระบบอัตโนมัติ (Automated Setup)
                             </button>
+                            <button class="btn btn-secondary" onclick="showDataFlowGuide()">
+                                <i class="fa-solid fa-diagram-project"></i> สรุปผังข้อมูล (Data Flow)
+                            </button>
                         </div>
 
                         <!-- Automated Setup Guide Modal -->
@@ -659,6 +662,37 @@
                                 </div>
                                 <div style="margin-top: 20px; text-align: right;">
                                     <button class="btn btn-secondary" onclick="closeAutomatedSetupGuide()">ปิด</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Flow Summary Modal -->
+                        <div id="dataFlowModal" class="modal">
+                            <div class="modal-content" style="max-width: 800px;">
+                                <span class="close" onclick="closeDataFlowGuide()">&times;</span>
+                                <h2>สรุปผังการไหลของข้อมูล (Data Flow)</h2>
+                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 10px;">บทบาทโปรเจกต์</h3>
+                                    <ul>
+                                        <li><strong>theonlyone</strong> (คลังศัพท์/การสอน): เก็บไฟล์ดิบทั้งหมดใน <code>data/raw/</code></li>
+                                        <li><strong>theDhatu</strong> (แอปธาตุ): ใช้งาน/ค้นหา/อัปโหลดขึ้น Firebase</li>
+                                    </ul>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">แหล่งข้อมูลร่วม</h3>
+                                    <ul>
+                                        <li>general-dpd: <a href="data/raw/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
+                                        <li>roots-dpd: <a href="data/raw/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
+                                        <li>tananunto: <a href="data/raw/vocab-tananunto.js">vocab-tananunto.js</a></li>
+                                        <li>roots-firebase: <a href="data/raw/vocab-roots-firebase.js">vocab-roots-firebase.js</a></li>
+                                    </ul>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">ทิศทางการปรับข้อมูล</h3>
+                                    <div style="background:#f4f4f4; padding:10px; border-radius:5px; font-family:monospace;">
+                                        theonlyone → theDhatu: general-dpd, roots-dpd, tananunto (ผ่าน sync-data และ import DPD ตอน deploy)<br>
+                                        theDhatu → theonlyone: roots-firebase (แก้ในแอป แล้วแจ้งกลับด้วย Cloud Functions)
+                                    </div>
+                                    <p style="color:#b35c00; margin-top:10px;">* ปิดการ Import roots-firebase อัตโนมัติใน Workflow deploy/preview เพื่อป้องกันข้อมูล Firestore ถูกทับ</p>
+                                </div>
+                                <div style="margin-top: 20px; text-align: right;">
+                                    <button class="btn btn-secondary" onclick="closeDataFlowGuide()">ปิด</button>
                                 </div>
                             </div>
                         </div>
@@ -1686,6 +1720,14 @@
 
         function closeAutomatedSetupGuide() {
             document.getElementById('automatedSetupModal').style.display = 'none';
+        }
+
+        function showDataFlowGuide() {
+            document.getElementById('dataFlowModal').style.display = 'block';
+        }
+
+        function closeDataFlowGuide() {
+            document.getElementById('dataFlowModal').style.display = 'none';
         }
 
         async function pingServer() {
