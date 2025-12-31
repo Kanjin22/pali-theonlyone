@@ -21,6 +21,11 @@ admin.initializeApp({
 
 const app = express();
 app.use(cors());
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
+});
 app.use(express.json());
 
 const defaultAdmins = ['pali.theonlyone@gmail.com','setthachayo@gmail.com'];
