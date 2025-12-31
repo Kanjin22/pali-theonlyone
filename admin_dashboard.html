@@ -527,18 +527,31 @@
 
         <!-- Tab: DPD Update -->
         <div id="tab-dpdupdate" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn btn-secondary" onclick="refreshDPDStats()">
-                            <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
-                        </button>
+            
+            <!-- Sub-Tab Navigation -->
+            <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; display: flex; gap: 5px;">
+                <button class="btn" onclick="switchSubTab('dashboard')" id="btn-sub-dashboard" style="border-radius: 5px 5px 0 0; background: #fff; color: #3498db; border: 1px solid #ddd; border-bottom: 1px solid #fff; margin-bottom: -1px;">
+                    <i class="fa-solid fa-gauge"></i> Dashboard
+                </button>
+                <button class="btn" onclick="switchSubTab('system')" id="btn-sub-system" style="border-radius: 5px 5px 0 0; background: #f8f9fa; color: #7f8c8d; border: 1px solid transparent;">
+                    <i class="fa-solid fa-server"></i> System Update
+                </button>
+            </div>
+
+            <!-- Sub-Tab: Dashboard -->
+            <div id="subtab-dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-secondary" onclick="refreshDPDStats()">
+                                <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <!-- 1. Status Grid -->
-                    <div class="stat-grid" style="margin-bottom:20px;">
+                    <div class="card-body">
+                        <!-- 1. Status Grid -->
+                        <div class="stat-grid" style="margin-bottom:20px;">
                         <!-- Latest Version (GitHub) -->
                         <div class="stat-card">
                             <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
@@ -622,7 +635,7 @@
                                 <span class="close" onclick="closeAutomatedSetupGuide()">&times;</span>
                                 <h2>การตั้งค่าระบบอัปเดตอัตโนมัติ (GitHub Actions)</h2>
                                 <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
-                                    <p>ระบบนี้จะทำการอัปเดตแอปโดยอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูลในโฟลเดอร์ <code>data/</code> ของ PaliDict (theonlyone)</p>
+                                    <p>ระบบนี้จะทำการอัปเดตแอปโดยอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูลในโฟลเดอร์ <code>data/</code> ของ Pali TheOnlyone (theonlyone)</p>
                                     
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. สร้าง Personal Access Token (PAT)</h3>
                                     <ul>
@@ -638,7 +651,7 @@
                                         <li><strong>pali-theonlyone:</strong> Settings > Secrets and variables > Actions > New Repository Secret</li>
                                     </ul>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. การทำงานของระบบ (PaliDict -> App)</h3>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. การทำงานของระบบ (Pali TheOnlyone -> App)</h3>
                                     <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
                                         1. คุณแก้ไขไฟล์ใน folder data/ ของ pali-theonlyone และ Push ขึ้น GitHub<br>
                                         2. GitHub Actions ฝั่ง theonlyone จะทำงานและส่งสัญญาณ (Trigger) ไปยัง pali-dhatu-app<br>
@@ -650,13 +663,13 @@
                                            - Build และ Deploy ขึ้นเว็บทันที
                                     </div>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. การตั้งค่า Reverse Sync (App -> PaliDict)</h3>
-                                    <p>เพื่อให้ PaliDict รับรู้เมื่อมีการแก้ไขข้อมูลในแอป (ผ่าน Firestore) ต้องตั้งค่า Cloud Functions ฝั่งแอป:</p>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. การตั้งค่า Reverse Sync (App -> Pali TheOnlyone)</h3>
+                                    <p>เพื่อให้ Pali TheOnlyone รับรู้เมื่อมีการแก้ไขข้อมูลในแอป (ผ่าน Firestore) ต้องตั้งค่า Cloud Functions ฝั่งแอป:</p>
                                     <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
                                         firebase functions:config:set github.token="YOUR_GH_PAT" github.owner="YOUR_USERNAME" github.repo="pali-theonlyone"
                                     </div>
                                     <p style="font-size: 0.9em; margin-top: 5px;">* ใช้ Token ตัวเดียวกับข้อ 1 ได้เลย (ต้องมีสิทธิ์ repo)</p>
-                                    <p>เมื่อตั้งค่าเสร็จ ระบบจะส่งสัญญาณมาที่ PaliDict ทุกครั้งที่มีการแก้ไขธาตุในแอป</p>
+                                    <p>เมื่อตั้งค่าเสร็จ ระบบจะส่งสัญญาณมาที่ Pali TheOnlyone ทุกครั้งที่มีการแก้ไขธาตุในแอป</p>
                                     
                                     <p style="color: green; font-weight: bold; margin-top: 10px;">* ไม่ต้องเปิดคอมพิวเตอร์ทิ้งไว้ ระบบทำงานบน Cloud ทั้งหมด</p>
                                 </div>
@@ -687,7 +700,7 @@
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">ทิศทางการปรับข้อมูล</h3>
                                     <div style="background:#f4f4f4; padding:10px; border-radius:5px; font-family:monospace;">
                                         theonlyone → theDhatu: general-dpd, roots-dpd, tananunto (ผ่าน sync-data และ import DPD ตอน deploy)<br>
-                                        theDhatu → theonlyone: roots-firebase (แก้ในแอป แล้วแจ้งกลับด้วย Cloud Functions)
+                                        theDhatu → theonlyone: roots-firebase (แก้ในแอป -> Webhook -> Auto Commit)
                                     </div>
                                     <p style="color:#b35c00; margin-top:10px;">* ปิดการ Import roots-firebase อัตโนมัติใน Workflow deploy/preview เพื่อป้องกันข้อมูล Firestore ถูกทับ</p>
                                 </div>
@@ -856,7 +869,7 @@
                                 <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
                                     <p>หากต้องทำการอัปเดตด้วยตนเอง (กรณีระบบอัตโนมัติไม่ทำงาน หรือต้องการตรวจสอบทุกขั้นตอน) ให้ทำตามลำดับดังนี้:</p>
                                     
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. ฝั่ง PaliDict (เตรียมไฟล์ข้อมูล)</h3>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. ฝั่ง theonlyone (เตรียมไฟล์ข้อมูล)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-theonlyone</code> เพื่อสร้างไฟล์:</p>
                                     <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
                                         # 1. สร้างข้อมูล DPD (Auto)<br>
@@ -870,9 +883,9 @@
                                     <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 7 ไฟล์ใน <code>data/raw/</code> (รวมถึง <code>vocab-roots-firebase.js</code>)</p>
 
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
-                                    <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก PaliDict ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ Pali Dhatu App</p>
+                                    <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. ฝั่ง Pali Dhatu App (ประมวลผลและอัปโหลด)</h3>
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. ฝั่ง theDhatu (ประมวลผลและอัปโหลด)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-dhatu-app</code>:</p>
                                     <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
                                         # 1. แปลงข้อมูลและ Sync (Convert)<br>
@@ -901,7 +914,50 @@
                         <pre id="dpdReportContentTab" style="max-height:400px; overflow:auto; background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; font-family:monospace; white-space: pre-wrap;">ยังไม่มีรายงาน</pre>
                     </div>
 
-                    <div class="card" style="margin-top: 25px;">
+                </div>
+            </div>
+            
+            <!-- Sub-Tab: System Update -->
+            <div id="subtab-system" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="fa-solid fa-heart-pulse"></i> สถานะระบบ (System Health)</span>
+                        <button class="btn btn-secondary" onclick="loadSystemHealth()">
+                            <i class="fa-solid fa-rotate"></i> รีเฟรช
+                        </button>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>ผู้ใช้งานทั้งหมด</div>
+                                <div id="sys-health-users">Checking...</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>ห้องเรียนทั้งหมด</div>
+                                <div id="sys-health-classrooms">Checking...</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
+                                <i class="fa-solid fa-thumbtack"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div>Active Pins</div>
+                                <div id="sys-health-pins">Checking...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="card">
                         <div class="card-header">
                             <span><i class="fa-solid fa-server"></i> ข้อแนะนำทางเทคนิค & Architecture Rules</span>
                         </div>
@@ -934,9 +990,8 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
             </div>
+
         </div>
 
         <!-- Tab: Enrollments -->
@@ -1696,6 +1751,61 @@
             } else if (tab === 'dpdupdate') {
                 refreshDPDStats();
                 refreshRawFilesStats();
+            }
+        }
+
+        function switchSubTab(subtab) {
+            document.getElementById('subtab-dashboard').classList.add('hidden');
+            document.getElementById('subtab-system').classList.add('hidden');
+            
+            document.getElementById(`subtab-${subtab}`).classList.remove('hidden');
+
+            const btnDash = document.getElementById('btn-sub-dashboard');
+            const btnSys = document.getElementById('btn-sub-system');
+            
+            // Reset base styles
+            const activeStyle = "border-radius: 5px 5px 0 0; background: #fff; color: #3498db; border: 1px solid #ddd; border-bottom: 1px solid #fff; margin-bottom: -1px;";
+            const inactiveStyle = "border-radius: 5px 5px 0 0; background: #f8f9fa; color: #7f8c8d; border: 1px solid transparent;";
+
+            if (subtab === 'dashboard') {
+                btnDash.style.cssText = activeStyle;
+                btnSys.style.cssText = inactiveStyle;
+            } else {
+                btnSys.style.cssText = activeStyle;
+                btnDash.style.cssText = inactiveStyle;
+                loadSystemHealth();
+            }
+        }
+
+        async function loadSystemHealth() {
+            document.getElementById('sys-health-users').textContent = 'Checking...';
+            document.getElementById('sys-health-classrooms').textContent = 'Checking...';
+            document.getElementById('sys-health-pins').textContent = 'Checking...';
+
+            try {
+                // 1. Users
+                const usersSnap = await db.collection('users').get();
+                document.getElementById('sys-health-users').textContent = usersSnap.size.toLocaleString();
+
+                // 2. Classrooms
+                const roomsSnap = await db.collection('classrooms').get();
+                document.getElementById('sys-health-classrooms').textContent = roomsSnap.size.toLocaleString();
+
+                // 3. Active Pins (config/today_pins)
+                const pinsDoc = await db.collection('config').doc('today_pins').get();
+                if (pinsDoc.exists) {
+                    const data = pinsDoc.data();
+                    const items = data.items || [];
+                    document.getElementById('sys-health-pins').textContent = items.length.toLocaleString();
+                } else {
+                    document.getElementById('sys-health-pins').textContent = '0';
+                }
+
+            } catch (e) {
+                console.error("System Health Error:", e);
+                document.getElementById('sys-health-users').textContent = 'Error';
+                document.getElementById('sys-health-classrooms').textContent = 'Error';
+                document.getElementById('sys-health-pins').textContent = 'Error';
             }
         }
 

@@ -90,7 +90,12 @@ for (const [key, roots] of Object.entries(vocabRoots)) {
         };
         
         // Check if key (dhatu_word) changed
-        const newKey = after.dhatu_word;
+        let newKey = after.dhatu_word;
+        // Fix: remove ' + paccaya' suffix if present (e.g. "กุ + ณ" -> "กุ")
+        if (newKey) {
+            newKey = newKey.split(' + ')[0];
+        }
+
         if (newKey && newKey !== oldKey) {
             console.log(`Root word changed from '${oldKey}' to '${newKey}'`);
             
@@ -114,7 +119,12 @@ for (const [key, roots] of Object.entries(vocabRoots)) {
 
 if (!found) {
     console.log(`Root with ID ${dhatuId} not found in file. Creating new entry...`);
-    const newKey = after.dhatu_word;
+    let newKey = after.dhatu_word;
+    // Fix: remove ' + paccaya' suffix if present
+    if (newKey) {
+        newKey = newKey.split(' + ')[0];
+    }
+
     if (!newKey) {
         console.error("Cannot create new root: missing dhatu_word in payload.");
         process.exit(1);
