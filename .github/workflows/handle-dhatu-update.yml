@@ -7,10 +7,28 @@ jobs:
   handle:
     runs-on: ubuntu-latest
     steps:
-      - name: Print payload
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Process Update
+        env:
+          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: node scripts/handle_dhatu_update.js
+
+      - name: Commit and Push changes
         run: |
-          echo "Dhatu ID: ${{ github.event.client_payload.dhatuId }}"
-          echo "Before: ${{ toJson(github.event.client_payload.before) }}"
-          echo "After: ${{ toJson(github.event.client_payload.after) }}"
-      - name: Log update
-        run: echo "Received dhatu update event"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/raw/vocab-roots-firebase.js
+          # Check if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update root data via webhook (ID: ${{ github.event.client_payload.dhatuId }})"
+            git push
+          fi
