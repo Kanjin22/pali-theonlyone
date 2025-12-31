@@ -211,7 +211,6 @@ app.get('/api/dpd-stats', (_req, res) => {
     const s = fs.statSync(p);
     let count = 0;
     try {
-      // Basic count by reading file and parsing keys
       const txt = fs.readFileSync(p, 'utf8').trim();
       let jsonStr = txt;
       if (prefix) jsonStr = jsonStr.replace(prefix, '').trim();
@@ -224,6 +223,48 @@ app.get('/api/dpd-stats', (_req, res) => {
   res.json({
     vocab: getStats('data/raw/vocab-dpd.js', 'const vocabDPD = '),
     roots: getStats('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ')
+  });
+});
+
+app.get('/api/raw-files-stats', (_req, res) => {
+  const parseWithPrefixes = (p, prefixes) => {
+    if (!fs.existsSync(p)) return null;
+    const s = fs.statSync(p);
+    let count = 0;
+    try {
+      const txt = fs.readFileSync(p, 'utf8').trim();
+      let payload = txt;
+      for (const pref of prefixes) {
+        if (payload.startsWith(pref)) {
+          payload = payload.slice(pref.length).trim();
+          break;
+        }
+      }
+      if (payload.endsWith(';')) payload = payload.slice(0, -1);
+      const obj = JSON.parse(payload);
+      if (Array.isArray(obj)) {
+        count = obj.length;
+      } else {
+        count = Object.keys(obj).length;
+      }
+    } catch {}
+    return { mtime: s.mtime, size: s.size, count };
+  };
+  res.json({
+    general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
+    roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
+    roots_firebase: parseWithPrefixes('data/raw/vocab-roots-firebase.js', ['const vocabRoots = ']),
+    tananunto: parseWithPrefixes('data/raw/vocab-tananunto.js', ['const vocabTananunto = ']),
+    etipitaka: parseWithPrefixes('data/raw/vocab-etipitaka.js', ['const vocabEtipitaka = ']),
+    derived_roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd-derived.js', ['const vocabRootsDPDDerived = ']),
+    extra_enthai: parseWithPrefixes('data/vocab-enthai.js', ['const vocabEnThai = ']),
+    extra_ipa: parseWithPrefixes('data/vocab-ipa.js', ['const vocabIPA = ']),
+    extra_pts: parseWithPrefixes('data/vocab-pts.js', ['const vocabPTS = ']),
+    extra_dppn: parseWithPrefixes('data/vocab-dppn.js', ['const vocabDPPN = ']),
+    extra_dhammika: parseWithPrefixes('data/vocab-dhammika.js', ['const vocabDhammika = ']),
+    extra_sc: parseWithPrefixes('data/vocab-sc.js', ['const vocabSC = ']),
+    extra_sandhi: parseWithPrefixes('data/vocab-sandhi.js', ['const vocabSandhi = ']),
+    extra_general: parseWithPrefixes('data/vocab-general.js', ['const vocabGeneral = '])
   });
 });
 

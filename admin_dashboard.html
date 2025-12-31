@@ -697,6 +697,157 @@
                             </div>
                         </div>
 
+                        <!-- Quick Checks Panel -->
+                        <div style="margin-top:20px; background:#fff; border:1px solid #eee; border-radius:10px; padding:15px;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                <h3 style="margin:0; font-size:1rem;"><i class="fa-solid fa-magnifying-glass"></i> Quick Checks</h3>
+                                <button class="btn btn-secondary btn-small" onclick="refreshRawFilesStats()">รีเฟรช Quick Checks</button>
+                            </div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#e8f4fd; color:#2980b9;">
+                                        <i class="fa-solid fa-list"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>general-dpd</div>
+                                        <div id="raw-general-count">-</div>
+                                        <div id="raw-general-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#fff4e6; color:#e67e22;">
+                                        <i class="fa-solid fa-seedling"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>roots-dpd</div>
+                                        <div id="raw-rootsdpd-count">-</div>
+                                        <div id="raw-rootsdpd-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#f0f4f0; color:#2e7d32;">
+                                        <i class="fa-solid fa-database"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>roots-firebase</div>
+                                        <div id="raw-rootsfb-count">-</div>
+                                        <div id="raw-rootsfb-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                        <i class="fa-solid fa-scroll"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>etipitaka</div>
+                                        <div id="raw-etipitaka-count">-</div>
+                                        <div id="raw-etipitaka-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#f3e5f5; color:#8e24aa;">
+                                        <i class="fa-solid fa-code-branch"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>derived (roots-dpd)</div>
+                                        <div id="raw-derived-count">-</div>
+                                        <div id="raw-derived-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#fef5f5; color:#c0392b;">
+                                        <i class="fa-solid fa-book-open"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>tananunto</div>
+                                        <div id="raw-tananunto-count">-</div>
+                                        <div id="raw-tananunto-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div style="flex-basis:100%; height:1px;"></div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: En-Thai</div>
+                                        <div id="extra-enthai-count">-</div>
+                                        <div id="extra-enthai-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: IPA</div>
+                                        <div id="extra-ipa-count">-</div>
+                                        <div id="extra-ipa-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-book"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: PTS</div>
+                                        <div id="extra-pts-count">-</div>
+                                        <div id="extra-pts-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-id-card-clip"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: DPPN</div>
+                                        <div id="extra-dppn-count">-</div>
+                                        <div id="extra-dppn-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-leaf"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: Dhammika</div>
+                                        <div id="extra-dhammika-count">-</div>
+                                        <div id="extra-dhammika-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-dharmachakra"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: SC</div>
+                                        <div id="extra-sc-count">-</div>
+                                        <div id="extra-sc-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-bezier-curve"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: Sandhi</div>
+                                        <div id="extra-sandhi-count">-</div>
+                                        <div id="extra-sandhi-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                        <i class="fa-solid fa-spell-check"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Extra: General</div>
+                                        <div id="extra-general-count">-</div>
+                                        <div id="extra-general-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Manual Update Guide Modal -->
                         <div id="manualUpdateModal" class="modal">
                             <div class="modal-content" style="max-width: 800px;">
@@ -1510,6 +1661,7 @@
                 }
             } else if (tab === 'dpdupdate') {
                 refreshDPDStats();
+                refreshRawFilesStats();
             }
         }
 
@@ -1811,6 +1963,85 @@
                 });
             } else {
                 alert('โปรดรันคำสั่ง: ' + cmd);
+            }
+        }
+        async function refreshRawFilesStats() {
+            const isOnline = await pingServer();
+            if (!isOnline) {
+                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-tananunto-count','raw-tananunto-date'];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '-';
+                });
+                return;
+            }
+            try {
+                const base = (window.localStorage.getItem('dpdServerBase') || 'http://localhost:3001');
+                const res = await fetch(base + '/api/raw-files-stats');
+                const data = await res.json();
+                const fmt = d => d ? new Date(d).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+                if (data.general_dpd) {
+                    document.getElementById('raw-general-count').textContent = data.general_dpd.count ? data.general_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-general-date').textContent = fmt(data.general_dpd.mtime);
+                }
+                if (data.roots_dpd) {
+                    document.getElementById('raw-rootsdpd-count').textContent = data.roots_dpd.count ? data.roots_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-rootsdpd-date').textContent = fmt(data.roots_dpd.mtime);
+                }
+                if (data.roots_firebase) {
+                    document.getElementById('raw-rootsfb-count').textContent = data.roots_firebase.count ? data.roots_firebase.count.toLocaleString() : '-';
+                    document.getElementById('raw-rootsfb-date').textContent = fmt(data.roots_firebase.mtime);
+                }
+                if (data.etipitaka) {
+                    document.getElementById('raw-etipitaka-count').textContent = data.etipitaka.count ? data.etipitaka.count.toLocaleString() : '-';
+                    document.getElementById('raw-etipitaka-date').textContent = fmt(data.etipitaka.mtime);
+                }
+                if (data.derived_roots_dpd) {
+                    document.getElementById('raw-derived-count').textContent = data.derived_roots_dpd.count ? data.derived_roots_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-derived-date').textContent = fmt(data.derived_roots_dpd.mtime);
+                }
+                if (data.tananunto) {
+                    document.getElementById('raw-tananunto-count').textContent = data.tananunto.count ? data.tananunto.count.toLocaleString() : '-';
+                    document.getElementById('raw-tananunto-date').textContent = fmt(data.tananunto.mtime);
+                }
+                if (data.extra_enthai) {
+                    document.getElementById('extra-enthai-count').textContent = data.extra_enthai.count ? data.extra_enthai.count.toLocaleString() : '-';
+                    document.getElementById('extra-enthai-date').textContent = fmt(data.extra_enthai.mtime);
+                }
+                if (data.extra_ipa) {
+                    document.getElementById('extra-ipa-count').textContent = data.extra_ipa.count ? data.extra_ipa.count.toLocaleString() : '-';
+                    document.getElementById('extra-ipa-date').textContent = fmt(data.extra_ipa.mtime);
+                }
+                if (data.extra_pts) {
+                    document.getElementById('extra-pts-count').textContent = data.extra_pts.count ? data.extra_pts.count.toLocaleString() : '-';
+                    document.getElementById('extra-pts-date').textContent = fmt(data.extra_pts.mtime);
+                }
+                if (data.extra_dppn) {
+                    document.getElementById('extra-dppn-count').textContent = data.extra_dppn.count ? data.extra_dppn.count.toLocaleString() : '-';
+                    document.getElementById('extra-dppn-date').textContent = fmt(data.extra_dppn.mtime);
+                }
+                if (data.extra_dhammika) {
+                    document.getElementById('extra-dhammika-count').textContent = data.extra_dhammika.count ? data.extra_dhammika.count.toLocaleString() : '-';
+                    document.getElementById('extra-dhammika-date').textContent = fmt(data.extra_dhammika.mtime);
+                }
+                if (data.extra_sc) {
+                    document.getElementById('extra-sc-count').textContent = data.extra_sc.count ? data.extra_sc.count.toLocaleString() : '-';
+                    document.getElementById('extra-sc-date').textContent = fmt(data.extra_sc.mtime);
+                }
+                if (data.extra_sandhi) {
+                    document.getElementById('extra-sandhi-count').textContent = data.extra_sandhi.count ? data.extra_sandhi.count.toLocaleString() : '-';
+                    document.getElementById('extra-sandhi-date').textContent = fmt(data.extra_sandhi.mtime);
+                }
+                if (data.extra_general) {
+                    document.getElementById('extra-general-count').textContent = data.extra_general.count ? data.extra_general.count.toLocaleString() : '-';
+                    document.getElementById('extra-general-date').textContent = fmt(data.extra_general.mtime);
+                }
+            } catch (e) {
+                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-etipitaka-count','raw-etipitaka-date','raw-derived-count','raw-derived-date','raw-tananunto-count','raw-tananunto-date','extra-enthai-count','extra-enthai-date','extra-ipa-count','extra-ipa-date','extra-pts-count','extra-pts-date','extra-dppn-count','extra-dppn-date','extra-dhammika-count','extra-dhammika-date','extra-sc-count','extra-sc-date','extra-sandhi-count','extra-sandhi-date','extra-general-count','extra-general-date'];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = 'Error';
+                });
             }
         }
         async function loadRoots(isLoadMore = false) {
