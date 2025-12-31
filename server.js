@@ -128,6 +128,10 @@ async function verifyAdmin(req) {
   }
 }
 
+app.get('/', (req, res) => {
+  res.send('Pali TheOnlyone API Server is running');
+});
+
 app.get('/api/is-admin', async (req, res) => {
   const ok = await verifyAdmin(req);
   res.json({ isAdmin: ok });
