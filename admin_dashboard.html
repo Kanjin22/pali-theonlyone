@@ -1589,10 +1589,7 @@
 
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 
     <script>
         // 1. Main App Config (palitest-generator) - For Members, Enrollments, Classes
@@ -1731,7 +1728,7 @@
             // Auto load roots if switching to roots tab and empty
             if (tab === 'roots') {
                 const rootList = document.getElementById('rootList');
-                if (rootList.children.length === 1 && rootList.children[0].classList.contains('loading')) {
+                if (rootList && rootList.children.length === 1 && rootList.children[0].classList.contains('loading')) {
                     loadRoots();
                 }
             } else if (tab === 'dpdupdate') {
