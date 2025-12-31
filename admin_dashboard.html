@@ -1723,7 +1723,10 @@
             const tabs = ['enrollments', 'members', 'classes', 'pins', 'roots', 'dpdupdate'];
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
-                if (el) el.classList.add('hidden');
+                if (el) {
+                    el.classList.add('hidden');
+                    el.style.display = 'none'; // Force hide to override any inline block
+                }
             });
 
             const activeTab = document.getElementById(`tab-${tab}`);
