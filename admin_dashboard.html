@@ -516,21 +516,35 @@
             <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
-            <a class="nav-link" onclick="switchTab('dpdupdate')">อัปเดต DPD</a>
+            <a class="nav-link" onclick="switchTab('roots')">จัดการธาตุ (Roots)</a>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
     </nav>
 
     <div class="container">
 
-        <!-- Tab: Roots (Deleted) -->
-        <div id="tab-roots" class="hidden" style="display:none !important;"></div>
+        <!-- Tab: Roots (Combined) -->
+        <div id="tab-roots" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-database"></i> ฐานข้อมูลธาตุ (Roots Database)</span>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..." style="padding:8px; border:1px solid #ddd; border-radius:6px;">
+                        <button class="btn btn-secondary" onclick="loadRoots()"><i class="fa-solid fa-search"></i> ค้นหา</button>
+                        <button class="btn btn-primary" onclick="openRootModal()"><i class="fa-solid fa-plus"></i> เพิ่มธาตุ</button>
+                        <button class="btn btn-info" onclick="toggleDPDDashboard()"><i class="fa-solid fa-chart-line"></i> แผงควบคุม DPD</button>
+                    </div>
+                </div>
 
-        <!-- Tab: DPD Update -->
-        <div id="tab-dpdupdate" class="hidden">
-            
-            <!-- Sub-Tab Navigation -->
-            <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; display: flex; gap: 5px;">
+                <!-- DPD Dashboard Container (Hidden by default) -->
+                <div id="dpd-dashboard-container" class="hidden" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; padding-left: 15px; padding-right: 15px;">
+                     <div class="alert alert-info" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-solid fa-info-circle"></i> นี่คือแผงควบคุมระบบ (System Dashboard)</span>
+                        <button class="btn btn-small btn-danger" onclick="toggleDPDDashboard()">ปิดแผงควบคุม</button>
+                    </div>
+
+                    <!-- Sub-Tab Navigation -->
+                    <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; display: flex; gap: 5px;">
                 <button class="btn" onclick="switchSubTab('dashboard')" id="btn-sub-dashboard" style="border-radius: 5px 5px 0 0; background: #fff; color: #3498db; border: 1px solid #ddd; border-bottom: 1px solid #fff; margin-bottom: -1px;">
                     <i class="fa-solid fa-gauge"></i> Dashboard
                 </button>
@@ -1720,7 +1734,7 @@
                 if (link) link.classList.add('active');
             }
 
-            const tabs = ['enrollments', 'members', 'classes', 'pins', 'roots', 'dpdupdate'];
+            const tabs = ['enrollments', 'members', 'classes', 'pins', 'roots'];
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (el) {
@@ -1741,21 +1755,33 @@
                 if (rootList && rootList.children.length === 1 && rootList.children[0].classList.contains('loading')) {
                     loadRoots();
                 }
-            } else if (tab === 'dpdupdate') {
-                // Ensure sub-tab visibility
-                const subDash = document.getElementById('subtab-dashboard');
-                if (subDash && !document.getElementById('subtab-system').classList.contains('active-sub')) {
-                    // Default to dashboard if not specified, or just ensure it is shown if system is not active?
-                    // Simpler: Just refresh stats. If subtabs are hidden, the user can click them. 
-                    // But wait, if both are hidden, it's blank.
-                    const dashHidden = subDash.classList.contains('hidden');
-                    const sysHidden = document.getElementById('subtab-system').classList.contains('hidden');
-                    if (dashHidden && sysHidden) {
-                        switchSubTab('dashboard');
+            }
+        }
+
+        function toggleDPDDashboard() {
+            const container = document.getElementById('dpd-dashboard-container');
+            if (container) {
+                if (container.classList.contains('hidden')) {
+                    container.classList.remove('hidden');
+                    
+                    // Refresh stats when opening
+                    if (typeof refreshDPDStats === 'function') refreshDPDStats();
+                    if (typeof refreshRawFilesStats === 'function') refreshRawFilesStats();
+
+                    // Ensure default sub-tab if none active
+                    const subDash = document.getElementById('subtab-dashboard');
+                    const subSys = document.getElementById('subtab-system');
+                    
+                    if (subDash && subSys) {
+                         const dashHidden = subDash.classList.contains('hidden');
+                         const sysHidden = subSys.classList.contains('hidden');
+                         if (dashHidden && sysHidden) {
+                             switchSubTab('dashboard');
+                         }
                     }
+                } else {
+                    container.classList.add('hidden');
                 }
-                refreshDPDStats();
-                refreshRawFilesStats();
             }
         }
 
