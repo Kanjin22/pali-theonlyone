@@ -695,12 +695,10 @@
                                         <li>general-dpd: <a href="data/raw/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
                                         <li>roots-dpd: <a href="data/raw/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
                                         <li>tananunto: <a href="data/raw/vocab-tananunto.js">vocab-tananunto.js</a></li>
-                                        <li>roots-firebase: <a href="data/raw/vocab-roots-firebase.js">vocab-roots-firebase.js</a></li>
                                     </ul>
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">ทิศทางการปรับข้อมูล</h3>
                                     <div style="background:#f4f4f4; padding:10px; border-radius:5px; font-family:monospace;">
-                                        theonlyone → theDhatu: general-dpd, roots-dpd, tananunto (ผ่าน sync-data และ import DPD ตอน deploy)<br>
-                                        theDhatu → theonlyone: roots-firebase (แก้ในแอป -> Webhook -> Auto Commit)
+                                        theonlyone → theDhatu: general-dpd, roots-dpd, tananunto (ผ่าน sync-data และ import DPD ตอน deploy)
                                     </div>
                                     <p style="color:#b35c00; margin-top:10px;">* ปิดการ Import roots-firebase อัตโนมัติใน Workflow deploy/preview เพื่อป้องกันข้อมูล Firestore ถูกทับ</p>
                                 </div>
@@ -735,16 +733,6 @@
                                         <div>roots-dpd</div>
                                         <div id="raw-rootsdpd-count">-</div>
                                         <div id="raw-rootsdpd-date" style="font-size:0.85rem; color:#666;">-</div>
-                                    </div>
-                                </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#f0f4f0; color:#2e7d32;">
-                                        <i class="fa-solid fa-database"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <div>roots-firebase</div>
-                                        <div id="raw-rootsfb-count">-</div>
-                                        <div id="raw-rootsfb-date" style="font-size:0.85rem; color:#666;">-</div>
                                     </div>
                                 </div>
                                 <div class="stat-card" style="min-width:220px;">
@@ -880,7 +868,7 @@
                                         # 2. จัดการข้อมูล Manual (Manual)<br>
                                         # แก้ไข/วางไฟล์ vocab-tananunto.js และ vocab-etipitaka.js ในโฟลเดอร์ data/raw/<br>
                                     </div>
-                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 7 ไฟล์ใน <code>data/raw/</code> (รวมถึง <code>vocab-roots-firebase.js</code>)</p>
+                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 6 ไฟล์ใน <code>data/raw/</code></p>
 
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
                                     <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
@@ -973,14 +961,7 @@
                                     <span style="color: #2980b9;">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
                                 </p>
                             </div>
-
-                            <div style="background: #fff8e1; border-left: 4px solid #f1c40f; padding: 15px; margin-bottom: 20px;">
-                                <h4 style="margin: 0 0 10px 0; color: #f39c12;"><i class="fa-solid fa-rotate"></i> 2. Reverse Sync (Roots)</h4>
-                                <p style="margin: 0;">
-                                    เมื่อมีการแก้ไขธาตุใน App Admin ระบบจะส่ง Webhook <code>dhatu-updated</code> กลับมาที่ Repo นี้<br>
-                                    Workflow <code>handle-dhatu-update.yml</code> จะทำการอัปเดตไฟล์ <code>data/raw/vocab-roots-firebase.js</code> โดยอัตโนมัติเพื่อให้ Repo มีข้อมูลล่าสุดเสมอ
-                                </p>
-                            </div>
+                            <!-- 2. Reverse Sync (Removed) -->
 
                             <div style="background: #eaf2f8; border-left: 4px solid #3498db; padding: 15px;">
                                 <h4 style="margin: 0 0 10px 0; color: #2980b9;"><i class="fa-solid fa-shield-halved"></i> 3. Safe Zone</h4>

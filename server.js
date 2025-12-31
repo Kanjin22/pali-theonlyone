@@ -262,7 +262,6 @@ app.get('/api/raw-files-stats', (_req, res) => {
   res.json({
     general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
     roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
-    roots_firebase: parseWithPrefixes('data/raw/vocab-roots-firebase.js', ['const vocabRoots = ']),
     tananunto: parseWithPrefixes('data/raw/vocab-tananunto.js', ['const vocabTananunto = ']),
     etipitaka: parseWithPrefixes('data/raw/vocab-etipitaka.js', ['const vocabEtipitaka = ']),
     derived_roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd-derived.js', ['const vocabRootsDPDDerived = ']),
