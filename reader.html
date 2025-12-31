@@ -878,13 +878,28 @@
                  stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(สนธิ)</span>`;
             } else if (result.source === 'Manual Vocab') {
                  stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ศัพท์)</span>`;
+            } else if (result.source === 'พจนานุกรมธาตุ') {
+                 stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ธาตุ)</span>`;
+            }
+
+            // Prepare display word (Link to Roots if applicable)
+            let displayWord = result._stemmedFrom ? result.word || cleanWord : cleanWord;
+            if (result.source === 'พจนานุกรมธาตุ') {
+                displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
+            }
+
+            // Check if Root exists (for Thai section icon)
+            let rootLinkHtml = "";
+            if (dbs.roots && (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord]))) {
+                const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
+                rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-tree"></i></a>`;
             }
 
             // Prepare content for Popup (Click to expand)
             const contentForPopup = `
                 <div style="font-size:1.4rem;">
                     <div style="font-weight: bold; color: #2980b9; margin-bottom:10px;">
-                        ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                        ${displayWord} 
                         <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
                     </div>
                     <div style="line-height:1.6;">${detailsHtml}</div>
@@ -897,8 +912,9 @@
                      onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
                      data-content="${safeContent}">
                     <div style="font-weight: bold; color: #2980b9;">
-                        ${result._stemmedFrom ? result.word || cleanWord : cleanWord} 
+                        ${displayWord} 
                         ${stemInfo}
+                        ${rootLinkHtml}
                         <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
                         <span style="float:right; color:#bdc3c7; font-size:0.8em;"><i class="fa-solid fa-expand"></i></span>
                     </div>
