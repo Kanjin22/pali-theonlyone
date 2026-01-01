@@ -512,55 +512,20 @@
             <span>Admin Control</span>
         </div>
         <div class="navbar-menu">
-            <span style="color:#bdc3c7; margin-right:5px; font-size:0.8em; align-self:center;">จัดการโรงเรียน:</span>
-            <a class="nav-link active" onclick="switchTab('enrollments')">คำขอสมัครเรียน</a>
-            <a class="nav-link" onclick="switchTab('members')">รายชื่อสมาชิก</a>
-            <a class="nav-link" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
-            <a class="nav-link" onclick="switchTab('pins')">จัดการปักหมุด</a>
-            
-            <span style="border-left:1px solid #7f8c8d; margin:0 10px; height:20px; display:inline-block; vertical-align:middle;"></span>
-            
-            <span style="color:#bdc3c7; margin-right:5px; font-size:0.8em; align-self:center;">จัดการข้อมูล:</span>
-            <a class="nav-link" onclick="switchTab('roots')">จัดการธาตุ (Roots)</a>
-            <a class="nav-link" onclick="switchTab('dpdupdate')">อัปเดตระบบ (DPD)</a>
-            
+            <span class="nav-item-static active">จัดการระบบและอัปเดตข้อมูล</span>
             <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
         </div>
     </nav>
 
     <div class="container">
-
-        <!-- Tab: Roots -->
-        <div id="tab-roots" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <span><i class="fa-solid fa-database"></i> ฐานข้อมูลธาตุ (Roots Database)</span>
-                    <div style="display:flex; gap:10px;">
-                        <input type="text" id="rootSearch" placeholder="ค้นหาธาตุ..." style="padding:8px; border:1px solid #ddd; border-radius:6px;">
-                        <button class="btn btn-secondary" onclick="loadRoots()"><i class="fa-solid fa-search"></i> ค้นหา</button>
-                        <button class="btn btn-primary" onclick="openRootModal()"><i class="fa-solid fa-plus"></i> เพิ่มธาตุ</button>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table id="rootTable">
-                        <thead>
-                            <tr>
-                                <th>ลำดับ</th>
-                                <th>ธาตุ</th>
-                                <th>กลุ่ม</th>
-                                <th>คำแปล</th>
-                                <th>อุทาหรณ์</th>
-                                <th>การจัดการ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rootList">
-                            <tr>
-                                <td colspan="6" class="loading">กำลังโหลดข้อมูล...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        
+        <!-- Sub-Navigation (Pills) -->
+        <div class="sub-nav-container" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-outline-primary active" id="btn-tab-enrollments" onclick="switchTab('enrollments')"><i class="fa-solid fa-user-plus"></i> คำขอสมัครเรียน</button>
+            <button class="btn btn-outline-primary" id="btn-tab-members" onclick="switchTab('members')"><i class="fa-solid fa-users"></i> รายชื่อสมาชิก</button>
+            <button class="btn btn-outline-primary" id="btn-tab-classes" onclick="switchTab('classes')"><i class="fa-solid fa-school"></i> จัดการชั้นเรียน</button>
+            <button class="btn btn-outline-primary" id="btn-tab-pins" onclick="switchTab('pins')"><i class="fa-solid fa-map-pin"></i> จัดการปักหมุด</button>
+            <button class="btn btn-outline-primary" id="btn-tab-dpdupdate" onclick="switchTab('dpdupdate')"><i class="fa-solid fa-server"></i> อัปเดตระบบ (DPD)</button>
         </div>
 
         <!-- Tab: System Update (DPD) -->
@@ -1756,13 +1721,14 @@
         }
 
         function switchTab(tab) {
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            if (typeof event !== 'undefined' && event.target) {
-                const link = event.target.closest('.nav-link');
-                if (link) link.classList.add('active');
-            }
+            // Update secondary nav buttons
+            document.querySelectorAll('.sub-nav-container .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.getElementById(`btn-tab-${tab}`);
+            if (activeBtn) activeBtn.classList.add('active');
 
-            const tabs = ['enrollments', 'members', 'classes', 'pins', 'roots', 'dpdupdate'];
+            const tabs = ['enrollments', 'members', 'classes', 'pins', 'dpdupdate'];
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (el) {
@@ -1777,13 +1743,7 @@
                 activeTab.style.display = 'block'; // Ensure visibility
             }
             
-            // Auto load roots if switching to roots tab and empty
-            if (tab === 'roots') {
-                const rootList = document.getElementById('rootList');
-                if (rootList && rootList.children.length === 1 && rootList.children[0].classList.contains('loading')) {
-                    loadRoots();
-                }
-            } else if (tab === 'dpdupdate') {
+            if (tab === 'dpdupdate') {
                  // Ensure sub-tab visibility and refresh stats
                  const subDash = document.getElementById('subtab-dashboard');
                  const subSys = document.getElementById('subtab-system');
