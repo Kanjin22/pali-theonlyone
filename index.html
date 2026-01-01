@@ -1164,8 +1164,13 @@
                                     // Helper to add pin
                                     const add = (subj, act) => {
                                         if (!act) return;
+                                        
                                         // Clean act (if array)
                                         const cleanAct = Array.isArray(act) ? act.join(', ') : act;
+                                        
+                                        // Filter out 'undefined' string
+                                        if (typeof cleanAct === 'string' && cleanAct === 'undefined') return;
+                                        if (cleanAct === 'undefined') return;
                                         // Determine subject label
                                         let subjLabel = subj;
                                         if (subj === 'Grammar') subjLabel = 'ไวยากรณ์';
