@@ -33,9 +33,9 @@ function loadData(filename) {
 }
 
 const sources = [
-    { file: 'vocab-etipitaka-bhum.js', source: 'Etipitaka (Bhumibalo)' },
-    { file: 'vocab-etipitaka-chin.js', source: 'Etipitaka (Chinnakarn)' },
-    { file: 'vocab-etipitaka-general.js', source: 'Etipitaka (General)' }
+    { file: 'vocab-bhumibalo.js', source: 'Bhumibalo' },
+    { file: 'vocab-jinakalamalini.js', source: 'Jinakālamālinī' },
+    { file: 'vocab-general.js', source: 'General' }
 ];
 
 function generateSearchIndex(headword, meaning) {

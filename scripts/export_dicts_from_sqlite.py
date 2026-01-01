@@ -59,7 +59,7 @@ try:
     export_source(cursor, 'ปทานุกรม บาลี-ไทย-อังกฤษ-สันสกฤต', 'vocab-jinakalamalini.js', 'vocabJinakalamalini')
     
     # 3. General
-    export_source(cursor, None, 'vocab-general.js', 'vocabGeneral')
+    export_source(cursor, None, 'vocab-general.js', 'vocabGeneralRaw')
     
     conn.close()
     

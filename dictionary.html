@@ -134,9 +134,11 @@
 
         /* Thai Sources */
         .source-tananunto .card-header { background: linear-gradient(135deg, #2ecc71, #27ae60); } /* Green */
-        .source-etipitaka .card-header { background: linear-gradient(135deg, #1abc9c, #16a085); } /* Teal */
+        .source-bhumibalo .card-header { background: linear-gradient(135deg, #1abc9c, #16a085); } /* Teal */
+        .source-jinakalamalini .card-header { background: linear-gradient(135deg, #d35400, #e67e22); } /* Orange */
         .source-newgen .card-header { background: linear-gradient(135deg, #3498db, #2980b9); } /* Blue */
         .source-general .card-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); } /* Gray */
+        .source-generalraw .card-header { background: linear-gradient(135deg, #7f8c8d, #bdc3c7); } /* Gray */
 
         /* Roman Sources */
         .source-sc .card-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; } /* Yellow/Orange */
@@ -271,7 +273,9 @@
             general: typeof vocabGeneral !== 'undefined' ? vocabGeneral : {},
             newgen: typeof vocabNewGen !== 'undefined' ? vocabNewGen : {},
             tananunto: typeof vocabTananunto !== 'undefined' ? vocabTananunto : {},
-            etipitaka: typeof vocabEtipitaka !== 'undefined' ? vocabEtipitaka : {},
+            bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
+             jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
+             general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
             
             sc: typeof vocabSC !== 'undefined' ? vocabSC : {},
             dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
@@ -373,7 +377,9 @@
                 let sourceClass = 'other';
                 const s = item.source;
                 if (s.includes('ทานานุนโต')) sourceClass = 'tananunto';
-                else if (s.includes('E-Tipitaka')) sourceClass = 'etipitaka';
+                else if (s.includes('ภูมิพโล')) sourceClass = 'bhumibalo';
+                else if (s.includes('ชินกาลมาลินี')) sourceClass = 'jinakalamalini';
+                else if (s.includes('ศัพท์ทั่วไป (Raw)')) sourceClass = 'generalraw';
                 else if (s.includes('New Gen')) sourceClass = 'newgen';
                 else if (s.includes('ศัพท์ทั่วไป')) sourceClass = 'general';
                 else if (s === 'sc') sourceClass = 'sc';

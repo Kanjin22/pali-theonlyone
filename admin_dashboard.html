@@ -689,6 +689,9 @@
                                         <li>general-dpd: <a href="data/raw/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
                                         <li>roots-dpd: <a href="data/raw/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
                                         <li>tananunto: <a href="data/raw/vocab-tananunto.js">vocab-tananunto.js</a></li>
+                                        <li>bhumibalo: <a href="data/raw/vocab-bhumibalo.js">vocab-bhumibalo.js</a></li>
+                                        <li>jinakalamalini: <a href="data/raw/vocab-jinakalamalini.js">vocab-jinakalamalini.js</a></li>
+                                        <li>general (raw): <a href="data/raw/vocab-general.js">vocab-general.js</a></li>
                                     </ul>
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">ทิศทางการปรับข้อมูล</h3>
                                     <div style="background:#f4f4f4; padding:10px; border-radius:5px; font-family:monospace;">
@@ -731,12 +734,32 @@
                                 </div>
                                 <div class="stat-card" style="min-width:220px;">
                                     <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
-                                        <i class="fa-solid fa-scroll"></i>
+                                        <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div class="stat-info">
-                                        <div>etipitaka</div>
-                                        <div id="raw-etipitaka-count">-</div>
-                                        <div id="raw-etipitaka-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div>Bhumibalo</div>
+                                        <div id="raw-bhumibalo-count">-</div>
+                                        <div id="raw-bhumibalo-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                        <i class="fa-solid fa-book"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>Jinakalamalini</div>
+                                        <div id="raw-jinakalamalini-count">-</div>
+                                        <div id="raw-jinakalamalini-date" style="font-size:0.85rem; color:#666;">-</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="min-width:220px;">
+                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                        <i class="fa-solid fa-book"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div>General (Raw)</div>
+                                        <div id="raw-generalraw-count">-</div>
+                                        <div id="raw-generalraw-date" style="font-size:0.85rem; color:#666;">-</div>
                                     </div>
                                 </div>
                                 <div class="stat-card" style="min-width:220px;">
@@ -860,7 +883,7 @@
                                         python generate_sync_files.py<br><br>
                                         
                                         # 2. จัดการข้อมูล Manual (Manual)<br>
-                                        # แก้ไข/วางไฟล์ vocab-tananunto.js และ vocab-etipitaka.js ในโฟลเดอร์ data/raw/<br>
+                                        # แก้ไข/วางไฟล์ vocab-tananunto.js, vocab-bhumibalo.js, vocab-jinakalamalini.js, vocab-general.js ในโฟลเดอร์ data/raw/<br>
                                     </div>
                                     <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 6 ไฟล์ใน <code>data/raw/</code></p>
 
@@ -875,7 +898,8 @@
                                         
                                         # 2. อัปโหลดขึ้น Firestore (Upload)<br>
                                         node tools/import-roots-to-firebase.js  # สำหรับ Roots<br>
-                                        node scripts/upload_dpd_vocab_firestore_for_app.js  # สำหรับ Vocab
+                                        node scripts/upload_dpd_vocab_firestore_for_app.js  # สำหรับ DPD Vocab<br>
+                                        node scripts/upload_dicts_to_firestore.js # สำหรับ Bhumibalo, Jinakalamalini, General
                                     </div>
                                     <p style="color: red; font-size: 0.9em; margin-top: 10px;">* หมายเหตุ: ต้องมีไฟล์ service-account-key.json ในโปรเจกต์แอป</p>
                                 </div>
@@ -953,7 +977,7 @@
                             <span style="color: #c0392b;">* ห้ามแก้ไขไฟล์ Roots ใน Repo แล้ว Deploy ทับ Firestore เด็ดขาด (import-roots-to-firebase.js ถูกปิดแล้ว)</span>
                         </p>
                         <p style="margin: 10px 0 0 0;">
-                            <strong>Vocab (ศัพท์):</strong> ยึด <code>theonlyone (Repo)</code> เป็นหลัก (เช่น vocab-tananunto, vocab-etipitaka)<br>
+                            <strong>Vocab (ศัพท์):</strong> ยึด <code>theonlyone (Repo)</code> เป็นหลัก (เช่น vocab-tananunto, vocab-bhumibalo, vocab-jinakalamalini)<br>
                             <span style="color: #2980b9;">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
                         </p>
                     </div>
@@ -2001,7 +2025,7 @@
         async function refreshRawFilesStats() {
             const isOnline = await pingServer();
             if (!isOnline) {
-                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-tananunto-count','raw-tananunto-date'];
+                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-tananunto-count','raw-tananunto-date','raw-bhumibalo-count','raw-bhumibalo-date','raw-jinakalamalini-count','raw-jinakalamalini-date','raw-generalraw-count','raw-generalraw-date'];
                 ids.forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.textContent = '-';
@@ -2025,9 +2049,17 @@
                     document.getElementById('raw-rootsfb-count').textContent = (data.roots_firebase.count !== undefined) ? data.roots_firebase.count.toLocaleString() : '-';
                     document.getElementById('raw-rootsfb-date').textContent = fmt(data.roots_firebase.mtime);
                 }
-                if (data.etipitaka) {
-                    document.getElementById('raw-etipitaka-count').textContent = (data.etipitaka.count !== undefined) ? data.etipitaka.count.toLocaleString() : '-';
-                    document.getElementById('raw-etipitaka-date').textContent = fmt(data.etipitaka.mtime);
+                if (data.bhumibalo) {
+                    document.getElementById('raw-bhumibalo-count').textContent = (data.bhumibalo.count !== undefined) ? data.bhumibalo.count.toLocaleString() : '-';
+                    document.getElementById('raw-bhumibalo-date').textContent = fmt(data.bhumibalo.mtime);
+                }
+                if (data.jinakalamalini) {
+                    document.getElementById('raw-jinakalamalini-count').textContent = (data.jinakalamalini.count !== undefined) ? data.jinakalamalini.count.toLocaleString() : '-';
+                    document.getElementById('raw-jinakalamalini-date').textContent = fmt(data.jinakalamalini.mtime);
+                }
+                if (data.general_raw) {
+                    document.getElementById('raw-generalraw-count').textContent = (data.general_raw.count !== undefined) ? data.general_raw.count.toLocaleString() : '-';
+                    document.getElementById('raw-generalraw-date').textContent = fmt(data.general_raw.mtime);
                 }
                 if (data.derived_roots_dpd) {
                     document.getElementById('raw-derived-count').textContent = (data.derived_roots_dpd.count !== undefined) ? data.derived_roots_dpd.count.toLocaleString() : '-';
@@ -2070,7 +2102,7 @@
                     document.getElementById('extra-general-date').textContent = fmt(data.extra_general.mtime);
                 }
             } catch (e) {
-                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-etipitaka-count','raw-etipitaka-date','raw-derived-count','raw-derived-date','raw-tananunto-count','raw-tananunto-date','extra-enthai-count','extra-enthai-date','extra-ipa-count','extra-ipa-date','extra-pts-count','extra-pts-date','extra-dppn-count','extra-dppn-date','extra-dhammika-count','extra-dhammika-date','extra-sc-count','extra-sc-date','extra-sandhi-count','extra-sandhi-date','extra-general-count','extra-general-date'];
+                const ids = ['raw-general-count','raw-general-date','raw-rootsdpd-count','raw-rootsdpd-date','raw-rootsfb-count','raw-rootsfb-date','raw-derived-count','raw-derived-date','raw-tananunto-count','raw-tananunto-date','raw-bhumibalo-count','raw-bhumibalo-date','raw-jinakalamalini-count','raw-jinakalamalini-date','raw-generalraw-count','raw-generalraw-date','extra-enthai-count','extra-enthai-date','extra-ipa-count','extra-ipa-date','extra-pts-count','extra-pts-date','extra-dppn-count','extra-dppn-date','extra-dhammika-count','extra-dhammika-date','extra-sc-count','extra-sc-date','extra-sandhi-count','extra-sandhi-date','extra-general-count','extra-general-date'];
                 ids.forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.textContent = 'Error';
