@@ -525,42 +525,25 @@
             <button class="btn btn-outline-primary" id="btn-tab-members" onclick="switchTab('members')"><i class="fa-solid fa-users"></i> รายชื่อสมาชิก</button>
             <button class="btn btn-outline-primary" id="btn-tab-classes" onclick="switchTab('classes')"><i class="fa-solid fa-school"></i> จัดการชั้นเรียน</button>
             <button class="btn btn-outline-primary" id="btn-tab-pins" onclick="switchTab('pins')"><i class="fa-solid fa-map-pin"></i> จัดการปักหมุด</button>
-            <button class="btn btn-outline-primary" id="btn-tab-dpdupdate" onclick="switchTab('dpdupdate')"><i class="fa-solid fa-server"></i> อัปเดตระบบ (DPD)</button>
+            <button class="btn btn-outline-primary" id="btn-tab-dashboard" onclick="switchTab('dashboard')"><i class="fa-solid fa-gauge"></i> Dashboard (DPD)</button>
+            <button class="btn btn-outline-primary" id="btn-tab-system" onclick="switchTab('system')"><i class="fa-solid fa-server"></i> System Update (DPD)</button>
         </div>
 
-        <!-- Tab: System Update (DPD) -->
-        <div id="tab-dpdupdate" class="hidden">
+        <!-- Tab: Dashboard (DPD) -->
+        <div id="tab-dashboard" class="hidden">
             <div class="card">
                 <div class="card-header">
-                    <span><i class="fa-solid fa-server"></i> อัปเดตระบบ (System Update & Dashboard)</span>
-                </div>
-                <div style="padding: 15px;">
-
-                    <!-- Sub-Tab Navigation -->
-                    <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; display: flex; gap: 5px;">
-                <button class="btn" onclick="switchSubTab('dashboard')" id="btn-sub-dashboard" style="border-radius: 5px 5px 0 0; background: #fff; color: #3498db; border: 1px solid #ddd; border-bottom: 1px solid #fff; margin-bottom: -1px;">
-                    <i class="fa-solid fa-gauge"></i> Dashboard
-                </button>
-                <button class="btn" onclick="switchSubTab('system')" id="btn-sub-system" style="border-radius: 5px 5px 0 0; background: #f8f9fa; color: #7f8c8d; border: 1px solid transparent;">
-                    <i class="fa-solid fa-server"></i> System Update
-                </button>
-            </div>
-
-            <!-- Sub-Tab: Dashboard -->
-            <div id="subtab-dashboard">
-                <div class="card">
-                    <div class="card-header">
-                        <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn btn-secondary" onclick="refreshDPDStats()">
-                                <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
-                            </button>
-                        </div>
+                    <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-secondary" onclick="refreshDPDStats()">
+                            <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
+                        </button>
                     </div>
-                    <div class="card-body">
-                        <!-- 1. Status Grid -->
-                        <div class="stat-grid" style="margin-bottom:20px;">
-                        <!-- Latest Version (GitHub) -->
+                </div>
+                <div class="card-body">
+                    <!-- 1. Status Grid -->
+                    <div class="stat-grid" style="margin-bottom:20px;">
+                    <!-- Latest Version (GitHub) -->
                         <div class="stat-card">
                             <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
                                 <i class="fa-brands fa-github"></i>
@@ -914,70 +897,69 @@
             </div>
             
             <!-- Sub-Tab: System Update -->
-            <div id="subtab-system" class="hidden">
-                <div class="card">
-                    <div class="card-header">
-                        <span><i class="fa-solid fa-heart-pulse"></i> สถานะระบบ (System Health)</span>
-                        <button class="btn btn-secondary" onclick="loadSystemHealth()">
-                            <i class="fa-solid fa-rotate"></i> รีเฟรช
-                        </button>
+        <!-- Tab: System Update (DPD) -->
+        <div id="tab-system" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-heart-pulse"></i> สถานะระบบ (System Health)</span>
+                    <button class="btn btn-secondary" onclick="loadSystemHealth()">
+                        <i class="fa-solid fa-rotate"></i> รีเฟรช
+                    </button>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div>ผู้ใช้งานทั้งหมด</div>
+                            <div id="sys-health-users">Checking...</div>
+                        </div>
                     </div>
-                    <div class="stat-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
-                            <div class="stat-info">
-                                <div>ผู้ใช้งานทั้งหมด</div>
-                                <div id="sys-health-users">Checking...</div>
-                            </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
+                            <i class="fa-solid fa-school"></i>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
-                                <i class="fa-solid fa-school"></i>
-                            </div>
-                            <div class="stat-info">
-                                <div>ห้องเรียนทั้งหมด</div>
-                                <div id="sys-health-classrooms">Checking...</div>
-                            </div>
+                        <div class="stat-info">
+                            <div>ห้องเรียนทั้งหมด</div>
+                            <div id="sys-health-classrooms">Checking...</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
-                                <i class="fa-solid fa-thumbtack"></i>
-                            </div>
-                            <div class="stat-info">
-                                <div>Active Pins</div>
-                                <div id="sys-health-pins">Checking...</div>
-                            </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
+                            <i class="fa-solid fa-thumbtack"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div>Active Pins</div>
+                            <div id="sys-health-pins">Checking...</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <span><i class="fa-solid fa-server"></i> ข้อแนะนำทางเทคนิค & Architecture Rules</span>
-                        </div>
-                        <div style="line-height: 1.8;">
-                            <div style="background: #e8f8f5; border-left: 4px solid #2ecc71; padding: 15px; margin-bottom: 20px;">
-                                <h4 style="margin: 0 0 10px 0; color: #27ae60;"><i class="fa-solid fa-database"></i> 1. Source of Truth Policy</h4>
-                                <p style="margin: 0;">
-                                    <strong>Roots (ธาตุ):</strong> ยึด <code>theDhatu (App/Firestore)</code> เป็นหลัก <br>
-                                    <span style="color: #c0392b;">* ห้ามแก้ไขไฟล์ Roots ใน Repo แล้ว Deploy ทับ Firestore เด็ดขาด (import-roots-to-firebase.js ถูกปิดแล้ว)</span>
-                                </p>
-                                <p style="margin: 10px 0 0 0;">
-                                    <strong>Vocab (ศัพท์):</strong> ยึด <code>theonlyone (Repo)</code> เป็นหลัก (เช่น vocab-tananunto, vocab-etipitaka)<br>
-                                    <span style="color: #2980b9;">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
-                                </p>
-                            </div>
-                            <!-- 2. Reverse Sync (Removed) -->
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-server"></i> ข้อแนะนำทางเทคนิค & Architecture Rules</span>
+                </div>
+                <div style="line-height: 1.8;">
+                    <div style="background: #e8f8f5; border-left: 4px solid #2ecc71; padding: 15px; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 10px 0; color: #27ae60;"><i class="fa-solid fa-database"></i> 1. Source of Truth Policy</h4>
+                        <p style="margin: 0;">
+                            <strong>Roots (ธาตุ):</strong> ยึด <code>theDhatu (App/Firestore)</code> เป็นหลัก <br>
+                            <span style="color: #c0392b;">* ห้ามแก้ไขไฟล์ Roots ใน Repo แล้ว Deploy ทับ Firestore เด็ดขาด (import-roots-to-firebase.js ถูกปิดแล้ว)</span>
+                        </p>
+                        <p style="margin: 10px 0 0 0;">
+                            <strong>Vocab (ศัพท์):</strong> ยึด <code>theonlyone (Repo)</code> เป็นหลัก (เช่น vocab-tananunto, vocab-etipitaka)<br>
+                            <span style="color: #2980b9;">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
+                        </p>
+                    </div>
+                    <!-- 2. Reverse Sync (Removed) -->
 
-                            <div style="background: #eaf2f8; border-left: 4px solid #3498db; padding: 15px;">
-                                <h4 style="margin: 0 0 10px 0; color: #2980b9;"><i class="fa-solid fa-shield-halved"></i> 3. Safe Zone</h4>
-                                <p style="margin: 0;">
-                                    ไฟล์ใน <code>data/dicts/</code> (เช่น En-Thai, IPA, PTS) และ <code>data/raw/</code> (ยกเว้น Roots) สามารถแก้ไขและจัดการได้อิสระ ไม่กระทบกับระบบ Sync หลัก
-                                </p>
-                            </div>
-                        </div>
+                    <div style="background: #eaf2f8; border-left: 4px solid #3498db; padding: 15px;">
+                        <h4 style="margin: 0 0 10px 0; color: #2980b9;"><i class="fa-solid fa-shield-halved"></i> 3. Safe Zone</h4>
+                        <p style="margin: 0;">
+                            ไฟล์ใน <code>data/dicts/</code> (เช่น En-Thai, IPA, PTS) และ <code>data/raw/</code> (ยกเว้น Roots) สามารถแก้ไขและจัดการได้อิสระ ไม่กระทบกับระบบ Sync หลัก
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1728,7 +1710,7 @@
             const activeBtn = document.getElementById(`btn-tab-${tab}`);
             if (activeBtn) activeBtn.classList.add('active');
 
-            const tabs = ['enrollments', 'members', 'classes', 'pins', 'dpdupdate'];
+            const tabs = ['enrollments', 'members', 'classes', 'pins', 'dashboard', 'system'];
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (el) {
@@ -1743,45 +1725,16 @@
                 activeTab.style.display = 'block'; // Ensure visibility
             }
             
-            if (tab === 'dpdupdate') {
-                 // Ensure sub-tab visibility and refresh stats
-                 const subDash = document.getElementById('subtab-dashboard');
-                 const subSys = document.getElementById('subtab-system');
-                 
-                 if (subDash && subSys) {
-                      const dashHidden = subDash.classList.contains('hidden');
-                      const sysHidden = subSys.classList.contains('hidden');
-                      if (dashHidden && sysHidden) {
-                          switchSubTab('dashboard');
-                      }
-                 }
+            if (tab === 'dashboard') {
                  if (typeof refreshDPDStats === 'function') refreshDPDStats();
                  if (typeof refreshRawFilesStats === 'function') refreshRawFilesStats();
-            }
-        }
-
-        function switchSubTab(subtab) {
-            document.getElementById('subtab-dashboard').classList.add('hidden');
-            document.getElementById('subtab-system').classList.add('hidden');
-            
-            document.getElementById(`subtab-${subtab}`).classList.remove('hidden');
-
-            const btnDash = document.getElementById('btn-sub-dashboard');
-            const btnSys = document.getElementById('btn-sub-system');
-            
-            // Reset base styles
-            const activeStyle = "border-radius: 5px 5px 0 0; background: #fff; color: #3498db; border: 1px solid #ddd; border-bottom: 1px solid #fff; margin-bottom: -1px;";
-            const inactiveStyle = "border-radius: 5px 5px 0 0; background: #f8f9fa; color: #7f8c8d; border: 1px solid transparent;";
-
-            if (subtab === 'dashboard') {
-                btnDash.style.cssText = activeStyle;
-                btnSys.style.cssText = inactiveStyle;
-            } else {
-                btnSys.style.cssText = activeStyle;
-                btnDash.style.cssText = inactiveStyle;
+            } else if (tab === 'system') {
                 loadSystemHealth();
             }
         }
+
+        // Deprecated: switchSubTab is no longer needed as tabs are flattened
+        // function switchSubTab(subtab) { ... }
 
         async function loadSystemHealth() {
             document.getElementById('sys-health-users').textContent = 'Checking...';
