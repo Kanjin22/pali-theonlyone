@@ -1237,6 +1237,16 @@
 
         function renderPins(body, pins) {
             body.innerHTML = ''; // Clear previous content
+            
+            // Filter out invalid pins (undefined/null activities)
+            if (pins && Array.isArray(pins)) {
+                pins = pins.filter(p => {
+                    if (!p.act) return false;
+                    const s = String(p.act).trim();
+                    return s !== 'undefined' && s !== 'null' && s !== '';
+                });
+            }
+
             if (!pins || pins.length === 0) {
                 body.innerHTML = '<div style="color:#95a5a6; text-align:center; padding:20px;">ยังไม่มีรายการปักหมุดสำหรับวันนี้</div>';
                 return;
