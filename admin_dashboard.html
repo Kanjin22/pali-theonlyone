@@ -902,6 +902,9 @@
                                         node scripts/upload_dicts_to_firestore.js # สำหรับ Bhumibalo, Jinakalamalini, General
                                     </div>
                                     <p style="color: red; font-size: 0.9em; margin-top: 10px;">* หมายเหตุ: ต้องมีไฟล์ service-account-key.json ในโปรเจกต์แอป</p>
+                                    
+                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. ระบบ Reverse Sync (อัตโนมัติ)</h3>
+                                    <p>สำหรับการแก้ไขข้อมูล Roots ใน App ระบบจะส่งสัญญาณ (Signal) มาที่ Repo เพื่ออัปเดตไฟล์ Backup (<code>data/raw/backup/vocab-roots-firebase.js</code>) ให้โดยอัตโนมัติผ่าน Cloud Functions ไม่ต้องทำ Manual Upload</p>
                                 </div>
                                 <div style="margin-top: 20px; text-align: right;">
                                     <button class="btn btn-secondary" onclick="closeManualUpdateGuide()">ปิด</button>
