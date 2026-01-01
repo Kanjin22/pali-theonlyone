@@ -1951,14 +1951,14 @@
                 const data = await res.json();
                 
                 if (data.vocab) {
-                    document.getElementById('dpd-vocab-count').textContent = data.vocab.count ? data.vocab.count.toLocaleString() : '-';
+                    document.getElementById('dpd-vocab-count').textContent = (data.vocab.count !== undefined) ? data.vocab.count.toLocaleString() : '-';
                     if (data.vocab.mtime) {
                         const d = new Date(data.vocab.mtime);
                         document.getElementById('dpd-local-date').textContent = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                     }
                 }
                 if (data.roots) {
-                    document.getElementById('dpd-roots-count').textContent = data.roots.count ? data.roots.count.toLocaleString() : '-';
+                    document.getElementById('dpd-roots-count').textContent = (data.roots.count !== undefined) ? data.roots.count.toLocaleString() : '-';
                 }
             } catch (e) {
                 console.error('Failed to fetch DPD stats:', e);
@@ -2009,27 +2009,27 @@
                 const data = await res.json();
                 const fmt = d => d ? new Date(d).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
                 if (data.general_dpd) {
-                    document.getElementById('raw-general-count').textContent = data.general_dpd.count ? data.general_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-general-count').textContent = (data.general_dpd.count !== undefined) ? data.general_dpd.count.toLocaleString() : '-';
                     document.getElementById('raw-general-date').textContent = fmt(data.general_dpd.mtime);
                 }
                 if (data.roots_dpd) {
-                    document.getElementById('raw-rootsdpd-count').textContent = data.roots_dpd.count ? data.roots_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-rootsdpd-count').textContent = (data.roots_dpd.count !== undefined) ? data.roots_dpd.count.toLocaleString() : '-';
                     document.getElementById('raw-rootsdpd-date').textContent = fmt(data.roots_dpd.mtime);
                 }
                 if (data.roots_firebase) {
-                    document.getElementById('raw-rootsfb-count').textContent = data.roots_firebase.count ? data.roots_firebase.count.toLocaleString() : '-';
+                    document.getElementById('raw-rootsfb-count').textContent = (data.roots_firebase.count !== undefined) ? data.roots_firebase.count.toLocaleString() : '-';
                     document.getElementById('raw-rootsfb-date').textContent = fmt(data.roots_firebase.mtime);
                 }
                 if (data.etipitaka) {
-                    document.getElementById('raw-etipitaka-count').textContent = data.etipitaka.count ? data.etipitaka.count.toLocaleString() : '-';
+                    document.getElementById('raw-etipitaka-count').textContent = (data.etipitaka.count !== undefined) ? data.etipitaka.count.toLocaleString() : '-';
                     document.getElementById('raw-etipitaka-date').textContent = fmt(data.etipitaka.mtime);
                 }
                 if (data.derived_roots_dpd) {
-                    document.getElementById('raw-derived-count').textContent = data.derived_roots_dpd.count ? data.derived_roots_dpd.count.toLocaleString() : '-';
+                    document.getElementById('raw-derived-count').textContent = (data.derived_roots_dpd.count !== undefined) ? data.derived_roots_dpd.count.toLocaleString() : '-';
                     document.getElementById('raw-derived-date').textContent = fmt(data.derived_roots_dpd.mtime);
                 }
                 if (data.tananunto) {
-                    document.getElementById('raw-tananunto-count').textContent = data.tananunto.count ? data.tananunto.count.toLocaleString() : '-';
+                    document.getElementById('raw-tananunto-count').textContent = (data.tananunto.count !== undefined) ? data.tananunto.count.toLocaleString() : '-';
                     document.getElementById('raw-tananunto-date').textContent = fmt(data.tananunto.mtime);
                 }
                 if (data.extra_enthai) {

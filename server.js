@@ -215,50 +215,41 @@ app.post('/api/dpd-update-report', async (req, res) => {
 });
 
 app.get('/api/dpd-stats', (_req, res) => {
-  const getStats = (p, prefix) => {
-    if (!fs.existsSync(p)) return null;
-    const s = fs.statSync(p);
-    let count = 0;
-    try {
-      const txt = fs.readFileSync(p, 'utf8').trim();
-      let jsonStr = txt;
-      if (prefix) jsonStr = jsonStr.replace(prefix, '').trim();
-      if (jsonStr.endsWith(';')) jsonStr = jsonStr.slice(0, -1);
-      const obj = JSON.parse(jsonStr);
-      count = Object.keys(obj).length;
-    } catch {}
-    return { mtime: s.mtime, size: s.size, count };
-  };
   res.json({
-    vocab: getStats('data/raw/vocab-dpd.js', 'const vocabDPD = '),
-    roots: getStats('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ')
+    vocab: parseWithPrefixes('data/raw/vocab-dpd.js', ['const vocabDPD = ']),
+    roots: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = '])
   });
 });
 
+const parseWithPrefixes = (p, prefixes) => {
+  if (!fs.existsSync(p)) return null;
+  const s = fs.statSync(p);
+  let count = 0;
+  try {
+    const txt = fs.readFileSync(p, 'utf8').trim();
+    let payload = txt;
+    // Strip BOM
+    if (payload.charCodeAt(0) === 0xFEFF) {
+      payload = payload.slice(1);
+    }
+    for (const pref of prefixes) {
+      if (payload.startsWith(pref)) {
+        payload = payload.slice(pref.length).trim();
+        break;
+      }
+    }
+    if (payload.endsWith(';')) payload = payload.slice(0, -1);
+    const obj = JSON.parse(payload);
+    if (Array.isArray(obj)) {
+      count = obj.length;
+    } else {
+      count = Object.keys(obj).length;
+    }
+  } catch {}
+  return { mtime: s.mtime, size: s.size, count };
+};
+
 app.get('/api/raw-files-stats', (_req, res) => {
-  const parseWithPrefixes = (p, prefixes) => {
-    if (!fs.existsSync(p)) return null;
-    const s = fs.statSync(p);
-    let count = 0;
-    try {
-      const txt = fs.readFileSync(p, 'utf8').trim();
-      let payload = txt;
-      for (const pref of prefixes) {
-        if (payload.startsWith(pref)) {
-          payload = payload.slice(pref.length).trim();
-          break;
-        }
-      }
-      if (payload.endsWith(';')) payload = payload.slice(0, -1);
-      const obj = JSON.parse(payload);
-      if (Array.isArray(obj)) {
-        count = obj.length;
-      } else {
-        count = Object.keys(obj).length;
-      }
-    } catch {}
-    return { mtime: s.mtime, size: s.size, count };
-  };
   res.json({
     general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
     roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
