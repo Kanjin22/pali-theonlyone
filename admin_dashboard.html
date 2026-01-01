@@ -1654,6 +1654,9 @@
         }
 
         function switchTab(tab) {
+            // Save active tab state
+            localStorage.setItem('admin_active_tab', tab);
+
             // 1. จัดการปุ่มเมนู (Highlight)
             document.querySelectorAll('.navbar-menu .nav-link').forEach(link => {
                 link.classList.remove('active');
