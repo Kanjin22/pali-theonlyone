@@ -264,8 +264,7 @@ app.get('/api/raw-files-stats', (_req, res) => {
     extra_dppn: parseWithPrefixes('data/vocab-dppn.js', ['const vocabDPPN = ']),
     extra_dhammika: parseWithPrefixes('data/vocab-dhammika.js', ['const vocabDhammika = ']),
     extra_sc: parseWithPrefixes('data/vocab-sc.js', ['const vocabSC = ']),
-    extra_sandhi: parseWithPrefixes('data/vocab-sandhi.js', ['const vocabSandhi = ']),
-    extra_general: parseWithPrefixes('data/vocab-general.js', ['const vocabGeneral = '])
+    extra_sandhi: parseWithPrefixes('data/vocab-sandhi.js', ['const vocabSandhi = '])
   });
 });
 
