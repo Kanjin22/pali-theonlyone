@@ -511,23 +511,27 @@
             <i class="fa-solid fa-shield-halved"></i>
             <span>Admin Control</span>
         </div>
-        <div class="navbar-menu">
-            <span class="nav-item-static active">จัดการระบบและอัปเดตข้อมูล</span>
-            <a href="index.html" class="btn btn-secondary" style="margin-left: 10px;">กลับหน้าหลัก</a>
+        <div class="navbar-menu" style="flex-wrap: wrap; justify-content: center;">
+            <!-- School Management -->
+            <a class="nav-link active" id="link-tab-enrollments" onclick="switchTab('enrollments')">คำขอสมัครเรียน</a>
+            <a class="nav-link" id="link-tab-members" onclick="switchTab('members')">รายชื่อสมาชิก</a>
+            <a class="nav-link" id="link-tab-classes" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
+            <a class="nav-link" id="link-tab-pins" onclick="switchTab('pins')">จัดการปักหมุด</a>
+            
+            <span style="border-left:1px solid #ddd; margin:0 10px; height:20px; align-self:center;"></span>
+            
+            <!-- Data Management -->
+            <a class="nav-link" id="link-tab-roots" onclick="switchTab('roots')">จัดการธาตุ (Roots)</a>
+            <a class="nav-link" id="link-tab-dashboard" onclick="switchTab('dashboard')">Dashboard (DPD)</a>
+            <a class="nav-link" id="link-tab-system" onclick="switchTab('system')">System Update (DPD)</a>
+
+            <a href="index.html" class="btn btn-secondary" style="margin-left: 10px; padding: 5px 10px; font-size: 0.85rem;">กลับหน้าหลัก</a>
         </div>
     </nav>
 
     <div class="container">
         
-        <!-- Sub-Navigation (Pills) -->
-        <div class="sub-nav-container" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="btn btn-outline-primary active" id="btn-tab-enrollments" onclick="switchTab('enrollments')"><i class="fa-solid fa-user-plus"></i> คำขอสมัครเรียน</button>
-            <button class="btn btn-outline-primary" id="btn-tab-members" onclick="switchTab('members')"><i class="fa-solid fa-users"></i> รายชื่อสมาชิก</button>
-            <button class="btn btn-outline-primary" id="btn-tab-classes" onclick="switchTab('classes')"><i class="fa-solid fa-school"></i> จัดการชั้นเรียน</button>
-            <button class="btn btn-outline-primary" id="btn-tab-pins" onclick="switchTab('pins')"><i class="fa-solid fa-map-pin"></i> จัดการปักหมุด</button>
-            <button class="btn btn-outline-primary" id="btn-tab-dashboard" onclick="switchTab('dashboard')"><i class="fa-solid fa-gauge"></i> Dashboard (DPD)</button>
-            <button class="btn btn-outline-primary" id="btn-tab-system" onclick="switchTab('system')"><i class="fa-solid fa-server"></i> System Update (DPD)</button>
-        </div>
+        <!-- Sub-Navigation (Pills) Removed -->
 
         <!-- Tab: Dashboard (DPD) -->
         <div id="tab-dashboard" class="hidden">
@@ -1705,11 +1709,11 @@
 
         function switchTab(tab) {
             // 1. จัดการปุ่มเมนู (Highlight)
-            document.querySelectorAll('.sub-nav-container .btn').forEach(btn => {
-                btn.classList.remove('active');
+            document.querySelectorAll('.navbar-menu .nav-link').forEach(link => {
+                link.classList.remove('active');
             });
-            const activeBtn = document.getElementById(`btn-tab-${tab}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            const activeLink = document.getElementById(`link-tab-${tab}`);
+            if (activeLink) activeLink.classList.add('active');
 
             // 2. รายชื่อแท็บทั้งหมด (รวม content ด้วยถ้ามี)
             const tabs = ['enrollments', 'members', 'classes', 'pins', 'dashboard', 'system', 'content', 'roots'];
