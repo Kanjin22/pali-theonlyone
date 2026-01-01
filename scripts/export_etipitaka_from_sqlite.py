@@ -53,13 +53,13 @@ try:
     cursor = conn.cursor()
     
     # 1. Bhumibalo
-    export_source(cursor, 'พจนานุกรม บาลี-ไทย-อังกฤษ ฉบับภูมิพโลภิกขุ', 'vocab-etipitaka-bhum.js', 'vocabEtipitakaBhum')
+    export_source(cursor, 'พจนานุกรม บาลี-ไทย-อังกฤษ ฉบับภูมิพโลภิกขุ', 'vocab-bhumibalo.js', 'vocabBhumibalo')
     
-    # 2. Chinnakarn
-    export_source(cursor, 'ปทานุกรม บาลี-ไทย-อังกฤษ-สันสกฤต', 'vocab-etipitaka-chin.js', 'vocabEtipitakaChin')
+    # 2. Chinnakarn (Jinakālamālinī)
+    export_source(cursor, 'ปทานุกรม บาลี-ไทย-อังกฤษ-สันสกฤต', 'vocab-jinakalamalini.js', 'vocabJinakalamalini')
     
     # 3. General
-    export_source(cursor, None, 'vocab-etipitaka-general.js', 'vocabEtipitakaGeneral')
+    export_source(cursor, None, 'vocab-general.js', 'vocabGeneral')
     
     conn.close()
     
