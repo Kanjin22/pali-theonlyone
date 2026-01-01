@@ -893,8 +893,9 @@
                         <pre id="dpdReportContentTab" style="max-height:400px; overflow:auto; background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; font-family:monospace; white-space: pre-wrap;">ยังไม่มีรายงาน</pre>
                     </div>
 
-                </div>
-            </div>
+                </div> <!-- จบ card-body -->
+            </div> <!-- จบ card -->
+        </div> <!-- จบ tab-dashboard (เพิ่มบรรทัดนี้สำคัญที่สุด) -->
             
             <!-- Sub-Tab: System Update -->
         <!-- Tab: System Update (DPD) -->
@@ -1659,11 +1660,11 @@
                     }
                 }
 
-                // 2. Load Data
-                loadMembers();
-                loadEnrollments();
+                // เพิ่มบรรทัดนี้ลงไปเพื่อตั้งค่าหน้าแรกให้แสดงผลแน่นอน
+                switchTab('enrollments');
+
+                // 2. Load Data (ข้อมูลพื้นฐานที่ควรโหลดไว้ก่อน)
                 loadClassConfig();
-                loadClassrooms();
                 fetchTeachers(); // Fetch teachers for classroom config
                 // loadRoots(); // Lazy load or manual refresh preferred for large datasets, but can uncomment if needed.
                 
@@ -1703,33 +1704,48 @@
         }
 
         function switchTab(tab) {
-            // Update secondary nav buttons
+            // 1. จัดการปุ่มเมนู (Highlight)
             document.querySelectorAll('.sub-nav-container .btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             const activeBtn = document.getElementById(`btn-tab-${tab}`);
             if (activeBtn) activeBtn.classList.add('active');
 
-            const tabs = ['enrollments', 'members', 'classes', 'pins', 'dashboard', 'system'];
+            // 2. รายชื่อแท็บทั้งหมด (รวม content ด้วยถ้ามี)
+            const tabs = ['enrollments', 'members', 'classes', 'pins', 'dashboard', 'system', 'content', 'roots'];
+            
+            // 3. ซ่อนทุกแท็บก่อน
             tabs.forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (el) {
                     el.classList.add('hidden');
-                    el.style.display = 'none'; // Force hide to override any inline block
+                    el.style.display = 'none'; // บังคับซ่อน
                 }
             });
 
+            // 4. แสดงแท็บที่เลือก
             const activeTab = document.getElementById(`tab-${tab}`);
             if (activeTab) {
                 activeTab.classList.remove('hidden');
-                activeTab.style.display = 'block'; // Ensure visibility
+                activeTab.style.display = 'block'; // บังคับแสดง
             }
             
+            // 5. โหลดข้อมูลเฉพาะของแท็บนั้นๆ (เพื่อลดภาระ server)
             if (tab === 'dashboard') {
                  if (typeof refreshDPDStats === 'function') refreshDPDStats();
                  if (typeof refreshRawFilesStats === 'function') refreshRawFilesStats();
             } else if (tab === 'system') {
-                loadSystemHealth();
+                if (typeof loadSystemHealth === 'function') loadSystemHealth();
+            } else if (tab === 'enrollments') {
+                if (typeof loadEnrollments === 'function') loadEnrollments();
+            } else if (tab === 'members') {
+                if (typeof loadMembers === 'function') loadMembers();
+            } else if (tab === 'pins') {
+                if (typeof loadPins === 'function') loadPins();
+            } else if (tab === 'classes') {
+                // โหลดเมื่อจำเป็น
+                if (typeof loadClassConfig === 'function') loadClassConfig();
+                if (typeof loadClassrooms === 'function') loadClassrooms();
             }
         }
 
