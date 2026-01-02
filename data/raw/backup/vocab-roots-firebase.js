@@ -299,7 +299,7 @@ const vocabRoots = {
       ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 19,
       "created_at": null,
       "updated_at": null
