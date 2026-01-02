@@ -639,10 +639,19 @@
                                     </ul>
 
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. เพิ่ม Secret ใน GitHub</h3>
-                                    <p>ต้องเพิ่ม Secret ชื่อ <code>GH_PAT</code> (ค่าคือ Token จากข้อ 1) ในทั้ง 2 Repositories:</p>
+                                    <p>ต้องเพิ่ม Secret ใน GitHub Settings ของทั้ง 2 Repositories:</p>
                                     <ul>
-                                        <li><strong>pali-dhatu-app:</strong> Settings > Secrets and variables > Actions > New Repository Secret</li>
-                                        <li><strong>pali-theonlyone:</strong> Settings > Secrets and variables > Actions > New Repository Secret</li>
+                                        <li><strong>pali-dhatu-app:</strong>
+                                            <ul>
+                                                <li><code>GH_PAT</code>: (ค่าคือ Token จากข้อ 1)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>pali-theonlyone:</strong>
+                                            <ul>
+                                                <li><code>GH_PAT</code>: (ค่าคือ Token จากข้อ 1)</li>
+                                                <li><code>FIREBASE_SERVICE_ACCOUNT</code>: (เนื้อหาไฟล์ service-account-key.json ทั้งหมด) <span style="color:#e74c3c; font-weight:bold; font-size:0.9em;">*จำเป็นสำหรับดึงข้อมูลกลับ (Reverse Sync)</span></li>
+                                            </ul>
+                                        </li>
                                     </ul>
 
                                     <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. การทำงานของระบบ (Pali TheOnlyone -> App)</h3>

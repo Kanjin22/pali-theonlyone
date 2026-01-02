@@ -8,5 +8,6 @@ __pycache__/
 .env
 .venv
 node_modules
+service-account-key.json
 scripts/service-account-key.json
 .vscode/PythonImportHelper-v2-Completion.json
