@@ -591,9 +591,9 @@ const vocabRoots = {
       "example": [
         "อจฺจติ.อจฺจิเปลวไฟ,อจฺจิมาไฟ, ผู้มีรัศมี.อจฺจยติ.อจฺจิโตผู้อันเขาบูชาแล้ว."
       ],
-      "group": "ภู (อ)",
+      "group": "ภู (อ), จุร (เณ ณย)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 38,
       "created_at": null,
       "updated_at": null
