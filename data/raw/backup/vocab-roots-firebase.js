@@ -508,10 +508,12 @@ const vocabRoots = {
       "root": "อจ",
       "meaning_pali": "อพฺยตฺตวาเกฺย",
       "meaning_thai": "พูดไม่ชัด",
-      "example": "อจติ,อจเต.",
+      "example": [
+        "อจติ, อจเต."
+      ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 33,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
