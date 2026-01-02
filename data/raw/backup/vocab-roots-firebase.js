@@ -461,10 +461,13 @@ const vocabRoots = {
       "root": "อฆิ",
       "meaning_pali": "นินฺทาคติอารมฺภชเวสุ",
       "meaning_thai": "นินทา; ไป; พยายาม; เร็ว",
-      "example": "องฺฆเต.องฺฆนํ.",
+      "example": [
+        "องฺฆเต.",
+        "องฺฆนํ."
+      ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 29,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
