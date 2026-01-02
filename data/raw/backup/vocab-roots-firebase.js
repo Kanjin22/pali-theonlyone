@@ -32645,7 +32645,7 @@ const vocabRoots = {
       "example": [
         "นิสติ, เนสติ."
       ],
-      "group": "ภู (อ, เอ)",
+      "group": "ภู (อ)",
       "page": "",
       "source": "App",
       "id": 2337,
