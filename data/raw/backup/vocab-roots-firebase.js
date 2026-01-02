@@ -259,7 +259,7 @@ const vocabRoots = {
     {
       "root": "อค, อคฺค",
       "meaning_pali": "วงฺกคเต",
-      "meaning_thai": "ไปคต",
+      "meaning_thai": "ไปคด",
       "example": [
         "อคติ รูปอาขยาต.",
         "อคติ (ความลำเอียง) รูปกิตก์.",
