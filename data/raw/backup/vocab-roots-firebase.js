@@ -570,11 +570,11 @@ const vocabRoots = {
     {
       "root": "อจุ",
       "meaning_pali": "คติอพฺยตฺตเก คตฺยพฺยตฺตเก",
-      "meaning_thai": "ไป, ถึง; พูดไม่ชัด",
+      "meaning_thai": "ไป, ถึง-บรรลุ; พูดไม่ชัด",
       "example": "อจติ,อจเต.",
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 37,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
