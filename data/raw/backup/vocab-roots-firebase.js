@@ -569,7 +569,7 @@ const vocabRoots = {
     },
     {
       "root": "อจุ",
-      "meaning_pali": "คติอพฺยตฺตเก คตฺยพฺยตฺตเก",
+      "meaning_pali": "คตฺยพฺยตฺตเก",
       "meaning_thai": "ไป, ถึง-บรรลุ; พูดไม่ชัด",
       "example": "อจติ,อจเต.",
       "group": "ภู (อ)",
