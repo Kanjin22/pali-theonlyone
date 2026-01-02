@@ -73,8 +73,8 @@ async function main() {
     console.log(`Total words fetched: ${Object.keys(vocabData).length}`);
     
     // Save to file
-    const content = `const vocabTananunto = ${JSON.stringify(vocabData, null, 2)};`;
-    const outputPath = path.join(__dirname, 'data/raw', 'vocab-tananunto.js');
+    const content = `const vocabInsarn = ${JSON.stringify(vocabData, null, 2)};`;
+    const outputPath = path.join(__dirname, 'data/raw', 'vocab-insarn-pr9.js');
     
     fs.writeFileSync(outputPath, content, 'utf8');
     console.log(`Saved to ${outputPath}`);

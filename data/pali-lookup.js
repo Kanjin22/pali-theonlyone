@@ -192,7 +192,7 @@ const PaliLookup = {
         // Priority order adjusted by user request
         
         // 1. Thai Dictionaries (Ordered: Tananunto, Bhumibalo, Jinakalamalini, General, New Gen)
-        if (dbs.tananunto && dbs.tananunto[key]) return { details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย', word: key };
+        if (dbs.insarn && dbs.insarn[key]) return { details: [dbs.insarn[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘', word: key };
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key };
         if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key };
@@ -229,7 +229,7 @@ const PaliLookup = {
         }
 
         // 1. Thai Dictionaries (Ordered: Tananunto, Bhumibalo, Jinakalamalini, General, New Gen)
-        if (dbs.tananunto && dbs.tananunto[key]) results.push({ details: [dbs.tananunto[key]], source: 'พจนานุกรม บาลี-ไทย (ธรรมบทภาค ๑-๘)', word: key });
+        if (dbs.insarn && dbs.insarn[key]) results.push({ details: [dbs.insarn[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ ของอาจารย์บุญสืบ อินสาร', word: key });
         if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key });
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key });
         if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key });

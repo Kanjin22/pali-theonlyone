@@ -253,7 +253,7 @@ app.get('/api/raw-files-stats', (_req, res) => {
   res.json({
     general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
     roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
-    tananunto: parseWithPrefixes('data/raw/vocab-tananunto.js', ['const vocabTananunto = ']),
+    insarn: parseWithPrefixes('data/raw/vocab-insarn-pr9.js', ['const vocabInsarn = ']),
     bhumibalo: parseWithPrefixes('data/raw/vocab-bhumibalo.js', ['const vocabBhumibalo = ']),
     jinakalamalini: parseWithPrefixes('data/raw/vocab-jinakalamalini.js', ['const vocabJinakalamalini = ']),
     general_raw: parseWithPrefixes('data/raw/vocab-general.js', ['const vocabGeneralRaw = ']),

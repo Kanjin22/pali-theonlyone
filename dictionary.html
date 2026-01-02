@@ -256,7 +256,7 @@
     <script src="data/pali-script.js"></script>
     <script src="data/dicts/vocab-general.js"></script>
     <script src="data/vocab-newgen.js"></script> <!-- Added New Gen -->
-    <script src="data/raw/vocab-tananunto.js"></script> <!-- Added Tananunto -->
+    <script src="data/raw/vocab-insarn-pr9.js"></script> <!-- Added Tananunto/Insarn -->
     <script src="data/raw/vocab-etipitaka.js"></script>
     
     <script src="data/dicts/vocab-sc.js"></script>
@@ -272,7 +272,7 @@
         const databases = {
             general: typeof vocabGeneral !== 'undefined' ? vocabGeneral : {},
             newgen: typeof vocabNewGen !== 'undefined' ? vocabNewGen : {},
-            tananunto: typeof vocabTananunto !== 'undefined' ? vocabTananunto : {},
+            insarn: typeof vocabInsarn !== 'undefined' ? vocabInsarn : {},
             bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
              jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
              general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
@@ -376,7 +376,7 @@
                 // Determine Source Class for Styling
                 let sourceClass = 'other';
                 const s = item.source;
-                if (s.includes('ทานานุนโต')) sourceClass = 'tananunto';
+                if (s.includes('ทานานุนโต') || s.includes('บุญสืบ')) sourceClass = 'tananunto';
                 else if (s.includes('ภูมิพโล')) sourceClass = 'bhumibalo';
                 else if (s.includes('ชินกาลมาลินี')) sourceClass = 'jinakalamalini';
                 else if (s.includes('ศัพท์ทั่วไป (Raw)')) sourceClass = 'generalraw';

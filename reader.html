@@ -322,7 +322,7 @@
   <!-- Vocab Data -->
   <script src="./data/dicts/vocab-general.js"></script>
   <script src="./data/vocab-newgen.js"></script>
-  <script src="./data/raw/vocab-tananunto.js"></script>
+  <script src="./data/raw/vocab-insarn-pr9.js"></script>
   <script src="./data/raw/vocab-bhumibalo.js"></script>
   <script src="./data/raw/vocab-jinakalamalini.js"></script>
   <script src="./data/raw/vocab-general.js"></script>
@@ -820,7 +820,7 @@
     function showDictionaryDefinition(word, manualOverride = null) {
         // Collect all databases
         const dbs = {
-        tananunto: (typeof vocabTananunto !== 'undefined' ? vocabTananunto : {}),
+        insarn: (typeof vocabInsarn !== 'undefined' ? vocabInsarn : {}),
         bhumibalo: (typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {}),
         jinakalamalini: (typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {}),
         general_raw: (typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {}),
