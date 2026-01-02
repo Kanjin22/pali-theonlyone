@@ -264,7 +264,7 @@ const vocabRoots = {
       ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 17,
       "created_at": "2025-12-30T18:31:19.048Z",
       "updated_at": "2025-12-31T03:13:45.010Z"
