@@ -77,7 +77,7 @@ const vocabRoots = {
     {
       "root": "อก",
       "meaning_pali": "กุฏิลคเต",
-      "meaning_thai": "ไปคด, บิดไปมา.",
+      "meaning_thai": "ไปคด, บิดไปบิดมา.",
       "example": [
         "สปฺโป อกติ, อกนํ."
       ],
