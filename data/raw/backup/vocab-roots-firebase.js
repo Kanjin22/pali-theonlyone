@@ -122,6 +122,20 @@ const vocabRoots = {
     },
     {
       "root": "อกิ",
+      "meaning_pali": "ลกฺขเณ",
+      "meaning_thai": "กำหนด, หมาย, เป็นเครื่องหมาย",
+      "example": "องฺเกติ,องฺกยติ",
+      "group": "จุร (เณ ณย)",
+      "page": "",
+      "source": "ธาตุปฺปทีปิกา",
+      "id": 10,
+      "created_at": null,
+      "updated_at": "2025-12-30T07:56:31.116Z"
+    }
+  ],
+  "อกิ, องฺก": [
+    {
+      "root": "อกิ, องฺก",
       "meaning_pali": "คติลกฺขเณ",
       "meaning_thai": "ไป, ถึง, บรรลุ; กำหนด, ทำเครื่องหมาย",
       "example": [
@@ -147,18 +161,6 @@ const vocabRoots = {
       "page": "",
       "source": "ธาตวัตถสังคหะ",
       "id": 9,
-      "created_at": null,
-      "updated_at": "2025-12-30T07:56:31.116Z"
-    },
-    {
-      "root": "อกิ",
-      "meaning_pali": "ลกฺขเณ",
-      "meaning_thai": "กำหนด, หมาย, เป็นเครื่องหมาย",
-      "example": "องฺเกติ,องฺกยติ",
-      "group": "จุร (เณ ณย)",
-      "page": "",
-      "source": "ธาตุปฺปทีปิกา",
-      "id": 10,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
     }
@@ -462,22 +464,6 @@ const vocabRoots = {
       "page": "",
       "source": "App",
       "id": 29,
-      "created_at": null,
-      "updated_at": "2025-12-30T07:56:31.116Z"
-    }
-  ],
-  "องฺก": [
-    {
-      "root": "องฺก",
-      "meaning_pali": "คติลกฺขเณ",
-      "meaning_thai": "ไป, ถึง, บรรลุ; กำหนด, ทำเครื่องหมาย",
-      "example": [
-        "อุทาหรณ์เดียวกันกับ อกิ ธาตุ."
-      ],
-      "group": "ภู (อ), จุร (เณ ณย)",
-      "page": "",
-      "source": "ธาตวัตถสังคหะ",
-      "id": 30,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
     }
