@@ -2422,10 +2422,12 @@ const vocabRoots = {
       "root": "อาฉิ",
       "meaning_pali": "อายาเม",
       "meaning_thai": "ลาก, ดึงด้านยาว",
-      "example": "",
+      "example": [
+        "ในบางแห่งเป็น อฉิ ธาตุ เพราะมีปริภาสาว่า \"สํโยเค ปเร รสฺสตฺตํ\"."
+      ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 170,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:52.190Z"
