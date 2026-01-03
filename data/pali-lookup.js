@@ -192,10 +192,10 @@ const PaliLookup = {
         // Priority order adjusted by user request
         
         // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General, New Gen)
-        if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ (Insan-PR9)', word: key };
-        if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key };
-        if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key };
-        if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key };
+        if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key };
+        if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key };
+        if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key };
+        if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key };
 
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         
@@ -213,7 +213,7 @@ const PaliLookup = {
              // Others
              if (dbs.dppn && dbs.dppn[romanKey]) return { source: 'dppn', data: dbs.dppn[romanKey], word: key };
              if (dbs.dhammika && dbs.dhammika[romanKey]) return { source: 'dhammika', data: dbs.dhammika[romanKey], word: key };
-             if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key };
+             if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'Digital Pāli Dictionary (DPD)', data: dbs.dpdInflected[romanKey], word: key };
         }
 
         return null;
@@ -229,11 +229,11 @@ const PaliLookup = {
         }
 
         // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General)
-        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (Insan-PR9)', word: key });
-        if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key });
-        if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key });
-        if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (Raw)', word: key });
-        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'พจนานุกรมทั่วไป', word: key });
+        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key });
+        if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key });
+        if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key });
+        if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key });
+        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
 
         // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
         let romanKey = key;
@@ -242,7 +242,7 @@ const PaliLookup = {
         }
         
         if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: key });
-        if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key });
+        if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāli Dictionary (DPD)', word: key });
         if (dbs.pts && dbs.pts[romanKey]) results.push({ source: 'pts', data: dbs.pts[romanKey], word: key });
         
         // Others

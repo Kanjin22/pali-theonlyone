@@ -133,17 +133,17 @@
         }
 
         /* Thai Sources */
-        .source-insan-pr9 .card-header { background: linear-gradient(135deg, #2ecc71, #27ae60); } /* Green */
-        .source-bhumibalo .card-header { background: linear-gradient(135deg, #1abc9c, #16a085); } /* Teal */
-        .source-jinakalamalini .card-header { background: linear-gradient(135deg, #d35400, #e67e22); } /* Orange */
+        .source-insan-pr9 .card-header { background: linear-gradient(135deg, #d35400, #e67e22); } /* Orange */
+        .source-bhumibalo .card-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); } /* Purple */
+        .source-jinakalamalini .card-header { background: linear-gradient(135deg, #8e44ad, #9b59b6); } /* Purple */
 
         .source-general .card-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); } /* Gray */
-        .source-generalraw .card-header { background: linear-gradient(135deg, #7f8c8d, #bdc3c7); } /* Gray */
+        .source-generalraw .card-header { background: linear-gradient(135deg, #27ae60, #2ecc71); } /* Green */
 
 
         /* Roman Sources */
         .source-sc .card-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; } /* Yellow/Orange */
-        .source-dpd .card-header { background: linear-gradient(135deg, #e74c3c, #c0392b); } /* Red */
+        .source-dpd .card-header { background: linear-gradient(135deg, #16a085, #1abc9c); } /* Teal */
         .source-pts .card-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); } /* Purple */
         .source-other .card-header { background: linear-gradient(135deg, #34495e, #2c3e50); } /* Dark Blue */
 
@@ -259,6 +259,8 @@
     <script src="data/raw/vocab-general.js"></script> <!-- Added General -->
     <script src="data/raw/vocab-insan-pr9.js"></script> <!-- Added Insan-PR9 -->
     <script src="data/raw/vocab-insan-pr9-5-8.js"></script> <!-- Added Insan-PR9 Part 5-8 -->
+    <script src="data/raw/vocab-bhumibalo.js"></script> <!-- Added Bhumibalo -->
+    <script src="data/raw/vocab-jinakalamalini.js"></script> <!-- Added Jinakalamalini -->
     <script>
         // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
         if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
@@ -387,14 +389,13 @@
                 // Determine Source Class for Styling
                 let sourceClass = 'other';
                 const s = item.source;
-                if (s.includes('ทานานุนโต') || s.includes('บุญสืบ')) sourceClass = 'insan-pr9';
+                if (s.includes('ธรรมบท') || s.includes('Insan')) sourceClass = 'insan-pr9';
                 else if (s.includes('ภูมิพโล')) sourceClass = 'bhumibalo';
                 else if (s.includes('ชินกาลมาลินี')) sourceClass = 'jinakalamalini';
-                else if (s.includes('ศัพท์ทั่วไป (Raw)')) sourceClass = 'generalraw';
-
+                else if (s.includes('พระไตรปิฎก')) sourceClass = 'generalraw';
                 else if (s.includes('ศัพท์ทั่วไป')) sourceClass = 'general';
                 else if (s === 'sc') sourceClass = 'sc';
-                else if (s === 'Digital Pāḷi Dictionary') sourceClass = 'dpd';
+                else if (s.includes('Digital Pā') || s.includes('DPD')) sourceClass = 'dpd';
                 else if (s === 'pts') sourceClass = 'pts';
 
                 // Display Source Name
@@ -404,10 +405,19 @@
                 if (sourceName === 'dppn') sourceName = 'Dictionary of Pali Proper Names';
                 if (sourceName === 'dhammika') sourceName = 'Nature Dictionary (Dhammika)';
 
+                // Determine Icon
+                let iconClass = 'fa-book';
+                if (sourceClass === 'insan-pr9') iconClass = 'fa-bookmark';
+                else if (sourceClass === 'bhumibalo') iconClass = 'fa-book';
+                else if (sourceClass === 'jinakalamalini') iconClass = 'fa-book-open';
+                else if (sourceClass === 'generalraw') iconClass = 'fa-language';
+                else if (sourceClass === 'dpd') iconClass = 'fa-language';
+                else if (sourceClass === 'sc') iconClass = 'fa-globe';
+
                 return `
                 <div class="vocab-card source-${sourceClass}">
                     <div class="card-header">
-                        <span><i class="fa-solid fa-book"></i> ${sourceName}</span>
+                        <span><i class="fa-solid ${iconClass}"></i> ${sourceName}</span>
                     </div>
                     <div class="card-body">
                         <div class="word-title">
