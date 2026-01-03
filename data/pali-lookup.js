@@ -229,11 +229,27 @@ const PaliLookup = {
         }
 
         // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General)
-        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key });
-        if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key });
-        if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key });
-        if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key });
-        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
+        let thaiKey = key;
+        if (!/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.romanToThai) {
+            thaiKey = PaliScript.romanToThai(key);
+        }
+        
+        const addT = (db, src, k) => { if (db && db[k]) results.push({ details: [db[k]], source: src, word: k }); };
+        const addG = (db, src, k) => { if (db && db[k]) results.push({ ...db[k], source: src, word: k }); };
+
+        addT(dbs.insan_pr9, 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', key);
+        addT(dbs.bhumibalo, 'พจนานุกรมฉบับภูมิพโลภิกขุ', key);
+        addT(dbs.jinakalamalini, 'ปทานุกรมชินกาลมาลินี', key);
+        addT(dbs.general_raw, 'พจนานุกรมทั่วไป (พระไตรปิฎก)', key);
+        addG(dbs.general, 'ศัพท์ทั่วไป', key);
+
+        if (thaiKey !== key) {
+            addT(dbs.insan_pr9, 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', thaiKey);
+            addT(dbs.bhumibalo, 'พจนานุกรมฉบับภูมิพโลภิกขุ', thaiKey);
+            addT(dbs.jinakalamalini, 'ปทานุกรมชินกาลมาลินี', thaiKey);
+            addT(dbs.general_raw, 'พจนานุกรมทั่วไป (พระไตรปิฎก)', thaiKey);
+            addG(dbs.general, 'ศัพท์ทั่วไป', thaiKey);
+        }
 
         // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
         let romanKey = key;
@@ -241,14 +257,14 @@ const PaliLookup = {
              romanKey = PaliScript.thaiToRoman(key);
         }
         
-        if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: key });
-        if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāli Dictionary (DPD)', word: key });
-        if (dbs.pts && dbs.pts[romanKey]) results.push({ source: 'pts', data: dbs.pts[romanKey], word: key });
+        if (dbs.sc && dbs.sc[romanKey]) results.push({ source: 'sc', data: dbs.sc[romanKey], word: romanKey });
+        if (dbs.dpd && dbs.dpd[romanKey]) results.push({ details: [dbs.dpd[romanKey]], source: 'Digital Pāli Dictionary (DPD)', word: romanKey });
+        if (dbs.pts && dbs.pts[romanKey]) results.push({ source: 'pts', data: dbs.pts[romanKey], word: romanKey });
         
         // Others
-        if (dbs.dppn && dbs.dppn[romanKey]) results.push({ source: 'dppn', data: dbs.dppn[romanKey], word: key });
-        if (dbs.dhammika && dbs.dhammika[romanKey]) results.push({ source: 'dhammika', data: dbs.dhammika[romanKey], word: key });
-        if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) results.push({ source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: key });
+        if (dbs.dppn && dbs.dppn[romanKey]) results.push({ source: 'dppn', data: dbs.dppn[romanKey], word: romanKey });
+        if (dbs.dhammika && dbs.dhammika[romanKey]) results.push({ source: 'dhammika', data: dbs.dhammika[romanKey], word: romanKey });
+        if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) results.push({ source: 'dpdInflected', data: dbs.dpdInflected[romanKey], word: romanKey });
 
         return results;
     },
