@@ -192,11 +192,11 @@ const PaliLookup = {
         // Priority order adjusted by user request
         
         // 1. Thai Dictionaries (Ordered: Tananunto, Bhumibalo, Jinakalamalini, General, New Gen)
-        if (dbs.insarn && dbs.insarn[key]) return { details: [dbs.insarn[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘', word: key };
+        if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ (Insan-PR9)', word: key };
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key };
         if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key };
-        if (dbs.newgen && dbs.newgen[key]) return { ...dbs.newgen[key], source: 'Thai New Gen', word: key };
+
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         
         // 2. Roman Dictionaries (Ordered: DPD, PTS, SC, Others)
@@ -228,12 +228,11 @@ const PaliLookup = {
              results.push({ details: entries, source: 'พจนานุกรมธาตุ', word: key });
         }
 
-        // 1. Thai Dictionaries (Ordered: Tananunto, Bhumibalo, Jinakalamalini, General, New Gen)
-        if (dbs.insarn && dbs.insarn[key]) results.push({ details: [dbs.insarn[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ ของอาจารย์บุญสืบ อินสาร', word: key });
+        // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General)
+        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ (Insan-PR9)', word: key });
         if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key });
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key });
         if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key });
-        if (dbs.newgen && dbs.newgen[key]) results.push({ ...dbs.newgen[key], source: 'Thai New Gen', word: key });
         if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
 
         // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)

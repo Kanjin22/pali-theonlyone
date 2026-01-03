@@ -133,12 +133,13 @@
         }
 
         /* Thai Sources */
-        .source-tananunto .card-header { background: linear-gradient(135deg, #2ecc71, #27ae60); } /* Green */
+        .source-insan-pr9 .card-header { background: linear-gradient(135deg, #2ecc71, #27ae60); } /* Green */
         .source-bhumibalo .card-header { background: linear-gradient(135deg, #1abc9c, #16a085); } /* Teal */
         .source-jinakalamalini .card-header { background: linear-gradient(135deg, #d35400, #e67e22); } /* Orange */
-        .source-newgen .card-header { background: linear-gradient(135deg, #3498db, #2980b9); } /* Blue */
+
         .source-general .card-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); } /* Gray */
         .source-generalraw .card-header { background: linear-gradient(135deg, #7f8c8d, #bdc3c7); } /* Gray */
+
 
         /* Roman Sources */
         .source-sc .card-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; } /* Yellow/Orange */
@@ -254,10 +255,10 @@
 
     <!-- Load Vocab Files -->
     <script src="data/pali-script.js"></script>
-    <script src="data/dicts/vocab-general.js"></script>
-    <script src="data/vocab-newgen.js"></script> <!-- Added New Gen -->
-    <script src="data/raw/vocab-insarn-pr9.js"></script> <!-- Added Tananunto/Insarn -->
-    <script src="data/raw/vocab-etipitaka.js"></script>
+
+    <script src="data/raw/vocab-general.js"></script> <!-- Added General -->
+    <script src="data/raw/vocab-insan-pr9.js"></script> <!-- Added Insan-PR9 -->
+    <script src="data/raw/vocab-insan-pr9-5-8.js"></script> <!-- Added Insan-PR9 Part 5-8 -->
     
     <script src="data/dicts/vocab-sc.js"></script>
     <script src="data/dicts/vocab-pts.js"></script>
@@ -270,9 +271,9 @@
     <script>
         // Initialize Databases
         const databases = {
-            general: typeof vocabGeneral !== 'undefined' ? vocabGeneral : {},
-            newgen: typeof vocabNewGen !== 'undefined' ? vocabNewGen : {},
-            insarn: typeof vocabInsarn !== 'undefined' ? vocabInsarn : {},
+            general: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
+
+            insan_pr9: typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {},
             bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
              jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
              general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
@@ -376,11 +377,11 @@
                 // Determine Source Class for Styling
                 let sourceClass = 'other';
                 const s = item.source;
-                if (s.includes('ทานานุนโต') || s.includes('บุญสืบ')) sourceClass = 'tananunto';
+                if (s.includes('ทานานุนโต') || s.includes('บุญสืบ')) sourceClass = 'insan-pr9';
                 else if (s.includes('ภูมิพโล')) sourceClass = 'bhumibalo';
                 else if (s.includes('ชินกาลมาลินี')) sourceClass = 'jinakalamalini';
                 else if (s.includes('ศัพท์ทั่วไป (Raw)')) sourceClass = 'generalraw';
-                else if (s.includes('New Gen')) sourceClass = 'newgen';
+
                 else if (s.includes('ศัพท์ทั่วไป')) sourceClass = 'general';
                 else if (s === 'sc') sourceClass = 'sc';
                 else if (s === 'Digital Pāḷi Dictionary') sourceClass = 'dpd';

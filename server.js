@@ -253,7 +253,16 @@ app.get('/api/raw-files-stats', (_req, res) => {
   res.json({
     general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
     roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
-    insarn: parseWithPrefixes('data/raw/vocab-insarn-pr9.js', ['const vocabInsarn = ']),
+    insan_pr9: (() => {
+        const p1 = parseWithPrefixes('data/raw/vocab-insan-pr9.js', ['const vocabInsanPr9 = ']);
+        const p2 = parseWithPrefixes('data/raw/vocab-insan-pr9-5-8.js', ['const vocabInsanPr9Part5to8 = ']);
+        if (!p1 && !p2) return null;
+        return {
+            mtime: (p1 && (!p2 || p1.mtime > p2.mtime)) ? p1.mtime : (p2 ? p2.mtime : null),
+            size: (p1 ? p1.size : 0) + (p2 ? p2.size : 0),
+            count: (p1 ? p1.count : 0) + (p2 ? p2.count : 0)
+        };
+    })(),
     bhumibalo: parseWithPrefixes('data/raw/vocab-bhumibalo.js', ['const vocabBhumibalo = ']),
     jinakalamalini: parseWithPrefixes('data/raw/vocab-jinakalamalini.js', ['const vocabJinakalamalini = ']),
     general_raw: parseWithPrefixes('data/raw/vocab-general.js', ['const vocabGeneralRaw = ']),

@@ -32,19 +32,24 @@ except Exception as e:
 # 2. Load Dictionary Keys from JS
 print("Loading Dictionary keys...")
 dict_keys = set()
-try:
-    with open('d:/pali-theonlyone/data/raw/vocab-tananunto.js', 'r', encoding='utf-8') as f:
-        for line in f:
-            # Match key pattern: "key":
-            match = re.search(r'^\s*"([^"]+)":', line)
-            if match:
-                dict_keys.add(match.group(1))
-    
-    print(f"Found {len(dict_keys)} entries in Tananunto dictionary.")
+vocab_paths = [
+    'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js',
+    'd:/pali-theonlyone/data/raw/vocab-insan-pr9-5-8.js'
+]
 
-except Exception as e:
-    print(f"Error processing Dictionary: {e}")
-    exit(1)
+for vocab_path in vocab_paths:
+    try:
+        with open(vocab_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                # Match key pattern: "key":
+                match = re.search(r'^\s*"([^"]+)":', line)
+                if match:
+                    dict_keys.add(match.group(1))
+    except Exception as e:
+        print(f"Error processing Dictionary {vocab_path}: {e}")
+        # Continue to try loading other files
+
+print(f"Found {len(dict_keys)} entries in combined Insan-PR9 dictionary.")
 
 # 3. Analyze Coverage
 print("\nAnalyzing Coverage...")

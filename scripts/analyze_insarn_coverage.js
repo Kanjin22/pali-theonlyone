@@ -1,24 +1,31 @@
 const fs = require('fs');
 const vm = require('vm');
 
-// Read the file content
-const filePath = 'd:\\pali-theonlyone\\data\\raw\\vocab-insarn-pr9.js';
-let fileContent = fs.readFileSync(filePath, 'utf8');
+const filePath1 = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js';
+const filePath2 = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9-5-8.js';
 
-// Remove 'const' to make it a valid assignment in the sandbox context or just evaluate it
-// The file has 'const vocabInsarn = { ... }'
-// We can just strip 'const ' and return the object
-if (fileContent.includes('const vocabTananunto')) {
-    fileContent = fileContent.replace('const vocabTananunto =', 'vocabInsarn =');
-} else {
-    fileContent = fileContent.replace('const vocabInsarn =', 'vocabInsarn =');
+let fileContent1 = fs.readFileSync(filePath1, 'utf8');
+
+// Handle variable replacement to ensure it attaches to sandbox
+// Replace `const varName =` with `var varName =` or `this.varName =`
+fileContent1 = fileContent1.replace(/const\s+vocabInsanPr9\s*=/, 'var vocabInsanPr9 =');
+
+const sandbox = {};
+vm.createContext(sandbox);
+vm.runInContext(fileContent1, sandbox);
+
+if (fs.existsSync(filePath2)) {
+    let fileContent2 = fs.readFileSync(filePath2, 'utf8');
+    fileContent2 = fileContent2.replace(/const\s+vocabInsanPr9Part5to8\s*=/, 'var vocabInsanPr9Part5to8 =');
+    vm.runInContext(fileContent2, sandbox);
 }
 
-const sandbox = { vocabInsarn: {} };
-vm.createContext(sandbox);
-vm.runInContext(fileContent, sandbox);
+// Merge
+const data = Object.assign({}, 
+    sandbox.vocabInsanPr9 || {}, 
+    sandbox.vocabInsanPr9Part5to8 || {}
+);
 
-const data = sandbox.vocabInsarn;
 const entries = Object.entries(data);
 
 console.log(`Total entries: ${entries.length}`);

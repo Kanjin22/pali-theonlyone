@@ -2,15 +2,15 @@ const fs = require('fs');
 const vm = require('vm');
 
 // Load the dictionary
-const filePath = 'd:/pali-theonlyone/data/raw/vocab-insarn-pr9.js';
+const filePath = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js';
 let fileContent = fs.readFileSync(filePath, 'utf8');
 
 // Quick hack to load the object
-fileContent = fileContent.replace('const vocabInsarn', 'vocabInsarn');
-const sandbox = { vocabInsarn: {} };
+fileContent = fileContent.replace('const vocabInsanPr9', 'vocabInsanPr9');
+const sandbox = { vocabInsanPr9: {} };
 vm.createContext(sandbox);
 vm.runInContext(fileContent, sandbox);
-const dictionary = sandbox.vocabInsarn;
+const dictionary = sandbox.vocabInsanPr9;
 
 // Counters
 const counts = {
@@ -41,7 +41,7 @@ Object.values(dictionary).forEach(def => {
     }
 });
 
-console.log('=== Reference Distribution in vocab-insarn-pr9.js ===');
+console.log('=== Reference Distribution in vocab-insan-pr9.js ===');
 console.log(`Total explicit part references found: ${totalRefs}`);
 console.log('---------------------------------------------------');
 for (let i = 1; i <= 8; i++) {

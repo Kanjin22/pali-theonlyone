@@ -35,7 +35,7 @@ function loadData(filename) {
 const sources = [
     { file: 'vocab-bhumibalo.js', source: 'Bhumibalo' },
     { file: 'vocab-jinakalamalini.js', source: 'Jinakālamālinī' },
-    { file: 'vocab-general.js', source: 'General' }
+
 ];
 
 function generateSearchIndex(headword, meaning) {

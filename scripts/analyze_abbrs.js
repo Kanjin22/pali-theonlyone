@@ -3,7 +3,7 @@ const path = require('path');
 
 const files = [
     'data/raw/vocab-jinakalamalini.js',
-    'data/raw/vocab-tananunto.js'
+    'data/raw/vocab-insan-pr9.js'
 ];
 
 files.forEach(relativePath => {

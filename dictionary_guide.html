@@ -155,7 +155,7 @@
                     <button class="nav-link active" id="bhumibalo-tab" data-bs-toggle="tab" data-bs-target="#bhumibalo" type="button" role="tab" aria-controls="bhumibalo" aria-selected="true">ฉบับภูมิพโลภิกขุ</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tananunto-tab" data-bs-toggle="tab" data-bs-target="#tananunto" type="button" role="tab" aria-controls="tananunto" aria-selected="false">ฉบับ อ.บุญสืบ (ธรรมบท ๑-๘)</button>
+                    <button class="nav-link" id="insan-pr9-tab" data-bs-toggle="tab" data-bs-target="#insan-pr9" type="button" role="tab" aria-controls="insan-pr9" aria-selected="false">ฉบับ Insan-PR9 (ธรรมบท ๑-๘)</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="jinakalamalini-tab" data-bs-toggle="tab" data-bs-target="#jinakalamalini" type="button" role="tab" aria-controls="jinakalamalini" aria-selected="false">ฉบับชินกาลมาลินี</button>
@@ -189,7 +189,7 @@
                 </div>
 
                 <!-- Tananunto Tab -->
-                <div class="tab-pane fade" id="tananunto" role="tabpanel" aria-labelledby="tananunto-tab">
+                <div class="tab-pane fade" id="insan-pr9" role="tabpanel" aria-labelledby="insan-pr9-tab">
                     <div class="row mb-3 align-items-center">
                         <div class="col-md-8">
                             <div class="alert alert-light border mb-0 py-2">
@@ -199,14 +199,14 @@
                         <div class="col-md-4 mt-2 mt-md-0">
                             <div class="search-box mb-0">
                                 <i class="fas fa-search"></i>
-                                <input type="text" class="form-control search-input" id="search-tananunto" placeholder="ค้นหาอักษรย่อ...">
+                                <input type="text" class="form-control search-input" id="search-insan-pr9" placeholder="ค้นหาอักษรย่อ...">
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="table-light"><tr><th style="width:25%">อักษรย่อ</th><th>ความหมายเต็ม</th></tr></thead>
-                            <tbody id="tananunto-tbody"></tbody>
+                            <tbody id="insan-pr9-tbody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -346,8 +346,10 @@
         { short: "วิ.ม.", full: "วิสุทฺธิมคฺค" },
         { short: "วิมาน.", full: "วิมานวตฺถุ" },
         { short: "วิมาน.อ.", full: "วิมานวตฺถุ อฏฺฐกถา" },
-        { short: "ส.ก.", full: "สกรรมกริยา" },
-        { short: "ส.กา.", full: "สัมพันธการก" },
+        { short: "ส.ก.", full: "สกรรมกริยา (กริยาที่ต้องมีกรรมมารับ)" },
+        { short: "ส.กา.", full: "สัมปทานการก (จตุตถีวิภัตติ)" },
+        { short: "ส.นิ.", full: "สังขยาคุณนาม, สังขยานาม" },
+        { short: "สัน.", full: "สันสกฤต" },
         { short: "ส.ปา.", full: "สมนฺตปาสาทิกา" },
         { short: "สรรพ.", full: "สรรพนาม" },
         { short: "สัต.", full: "สัตตมี" },
@@ -364,8 +366,8 @@
         { short: "Sk, *Sk", full: "สันสกฤต" }
     ];
 
-    // 2. Tananunto Data (Verified)
-    const tananuntoAbbrs = [
+    // 2. Insan-PR9 Data (Verified)
+    const insanPr9Abbrs = [
         { short: 'ก.', full: 'กิริยา' },
         { short: 'กฺวิ.กัต.กัต.วิ.', full: 'กฺวิ ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
         { short: 'จ.', full: 'จตุตถีวิภัตติ' },
@@ -508,12 +510,12 @@
 
     // Initial Render
     renderTable(bhumibaloAbbrs, 'bhumibalo-tbody');
-    renderTable(tananuntoAbbrs, 'tananunto-tbody');
+    renderTable(insanPr9Abbrs, 'insan-pr9-tbody');
     renderTable(jinakalamaliniAbbrs, 'jinakalamalini-tbody');
 
     // Setup Search
     setupSearch('search-bhumibalo', bhumibaloAbbrs, 'bhumibalo-tbody');
-    setupSearch('search-tananunto', tananuntoAbbrs, 'tananunto-tbody');
+    setupSearch('search-insan-pr9', insanPr9Abbrs, 'insan-pr9-tbody');
     setupSearch('search-jinakalamalini', jinakalamaliniAbbrs, 'jinakalamalini-tbody');
 </script>
 

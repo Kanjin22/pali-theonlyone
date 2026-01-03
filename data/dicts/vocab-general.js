@@ -1,1 +1,0 @@
-document.write('<script src="data/vocab-general.js"></script>');
