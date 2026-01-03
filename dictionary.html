@@ -259,6 +259,16 @@
     <script src="data/raw/vocab-general.js"></script> <!-- Added General -->
     <script src="data/raw/vocab-insan-pr9.js"></script> <!-- Added Insan-PR9 -->
     <script src="data/raw/vocab-insan-pr9-5-8.js"></script> <!-- Added Insan-PR9 Part 5-8 -->
+    <script>
+        // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
+        if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
+            for (var key in vocabInsanPr9Part5to8) {
+                if (!vocabInsanPr9.hasOwnProperty(key)) {
+                    vocabInsanPr9[key] = vocabInsanPr9Part5to8[key];
+                }
+            }
+        }
+    </script>
     
     <script src="data/dicts/vocab-sc.js"></script>
     <script src="data/dicts/vocab-pts.js"></script>

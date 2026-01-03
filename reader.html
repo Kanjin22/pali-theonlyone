@@ -322,6 +322,17 @@
   <!-- Vocab Data -->
 
   <script src="./data/raw/vocab-insan-pr9.js"></script>
+  <script src="./data/raw/vocab-insan-pr9-5-8.js"></script>
+  <script>
+      // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
+      if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
+          for (var key in vocabInsanPr9Part5to8) {
+              if (!vocabInsanPr9.hasOwnProperty(key)) {
+                  vocabInsanPr9[key] = vocabInsanPr9Part5to8[key];
+              }
+          }
+      }
+  </script>
   <script src="./data/raw/vocab-bhumibalo.js"></script>
   <script src="./data/raw/vocab-jinakalamalini.js"></script>
 

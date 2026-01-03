@@ -2,15 +2,30 @@ const fs = require('fs');
 const vm = require('vm');
 
 // Load the dictionary
-const filePath = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js';
-let fileContent = fs.readFileSync(filePath, 'utf8');
+const filePath1 = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js';
+const filePath2 = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9-5-8.js';
 
-// Quick hack to load the object
-fileContent = fileContent.replace('const vocabInsanPr9', 'vocabInsanPr9');
-const sandbox = { vocabInsanPr9: {} };
-vm.createContext(sandbox);
-vm.runInContext(fileContent, sandbox);
-const dictionary = sandbox.vocabInsanPr9;
+let dictionary = {};
+
+// Load Part 1-4
+if (fs.existsSync(filePath1)) {
+    let fileContent = fs.readFileSync(filePath1, 'utf8');
+    fileContent = fileContent.replace('const vocabInsanPr9', 'var vocabInsanPr9');
+    const sandbox = {};
+    vm.createContext(sandbox);
+    vm.runInContext(fileContent, sandbox);
+    Object.assign(dictionary, sandbox.vocabInsanPr9);
+}
+
+// Load Part 5-8
+if (fs.existsSync(filePath2)) {
+    let fileContent = fs.readFileSync(filePath2, 'utf8');
+    fileContent = fileContent.replace('const vocabInsanPr9Part5to8', 'var vocabInsanPr9Part5to8');
+    const sandbox = {};
+    vm.createContext(sandbox);
+    vm.runInContext(fileContent, sandbox);
+    Object.assign(dictionary, sandbox.vocabInsanPr9Part5to8);
+}
 
 // Counters
 const counts = {

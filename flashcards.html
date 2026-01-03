@@ -393,6 +393,7 @@
     <!-- Dictionary Data -->
     <script src="data/raw/vocab-general.js"></script>
     <script src="data/raw/vocab-insan-pr9.js"></script>
+    <script src="data/raw/vocab-insan-pr9-5-8.js"></script>
     <script src="data/raw/vocab-bhumibalo.js"></script>
     <script src="data/raw/vocab-jinakalamalini.js"></script>
 
@@ -434,8 +435,8 @@
         // 2. Dictionary DBs
         const dbs = {
             insan_pr9: Object.assign({},
-                (typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {}),
-                (typeof vocabInsanPr9Part5to8 !== 'undefined' ? vocabInsanPr9Part5to8 : {})
+                (typeof vocabInsanPr9Part5to8 !== 'undefined' ? vocabInsanPr9Part5to8 : {}),
+                (typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {})
             ),
             bhumibalo: (typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {}),
             jinakalamalini: (typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {}),

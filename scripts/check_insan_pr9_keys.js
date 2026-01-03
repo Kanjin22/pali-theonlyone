@@ -1,29 +1,33 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../data/raw/vocab-insan-pr9.js');
-console.log('Reading file from:', filePath);
+const filePaths = [
+    path.join(__dirname, '../data/raw/vocab-insan-pr9.js'),
+    path.join(__dirname, '../data/raw/vocab-insan-pr9-5-8.js')
+];
 
-if (!fs.existsSync(filePath)) {
-    console.error('File does not exist!');
-    process.exit(1);
-}
+let totalKeys = 0;
+let combinedContent = '';
 
-const content = fs.readFileSync(filePath, 'utf8');
-const jsonStr = content.replace('const vocabInsanPr9 = ', '');
-console.log('File content length:', content.length);
-console.log('First 200 chars:', content.substring(0, 200));
-
-const keysToCheck = ['ธมฺมา', 'ธมฺมปทฏฺฐกถา', 'ปณามคาถา'];
-const totalEntriesMatch = content.match(/"[^"]+":/g);
-const totalKeys = totalEntriesMatch ? totalEntriesMatch.length : 0;
+filePaths.forEach(filePath => {
+    if (fs.existsSync(filePath)) {
+        console.log('Reading file from:', filePath);
+        const content = fs.readFileSync(filePath, 'utf8');
+        combinedContent += content;
+        
+        const matches = content.match(/"[^"]+":/g);
+        if (matches) totalKeys += matches.length;
+    } else {
+        console.log('File not found:', filePath);
+    }
+});
 
 console.log(`Estimated total entries (regex): ${totalKeys}`);
 
+const keysToCheck = ['ธมฺมา', 'ธมฺมปทฏฺฐกถา', 'ปณามคาถา'];
 keysToCheck.forEach(k => {
-    // Look for "key": or 'key':
     const regex = new RegExp(`["']${k}["']\\s*:`);
-    if (regex.test(content)) {
+    if (regex.test(combinedContent)) {
         console.log(`Found: ${k}`);
     } else {
         console.log(`Missing: ${k}`);

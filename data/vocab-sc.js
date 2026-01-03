@@ -82656,8 +82656,8 @@ const vocabSC = {
     "definition": "dissolved"
   },
   "saṁvaḍḍha": {
-    "grammar": "",
-    "definition": "#NAME?"
+    "grammar": "pp",
+    "definition": "grown up; fully grown (in)"
   },
   "saṁvaḍḍhati": {
     "grammar": "saṁ + vaḍḍh + a",
