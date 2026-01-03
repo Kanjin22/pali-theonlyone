@@ -11,12 +11,7 @@ let fileContent = fs.readFileSync(dictPath, 'utf8');
 
 // Safe parsing
 const sandbox = {};
-// Handle BOTH cases for reading (migration from vocabTananunto -> vocabInsanPr9)
-if (fileContent.includes('const vocabTananunto')) {
-    fileContent = fileContent.replace(/const\s+vocabTananunto\s*=\s*/, 'vocabInsanPr9 = ');
-} else {
-    fileContent = fileContent.replace(/const\s+vocabInsanPr9\s*=\s*/, 'vocabInsanPr9 = ');
-}
+fileContent = fileContent.replace(/const\s+vocabInsanPr9\s*=\s*/, 'vocabInsanPr9 = ');
 
 vm.createContext(sandbox);
 vm.runInContext(fileContent, sandbox);

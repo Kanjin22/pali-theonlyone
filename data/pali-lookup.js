@@ -191,7 +191,7 @@ const PaliLookup = {
     checkAll: function(key, dbs) {
         // Priority order adjusted by user request
         
-        // 1. Thai Dictionaries (Ordered: Tananunto, Bhumibalo, Jinakalamalini, General, New Gen)
+        // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General, New Gen)
         if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ (Insan-PR9)', word: key };
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key };
@@ -229,11 +229,11 @@ const PaliLookup = {
         }
 
         // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General)
-        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบทภาค ๑-๘ (Insan-PR9)', word: key });
+        if (dbs.insan_pr9 && dbs.insan_pr9[key]) results.push({ details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (Insan-PR9)', word: key });
         if (dbs.bhumibalo && dbs.bhumibalo[key]) results.push({ details: [dbs.bhumibalo[key]], source: 'พจนานุกรม ฉบับภูมิพโลภิกขุ', word: key });
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) results.push({ details: [dbs.jinakalamalini[key]], source: 'ปทานุกรม พระชินกาลมาลินี', word: key });
-        if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'ศัพท์ทั่วไป (Raw)', word: key });
-        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key });
+        if (dbs.general_raw && dbs.general_raw[key]) results.push({ details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (Raw)', word: key });
+        if (dbs.general && dbs.general[key]) results.push({ ...dbs.general[key], source: 'พจนานุกรมทั่วไป', word: key });
 
         // 2. Roman Dictionaries (Ordered: SC, DPD, PTS, Others)
         let romanKey = key;
