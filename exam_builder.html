@@ -1194,6 +1194,40 @@
                 return true;
             });
         }
+        // Global content storage for "Book Mode"
+        window.examContent = { literal: '', sense: '' };
+
+        function useSelectionForExam(mode) {
+            const sel = window.getSelection();
+            const text = sel.toString();
+            
+            if (!text.trim()) {
+                alert('กรุณาคลุมดำข้อความที่ต้องการเลือกก่อนครับ');
+                return;
+            }
+
+            // Determine target slot
+            const target = (mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense';
+            window.examContent[target] = text;
+
+            // Generate Preview
+            buildExamPreview();
+
+            // Visual Feedback
+            const btn = document.getElementById('btn-use-' + mode);
+            if (btn) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> เรียบร้อย';
+                btn.classList.remove('primary');
+                btn.classList.add('step-completed'); // Greenish
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.add('primary');
+                    btn.classList.remove('step-completed');
+                }, 1500);
+            }
+        }
+
         function renderList(containerId, items, mode, part, startPage, endPage) {
             const box = document.getElementById(containerId);
             if (box) box.innerHTML = '';
@@ -1203,13 +1237,37 @@
                 return;
             }
 
-            const allSlides = getPartSlides(part); // For global index lookup
+            // Book Mode Render
+            const wrapper = document.createElement('div');
+            
+            // Toolbar
+            const toolbar = document.createElement('div');
+            toolbar.style.marginBottom = '10px';
+            toolbar.style.display = 'flex';
+            toolbar.style.alignItems = 'center';
+            toolbar.style.gap = '10px';
+            toolbar.innerHTML = `
+                <button id="btn-use-${mode}" class="btn primary" onclick="useSelectionForExam('${mode}')">
+                    <i class="fa-solid fa-file-import"></i> นำข้อความที่คลุมดำไปออกข้อสอบ
+                </button>
+                <span style="font-size:0.85rem; color:#666;">
+                    <i class="fa-solid fa-circle-info"></i> ลากคลุมดำข้อความในกล่องด้านล่าง แล้วกดปุ่มนี้
+                </span>
+                <button class="btn secondary" onclick="window.examContent['${(mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense'}'] = ''; buildExamPreview(); alert('ล้างค่าแล้ว');" style="margin-left:auto; font-size:0.8rem;">
+                    <i class="fa-solid fa-trash"></i> ล้างค่า
+                </button>
+            `;
+            wrapper.appendChild(toolbar);
 
-            let idx = 1;
+            // Text Area (Read-only but selectable)
+            const textArea = document.createElement('div');
+            textArea.className = 'book-content-area';
+            textArea.style.cssText = 'background:#fff; padding:25px; border:1px solid #ccc; border-radius:4px; line-height:1.8; font-family:"Sarabun", sans-serif; height: 400px; overflow-y: auto; white-space: pre-wrap; font-size: 1.1rem; color:#333; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);';
+            
+            let fullContentHTML = '';
+            let lastPage = 0;
+
             items.forEach((s) => {
-                const pageVal = parsePageNumber(s.page);
-                const globalSlideIdx = allSlides.indexOf(s); // Stable Index!
-                
                 let textToUse = s.pali;
                 if (mode !== 'thai_source' && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
                     if (s.gatha.type === 'couplet') {
@@ -1220,127 +1278,22 @@
                 } else if (mode === 'thai_source') {
                     textToUse = s.thai_desana || s.thai_sense || s.thai || '';
                 }
-                
-                const sentences = [textToUse]; // Treat as single sentence (1 Slide = 1 Sentence)
-                sentences.forEach((sent, sentIdx) => {
-                    // Stable Key: Part - GlobalSlideIndex - SentenceIndex
-                    const key = `${part}-${globalSlideIdx}-${sentIdx}`;
-                    
-                    const isSense = (mode === 'sense');
-                    const setRef = isSense ? selectedSense : selectedLiteral;
-                    const deselectRef = isSense ? deselectedSense : deselectedLiteral;
-                    const mapRef = isSense ? senseTextMap : literalTextMap;
-                    
-                    // Logic: Select by default UNLESS explicitly deselected
-                    if (!deselectRef.has(key) && !setRef.has(key)) {
-                        setRef.add(key);
-                    }
-                    
-                    mapRef.set(key, sent);
-                    const selected = setRef.has(key);
-                    const num = toThaiDigits(idx++);
-                    if (box) {
-                        const div = document.createElement('div');
-                        div.className = 'item';
-                        div.innerHTML = `
-                            <div class="item-content">
-                                <span class="badge" style="margin:0;">${num}</span>
-                                <span class="pali-text" style="line-height:1.6;">${sent}</span>
-                            </div>
-                            <div class="item-controls">
-                                ${pageVal > 0 ? `<span class="badge" style="margin:0;">หน้า ${toThaiDigits(pageVal)}</span>` : ''}
-                                <button type="button" class="btn ${selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="yes" title="เลือกประโยคนี้">✅</button>
-                                <button type="button" class="btn ${!selected ? 'primary' : 'secondary'}" data-mode="${mode}" data-key="${key}" data-select="no" title="ตัดประโยคนี้ออก">❌</button>
-                            </div>
-                        `;
-                        box.appendChild(div);
-                    }
-                });
-            });
-            // Auto cross-exclusion on render: prevent duplicates without user clicks
-            if (box) {
-                const isSenseMode = (mode === 'sense');
-                const otherSelectedRef = isSenseMode ? selectedLiteral : selectedSense;
-                const thisSelectedRef = isSenseMode ? selectedSense : selectedLiteral;
-                const thisDeselectRef = isSenseMode ? deselectedSense : deselectedLiteral;
-                
-                box.querySelectorAll('button[data-key][data-select="yes"]').forEach(yesBtn => {
-                    const key = yesBtn.getAttribute('data-key');
-                    if (otherSelectedRef.has(key)) {
-                        // Ensure this mode deselects duplicates
-                        thisDeselectRef.add(key);
-                        thisSelectedRef.delete(key);
-                        const parent = yesBtn.parentElement;
-                        const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
-                        if (noBtn) {
-                            noBtn.classList.add('primary'); 
-                            noBtn.classList.remove('secondary'); 
-                            yesBtn.classList.add('secondary'); 
-                            yesBtn.classList.remove('primary');
-                        }
-                    }
-                });
-            }
-            // ติดตั้งตัวจัดการคลิกสำหรับปุ่มเลือก/ตัด
-            if (box) {
-                box.querySelectorAll('button[data-key]').forEach(btn => {
-                    btn.onclick = function() {
-                        const key = this.getAttribute('data-key');
-                        const mode = this.getAttribute('data-mode');
-                        const sel = this.getAttribute('data-select') === 'yes';
-                        
-                        const effectiveMode = (mode === 'thai_source') ? 'literal' : mode;
-                        const isSense = (effectiveMode === 'sense');
-                        const setRef = isSense ? selectedSense : selectedLiteral;
-                        const deselectRef = isSense ? deselectedSense : deselectedLiteral;
-                        
-                        if (sel) {
-                            setRef.add(key);
-                            deselectRef.delete(key);
-                            
-                            // Cross-exclusion Logic:
-                            // If selected in current mode, DESELECT (mark as NO) in the other mode
-                            const otherSetRef = isSense ? selectedLiteral : selectedSense;
-                            const otherDeselectRef = isSense ? deselectedLiteral : deselectedSense;
-                            
-                            // Always mark as explicitly deselected in the other mode,
-                            // so future default selection won't include duplicates
-                            otherDeselectRef.add(key);
-                            // If it was selected in the other mode, remove it
-                            if (otherSetRef.has(key)) {
-                                otherSetRef.delete(key);
-                            }
-                            // Update UI for the other list if visible
-                            const otherListId = isSense ? 'literalList' : 'senseList';
-                            const otherList = document.getElementById(otherListId);
-                            if (otherList) {
-                                const otherYesBtn = otherList.querySelector('button[data-select="yes"][data-key="'+key+'"]');
-                                const otherNoBtn = otherList.querySelector('button[data-select="no"][data-key="'+key+'"]');
-                                if (otherYesBtn && otherNoBtn) {
-                                    otherNoBtn.classList.add('primary'); 
-                                    otherNoBtn.classList.remove('secondary'); 
-                                    otherYesBtn.classList.add('secondary'); 
-                                    otherYesBtn.classList.remove('primary');
-                                }
-                            }
 
-                        } else {
-                            setRef.delete(key);
-                            deselectRef.add(key);
-                        }
-                        
-                        // รีเฟรชปุ่มสถานะในบรรทัดเดียวกัน
-                        const parent = this.parentElement;
-                        const yesBtn = parent.querySelector('button[data-select="yes"][data-key="'+key+'"]');
-                        const noBtn = parent.querySelector('button[data-select="no"][data-key="'+key+'"]');
-                        if (yesBtn && noBtn) {
-                            if (sel) { yesBtn.classList.add('primary'); yesBtn.classList.remove('secondary'); noBtn.classList.add('secondary'); noBtn.classList.remove('primary'); }
-                            else { noBtn.classList.add('primary'); noBtn.classList.remove('secondary'); yesBtn.classList.add('secondary'); yesBtn.classList.remove('primary'); }
-                        }
-                        buildExamPreview(); // update paper immediately
-                    };
-                });
-            }
+                // Append Page Marker if changed
+                const pageVal = parsePageNumber(s.page);
+                if (pageVal > 0 && pageVal !== lastPage) {
+                    fullContentHTML += `<div style="color:#999; font-size:0.8rem; margin:15px 0 5px 0; border-bottom:1px dashed #eee; text-align:right;">หน้า ${toThaiDigits(pageVal)}</div>`;
+                    lastPage = pageVal;
+                }
+
+                // Append Text
+                // We use spans to make it look nice, but user just selects text
+                fullContentHTML += `<span>${textToUse}</span> `;
+            });
+
+            textArea.innerHTML = fullContentHTML;
+            wrapper.appendChild(textArea);
+            box.appendChild(wrapper);
         }
         function buildExamPreview() {
             const paper = document.getElementById('paperContent');
@@ -1485,20 +1438,28 @@
                 : `font-family: ${thaiFont};`;
 
             let litContent = '';
-            litKeys.forEach(k => {
-                const txt = literalTextMap.get(k) || '';
-                // Add spacing between sentences based on mode
-                // If Pali content (2 spaces), separator should also be 2 spaces
-                const sep = isPaliContent ? '  ' : ' ';
-                if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
-            });
+            if (window.examContent && window.examContent.literal) {
+                 litContent = formatSpacing(window.examContent.literal);
+            } else {
+                litKeys.forEach(k => {
+                    const txt = literalTextMap.get(k) || '';
+                    // Add spacing between sentences based on mode
+                    // If Pali content (2 spaces), separator should also be 2 spaces
+                    const sep = isPaliContent ? '  ' : ' ';
+                    if (txt) litContent += (litContent ? sep : '') + formatSpacing(txt);
+                });
+            }
 
             let senContent = '';
-            senKeys.forEach(k => {
-                const txt = senseTextMap.get(k) || '';
-                const sep = isPaliContent ? '  ' : ' ';
-                if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
-            });
+            if (window.examContent && window.examContent.sense) {
+                 senContent = formatSpacing(window.examContent.sense);
+            } else {
+                senKeys.forEach(k => {
+                    const txt = senseTextMap.get(k) || '';
+                    const sep = isPaliContent ? '  ' : ' ';
+                    if (txt) senContent += (senContent ? sep : '') + formatSpacing(txt);
+                });
+            }
 
             const rawTimeLine = minutes && parseInt(minutes) > 0
                 ? `ให้เวลา ${toThaiDigits(hours)} ชั่วโมง กับ ${toThaiDigits(minutes)} นาที.`
@@ -1731,12 +1692,18 @@
             let litContent = '';
             let senContent = '';
             
-            if (isThaiSource) {
-                 litContent = processKeysToHTML([...selectedLiteral], 'literal');
-                 senContent = processKeysToHTML([...selectedSense], 'sense');
+            if ((window.examContent && window.examContent.literal) || (window.examContent && window.examContent.sense)) {
+                 const msg = '<div style="color:red; font-weight:bold; text-align:center; padding:20px;">(ขออภัย: ระบบเฉลยยังไม่รองรับการทำงานร่วมกับการเลือกข้อความแบบอิสระ/Book Mode<br>กรุณาใช้โหมดเลือกทีละประโยคหากต้องการสร้างเฉลยอัตโนมัติ)</div>';
+                 litContent = msg;
+                 senContent = msg;
             } else {
-                 litContent = processKeysToHTML([...selectedLiteral], 'literal');
-                 senContent = processKeysToHTML([...selectedSense], 'sense');
+                if (isThaiSource) {
+                     litContent = processKeysToHTML([...selectedLiteral], 'literal');
+                     senContent = processKeysToHTML([...selectedSense], 'sense');
+                } else {
+                     litContent = processKeysToHTML([...selectedLiteral], 'literal');
+                     senContent = processKeysToHTML([...selectedSense], 'sense');
+                }
             }
 
             // Build Paper
@@ -1824,6 +1791,12 @@
             literalTextMap.clear();
             selectedSense.clear();
             senseTextMap.clear();
+            
+            // Clear Book Mode content
+            if (window.examContent) {
+                window.examContent.literal = '';
+                window.examContent.sense = '';
+            }
 
             const level = document.getElementById('levelSelect').value;
             const attempt = document.getElementById('attemptInput').value;
@@ -1869,11 +1842,13 @@
                 selectedLiteral.clear(); 
                 deselectedLiteral.clear();
                 literalTextMap.clear(); 
+                if (window.examContent) window.examContent.literal = '';
             }
             if (mode === 'sense') { 
                 selectedSense.clear(); 
                 deselectedSense.clear();
                 senseTextMap.clear(); 
+                if (window.examContent) window.examContent.sense = '';
             }
         }
         function resetForm() {
