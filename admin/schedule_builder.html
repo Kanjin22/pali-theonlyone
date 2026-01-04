@@ -678,8 +678,8 @@
 
             if (ids.length > 0) {
                 const currentVal = activeSlideTextarea.value.trim();
-                const newVal = ids.join('\\n');
-                activeSlideTextarea.value = currentVal ? currentVal + '\\n' + newVal : newVal;
+                const newVal = ids.join('\n');
+                activeSlideTextarea.value = currentVal ? currentVal + '\n' + newVal : newVal;
             }
             closeSlideSelector();
         }
@@ -1384,6 +1384,7 @@
                     // Activity
                     if (data.activities && data.activities[subj.id]) {
                         actVal = data.activities[subj.id];
+                        if (Array.isArray(actVal)) actVal = actVal.join('\n');
                         hasData = true;
                     } else {
                         // Legacy Fallback

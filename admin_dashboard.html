@@ -3485,7 +3485,7 @@
                     <td>${pin.time || '-'}</td>
                     <td>${pin.level || '-'}</td>
                     <td>${pin.subject || '-'}</td>
-                    <td>${pin.activity || '-'}</td>
+                    <td style="white-space: pre-wrap;">${pin.act || pin.activity || '-'}</td>
                     <td>
                         <button class="btn-danger" onclick="removePin(${index})" style="padding:2px 8px;">
                             <i class="fa-solid fa-trash"></i>
