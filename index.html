@@ -1278,6 +1278,17 @@
                     }
                 } catch (e) {}
                 window.todayPins = filtered.slice();
+
+                // FIX: Handle case where filtering removes all pins
+                if (window.todayPins.length === 0 && pins.length > 0) {
+                    body.innerHTML = '<div style="color:#95a5a6; text-align:center; padding:20px;">ไม่มีรายการปักหมุดสำหรับห้องเรียนของคุณในวันนี้</div>';
+                    // Update dashboard anyway just in case
+                    if (window._currentUser && window._currentRole) {
+                        updateStudentDashboard(window._currentUser, window._currentRole);
+                    }
+                    return;
+                }
+
                 if (window._currentUser && window._currentRole) {
                     updateStudentDashboard(window._currentUser, window._currentRole);
                 }
