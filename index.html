@@ -1388,10 +1388,13 @@
                     // Content
                     const contentDiv = document.createElement('div');
                     contentDiv.style.flex = '1';
+                    contentDiv.style.display = 'flex';
+                    contentDiv.style.alignItems = 'flex-start';
 
                     // Subject Badge
                     const subjectBadge = document.createElement('span');
                     subjectBadge.style.display = 'inline-block';
+                    subjectBadge.style.flexShrink = '0';
                     subjectBadge.style.fontSize = '0.8rem';
                     subjectBadge.style.padding = '2px 8px';
                     subjectBadge.style.borderRadius = '4px';
@@ -1416,6 +1419,7 @@
                     }
 
                     const actText = document.createElement('span');
+                    actText.style.flex = '1';
                     actText.style.fontSize = '1rem';
                     actText.style.color = '#34495e';
                     actText.style.whiteSpace = 'pre-wrap';
