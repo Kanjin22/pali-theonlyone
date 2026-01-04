@@ -1109,16 +1109,11 @@
                 const doc = await db.collection('config').doc('today_pins').get();
                 if (doc.exists && doc.data() && Array.isArray(doc.data().items)) {
                     const pins = doc.data().items;
-                    if (doc.data().date && doc.data().date !== iso) {
-                        const warn = document.createElement('div');
-                        warn.style.color = '#e67e22';
-                        warn.style.marginBottom = '8px';
-                        warn.style.fontSize = '0.9rem';
-                        warn.textContent = 'หมายเหตุ: ข้อมูลปักหมุดยังไม่อัปเดตเป็นวันนี้';
-                        body.appendChild(warn);
+                    // Only use manual pins if they are for TODAY
+                    if (doc.data().date === iso) {
+                        renderPins(body, pins);
+                        pinsLoaded = true;
                     }
-                    renderPins(body, pins);
-                    pinsLoaded = true;
                 }
             } catch (e) { }
             // 2) Load from 'schedules' collection (The New System)
@@ -1243,6 +1238,14 @@
         function renderPins(body, pins) {
             body.innerHTML = ''; // Clear previous content
             
+            // Normalize activity -> act (Handle legacy/manual pins)
+            if (pins && Array.isArray(pins)) {
+                pins = pins.map(p => {
+                    if (!p.act && p.activity) return { ...p, act: p.activity };
+                    return p;
+                });
+            }
+
             // Filter out invalid pins (undefined/null activities)
             if (pins && Array.isArray(pins)) {
                 pins = pins.filter(p => {
