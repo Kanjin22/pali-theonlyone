@@ -1,0 +1,9 @@
+NO_MAPPING: d01_v01_s12_devahita | ๑๒. เรื่องพระเถระชื่อว่าเทวหิตะ [๑๒]
+MISSING_DATA: d02_v03_s05_cittahattha | ๕. เรื่องพระจิตตหัตถเถระ [๒๘] -> พระจิตตหัตถเถระ
+NO_MAPPING: d04_v06_s09_mahadhana | ๙. เรื่องพ่อค้ามีทรัพย์มาก [๖๘]
+NO_MAPPING: d04_v08_s04_anathapindika | ๔. เรื่องอนาถบิณฑิกเศรษฐี [๘๔]
+NO_MAPPING: d04_v08_s09_kassapa | ๙. เรื่องพ่อค้ามีทรัพย์มาก [๘๙]
+NO_MAPPING: d04_v08_s15_silava | ๑๕. เรื่องภิกษุผู้มีศีลเป็นที่รัก [๙๕]
+NO_MAPPING: d08_v20_s01_pancasata_bhikkhu_1 | ๒. เรื่องผู้ถูกเบียดเบียนเพราะทุจริต [๒๒๕]
+NO_MAPPING: d08_v22_s09_titthiya_savaka | ๑. เรื่องพราหมณ์ผู้ฝึกตน [๒๓๓]
+NO_MAPPING: d08_v23_s02_hatthacariya | ๖. เรื่องช้างชื่อปาเวยยกะ [๒๓๘]

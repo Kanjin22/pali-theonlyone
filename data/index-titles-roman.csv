@@ -1,0 +1,435 @@
+book,vagga_no,story_roman,story_thai,key
+1,1,cakkhupala,,d01_v01_s01_cakkhupala
+1,1,matthakundali,๒. เรื่องมัฏฐกุณฑลี [๒],d01_v01_s02_matthakundali
+1,1,tissa,,d01_v01_s03_tissa
+1,1,kali,,d01_v01_s04_kali
+1,1,kosambi,,d01_v01_s05_kosambi
+1,1,culakala_mahakala,๖. เรื่องจุลกาลและมหากาล [๖],d01_v01_s06_culakala_mahakala
+1,1,devadatta,๗. เรื่องพระเทวทัต [๗],d01_v01_s07_devadatta
+1,1,sanjaya,๘. เรื่องสญชัย [๘],d01_v01_s08_sanjaya
+1,1,nanda,๙. เรื่องพระนันทเถระ [๙],d01_v01_s09_nanda
+1,1,cundasukarika,๑๐. เรื่องจุนทสูกริก [๑๐],d01_v01_s10_cundasukarika
+1,1,dhammika,๑๑. เรื่องอุบาสกผู้ทรงธรรม [๑๑],d01_v01_s11_dhammika
+1,1,devahita,๑๒. เรื่องพระเถระชื่อว่าเทวหิตะ [๑๒],d01_v01_s12_devahita
+1,1,sumana,๑๓. เรื่องภิกษุรูปใดรูปหนึ่ง [๑๓],d01_v01_s13_sumana
+1,1,dvesahayaka,๑๔. เรื่องภิกษุ ๒ สหาย [๑๔],d01_v01_s14_dvesahayaka
+1,1,cakkhupala,,d01_v01_s01_cakkhupala
+1,1,matthakundali,๒. เรื่องมัฏฐกุณฑลี [๒],d01_v01_s02_matthakundali
+1,1,tissa,,d01_v01_s03_tissa
+1,1,kali,,d01_v01_s04_kali
+1,1,kosambi,,d01_v01_s05_kosambi
+1,1,culakala_mahakala,๖. เรื่องจุลกาลและมหากาล [๖],d01_v01_s06_culakala_mahakala
+1,1,devadatta,๗. เรื่องพระเทวทัต [๗],d01_v01_s07_devadatta
+1,1,sanjaya,๘. เรื่องสญชัย [๘],d01_v01_s08_sanjaya
+1,1,nanda,๙. เรื่องพระนันทเถระ [๙],d01_v01_s09_nanda
+1,1,cundasukarika,๑๐. เรื่องจุนทสูกริก [๑๐],d01_v01_s10_cundasukarika
+1,1,dhammika,๑๑. เรื่องอุบาสกผู้ทรงธรรม [๑๑],d01_v01_s11_dhammika
+1,1,devahita,๑๒. เรื่องพระเถระชื่อว่าเทวหิตะ [๑๒],d01_v01_s12_devahita
+1,1,sumana,๑๓. เรื่องภิกษุรูปใดรูปหนึ่ง [๑๓],d01_v01_s13_sumana
+1,1,dvesahayaka,๑๔. เรื่องภิกษุ ๒ สหาย [๑๔],d01_v01_s14_dvesahayaka
+2,2,samavati,๑. เรื่องพระนางสามาวดี [๑๕],d02_v02_s01_samavati
+2,2,kumbhaghosaka,๒. เรื่องกุมภโฆสก [๑๖],d02_v02_s02_kumbhaghosaka
+2,2,culapanthaka,๓. เรื่องพระจูฬปันถกเถระ [๑๗],d02_v02_s03_culapanthaka
+2,2,bala,๔. เรื่องพาลนักษัตร [๑๘],d02_v02_s04_bala
+2,2,mahakassapa,๕. เรื่องพระมหากัสสปเถระ [๑๙],d02_v02_s05_mahakassapa
+2,2,two_monks,๖. เรื่องภิกษุสองสหาย [๒๐],d02_v02_s06_two_monks
+2,2,sakka,๗. เรื่องท้าวสักกะ [๒๑],d02_v02_s07_sakka
+2,2,monk,๘. เรื่องภิกษุรูปใดรูปหนึ่ง [๒๒],d02_v02_s08_monk
+2,2,tissa,๙ เรื่องพระติสสเถระผู้มีปกติอยู่ในนิคม [๒๓],d02_v02_s09_tissa
+2,3,meghiya,๑. เรื่องพระเมฆิยเถระ [๒๔],d02_v03_s01_meghiya
+2,3,monk,๒. เรื่องภิกษุรูปใดรูปหนึ่ง [๒๕],d02_v03_s02_monk
+2,3,ukkantitha,๓. เรื่องอุกกัณฐิตภิกษุ [๒๖],d02_v03_s03_ukkantitha
+2,3,sangharakkhita,๔. เรื่องพระภาคิไนยสังฆรักขิตเถระ [๒๗],d02_v03_s04_sangharakkhita
+2,3,cittahattha,๕. เรื่องพระจิตตหัตถเถระ [๒๘],d02_v03_s05_cittahattha
+2,3,vipassana,๖. เรื่องภิกษุผู้ปรารภวิปัสสนา [๒๙],d02_v03_s06_vipassana
+2,3,putigatta,๗. เรื่องพระปูติคัตตติสสเถระ [๓๐],d02_v03_s07_putigatta
+2,3,nandagopala,๘. เรื่องนันทโคปาลกะ [๓๑],d02_v03_s08_nandagopala
+2,3,soraiya,๙. เรื่องพระโสไรยเถระ [๓๒],d02_v03_s09_soraiya
+2,2,samavati,๑. เรื่องพระนางสามาวดี [๑๕],d02_v02_s01_samavati
+2,2,kumbhaghosaka,๒. เรื่องกุมภโฆสก [๑๖],d02_v02_s02_kumbhaghosaka
+2,2,culapanthaka,๓. เรื่องพระจูฬปันถกเถระ [๑๗],d02_v02_s03_culapanthaka
+2,2,bala,๔. เรื่องพาลนักษัตร [๑๘],d02_v02_s04_bala
+2,2,mahakassapa,๕. เรื่องพระมหากัสสปเถระ [๑๙],d02_v02_s05_mahakassapa
+2,2,two_monks,๖. เรื่องภิกษุสองสหาย [๒๐],d02_v02_s06_two_monks
+2,2,sakka,๗. เรื่องท้าวสักกะ [๒๑],d02_v02_s07_sakka
+2,2,monk,๘. เรื่องภิกษุรูปใดรูปหนึ่ง [๒๒],d02_v02_s08_monk
+2,2,tissa,๙ เรื่องพระติสสเถระผู้มีปกติอยู่ในนิคม [๒๓],d02_v02_s09_tissa
+2,3,meghiya,๑. เรื่องพระเมฆิยเถระ [๒๔],d02_v03_s01_meghiya
+2,3,monk,๒. เรื่องภิกษุรูปใดรูปหนึ่ง [๒๕],d02_v03_s02_monk
+2,3,ukkantitha,๓. เรื่องอุกกัณฐิตภิกษุ [๒๖],d02_v03_s03_ukkantitha
+2,3,sangharakkhita,๔. เรื่องพระภาคิไนยสังฆรักขิตเถระ [๒๗],d02_v03_s04_sangharakkhita
+2,3,cittahattha,๕. เรื่องพระจิตตหัตถเถระ [๒๘],d02_v03_s05_cittahattha
+2,3,vipassana,๖. เรื่องภิกษุผู้ปรารภวิปัสสนา [๒๙],d02_v03_s06_vipassana
+2,3,putigatta,๗. เรื่องพระปูติคัตตติสสเถระ [๓๐],d02_v03_s07_putigatta
+2,3,nandagopala,๘. เรื่องนันทโคปาลกะ [๓๑],d02_v03_s08_nandagopala
+2,3,soraiya,๙. เรื่องพระโสไรยเถระ [๓๒],d02_v03_s09_soraiya
+3,4,pathavikatha,๑. เรื่องภิกษุ ๕๐๐ รูปผู้ขวนขวายในปฐวีกถา [๓๓],d03_v04_s01_pathavikatha
+3,4,marici,๒. เรื่องพระเถระผู้เจริญมรีจิกัมมัฏฐาน [๓๔],d03_v04_s02_marici
+3,4,vidudabha,๓. เรื่องพระเจ้าวิฑูฑภะ [๓๕],d03_v04_s03_vidudabha
+3,4,patipujika,๔. เรื่องนางปติปูชิกา [๓๖],d03_v04_s04_patipujika
+3,4,kosiya,๕. เรื่องโกสิยเศรษฐีผู้มีความตระหนี่ [๓๗],d03_v04_s05_kosiya
+3,4,patika,๖. เรื่องปาฏิกาชีวก [๓๘],d03_v04_s06_patika
+3,4,chattapani,๗. เรื่องฉัตตปาณิอุบาสก [๓๙],d03_v04_s07_chattapani
+3,4,visakha,๘. เรื่องนางวิสาขา [๔๐],d03_v04_s08_visakha
+3,4,ananda,๙. เรื่องปัญหาของพระอานนทเถระ [๔๑],d03_v04_s09_ananda
+3,4,mahakassapa,๑๐. เรื่องถวายบิณฑบาตแก่พระมหากัสสปเถระ [๔๒],d03_v04_s10_mahakassapa
+3,4,godhika,๑๑. เรื่องปรินิพพานของพระโคธิกเถระ [๔๓],d03_v04_s11_godhika
+3,4,garahadinna,๑๒. เรื่องครหทินน์ [๔๔],d03_v04_s12_garahadinna
+3,5,anyaman,๑. เรื่องบุรุษคนใดคนหนึ่ง [๔๕],d03_v05_s01_anyaman
+3,5,saddhiviharika,๒. เรื่องสัทธิวิหาริกของพระมหากัสสปเถระ [๔๖],d03_v05_s02_saddhiviharika
+3,5,ananda_setthi,๓. เรื่องอานนทเศรษฐี [๔๗],d03_v05_s03_ananda_setthi
+3,5,ganthibhedaka,๔. เรื่องโจรผู้ทำลายปม [๔๘],d03_v05_s04_ganthibhedaka
+3,5,udayi,๕. เรื่องพระอุทายีเถระ [๔๙],d03_v05_s05_udayi
+3,5,patha,๖. เรื่องภิกษุชาวเมืองปาฐา [๕๐],d03_v05_s06_patha
+3,5,suppabuddha,๗. เรื่องสุปปพุทธกุฏฐิ [๕๑],d03_v05_s07_suppabuddha
+3,5,farmer,๘. เรื่องชาวนา [๕๒],d03_v05_s08_farmer
+3,5,sumana,๙. เรื่องนายสุมนมาลาการ [๕๓],d03_v05_s09_sumana
+3,5,uppalavanna,๑๐. เรื่องพระอุบลวรรณาเถรี [๕๔],d03_v05_s10_uppalavanna
+3,5,jambuka,,d03_v05_s11_jambuka
+3,5,ahi_peta,,d03_v05_s12_ahi_peta
+3,5,satthikuta_peta,,d03_v05_s13_satthikuta_peta
+3,5,sudhamma,๑๔. เรื่องพระสุธรรมเถระ [๕๘],d03_v05_s14_sudhamma
+3,5,vanavasi,๑๕. เรื่องพระวนวาสีติสสเถระ [๕๙],d03_v05_s15_vanavasi
+3,4,pathavikatha,๑. เรื่องภิกษุ ๕๐๐ รูปผู้ขวนขวายในปฐวีกถา [๓๓],d03_v04_s01_pathavikatha
+3,4,marici,๒. เรื่องพระเถระผู้เจริญมรีจิกัมมัฏฐาน [๓๔],d03_v04_s02_marici
+3,4,vidudabha,๓. เรื่องพระเจ้าวิฑูฑภะ [๓๕],d03_v04_s03_vidudabha
+3,4,patipujika,๔. เรื่องนางปติปูชิกา [๓๖],d03_v04_s04_patipujika
+3,4,kosiya,๕. เรื่องโกสิยเศรษฐีผู้มีความตระหนี่ [๓๗],d03_v04_s05_kosiya
+3,4,patika,๖. เรื่องปาฏิกาชีวก [๓๘],d03_v04_s06_patika
+3,4,chattapani,๗. เรื่องฉัตตปาณิอุบาสก [๓๙],d03_v04_s07_chattapani
+3,4,visakha,๘. เรื่องนางวิสาขา [๔๐],d03_v04_s08_visakha
+3,4,ananda,๙. เรื่องปัญหาของพระอานนทเถระ [๔๑],d03_v04_s09_ananda
+3,4,mahakassapa,๑๐. เรื่องถวายบิณฑบาตแก่พระมหากัสสปเถระ [๔๒],d03_v04_s10_mahakassapa
+3,4,godhika,๑๑. เรื่องปรินิพพานของพระโคธิกเถระ [๔๓],d03_v04_s11_godhika
+3,4,garahadinna,๑๒. เรื่องครหทินน์ [๔๔],d03_v04_s12_garahadinna
+3,5,anyaman,๑. เรื่องบุรุษคนใดคนหนึ่ง [๔๕],d03_v05_s01_anyaman
+3,5,saddhiviharika,๒. เรื่องสัทธิวิหาริกของพระมหากัสสปเถระ [๔๖],d03_v05_s02_saddhiviharika
+3,5,ananda_setthi,๓. เรื่องอานนทเศรษฐี [๔๗],d03_v05_s03_ananda_setthi
+3,5,ganthibhedaka,๔. เรื่องโจรผู้ทำลายปม [๔๘],d03_v05_s04_ganthibhedaka
+3,5,udayi,๕. เรื่องพระอุทายีเถระ [๔๙],d03_v05_s05_udayi
+3,5,patha,๖. เรื่องภิกษุชาวเมืองปาฐา [๕๐],d03_v05_s06_patha
+3,5,suppabuddha,๗. เรื่องสุปปพุทธกุฏฐิ [๕๑],d03_v05_s07_suppabuddha
+3,5,farmer,๘. เรื่องชาวนา [๕๒],d03_v05_s08_farmer
+3,5,sumana,๙. เรื่องนายสุมนมาลาการ [๕๓],d03_v05_s09_sumana
+3,5,uppalavanna,๑๐. เรื่องพระอุบลวรรณาเถรี [๕๔],d03_v05_s10_uppalavanna
+3,5,jambuka,,d03_v05_s11_jambuka
+3,5,ahi_peta,,d03_v05_s12_ahi_peta
+3,5,satthikuta_peta,,d03_v05_s13_satthikuta_peta
+3,5,sudhamma,๑๔. เรื่องพระสุธรรมเถระ [๕๘],d03_v05_s14_sudhamma
+3,5,vanavasi,๑๕. เรื่องพระวนวาสีติสสเถระ [๕๙],d03_v05_s15_vanavasi
+4,6,radha,๑. เรื่องพระราธเถระ [๖๐],d04_v06_s01_radha
+4,6,assaji_punabbasu,๒. เรื่องภิกษุอัสสชิและปุนัพพสุกะ [๖๑],d04_v06_s02_assaji_punabbasu
+4,6,channa,๓. เรื่องพระฉันนเถระ [๖๒],d04_v06_s03_channa
+4,6,mahakappina,๔. เรื่องพระมหากัปปินเถระ [๖๓],d04_v06_s04_mahakappina
+4,6,pandita,๕. เรื่องบัณฑิตสามเณร [๖๔],d04_v06_s05_pandita
+4,6,lakuntaka,๖. เรื่องพระลกุณฏกภัททิยเถระ [๖๕],d04_v06_s06_lakuntaka
+4,6,kanamata,๗. เรื่องมารดาของนางกาณา [๖๖],d04_v06_s07_kanamata
+4,6,sariputta,๘. เรื่องพระสารีบุตรเถระ [๖๗],d04_v06_s08_sariputta
+4,6,mahadhana,๙. เรื่องพ่อค้ามีทรัพย์มาก [๖๘],d04_v06_s09_mahadhana
+4,6,kisagotami,๑๐. เรื่องนางกีสาโคตมี [๖๙],d04_v06_s10_kisagotami
+4,6,patacara,๑๑. เรื่องนางปฏาจารา [๗๐],d04_v06_s11_patacara
+4,7,jivaka,๑. เรื่องหมอชีวก [๗๑],d04_v07_s01_jivaka
+4,7,mahakassapa,๒. เรื่องพระมหากัสสปเถระ [๗๒],d04_v07_s02_mahakassapa
+4,7,belatthasisa,๓. เรื่องพระเบลัฏฐสีสเถระ [๗๓],d04_v07_s03_belatthasisa
+4,7,anuruddha,๔. เรื่องพระอนุรุทธเถระ [๗๔],d04_v07_s04_anuruddha
+4,7,mahakaccayana,๕. เรื่องพระมหากัจจายนเถระ [๗๕],d04_v07_s05_mahakaccayana
+4,7,sariputta,๖. เรื่องพระสารีบุตรเถระ [๗๖],d04_v07_s06_sariputta
+4,7,kosambivasitissa,๗. เรื่องพระติสสเถระผู้อยู่ในเมืองโกสัมพี [๗๗],d04_v07_s07_kosambivasitissa
+4,7,sariputta,๘. เรื่องพระสารีบุตรเถระ [๗๘],d04_v07_s08_sariputta
+4,7,khadiravaniya,๙. เรื่องพระเรวตเถระผู้อยู่ในป่าไม้ตะเคียน [๗๙],d04_v07_s09_khadiravaniya
+4,7,woman,๑๐. เรื่องหญิงคนใดคนหนึ่ง [๘๐],d04_v07_s10_woman
+4,8,tambadathika,๑. เรื่องโจรผู้มีเคราแดง [๘๑],d04_v08_s01_tambadathika
+4,8,bahiya,,d04_v08_s02_bahiya
+4,8,kundalakesi,๓. เรื่องนางกุณฑลเกสีเถรี [๘๓],d04_v08_s03_kundalakesi
+4,8,anathapindika,๔. เรื่องอนาถบิณฑิกเศรษฐี [๘๔],d04_v08_s04_anathapindika
+4,8,sariputta,๕. เรื่องพระสารีบุตรเถระ [๘๕],d04_v08_s05_sariputta
+4,8,patacara,๖. เรื่องนางปฏาจาราเถรี [๘๖],d04_v08_s06_patacara
+4,8,kisagotami,๗. เรื่องนางกีสาโคตมีเถรี [๘๗],d04_v08_s07_kisagotami
+4,8,bahuputtika,๘. เรื่องนางพหุปุตติกาเถรี [๘๘],d04_v08_s08_bahuputtika
+4,8,kassapa,๙. เรื่องพ่อค้ามีทรัพย์มาก [๘๙],d04_v08_s09_kassapa
+4,8,sankicca,๑๐. เรื่องพระสังกิจจสามเณร [๙๐],d04_v08_s10_sankicca
+4,8,khanu,๑๑. เรื่องพระเถระชื่อขานุโกณฑัญญะ [๙๑],d04_v08_s11_khanu
+4,8,sappadasa,๑๒. เรื่องพระสัปปทาสเถระ [๙๒],d04_v08_s12_sappadasa
+4,8,patacara,๑๓. เรื่องนางปฏาจาราเถรี [๙๓],d04_v08_s13_patacara
+4,8,kisa,๑๔. เรื่องนางกีสาโคตมีเถรี [๙๔],d04_v08_s14_kisa
+4,8,silava,๑๕. เรื่องภิกษุผู้มีศีลเป็นที่รัก [๙๕],d04_v08_s15_silava
+4,6,radha,๑. เรื่องพระราธเถระ [๖๐],d04_v06_s01_radha
+4,6,assaji_punabbasu,๒. เรื่องภิกษุอัสสชิและปุนัพพสุกะ [๖๑],d04_v06_s02_assaji_punabbasu
+4,6,channa,๓. เรื่องพระฉันนเถระ [๖๒],d04_v06_s03_channa
+4,6,mahakappina,๔. เรื่องพระมหากัปปินเถระ [๖๓],d04_v06_s04_mahakappina
+4,6,pandita,๕. เรื่องบัณฑิตสามเณร [๖๔],d04_v06_s05_pandita
+4,6,lakuntaka,๖. เรื่องพระลกุณฏกภัททิยเถระ [๖๕],d04_v06_s06_lakuntaka
+4,6,kanamata,๗. เรื่องมารดาของนางกาณา [๖๖],d04_v06_s07_kanamata
+4,6,sariputta,๘. เรื่องพระสารีบุตรเถระ [๖๗],d04_v06_s08_sariputta
+4,6,mahadhana,๙. เรื่องพ่อค้ามีทรัพย์มาก [๖๘],d04_v06_s09_mahadhana
+4,6,kisagotami,๑๐. เรื่องนางกีสาโคตมี [๖๙],d04_v06_s10_kisagotami
+4,6,patacara,๑๑. เรื่องนางปฏาจารา [๗๐],d04_v06_s11_patacara
+4,7,jivaka,๑. เรื่องหมอชีวก [๗๑],d04_v07_s01_jivaka
+4,7,mahakassapa,๒. เรื่องพระมหากัสสปเถระ [๗๒],d04_v07_s02_mahakassapa
+4,7,belatthasisa,๓. เรื่องพระเบลัฏฐสีสเถระ [๗๓],d04_v07_s03_belatthasisa
+4,7,anuruddha,๔. เรื่องพระอนุรุทธเถระ [๗๔],d04_v07_s04_anuruddha
+4,7,mahakaccayana,๕. เรื่องพระมหากัจจายนเถระ [๗๕],d04_v07_s05_mahakaccayana
+4,7,sariputta,๖. เรื่องพระสารีบุตรเถระ [๗๖],d04_v07_s06_sariputta
+4,7,kosambivasitissa,๗. เรื่องพระติสสเถระผู้อยู่ในเมืองโกสัมพี [๗๗],d04_v07_s07_kosambivasitissa
+4,7,sariputta,๘. เรื่องพระสารีบุตรเถระ [๗๘],d04_v07_s08_sariputta
+4,7,khadiravaniya,๙. เรื่องพระเรวตเถระผู้อยู่ในป่าไม้ตะเคียน [๗๙],d04_v07_s09_khadiravaniya
+4,7,woman,๑๐. เรื่องหญิงคนใดคนหนึ่ง [๘๐],d04_v07_s10_woman
+4,8,tambadathika,๑. เรื่องโจรผู้มีเคราแดง [๘๑],d04_v08_s01_tambadathika
+4,8,bahiya,,d04_v08_s02_bahiya
+4,8,kundalakesi,๓. เรื่องนางกุณฑลเกสีเถรี [๘๓],d04_v08_s03_kundalakesi
+4,8,anathapindika,๔. เรื่องอนาถบิณฑิกเศรษฐี [๘๔],d04_v08_s04_anathapindika
+4,8,sariputta,๕. เรื่องพระสารีบุตรเถระ [๘๕],d04_v08_s05_sariputta
+4,8,patacara,๖. เรื่องนางปฏาจาราเถรี [๘๖],d04_v08_s06_patacara
+4,8,kisagotami,๗. เรื่องนางกีสาโคตมีเถรี [๘๗],d04_v08_s07_kisagotami
+4,8,bahuputtika,๘. เรื่องนางพหุปุตติกาเถรี [๘๘],d04_v08_s08_bahuputtika
+4,8,kassapa,๙. เรื่องพ่อค้ามีทรัพย์มาก [๘๙],d04_v08_s09_kassapa
+4,8,sankicca,๑๐. เรื่องพระสังกิจจสามเณร [๙๐],d04_v08_s10_sankicca
+4,8,khanu,๑๑. เรื่องพระเถระชื่อขานุโกณฑัญญะ [๙๑],d04_v08_s11_khanu
+4,8,sappadasa,๑๒. เรื่องพระสัปปทาสเถระ [๙๒],d04_v08_s12_sappadasa
+4,8,patacara,๑๓. เรื่องนางปฏาจาราเถรี [๙๓],d04_v08_s13_patacara
+4,8,kisa,๑๔. เรื่องนางกีสาโคตมีเถรี [๙๔],d04_v08_s14_kisa
+4,8,silava,๑๕. เรื่องภิกษุผู้มีศีลเป็นที่รัก [๙๕],d04_v08_s15_silava
+5,9,cullaekasataka,๕. เรื่องนางรูปนันทาเถรี (ชนบทกัลยาณี) [๑๒๓],d05_v09_s01_cullaekasataka
+5,11,mallika,๙. เรื่องบุตรของเศรษฐีมีทรัพย์มาก [๑๒๗],d05_v11_s06_mallika
+5,9,cullaekasataka,๑. เรื่องพราหมณ์ชื่อจูฬเอกสาฎก [๙๖],d05_v09_s01_cullaekasataka
+5,9,seyyasaka,๒. เรื่องพระเสยยสกเถระ [๙๗],d05_v09_s02_seyyasaka
+5,9,laja,๓. เรื่องนางลาชเทวธิดา [๙๘],d05_v09_s03_laja
+5,9,anathapindika,๔. เรื่องอนาถบิณฑิกเศรษฐี [๙๙],d05_v09_s04_anathapindika
+5,9,aparijjuta,๕. เรื่องภิกษุผู้ไม่จัดแจงซึ่งบริขาร [๑๐๐],d05_v09_s05_aparijjuta
+5,9,bilalapadaka,๖. เรื่องเศรษฐีชื่อพิฬาลปทกะ [๑๐๑],d05_v09_s06_bilalapadaka
+5,9,mahadhana,๗. เรื่องพ่อค้ามีทรัพย์มาก [๑๐๒],d05_v09_s07_mahadhana
+5,9,kukkutamitta,๘. เรื่องนายพรานกุกกุฏมิตร [๑๐๓],d05_v09_s08_kukkutamitta
+5,9,koka,๙. เรื่องนายพรานสุนัขชื่อโกกะ [๑๐๔],d05_v09_s09_koka
+5,9,tissa,๑๐. เรื่องพระติสสเถระผู้เข้าถึงสกุลนายช่างแก้ว [๑๐๕],d05_v09_s10_tissa
+5,9,tayo_jana,๑๑. เรื่องชน ๓ คน [๑๐๖],d05_v09_s11_tayo_jana
+5,9,suppabuddha,๑๒. เรื่องสุปปพุทธศากยะ [๑๐๗],d05_v09_s12_suppabuddha
+5,10,chabbaggiya_1,๑. เรื่องภิกษุฉับบัคคีย์ เรื่องที่ ๑ [๑๐๘],d05_v10_s01_chabbaggiya_1
+5,10,chabbaggiya_2,๒. เรื่องภิกษุฉับบัคคีย์ เรื่องที่ ๒ [๑๐๙],d05_v10_s02_chabbaggiya_2
+5,10,sambahula_kumara,๓. เรื่องเด็กหลายคน [๑๑๐],d05_v10_s03_sambahula_kumara
+5,10,kondadhana,๔. เรื่องพระโกณฑธานเถระ [๑๑๑],d05_v10_s04_kondadhana
+5,10,uposatha,๕. เรื่องอุโบสถกรรม [๑๑๒],d05_v10_s05_uposatha
+5,10,ajagara,๖. เรื่องอชครเปรต [๑๑๓],d05_v10_s06_ajagara
+5,10,moggallana,๗. เรื่องพระมหาโมคคัลลานเถระ [๑๑๔],d05_v10_s07_moggallana
+5,10,bahubhandika,๘. เรื่องภิกษุผู้มีบริขารมาก [๑๑๕],d05_v10_s08_bahubhandika
+5,10,santati,๙. เรื่องสันตติมหาอำมาตย์ [๑๑๖],d05_v10_s09_santati
+5,10,pilotika,๑๐. เรื่องพระปิโลติกเถระ [๑๑๗],d05_v10_s10_pilotika
+5,10,sukha,๑๑. เรื่องสุขสามเณร [๑๑๘],d05_v10_s11_sukha
+5,11,visakha_sahaya,๑. เรื่องสหายของนางวิสาขา [๑๑๙],d05_v11_s01_visakha_sahaya
+5,11,sirima,๒. เรื่องนางสิริมา [๑๒๐],d05_v11_s02_sirima
+5,11,uttara,๓. เรื่องพระนางอุตตราเถรี [๑๒๑],d05_v11_s03_uttara
+5,11,adhimanika,๔. เรื่องภิกษุผู้มีอธิมานะ [๑๒๒],d05_v11_s04_adhimanika
+5,11,janapadakalyani,๕. เรื่องนางรูปนันทาเถรี (ชนบทกัลยาณี) [๑๒๓],d05_v11_s05_janapadakalyani
+5,11,mallika,๖. เรื่องพระนางมัลลิกาเทวี [๑๒๔],d05_v11_s06_mallika
+5,11,loludayi,๗. เรื่องพระโลฬุทายีเถระ [๑๒๕],d05_v11_s07_loludayi
+5,11,udana,๘. เรื่องปฐมโพธิกาล (คาถาเปล่งอุทาน) [๑๒๖],d05_v11_s08_udana
+5,11,mahadhana_putta,๙. เรื่องบุตรของเศรษฐีมีทรัพย์มาก [๑๒๗],d05_v11_s09_mahadhana_putta
+6,12,bodhirajakumara,๕. เรื่องพระสัมมุญชเถระ [๑๔๒],d06_v12_s01_bodhirajakumara
+6,13,angulimala,๘. เรื่องท้าวสักกะ [๑๖๕],d06_v13_s06_angulimala
+6,12,bodhirajakumara,๑. เรื่องพระราชกุมารชื่อโพธิ [๑๒๘],d06_v12_s01_bodhirajakumara
+6,12,upananda,๒. เรื่องพระอุปนันทศากยบุตร [๑๒๙],d06_v12_s02_upananda
+6,12,padhanikatissa,๓. เรื่องพระปธานิกติสสเถระ [๑๓๐],d06_v12_s03_padhanikatissa
+6,12,kumarakassapa_mata,๔. เรื่องมารดาของพระกุมารกัสสปเถระ [๑๓๑],d06_v12_s04_kumarakassapa_mata
+6,12,mahakala,๕. เรื่องอุบาสกชื่อมหากาล [๑๓๒],d06_v12_s05_mahakala
+6,12,devadatta,๖. เรื่องพระเทวทัต [๑๓๓],d06_v12_s06_devadatta
+6,12,sanghabheda,๗. เรื่องการพยายามเพื่อทำลายสงฆ์ [๑๓๔],d06_v12_s07_sanghabheda
+6,12,kala,๘. เรื่องพระกาลเถระ [๑๓๕],d06_v12_s08_kala
+6,12,culakala,๙. เรื่องอุบาสกชื่อจุลกาล [๑๓๖],d06_v12_s09_culakala
+6,12,attadattha,๑๐. เรื่องพระอัตตทัตถเถระ [๑๓๗],d06_v12_s10_attadattha
+6,13,dahara_bhikkhu,๑. เรื่องภิกษุหนุ่ม [๑๓๘],d06_v13_s01_dahara_bhikkhu
+6,13,suddhodana,๒. เรื่องพระเจ้าสุทโธทนะ [๑๓๙],d06_v13_s02_suddhodana
+6,13,vipassaka,๓. เรื่องภิกษุผู้เจริญวิปัสสนา ๕๐๐ รูป [๑๔๐],d06_v13_s03_vipassaka
+6,13,abhaya,๔. เรื่องอภัยราชกุมาร [๑๔๑],d06_v13_s04_abhaya
+6,13,sammunjani,๕. เรื่องพระสัมมุญชเถระ [๑๔๒],d06_v13_s05_sammunjani
+6,13,angulimala,๖. เรื่องพระองคุลิมาลเถระ [๑๔๓],d06_v13_s06_angulimala
+6,13,pesakaradhita,๗. เรื่องธิดานายช่างหู [๑๔๔],d06_v13_s07_pesakaradhita
+6,13,tinsa_bhikkhu,๘. เรื่องภิกษุ ๓๐ รูป [๑๔๕],d06_v13_s08_tinsa_bhikkhu
+6,13,cinca,๙. เรื่องนางจิญจมาณวิกา [๑๔๖],d06_v13_s09_cinca
+6,13,asadisa,๑๐. เรื่องอัสทิสทาน [๑๔๗],d06_v13_s10_asadisa
+6,13,kala_anathapindika,๑๑. เรื่องนายกาลบุตรของอนาถบิณฑิกเศรษฐี [๑๔๘],d06_v13_s11_kala_anathapindika
+6,14,mara_dhita,๑. เรื่องธิดามาร [๑๔๙],d06_v14_s01_mara_dhita
+6,14,devorohana,๒. เรื่องยมกปาฏิหาริย์ (เทโวโรหณะ) [๑๕๐],d06_v14_s02_devorohana
+6,14,erakapatta,๓. เรื่องเอรกปัตตนาคราช [๑๕๑],d06_v14_s03_erakapatta
+6,14,ananda_panha,๔. เรื่องปัญหาของพระอานนทเถระ [๑๕๒],d06_v14_s04_ananda_panha
+6,14,anabhirata,๕. เรื่องภิกษุผู้ไม่ยินดี [๑๕๓],d06_v14_s05_anabhirata
+6,14,aggidatta,๖. เรื่องอัคคิทัตตพราหมณ์ [๑๕๔],d06_v14_s06_aggidatta
+6,14,ananda_panha_2,๗. เรื่องปัญหาของพระอานนทเถระ (เรื่องที่ ๒) [๑๕๕],d06_v14_s07_ananda_panha_2
+6,14,sambahula_bhikkhu,๘. เรื่องภิกษุมากรูป [๑๕๖],d06_v14_s08_sambahula_bhikkhu
+6,14,kassapa_cediya,๙. เรื่องเจดีย์ทองของพระกัสสปทศพล [๑๕๗],d06_v14_s09_kassapa_cediya
+6,15,nati_kalaha,๑. เรื่องการระงับความทะเลาะแห่งพระญาติ [๑๕๘],d06_v15_s01_nati_kalaha
+6,15,mara,๒. เรื่องมาร [๑๕๙],d06_v15_s02_mara
+6,15,kosala,๓. เรื่องความปราชัยของพระเจ้าโกศล [๑๖๐],d06_v15_s03_kosala
+6,15,annatara_kula,๔. เรื่องเด็กหญิงแห่งตระกูลคนใดคนหนึ่ง [๑๖๑],d06_v15_s04_annatara_kula
+6,15,upasaka,๕. เรื่องอุบาสกคนใดคนหนึ่ง [๑๖๒],d06_v15_s05_upasaka
+6,15,pasenadi,๖. เรื่องพระเจ้าปเสนทิโกศล [๑๖๓],d06_v15_s06_pasenadi
+6,15,tissa,๗. เรื่องพระติสสเถระ [๑๖๔],d06_v15_s07_tissa
+6,15,sakka,๘. เรื่องท้าวสักกะ [๑๖๕],d06_v15_s08_sakka
+7,16,tayo_jana,๖. เรื่องภิกษุชื่อจูฬสารี [๑๘๘],d07_v16_s01_tayo_jana
+7,18,upasaka_5,๑๐. เรื่องภิกษุมากรูป (เรื่องที่ ๒) [๒๐๔],d07_v18_s07_upasaka_5
+7,16,tayo_jana,๑. เรื่องบรรพชิต ๓ รูป [๑๖๖],d07_v16_s01_tayo_jana
+7,16,kutumbi,๒. เรื่องกุฏุมพีคนใดคนหนึ่ง [๑๖๗],d07_v16_s02_kutumbi
+7,16,visakha,๓. เรื่องนางวิสาขาอุบาสิกา [๑๖๘],d07_v16_s03_visakha
+7,16,licchavi,๔. เรื่องเจ้าลิจฉวี [๑๖๙],d07_v16_s04_licchavi
+7,16,anitthigandha,๕. เรื่องอนิตถิคันธกุมาร [๑๗๐],d07_v16_s05_anitthigandha
+7,16,brahmana,๖. เรื่องพราหมณ์คนใดคนหนึ่ง [๑๗๑],d07_v16_s06_brahmana
+7,16,pancasata_daraka,๗. เรื่องเด็ก ๕๐๐ คน [๑๗๒],d07_v16_s07_pancasata_daraka
+7,16,anagami,๘. เรื่องพระอนาคามิเถระ [๑๗๓],d07_v16_s08_anagami
+7,16,nandiya,๙. เรื่องนายนันทิยะ [๑๗๔],d07_v16_s09_nandiya
+7,17,rohini,๑. เรื่องนางโรหิณี [๑๗๕],d07_v17_s01_rohini
+7,17,bhikkhu,๒. เรื่องภิกษุรูปใดรูปหนึ่ง [๑๗๖],d07_v17_s02_bhikkhu
+7,17,uttara,๓. เรื่องนางอุตตราอุบาสิกา [๑๗๗],d07_v17_s03_uttara
+7,17,moggallana_panha,๔. เรื่องปัญหาของพระมหาโมคคัลลานเถระ [๑๗๘],d07_v17_s04_moggallana_panha
+7,17,bhikkhu_panha,๕. เรื่องปัญหาที่ภิกษุทูลถาม [๑๗๙],d07_v17_s05_bhikkhu_panha
+7,17,punna,๖. เรื่องนางปุณณทาสี [๑๘๐],d07_v17_s06_punna
+7,17,atula,๗. เรื่องอตุลอุบาสก [๑๘๑],d07_v17_s07_atula
+7,17,chabbaggiya,๘. เรื่องภิกษุฉับบัคคีย์ [๑๘๒],d07_v17_s08_chabbaggiya
+7,18,ghataka_putta,๑. เรื่องบุตรของคนฆ่าโค [๑๘๓],d07_v18_s01_ghataka_putta
+7,18,brahmana,๒. เรื่องพราหมณ์คนใดคนหนึ่ง [๑๘๔],d07_v18_s02_brahmana
+7,18,tissa,๓. เรื่องพระติสสเถระ [๑๘๕],d07_v18_s03_tissa
+7,18,loludayi,๔. เรื่องพระโลฬุทายีเถระ [๑๘๖],d07_v18_s04_loludayi
+7,18,kulaputta,๕. เรื่องกุลบุตรคนใดคนหนึ่ง [๑๘๗],d07_v18_s05_kulaputta
+7,18,culasari,๖. เรื่องภิกษุชื่อจูฬสารี [๑๘๘],d07_v18_s06_culasari
+7,18,upasaka_5,๗. เรื่องอุบาสก ๕ คน [๑๘๙],d07_v18_s07_upasaka_5
+7,18,tissa_dahara,๘. เรื่องภิกษุหนุ่มชื่อติสสะ [๑๙๐],d07_v18_s08_tissa_dahara
+7,18,upasaka_5_again,๙. เรื่องอุบาสก ๕ คน (เรื่องที่ ๒) [๑๙๑],d07_v18_s09_upasaka_5_again
+7,18,mendaka,๑๐. เรื่องเมณฑกเศรษฐี [๑๙๒],d07_v18_s10_mendaka
+7,18,ujjhanasanni,๑๑. เรื่องพระอุชฌานสัญญีเถระ [๑๙๓],d07_v18_s11_ujjhanasanni
+7,18,subhadda,๑๒. เรื่องสุภัททปริพาชก [๑๙๔],d07_v18_s12_subhadda
+7,19,vinicchaya,๑. เรื่องมหาอำมาตย์ผู้วินิจฉัย [๑๙๕],d07_v19_s01_vinicchaya
+7,19,chabbaggiya,๒. เรื่องภิกษุฉับบัคคีย์ [๑๙๖],d07_v19_s02_chabbaggiya
+7,19,ekudana,๓. เรื่องพระเอกุทานเถระ [๑๙๗],d07_v19_s03_ekudana
+7,19,lakuntaka,๔. เรื่องพระลกุณฏกภัททิยเถระ [๑๙๘],d07_v19_s04_lakuntaka
+7,19,sambahula_bhikkhu,๕. เรื่องภิกษุมากรูป [๑๙๙],d07_v19_s05_sambahula_bhikkhu
+7,19,hatthaka,๖. เรื่องภิกษุชื่อหัตถกะ [๒๐๐],d07_v19_s06_hatthaka
+7,19,brahmana,๗. เรื่องพราหมณ์คนใดคนหนึ่ง [๒๐๑],d07_v19_s07_brahmana
+7,19,titthiya,๘. เรื่องเดียรถีย์ [๒๐๒],d07_v19_s08_titthiya
+7,19,ariya,๙. เรื่องพรานเบ็ดชื่ออริยะ [๒๐๓],d07_v19_s09_ariya
+7,19,sambahula_bhikkhu_2,๑๐. เรื่องภิกษุมากรูป (เรื่องที่ ๒) [๒๐๔],d07_v19_s10_sambahula_bhikkhu_2
+8,20,pancasata_bhikkhu_1,๑. เรื่องภิกษุ ๕๐๐ รูป เรื่องที่ ๑ [๒๐๕],d08_v20_s01_pancasata_bhikkhu_1
+8,20,pancasata_bhikkhu_2,๒. เรื่องภิกษุ ๕๐๐ รูป เรื่องที่ ๒ [๒๐๖],d08_v20_s02_pancasata_bhikkhu_2
+8,20,tissa,๓. เรื่องพระติสสเถระ [๒๐๗],d08_v20_s03_tissa
+8,20,sukara,๔. เรื่องเปรตสุกร [๒๐๘],d08_v20_s04_sukara
+8,20,pothila,๕. เรื่องพระโปฐิลเถระ [๒๐๙],d08_v20_s05_pothila
+8,20,mahallaka,๖. เรื่องภิกษุแก่ ๕ รูป [๒๑๐],d08_v20_s06_mahallaka
+8,20,suvanna_kara,๗. เรื่องพระเถระผู้เคยเป็นช่างทอง [๒๑๑],d08_v20_s07_suvanna_kara
+8,20,mahadhana,๘. เรื่องมหาธนวาณิช [๒๑๒],d08_v20_s08_mahadhana
+8,20,kisagotami,๙. เรื่องนางกีสาโคตมี [๒๑๓],d08_v20_s09_kisagotami
+8,20,patacara,๑๐. เรื่องนางปฏาจารา [๒๑๔],d08_v20_s10_patacara
+8,21,attano_pubbakamma,๑. เรื่องบุรพกรรมของพระองค์ [๒๑๕],d08_v21_s01_attano_pubbakamma
+8,21,kukkuta_andani,๒. เรื่องหญิงผู้กินไข่ไก่ [๒๑๖],d08_v21_s02_kukkuta_andani
+8,21,bhaddiya_bhikkhu,๓. เรื่องภิกษุชาวเมืองภัททิยะ [๒๑๗],d08_v21_s03_bhaddiya_bhikkhu
+8,21,lakuntaka,๔. เรื่องพระลกุณฏกภัททิยเถระ [๒๑๘],d08_v21_s04_lakuntaka
+8,21,daru_cira,๕. เรื่องเด็กบุตรของคนตัดฟืน [๒๑๙],d08_v21_s05_daru_cira
+8,21,vajjiputta,๖. เรื่องภิกษุชาววัชชีบุตร [๒๒๐],d08_v21_s06_vajjiputta
+8,21,citta,๗. เรื่องจิตตคฤหัสถ์ [๒๒๑],d08_v21_s07_citta
+8,21,culasubhadda,๘. เรื่องนางจูฬสุภัททา [๒๒๒],d08_v21_s08_culasubhadda
+8,21,ekavihari,๙. เรื่องพระเอกวิหารีเถระ [๒๒๓],d08_v21_s09_ekavihari
+8,22,sundari,๑. เรื่องนางสุนทรีปริพาชิกา [๒๒๔],d08_v22_s01_sundari
+8,22,duccarita,๒. เรื่องผู้ถูกเบียดเบียนเพราะทุจริต [๒๒๕],d08_v22_s02_duccarita
+8,22,vaggumuda,๘. เรื่องนิครนถ์ [๒๓๑],d08_v22_s03_vaggumuda
+8,22,titthiya_savaka,๙. เรื่องสาวกของเดียรถีย์ [๒๓๒],d08_v22_s09_titthiya_savaka
+8,23,attadanta,๑. เรื่องพราหมณ์ผู้ฝึกตน [๒๓๓],d08_v23_s01_attadanta
+8,23,hatthacariya,๒. เรื่องภิกษุผู้เคยเป็นควาญช้าง [๒๓๔],d08_v23_s02_hatthacariya
+8,23,brahmana_putta,๓. เรื่องบุตรของพราหมณ์เฒ่า [๒๓๕],d08_v23_s03_brahmana_putta
+8,23,pasenadi,๔. เรื่องพระเจ้าปเสนทิโกศล [๒๓๖],d08_v23_s04_pasenadi
+8,23,sanu,๕. เรื่องสามเณรชื่อสานุ [๒๓๗],d08_v23_s05_sanu
+8,23,paveyyaka,๖. เรื่องช้างชื่อปาเวยยกะ [๒๓๘],d08_v23_s06_paveyyaka
+8,23,sambahula_bhikkhu,๓๙. เรื่องเทวหิตพราหมณ์ [๓๐๓],d08_v23_s07_sambahula_bhikkhu
+8,20,pancasata_bhikkhu_1,๑. เรื่องภิกษุ ๕๐๐ รูป เรื่องที่ ๑ [๒๐๕],d08_v20_s01_pancasata_bhikkhu_1
+8,20,pancasata_bhikkhu_2,๒. เรื่องภิกษุ ๕๐๐ รูป เรื่องที่ ๒ [๒๐๖],d08_v20_s02_pancasata_bhikkhu_2
+8,20,tissa,๓. เรื่องพระติสสเถระ [๒๐๗],d08_v20_s03_tissa
+8,20,sukara,๔. เรื่องเปรตสุกร [๒๐๘],d08_v20_s04_sukara
+8,20,pothila,๕. เรื่องพระโปฐิลเถระ [๒๐๙],d08_v20_s05_pothila
+8,20,mahallaka,๖. เรื่องภิกษุแก่ ๕ รูป [๒๑๐],d08_v20_s06_mahallaka
+8,20,suvanna_kara,๗. เรื่องพระเถระผู้เคยเป็นช่างทอง [๒๑๑],d08_v20_s07_suvanna_kara
+8,20,mahadhana,๘. เรื่องมหาธนวาณิช [๒๑๒],d08_v20_s08_mahadhana
+8,20,kisagotami,๙. เรื่องนางกีสาโคตมี [๒๑๓],d08_v20_s09_kisagotami
+8,20,patacara,๑๐. เรื่องนางปฏาจารา [๒๑๔],d08_v20_s10_patacara
+8,21,attano_pubbakamma,๑. เรื่องบุรพกรรมของพระองค์ [๒๑๕],d08_v21_s01_attano_pubbakamma
+8,21,kukkuta_andani,๒. เรื่องหญิงผู้กินไข่ไก่ [๒๑๖],d08_v21_s02_kukkuta_andani
+8,21,bhaddiya_bhikkhu,๓. เรื่องภิกษุชาวเมืองภัททิยะ [๒๑๗],d08_v21_s03_bhaddiya_bhikkhu
+8,21,lakuntaka,๔. เรื่องพระลกุณฏกภัททิยเถระ [๒๑๘],d08_v21_s04_lakuntaka
+8,21,daru_cira,๕. เรื่องเด็กบุตรของคนตัดฟืน [๒๑๙],d08_v21_s05_daru_cira
+8,21,vajjiputta,๖. เรื่องภิกษุชาววัชชีบุตร [๒๒๐],d08_v21_s06_vajjiputta
+8,21,citta,๗. เรื่องจิตตคฤหัสถ์ [๒๒๑],d08_v21_s07_citta
+8,21,culasubhadda,๘. เรื่องนางจูฬสุภัททา [๒๒๒],d08_v21_s08_culasubhadda
+8,21,ekavihari,๙. เรื่องพระเอกวิหารีเถระ [๒๒๓],d08_v21_s09_ekavihari
+8,22,sundari,๑. เรื่องนางสุนทรีปริพาชิกา [๒๒๔],d08_v22_s01_sundari
+8,22,duccarita,๒. เรื่องผู้ถูกเบียดเบียนเพราะทุจริต [๒๒๕],d08_v22_s02_duccarita
+8,22,vaggumuda,๓. เรื่องภิกษุผู้อยู่ที่ฝั่งแม่น้ำวัคคุมุทา [๒๒๖],d08_v22_s03_vaggumuda
+8,22,khema,๔. เรื่องบุตรเศรษฐีชื่อเขมกะ [๒๒๗],d08_v22_s04_khema
+8,22,dubbacca,๕. เรื่องภิกษุว่ายาก [๒๒๘],d08_v22_s05_dubbacca
+8,22,issapakata,๖. เรื่องหญิงขี้หึง [๒๒๙],d08_v22_s06_issapakata
+8,22,sambahula_bhikkhu,๗. เรื่องภิกษุอาคันตุกะมากรูป [๒๓๐],d08_v22_s07_sambahula_bhikkhu
+8,22,nigantha,๘. เรื่องนิครนถ์ [๒๓๑],d08_v22_s08_nigantha
+8,22,titthiya_savaka,๙. เรื่องสาวกของเดียรถีย์ [๒๓๒],d08_v22_s09_titthiya_savaka
+8,23,attadanta,๑. เรื่องพราหมณ์ผู้ฝึกตน [๒๓๓],d08_v23_s01_attadanta
+8,23,hatthacariya,๒. เรื่องภิกษุผู้เคยเป็นควาญช้าง [๒๓๔],d08_v23_s02_hatthacariya
+8,23,brahmana_putta,๓. เรื่องบุตรของพราหมณ์เฒ่า [๒๓๕],d08_v23_s03_brahmana_putta
+8,23,pasenadi,๔. เรื่องพระเจ้าปเสนทิโกศล [๒๓๖],d08_v23_s04_pasenadi
+8,23,sanu,๕. เรื่องสามเณรชื่อสานุ [๒๓๗],d08_v23_s05_sanu
+8,23,paveyyaka,๖. เรื่องช้างชื่อปาเวยยกะ [๒๓๘],d08_v23_s06_paveyyaka
+8,23,sambahula_bhikkhu,๗. เรื่องภิกษุมากรูป [๒๓๙],d08_v23_s07_sambahula_bhikkhu
+8,23,mara,๘. เรื่องมาร [๒๔๐],d08_v23_s08_mara
+8,24,kapila_maccha,๑. เรื่องปลาชื่อกปิละ [๒๔๑],d08_v24_s01_kapila_maccha
+8,24,sukara,๒. เรื่องนางลูกสุกร [๒๔๒],d08_v24_s02_sukara
+8,24,vibbhanta,๓. เรื่องภิกษุผู้หมุนไปผิด [๒๔๓],d08_v24_s03_vibbhanta
+8,24,bandhanagara,๔. เรื่องเรือนจำ [๒๔๔],d08_v24_s04_bandhanagara
+8,24,khema,๕. เรื่องพระนางเขมา [๒๔๕],d08_v24_s05_khema
+8,24,uggasena,๖. เรื่องบุตรเศรษฐีชื่ออุคคเสน [๒๔๖],d08_v24_s06_uggasena
+8,24,culladhanuggaha,๗. เรื่องจูฬธนุคคหบัณฑิต [๒๔๗],d08_v24_s07_culladhanuggaha
+8,24,mara,๘. เรื่องมาร [๒๔๘],d08_v24_s08_mara
+8,24,upaka,๙. เรื่องอุปกาชีวก [๒๔๙],d08_v24_s09_upaka
+8,24,sakka,๑๐. เรื่องท้าวสักกเทวราช [๒๕๐],d08_v24_s10_sakka
+8,24,aputtaka,๑๑. เรื่องเศรษฐีผู้ไม่มีบุตร [๒๕๑],d08_v24_s11_aputtaka
+8,24,ankura,๑๒. เรื่องอังกุรเทพบุตร [๒๕๒],d08_v24_s12_ankura
+8,25,panca_bhikkhu,๑. เรื่องภิกษุ ๕ รูป [๒๕๓],d08_v25_s01_panca_bhikkhu
+8,25,hamsa_ghataka,๒. เรื่องภิกษุผู้ฆ่าหงส์ [๒๕๔],d08_v25_s02_hamsa_ghataka
+8,25,kokalika,๓. เรื่องพระโกกาลิกะ [๒๕๕],d08_v25_s03_kokalika
+8,25,dhammarama,๔. เรื่องพระธรรมารามเถระ [๒๕๖],d08_v25_s04_dhammarama
+8,25,vipakkhasevi,๕. เรื่องภิกษุคบภิกษุฝ่ายผิดรูปใดรูปหนึ่ง [๒๕๗],d08_v25_s05_vipakkhasevi
+8,25,pancaggadayaka,๖. เรื่องพราหมณ์ชื่อปัญจัคคทายก [๒๕๘],d08_v25_s06_pancaggadayaka
+8,25,sambahula_bhikkhu,๗. เรื่องภิกษุมากรูป [๒๕๙],d08_v25_s07_sambahula_bhikkhu
+8,25,pancasata_bhikkhu,๘. เรื่องภิกษุ ๕๐๐ รูป [๒๖๐],d08_v25_s08_pancasata_bhikkhu
+8,25,santakaya,๙. เรื่องพระสันตกายเถระ [๒๖๑],d08_v25_s09_santakaya
+8,25,nangalakuta,๑๐. เรื่องพระนังคลกูฏเถระ [๒๖๒],d08_v25_s10_nangalakuta
+8,25,vakkali,๑๑. เรื่องพระวักกลิเถระ [๒๖๓],d08_v25_s11_vakkali
+8,25,sumana,๑๒. เรื่องสามเณรชื่อสุมนะ [๒๖๔],d08_v25_s12_sumana
+8,26,pasada_brahmana,๑. เรื่องพราหมณ์ผู้มีความเลื่อมใสมาก [๒๖๕],d08_v26_s01_pasada_brahmana
+8,26,sambahula_bhikkhu,๒. เรื่องภิกษุมากรูป [๒๖๖],d08_v26_s02_sambahula_bhikkhu
+8,26,mara,๓. เรื่องมาร [๒๖๗],d08_v26_s03_mara
+8,26,annatara_brahmana,๔. เรื่องพราหมณ์คนใดคนหนึ่ง [๒๖๘],d08_v26_s04_annatara_brahmana
+8,26,ananda,๕. เรื่องพระอานนทเถระ [๒๖๙],d08_v26_s05_ananda
+8,26,annatara_pabbajita,๖. เรื่องบรรพชิตรูปใดรูปหนึ่ง [๒๗๐],d08_v26_s06_annatara_pabbajita
+8,26,sariputta,๗. เรื่องพระสารีบุตรเถระ [๒๗๑],d08_v26_s07_sariputta
+8,26,mahapajapati,๘. เรื่องพระนางมหาปชาบดีโคตมี [๒๗๒],d08_v26_s08_mahapajapati
+8,26,sariputta_2,๙. เรื่องพระสารีบุตรเถระ (เรื่องที่ ๒) [๒๗๓],d08_v26_s09_sariputta_2
+8,26,jatila,๑๐. เรื่องชฎิลพราหมณ์ [๒๗๔],d08_v26_s10_jatila
+8,26,kuhaka,๑๑. เรื่องกุหกพราหมณ์ [๒๗๕],d08_v26_s11_kuhaka
+8,26,kisagotami,๑๒. เรื่องนางกิสาโคตมี [๒๗๖],d08_v26_s12_kisagotami
+8,26,brahmana,๑๓. เรื่องพราหมณ์คนใดคนหนึ่ง [๒๗๗],d08_v26_s13_brahmana
+8,26,uggasena,๑๔. เรื่องบุตรเศรษฐีชื่ออุคคเสน [๒๗๘],d08_v26_s14_uggasena
+8,26,dve_brahmana,๑๕. เรื่องพราหมณ์ ๒ คน [๒๗๙],d08_v26_s15_dve_brahmana
+8,26,akkosaka,๑๖. เรื่องอักโกสกภารทวาชพราหมณ์ [๒๘๐],d08_v26_s16_akkosaka
+8,26,sariputta_3,๑๗. เรื่องพระสารีบุตรเถระ (เรื่องที่ ๓) [๒๘๑],d08_v26_s17_sariputta_3
+8,26,uppalavanna,๑๘. เรื่องนางอุบลวรรณาเถรี [๒๘๒],d08_v26_s18_uppalavanna
+8,26,brahmana_again,๑๙. เรื่องพราหมณ์คนใดคนหนึ่ง (เรื่องที่ ๒) [๒๘๓],d08_v26_s19_brahmana_again
+8,26,khema,๒๐. เรื่องนางเขมาภิกษุณี [๒๘๔],d08_v26_s20_khema
+8,26,tissa_pabbhara,๒๑. เรื่องพระติสสเถระผู้อยู่ในเงื้อมเขา [๒๘๕],d08_v26_s21_tissa_pabbhara
+8,26,bhikkhu,๒๒. เรื่องภิกษุรูปใดรูปหนึ่ง [๒๘๖],d08_v26_s22_bhikkhu
+8,26,samanera,๒๓. เรื่องสามเณร [๒๘๗],d08_v26_s23_samanera
+8,26,mahapanthaka,๒๔. เรื่องพระมหาปันถกเถระ [๒๘๘],d08_v26_s24_mahapanthaka
+8,26,pilindavaccha,๒๕. เรื่องพระปิลินทวัจฉเถระ [๒๘๙],d08_v26_s25_pilindavaccha
+8,26,bhikkhu_2,๒๖. เรื่องภิกษุรูปใดรูปหนึ่ง (เรื่องที่ ๒) [๒๙๐],d08_v26_s26_bhikkhu_2
+8,26,sariputta_4,๒๗. เรื่องพระสารีบุตรเถระ (เรื่องที่ ๔) [๒๙๑],d08_v26_s27_sariputta_4
+8,26,moggallana,๒๘. เรื่องพระมหาโมคคัลลานเถระ [๒๙๒],d08_v26_s28_moggallana
+8,26,revata,๒๙. เรื่องพระเรวตเถระ [๒๙๓],d08_v26_s29_revata
+8,26,candabha,๓๐. เรื่องพระจันทาภเถระ [๒๙๔],d08_v26_s30_candabha
+8,26,sivali,๓๑. เรื่องพระสีวลีเถระ [๒๙๕],d08_v26_s31_sivali
+8,26,sundarasamudra,๓๒. เรื่องพระสุนทรสมุทรเถระ [๒๙๖],d08_v26_s32_sundarasamudra
+8,26,jotika,๓๓. เรื่องพระโชติกเถระ [๒๙๗],d08_v26_s33_jotika
+8,26,natapubbaka_1,๓๔. เรื่องภิกษุเคยเป็นนักฟ้อน เรื่องที่ ๑ [๒๙๘],d08_v26_s34_natapubbaka_1
+8,26,natapubbaka_2,๓๕. เรื่องภิกษุเคยเป็นนักฟ้อน เรื่องที่ ๒ [๒๙๙],d08_v26_s35_natapubbaka_2
+8,26,vangisa,๓๖. เรื่องพระวังคีสเถระ [๓๐๐],d08_v26_s36_vangisa
+8,26,dhammadinna,๓๗. เรื่องพระธรรมทินนาเถรี [๓๐๑],d08_v26_s37_dhammadinna
+8,26,angulimala,๓๘. เรื่องพระองคุลิมาลเถระ [๓๐๒],d08_v26_s38_angulimala
+8,26,devahita,๓๙. เรื่องเทวหิตพราหมณ์ [๓๐๓],d08_v26_s39_devahita
