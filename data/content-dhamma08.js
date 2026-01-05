@@ -410,6 +410,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        }
     ],
     "d08_v20_s02_pancasata_bhikkhu_2": [
         {

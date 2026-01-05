@@ -9158,7 +9158,6 @@ const contentDhamma04 = {
             kitaka: "รอข้อมูล",
             vocab_list: "รอข้อมูล",
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d04_v06_s10_kisagotami": [
