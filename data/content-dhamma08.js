@@ -4765,6 +4765,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        },
     ],
     "d08_v20_s09_kisagotami": [
         {
@@ -5074,6 +5075,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        },
     ],
     "d08_v20_s10_patacara": [
         {
@@ -5401,6 +5403,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        }
     ],
 
     // ๒๑. ปกิณณกวรรค (Vagga 21: Pakinnakavagga)
@@ -7020,6 +7023,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        }
     ],
     "d08_v21_s02_kukkuta_andani": [
         {
@@ -7357,7 +7361,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s03_bhaddiya_bhikkhu": [
         {
@@ -8353,7 +8358,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s04_lakuntaka": [
         {
@@ -8982,7 +8988,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s05_daru_cira": [
         {
@@ -9773,7 +9780,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s06_vajjiputta": [
         {
@@ -10182,7 +10190,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s07_citta": [
         {
@@ -10455,7 +10464,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s08_culasubhadda": [
         {
@@ -11135,7 +11145,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
     "d08_v21_s09_ekavihari": [
         {
@@ -11504,7 +11515,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+        },
     ],
 
     // ๒๒. นิรยวรรค (Vagga 22: Nirayavagga)
@@ -12177,6 +12189,13 @@ const contentDhamma8 = {
             pali: `สุนฺทรีปริพฺพาชิกาวตฺถุ.`,
             thai: `อ.เรื่องปริพาชิกาชื่อว่าสุนทรี (จบแล้ว) ฯ`,
             thai_desana: "",
+            thai_sense: ``,
+            context: ``,
+            akhyata: ``,
+            kitaka: ``,
+            vocab_list: ``,
+            sandhi: {},
+        },
     ],
     "d08_v22_s02_duccarita": [
         {
@@ -12881,6 +12900,13 @@ const contentDhamma8 = {
             pali: `ทฺวาวีสติโม วคฺโค.`,
             thai: `อ.วรรคที่ ๒๒ (จบแล้ว) ฯ`,
             thai_desana: "",
+            thai_sense: ``,
+            context: ``,
+            akhyata: ``,
+            kitaka: ``,
+            vocab_list: ``,
+            sandhi: {},
+        },
     ],
 
     // ๒๓. นาควรรค (Vagga 23: Nagavagga)
@@ -13084,7 +13110,8 @@ const contentDhamma8 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {},
+            sandhi: {}
+            },
     ],
     "d08_v23_s03_brahmana_putta": [
         {
@@ -14576,7 +14603,7 @@ const contentDhamma8 = {
             page: "หน้า 128",
             episode: "รหัส 12726",
             pali: `ตตฺถ “ทุกฺขสฺสาติ: ขนฺธทุกฺขสฺส.`,
-            thai: `(อ.อรรถ ว่า) แห่งทุกข์อันเกิดแต่ขันธ์(ดังนี้ ในบท ท.) เหล่านั้น หนา(แห่งบท) ว่า ทุกฺขสฺส ดังนี้ ฯ`,
+            thai: `(อ.อรรถ ว่า) แห่งทุกข์อันเกิดแต่ขันธ์(ดังนี้ ในบท ท.) เหล่านั้น หนา (แห่งบท) ว่า ทุกฺขสฺส ดังนี้ ฯ`,
             thai_desana: "",
             thai_sense: ``,
             context: ``,
