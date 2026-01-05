@@ -1461,6 +1461,7 @@ const contentDhamma8 = {
             kitaka: ``,
             vocab_list: ``,
             sandhi: {},
+        }
     ],
     "d08_v20_s04_sukara": [
         {
