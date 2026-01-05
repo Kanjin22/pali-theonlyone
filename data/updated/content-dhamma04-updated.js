@@ -9150,15 +9150,15 @@ const contentDhamma04 = {
             story: "๙. เรื่องพ่อค้ามีทรัพย์มาก [๖๘]",
             page: "หน้า ...",
             episode: "รอข้อมูล",
-            pali: "รอข้อมูล",
-            thai: "รอข้อมูล",
-            thai_sense: "รอข้อมูล",
-            context: "รอข้อมูล",
-            akhyata: "รอข้อมูล",
-            kitaka: "รอข้อมูล",
-            vocab_list: "รอข้อมูล",
+            pali: `รอข้อมูล`,
+            thai: `รอข้อมูล`,
+            thai_desana: ``,
+            thai_sense: ``,
+            context: ``,
+            akhyata: ``,
+            kitaka: ``,
+            vocab_list: ``,
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d04_v06_s10_kisagotami": [

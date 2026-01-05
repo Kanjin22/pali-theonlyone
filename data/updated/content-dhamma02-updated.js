@@ -23747,15 +23747,15 @@ const contentDhamma02 = {
             story: "๕. เรื่องพระจิตตหัตถเถระ [๒๘]",
             page: "...",
             episode: "...",
-            pali: "...",
-            thai: "...",
-            thai_sense: "...",
-            context: "...",
-            akhyata: "...",
-            kitaka: "...",
-            vocab_list: "...",
+            pali: `...`,
+            thai: `...`,
+            thai_desana: ``,
+            thai_sense: ``,
+            context: ``,
+            akhyata: ``,
+            kitaka: ``,
+            vocab_list: ``,
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d02_v03_s06_vipassana": [
