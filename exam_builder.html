@@ -277,6 +277,20 @@
             border-radius: 4px;
         }
 
+        /* View Mode Switcher */
+        .view-mode-switcher { display: flex; gap: 0; margin-bottom: 15px; background: #f0f0f0; padding: 4px; border-radius: 8px; width: fit-content; }
+        .mode-btn { border: none; background: transparent; padding: 8px 16px; cursor: pointer; border-radius: 6px; font-family: "Niramit", sans-serif; font-size: 0.95rem; color: #666; transition: all 0.2s; }
+        .mode-btn:hover { background: #e0e0e0; color: #333; }
+        .mode-btn.active { background: #fff; color: #1976D2; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        /* Sentence Blocks */
+        .sentence-mode-wrapper { background: #fff; padding: 25px; border: 1px solid #ccc; border-radius: 4px; font-family: "Sarabun", sans-serif; font-size: 1.1rem; height: 400px; overflow-y: auto; line-height: 2; }
+        .sent-block { display: inline; padding: 2px 6px; margin: 2px; border-radius: 4px; cursor: pointer; border: 1px solid transparent; transition: all 0.1s; }
+        .sent-block:hover { background-color: #f5f5f5; border-color: #ddd; }
+        .sent-selected { background-color: #e8f5e9 !important; border-color: #2e7d32 !important; color: #1b5e20; }
+        .sent-unselected { background-color: #ffebee !important; border-color: #c62828 !important; color: #b71c1c; opacity: 0.7; }
+        .page-marker { color: #999; font-size: 0.8rem; margin: 15px 0 5px 0; border-bottom: 1px dashed #eee; text-align: right; width: 100%; display: block; }
+
         @media print {
             body { background: #fff; margin: 0; padding: 0; }
             .header, .content, .actions, .toolbar, .container > .header, .container > .content, .container > .actions, .container > .toolbar { display: none !important; }
@@ -1167,8 +1181,11 @@
             // We use the cached full list to ensure we have the original objects
             const allSlides = getPartSlides(part);
             
+            // Map to include original index for Key generation
+            const indexedSlides = allSlides.map((s, i) => ({ ...s, _origIndex: i }));
+            
             // Filter
-            let slides = allSlides.filter(s => typeof s.page !== 'undefined');
+            let slides = indexedSlides.filter(s => typeof s.page !== 'undefined');
             
             // Filter by vagga/story
             slides = slides.filter(s => {
@@ -1196,6 +1213,51 @@
         }
         // Global content storage for "Book Mode"
         window.examContent = { literal: '', sense: '' };
+        // Global View Mode
+        window.viewMode = 'book'; 
+        window.renderCache = {};
+
+        function switchViewMode(containerId, mode) {
+            window.viewMode = mode;
+            const cache = window.renderCache[containerId];
+            if (cache) {
+                renderList(containerId, cache.items, cache.mode, cache.part, cache.startPage, cache.endPage);
+            }
+        }
+
+        function toggleSentenceSelection(element, key, mode) {
+            const isSelected = element.classList.contains('sent-selected');
+            const targetSet = mode === 'literal' ? selectedLiteral : selectedSense;
+            const targetMap = mode === 'literal' ? literalTextMap : senseTextMap;
+            const deselectedSet = mode === 'literal' ? deselectedLiteral : deselectedSense;
+
+            if (isSelected) {
+                // Deselect (Turn Red/Unselected)
+                element.classList.remove('sent-selected');
+                element.classList.add('sent-unselected');
+                targetSet.delete(key);
+                targetMap.delete(key);
+                deselectedSet.add(key); 
+            } else {
+                // Select (Turn Green)
+                element.classList.remove('sent-unselected');
+                element.classList.add('sent-selected');
+                targetSet.add(key);
+                
+                // Add text to map
+                const text = element.getAttribute('data-text');
+                targetMap.set(key, text);
+                deselectedSet.delete(key);
+            }
+            
+            // Clear Book Mode content to avoid confusion
+            if (window.examContent) {
+                const contentKey = (mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense';
+                window.examContent[contentKey] = ''; 
+            }
+            
+            buildExamPreview();
+        }
 
         function useSelectionForExam(mode) {
             const sel = window.getSelection();
@@ -1232,68 +1294,133 @@
             const box = document.getElementById(containerId);
             if (box) box.innerHTML = '';
 
+            // Cache params
+            if (!window.renderCache) window.renderCache = {};
+            window.renderCache[containerId] = { items, mode, part, startPage, endPage };
+
             if (part === 'waiting') {
                 if (box) box.innerHTML = '<div style="padding:20px; text-align:center; color:#888;">กำลังรอเนื้อหา...</div>';
                 return;
             }
 
-            // Book Mode Render
-            const wrapper = document.createElement('div');
-            
-            // Toolbar
-            const toolbar = document.createElement('div');
-            toolbar.style.marginBottom = '10px';
-            toolbar.style.display = 'flex';
-            toolbar.style.alignItems = 'center';
-            toolbar.style.gap = '10px';
-            toolbar.innerHTML = `
-                <button id="btn-use-${mode}" class="btn primary" onclick="useSelectionForExam('${mode}')">
-                    <i class="fa-solid fa-file-import"></i> นำข้อความที่คลุมดำไปออกข้อสอบ
-                </button>
-                <span style="font-size:0.85rem; color:#666;">
-                    <i class="fa-solid fa-circle-info"></i> ลากคลุมดำข้อความในกล่องด้านล่าง แล้วกดปุ่มนี้
-                </span>
-                <button class="btn secondary" onclick="window.examContent['${(mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense'}'] = ''; buildExamPreview(); alert('ล้างค่าแล้ว');" style="margin-left:auto; font-size:0.8rem;">
-                    <i class="fa-solid fa-trash"></i> ล้างค่า
-                </button>
+            // View Mode Switcher
+            const switcher = document.createElement('div');
+            switcher.className = 'view-mode-switcher';
+            switcher.innerHTML = `
+                <button class="mode-btn ${window.viewMode === 'book' ? 'active' : ''}" onclick="switchViewMode('${containerId}', 'book')"><i class="fa-solid fa-book"></i> โหมดอิสระ (แนะนำ)</button>
+                <button class="mode-btn ${window.viewMode === 'sentence' ? 'active' : ''}" onclick="switchViewMode('${containerId}', 'sentence')"><i class="fa-solid fa-list-check"></i> โหมดเลือกประโยค (สำหรับทำเฉลย)</button>
             `;
-            wrapper.appendChild(toolbar);
+            box.appendChild(switcher);
 
-            // Text Area (Read-only but selectable)
-            const textArea = document.createElement('div');
-            textArea.className = 'book-content-area';
-            textArea.style.cssText = 'background:#fff; padding:25px; border:1px solid #ccc; border-radius:4px; line-height:1.8; font-family:"Sarabun", sans-serif; height: 400px; overflow-y: auto; white-space: pre-wrap; font-size: 1.1rem; color:#333; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);';
-            
-            let fullContentHTML = '';
-            let lastPage = 0;
+            if (window.viewMode === 'book') {
+                // Book Mode Render
+                const wrapper = document.createElement('div');
+                
+                // Toolbar
+                const toolbar = document.createElement('div');
+                toolbar.style.marginBottom = '10px';
+                toolbar.style.display = 'flex';
+                toolbar.style.alignItems = 'center';
+                toolbar.style.gap = '10px';
+                toolbar.innerHTML = `
+                    <button id="btn-use-${mode}" class="btn primary" onclick="useSelectionForExam('${mode}')">
+                        <i class="fa-solid fa-file-import"></i> นำข้อความที่คลุมดำไปออกข้อสอบ
+                    </button>
+                    <span style="font-size:0.85rem; color:#666;">
+                        <i class="fa-solid fa-circle-info"></i> ลากคลุมดำข้อความในกล่องด้านล่าง แล้วกดปุ่มนี้
+                    </span>
+                    <button class="btn secondary" onclick="window.examContent['${(mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense'}'] = ''; buildExamPreview(); alert('ล้างค่าแล้ว');" style="margin-left:auto; font-size:0.8rem;">
+                        <i class="fa-solid fa-trash"></i> ล้างค่า
+                    </button>
+                `;
+                wrapper.appendChild(toolbar);
 
-            items.forEach((s) => {
-                let textToUse = s.pali;
-                if (mode !== 'thai_source' && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
-                    if (s.gatha.type === 'couplet') {
-                        textToUse = s.gatha.lines.map(l => `${(l.left||'').trim()}    ${(l.right||'').trim()}`).join('\n');
-                    } else if (s.gatha.type === 'quatrain') {
-                        textToUse = s.gatha.lines.map(l => (l||'').trim()).join('\n');
+                // Text Area (Read-only but selectable)
+                const textArea = document.createElement('div');
+                textArea.className = 'book-content-area';
+                textArea.style.cssText = 'background:#fff; padding:25px; border:1px solid #ccc; border-radius:4px; line-height:1.8; font-family:"Sarabun", sans-serif; height: 400px; overflow-y: auto; white-space: pre-wrap; font-size: 1.1rem; color:#333; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);';
+                
+                let fullContentHTML = '';
+                let lastPage = 0;
+
+                items.forEach((s) => {
+                    let textToUse = s.pali;
+                    if (mode !== 'thai_source' && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
+                        if (s.gatha.type === 'couplet') {
+                            textToUse = s.gatha.lines.map(l => `${(l.left||'').trim()}    ${(l.right||'').trim()}`).join('\n');
+                        } else if (s.gatha.type === 'quatrain') {
+                            textToUse = s.gatha.lines.map(l => (l||'').trim()).join('\n');
+                        }
+                    } else if (mode === 'thai_source') {
+                        textToUse = s.thai_desana || s.thai_sense || s.thai || '';
                     }
-                } else if (mode === 'thai_source') {
-                    textToUse = s.thai_desana || s.thai_sense || s.thai || '';
-                }
 
-                // Append Page Marker if changed
-                const pageVal = parsePageNumber(s.page);
-                if (pageVal > 0 && pageVal !== lastPage) {
-                    fullContentHTML += `<div style="color:#999; font-size:0.8rem; margin:15px 0 5px 0; border-bottom:1px dashed #eee; text-align:right;">หน้า ${toThaiDigits(pageVal)}</div>`;
-                    lastPage = pageVal;
-                }
+                    // Append Page Marker if changed
+                    const pageVal = parsePageNumber(s.page);
+                    if (pageVal > 0 && pageVal !== lastPage) {
+                        fullContentHTML += `<div style="color:#999; font-size:0.8rem; margin:15px 0 5px 0; border-bottom:1px dashed #eee; text-align:right;">หน้า ${toThaiDigits(pageVal)}</div>`;
+                        lastPage = pageVal;
+                    }
 
-                // Append Text
-                // We use spans to make it look nice, but user just selects text
-                fullContentHTML += `<span>${textToUse}</span> `;
-            });
+                    // Append Text
+                    fullContentHTML += `<span>${textToUse}</span> `;
+                });
 
-            textArea.innerHTML = fullContentHTML;
-            wrapper.appendChild(textArea);
-            box.appendChild(wrapper);
+                textArea.innerHTML = fullContentHTML;
+                wrapper.appendChild(textArea);
+                box.appendChild(wrapper);
+            } else {
+                // Sentence Mode Render (New Block Style)
+                const wrapper = document.createElement('div');
+                wrapper.className = 'sentence-mode-wrapper';
+
+                const targetSet = (mode === 'literal' || mode === 'thai_source') ? selectedLiteral : selectedSense;
+                
+                let lastPage = 0;
+                
+                items.forEach((s) => {
+                    // Page Marker
+                    const pageVal = parsePageNumber(s.page);
+                    if (pageVal > 0 && pageVal !== lastPage) {
+                        const pg = document.createElement('div');
+                        pg.className = 'page-marker';
+                        pg.innerText = `หน้า ${toThaiDigits(pageVal)}`;
+                        wrapper.appendChild(pg);
+                        lastPage = pageVal;
+                    }
+
+                    // Determine Text
+                    let textToUse = s.pali;
+                    if (mode !== 'thai_source' && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
+                        if (s.gatha.type === 'couplet') {
+                            textToUse = s.gatha.lines.map(l => `${(l.left||'').trim()}    ${(l.right||'').trim()}`).join('\n');
+                        } else if (s.gatha.type === 'quatrain') {
+                            textToUse = s.gatha.lines.map(l => (l||'').trim()).join('\n');
+                        }
+                    } else if (mode === 'thai_source') {
+                        textToUse = s.thai_desana || s.thai_sense || s.thai || '';
+                    }
+                    
+                    if (!textToUse) return;
+
+                    // Generate Key
+                    const idx = (typeof s._origIndex !== 'undefined') ? s._origIndex : 0;
+                    const key = `${part}-${idx}-0`;
+                    
+                    const isSelected = targetSet.has(key);
+                    
+                    const el = document.createElement('div'); 
+                    el.className = `sent-block ${isSelected ? 'sent-selected' : 'sent-unselected'}`;
+                    el.innerText = textToUse;
+                    el.setAttribute('data-text', textToUse);
+                    el.onclick = () => toggleSentenceSelection(el, key, (mode === 'thai_source' ? 'literal' : mode));
+                    
+                    wrapper.appendChild(el);
+                    wrapper.appendChild(document.createTextNode(' ')); // Space
+                });
+                
+                box.appendChild(wrapper);
+            }
         }
         function buildExamPreview() {
             const paper = document.getElementById('paperContent');
