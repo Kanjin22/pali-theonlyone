@@ -1225,6 +1225,43 @@
             }
         }
 
+        function updateSelectionStatus(mode) {
+            // Determine the actual mode key (literal vs sense)
+            const targetMode = (mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense';
+            const targetSet = targetMode === 'literal' ? selectedLiteral : selectedSense;
+            
+            const statusDiv = document.getElementById('selection-status-' + targetMode);
+            if (!statusDiv) return;
+            
+            if (targetSet.size === 0) {
+                statusDiv.innerHTML = '<span style="color:#7f8c8d;"><i class="fa-solid fa-circle-info"></i> ยังไม่ได้เลือกประโยคใดๆ</span>';
+                return;
+            }
+            
+            // Calculate pages
+            const pages = new Set();
+            targetSet.forEach(key => {
+                // key format: part-idx-0
+                const parts = key.split('-');
+                if (parts.length >= 3) {
+                    const len = parts.length;
+                    const idx = parseInt(parts[len-2]);
+                    const partName = parts.slice(0, len-2).join('-');
+                    
+                    const slides = getPartSlides(partName);
+                    if (slides && slides[idx]) {
+                        const p = parsePageNumber(slides[idx].page);
+                        if (p > 0) pages.add(p);
+                    }
+                }
+            });
+            
+            const sortedPages = Array.from(pages).sort((a,b) => a-b);
+            const pageStr = sortedPages.length > 0 ? ` (จากหน้า ${sortedPages.map(toThaiDigits).join(', ')})` : '';
+            
+            statusDiv.innerHTML = `<span style="color:#2e7d32; font-weight:bold;"><i class="fa-solid fa-check-circle"></i> เลือกแล้ว ${toThaiDigits(targetSet.size)} ประโยค${pageStr}</span>`;
+        }
+
         function toggleSentenceSelection(element, key, mode) {
             const isSelected = element.classList.contains('sent-selected');
             const targetSet = mode === 'literal' ? selectedLiteral : selectedSense;
@@ -1257,6 +1294,7 @@
             }
             
             buildExamPreview();
+            updateSelectionStatus(mode);
         }
 
         function useSelectionForExam(mode) {
@@ -1371,10 +1409,31 @@
                 box.appendChild(wrapper);
             } else {
                 // Sentence Mode Render (New Block Style)
+                const targetMode = (mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense';
+                
+                // Selection Status Bar
+                const statusBar = document.createElement('div');
+                statusBar.id = 'selection-status-' + targetMode;
+                statusBar.style.padding = '8px 12px';
+                statusBar.style.background = '#e8f5e9';
+                statusBar.style.border = '1px solid #c8e6c9';
+                statusBar.style.borderRadius = '6px';
+                statusBar.style.marginBottom = '10px';
+                statusBar.style.fontSize = '0.95rem';
+                statusBar.style.display = 'flex';
+                statusBar.style.alignItems = 'center';
+                statusBar.style.gap = '8px';
+                statusBar.innerHTML = '<span style="color:#7f8c8d;"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดสถานะ...</span>';
+                
+                box.appendChild(statusBar);
+                
+                // Defer update slightly to let UI render
+                setTimeout(() => updateSelectionStatus(mode), 0);
+                
                 const wrapper = document.createElement('div');
                 wrapper.className = 'sentence-mode-wrapper';
 
-                const targetSet = (mode === 'literal' || mode === 'thai_source') ? selectedLiteral : selectedSense;
+                const targetSet = targetMode === 'literal' ? selectedLiteral : selectedSense;
                 
                 let lastPage = 0;
                 
