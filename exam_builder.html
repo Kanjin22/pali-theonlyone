@@ -582,7 +582,7 @@
                 btn.style.borderColor = '';
                 btn.innerHTML = '<i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.';
             }
-            generatePreview();
+            buildExamPreview();
         }
 
         function execCmd(command) {
@@ -1972,17 +1972,12 @@
             }
         }
         function generatePreview() {
-            // Clear current selection buffers to ensure we only show active range content
-            selectedLiteral.clear();
-            literalTextMap.clear();
-            selectedSense.clear();
-            senseTextMap.clear();
+            // NOTE: We do NOT clear selection buffers here anymore.
+            // This allows users to change stories/parts without losing their previous selections.
+            // Users can manually clear selections using the UI if needed.
             
-            // Clear Book Mode content
-            if (window.examContent) {
-                window.examContent.literal = '';
-                window.examContent.sense = '';
-            }
+            // NOTE: We do NOT clear Book Mode content here anymore.
+            // This fixes the issue where selecting a new story wipes out the manually selected text.
 
             const level = document.getElementById('levelSelect').value;
             const attempt = document.getElementById('attemptInput').value;
