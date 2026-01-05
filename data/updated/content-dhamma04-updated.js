@@ -12422,7 +12422,6 @@ const contentDhamma04 = {
                 "อลคฺโคเยว": "อลคฺโค + เอว",
                 "ปุตฺโตติ": "ปุตฺโต + อิติ",
                 "คาถมาห": "คาถํ + อาห"
-            thai_desana: "",
             }
         },
         {
@@ -14804,7 +14803,6 @@ const contentDhamma04 = {
             sandhi: {
                 "สนฺตมานสาว": "สนฺตมานสา + เอว",
                 "โหนฺตีติ": "โหนฺติ + อิติ"
-            thai_desana: "",
             }
         }
     ],
@@ -21477,7 +21475,6 @@ const contentDhamma04 = {
             kitaka: "รอข้อมูล",
             vocab_list: "รอข้อมูล",
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d04_v08_s05_sariputta": [
@@ -24687,7 +24684,6 @@ const contentDhamma04 = {
             kitaka: "รอข้อมูล",
             vocab_list: "รอข้อมูล",
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d04_v08_s10_sankicca": [

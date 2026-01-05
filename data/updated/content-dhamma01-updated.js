@@ -21169,7 +21169,6 @@ const contentDhamma01 = {
             kitaka: "...",
             vocab_list: "...",
             sandhi: {}
-            thai_desana: "",
         }
     ],
     "d01_v01_s13_sumana": [
