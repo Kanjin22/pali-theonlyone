@@ -23754,7 +23754,8 @@ const contentDhamma02 = {
             akhyata: "...",
             kitaka: "...",
             vocab_list: "...",
-            sandhi: {},
+            sandhi: {}
+,
             thai_desana: "",
         }
     ],
