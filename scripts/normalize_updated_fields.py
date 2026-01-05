@@ -63,6 +63,13 @@ def process_file(path):
     i = 0
     while i < len(src):
         line = src[i]
+        # Reorder episode/page so that page comes before episode when adjacent
+        if re.search(r'^\s*episode\s*:\s*".*",\s*$', line):
+            if i + 1 < len(src) and re.search(r'^\s*page\s*:\s*".*",\s*$', src[i+1]):
+                out.append(src[i+1])
+                out.append(line)
+                i += 2
+                continue
         out.append(line)
         if re.search(r'^\s*thai_desana\s*:', line):
             lookahead = src[i+1:i+20]
@@ -139,7 +146,7 @@ def process_file(path):
     Path(path).write_text("\n".join(final_lines), encoding='utf-8')
 
 if __name__ == "__main__":
-    target = "d:/pali-theonlyone/data/content-dhamma08-updated.js"
+    target = "d:/pali-theonlyone/data/updated/content-dhamma08-updated.js"
     if len(sys.argv) > 1:
         target = sys.argv[1]
     process_file(target)

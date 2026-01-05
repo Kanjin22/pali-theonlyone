@@ -332,7 +332,7 @@ def find_matching_scraped_title(js_key, js_story_title, manual_map, scraped_stor
 
 def process_book(book_id, scraped_stories, manual_map, missing_keys):
     input_path = f'd:/pali-theonlyone/data/content-dhamma{book_id:02d}.js'
-    output_path = f'd:/pali-theonlyone/data/content-dhamma{book_id:02d}-updated.js'
+    output_path = f'd:/pali-theonlyone/data/updated/content-dhamma{book_id:02d}-updated.js'
     
     if not os.path.exists(input_path):
         print(f"Skipping {input_path} (File not found)")
@@ -467,9 +467,9 @@ def process_book(book_id, scraped_stories, manual_map, missing_keys):
                     obj_str += f'            part: "{metadata.get("part", "")}",\n'
                     obj_str += f'            vagga: "{metadata.get("vagga", "")}",\n'
                     obj_str += f'            story: "{metadata.get("story", "")}",\n'
+                    obj_str += f'            page: "หน้า {page_num}",\n'
                     episode_val = metadata.get("episode", f'รหัส {s_line.get("id", "")}')
                     obj_str += f'            episode: "{episode_val}",\n'
-                    obj_str += f'            page: "หน้า {page_num}",\n'
                     obj_str += f'            pali: `{pali_text}`,\n'
                     obj_str += f'            thai: `{thai_text}`,\n'
                     obj_str += f'            thai_desana: `{thai_desana}`,\n'
@@ -506,9 +506,9 @@ def process_book(book_id, scraped_stories, manual_map, missing_keys):
                 obj_str += f'            part: "{metadata.get("part", "")}",\n'
                 obj_str += f'            vagga: "{metadata.get("vagga", "")}",\n'
                 obj_str += f'            story: "{metadata.get("story", "")}",\n'
+                obj_str += f'            page: "หน้า {page_num if page_num else "..."}",\n'
                 episode_val = metadata.get("episode", "")
                 obj_str += f'            episode: "{episode_val if episode_val else "รอข้อมูล"}",\n'
-                obj_str += f'            page: "หน้า {page_num if page_num else "..."}",\n'
                 obj_str += f'            pali: `{normalize_text(orig_data.get("pali", ""))}`,\n'
                 obj_str += f'            thai: `{normalize_text(orig_data.get("thai", ""))}`,\n'
                 obj_str += f'            thai_desana: `{normalize_text(orig_data.get("thai_desana", ""))}`,\n'

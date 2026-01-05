@@ -201,8 +201,8 @@ def main():
                         obj_str += f'            part: "{metadata.get("part", "")}",\n'
                         obj_str += f'            vagga: "{metadata.get("vagga", "")}",\n'
                         obj_str += f'            story: "{metadata.get("story", "")}",\n'
-                        obj_str += f'            episode: "รหัส {s_line.get("id", "")}",\n' # Use ID as episode or keep empty
                         obj_str += f'            page: "หน้า {page_num}",\n'
+                        obj_str += f'            episode: "รหัส {s_line.get("id", "")}",\n' # Use ID as episode or keep empty
                         obj_str += f'            pali: `{pali_text}`,\n'
                         obj_str += f'            thai: `{thai_text}`,\n'
                         obj_str += '            thai_sense: "",\n'

@@ -53,7 +53,7 @@ def compare_books(books_range):
     
     for book_id in books_range:
         original_path = f'd:/pali-theonlyone/data/content-dhamma{book_id:02d}.js'
-        updated_path = f'd:/pali-theonlyone/data/content-dhamma{book_id:02d}-updated.js'
+        updated_path = f'd:/pali-theonlyone/data/updated/content-dhamma{book_id:02d}-updated.js'
         
         print(f"\n--- Checking Book {book_id} ---")
         
