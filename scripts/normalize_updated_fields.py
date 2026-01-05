@@ -70,6 +70,13 @@ def process_file(path):
                 out.append(line)
                 i += 2
                 continue
+        # Fix escaped opening backtick for template fields
+        if re.search(r'^\s*(pali|thai|thai_desana|thai_sense|context|akhyata|kitaka|vocab_list)\s*:\s*\\`', line):
+            line = re.sub(r'(^\s*(pali|thai|thai_desana|thai_sense|context|akhyata|kitaka|vocab_list)\s*:\s*)\\`', r'\1`', line)
+        # Ensure trailing comma on template literal fields
+        if re.search(r'^\s*(pali|thai|thai_desana|thai_sense|context|akhyata|kitaka|vocab_list)\s*:\s*`', line) and not re.search(r'`,\s*$', line):
+            # if the next significant line is a closing brace, still add comma (valid in JS object)
+            line = line.rstrip() + ','
         out.append(line)
         if re.search(r'^\s*thai_desana\s*:', line):
             lookahead = src[i+1:i+20]
