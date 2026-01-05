@@ -1318,10 +1318,37 @@
         );
 
         const params = new URLSearchParams(window.location.search);
-        const slideId = params.get('id') ? params.get('id').trim() : null;
+        function resolveSlideId(id) {
+            if (!id) return null;
+            if (slidesDatabase[id]) return id;
+            const alias = {
+                "d01_v01_s05_kosambi": "d04_v07_s07_kosambivasitissa"
+            };
+            if (alias[id] && slidesDatabase[alias[id]]) return alias[id];
+            let name = id;
+            const m = id.match(/^[^_]+_[^_]+_[^_]+_(.+)$/);
+            if (m && m[1]) name = m[1];
+            const tokens = name.split('_').filter(Boolean);
+            const keys = Object.keys(slidesDatabase);
+            let bestKey = null;
+            let bestScore = 0;
+            for (const k of keys) {
+                let score = 0;
+                for (const t of tokens) {
+                    if (k.includes(t)) score += 1;
+                }
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestKey = k;
+                }
+            }
+            return bestScore > 0 ? bestKey : null;
+        }
+        const rawId = params.get('id') ? params.get('id').trim() : null;
+        const slideId = resolveSlideId(rawId);
 
         let slides = [];
-        if (slideId && slidesDatabase[slideId]) {
+        if (slideId && slidesDatabase[slideId] && Array.isArray(slidesDatabase[slideId]) && slidesDatabase[slideId].length > 0) {
             slides = slidesDatabase[slideId];
         } else {
             slides = [{ pali: "ไม่พบข้อมูลสื่อการสอน", thai: "กรุณาตรวจสอบรหัส (ID) หรือไฟล์ข้อมูล", context: "-", akhyata: "-", kitaka: "-" }];

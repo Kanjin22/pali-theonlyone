@@ -1,1 +1,0 @@
-document.write('<script src="data/vocab-sandhi.js"></script>');
