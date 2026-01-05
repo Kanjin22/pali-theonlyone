@@ -1820,6 +1820,7 @@
     }
 
     function showDictionaryDefinition(word) {
+        if (!word || typeof word !== 'string') return;
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         
         // Check Manual Sandhi/Vocab from current slide first
