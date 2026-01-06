@@ -26,14 +26,14 @@ search_terms = {
     "d08_v23_s02_hatthacariya": ["ปาเวยยกะ", "Hatthacariya", "ช้าง"]
 }
 
-data_dir = r"d:\pali-theonlyone\data\raw"
-json_files = glob.glob(os.path.join(data_dir, "purivaro-book*-raw.json"))
+data_dir = r"D:\Budsir 7\BUDSIR7 ict21607"
+json_files = glob.glob(os.path.join(data_dir, "*.json"))
 
 print(f"Searching in {len(json_files)} files...")
 
 for file_path in json_files:
-    book_num = os.path.basename(file_path).replace("purivaro-book", "").replace("-raw.json", "")
-    print(f"Scanning Book {book_num}...")
+    book_num = os.path.basename(file_path)
+    print(f"Scanning {book_num}...")
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -47,6 +47,6 @@ for file_path in json_files:
             for title in titles:
                 for term in terms:
                     if term in title:
-                        print(f"Match for {key} in Book {book_num}: {title}")
+                        print(f"Match for {key} in {book_num}: {title}")
     except Exception as e:
         print(f"Error reading {file_path}: {e}")

@@ -561,6 +561,9 @@ def process_book(book_id, scraped_stories, manual_map, missing_keys):
 def main():
     # Load all raw data into a dictionary keyed by title
     raw_data = load_all_raw_data()
+    if not raw_data:
+        print("No purivaro raw data found. Skipping update to avoid overwriting originals.")
+        return
     scraped_stories = {}
     for line in raw_data:
         title_val = line.get('story_title', '')

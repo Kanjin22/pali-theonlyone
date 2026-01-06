@@ -11,8 +11,22 @@ search_term = sys.argv[2]
 file_path = fr"d:\pali-theonlyone\data\raw\purivaro-book{book_num}-raw.json"
 
 if not os.path.exists(file_path):
-    print(f"File not found: {file_path}")
-    sys.exit(1)
+    base_dir = r"D:\Budsir 7\BUDSIR7 ict21607"
+    txt_files = []
+    for root, dirs, files in os.walk(base_dir):
+        for name in files:
+            if name.lower().endswith(".txt"):
+                txt_files.append(os.path.join(root, name))
+    print(f"--- Searching '{search_term}' in Budsir directory ---")
+    for p in txt_files:
+        try:
+            with open(p, 'r', encoding='utf-8') as f:
+                for i, line in enumerate(f):
+                    if search_term in line:
+                        print(f"{p}:{i+1} -> {line.strip()[:200]}")
+        except Exception:
+            pass
+    sys.exit(0)
 
 try:
     with open(file_path, 'r', encoding='utf-8') as f:
