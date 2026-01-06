@@ -115,9 +115,9 @@ if (vocabInsarn['ป.เอ']) {
     console.log("Removed false positive: ป.เอ");
 }
 // Cleanup old key with special character if exists
-if (vocabInsarn['อากาสฏฺเทวตา']) {
-    delete vocabInsarn['อากาสฏฺเทวตา'];
-    console.log("Removed old key: อากาสฏฺเทวตา");
+if (vocabInsarn['อากาสฏฺฐเทวตา']) {
+    delete vocabInsarn['อากาสฏฺฐเทวตา'];
+    console.log("Removed old key: อากาสฏฺฐเทวตา");
 }
 if (vocabInsarn['อากฑฺฒิก.']) {
     delete vocabInsarn['อากฑฺฒิก.'];
