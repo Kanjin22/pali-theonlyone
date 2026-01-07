@@ -275,9 +275,9 @@ const PaliLookup = {
                      const thaiBase = PaliScript.romanToThai ? PaliScript.romanToThai(base) : base;
                      if (dbs.insan_pr9[thaiBase]) {
                          return { 
-                             details: [dbs.insan_pr9[thaiBase]], 
+                             details: [`<b>${thaiBase}</b> ${dbs.insan_pr9[thaiBase]}`], 
                              source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
-                             word: thaiBase 
+                             word: key 
                          };
                      }
                  }
@@ -300,9 +300,9 @@ const PaliLookup = {
                      const subThai = PaliScript.romanToThai ? PaliScript.romanToThai(subRoman) : subRoman;
                      if (dbs.insan_pr9[subThai]) {
                          return { 
-                             details: [dbs.insan_pr9[subThai]], 
+                             details: [`<b>${subThai}</b> ${dbs.insan_pr9[subThai]}`], 
                              source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
-                             word: subThai 
+                             word: key 
                          };
                      }
                  }
