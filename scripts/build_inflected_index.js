@@ -372,6 +372,41 @@ function generateForms(base, template) {
 
 // --- 2. Main Processing ---
 
+// NEW: Load Corpus for Filtering
+function loadCorpus() {
+    console.log("Loading Corpus from content-dhamma*.js...");
+    const corpusSet = new Set();
+    const dataDir = 'd:/pali-theonlyone/data';
+
+    if (!fs.existsSync(dataDir)) {
+        console.warn("Data directory not found:", dataDir);
+        return corpusSet;
+    }
+
+    const files = fs.readdirSync(dataDir).filter(f => f.startsWith('content-dhamma') && f.endsWith('.js'));
+    
+    files.forEach(file => {
+        const filePath = path.join(dataDir, file);
+        const content = fs.readFileSync(filePath, 'utf-8');
+        // Regex to extract text inside pali: `...`
+        const regex = /pali:\s*`([^`]+)`/g;
+        let match;
+        while ((match = regex.exec(content)) !== null) {
+            const sentence = match[1];
+            // Tokenize: Remove punctuation, split by spaces
+            // Punctuation: “"'(‘)”"'.ฯ,;:?’ and numerals if needed? Keep numerals for now or strip?
+            // Usually dictionary doesn't have numerals.
+            const cleanSentence = sentence.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, ' ').replace(/\s+/g, ' ').trim();
+            const words = cleanSentence.split(' ');
+            words.forEach(w => {
+                if (w.length > 0) corpusSet.add(w);
+            });
+        }
+    });
+    console.log(`Corpus loaded. Found ${corpusSet.size} unique words.`);
+    return corpusSet;
+}
+
 const inputFiles = [
     { path: 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js', varName: 'vocabInsanPr9' },
     { path: 'd:/pali-theonlyone/data/raw/vocab-insan-pr9-5-8.js', varName: 'vocabInsanPr9Part5to8' },
@@ -381,6 +416,7 @@ const inputFiles = [
 const outputFile = 'd:/pali-theonlyone/data/vocab-inflected.js';
 
 let masterIndex = {}; // Form -> Base
+const corpusSet = loadCorpus();
 
 const context = vm.createContext({
     Object: Object,
@@ -440,6 +476,8 @@ inputFiles.forEach(fileInfo => {
             if (forms.length > 0) matchCount++;
 
             forms.forEach(form => {
+                if (!corpusSet.has(form)) return;
+
                 // If collision, maybe keep existing or overwrite? 
                 // Let's overwrite as we process files in priority order?
                 // Actually, priority: Sandhi (last) > Part 5-8 > Main
