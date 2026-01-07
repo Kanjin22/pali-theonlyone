@@ -917,7 +917,7 @@
             let rootLinkHtml = "";
             if (dbs.roots && (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord]))) {
                 const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
-                rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-tree"></i></a>`;
+                rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
             }
 
             // Prepare content for Popup (Click to expand)

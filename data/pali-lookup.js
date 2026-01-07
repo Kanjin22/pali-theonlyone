@@ -264,6 +264,26 @@ const PaliLookup = {
         // 1. Thai Dictionaries (Ordered: Insan-PR9 (1-8), Bhumibalo, Jinakalamalini, General)
         // Note: dbs.insan_pr9 includes both Part 1-4 and Part 5-8 merged in presentation.html
         if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key };
+
+        // [Priority Override] Try stemming for Insan-PR9 BEFORE checking exact matches in other dictionaries
+        // This ensures Dhammapada results are always shown if available, even if the exact word form exists in a lower-priority dictionary (like General).
+        if (dbs.insan_pr9 && typeof PaliScript !== 'undefined' && typeof PaliDeclension !== 'undefined') {
+            const romanKey = PaliScript.thaiToRoman ? PaliScript.thaiToRoman(key) : key;
+            if (PaliDeclension.decompose) {
+                const bases = PaliDeclension.decompose(romanKey);
+                for (const base of bases) {
+                    const thaiBase = PaliScript.romanToThai ? PaliScript.romanToThai(base) : base;
+                    if (dbs.insan_pr9[thaiBase]) {
+                        return { 
+                            details: [dbs.insan_pr9[thaiBase]], 
+                            source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
+                            word: thaiBase 
+                        };
+                    }
+                }
+            }
+        }
+
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key };
         

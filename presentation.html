@@ -1996,7 +1996,7 @@
                     let rootLinkHtml = "";
                     if (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord])) {
                         const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
-                        rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-tree"></i></a>`;
+                        rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
                     }
 
                     // Prepare content for Popup (Click to expand)
@@ -2117,7 +2117,7 @@
             // Check if Root exists for this word (Direct or Stemmed)
             let rootUrl = "roots.html"; // Default to main page
             let rootStyle = "color:#95a5a6;"; // Default gray
-            let rootIcon = "fa-tree";
+            let rootIcon = "fa-square-root-variable";
             
             if (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord])) {
                 const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
