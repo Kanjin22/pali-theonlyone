@@ -221,12 +221,14 @@ const PaliLookup = {
     checkAll: function(key, dbs) {
         // Priority order adjusted by user request
         
-        // 1. Thai Dictionaries (Ordered: Insan-PR9, Bhumibalo, Jinakalamalini, General, New Gen)
+        // 1. Thai Dictionaries (Ordered: Insan-PR9 (1-8), Bhumibalo, Jinakalamalini, General)
+        // Note: dbs.insan_pr9 includes both Part 1-4 and Part 5-8 merged in presentation.html
         if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key };
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key };
+        
+        // General Tripitaka Dictionaries
         if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key };
-
         if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
         
         // 2. Roman Dictionaries (Ordered: DPD, PTS, SC, Others)
@@ -236,14 +238,19 @@ const PaliLookup = {
                  romanKey = PaliScript.thaiToRoman(key);
              }
              
-             if (dbs.dpd && dbs.dpd[romanKey]) return { details: [dbs.dpd[romanKey]], source: 'Digital Pāḷi Dictionary', word: key };
+             // Priority 1: DPD (Digital Pāli Dictionary)
+             if (dbs.dpd && dbs.dpd[romanKey]) return { details: [dbs.dpd[romanKey]], source: 'Digital Pāli Dictionary (DPD)', word: key };
+             
+             // Priority 2: PTS (Pali Text Society)
              if (dbs.pts && dbs.pts[romanKey]) return { source: 'pts', data: dbs.pts[romanKey], word: key };
+             
+             // Priority 3: SC (SuttaCentral)
              if (dbs.sc && dbs.sc[romanKey]) return { source: 'sc', data: dbs.sc[romanKey], word: key };
              
-             // Others
+             // Others / Fallbacks
+             if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'Digital Pāli Dictionary (DPD Inflected)', data: dbs.dpdInflected[romanKey], word: key };
              if (dbs.dppn && dbs.dppn[romanKey]) return { source: 'dppn', data: dbs.dppn[romanKey], word: key };
              if (dbs.dhammika && dbs.dhammika[romanKey]) return { source: 'dhammika', data: dbs.dhammika[romanKey], word: key };
-             if (dbs.dpdInflected && dbs.dpdInflected[romanKey]) return { source: 'Digital Pāli Dictionary (DPD)', data: dbs.dpdInflected[romanKey], word: key };
         }
 
         return null;
