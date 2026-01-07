@@ -1850,11 +1850,60 @@
             dppn: (typeof vocabDPPN !== 'undefined' ? vocabDPPN : {}),
             dhammika: (typeof vocabDhammika !== 'undefined' ? vocabDhammika : {}),
             dpdInflected: (typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {}),
-            roots: (typeof vocabRoots !== 'undefined' ? vocabRoots : {})
+            roots: (typeof vocabRoots !== 'undefined' ? vocabRoots : {}),
+            sandhi: (typeof vocabSandhi !== 'undefined' ? vocabSandhi : {})
         };
 
         // Use smart lookup
-        const result = manualResult || PaliLookup.lookup(word, dbs);
+        let result = manualResult || PaliLookup.lookup(word, dbs);
+
+        // --- 2. Contextual Fallback (User Request) ---
+        // If dictionary lookup failed, try to use hints from slide data (vocab_list, akhyata, kitaka)
+        if (!result && typeof s !== 'undefined') {
+            
+            // 2.1 Check vocab_list (Comma separated bases)
+            if (s.vocab_list) {
+                const vocabItems = s.vocab_list.split(',').map(v => v.trim()).filter(v => v);
+                // Sort by length desc to match longest first
+                vocabItems.sort((a, b) => b.length - a.length);
+                
+                for (const v of vocabItems) {
+                    // Check if cleanWord relates to v
+                    // Heuristic: cleanWord contains v (e.g. puttang contains putta)
+                    if (cleanWord.includes(v)) {
+                         const fallbackRes = PaliLookup.lookup(v, dbs);
+                         if (fallbackRes) {
+                             result = fallbackRes;
+                             // Append source info
+                             // Clone to avoid mutating cache if PaliLookup returns cached obj
+                             result = Object.assign({}, result); 
+                             result.source = (result.source || "") + " (ศัพท์ในบทเรียน)";
+                             result._stemmedFrom = cleanWord; 
+                             result._baseWord = v;
+                             break;
+                         }
+                    }
+                }
+            }
+
+            // 2.2 Check Akhyata / Kitaka (Grammar Forms)
+            if (!result) {
+                 const isAkhyata = s.akhyata && s.akhyata.includes(cleanWord);
+                 const isKitaka = s.kitaka && s.kitaka.includes(cleanWord);
+                 
+                 if (isAkhyata || isKitaka) {
+                     const typeLabel = [];
+                     if (isAkhyata) typeLabel.push("อาขยาต (กิริยา)");
+                     if (isKitaka) typeLabel.push("กิตก์ (กิริยา/นาม)");
+                     
+                     result = {
+                         word: cleanWord,
+                         details: [`<span style="color:#e67e22;">[${typeLabel.join(' / ')}]</span> พบในรายการศัพท์ไวยากรณ์ของบทนี้`],
+                         source: 'Context'
+                     };
+                 }
+            }
+        }
         
         // Display in Footer
         let wordToConvert = cleanWord;
@@ -1892,6 +1941,8 @@
                          stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ศัพท์)</span>`;
                     } else if (result.source === 'พจนานุกรมธาตุ') {
                          stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(ธาตุ)</span>`;
+                    } else if (result.source === 'Context') {
+                         stemInfo = `<span style="font-size:0.8em; color:#8e44ad; margin-left:5px;">(ไวยากรณ์)</span>`;
                     }
 
                     // Prepare display word (Link to Roots if applicable)

@@ -110,6 +110,36 @@ const PaliLookup = {
 
 
     splitSandhi: function(word, dbs) {
+        // 0. Manual Sandhi/Vocab Check (vocab-sandhi.js)
+        if (dbs && dbs.sandhi && dbs.sandhi[word]) {
+            const manualData = dbs.sandhi[word];
+            // Support both array ["split1", "split2"] and simple string "definition"
+            if (Array.isArray(manualData)) {
+                return {
+                    split: manualData.join(' + '),
+                    details: manualData.map(part => {
+                        // Try to find definition for each part
+                        let def = "";
+                        let partRes = this.checkPart(part, dbs);
+                        if (partRes) {
+                            def = this.extractDef(partRes);
+                        }
+                        return `<span style="color:#e67e22;"><b>${part}</b></span>: ${def || "-"}`;
+                    }),
+                    source: 'Manual Sandhi',
+                    _stemmedFrom: null
+                };
+            } else {
+                // Treat as direct vocabulary override
+                return {
+                    details: [manualData],
+                    source: 'Manual Vocab',
+                    word: word,
+                    _stemmedFrom: null
+                };
+            }
+        }
+
         // Convert to Roman if Thai
         let roman = word;
         if (/[ก-ฮ]/.test(word)) {
