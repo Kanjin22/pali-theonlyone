@@ -270,19 +270,44 @@ const PaliLookup = {
         if (dbs.insan_pr9 && typeof PaliScript !== 'undefined' && typeof PaliDeclension !== 'undefined') {
             const romanKey = PaliScript.thaiToRoman ? PaliScript.thaiToRoman(key) : key;
             if (PaliDeclension.decompose) {
-                const bases = PaliDeclension.decompose(romanKey);
-                for (const base of bases) {
-                    const thaiBase = PaliScript.romanToThai ? PaliScript.romanToThai(base) : base;
-                    if (dbs.insan_pr9[thaiBase]) {
-                        return { 
-                            details: [dbs.insan_pr9[thaiBase]], 
-                            source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
-                            word: thaiBase 
-                        };
-                    }
-                }
-            }
-        }
+                 const bases = PaliDeclension.decompose(romanKey);
+                 for (const base of bases) {
+                     const thaiBase = PaliScript.romanToThai ? PaliScript.romanToThai(base) : base;
+                     if (dbs.insan_pr9[thaiBase]) {
+                         return { 
+                             details: [dbs.insan_pr9[thaiBase]], 
+                             source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
+                             word: thaiBase 
+                         };
+                     }
+                 }
+             }
+
+             // Extra: Vowel Substitution for common cases (e.g. bhājane -> bhājana)
+             // This covers simple inflection changes that might be missed by strict declension rules
+             const vowelMap = {
+                 'e': ['a', 'ā'], 'o': ['a', 'ā'], 
+                 'ā': ['a'], 'a': ['ā'], 
+                 'i': ['ī'], 'ī': ['i'], 
+                 'u': ['ū'], 'ū': ['u'],
+                 'ṃ': ['m'], 'm': ['ṃ']
+             };
+             const lastChar = romanKey.slice(-1);
+             if (vowelMap[lastChar]) {
+                 const basePrefix = romanKey.slice(0, -1);
+                 for (const subChar of vowelMap[lastChar]) {
+                     const subRoman = basePrefix + subChar;
+                     const subThai = PaliScript.romanToThai ? PaliScript.romanToThai(subRoman) : subRoman;
+                     if (dbs.insan_pr9[subThai]) {
+                         return { 
+                             details: [dbs.insan_pr9[subThai]], 
+                             source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', 
+                             word: subThai 
+                         };
+                     }
+                 }
+             }
+         }
 
         if (dbs.bhumibalo && dbs.bhumibalo[key]) return { details: [dbs.bhumibalo[key]], source: 'พจนานุกรมฉบับภูมิพโลภิกขุ', word: key };
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key };
