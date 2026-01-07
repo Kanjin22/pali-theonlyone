@@ -151,7 +151,7 @@
         .card {
             width: 98%;
             max-width: none;
-            height: 92vh;
+            height: 85vh;
             /* เผื่อที่ด้านล่างไว้ให้ปุ่ม Nav */
             max-height: none;
             background-color: #ffffff;
@@ -772,7 +772,7 @@
 
         @media screen and (max-width: 768px) {
             .card {
-                height: 90vh;
+                height: 82vh;
                 margin-top: 10px; /* แก้ไข: ไม่ให้ติดขอบบนเกินไป (เดิม -40px) */
                 width: 95%;
                 margin-bottom: 60px;
@@ -2679,6 +2679,49 @@
         });
 
         updateSlide();
+
+        // --- Swipe Support for Mobile/Tablet ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50;
+
+        document.addEventListener('touchstart', e => {
+            // Ignore if touching interactive elements
+            if (e.target.closest('.controls') || 
+                e.target.closest('#dict-panel') || 
+                e.target.closest('.toc-panel') ||
+                e.target.closest('#analysis-modal') ||
+                e.target.closest('#trans-modal') ||
+                e.target.closest('#drawing-canvas')) return;
+            
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            // Ignore if touching interactive elements
+            if (e.target.closest('.controls') || 
+                e.target.closest('#dict-panel') || 
+                e.target.closest('.toc-panel') ||
+                e.target.closest('#analysis-modal') ||
+                e.target.closest('#trans-modal') ||
+                e.target.closest('#drawing-canvas')) return;
+
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const distance = touchEndX - touchStartX;
+            if (Math.abs(distance) > minSwipeDistance) {
+                if (distance < 0) {
+                    // Swiped Left -> Next Slide
+                    nextSlide();
+                } else {
+                    // Swiped Right -> Previous Slide
+                    prevSlide();
+                }
+            }
+        }
     </script>
 </body>
 
