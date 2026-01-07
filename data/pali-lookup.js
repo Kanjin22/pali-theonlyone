@@ -283,6 +283,37 @@ const PaliLookup = {
                  if (t !== word && !candidates.includes(t)) candidates.push(t);
              };
 
+             // --- 0. Reverse Declension (Karanta Rules) ---
+             // Use PaliDeclension to decompose suffixes based on detailed grammar rules
+             if (typeof PaliDeclension !== 'undefined' && PaliDeclension.decompose) {
+                 const declensionBases = PaliDeclension.decompose(roman);
+                 for (const base of declensionBases) {
+                     // Check if base exists in any dictionary to avoid noise
+                     let found = false;
+                     
+                     // 1. Check Roman DBs
+                     if (dbs && ((dbs.sc && dbs.sc[base]) || (dbs.dpd && dbs.dpd[base]) || (dbs.pts && dbs.pts[base]) || (dbs.dpdInflected && dbs.dpdInflected[base]))) {
+                         found = true;
+                     }
+                     
+                     // 2. Check Thai DBs (if not found in Roman yet, or just to be safe)
+                     if (!found && dbs) {
+                         const thaiBase = PaliScript.romanToThai(base);
+                         if ((dbs.insan_pr9 && dbs.insan_pr9[thaiBase]) ||
+                             (dbs.bhumibalo && dbs.bhumibalo[thaiBase]) ||
+                             (dbs.jinakalamalini && dbs.jinakalamalini[thaiBase]) ||
+                             (dbs.general && dbs.general[thaiBase]) ||
+                             (dbs.general_raw && dbs.general_raw[thaiBase])) {
+                             found = true;
+                         }
+                     }
+
+                     if (found) {
+                         add(base);
+                     }
+                 }
+             }
+
              // Vowel mappings for substitution
              const vowelMap = {
                  'a': ['ā'], 'ā': ['a'],
