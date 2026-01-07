@@ -61,6 +61,10 @@ var PaliDeclension = {
     "a": [
         "a"
     ],
+    "aṃ": [
+        "a",
+        "ā"
+    ],
     "i": [
         "i",
         "e"
