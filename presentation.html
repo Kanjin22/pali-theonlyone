@@ -1821,6 +1821,34 @@
         return clean;
     }
 
+    // Helper: Find Root Key in vocabRoots (Handling variants)
+    function findRootKey(word) {
+        if (!window.vocabRoots) return null;
+        let root = word.trim();
+        // Special mappings
+        if (root === 'คม') root = 'คมุ';
+        
+        if (window.vocabRoots[root]) return root;
+        if (window.vocabRoots[root + 'ุ']) return root + 'ุ';
+        if (window.vocabRoots[root + 'ิ']) return root + 'ิ';
+        
+        return null;
+    }
+
+    // Helper: Link "Root + Dhatu" in definition text
+    function linkRootsInText(text) {
+        if (!text) return text;
+        // Match Thai Word + " ธาตุ" (e.g. "ภู ธาตุ", "กุ ธาตุ")
+        return text.replace(/([ก-๙ฺ]+)(\s+ธาตุ)/g, (match, rootWord, suffix) => {
+            const validKey = findRootKey(rootWord);
+            if (validKey) {
+                // Return clickable link
+                return `<span style="color:#d35400; cursor:pointer; text-decoration:underline;" onclick="showRootDefinition('${validKey}')">${rootWord}</span>${suffix}`;
+            }
+            return match;
+        });
+    }
+
     function showDictionaryDefinition(word, options = {}) {
         if (!word || typeof word !== 'string') return;
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
@@ -1933,9 +1961,9 @@
                 if (result && !isRomanSource) {
                     let detailsHtml = "";
                     if (result.details && Array.isArray(result.details)) {
-                        detailsHtml = result.details.map(d => `<div>• ${formatDictText(d)}</div>`).join('');
+                        detailsHtml = result.details.map(d => `<div>• ${linkRootsInText(formatDictText(d))}</div>`).join('');
                     } else if (typeof result === 'string') {
-                        detailsHtml = formatDictText(result);
+                        detailsHtml = linkRootsInText(formatDictText(result));
                     } else if (result.split) {
                         detailsHtml = `<div>${formatDictText(result.split)}</div>`;
                     }
