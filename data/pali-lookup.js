@@ -34,6 +34,18 @@ const PaliLookup = {
 
         // 1. Exact Match
         let result = this.checkAll(cleanWord, databases);
+
+        // 1.5. Inflected Form Lookup (Thai)
+        // Check generated vocab-inflected.js
+        if (!result && databases.inflected && databases.inflected[cleanWord]) {
+            const baseWord = databases.inflected[cleanWord];
+            const baseResult = this.checkAll(baseWord, databases);
+            if (baseResult) {
+                baseResult._stemmedFrom = cleanWord;
+                baseResult._baseWord = baseWord;
+                return baseResult;
+            }
+        }
         
         // 2. Indirect Thai Lookup (via DPD Inflected Base Word)
         // If we didn't find a Thai result (result is null OR result is Roman), try to find base via DPD Inflected
@@ -232,6 +244,21 @@ const PaliLookup = {
     },
     
     checkAll: function(key, dbs) {
+        // Priority 0: Manual Vocab (vocab-sandhi.js)
+        if (dbs.sandhi) {
+            // Check direct key
+            if (dbs.sandhi[key] && typeof dbs.sandhi[key] === 'string') {
+                 return { details: [dbs.sandhi[key]], source: 'Manual Vocab', word: key };
+            }
+            // Check Thai key if Roman input
+            if (!/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.romanToThai) {
+                let thaiKey = PaliScript.romanToThai(key);
+                if (dbs.sandhi[thaiKey] && typeof dbs.sandhi[thaiKey] === 'string') {
+                     return { details: [dbs.sandhi[thaiKey]], source: 'Manual Vocab', word: thaiKey };
+                }
+            }
+        }
+
         // Priority order adjusted by user request
         
         // 1. Thai Dictionaries (Ordered: Insan-PR9 (1-8), Bhumibalo, Jinakalamalini, General)
@@ -348,15 +375,16 @@ const PaliLookup = {
                      
                      // 2. Check Thai DBs (if not found in Roman yet, or just to be safe)
                      if (!found && dbs) {
-                         const thaiBase = PaliScript.romanToThai(base);
-                         if ((dbs.insan_pr9 && dbs.insan_pr9[thaiBase]) ||
-                             (dbs.bhumibalo && dbs.bhumibalo[thaiBase]) ||
-                             (dbs.jinakalamalini && dbs.jinakalamalini[thaiBase]) ||
-                             (dbs.general && dbs.general[thaiBase]) ||
-                             (dbs.general_raw && dbs.general_raw[thaiBase])) {
-                             found = true;
-                         }
-                     }
+                        const thaiBase = PaliScript.romanToThai(base);
+                        if ((dbs.sandhi && dbs.sandhi[thaiBase]) ||
+                            (dbs.insan_pr9 && dbs.insan_pr9[thaiBase]) ||
+                            (dbs.bhumibalo && dbs.bhumibalo[thaiBase]) ||
+                            (dbs.jinakalamalini && dbs.jinakalamalini[thaiBase]) ||
+                            (dbs.general && dbs.general[thaiBase]) ||
+                            (dbs.general_raw && dbs.general_raw[thaiBase])) {
+                            found = true;
+                        }
+                    }
 
                      if (found) {
                          add(base);
@@ -425,6 +453,7 @@ const PaliLookup = {
         }
 
         // --- 2. Suffix Stripping (Complex Endings) ---
+        const len = word.length;
 
         // --- Suffix Stripping ---
         
