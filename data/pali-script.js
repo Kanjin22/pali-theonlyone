@@ -202,3 +202,5 @@ const PaliScript = {
         return res;
     }
 };
+
+if (typeof module !== 'undefined') module.exports = PaliScript;
