@@ -1,12 +1,13 @@
 
 const PaliLookup = {
-    lookup: function(word, databases) {
+    lookup: function(word, databases, options = {}) {
         if (!word) return null;
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '').trim();
         if (!cleanWord) return null;
 
         // 0. Manual Root Mapping (User Defined) or Pali Roots Dictionary
-        if (databases.roots && databases.roots[cleanWord]) {
+        // Enabled only if options.includeRoots is true (per user request)
+        if (options.includeRoots && databases.roots && databases.roots[cleanWord]) {
             const rootData = databases.roots[cleanWord];
             
             // NEW: Handle Roots Dictionary (Array of Objects)

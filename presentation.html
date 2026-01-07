@@ -1708,10 +1708,11 @@
         }
 
         // 2. Check Manual Roots (Word Origin)
-        if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
+        // Disabled per user request (will link only from popup details)
+        /* if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
              showDictionaryDefinition(vocabRoots[cleanWord]);
              return;
-        }
+        } */
 
         // 3. Check Manual Sandhi DB (Global)
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
@@ -1820,7 +1821,7 @@
         return clean;
     }
 
-    function showDictionaryDefinition(word) {
+    function showDictionaryDefinition(word, options = {}) {
         if (!word || typeof word !== 'string') return;
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         
@@ -1842,9 +1843,9 @@
                 (typeof vocabInsanPr9Part5to8 !== 'undefined' ? vocabInsanPr9Part5to8 : {})
             ),
             bhumibalo: (typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {}),
-        jinakalamalini: (typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {}),
-        general_raw: (typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {}),
-        dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
+            jinakalamalini: (typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {}),
+            general_raw: (typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {}),
+            dpd: (typeof vocabDPD !== 'undefined' ? vocabDPD : {}),
             sc: (typeof vocabSC !== 'undefined' ? vocabSC : {}),
             pts: (typeof vocabPTS !== 'undefined' ? vocabPTS : {}),
             dppn: (typeof vocabDPPN !== 'undefined' ? vocabDPPN : {}),
@@ -1855,7 +1856,7 @@
         };
 
         // Use smart lookup
-        let result = manualResult || PaliLookup.lookup(word, dbs);
+        let result = manualResult || PaliLookup.lookup(word, dbs, options);
 
         // --- 2. Contextual Fallback (User Request) ---
         // If dictionary lookup failed, try to use hints from slide data (vocab_list, akhyata, kitaka)
@@ -2126,7 +2127,12 @@
         }
     }
 
-        function getAnalysisData(word, slide) {
+    // Helper: Show Root Definition explicitly (bypassing default disable)
+    window.showRootDefinition = function(word) {
+        showDictionaryDefinition(word, { includeRoots: true });
+    };
+
+    function getAnalysisData(word, slide) {
             if (slide) {
                 if (slide.analysis && slide.analysis[word]) return slide.analysis[word];
                 if (slide.sandhi && slide.sandhi[word]) return { type: "sandhi", split: slide.sandhi[word] };
