@@ -1992,24 +1992,25 @@
                         displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
                     }
 
-                    // Prepare content for Popup (Click to expand)
-                    const contentForPopup = `
-                        <div style="font-size:1.4rem;">
-                            <div style="font-weight: bold; color: #2980b9; margin-bottom:10px;">
-                                ${displayWord} 
-                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
-                            </div>
-                            <div style="line-height:1.6;">${detailsHtml}</div>
-                        </div>
-                    `;
-                    const safeContent = contentForPopup.replace(/"/g, '&quot;');
-
                     // Check if Root exists (for Thai section icon)
                     let rootLinkHtml = "";
                     if (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord])) {
                         const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
                         rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-tree"></i></a>`;
                     }
+
+                    // Prepare content for Popup (Click to expand)
+                    const contentForPopup = `
+                        <div style="font-size:1.4rem;">
+                            <div style="font-weight: bold; color: #2980b9; margin-bottom:10px;">
+                                ${displayWord} 
+                                <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
+                                ${rootLinkHtml}
+                            </div>
+                            <div style="line-height:1.6;">${detailsHtml}</div>
+                        </div>
+                    `;
+                    const safeContent = contentForPopup.replace(/"/g, '&quot;');
 
                     thaiVocabContent.innerHTML = `
                         <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
@@ -2019,7 +2020,6 @@
                                 ${displayWord} 
                                 <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal; font-family: 'Sarabun', sans-serif;">[${romanWord}]</span>
                                 ${stemInfo}
-                                ${rootLinkHtml}
                                 <i class="fa-solid fa-expand" style="float:right; color:#bdc3c7; font-size:0.8em;"></i>
                             </div>
                             <div style="margin-top: 5px; font-size: 0.95em;">${detailsHtml}</div>
@@ -2114,10 +2114,6 @@
                  romanDefHtml = `<div style="color:#95a5a6; font-style:italic; margin-top:10px;">ไม่พบคำศัพท์ในฐานข้อมูล Offline</div>`;
             }
 
-            // Feature: Wrap English words for Translation Click
-            const interactiveHtml = wrapEnglishWords(romanDefHtml);
-            const safeInteractiveHtml = interactiveHtml.replace(/"/g, '&quot;');
-
             // Check if Root exists for this word (Direct or Stemmed)
             let rootUrl = "roots.html"; // Default to main page
             let rootStyle = "color:#95a5a6;"; // Default gray
@@ -2129,22 +2125,33 @@
                 rootStyle = "color:#e67e22; font-weight:bold;"; // Highlight orange if found
             }
 
+            // Feature: Wrap English words for Translation Click
+            const interactiveHtml = wrapEnglishWords(romanDefHtml);
+            
+            // Prepare Popup Content (Add links here)
+            const popupLinksHtml = `
+                <div style="margin-top: 15px; border-top: 1px dashed #bdc3c7; padding-top: 10px; font-size: 0.9em;">
+                    <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:10px; color:#3498db; text-decoration:none;">
+                        <i class="fa-solid fa-dharmachakra"></i> SC
+                    </a>
+                    <a href="${dpdLink}" target="_blank" style="display:inline-block; margin-right:10px; color:#27ae60; text-decoration:none;">
+                        <i class="fa-solid fa-book"></i> DPD
+                    </a>
+                    <a href="${rootUrl}" target="_blank" style="display:inline-block; ${rootStyle} text-decoration:none;">
+                        <i class="fa-solid ${rootIcon}"></i> ธาตุ
+                    </a>
+                </div>
+            `;
+            const popupContent = interactiveHtml + popupLinksHtml;
+            const safeInteractiveHtml = popupContent.replace(/"/g, '&quot;');
+
             romanVocabContent.innerHTML = `
                 <div style="cursor: pointer;"
                      onclick="openGenericModal('พจนานุกรมบาลี - โรมัน', this.getAttribute('data-content'))"
                      data-content="${safeInteractiveHtml}">
                     ${interactiveHtml}
-                    <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
-                        <span style="float:right; color:#bdc3c7;"><i class="fa-solid fa-expand"></i></span>
-                        <a href="${scLink}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
-                            <i class="fa-solid fa-dharmachakra"></i> SC
-                        </a>
-                        <a href="${dpdLink}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; margin-right:5px; color:#27ae60; text-decoration:none;">
-                            <i class="fa-solid fa-book"></i> DPD
-                        </a>
-                        <a href="${rootUrl}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; ${rootStyle} text-decoration:none;">
-                            <i class="fa-solid ${rootIcon}"></i> ธาตุ
-                        </a>
+                    <div style="margin-top: 5px; text-align:right;">
+                        <span style="color:#bdc3c7;"><i class="fa-solid fa-expand"></i></span>
                     </div>
                 </div>
             `;
