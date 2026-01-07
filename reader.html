@@ -745,9 +745,15 @@
 
         // Check Manual Sandhi DB
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
-            const parts = vocabSandhi[cleanWord];
-            showSandhiBubble(el, parts);
-            return;
+            const val = vocabSandhi[cleanWord];
+            if (Array.isArray(val)) {
+                showSandhiBubble(el, val);
+                return;
+            } else if (typeof val === 'string') {
+                // Manual Mapping (Redirect)
+                showDictionaryDefinition(val);
+                return;
+            }
         }
 
         showDictionaryDefinition(word);

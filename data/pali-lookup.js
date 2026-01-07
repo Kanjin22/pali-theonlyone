@@ -36,7 +36,16 @@ const PaliLookup = {
         
         // 2. Indirect Thai Lookup (via DPD Inflected Base Word)
         // If we didn't find a Thai result (result is null OR result is Roman), try to find base via DPD Inflected
-        const isThaiResult = result && (result.source === 'Thai New Gen' || result.source === 'พจนานุกรม บาลี-ไทย' || result.source === 'พจนานุกรม E-Tipitaka' || result.source === 'ศัพท์ทั่วไป');
+        const isThaiResult = result && (
+            result.source === 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)' || 
+            result.source === 'พจนานุกรมฉบับภูมิพโลภิกขุ' || 
+            result.source === 'ปทานุกรมชินกาลมาลินี' || 
+            result.source === 'พจนานุกรมทั่วไป (พระไตรปิฎก)' || 
+            result.source === 'ศัพท์ทั่วไป' ||
+            result.source === 'Thai New Gen' || 
+            result.source === 'พจนานุกรม บาลี-ไทย' || 
+            result.source === 'พจนานุกรม E-Tipitaka'
+        );
         
         if (!isThaiResult && databases.dpdInflected) {
              let roman = cleanWord;
@@ -509,3 +518,67 @@ const PaliLookup = {
         return [...new Set(candidates)]; // Unique only
     }
 };
+
+// --- Pali Declension Logic (Reverse) ---
+const PaliDeclension = {
+    // Reverse Mapping: Roman Suffix -> List of possible Base Endings (Roman)
+    // "a" represents short a, "ā" represents long ā, etc.
+    reverseRules: {
+        // A-Pungling (Base: a)
+        "o": ["a"], "ā": ["a", "ā"], "aṃ": ["a"], "e": ["a", "ā"], "ena": ["a"], 
+        "ehi": ["a"], "ebhi": ["a"], "assa": ["a"], "āya": ["a", "ā"], 
+        "atthaṃ": ["a"], "ānaṃ": ["a", "ā"], "asmā": ["a"], "amhā": ["a"], 
+        "smiṃ": ["a"], "mhi": ["a"], "esu": ["a"], 
+        
+        // I/Ī-Pungling/Itthiling (Base: i, ī)
+        "ayo": ["i"], "ī": ["i", "ī"], "iṃ": ["i", "ī"], "inā": ["i", "ī"], 
+        "īhi": ["i", "ī"], "ībhi": ["i", "ī"], "issa": ["i", "ī"], "ino": ["i", "ī"], 
+        "īnaṃ": ["i", "ī"], "ismā": ["i", "ī"], "imhā": ["i", "ī"], 
+        "ismiṃ": ["i", "ī"], "imhi": ["i", "ī"], "īsu": ["i", "ī"],
+        "iyo": ["i", "ī"], "iyā": ["i", "ī"], "iyaṃ": ["i", "ī"], "yaṃ": ["i"],
+        
+        // U/Ū-Pungling/Itthiling (Base: u, ū)
+        "avo": ["u"], "ū": ["u", "ū"], "uṃ": ["u", "ū"], "unā": ["u", "ū"], 
+        "ūhi": ["u", "ū"], "ūbhi": ["u", "ū"], "ussa": ["u", "ū"], "uno": ["u", "ū"], 
+        "ūnaṃ": ["u", "ū"], "usmā": ["u", "ū"], "umhā": ["u", "ū"], 
+        "usmiṃ": ["u", "ū"], "umhi": ["u", "ū"], "ūsu": ["u", "ū"], "ave": ["u"],
+        "uyo": ["u", "ū"], "uyā": ["u", "ū"], "uyaṃ": ["u", "ū"],
+        
+        // Aa-Itthiling (Base: ā)
+        "āyo": ["ā"], "āhi": ["ā"], "ābhi": ["ā"], "āsu": ["ā"], "āyā": ["ā"],
+
+        // Neuter Plurals
+        "āni": ["a"],
+        "īni": ["i", "ī"], 
+        "ūni": ["u", "ū"],
+
+        // General / Common
+        "ṃ": ["a", "i", "ī", "u", "ū"], // Niggahita
+        "m": ["a", "i", "ī", "u", "ū"]  // Alternative Niggahita
+    },
+    
+    decompose: function(word) {
+        if (!word) return [];
+        let candidates = [];
+        const rules = this.reverseRules;
+        const suffixes = Object.keys(rules).sort((a, b) => b.length - a.length); // Longest first
+        
+        for (const suffix of suffixes) {
+            if (word.endsWith(suffix)) {
+                const stem = word.slice(0, -suffix.length);
+                const possibleEndings = rules[suffix];
+                
+                for (const ending of possibleEndings) {
+                    let base = stem + ending;
+                    if (base.length > 1 && !candidates.includes(base)) {
+                        candidates.push(base);
+                    }
+                }
+            }
+        }
+        return candidates;
+    }
+};
+
+// Export if module
+if (typeof module !== 'undefined') module.exports = { PaliLookup, PaliDeclension };

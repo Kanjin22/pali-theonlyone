@@ -1919,7 +1919,17 @@
             // --- 1. Thai Dictionary Output ---
             const thaiVocabContent = document.getElementById('thaiVocabContent');
             if (thaiVocabContent) {
-                if (result) {
+                // Filter out Roman sources from Thai box to ensure separation
+                const isRomanSource = result && [
+                    'Digital Pāli Dictionary (DPD)', 
+                    'pts', 
+                    'sc', 
+                    'dppn', 
+                    'dhammika', 
+                    'Digital Pāli Dictionary (DPD Inflected)'
+                ].includes(result.source);
+
+                if (result && !isRomanSource) {
                     let detailsHtml = "";
                     if (result.details && Array.isArray(result.details)) {
                         detailsHtml = result.details.map(d => `<div>• ${formatDictText(d)}</div>`).join('');
