@@ -446,6 +446,16 @@
             border-radius: 4px;
         }
 
+        /* Note Mode Cursor */
+        body.note-mode-active .word-span {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%23d35400' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'%3E%3C/path%3E%3C/svg%3E") 0 24, context-menu !important;
+        }
+        body.note-mode-active .word-span:hover {
+            background-color: rgba(211, 84, 0, 0.1);
+            outline: 1px dashed #d35400;
+            border-radius: 3px;
+        }
+
         /* --- Controls & UI --- */
         .page-badge {
             display: inline-block;
@@ -2691,12 +2701,14 @@
                 // Disable Inline Edit Mode if active
                 if (window.inlineEditMode) toggleInlineEditMode();
 
+                document.body.classList.add('note-mode-active');
                 btn.classList.add('active');
                 btn.style.color = '#27ae60';
                 btn.title = 'โหมดคำอธิบาย: คลิกคำเพื่อวางโน้ต (ปิดด้วยปุ่มนี้อีกครั้ง)';
                 const addBtn = document.getElementById('btn-add-note');
                 if (addBtn) addBtn.disabled = true;
             } else {
+                document.body.classList.remove('note-mode-active');
                 btn.classList.remove('active');
                 btn.style.color = '';
                 btn.title = 'โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)';
@@ -2715,11 +2727,24 @@
             const storeKey = 'inline_edits_v1';
             let store = {};
             try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-            store[getInlineKey()] = {
-                pali: pali ? pali.innerHTML : '',
-                thai: thai ? thai.innerHTML : '',
-                timestamp: Date.now()
-            };
+            
+            // Get existing data or init new
+            let data = store[getInlineKey()] || {};
+            
+            // Save based on current mode
+            if (typeof isThaiSense !== 'undefined' && isThaiSense) {
+                // Sense Mode
+                if (pali) data.pali_sense = pali.innerHTML;
+                if (thai) data.thai_sense = thai.innerHTML;
+            } else {
+                // Literal Mode
+                if (pali) data.pali_literal = pali.innerHTML;
+                if (thai) data.thai_literal = thai.innerHTML;
+            }
+            
+            data.timestamp = Date.now();
+            
+            store[getInlineKey()] = data;
             try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
         }
         function loadInlineEdits() {
@@ -2730,8 +2755,35 @@
             if (saved) {
                 const pali = document.getElementById('paliContent');
                 const thai = document.getElementById('thaiContent');
-                if (pali && typeof saved.pali === 'string' && saved.pali) pali.innerHTML = saved.pali;
-                if (thai && typeof saved.thai === 'string' && saved.thai) thai.innerHTML = saved.thai;
+                
+                if (typeof isThaiSense !== 'undefined' && isThaiSense) {
+                    // Sense Mode
+                    if (pali && saved.pali_sense && typeof saved.pali_sense === 'string') {
+                        pali.innerHTML = saved.pali_sense;
+                    }
+                    if (thai && saved.thai_sense && typeof saved.thai_sense === 'string') {
+                        thai.innerHTML = saved.thai_sense;
+                    }
+                } else {
+                    // Literal Mode
+                    // Load Pali (priority: pali_literal > pali (legacy))
+                    if (pali) {
+                        if (saved.pali_literal && typeof saved.pali_literal === 'string') {
+                            pali.innerHTML = saved.pali_literal;
+                        } else if (saved.pali && typeof saved.pali === 'string' && !saved.pali_literal) {
+                            pali.innerHTML = saved.pali;
+                        }
+                    }
+                    
+                    // Load Thai (priority: thai_literal > thai (legacy))
+                    if (thai) {
+                        if (saved.thai_literal && typeof saved.thai_literal === 'string') {
+                            thai.innerHTML = saved.thai_literal;
+                        } else if (saved.thai && typeof saved.thai === 'string' && !saved.thai_literal) {
+                            thai.innerHTML = saved.thai;
+                        }
+                    }
+                }
             }
         }
         function clearInlineEdits() {
