@@ -1717,9 +1717,16 @@
 
         // 3. Check Manual Sandhi DB (Global)
         if (typeof vocabSandhi !== 'undefined' && vocabSandhi[cleanWord]) {
-            const parts = vocabSandhi[cleanWord];
-            showSandhiBubble(el, parts);
-            return;
+            const val = vocabSandhi[cleanWord];
+            if (Array.isArray(val)) {
+                // Show Bubble for splits
+                showSandhiBubble(el, val);
+                return;
+            } else if (typeof val === 'string') {
+                // Manual Mapping (Redirect) - No Bubble
+                showDictionaryDefinition(val);
+                return;
+            }
         }
 
         // New Feature: Show Dictionary Definition in Footer
@@ -1727,11 +1734,6 @@
     }
 
     function showSandhiBubble(el, parts) {
-        // Normalize string (manual mapping) to array
-        if (typeof parts === 'string') {
-            parts = [parts];
-        }
-
         const bubble = document.createElement('div');
         bubble.className = 'sandhi-bubble';
         

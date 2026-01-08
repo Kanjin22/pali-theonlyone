@@ -768,11 +768,6 @@
     }
 
     function showSandhiBubble(el, parts) {
-        // Normalize string (manual mapping) to array
-        if (typeof parts === 'string') {
-            parts = [parts];
-        }
-
         const bubble = document.createElement('div');
         bubble.className = 'sandhi-bubble';
         
