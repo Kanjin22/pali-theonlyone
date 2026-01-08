@@ -248,13 +248,39 @@ const PaliLookup = {
         if (dbs.sandhi) {
             // Check direct key
             if (dbs.sandhi[key] && typeof dbs.sandhi[key] === 'string') {
-                 return { details: [dbs.sandhi[key]], source: 'Manual Vocab', word: key };
+                 const target = dbs.sandhi[key];
+                 // Recursive Lookup: If mapping points to another word, look that word up!
+                 if (target !== key) {
+                     // We need to clone dbs to avoid modifying it, or just pass it? 
+                     // Pass it is fine, but we must ensure we don't loop forever.
+                     // Since target is different, it's safe (unless circular reference A->B->A exists).
+                     const deepResult = this.checkAll(target, dbs);
+                     if (deepResult) {
+                         // Copy result to avoid mutating cache if any
+                         const newResult = Object.assign({}, deepResult);
+                         newResult._stemmedFrom = key;
+                         newResult._baseWord = target;
+                         return newResult;
+                     }
+                 }
+                 // Fallback: Return the mapped string as detail
+                 return { details: [target], source: 'Manual Vocab', word: key };
             }
             // Check Thai key if Roman input
             if (!/[ก-ฮ]/.test(key) && typeof PaliScript !== 'undefined' && PaliScript.romanToThai) {
                 let thaiKey = PaliScript.romanToThai(key);
                 if (dbs.sandhi[thaiKey] && typeof dbs.sandhi[thaiKey] === 'string') {
-                     return { details: [dbs.sandhi[thaiKey]], source: 'Manual Vocab', word: thaiKey };
+                     const target = dbs.sandhi[thaiKey];
+                     if (target !== thaiKey) {
+                         const deepResult = this.checkAll(target, dbs);
+                         if (deepResult) {
+                             const newResult = Object.assign({}, deepResult);
+                             newResult._stemmedFrom = key; // Use original input key
+                             newResult._baseWord = target;
+                             return newResult;
+                         }
+                     }
+                     return { details: [target], source: 'Manual Vocab', word: thaiKey };
                 }
             }
         }
