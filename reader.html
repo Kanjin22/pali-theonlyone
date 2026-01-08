@@ -540,6 +540,13 @@
     // --- Helper Functions (Ported from presentation.html) ---
     function formatDictText(text) {
         if (!text) return "";
+        if (typeof text !== 'string') {
+            // Handle array or object by converting to string or joining
+            if (Array.isArray(text)) return text.join('<br>');
+            if (typeof text === 'object') return JSON.stringify(text); // Fallback for objects
+            text = String(text); // Convert numbers/others to string
+        }
+
         // 1. Normalize Newlines: Convert \n to <br> and collapse multiple <br>
         let clean = text.replace(/(\r\n|\n|\r)+/g, '<br>'); 
         clean = clean.replace(/(<br\s*\/?>\s*){2,}/gi, '<br>');
