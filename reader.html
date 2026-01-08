@@ -28,6 +28,24 @@
     .word-span:hover { color: #d35400; border-bottom-color: #d35400; background-color: rgba(230, 126, 34, 0.1); border-radius: 3px; }
     .word-span.active-word { background-color: #f39c12; color: white; border-radius: 3px; padding: 0 2px; }
 
+    .inline-edit-mode .word-span {
+        cursor: text;
+        border-bottom: none;
+        color: inherit;
+        background: transparent;
+    }
+    .inline-edit-mode .word-span:hover {
+        color: inherit;
+        border-bottom-color: transparent;
+        background-color: transparent;
+    }
+    .inline-edit-mode .word-span.active-word {
+        background-color: transparent;
+        color: inherit;
+    }
+    .inline-edit-mode #pageContent {
+        cursor: text;
+    }
     /* Dictionary Panel */
     #dict-panel {
         position: fixed;
@@ -727,12 +745,14 @@
             if (btn) { btn.classList.add('active'); btn.style.background = '#27ae60'; btn.style.color = '#fff'; }
             if (tools) tools.style.display = 'inline-flex';
             if (page) { page.contentEditable = 'true'; page.style.outline = '2px dashed #27ae60'; }
+            document.body.classList.add('inline-edit-mode');
             ['input','blur','keyup','paste'].forEach(ev => { if (page) page.addEventListener(ev, onInlineChanged); });
             loadInlineEdits();
         } else {
             if (btn) { btn.classList.remove('active'); btn.style.background = ''; btn.style.color = ''; }
             if (tools) tools.style.display = 'none';
             if (page) { page.contentEditable = 'false'; page.style.outline = ''; }
+            document.body.classList.remove('inline-edit-mode');
             ['input','blur','keyup','paste'].forEach(ev => { if (page) page.removeEventListener(ev, onInlineChanged); });
         }
     }

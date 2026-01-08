@@ -330,6 +330,28 @@
             border-bottom: 2px dotted #1565C0;
         }
 
+        .inline-edit-mode .word-span {
+            cursor: text;
+            border-bottom: none;
+            color: inherit;
+            background: transparent;
+        }
+        .inline-edit-mode .word-span:hover {
+            color: inherit;
+            border-bottom-color: transparent;
+            background-color: transparent;
+        }
+        .inline-edit-mode .word-span.active-word,
+        .inline-edit-mode .word-span.translated,
+        .inline-edit-mode .word-span.has-info.translated {
+            background-color: transparent;
+            color: inherit;
+            border-bottom-color: transparent;
+        }
+        .inline-edit-mode #paliContent,
+        .inline-edit-mode #thaiContent {
+            cursor: text;
+        }
         /* --- CSS สำหรับ Canvas วาดเขียน (Whiteboard) --- */
         #drawing-canvas {
             position: absolute;
@@ -1692,21 +1714,13 @@
     }
 
     function handleWordClick(el) {
-        // Toggle Highlight (Original Function)
+        if (window.inlineEditMode === true) return;
+        if (window.noteMode === true) { addNoteAtElement(el); return; }
+        if (el.closest('#thaiContent')) return;
+
         toggleHighlight(el);
         
-        // Remove existing bubbles
         document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
-
-        // ********** Fix: Thai Content - Click to Highlight only, No Dictionary **********
-        // User requested: "Allow clicking but don't trigger the dictionary" for Thai translation box.
-        if (el.closest('#thaiContent')) {
-            return;
-        }
-
-        if (window.inlineEditMode === true) {
-            return;
-        }
 
         // Note Mode: place a temporary note anchored near the clicked word, no dictionary
         if (window.noteMode === true) {
@@ -2691,6 +2705,7 @@
                 if (tools) tools.style.display = 'inline-flex';
                 if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
                 if (thai) { thai.contentEditable = 'true'; thai.style.outline = '2px dashed #27ae60'; }
+                document.body.classList.add('inline-edit-mode');
                 window.noteMode = false;
                 const noteBtn = document.getElementById('btn-note-mode');
                 if (noteBtn) { noteBtn.classList.remove('active'); noteBtn.style.color = ''; }
@@ -2706,6 +2721,7 @@
                 if (tools) tools.style.display = 'none';
                 if (pali) { pali.contentEditable = 'false'; pali.style.outline = ''; }
                 if (thai) { thai.contentEditable = 'false'; thai.style.outline = ''; }
+                document.body.classList.remove('inline-edit-mode');
                 const addBtn = document.getElementById('btn-add-note');
                 if (addBtn) addBtn.disabled = false;
                 ['input','blur','keyup','paste'].forEach(ev => {
