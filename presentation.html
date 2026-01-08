@@ -1075,6 +1075,22 @@
             <button class="tool-btn" id="btn-note-mode" title="โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)" onclick="toggleNoteMode()">
                 <i class="fa-solid fa-comment-dots"></i>
             </button>
+            <button class="tool-btn" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()">
+                <i class="fa-solid fa-i-cursor"></i>
+            </button>
+            <div id="inline-annotate-tools" style="display:none; align-items:center; gap:6px; margin-left:8px;">
+                <button class="set-btn" onclick="inlineFormat('bold')" title="ตัวหนา"><i class="fa-solid fa-bold"></i></button>
+                <button class="set-btn" onclick="inlineFormat('italic')" title="ตัวเอียง"><i class="fa-solid fa-italic"></i></button>
+                <button class="set-btn" onclick="inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fa-solid fa-underline"></i></button>
+                <span style="margin-left:6px; color:#7f8c8d; font-size:0.9rem;">สี:</span>
+                <span class="color-dot" onclick="inlineColor('#2c3e50')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2c3e50;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <span class="color-dot" onclick="inlineColor('#d35400')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#d35400;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <span class="color-dot" onclick="inlineColor('#27ae60')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#27ae60;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <span class="color-dot" onclick="inlineColor('#2980b9')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2980b9;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <span class="color-dot" onclick="inlineColor('#8e44ad')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#8e44ad;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <span class="color-dot" onclick="inlineColor('#e74c3c')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#e74c3c;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                <button class="set-btn" onclick="clearInlineEdits()" title="ล้างข้อความแทรกสำหรับสไลด์นี้" style="margin-left:8px;color:#e74c3c;"><i class="fa-solid fa-eraser"></i></button>
+            </div>
         </div>
 
         <canvas id="drawing-canvas"></canvas>
@@ -1685,6 +1701,10 @@
         // ********** Fix: Thai Content - Click to Highlight only, No Dictionary **********
         // User requested: "Allow clicking but don't trigger the dictionary" for Thai translation box.
         if (el.closest('#thaiContent')) {
+            return;
+        }
+
+        if (window.inlineEditMode === true) {
             return;
         }
 
@@ -2388,6 +2408,13 @@
             computeMeta(slideId, s);
             applyThaiState();
             applyThaiModeLabel();
+            if (window.inlineEditMode) {
+                const pali = document.getElementById('paliContent');
+                const thai = document.getElementById('thaiContent');
+                if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
+                if (thai) { thai.contentEditable = 'true'; thai.style.outline = '2px dashed #27ae60'; }
+            }
+            loadInlineEdits();
 
             // Save Progress
             if (slideId) {
@@ -2605,11 +2632,96 @@
                 btn.classList.add('active');
                 btn.style.color = '#27ae60';
                 btn.title = 'โหมดคำอธิบาย: คลิกคำเพื่อวางโน้ต (ปิดด้วยปุ่มนี้อีกครั้ง)';
+                const addBtn = document.getElementById('btn-add-note');
+                if (addBtn) addBtn.disabled = true;
             } else {
                 btn.classList.remove('active');
                 btn.style.color = '';
                 btn.title = 'โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)';
+                const addBtn = document.getElementById('btn-add-note');
+                if (addBtn) addBtn.disabled = false;
             }
+        }
+        window.inlineEditMode = false;
+        let inlineSaveTimer = null;
+        function getInlineKey() {
+            return slideId ? (slideId + ':' + currentIndex) : ('__noid__:' + currentIndex);
+        }
+        function saveInlineEdits() {
+            const pali = document.getElementById('paliContent');
+            const thai = document.getElementById('thaiContent');
+            const storeKey = 'inline_edits_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            store[getInlineKey()] = {
+                pali: pali ? pali.innerHTML : '',
+                thai: thai ? thai.innerHTML : ''
+            };
+            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        }
+        function loadInlineEdits() {
+            const storeKey = 'inline_edits_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            const saved = store[getInlineKey()];
+            if (saved) {
+                const pali = document.getElementById('paliContent');
+                const thai = document.getElementById('thaiContent');
+                if (pali && typeof saved.pali === 'string' && saved.pali) pali.innerHTML = saved.pali;
+                if (thai && typeof saved.thai === 'string' && saved.thai) thai.innerHTML = saved.thai;
+            }
+        }
+        function clearInlineEdits() {
+            const storeKey = 'inline_edits_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            delete store[getInlineKey()];
+            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+            updateSlide();
+        }
+        function toggleInlineEditMode() {
+            window.inlineEditMode = !window.inlineEditMode;
+            const btn = document.getElementById('btn-inline-edit');
+            const tools = document.getElementById('inline-annotate-tools');
+            const pali = document.getElementById('paliContent');
+            const thai = document.getElementById('thaiContent');
+            if (window.inlineEditMode) {
+                if (btn) { btn.classList.add('active'); btn.style.color = '#27ae60'; }
+                if (tools) tools.style.display = 'inline-flex';
+                if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
+                if (thai) { thai.contentEditable = 'true'; thai.style.outline = '2px dashed #27ae60'; }
+                window.noteMode = false;
+                const noteBtn = document.getElementById('btn-note-mode');
+                if (noteBtn) { noteBtn.classList.remove('active'); noteBtn.style.color = ''; }
+                const addBtn = document.getElementById('btn-add-note');
+                if (addBtn) addBtn.disabled = true;
+                ['input','blur','keyup','paste'].forEach(ev => {
+                    if (pali) pali.addEventListener(ev, onInlineChanged);
+                    if (thai) thai.addEventListener(ev, onInlineChanged);
+                });
+                loadInlineEdits();
+            } else {
+                if (btn) { btn.classList.remove('active'); btn.style.color = ''; }
+                if (tools) tools.style.display = 'none';
+                if (pali) { pali.contentEditable = 'false'; pali.style.outline = ''; }
+                if (thai) { thai.contentEditable = 'false'; thai.style.outline = ''; }
+                const addBtn = document.getElementById('btn-add-note');
+                if (addBtn) addBtn.disabled = false;
+                ['input','blur','keyup','paste'].forEach(ev => {
+                    if (pali) pali.removeEventListener(ev, onInlineChanged);
+                    if (thai) thai.removeEventListener(ev, onInlineChanged);
+                });
+            }
+        }
+        function onInlineChanged() {
+            if (inlineSaveTimer) clearTimeout(inlineSaveTimer);
+            inlineSaveTimer = setTimeout(saveInlineEdits, 300);
+        }
+        function inlineFormat(cmd) {
+            document.execCommand(cmd, false, null);
+        }
+        function inlineColor(color) {
+            document.execCommand('foreColor', false, color);
         }
         function addNote() {
             const card = document.getElementById('cardContainer');

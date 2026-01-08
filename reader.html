@@ -281,6 +281,20 @@
             <div style="margin-left:auto; display:flex; gap:8px;">
                  <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
                  <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
+                 <button class="btn secondary" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()"><i class="fas fa-i-cursor"></i> พิมพ์แทรก</button>
+                 <div id="inline-annotate-tools" style="display:none; align-items:center; gap:6px;">
+                    <button class="btn secondary" onclick="inlineFormat('bold')" title="ตัวหนา"><i class="fas fa-bold"></i></button>
+                    <button class="btn secondary" onclick="inlineFormat('italic')" title="ตัวเอียง"><i class="fas fa-italic"></i></button>
+                    <button class="btn secondary" onclick="inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fas fa-underline"></i></button>
+                    <span style="margin-left:6px; color:#7f8c8d; font-size:0.9rem;">สี:</span>
+                    <span class="color-dot" onclick="inlineColor('#2c3e50')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2c3e50;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <span class="color-dot" onclick="inlineColor('#d35400')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#d35400;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <span class="color-dot" onclick="inlineColor('#27ae60')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#27ae60;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <span class="color-dot" onclick="inlineColor('#2980b9')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2980b9;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <span class="color-dot" onclick="inlineColor('#8e44ad')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#8e44ad;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <span class="color-dot" onclick="inlineColor('#e74c3c')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#e74c3c;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
+                    <button class="btn secondary" onclick="clearInlineEdits()" title="ล้างข้อความแทรกสำหรับหน้านี้" style="margin-left:8px; background:#e74c3c;"><i class="fas fa-eraser"></i></button>
+                 </div>
             </div>
         </div>
     </div>
@@ -666,6 +680,68 @@
         
         return html;
     }
+    
+    // Inline Edit Mode & Persistence
+    window.inlineEditMode = false;
+    let inlineSaveTimer = null;
+    function getReaderInlineKey() {
+        const lvl = document.getElementById('levelSelect') ? document.getElementById('levelSelect').value : 'lvl';
+        const subj = document.getElementById('subjectSelect') ? document.getElementById('subjectSelect').value : 'subj';
+        const part = document.getElementById('partSelect') ? document.getElementById('partSelect').value : 'part';
+        const vagga = document.getElementById('vaggaSelect') ? document.getElementById('vaggaSelect').value : 'vagga';
+        const story = document.getElementById('storySelect') ? document.getElementById('storySelect').value : 'story';
+        return `reader:${lvl}-${subj}-${part}-${vagga}-${story}:${currentBookPageIndex}`;
+    }
+    function saveInlineEdits() {
+        const page = document.getElementById('pageContent');
+        const storeKey = 'inline_edits_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        store[getReaderInlineKey()] = { html: page ? page.innerHTML : '' };
+        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+    }
+    function loadInlineEdits() {
+        const storeKey = 'inline_edits_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        const saved = store[getReaderInlineKey()];
+        if (saved && typeof saved.html === 'string' && saved.html) {
+            const page = document.getElementById('pageContent');
+            if (page) page.innerHTML = saved.html;
+        }
+    }
+    function clearInlineEdits() {
+        const storeKey = 'inline_edits_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        delete store[getReaderInlineKey()];
+        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        renderCurrentPage();
+    }
+    function toggleInlineEditMode() {
+        window.inlineEditMode = !window.inlineEditMode;
+        const btn = document.getElementById('btn-inline-edit');
+        const tools = document.getElementById('inline-annotate-tools');
+        const page = document.getElementById('pageContent');
+        if (window.inlineEditMode) {
+            if (btn) { btn.classList.add('active'); btn.style.background = '#27ae60'; btn.style.color = '#fff'; }
+            if (tools) tools.style.display = 'inline-flex';
+            if (page) { page.contentEditable = 'true'; page.style.outline = '2px dashed #27ae60'; }
+            ['input','blur','keyup','paste'].forEach(ev => { if (page) page.addEventListener(ev, onInlineChanged); });
+            loadInlineEdits();
+        } else {
+            if (btn) { btn.classList.remove('active'); btn.style.background = ''; btn.style.color = ''; }
+            if (tools) tools.style.display = 'none';
+            if (page) { page.contentEditable = 'false'; page.style.outline = ''; }
+            ['input','blur','keyup','paste'].forEach(ev => { if (page) page.removeEventListener(ev, onInlineChanged); });
+        }
+    }
+    function onInlineChanged() {
+        if (inlineSaveTimer) clearTimeout(inlineSaveTimer);
+        inlineSaveTimer = setTimeout(saveInlineEdits, 300);
+    }
+    function inlineFormat(cmd) { document.execCommand(cmd, false, null); }
+    function inlineColor(color) { document.execCommand('foreColor', false, color); }
 
     function showTranslation(word, event) {
         if (event) event.stopPropagation();
@@ -700,6 +776,9 @@
     }
 
     function handleWordClick(el) {
+        if (window.inlineEditMode === true) {
+            return;
+        }
         // Remove active class from all
         document.querySelectorAll('.word-span').forEach(s => s.classList.remove('active-word'));
         el.classList.add('active-word');
@@ -1133,6 +1212,7 @@
         
         // --- Content Section ---
         const contentDiv = document.createElement('div');
+        contentDiv.id = 'pageContent';
         const layout = document.getElementById('layoutSelect').value;
 
         // Apply Font & Alignment
@@ -1220,6 +1300,11 @@
         });
         
         container.appendChild(contentDiv);
+        if (window.inlineEditMode) {
+            const page = document.getElementById('pageContent');
+            if (page) { page.contentEditable = 'true'; page.style.outline = '2px dashed #27ae60'; }
+        }
+        loadInlineEdits();
         
         // --- Navigation Section ---
         const navDiv = document.createElement('div');
