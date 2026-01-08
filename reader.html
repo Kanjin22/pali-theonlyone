@@ -259,7 +259,10 @@
                 <select id="thaiMode" style="min-width:140px;">
                     <option value="thai">โดยพยัญชนะ</option>
                     <option value="thai_sense">โดยอรรถ</option>
+                    <option value="thai_custom">สำนวนของฉัน</option>
                 </select>
+                <button id="editCustomThaiBtn" class="btn" style="margin-top:6px; display:none; background:#8e44ad;"
+                        onclick="editCustomThai()">แก้ไขสำนวนของฉัน</button>
             </div>
 
             <!-- Font Family -->
@@ -516,7 +519,10 @@
     function preferThai(obj){
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         let text = '';
-        if(mode === 'thai_sense') {
+        if (mode === 'thai_custom') {
+            const custom = loadCustomThai() || '';
+            text = custom || obj.thai_sense || obj.thai || '';
+        } else if(mode === 'thai_sense') {
             text = obj.thai_sense || obj.thai || '';
         } else {
             text = obj.thai || obj.thai_sense || '';
@@ -760,27 +766,62 @@
         if (inlineSaveTimer) clearTimeout(inlineSaveTimer);
         inlineSaveTimer = setTimeout(saveInlineEdits, 300);
     }
+    function getCustomThaiKey() { return `reader_custom_thai:${getReaderInlineKey()}`; }
+    function saveCustomThai(text) {
+        const storeKey = 'reader_custom_thai_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        store[getCustomThaiKey()] = String(text || '');
+        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+    }
+    function loadCustomThai() {
+        const storeKey = 'reader_custom_thai_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        return store[getCustomThaiKey()] || '';
+    }
+    function editCustomThai() {
+        const current = loadCustomThai();
+        const content = `
+            <div style="padding:8px;">
+              <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับหน้านี้</div>
+              <textarea id="customThaiInput" style="width:100%; height:140px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${(current || '').replace(/</g,'&lt;')}</textarea>
+              <div style="margin-top:10px; text-align:right;">
+                <button class="btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiInput').value; saveCustomThai(v); closeAnalysisModal(null,true); renderCurrentPage(); })()">บันทึก</button>
+              </div>
+            </div>
+        `;
+        openGenericModal('สำนวนของฉัน', content);
+    }
     function inlineFormat(cmd) { document.execCommand(cmd, false, null); }
     function inlineColor(color) {
         try { document.execCommand('styleWithCSS', false, true); } catch(e) {}
-        // Ensure focus on editable page
         const page = document.getElementById('pageContent');
-        if (page) page.focus();
+        const sel = window.getSelection ? window.getSelection() : null;
+        if (page && sel && sel.rangeCount) {
+            const range = sel.getRangeAt(0);
+            let container = range.commonAncestorContainer;
+            if (container.nodeType === 3) container = container.parentNode;
+            const insideEditable = page.contains(container);
+            if (!insideEditable) page.focus();
+        } else if (page) {
+            page.focus();
+        }
         const ok = document.execCommand('foreColor', false, color);
         if (!ok) {
-            const sel = window.getSelection ? window.getSelection() : null;
-            if (sel && sel.rangeCount) {
-                const range = sel.getRangeAt(0);
-                if (!range.collapsed) {
+            const sel2 = window.getSelection ? window.getSelection() : null;
+            if (sel2 && sel2.rangeCount) {
+                const range2 = sel2.getRangeAt(0);
+                if (!range2.collapsed) {
                     const span = document.createElement('span');
                     span.style.color = color;
-                    span.appendChild(range.extractContents());
-                    range.insertNode(span);
-                    sel.removeAllRanges();
+                    span.appendChild(range2.extractContents());
+                    range2.insertNode(span);
+                    sel2.removeAllRanges();
                     const newRange = document.createRange();
                     newRange.setStartAfter(span);
                     newRange.collapse(true);
-                    sel.addRange(newRange);
+                    sel2.addRange(newRange);
                 }
             }
         }
@@ -1480,7 +1521,15 @@
         document.getElementById('layoutSelect').onchange=render;
 
         // New Controls Listeners
-        if(document.getElementById('thaiMode')) document.getElementById('thaiMode').onchange = render;
+        if(document.getElementById('thaiMode')) {
+            document.getElementById('thaiMode').onchange = function() {
+                const btn = document.getElementById('editCustomThaiBtn');
+                if (btn) btn.style.display = (this.value === 'thai_custom') ? 'inline-block' : 'none';
+                render();
+            };
+            const btn = document.getElementById('editCustomThaiBtn');
+            if (btn) btn.style.display = (document.getElementById('thaiMode').value === 'thai_custom') ? 'inline-block' : 'none';
+        }
         if(document.getElementById('fontSelect')) document.getElementById('fontSelect').onchange = renderCurrentPage;
         
         const sizeRange = document.getElementById('fontSizeRange');

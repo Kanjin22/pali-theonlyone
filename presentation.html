@@ -2363,7 +2363,10 @@
                  displayThai = s.thai_desana || s.thai_sense;
             } else {
                  if (isThaiSense) {
-                     if (thaiSenseVariant === 'desana' && s.thai_desana) {
+                     if (thaiSenseVariant === 'custom') {
+                         const custom = loadCustomThaiVariant();
+                         displayThai = custom || s.thai_sense || s.thai_desana || s.thai;
+                     } else if (thaiSenseVariant === 'desana' && s.thai_desana) {
                          displayThai = s.thai_desana;
                      } else if (thaiSenseVariant === 'sense' && s.thai_sense) {
                          displayThai = s.thai_sense;
@@ -2396,13 +2399,32 @@
                         opt.text = 'เอาความ';
                         select.appendChild(opt);
                     }
+                    {
+                        const opt = document.createElement('option');
+                        opt.value = 'custom';
+                        opt.text = 'สำนวนของฉัน';
+                        select.appendChild(opt);
+                    }
                     if (!((thaiSenseVariant === 'desana' && hasDesana) || (thaiSenseVariant === 'sense' && hasSense))) {
-                        thaiSenseVariant = hasDesana ? 'desana' : 'sense';
+                        thaiSenseVariant = hasDesana ? 'desana' : (hasSense ? 'sense' : 'custom');
                     }
                     select.value = thaiSenseVariant;
                     select.onchange = function() { setThaiSenseVariant(this.value); };
+                    const existingBtn = document.getElementById('editCustomThaiVariantBtn');
+                    if (existingBtn) existingBtn.remove();
+                    const btn = document.createElement('button');
+                    btn.id = 'editCustomThaiVariantBtn';
+                    btn.className = 'set-btn';
+                    btn.style.marginLeft = '8px';
+                    btn.style.display = (thaiSenseVariant === 'custom') ? 'inline-block' : 'none';
+                    btn.style.background = '#8e44ad';
+                    btn.innerHTML = 'แก้ไขสำนวนของฉัน';
+                    btn.onclick = function() { editCustomThaiVariant(); };
+                    select.parentElement.appendChild(btn);
                 } else {
                     select.style.display = 'none';
+                    const existingBtn = document.getElementById('editCustomThaiVariantBtn');
+                    if (existingBtn) existingBtn.remove();
                 }
             }
 
@@ -2636,6 +2658,35 @@
             if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
         }
         function setThaiSenseVariant(val) { thaiSenseVariant = val; updateSlide(); }
+        function getCustomThaiVariantKey() {
+            return `presentation_custom_thai:${slideId || '__noid__'}:${currentIndex}`;
+        }
+        function saveCustomThaiVariant(text) {
+            const storeKey = 'presentation_custom_thai_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            store[getCustomThaiVariantKey()] = String(text || '');
+            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        }
+        function loadCustomThaiVariant() {
+            const storeKey = 'presentation_custom_thai_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            return store[getCustomThaiVariantKey()] || '';
+        }
+        function editCustomThaiVariant() {
+            const current = loadCustomThaiVariant();
+            const content = `
+                <div style="padding:8px;">
+                  <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับสไลด์นี้</div>
+                  <textarea id="customThaiVariantInput" style="width:100%; height:140px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${(current || '').replace(/</g,'&lt;')}</textarea>
+                  <div style="margin-top:10px; text-align:right;">
+                    <button class="set-btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiVariantInput').value; saveCustomThaiVariant(v); closeAnalysisModal(null,true); updateSlide(); })()">บันทึก</button>
+                  </div>
+                </div>
+            `;
+            openGenericModal('สำนวนของฉัน', content);
+        }
         // Annotation Mode
         window.noteMode = false;
         function toggleNoteMode() {
