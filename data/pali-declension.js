@@ -203,10 +203,12 @@ var PaliDeclension = {
     ],
     "iyaṃ": [
         "i",
-        "e"
+        "e",
+        "ī"
     ],
     "yaṃ": [
-        "i"
+        "i",
+        "ī"
     ],
     "uyo": [
         "u"
