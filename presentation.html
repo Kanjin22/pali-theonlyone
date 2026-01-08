@@ -1129,9 +1129,11 @@
             <div class="split-pane" style="flex: 1;">
                 <span class="pane-label" id="thaiLabel">ไทย</span>
                 <select id="thaiVariantSelect" style="margin-left:10px; padding:4px 8px; font-size:0.9rem; display:none;">
-                    <option value="desana">แปลโดยอรรถ</option>
-                    <option value="sense">แปลเอาความ</option>
+                    <option value="desana">เผด็จ มมร.</option>
                 </select>
+                <button class="set-btn" id="btn-view-sense" style="margin-left:8px; display:inline-block;" title="อ่านเอาความ" onclick="showSenseModal()">
+                    เอาความ
+                </button>
                 <div class="thai-text" id="thaiContent">...</div>
             </div>
         </div>
@@ -2421,8 +2423,7 @@
             const select = document.getElementById('thaiVariantSelect');
             if (select) {
                 const hasDesana = !!s.thai_desana;
-                const hasSense = !!s.thai_sense;
-                if (isThaiSense && (hasDesana || hasSense)) {
+                if (isThaiSense && hasDesana) {
                     select.style.display = 'inline-block';
                     select.innerHTML = '';
                     if (hasDesana) {
@@ -2431,20 +2432,14 @@
                         opt.text = 'เผด็จ มมร.';
                         select.appendChild(opt);
                     }
-                    if (hasSense) {
-                        const opt = document.createElement('option');
-                        opt.value = 'sense';
-                        opt.text = 'เอาความ';
-                        select.appendChild(opt);
-                    }
                     {
                         const opt = document.createElement('option');
                         opt.value = 'custom';
                         opt.text = 'สำนวนของฉัน';
                         select.appendChild(opt);
                     }
-                    if (!((thaiSenseVariant === 'desana' && hasDesana) || (thaiSenseVariant === 'sense' && hasSense))) {
-                        thaiSenseVariant = hasDesana ? 'desana' : (hasSense ? 'sense' : 'custom');
+                    if (!(thaiSenseVariant === 'desana' && hasDesana)) {
+                        thaiSenseVariant = hasDesana ? 'desana' : 'custom';
                     }
                     select.value = thaiSenseVariant;
                     select.onchange = function() { setThaiSenseVariant(this.value); };
@@ -2682,8 +2677,7 @@
             if (isThaiSense) {
                 const s = slides[currentIndex] || {};
                 const hasDesana = !!s.thai_desana;
-                const hasSense = !!s.thai_sense;
-                thaiSenseVariant = hasDesana ? 'desana' : (hasSense ? 'sense' : 'desana');
+                thaiSenseVariant = hasDesana ? 'desana' : 'desana';
             }
             updateSlide();
         }
@@ -2738,6 +2732,17 @@
                 </div>
             `;
             openGenericModal('สำนวนของฉัน', content);
+        }
+        function showSenseModal() {
+            const s = slides[currentIndex] || {};
+            const senseText = s.thai_sense || '';
+            const content = `
+                <div style="padding:8px;">
+                  <div style="font-weight:bold; color:#2c3e50; margin-bottom:6px;">โดยอรรถ (เอาความ)</div>
+                  <div>${wrapWords(senseText, s)}</div>
+                </div>
+            `;
+            openGenericModal('อ่านเอาความ', content);
         }
         // Annotation Mode
         window.noteMode = false;
