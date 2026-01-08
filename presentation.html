@@ -1081,6 +1081,9 @@
             <button class="tool-btn" id="btn-toggle-thai-mode" title="สลับโหมดคำแปล" onclick="toggleThaiMode()">
                 <i class="fa-solid fa-right-left"></i>
             </button>
+            <button class="tool-btn" id="btn-custom-thai" title="แก้ไขสำนวนของฉัน" onclick="editCustomThaiVariant()">
+                <i class="fa-solid fa-pen"></i>
+            </button>
 
             <!-- ********** 1. เพิ่มปุ่มปากกา ตรงนี้ครับ ********** -->
             <button class="tool-btn" id="btn-pen" title="เขียนหน้าจอ (Whiteboard)" onclick="toggleDrawingMode()">
@@ -1611,6 +1614,7 @@
         let currentFontSizeThai = 1.8;
         let isThaiSense = false;
         let thaiSenseVariant = 'desana';
+        let thaiLiteralVariant = 'system';
 
         function toggleSettings() {
             const panel = document.getElementById('settings-panel');
@@ -2399,7 +2403,12 @@
                          displayThai = s.thai_sense || s.thai_desana || s.thai;
                      }
                  } else {
-                     displayThai = s.thai;
+                     if (thaiLiteralVariant === 'custom') {
+                        const customLit = (loadCustomThaiLiteralVariant() || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                        displayThai = customLit || s.thai;
+                     } else {
+                        displayThai = s.thai;
+                     }
                  }
             }
             
@@ -2439,21 +2448,19 @@
                     }
                     select.value = thaiSenseVariant;
                     select.onchange = function() { setThaiSenseVariant(this.value); };
-                    const existingBtn = document.getElementById('editCustomThaiVariantBtn');
-                    if (existingBtn) existingBtn.remove();
-                    const btn = document.createElement('button');
-                    btn.id = 'editCustomThaiVariantBtn';
-                    btn.className = 'set-btn';
-                    btn.style.marginLeft = '8px';
-                    btn.style.display = (thaiSenseVariant === 'custom') ? 'inline-block' : 'none';
-                    btn.style.background = '#8e44ad';
-                    btn.innerHTML = 'แก้ไขสำนวนของฉัน';
-                    btn.onclick = function() { editCustomThaiVariant(); };
-                    select.parentElement.appendChild(btn);
                 } else {
-                    select.style.display = 'none';
-                    const existingBtn = document.getElementById('editCustomThaiVariantBtn');
-                    if (existingBtn) existingBtn.remove();
+                    select.style.display = 'inline-block';
+                    select.innerHTML = '';
+                    const opt1 = document.createElement('option');
+                    opt1.value = 'system';
+                    opt1.text = 'ฉบับระบบ';
+                    select.appendChild(opt1);
+                    const opt2 = document.createElement('option');
+                    opt2.value = 'custom';
+                    opt2.text = 'สำนวนของฉัน (โดยพยัญชนะ)';
+                    select.appendChild(opt2);
+                    select.value = thaiLiteralVariant;
+                    select.onchange = function() { thaiLiteralVariant = this.value; updateSlide(); };
                 }
             }
 
@@ -2703,14 +2710,30 @@
             try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
             return store[getCustomThaiVariantKey()] || '';
         }
+        function getCustomThaiLiteralVariantKey() {
+            return `presentation_custom_thai_literal:${slideId || '__noid__'}:${currentIndex}`;
+        }
+        function saveCustomThaiLiteralVariant(text) {
+            const storeKey = 'presentation_custom_thai_literal_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            store[getCustomThaiLiteralVariantKey()] = String(text || '');
+            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        }
+        function loadCustomThaiLiteralVariant() {
+            const storeKey = 'presentation_custom_thai_literal_v1';
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            return store[getCustomThaiLiteralVariantKey()] || '';
+        }
         function editCustomThaiVariant() {
-            const current = loadCustomThaiVariant();
+            const current = isThaiSense ? loadCustomThaiVariant() : loadCustomThaiLiteralVariant();
             const content = `
                 <div style="padding:8px;">
-                  <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับสไลด์นี้</div>
+                  <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับสไลด์นี้ (${isThaiSense?'โดยอรรถ':'โดยพยัญชนะ'})</div>
                   <textarea id="customThaiVariantInput" style="width:100%; height:140px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${(current || '').replace(/</g,'&lt;')}</textarea>
                   <div style="margin-top:10px; text-align:right;">
-                    <button class="set-btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiVariantInput').value; saveCustomThaiVariant(v); closeAnalysisModal(null,true); updateSlide(); })()">บันทึก</button>
+                    <button class="set-btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiVariantInput').value; ${isThaiSense ? 'saveCustomThaiVariant(v);' : 'saveCustomThaiLiteralVariant(v);'} closeAnalysisModal(null,true); updateSlide(); })()">บันทึก</button>
                   </div>
                 </div>
             `;

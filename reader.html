@@ -265,7 +265,11 @@
                     <option value="desana">เผด็จ มมร.</option>
                     <option value="sense">เอาความ</option>
                 </select>
-                <button id="editCustomThaiBtn" class="btn" style="margin-top:6px; display:none; background:#8e44ad;"
+                <select id="thaiLiteralVariant" style="min-width:140px; display:none; margin-top:6px;">
+                    <option value="system">ฉบับระบบ</option>
+                    <option value="custom">สำนวนของฉัน (โดยพยัญชนะ)</option>
+                </select>
+                <button id="editCustomThaiBtn" class="btn" style="margin-top:6px; display:inline-block; background:#8e44ad;"
                         onclick="editCustomThai()">แก้ไขสำนวนของฉัน</button>
             </div>
 
@@ -521,6 +525,7 @@
     function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
     window.readerThaiSenseVariant = 'desana';
+    window.readerThaiLiteralVariant = 'system';
     function preferThai(obj){
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         let text = '';
@@ -536,7 +541,12 @@
                 text = obj.thai_sense || obj.thai_desana || obj.thai || '';
             }
         } else {
-            text = obj.thai || obj.thai_sense || '';
+            if (window.readerThaiLiteralVariant === 'custom') {
+                const customLit = loadCustomThaiLiteral();
+                text = customLit || obj.thai || obj.thai_sense || '';
+            } else {
+                text = obj.thai || obj.thai_sense || '';
+            }
         }
         return text.replace(/_/g, ' ');
     }
@@ -825,14 +835,29 @@
         try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
         return store[getCustomThaiKey()] || '';
     }
+    function getCustomThaiLiteralKey() { return `reader_custom_thai_literal:${getReaderInlineKey()}`; }
+    function saveCustomThaiLiteral(text) {
+        const storeKey = 'reader_custom_thai_literal_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        store[getCustomThaiLiteralKey()] = String(text || '');
+        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+    }
+    function loadCustomThaiLiteral() {
+        const storeKey = 'reader_custom_thai_literal_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        return store[getCustomThaiLiteralKey()] || '';
+    }
     function editCustomThai() {
-        const current = loadCustomThai();
+        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
+        const current = (mode === 'thai') ? loadCustomThaiLiteral() : loadCustomThai();
         const content = `
             <div style="padding:8px;">
-              <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับหน้านี้</div>
+              <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับหน้านี้ (${mode==='thai'?'โดยพยัญชนะ':'ทั่วไป'})</div>
               <textarea id="customThaiInput" style="width:100%; height:140px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${(current || '').replace(/</g,'&lt;')}</textarea>
               <div style="margin-top:10px; text-align:right;">
-                <button class="btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiInput').value; saveCustomThai(v); closeAnalysisModal(null,true); renderCurrentPage(); })()">บันทึก</button>
+                <button class="btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiInput').value; ${mode==='thai' ? 'saveCustomThaiLiteral(v);' : 'saveCustomThai(v);'} closeAnalysisModal(null,true); renderCurrentPage(); })()">บันทึก</button>
               </div>
             </div>
         `;
@@ -1378,7 +1403,7 @@
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
                 b2.style.color='#7f8c8d';
-                b2.innerHTML=getThaiCombinedHtml(s);
+                b2.textContent=preferThai(s);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -1387,7 +1412,7 @@
                 b1.className='block thai-text';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
-                b1.innerHTML=getThaiCombinedHtml(s);
+                b1.textContent=preferThai(s);
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
@@ -1406,7 +1431,7 @@
                 leftB.innerHTML=wrapWords(s.pali||'', sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
-                rightB.innerHTML=getThaiCombinedHtml(s);
+                rightB.textContent=preferThai(s);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
@@ -1415,7 +1440,7 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
-                leftB.innerHTML=getThaiCombinedHtml(s);
+                leftB.textContent=preferThai(s);
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
@@ -1568,20 +1593,26 @@
         // New Controls Listeners
         if(document.getElementById('thaiMode')) {
             document.getElementById('thaiMode').onchange = function() {
-                const btn = document.getElementById('editCustomThaiBtn');
                 const variantSel = document.getElementById('thaiSenseVariant');
-                if (btn) btn.style.display = (this.value === 'thai_custom') ? 'inline-block' : 'none';
+                const litSel = document.getElementById('thaiLiteralVariant');
                 if (variantSel) variantSel.style.display = (this.value === 'thai_sense') ? 'inline-block' : 'none';
+                if (litSel) litSel.style.display = (this.value === 'thai') ? 'inline-block' : 'none';
                 render();
             };
-            const btn = document.getElementById('editCustomThaiBtn');
             const variantSel = document.getElementById('thaiSenseVariant');
-            if (btn) btn.style.display = (document.getElementById('thaiMode').value === 'thai_custom') ? 'inline-block' : 'none';
+            const litSel = document.getElementById('thaiLiteralVariant');
             if (variantSel) variantSel.style.display = (document.getElementById('thaiMode').value === 'thai_sense') ? 'inline-block' : 'none';
+            if (litSel) litSel.style.display = (document.getElementById('thaiMode').value === 'thai') ? 'inline-block' : 'none';
         }
         if (document.getElementById('thaiSenseVariant')) {
             document.getElementById('thaiSenseVariant').onchange = function() {
                 window.readerThaiSenseVariant = this.value || 'desana';
+                render();
+            };
+        }
+        if (document.getElementById('thaiLiteralVariant')) {
+            document.getElementById('thaiLiteralVariant').onchange = function() {
+                window.readerThaiLiteralVariant = this.value || 'system';
                 render();
             };
         }
