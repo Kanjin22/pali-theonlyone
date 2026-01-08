@@ -2364,8 +2364,33 @@
             } else {
                  if (isThaiSense) {
                      if (thaiSenseVariant === 'custom') {
-                         const custom = loadCustomThaiVariant();
-                         displayThai = custom || s.thai_sense || s.thai_desana || s.thai;
+                         const custom = (loadCustomThaiVariant() || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                         const blocks = [];
+                         if (custom && custom.trim()) {
+                            blocks.push(`
+                              <div style="margin-bottom:6px;">
+                                <div style="font-weight:bold; color:#8e44ad; margin-bottom:4px;">สำนวนของฉัน</div>
+                                <div>${wrapWords(custom, s)}</div>
+                              </div>
+                            `);
+                         }
+                         if (s.thai_desana) {
+                            blocks.push(`
+                              <div style="margin:10px 0;">
+                                <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">เผด็จ มมร.</div>
+                                <div>${wrapWords(s.thai_desana, s)}</div>
+                              </div>
+                            `);
+                         }
+                         if (s.thai_sense) {
+                            blocks.push(`
+                              <div style="margin:10px 0;">
+                                <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">เอาความ</div>
+                                <div>${wrapWords(s.thai_sense, s)}</div>
+                              </div>
+                            `);
+                         }
+                         displayThai = blocks.join(`<hr style="border:none; border-top:1px solid #eee; margin:8px 0;">`);
                      } else if (thaiSenseVariant === 'desana' && s.thai_desana) {
                          displayThai = s.thai_desana;
                      } else if (thaiSenseVariant === 'sense' && s.thai_sense) {
@@ -2378,7 +2403,11 @@
                  }
             }
             
-            thaiBox.innerHTML = wrapWords(displayThai, null);
+            if (isThaiSense && thaiSenseVariant === 'custom') {
+                thaiBox.innerHTML = displayThai;
+            } else {
+                thaiBox.innerHTML = wrapWords(displayThai, null);
+            }
 
             const select = document.getElementById('thaiVariantSelect');
             if (select) {

@@ -529,6 +529,40 @@
         }
         return text.replace(/_/g, ' ');
     }
+    function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+    function getThaiCombinedHtml(obj){
+        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
+        if (mode !== 'thai_custom') {
+            return `<div>${escapeHtml(preferThai(obj))}</div>`;
+        }
+        const blocks = [];
+        const custom = loadCustomThai();
+        if (custom && custom.trim()) {
+            blocks.push(`
+                <div style="margin-bottom:6px;">
+                    <div style="font-weight:bold; color:#8e44ad; margin-bottom:4px;">สำนวนของฉัน</div>
+                    <div>${escapeHtml(custom).replace(/_/g,' ')}</div>
+                </div>
+            `);
+        }
+        if (obj.thai) {
+            blocks.push(`
+                <div style="margin:10px 0;">
+                    <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">โดยพยัญชนะ</div>
+                    <div>${escapeHtml(obj.thai).replace(/_/g,' ')}</div>
+                </div>
+            `);
+        }
+        if (obj.thai_sense) {
+            blocks.push(`
+                <div style="margin:10px 0;">
+                    <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">โดยอรรถ</div>
+                    <div>${escapeHtml(obj.thai_sense).replace(/_/g,' ')}</div>
+                </div>
+            `);
+        }
+        return blocks.join(`<hr style="border:none; border-top:1px solid #eee; margin:8px 0;">`);
+    }
     
     // --- New Pagination Logic ---
     let groupedPages = [];
@@ -1333,7 +1367,7 @@
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
                 b2.style.color='#7f8c8d';
-                b2.textContent=preferThai(s);
+                b2.innerHTML=getThaiCombinedHtml(s);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -1342,7 +1376,7 @@
                 b1.className='block thai-text';
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
-                b1.textContent=preferThai(s);
+                b1.innerHTML=getThaiCombinedHtml(s);
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
@@ -1361,7 +1395,7 @@
                 leftB.innerHTML=wrapWords(s.pali||'', sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
-                rightB.textContent=preferThai(s);
+                rightB.innerHTML=getThaiCombinedHtml(s);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
@@ -1370,7 +1404,7 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
-                leftB.textContent=preferThai(s);
+                leftB.innerHTML=getThaiCombinedHtml(s);
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
