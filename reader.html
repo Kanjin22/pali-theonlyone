@@ -44,8 +44,31 @@
         color: inherit;
     }
     .inline-edit-mode #pageContent {
-        cursor: text;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23e74c3c"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>') 0 24, auto;
     }
+    
+    /* Note Mode Styles */
+    .sentence-item.has-sentence-note {
+        border: 2px dashed #e67e22 !important;
+        border-radius: 8px !important;
+        background-color: rgba(230, 126, 34, 0.03) !important;
+    }
+    .sentence-item.has-sentence-note:hover {
+        border-color: #d35400 !important;
+        background-color: rgba(230, 126, 34, 0.08) !important;
+    }
+    .note-mode-active .word-span {
+        cursor: context-menu;
+        /* Orange Pen Cursor for Note Mode */
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23e67e22"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>') 0 24, context-menu;
+    }
+    .note-mode-active .word-span:hover {
+        outline: 2px solid #e67e22;
+        border-radius: 4px;
+        background-color: rgba(230, 126, 34, 0.1);
+        border-bottom-color: transparent; /* Override default dotted */
+    }
+
     /* Dictionary Panel */
     #dict-panel {
         position: fixed;
@@ -198,6 +221,113 @@
     @media (max-width: 480px) {
       .controls { grid-template-columns: 1fr; }
     }
+    
+    /* Sentence Controls */
+    .sentence-item {
+        position: relative;
+    }
+    .sentence-controls {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        gap: 5px;
+        opacity: 0.3;
+        transition: opacity 0.2s;
+        z-index: 10;
+    }
+    .sentence-item:hover .sentence-controls {
+        opacity: 1;
+    }
+    .sentence-btn {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: #7f8c8d;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .sentence-btn:hover {
+        background: #f5f5f5;
+        color: #3498db;
+    }
+    .sentence-btn.active {
+        background: #2ecc71;
+        color: white;
+        border-color: #27ae60;
+    }
+
+    /* Floating Toolbar */
+    #floating-toolbar {
+        position: absolute;
+        display: none;
+        background-color: #34495e;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+    }
+    #floating-toolbar::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -6px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #34495e transparent transparent transparent;
+    }
+    #floating-toolbar button {
+        background: transparent;
+        border: none;
+        color: #ecf0f1;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background 0.2s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    #floating-toolbar button:hover { background-color: rgba(255,255,255,0.2); }
+    #floating-toolbar .separator { width: 1px; height: 20px; background-color: #7f8c8d; margin: 0 5px; }
+    .floating-color-dot {
+        width: 18px; height: 18px; border-radius: 50%; display: inline-block;
+        border: 2px solid rgba(255,255,255,0.2); cursor: pointer; transition: transform 0.2s;
+    }
+    .floating-color-dot:hover { transform: scale(1.2); border-color: #fff; }
+
+    /* Inline Edit Mode Styles */
+    /* Only apply to the specific sentence being edited */
+    .sentence-item.editing-sentence .word-span {
+        cursor: text;
+        border-bottom: none;
+        color: inherit;
+        background: transparent;
+        pointer-events: none; /* Disable click/hover on span, let parent handle caret */
+    }
+    .sentence-item.editing-sentence .word-span:hover {
+        /* No hover effects in edit mode */
+        color: inherit;
+        border-bottom-color: transparent;
+        background-color: transparent;
+        outline: none;
+    }
+    .sentence-item.editing-sentence .pali-text, .sentence-item.editing-sentence .thai-text {
+        outline: 2px dashed #27ae60;
+        cursor: text;
+        line-height: 2.0;
+        /* Ensure parent handles interaction */
+        user-select: text;
+        -webkit-user-select: text;
+    }
+    
+    /* Legacy support / Global fallback (optional, but better removed to avoid confusion) */
+    /* Kept empty or minimal if needed */
   </style>
 </head>
 <body>
@@ -259,15 +389,7 @@
                 <select id="thaiMode" style="min-width:140px;">
                     <option value="thai">โดยพยัญชนะ</option>
                     <option value="thai_desana">โดยอรรถ (มมร.)</option>
-                    <option value="thai_sense">เอาความ</option>
-                    <option value="thai_custom">สำนวนของฉัน</option>
                 </select>
-                <select id="thaiLiteralVariant" style="min-width:140px; display:none; margin-top:6px;">
-                    <option value="system">ฉบับระบบ</option>
-                    <option value="custom">สำนวนของฉัน (โดยพยัญชนะ)</option>
-                </select>
-                <button id="editCustomThaiBtn" class="btn" style="margin-top:6px; display:inline-block; background:#8e44ad;"
-                        onclick="editCustomThai()">แก้ไขสำนวนของฉัน</button>
             </div>
 
             <!-- Font Family -->
@@ -307,21 +429,6 @@
             <div style="margin-left:auto; display:flex; gap:8px;">
                  <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
                  <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
-                 <button class="btn secondary" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()"><i class="fas fa-i-cursor"></i> พิมพ์แทรก</button>
-                 <button class="btn secondary" id="btn-note-mode" title="โหมดจดบันทึกช่วยจำ" onclick="toggleNoteMode()"><i class="fas fa-sticky-note"></i> บันทึก</button>
-                 <div id="inline-annotate-tools" style="display:none; align-items:center; gap:6px;">
-                    <button class="btn secondary" onclick="inlineFormat('bold')" title="ตัวหนา"><i class="fas fa-bold"></i></button>
-                    <button class="btn secondary" onclick="inlineFormat('italic')" title="ตัวเอียง"><i class="fas fa-italic"></i></button>
-                    <button class="btn secondary" onclick="inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fas fa-underline"></i></button>
-                    <span style="margin-left:6px; color:#7f8c8d; font-size:0.9rem;">สี:</span>
-                    <span class="color-dot" onclick="inlineColor('#2c3e50')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2c3e50;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <span class="color-dot" onclick="inlineColor('#d35400')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#d35400;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <span class="color-dot" onclick="inlineColor('#27ae60')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#27ae60;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <span class="color-dot" onclick="inlineColor('#2980b9')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#2980b9;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <span class="color-dot" onclick="inlineColor('#8e44ad')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#8e44ad;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <span class="color-dot" onclick="inlineColor('#e74c3c')" style="width:14px;height:14px;border-radius:50%;display:inline-block;background:#e74c3c;border:1px solid rgba(0,0,0,0.2);cursor:pointer;"></span>
-                    <button class="btn secondary" onclick="clearInlineEdits()" title="ล้างข้อความแทรกสำหรับหน้านี้" style="margin-left:8px; background:#e74c3c;"><i class="fas fa-eraser"></i></button>
-                 </div>
             </div>
         </div>
     </div>
@@ -527,10 +634,8 @@
         let text = '';
         if (mode === 'thai_desana') {
             text = obj.thai_desana || obj.thai_sense || obj.thai || '';
-        } else if (mode === 'thai_sense') {
-            text = obj.thai_sense || obj.thai_desana || obj.thai || '';
         } else {
-            text = obj.thai || obj.thai_sense || '';
+            text = obj.thai || '';
         }
         return text.replace(/_/g, ' ');
     }
@@ -731,25 +836,78 @@
         const part = document.getElementById('partSelect') ? document.getElementById('partSelect').value : 'part';
         const vagga = document.getElementById('vaggaSelect') ? document.getElementById('vaggaSelect').value : 'vagga';
         const story = document.getElementById('storySelect') ? document.getElementById('storySelect').value : 'story';
-        return `reader:${lvl}-${subj}-${part}-${vagga}-${story}:${currentBookPageIndex}`;
+        
+        // Include Thai Mode and Variant in the key to support mode-specific edits
+        const thaiMode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'default';
+        let variant = '';
+        if (thaiMode === 'thai' && document.getElementById('thaiLiteralVariant')) {
+             variant = '-' + document.getElementById('thaiLiteralVariant').value;
+        }
+        
+        return `reader:${lvl}-${subj}-${part}-${vagga}-${story}:${currentBookPageIndex}:${thaiMode}${variant}`;
     }
     function saveInlineEdits() {
         const page = document.getElementById('pageContent');
+        if (!page) return;
+        
         const storeKey = 'inline_edits_v1';
         let store = {};
         try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-        store[getReaderInlineKey()] = { html: page ? page.innerHTML : '' };
-        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        
+        const key = getReaderInlineKey();
+        let pageEdits = store[key] || {}; // Load existing or init new
+        
+        const blocks = Array.from(page.children);
+        let hasChanges = false;
+        
+        blocks.forEach((block, index) => {
+            // Only save blocks that are actual sentence items AND are currently being edited
+            // Note: toggleSentenceEdit calls this BEFORE removing the class, so we capture the final state.
+            // But we also want to support auto-save during edit.
+            // If we only save .editing-sentence, we avoid overwriting other sentences with their current DOM state (which might be originals).
+            if (!block.classList.contains('sentence-item')) return;
+            if (!block.classList.contains('editing-sentence')) return;
+            
+            const pali = block.querySelector('.pali-text');
+            const thai = block.querySelector('.thai-text');
+            
+            if (pali || thai) {
+                pageEdits[index] = pageEdits[index] || {}; // Merge with existing block data
+                if (pali) pageEdits[index].pali = pali.innerHTML;
+                if (thai) pageEdits[index].thai = thai.innerHTML;
+                pageEdits[index].timestamp = Date.now();
+                hasChanges = true;
+            }
+        });
+        
+        if (hasChanges) {
+             pageEdits.timestamp = Date.now();
+             store[key] = pageEdits;
+             try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        }
     }
+
     function loadInlineEdits() {
         const storeKey = 'inline_edits_v1';
         let store = {};
         try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        
         const saved = store[getReaderInlineKey()];
-        if (saved && typeof saved.html === 'string' && saved.html) {
-            const page = document.getElementById('pageContent');
-            if (page) page.innerHTML = saved.html;
-        }
+        if (!saved) return;
+        
+        const page = document.getElementById('pageContent');
+        if (!page) return;
+        
+        const blocks = Array.from(page.children);
+        blocks.forEach((block, index) => {
+            if (saved[index]) {
+                const pali = block.querySelector('.pali-text');
+                const thai = block.querySelector('.thai-text');
+                
+                if (pali && saved[index].pali) pali.innerHTML = saved[index].pali;
+                if (thai && saved[index].thai) thai.innerHTML = saved[index].thai;
+            }
+        });
     }
     function clearInlineEdits() {
         const storeKey = 'inline_edits_v1';
@@ -759,27 +917,283 @@
         try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
         renderCurrentPage();
     }
-    function toggleInlineEditMode() {
-        if (window.isNoteMode) toggleNoteMode();
-        window.inlineEditMode = !window.inlineEditMode;
-        const btn = document.getElementById('btn-inline-edit');
-        const tools = document.getElementById('inline-annotate-tools');
+
+    // Per-Sentence Controls Logic
+    function injectSentenceControls() {
         const page = document.getElementById('pageContent');
-        if (window.inlineEditMode) {
-            if (btn) { btn.classList.add('active'); btn.style.background = '#27ae60'; btn.style.color = '#fff'; }
-            if (tools) tools.style.display = 'inline-flex';
-            if (page) { page.contentEditable = 'true'; page.style.outline = '2px dashed #27ae60'; }
-            document.body.classList.add('inline-edit-mode');
-            ['input','blur','keyup','paste'].forEach(ev => { if (page) page.addEventListener(ev, onInlineChanged); });
-            loadInlineEdits();
+        if (!page) return;
+        
+        const blocks = Array.from(page.children);
+        blocks.forEach((block, index) => {
+            // Ensure proper class and positioning
+            if (!block.classList.contains('sentence-item')) {
+                block.classList.add('sentence-item');
+            }
+            if (block.style.position !== 'relative') {
+                block.style.position = 'relative';
+            }
+            
+            // Check for notes inside this block (Visual Indicator)
+            if (block.querySelector('.has-note')) {
+                block.classList.add('has-sentence-note');
+            } else {
+                block.classList.remove('has-sentence-note');
+            }
+
+            // Avoid duplicates
+            if (block.querySelector('.sentence-controls')) return;
+            
+            const controls = document.createElement('div');
+            controls.className = 'sentence-controls';
+            controls.innerHTML = `
+                <button class="sentence-btn btn-edit" title="แก้ไขข้อความ" onclick="toggleSentenceEdit(this, ${index})"><i class="fas fa-pen"></i></button>
+                <button class="sentence-btn btn-note" title="โหมดบันทึกช่วยจำ" onclick="openSentenceNote(${index})"><i class="fas fa-sticky-note"></i></button>
+            `;
+            block.appendChild(controls);
+        });
+    }
+
+    function showSenseTranslation(slideIndex) {
+        // Find the slide in the current page group
+        // Note: slideIndex passed from render loop is the index in the ORIGINAL slides array of the part
+        // We need to find it in the current page context if needed, but since we have the index, we can lookup directly.
+        // Actually, render loop uses 'slides' which is `pageData.slides`. 
+        // But `sIndex = slides.indexOf(s)` in render loop refers to the index within the `slides` array of the current page rendering?
+        // Wait, the previous code was `const sIndex = slides.indexOf(s)`.
+        // Let's check renderCurrentPage: `const slides = pageData.slides;`.
+        // So `sIndex` is the index within the current page's slides array.
+        
+        const pageData = groupedPages[currentBookPageIndex];
+        if (!pageData || !pageData.slides || !pageData.slides[slideIndex]) return;
+        
+        const slide = pageData.slides[slideIndex];
+        const senseText = (slide.thai_sense || 'ไม่มีข้อมูลแปลโดยเอาความ').replace(/_/g, ' ');
+        const content = `
+            <div style="font-size:1.3rem; line-height:1.8; color:#2c3e50; padding:10px;">
+                ${senseText}
+            </div>
+        `;
+        openGenericModal('แปลโดยเอาความ', content);
+    }
+
+    function toggleSentenceEdit(btn, index) {
+        const page = document.getElementById('pageContent');
+        const block = page.children[index];
+        if (!block) return;
+        
+        const isEditing = btn.classList.contains('active');
+        
+        if (isEditing) {
+            // Save Action
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fas fa-pen"></i>';
+            btn.title = 'แก้ไขข้อความ';
+            btn.style.background = '';
+            btn.style.color = '';
+            
+            // Remove Clear Button if exists
+            const controls = btn.parentElement;
+            const clearBtn = controls.querySelector('.btn-clear-sentence');
+            if(clearBtn) clearBtn.remove();
+            
+            const editables = block.querySelectorAll('.pali-text, .thai-text');
+            editables.forEach(el => {
+                el.contentEditable = 'false';
+                // Remove listeners
+                ['input','blur','keyup','paste'].forEach(ev => el.removeEventListener(ev, onInlineChanged));
+            });
+            block.style.outline = '';
+            
+            // Check if any other sentence is editing before hiding tools
+            const anyEditing = page.querySelectorAll('.sentence-btn.active').length > 0;
+            if (!anyEditing) {
+                // Exit Global Edit Mode State
+                window.inlineEditMode = false;
+                
+                // Remove Selection Listeners
+                document.removeEventListener('selectionchange', checkSelectionForToolbar);
+                document.removeEventListener('mouseup', checkSelectionForToolbar);
+                document.removeEventListener('keyup', checkSelectionForToolbar);
+                const tb = document.getElementById('floating-toolbar');
+                if(tb) tb.style.display = 'none';
+            }
+            
+            // Force immediate save BEFORE removing the class (so saveInlineEdits can find it)
+            saveInlineEdits();
+            
+            // Remove local class
+            block.classList.remove('editing-sentence');
+            
         } else {
-            if (btn) { btn.classList.remove('active'); btn.style.background = ''; btn.style.color = ''; }
-            if (tools) tools.style.display = 'none';
-            if (page) { page.contentEditable = 'false'; page.style.outline = ''; }
-            document.body.classList.remove('inline-edit-mode');
-            ['input','blur','keyup','paste'].forEach(ev => { if (page) page.removeEventListener(ev, onInlineChanged); });
+            // Edit Action
+            // Turn off conflicting modes
+            if (window.isNoteMode) toggleNoteMode();
+            closeAllLookupOverlays();
+
+            // Enter Global Edit Mode State (to disable dict and apply styles)
+            window.inlineEditMode = true;
+            
+            // Add local class for scoping styles
+            block.classList.add('editing-sentence');
+
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fas fa-save"></i>';
+            btn.title = 'บันทึก';
+            btn.style.background = '#27ae60';
+            btn.style.color = 'white';
+            
+            // Add Clear Button
+            const controls = btn.parentElement;
+            if(!controls.querySelector('.btn-clear-sentence')) {
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'sentence-btn btn-clear-sentence';
+                clearBtn.innerHTML = '<i class="fas fa-undo"></i>';
+                clearBtn.title = 'คืนค่าเดิม';
+                clearBtn.style.background = '#e74c3c';
+                clearBtn.style.color = 'white';
+                clearBtn.onclick = function() { resetSentenceEdits(index); };
+                // Insert after the save button (which is btn)
+                btn.after(clearBtn);
+            }
+            
+            const editables = block.querySelectorAll('.pali-text, .thai-text');
+            editables.forEach(el => {
+                el.contentEditable = 'true';
+                // Add listeners for auto-save (debounce)
+                ['input','blur','keyup','paste'].forEach(ev => el.addEventListener(ev, onInlineChanged));
+            });
+            block.style.outline = '2px dashed #3498db';
+
+            // Add Selection Listeners
+            document.addEventListener('selectionchange', checkSelectionForToolbar);
+            document.addEventListener('mouseup', checkSelectionForToolbar);
+            document.addEventListener('keyup', checkSelectionForToolbar);
+            
+            if (editables.length > 0) editables[0].focus();
         }
     }
+
+    function resetSentenceEdits(index) {
+        if(!confirm('ต้องการคืนค่าข้อความเป็นต้นฉบับหรือไม่? การแก้ไขทั้งหมดในประโยคนี้จะหายไป')) return;
+        
+        // Remove from storage
+        const storeKey = 'inline_edits_v1';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+        
+        const key = getReaderInlineKey();
+        if(store[key] && store[key][index]) {
+            delete store[key][index];
+            // Clean up if empty
+            if(Object.keys(store[key]).length <= 1) { // 1 for timestamp
+                delete store[key];
+            }
+            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+        }
+        
+        // Restore original text WITHOUT reloading page (to keep edit mode active)
+        const page = document.getElementById('pageContent');
+        const block = page.children[index];
+        if (!block) {
+            renderCurrentPage(); // Fallback
+            return;
+        }
+
+        const pageData = groupedPages[currentBookPageIndex];
+        if (!pageData || !pageData.slides || !pageData.slides[index]) {
+             renderCurrentPage(); // Fallback
+             return;
+        }
+
+        const s = pageData.slides[index];
+        const layout = document.getElementById('layoutSelect') ? document.getElementById('layoutSelect').value : 'pali_over_thai';
+        const isThaiMode = document.getElementById('thaiMode') && document.getElementById('thaiMode').value === 'thai_desana';
+        
+        // Helper to get raw HTML (similar to render loop)
+        const getPaliHtml = () => wrapWords(s.pali || '', index);
+        const getThaiHtml = () => isThaiMode ? (s.thai_desana || s.thai || '') : (s.thai || '');
+
+        const paliDiv = block.querySelector('.pali-text');
+        const thaiDiv = block.querySelector('.thai-text');
+
+        if (paliDiv) paliDiv.innerHTML = getPaliHtml();
+        if (thaiDiv) thaiDiv.innerHTML = getThaiHtml();
+
+        // Re-enable listeners because innerHTML replacement might kill them? 
+        // No, listeners are on the element itself, but if we replaced innerHTML, the listeners on the element (paliDiv) stay.
+        // However, if we replaced the element, they would be gone. Here we just set innerHTML.
+        
+        // But wait, wrapWords generates spans with onclicks. Those are inline, so they work.
+        // The 'input' listeners for auto-save are on paliDiv/thaiDiv, so they persist.
+        
+        // Visual feedback
+        // block.style.outline = '2px dashed #e74c3c';
+        // setTimeout(() => block.style.outline = '2px dashed #3498db', 300);
+    }
+
+    function openSentenceNote(index) {
+        toggleNoteMode();
+    }
+
+    function checkSelectionForToolbar(event) {
+        const toolbar = document.getElementById('floating-toolbar');
+        if (!toolbar) return;
+
+        // 1. If not editing, hide
+        const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+        if (!window.inlineEditMode && !anySentenceEditing) {
+            toolbar.style.display = 'none';
+            return;
+        }
+
+        // 2. Check selection
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+            toolbar.style.display = 'none';
+            return;
+        }
+
+        // Only update position on mouseup/keyup to avoid jitter during drag
+        if (event && event.type === 'selectionchange') {
+            return; 
+        }
+
+        const range = selection.getRangeAt(0);
+        const text = selection.toString().trim();
+        if (!text) {
+            toolbar.style.display = 'none';
+            return;
+        }
+
+        // 3. Check if selection is inside editable area
+        let container = range.commonAncestorContainer;
+        if (container.nodeType === 3) container = container.parentNode;
+        
+        // Must be inside .pali-text or .thai-text
+        if (!container.closest('.pali-text') && !container.closest('.thai-text')) {
+            toolbar.style.display = 'none';
+            return;
+        }
+
+        // 4. Position Toolbar
+        const rect = range.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        // Position above selection
+        let top = rect.top + scrollTop - toolbar.offsetHeight - 10;
+        let left = rect.left + scrollLeft + (rect.width / 2) - (toolbar.offsetWidth / 2);
+        
+        // Prevent going off screen
+        if (top < 10) top = rect.bottom + scrollTop + 10; // show below if too high
+        if (left < 10) left = 10;
+        if (left + toolbar.offsetWidth > window.innerWidth - 10) left = window.innerWidth - toolbar.offsetWidth - 10;
+
+        toolbar.style.top = top + 'px';
+        toolbar.style.left = left + 'px';
+        toolbar.style.display = 'flex';
+    }
+
     function onInlineChanged() {
         if (inlineSaveTimer) clearTimeout(inlineSaveTimer);
         inlineSaveTimer = setTimeout(saveInlineEdits, 300);
@@ -820,6 +1234,9 @@
 
     function showTranslation(word, event) {
         if (event) event.stopPropagation();
+        if (window.inlineEditMode === true) return;
+        if (window.isNoteMode === true) return;
+        if (document.querySelectorAll('.sentence-btn.active').length > 0) return;
         const modal = document.getElementById('trans-modal');
         const content = document.getElementById('trans-content');
         
@@ -1000,6 +1417,9 @@
     }
 
     function showDictionaryDefinition(word, manualOverride = null) {
+        if (window.inlineEditMode === true) return;
+        if (window.isNoteMode === true) return;
+        if (document.querySelectorAll('.sentence-btn.active').length > 0) return;
         // Collect all databases
         const dbs = {
         insan_pr9: Object.assign({},
@@ -1240,7 +1660,24 @@
         document.querySelectorAll('.word-span').forEach(s => s.classList.remove('active-word'));
     }
 
-    function render(){
+    function closeAllLookupOverlays() {
+        closeDictPanel();
+        document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
+        const analysis = document.getElementById('analysis-modal');
+        if (analysis) {
+            analysis.style.display = 'none';
+            const generic = document.getElementById('ana-generic-content');
+            const split = document.getElementById('ana-split');
+            const details = document.getElementById('ana-details');
+            if (generic) generic.style.display = 'none';
+            if (split) split.style.display = 'block';
+            if (details) details.style.display = 'block';
+        }
+        const trans = document.getElementById('trans-modal');
+        if (trans) trans.style.display = 'none';
+    }
+
+    function render(resetPage = true){
         const part=document.getElementById('partSelect').value;
         const vagga=document.getElementById('vaggaSelect').value;
         const story=document.getElementById('storySelect').value;
@@ -1249,7 +1686,16 @@
         
         const slides=collectSlides(part,startPage,endPage,vagga,story);
         groupedPages = groupSlidesByPage(slides);
-        currentBookPageIndex = 0;
+        
+        if (resetPage === true || (typeof resetPage === 'object' && resetPage.type)) { // Handle explicit true or Event object
+             currentBookPageIndex = 0;
+        } else {
+             // Preserve page, clamp to bounds
+             if (currentBookPageIndex >= groupedPages.length) {
+                 currentBookPageIndex = Math.max(0, groupedPages.length - 1);
+             }
+        }
+
         renderCurrentPage();
     }
 
@@ -1312,6 +1758,20 @@
             // Render content based on layout
             const sIndex = slides.indexOf(s); // Get correct index from original array
             
+            // Helper for Sense Button
+            const createSenseBtn = (slideIndex) => {
+                if(s.thai_sense) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn secondary';
+                    btn.style.cssText = 'padding: 2px 8px; font-size: 0.8em; margin-left: 8px; border-radius: 12px; background-color: #9b59b6; color: white; border: none; cursor: pointer; vertical-align: middle;';
+                    btn.innerHTML = '<i class="fas fa-language"></i> เอาความ';
+                    btn.title = 'แสดงคำแปลโดยเอาความ';
+                    btn.onclick = (e) => { e.stopPropagation(); showSenseTranslation(slideIndex); };
+                    return btn;
+                }
+                return null;
+            };
+
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block pali-text';
@@ -1330,6 +1790,8 @@
                 b2.className='block thai-text';
                 b2.style.color='#7f8c8d';
                 b2.textContent=preferThai(s);
+                const senseBtn = createSenseBtn(sIndex);
+                if(senseBtn) b2.appendChild(senseBtn);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -1339,6 +1801,8 @@
                 b1.style.marginBottom='8px';
                 b1.style.color='#2c3e50';
                 b1.textContent=preferThai(s);
+                const senseBtn = createSenseBtn(sIndex);
+                if(senseBtn) b1.appendChild(senseBtn);
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
@@ -1358,6 +1822,9 @@
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
                 rightB.textContent=preferThai(s);
+                const senseBtn = createSenseBtn(sIndex);
+                if(senseBtn) rightB.appendChild(senseBtn);
+
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
@@ -1367,6 +1834,9 @@
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
                 leftB.textContent=preferThai(s);
+                const senseBtn = createSenseBtn(sIndex);
+                if(senseBtn) leftB.appendChild(senseBtn);
+
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
@@ -1380,11 +1850,16 @@
         });
         
         container.appendChild(contentDiv);
-        if (window.inlineEditMode) {
-            const page = document.getElementById('pageContent');
-            if (page) { page.contentEditable = 'true'; page.style.outline = '2px dashed #27ae60'; }
-        }
+
+        // Load Inline Edits
         loadInlineEdits();
+        
+        // Inject Per-Sentence Controls
+        injectSentenceControls();
+
+        // Reset global edit mode on render (prevents carry-over issues)
+        window.inlineEditMode = false;
+        document.body.classList.remove('inline-edit-mode');
         
         // --- Navigation Section ---
         const navDiv = document.createElement('div');
@@ -1402,6 +1877,8 @@
         }
         prevBtn.onclick = () => {
             if(currentBookPageIndex > 0) {
+                const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+                if (window.inlineEditMode || anySentenceEditing) saveInlineEdits();
                 currentBookPageIndex--;
                 renderCurrentPage();
                 window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1420,6 +1897,8 @@
         }
         nextBtn.onclick = () => {
             if(currentBookPageIndex < groupedPages.length - 1) {
+                const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+                if (window.inlineEditMode || anySentenceEditing) saveInlineEdits();
                 currentBookPageIndex++;
                 renderCurrentPage();
                 window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1514,14 +1993,14 @@
         populateSubjects();
         document.getElementById('renderBtn').onclick=render;
         document.getElementById('printBtn').onclick=function(){window.print()};
-        document.getElementById('layoutSelect').onchange=render;
+        document.getElementById('layoutSelect').onchange = () => render(false);
 
         // New Controls Listeners
         if(document.getElementById('thaiMode')) {
             document.getElementById('thaiMode').onchange = function() {
                 const litSel = document.getElementById('thaiLiteralVariant');
                 if (litSel) litSel.style.display = (this.value === 'thai') ? 'inline-block' : 'none';
-                render();
+                render(false);
             };
             const litSel = document.getElementById('thaiLiteralVariant');
             if (litSel) litSel.style.display = (document.getElementById('thaiMode').value === 'thai') ? 'inline-block' : 'none';
@@ -1529,7 +2008,7 @@
         if (document.getElementById('thaiLiteralVariant')) {
             document.getElementById('thaiLiteralVariant').onchange = function() {
                 window.readerThaiLiteralVariant = this.value || 'system';
-                render();
+                render(false);
             };
         }
         if(document.getElementById('fontSelect')) document.getElementById('fontSelect').onchange = renderCurrentPage;
@@ -1625,21 +2104,52 @@ function getPageNote(noteId) {
 function toggleNoteMode() {
     window.isNoteMode = !window.isNoteMode;
     const btn = document.getElementById('btn-note-mode');
-    if (window.isNoteMode) {
-        if (btn) {
+    
+    // Sync Global Button
+    if (btn) {
+        if (window.isNoteMode) {
             btn.classList.add('active');
             btn.style.background = '#e67e22';
             btn.style.color = '#fff';
-        }
-        document.body.classList.add('note-mode');
-        if (window.inlineEditMode) toggleInlineEditMode();
-    } else {
-        if (btn) {
+            document.body.classList.add('note-mode-active');
+            closeAllLookupOverlays();
+        } else {
             btn.classList.remove('active');
             btn.style.background = '';
             btn.style.color = '';
+            document.body.classList.remove('note-mode-active');
         }
-        document.body.classList.remove('note-mode');
+    }
+
+    // Sync Per-Sentence Buttons
+    const sentenceBtns = document.querySelectorAll('.sentence-btn.btn-note');
+    sentenceBtns.forEach(b => {
+        if (window.isNoteMode) {
+            b.classList.add('active');
+            b.innerHTML = '<i class="fas fa-check"></i>';
+            b.title = 'ปิดโหมดบันทึก';
+            b.style.background = '#e67e22';
+            b.style.color = 'white';
+            b.style.borderColor = '#d35400';
+        } else {
+            b.classList.remove('active');
+            b.innerHTML = '<i class="fas fa-sticky-note"></i>';
+            b.title = 'โหมดบันทึกช่วยจำ';
+            b.style.background = '';
+            b.style.color = '';
+            b.style.borderColor = '';
+        }
+    });
+
+    if (window.isNoteMode) {
+        document.body.classList.add('note-mode-active');
+        
+        // Turn off any active sentence edits
+        const activeEditBtns = document.querySelectorAll('.sentence-btn.btn-edit.active');
+        activeEditBtns.forEach(b => b.click());
+
+    } else {
+        document.body.classList.remove('note-mode-active');
     }
 }
 
@@ -1674,6 +2184,7 @@ function saveNote(noteId) {
             el.classList.remove('has-note');
             el.style.borderBottom = '';
         }
+        updateSentenceNoteStatus(el);
     }
 }
 
@@ -1685,10 +2196,36 @@ function deleteNote(noteId, word) {
     if (el) {
         el.classList.remove('has-note');
         el.style.borderBottom = '';
+        updateSentenceNoteStatus(el);
+    }
+}
+
+function updateSentenceNoteStatus(el) {
+    const sentenceItem = el.closest('.sentence-item');
+    if (sentenceItem) {
+        if (sentenceItem.querySelector('.has-note')) {
+            sentenceItem.classList.add('has-sentence-note');
+        } else {
+            sentenceItem.classList.remove('has-sentence-note');
+        }
     }
 }
 
     init()
   </script>
+    <!-- Floating Toolbar -->
+    <div id="floating-toolbar">
+        <button onmousedown="event.preventDefault(); inlineFormat('bold')" title="ตัวหนา"><i class="fa-solid fa-bold"></i></button>
+        <button onmousedown="event.preventDefault(); inlineFormat('italic')" title="ตัวเอียง"><i class="fa-solid fa-italic"></i></button>
+        <button onmousedown="event.preventDefault(); inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fa-solid fa-underline"></i></button>
+        <div class="separator"></div>
+        <div style="display:flex; gap:6px; align-items:center; padding:0 4px;">
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2c3e50')" style="background:#2c3e50;" title="สีดำ"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#c0392b')" style="background:#c0392b;" title="สีแดงเข้ม"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#27ae60')" style="background:#27ae60;" title="สีเขียว"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2980b9')" style="background:#2980b9;" title="สีน้ำเงิน"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" style="background:#8e44ad;" title="สีม่วง"></span>
+        </div>
+    </div>
 </body>
 </html>
