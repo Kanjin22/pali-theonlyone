@@ -12,6 +12,7 @@ const vocabSandhi = {
     // "โกสมฺพิยํ": "โกสมฺพี",
     "โกสมฺพิยํ": "โกสมฺพี",
     "สตฺถารํ": "สตฺถุ",
+    "ตยา": "ตุมฺห",
 };
 
 if (typeof module !== 'undefined') module.exports = vocabSandhi;

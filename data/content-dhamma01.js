@@ -9607,7 +9607,7 @@ const contentDhamma01 = {
             akhyata: ``,
             kitaka: ``,
             vocab_list: ``,
-            sandhi: {}
+            sandhi: {            }
         },
         {
             part: "ภาคที่ ๑",
