@@ -308,6 +308,7 @@
                  <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
                  <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
                  <button class="btn secondary" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()"><i class="fas fa-i-cursor"></i> พิมพ์แทรก</button>
+                 <button class="btn secondary" id="btn-note-mode" title="โหมดจดบันทึกช่วยจำ" onclick="toggleNoteMode()"><i class="fas fa-sticky-note"></i> บันทึก</button>
                  <div id="inline-annotate-tools" style="display:none; align-items:center; gap:6px;">
                     <button class="btn secondary" onclick="inlineFormat('bold')" title="ตัวหนา"><i class="fas fa-bold"></i></button>
                     <button class="btn secondary" onclick="inlineFormat('italic')" title="ตัวเอียง"><i class="fas fa-italic"></i></button>
@@ -521,60 +522,21 @@
     function populateVaggas(){const part=document.getElementById('partSelect').value;const vaggas=deriveVaggas(part);const sel=document.getElementById('vaggaSelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);vaggas.forEach(v=>{const o=document.createElement('option');o.value=v;o.text=v;sel.appendChild(o)});sel.onchange=populateStories;populateStories()}
     function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
-    window.readerThaiLiteralVariant = 'system';
     function preferThai(obj){
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         let text = '';
-        if (mode === 'thai_custom') {
-            const custom = loadCustomThai() || '';
-            text = custom || obj.thai_sense || obj.thai || '';
-        } else if (mode === 'thai_desana') {
+        if (mode === 'thai_desana') {
             text = obj.thai_desana || obj.thai_sense || obj.thai || '';
         } else if (mode === 'thai_sense') {
             text = obj.thai_sense || obj.thai_desana || obj.thai || '';
         } else {
-            if (window.readerThaiLiteralVariant === 'custom') {
-                const customLit = loadCustomThaiLiteral();
-                text = customLit || obj.thai || obj.thai_sense || '';
-            } else {
-                text = obj.thai || obj.thai_sense || '';
-            }
+            text = obj.thai || obj.thai_sense || '';
         }
         return text.replace(/_/g, ' ');
     }
     function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
     function getThaiCombinedHtml(obj){
-        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
-        if (mode !== 'thai_custom') {
-            return `<div>${escapeHtml(preferThai(obj))}</div>`;
-        }
-        const blocks = [];
-        const custom = loadCustomThai();
-        if (custom && custom.trim()) {
-            blocks.push(`
-                <div style="margin-bottom:6px;">
-                    <div style="font-weight:bold; color:#8e44ad; margin-bottom:4px;">สำนวนของฉัน</div>
-                    <div>${escapeHtml(custom).replace(/_/g,' ')}</div>
-                </div>
-            `);
-        }
-        if (obj.thai) {
-            blocks.push(`
-                <div style="margin:10px 0;">
-                    <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">โดยพยัญชนะ</div>
-                    <div>${escapeHtml(obj.thai).replace(/_/g,' ')}</div>
-                </div>
-            `);
-        }
-        if (obj.thai_sense) {
-            blocks.push(`
-                <div style="margin:10px 0;">
-                    <div style="font-weight:bold; color:#2c3e50; margin-bottom:4px;">โดยอรรถ</div>
-                    <div>${escapeHtml(obj.thai_sense).replace(/_/g,' ')}</div>
-                </div>
-            `);
-        }
-        return blocks.join(`<hr style="border:none; border-top:1px solid #eee; margin:8px 0;">`);
+        return `<div>${escapeHtml(preferThai(obj))}</div>`;
     }
     
     // --- New Pagination Logic ---
@@ -611,14 +573,22 @@
     // --- Dictionary Logic ---
     function wrapWords(text, slideIndex) {
         if (!text) return "";
-        return text.split(' ').map(word => {
+        const notes = window.currentPageNotes || {};
+        return text.split(' ').map((word, wIdx) => {
             if (word.trim() === "") return "";
             const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
             let prefix = "", cleanWord = word, suffix = "";
             if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
             let displayText = cleanWord.replace(/_/g, ' ');
             
-            return `${prefix}<span class="word-span" data-slide-index="${slideIndex}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
+            const noteId = `${slideIndex}_${wIdx}`;
+            const hasNote = notes[noteId];
+            const noteClass = hasNote ? ' has-note' : '';
+            // If inline style is used, we need to append to it. But word-span usually has no inline style.
+            // We'll just add the border style directly.
+            const noteStyle = hasNote ? 'border-bottom: 2px solid #e67e22;' : '';
+
+            return `${prefix}<span class="word-span${noteClass}" style="${noteStyle}" data-slide-index="${slideIndex}" data-note-id="${noteId}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
         }).join(' ');
     }
 
@@ -790,6 +760,7 @@
         renderCurrentPage();
     }
     function toggleInlineEditMode() {
+        if (window.isNoteMode) toggleNoteMode();
         window.inlineEditMode = !window.inlineEditMode;
         const btn = document.getElementById('btn-inline-edit');
         const tools = document.getElementById('inline-annotate-tools');
@@ -812,48 +783,6 @@
     function onInlineChanged() {
         if (inlineSaveTimer) clearTimeout(inlineSaveTimer);
         inlineSaveTimer = setTimeout(saveInlineEdits, 300);
-    }
-    function getCustomThaiKey() { return `reader_custom_thai:${getReaderInlineKey()}`; }
-    function saveCustomThai(text) {
-        const storeKey = 'reader_custom_thai_v1';
-        let store = {};
-        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-        store[getCustomThaiKey()] = String(text || '');
-        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
-    }
-    function loadCustomThai() {
-        const storeKey = 'reader_custom_thai_v1';
-        let store = {};
-        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-        return store[getCustomThaiKey()] || '';
-    }
-    function getCustomThaiLiteralKey() { return `reader_custom_thai_literal:${getReaderInlineKey()}`; }
-    function saveCustomThaiLiteral(text) {
-        const storeKey = 'reader_custom_thai_literal_v1';
-        let store = {};
-        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-        store[getCustomThaiLiteralKey()] = String(text || '');
-        try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
-    }
-    function loadCustomThaiLiteral() {
-        const storeKey = 'reader_custom_thai_literal_v1';
-        let store = {};
-        try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-        return store[getCustomThaiLiteralKey()] || '';
-    }
-    function editCustomThai() {
-        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
-        const current = (mode === 'thai') ? loadCustomThaiLiteral() : loadCustomThai();
-        const content = `
-            <div style="padding:8px;">
-              <div style="margin-bottom:6px; color:#7f8c8d;">พิมพ์ “สำนวนของฉัน” สำหรับหน้านี้ (${mode==='thai'?'โดยพยัญชนะ':'ทั่วไป'})</div>
-              <textarea id="customThaiInput" style="width:100%; height:140px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${(current || '').replace(/</g,'&lt;')}</textarea>
-              <div style="margin-top:10px; text-align:right;">
-                <button class="btn" style="background:#27ae60;" onclick="(function(){ const v=document.getElementById('customThaiInput').value; ${mode==='thai' ? 'saveCustomThaiLiteral(v);' : 'saveCustomThai(v);'} closeAnalysisModal(null,true); renderCurrentPage(); })()">บันทึก</button>
-              </div>
-            </div>
-        `;
-        openGenericModal('สำนวนของฉัน', content);
     }
     function inlineFormat(cmd) { document.execCommand(cmd, false, null); }
     function inlineColor(color) {
@@ -923,6 +852,10 @@
 
     function handleWordClick(el) {
         if (window.inlineEditMode === true) {
+            return;
+        }
+        if (window.isNoteMode === true) {
+            handleNoteClick(el);
             return;
         }
         // Remove active class from all
@@ -1321,6 +1254,7 @@
     }
 
     function renderCurrentPage() {
+        window.currentPageNotes = loadPageNotes();
         const container = document.getElementById('pages');
         container.innerHTML = '';
         
@@ -1651,6 +1585,109 @@
             }
         });
     }
+// --- Note Mode Logic ---
+window.isNoteMode = false;
+window.currentPageNotes = null;
+
+function getReaderNoteKey() {
+    return `reader_notes:${getReaderInlineKey().replace('reader:', '')}`;
+}
+
+function loadPageNotes() {
+    const key = getReaderNoteKey();
+    try {
+        const stored = localStorage.getItem(key);
+        return stored ? JSON.parse(stored) : {};
+    } catch(e) {
+        return {};
+    }
+}
+
+function savePageNote(noteId, text) {
+    const notes = loadPageNotes();
+    if (text && text.trim()) {
+        notes[noteId] = text.trim();
+    } else {
+        delete notes[noteId];
+    }
+    const key = getReaderNoteKey();
+    localStorage.setItem(key, JSON.stringify(notes));
+    window.currentPageNotes = notes;
+}
+
+function getPageNote(noteId) {
+    if (!window.currentPageNotes) {
+        window.currentPageNotes = loadPageNotes();
+    }
+    return window.currentPageNotes[noteId];
+}
+
+function toggleNoteMode() {
+    window.isNoteMode = !window.isNoteMode;
+    const btn = document.getElementById('btn-note-mode');
+    if (window.isNoteMode) {
+        if (btn) {
+            btn.classList.add('active');
+            btn.style.background = '#e67e22';
+            btn.style.color = '#fff';
+        }
+        document.body.classList.add('note-mode');
+        if (window.inlineEditMode) toggleInlineEditMode();
+    } else {
+        if (btn) {
+            btn.classList.remove('active');
+            btn.style.background = '';
+            btn.style.color = '';
+        }
+        document.body.classList.remove('note-mode');
+    }
+}
+
+function handleNoteClick(el) {
+    const noteId = el.getAttribute('data-note-id');
+    const currentNote = getPageNote(noteId) || '';
+    const word = el.innerText;
+    
+    const content = `
+        <div style="padding:8px;">
+            <div style="margin-bottom:6px; color:#7f8c8d;">บันทึกช่วยจำสำหรับ <b>"${word}"</b></div>
+            <textarea id="noteInput" style="width:100%; height:120px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${currentNote.replace(/</g,'&lt;')}</textarea>
+            <div style="margin-top:10px; display:flex; justify-content:space-between;">
+                <button class="btn" style="background:#e74c3c; color:#fff;" onclick="deleteNote('${noteId}', '${word}')"><i class="fas fa-trash"></i> ลบ</button>
+                <button class="btn" style="background:#27ae60; color:#fff;" onclick="saveNote('${noteId}')"><i class="fas fa-save"></i> บันทึก</button>
+            </div>
+        </div>
+    `;
+    openGenericModal('บันทึกช่วยจำ', content);
+}
+
+function saveNote(noteId) {
+    const text = document.getElementById('noteInput').value;
+    savePageNote(noteId, text);
+    closeAnalysisModal(null, true);
+    const el = document.querySelector(`span[data-note-id="${noteId}"]`);
+    if (el) {
+        if (text && text.trim()) {
+            el.classList.add('has-note');
+            el.style.borderBottom = '2px solid #e67e22';
+        } else {
+            el.classList.remove('has-note');
+            el.style.borderBottom = '';
+        }
+    }
+}
+
+function deleteNote(noteId, word) {
+    if(!confirm(`ลบบันทึกของ "${word}"?`)) return;
+    savePageNote(noteId, null);
+    closeAnalysisModal(null, true);
+    const el = document.querySelector(`span[data-note-id="${noteId}"]`);
+    if (el) {
+        el.classList.remove('has-note');
+        el.style.borderBottom = '';
+    }
+}
+
     init()
   </script>
 </body>
