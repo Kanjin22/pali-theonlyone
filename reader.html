@@ -261,6 +261,10 @@
                     <option value="thai_sense">โดยอรรถ</option>
                     <option value="thai_custom">สำนวนของฉัน</option>
                 </select>
+                <select id="thaiSenseVariant" style="min-width:140px; display:none; margin-top:6px;">
+                    <option value="desana">เผด็จ มมร.</option>
+                    <option value="sense">เอาความ</option>
+                </select>
                 <button id="editCustomThaiBtn" class="btn" style="margin-top:6px; display:none; background:#8e44ad;"
                         onclick="editCustomThai()">แก้ไขสำนวนของฉัน</button>
             </div>
@@ -516,6 +520,7 @@
     function populateVaggas(){const part=document.getElementById('partSelect').value;const vaggas=deriveVaggas(part);const sel=document.getElementById('vaggaSelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);vaggas.forEach(v=>{const o=document.createElement('option');o.value=v;o.text=v;sel.appendChild(o)});sel.onchange=populateStories;populateStories()}
     function populateStories(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const stories=deriveStories(part,vagga);const sel=document.getElementById('storySelect');sel.innerHTML='';const o0=document.createElement('option');o0.value='';o0.text='ทั้งหมด';sel.appendChild(o0);stories.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=updatePageRange;updatePageRange()}
     function updatePageRange(){const part=document.getElementById('partSelect').value;const vagga=document.getElementById('vaggaSelect').value;const story=document.getElementById('storySelect').value;const pages=derivePages(part,vagga,story);const min=pages.length?Math.min(...pages):'';const max=pages.length?Math.max(...pages):'';document.getElementById('startPage').value=min;document.getElementById('endPage').value=max}
+    window.readerThaiSenseVariant = 'desana';
     function preferThai(obj){
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         let text = '';
@@ -523,7 +528,13 @@
             const custom = loadCustomThai() || '';
             text = custom || obj.thai_sense || obj.thai || '';
         } else if(mode === 'thai_sense') {
-            text = obj.thai_sense || obj.thai || '';
+            if (window.readerThaiSenseVariant === 'desana' && obj.thai_desana) {
+                text = obj.thai_desana;
+            } else if (window.readerThaiSenseVariant === 'sense' && obj.thai_sense) {
+                text = obj.thai_sense;
+            } else {
+                text = obj.thai_sense || obj.thai_desana || obj.thai || '';
+            }
         } else {
             text = obj.thai || obj.thai_sense || '';
         }
@@ -1558,11 +1569,21 @@
         if(document.getElementById('thaiMode')) {
             document.getElementById('thaiMode').onchange = function() {
                 const btn = document.getElementById('editCustomThaiBtn');
+                const variantSel = document.getElementById('thaiSenseVariant');
                 if (btn) btn.style.display = (this.value === 'thai_custom') ? 'inline-block' : 'none';
+                if (variantSel) variantSel.style.display = (this.value === 'thai_sense') ? 'inline-block' : 'none';
                 render();
             };
             const btn = document.getElementById('editCustomThaiBtn');
+            const variantSel = document.getElementById('thaiSenseVariant');
             if (btn) btn.style.display = (document.getElementById('thaiMode').value === 'thai_custom') ? 'inline-block' : 'none';
+            if (variantSel) variantSel.style.display = (document.getElementById('thaiMode').value === 'thai_sense') ? 'inline-block' : 'none';
+        }
+        if (document.getElementById('thaiSenseVariant')) {
+            document.getElementById('thaiSenseVariant').onchange = function() {
+                window.readerThaiSenseVariant = this.value || 'desana';
+                render();
+            };
         }
         if(document.getElementById('fontSelect')) document.getElementById('fontSelect').onchange = renderCurrentPage;
         
