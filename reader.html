@@ -741,7 +741,30 @@
         inlineSaveTimer = setTimeout(saveInlineEdits, 300);
     }
     function inlineFormat(cmd) { document.execCommand(cmd, false, null); }
-    function inlineColor(color) { document.execCommand('foreColor', false, color); }
+    function inlineColor(color) {
+        try { document.execCommand('styleWithCSS', false, true); } catch(e) {}
+        // Ensure focus on editable page
+        const page = document.getElementById('pageContent');
+        if (page) page.focus();
+        const ok = document.execCommand('foreColor', false, color);
+        if (!ok) {
+            const sel = window.getSelection ? window.getSelection() : null;
+            if (sel && sel.rangeCount) {
+                const range = sel.getRangeAt(0);
+                if (!range.collapsed) {
+                    const span = document.createElement('span');
+                    span.style.color = color;
+                    span.appendChild(range.extractContents());
+                    range.insertNode(span);
+                    sel.removeAllRanges();
+                    const newRange = document.createRange();
+                    newRange.setStartAfter(span);
+                    newRange.collapse(true);
+                    sel.addRange(newRange);
+                }
+            }
+        }
+    }
 
     function showTranslation(word, event) {
         if (event) event.stopPropagation();

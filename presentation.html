@@ -2686,6 +2686,7 @@
             const pali = document.getElementById('paliContent');
             const thai = document.getElementById('thaiContent');
             if (window.inlineEditMode) {
+                try { document.execCommand('styleWithCSS', false, true); } catch(e) {}
                 if (btn) { btn.classList.add('active'); btn.style.color = '#27ae60'; }
                 if (tools) tools.style.display = 'inline-flex';
                 if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
@@ -2721,7 +2722,33 @@
             document.execCommand(cmd, false, null);
         }
         function inlineColor(color) {
-            document.execCommand('foreColor', false, color);
+            try { document.execCommand('styleWithCSS', false, true); } catch(e) {}
+            // Ensure focus on an editable area
+            let target = document.activeElement;
+            const pali = document.getElementById('paliContent');
+            const thai = document.getElementById('thaiContent');
+            if (!(target && target.isContentEditable)) {
+                target = (pali && pali.isContentEditable) ? pali : ((thai && thai.isContentEditable) ? thai : pali);
+                if (target) target.focus();
+            }
+            const ok = document.execCommand('foreColor', false, color);
+            if (!ok) {
+                const sel = window.getSelection ? window.getSelection() : null;
+                if (sel && sel.rangeCount) {
+                    const range = sel.getRangeAt(0);
+                    if (!range.collapsed) {
+                        const span = document.createElement('span');
+                        span.style.color = color;
+                        span.appendChild(range.extractContents());
+                        range.insertNode(span);
+                        sel.removeAllRanges();
+                        const newRange = document.createRange();
+                        newRange.setStartAfter(span);
+                        newRange.collapse(true);
+                        sel.addRange(newRange);
+                    }
+                }
+            }
         }
         function addNote() {
             const card = document.getElementById('cardContainer');
