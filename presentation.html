@@ -1072,6 +1072,9 @@
             <button class="tool-btn" id="btn-add-note" title="เพิ่มคำอธิบาย (Note)" onclick="addNote()">
                 <i class="fa-solid fa-note-sticky"></i>
             </button>
+            <button class="tool-btn" id="btn-note-mode" title="โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)" onclick="toggleNoteMode()">
+                <i class="fa-solid fa-comment-dots"></i>
+            </button>
         </div>
 
         <canvas id="drawing-canvas"></canvas>
@@ -1682,6 +1685,12 @@
         // ********** Fix: Thai Content - Click to Highlight only, No Dictionary **********
         // User requested: "Allow clicking but don't trigger the dictionary" for Thai translation box.
         if (el.closest('#thaiContent')) {
+            return;
+        }
+
+        // Note Mode: place a temporary note anchored near the clicked word, no dictionary
+        if (window.noteMode === true) {
+            addNoteAtElement(el);
             return;
         }
 
@@ -2586,15 +2595,83 @@
             if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
         }
         function setThaiSenseVariant(val) { thaiSenseVariant = val; updateSlide(); }
+        // Annotation Mode
+        window.noteMode = false;
+        function toggleNoteMode() {
+            window.noteMode = !window.noteMode;
+            const btn = document.getElementById('btn-note-mode');
+            if (!btn) return;
+            if (window.noteMode) {
+                btn.classList.add('active');
+                btn.style.color = '#27ae60';
+                btn.title = 'โหมดคำอธิบาย: คลิกคำเพื่อวางโน้ต (ปิดด้วยปุ่มนี้อีกครั้ง)';
+            } else {
+                btn.classList.remove('active');
+                btn.style.color = '';
+                btn.title = 'โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)';
+            }
+        }
         function addNote() {
             const card = document.getElementById('cardContainer');
             const note = document.createElement('div');
             note.className = 'sticky-note'; note.contentEditable = true; note.innerText = 'พิมพ์บันทึก...';
             note.style.left = '50px'; note.style.top = '100px';
+            // Inline palette for text color
+            const palette = document.createElement('div');
+            palette.contentEditable = false;
+            palette.style.display = 'flex';
+            palette.style.gap = '6px';
+            palette.style.marginBottom = '6px';
+            const colors = ['#2c3e50','#d35400','#27ae60','#2980b9','#8e44ad','#e74c3c'];
+            colors.forEach(c => {
+                const dot = document.createElement('span');
+                dot.style.width = '14px'; dot.style.height = '14px'; dot.style.borderRadius = '50%';
+                dot.style.display = 'inline-block'; dot.style.background = c; dot.style.cursor = 'pointer';
+                dot.style.border = '1px solid rgba(0,0,0,0.2)';
+                dot.onclick = (e) => { e.stopPropagation(); note.style.color = c; };
+                palette.appendChild(dot);
+            });
+            note.insertBefore(palette, note.firstChild);
             const closeBtn = document.createElement('div');
             closeBtn.className = 'close-note'; closeBtn.innerHTML = '&times;'; closeBtn.contentEditable = false;
             closeBtn.onclick = function () { note.remove(); };
             note.appendChild(closeBtn); makeDraggable(note); card.appendChild(note); note.focus();
+        }
+        function addNoteAtElement(el) {
+            const card = document.getElementById('cardContainer');
+            const rect = el.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+            const note = document.createElement('div');
+            note.className = 'sticky-note'; note.contentEditable = true;
+            note.innerText = `อธิบาย: ${el.innerText.trim()} ...`;
+            // position near the word
+            const left = rect.left - cardRect.left;
+            const top = rect.bottom - cardRect.top + 8;
+            note.style.left = `${Math.max(10, left)}px`;
+            note.style.top = `${Math.max(10, top)}px`;
+            // Inline palette for text color
+            const palette = document.createElement('div');
+            palette.contentEditable = false;
+            palette.style.display = 'flex';
+            palette.style.gap = '6px';
+            palette.style.marginBottom = '6px';
+            const colors = ['#2c3e50','#d35400','#27ae60','#2980b9','#8e44ad','#e74c3c'];
+            colors.forEach(c => {
+                const dot = document.createElement('span');
+                dot.style.width = '14px'; dot.style.height = '14px'; dot.style.borderRadius = '50%';
+                dot.style.display = 'inline-block'; dot.style.background = c; dot.style.cursor = 'pointer';
+                dot.style.border = '1px solid rgba(0,0,0,0.2)';
+                dot.onclick = (e) => { e.stopPropagation(); note.style.color = c; };
+                palette.appendChild(dot);
+            });
+            note.insertBefore(palette, note.firstChild);
+            const closeBtn = document.createElement('div');
+            closeBtn.className = 'close-note'; closeBtn.innerHTML = '&times;'; closeBtn.contentEditable = false;
+            closeBtn.onclick = function () { note.remove(); };
+            note.appendChild(closeBtn);
+            makeDraggable(note);
+            card.appendChild(note);
+            note.focus();
         }
         function makeDraggable(el) {
             let isDragging = false; let startX, startY, initialLeft, initialTop;
