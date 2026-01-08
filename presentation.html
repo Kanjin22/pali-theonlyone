@@ -470,6 +470,17 @@
             /* จัดกึ่งกลางเทียบกับจุดที่คำนวณ */
             transform: translateX(-50%) translateY(-10px);
             transition: opacity 0.2s ease;
+            
+            /* ป้องกันไม่ให้ Floating Toolbar ล้นจอในมือถือ */
+            max-width: 90vw;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ปรับระยะห่างบรรทัดให้พิมพ์แก้ง่ายขึ้น */
+        .inline-edit-mode .pali-text,
+        .inline-edit-mode .thai-text {
+            line-height: 2.0; /* เพิ่มระยะห่างบรรทัดตอนแก้ไข */
         }
 
         /* สามเหลี่ยมชี้ลงด้านล่าง */
@@ -1180,23 +1191,10 @@
             <button class="tool-btn" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()">
                 <i class="fa-solid fa-i-cursor"></i>
             </button>
-            <div id="floating-toolbar">
-                <!-- onmousedown="event.preventDefault()" สำคัญมาก เพื่อไม่ให้ Selection หลุดตอนคลิกปุ่ม -->
-                <button onmousedown="event.preventDefault(); inlineFormat('bold')" title="ตัวหนา"><i class="fa-solid fa-bold"></i></button>
-                <button onmousedown="event.preventDefault(); inlineFormat('italic')" title="ตัวเอียง"><i class="fa-solid fa-italic"></i></button>
-                <button onmousedown="event.preventDefault(); inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fa-solid fa-underline"></i></button>
-                
-                <div class="separator"></div>
-                
-                <!-- สี -->
-                <div style="display:flex; gap:6px; align-items:center;">
-                    <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2c3e50')" style="background:#2c3e50;" title="สีดำ"></span>
-                    <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#c0392b')" style="background:#c0392b;" title="สีแดง"></span>
-                    <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#27ae60')" style="background:#27ae60;" title="สีเขียว"></span>
-                    <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2980b9')" style="background:#2980b9;" title="สีน้ำเงิน"></span>
-                    <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" style="background:#8e44ad;" title="สีม่วง"></span>
-                </div>
-            </div>
+            <button class="tool-btn" id="btn-clear-inline" title="ล้างสิ่งที่พิมพ์แทรกทั้งหมด" onclick="confirmClearInlineEdits()" style="display:none; color: #e74c3c;">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+
         </div>
 
         <canvas id="drawing-canvas"></canvas>
@@ -2857,17 +2855,45 @@
                 }
             }
         }
+        function confirmClearInlineEdits() {
+            if (confirm('ต้องการล้างสิ่งที่พิมพ์แก้ไขทั้งหมดในหน้านี้ใช่หรือไม่?')) {
+                clearInlineEdits();
+            }
+        }
         function clearInlineEdits() {
             const storeKey = 'inline_edits_v1';
             let store = {};
             try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-            delete store[getInlineKey()];
+            
+            const key = getInlineKey();
+            if (store[key]) {
+                if (typeof isThaiSense !== 'undefined' && isThaiSense) {
+                    // Sense Mode (เคลียร์เฉพาะโดยอรรถ)
+                    delete store[key].pali_sense;
+                    delete store[key].thai_sense;
+                } else {
+                    // Literal Mode (เคลียร์เฉพาะโดยพยัญชนะ)
+                    delete store[key].pali_literal;
+                    delete store[key].thai_literal;
+                    // Legacy fallback cleanup
+                    delete store[key].pali;
+                    delete store[key].thai;
+                }
+                
+                // ถ้าเหลือแค่ timestamp หรือไม่เหลืออะไรเลย ให้ลบทิ้งทั้งก้อน
+                const remainingKeys = Object.keys(store[key]).filter(k => k !== 'timestamp');
+                if (remainingKeys.length === 0) {
+                    delete store[key];
+                }
+            }
+            
             try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
             updateSlide();
         }
         function toggleInlineEditMode() {
             window.inlineEditMode = !window.inlineEditMode;
             const btn = document.getElementById('btn-inline-edit');
+            const clearBtn = document.getElementById('btn-clear-inline');
             const pali = document.getElementById('paliContent');
             const thai = document.getElementById('thaiContent');
             const toolbar = document.getElementById('floating-toolbar');
@@ -2881,6 +2907,7 @@
 
                 // 2. ปรับหน้าตาปุ่ม
                 if (btn) { btn.classList.add('active'); btn.style.color = '#27ae60'; }
+                if (clearBtn) clearBtn.style.display = 'flex';
 
                 // 3. เปิดให้พิมพ์แก้ได้
                 if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
@@ -2891,14 +2918,21 @@
                 document.addEventListener('selectionchange', checkSelectionForToolbar);
                 document.addEventListener('mouseup', checkSelectionForToolbar);
                 document.addEventListener('keyup', checkSelectionForToolbar); // เผื่อใช้ Shift+Arrow เลือก
+                
+                // 5. เพิ่ม Listener สำหรับ Auto-save
+                ['input', 'blur', 'keyup', 'paste'].forEach(ev => {
+                    if (pali) pali.addEventListener(ev, onInlineChanged);
+                    if (thai) thai.addEventListener(ev, onInlineChanged);
+                });
 
-                // 5. โหลดข้อมูลเก่า (ถ้ามี)
+                // 6. โหลดข้อมูลเก่า (ถ้ามี)
                 loadInlineEdits();
 
             } else {
                 // --- ออกจากโหมดแก้ไข ---
                 
                 if (btn) { btn.classList.remove('active'); btn.style.color = ''; }
+                if (clearBtn) clearBtn.style.display = 'none';
 
                 // 1. ซ่อน Toolbar ทันที
                 if (toolbar) toolbar.style.display = 'none';
@@ -2912,6 +2946,11 @@
                 document.removeEventListener('selectionchange', checkSelectionForToolbar);
                 document.removeEventListener('mouseup', checkSelectionForToolbar);
                 document.removeEventListener('keyup', checkSelectionForToolbar);
+                
+                ['input', 'blur', 'keyup', 'paste'].forEach(ev => {
+                    if (pali) pali.removeEventListener(ev, onInlineChanged);
+                    if (thai) thai.removeEventListener(ev, onInlineChanged);
+                });
             }
         }
 
@@ -3216,6 +3255,24 @@
             }
         }
     </script>
+
+    <div id="floating-toolbar">
+        <!-- onmousedown="event.preventDefault()" สำคัญมาก เพื่อไม่ให้ Selection หลุดตอนคลิกปุ่ม -->
+        <button onmousedown="event.preventDefault(); inlineFormat('bold')" title="ตัวหนา"><i class="fa-solid fa-bold"></i></button>
+        <button onmousedown="event.preventDefault(); inlineFormat('italic')" title="ตัวเอียง"><i class="fa-solid fa-italic"></i></button>
+        <button onmousedown="event.preventDefault(); inlineFormat('underline')" title="ขีดเส้นใต้"><i class="fa-solid fa-underline"></i></button>
+        
+        <div class="separator"></div>
+        
+        <!-- สี -->
+        <div style="display:flex; gap:6px; align-items:center;">
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2c3e50')" style="background:#2c3e50;" title="สีดำ"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#c0392b')" style="background:#c0392b;" title="สีแดง"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#27ae60')" style="background:#27ae60;" title="สีเขียว"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2980b9')" style="background:#2980b9;" title="สีน้ำเงิน"></span>
+            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" style="background:#8e44ad;" title="สีม่วง"></span>
+        </div>
+    </div>
 </body>
 
 </html>
