@@ -328,6 +328,63 @@
     
     /* Legacy support / Global fallback (optional, but better removed to avoid confusion) */
     /* Kept empty or minimal if needed */
+    
+    @media print {
+        body { 
+            background: white; 
+            padding: 0; 
+        }
+        .container { 
+            width: 100%; 
+            max-width: none; 
+            box-shadow: none; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        /* Hide everything in container except #pages */
+        .container > div:not(#pages) {
+            display: none !important;
+        }
+        
+        /* Hide floating toolbar */
+        #floating-toolbar {
+            display: none !important;
+        }
+        
+        /* Inside #pages */
+        #pages {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Hide Navigation Div (Last child of #pages) */
+        #pages > div:last-child {
+            display: none !important;
+        }
+        
+        /* Hide all buttons (Sense buttons, etc.) */
+        button {
+            display: none !important;
+        }
+        
+        /* Ensure text is black for printing */
+        .pali-text, .thai-text, .block {
+            color: black !important;
+            text-shadow: none !important;
+        }
+        
+        /* Remove shadows and borders from sentence items for clean print */
+        .sentence-item {
+            box-shadow: none !important;
+            border: none !important;
+            border-bottom: 1px solid #eee !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Hide URL footers if browser adds them (optional, user controls this usually) */
+    }
   </style>
 </head>
 <body>
@@ -1783,12 +1840,12 @@
                 b1.className='block pali-text';
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
-                b1.style.color='#2c3e50';
+                b1.style.color='#000000'; // Darker Pali
                 b1.innerHTML=wrapWords(s.pali||'', sIndex);
                 
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
-                b2.style.color='#7f8c8d';
+                b2.style.color='#333333'; // Darker Thai
                 b2.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b2.appendChild(senseBtn);
@@ -1799,7 +1856,7 @@
                 const b1=document.createElement('div');
                 b1.className='block thai-text';
                 b1.style.marginBottom='8px';
-                b1.style.color='#2c3e50';
+                b1.style.color='#000000'; // Darker Thai
                 b1.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b1.appendChild(senseBtn);
@@ -1807,7 +1864,7 @@
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
                 b2.style.fontWeight='bold';
-                b2.style.color='#7f8c8d';
+                b2.style.color='#333333'; // Darker Pali
                 b2.innerHTML=wrapWords(s.pali||'', sIndex);
                 
                 item.appendChild(b1);
