@@ -2092,6 +2092,8 @@
             currentPageNumber = groupedPages[currentBookPageIndex].pageNumber;
         }
 
+        const partName = partSelect.options[partSelect.selectedIndex] ? partSelect.options[partSelect.selectedIndex].text : '';
+
         const state = {
             type: 'reader',
             level: levelSelect.value,
@@ -2106,17 +2108,24 @@
             pageNumber: currentPageNumber,
             scrollTop: window.scrollY || document.documentElement.scrollTop,
             timestamp: Date.now(),
-            title: `อ่าน ${(partSelect.options[partSelect.selectedIndex] ? partSelect.options[partSelect.selectedIndex].text : '')} หน้า ${toThaiDigits(currentPageNumber)}`
+            title: `อ่าน ${partName} หน้า ${toThaiDigits(currentPageNumber)}`,
+            lastUrl: window.location.href
         };
 
+        // 1. LocalStorage
         localStorage.setItem('pali_last_session', JSON.stringify(state));
 
-        const storedUid = localStorage.getItem('pali_user_uid');
-        const userName = localStorage.getItem('pali_user_name');
-        const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+        // 2. Firestore (Cloud Sync)
+        if (typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+            const uid = firebase.auth().currentUser.uid;
+            db.collection('users').doc(uid).collection('progress').doc('last_session').set(state, { merge: true })
+                .catch(err => console.warn('Cloud save failed', err));
+        }
 
-        if (uid) {
-            localStorage.setItem(`pali_progress_${uid}`, JSON.stringify(state));
+        // 3. Local User
+        const localUser = localStorage.getItem('pali_user_name');
+        if (localUser) {
+            localStorage.setItem(`pali_progress_local_${localUser}`, JSON.stringify(state));
         }
     }
 

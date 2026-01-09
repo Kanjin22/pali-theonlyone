@@ -2549,6 +2549,7 @@
             }
             loadInlineEdits();
 
+            // Save Progress
             if (slideId) {
                 const title = document.getElementById('slideTitle').innerText;
                 const sub = document.getElementById('slideSubtitle').innerText;
@@ -2559,16 +2560,24 @@
                     id: slideId,
                     index: currentIndex,
                     title: fullTitle,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    lastUrl: window.location.href
                 };
+                
+                // 1. LocalStorage (Backup/Guest)
                 localStorage.setItem('pali_last_session', JSON.stringify(state));
                 
-                const storedUid = localStorage.getItem('pali_user_uid');
-                const userName = localStorage.getItem('pali_user_name');
-                const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+                // 2. Firestore (Cloud Sync)
+                if (typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+                    const uid = firebase.auth().currentUser.uid;
+                    db.collection('users').doc(uid).collection('progress').doc('last_session').set(state, { merge: true })
+                        .catch(err => console.error("Save progress failed:", err));
+                }
                 
-                if (uid) {
-                    localStorage.setItem(`pali_progress_${uid}`, JSON.stringify(state));
+                // 3. Local User (Simple Login)
+                const localUser = localStorage.getItem('pali_user_name');
+                if (localUser) {
+                    localStorage.setItem(`pali_progress_local_${localUser}`, JSON.stringify(state));
                 }
             }
         }

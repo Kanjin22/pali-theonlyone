@@ -384,6 +384,8 @@
                     <div class="card-title">คู่มือการใช้พจนานุกรม</div>
                     <div class="card-desc">อักษรย่อและวิธีการใช้</div>
                 </a>
+                <!-- ปิดไว้ก่อน: ยังไม่เปิดใช้งาน -->
+                <!--
                 <a href="grammar_comparison.html" class="menu-card level-tool">
                     <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
                     <div class="card-title">เปรียบเทียบ ๔ คัมภีร์</div>
@@ -409,6 +411,7 @@
                     <div class="card-title">ดาวน์โหลดเอกสาร</div>
                     <div class="card-desc">คู่มือเรียน, ข้อสอบเก่า, สื่อการสอน</div>
                 </a>
+                -->
             </div>
 
             <div class="section-label" style="margin-top: 40px;">👨‍🏫 เครื่องมือสำหรับอาจารย์</div>
@@ -1769,28 +1772,63 @@
              }
  
             if (resumeBtnEl) {
-                try {
-                    let saved = null;
-                    if (user && user.uid) saved = localStorage.getItem(`pali_progress_${user.uid}`);
-                    if (!saved) saved = localStorage.getItem('pali_last_session');
-                    if (saved) {
-                        const state = JSON.parse(saved);
-                        if (state && state.type === 'reader') {
-                            resumeBtnEl.href = 'reader.html?resume=true';
-                            resumeBtnEl.style.display = 'flex';
-                        } else if (state && state.id && typeof state.index !== 'undefined') {
-                            resumeBtnEl.href = `presentation.html?id=${state.id}&index=${state.index}`;
-                            resumeBtnEl.style.display = 'flex';
-                        } else {
-                            resumeBtnEl.style.display = 'none';
-                        }
+                resumeBtnEl.style.display = 'none'; // ซ่อนไว้ก่อน
+                // resumeBtnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลด...';
+
+                // ฟังก์ชันช่วยสร้างลิงก์
+                const setupResumeButton = (data) => {
+                    if (!data) return;
+                    resumeBtnEl.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อ: ' + (data.title || 'ล่าสุด');
+                    
+                    if (data.type === 'reader') {
+                        // สร้าง URL ของ Reader
+                        let url = `reader.html?resume=true`;
+                        // ถ้ามีข้อมูลละเอียดก็ใส่ไปเลยเพื่อความแม่นยำ (Backup)
+                        if(data.level) url += `&level=${encodeURIComponent(data.level)}`;
+                        resumeBtnEl.href = url;
                     } else {
-                         resumeBtnEl.style.display = 'none';
-                     }
-                 } catch (e) {
-                     resumeBtnEl.style.display = 'none';
-                 }
-             }
+                        // สร้าง URL ของ Presentation
+                        resumeBtnEl.href = `presentation.html?id=${data.id}&index=${data.index}`;
+                    }
+                    resumeBtnEl.style.display = 'flex';
+                };
+
+                function fallbackToLocal() {
+                    try {
+                        // เช็ค LocalStorage แบบระบุชื่อ (Simple Login)
+                        let localData = null;
+                        // Use user.displayName safely
+                        if (user && user.displayName) {
+                             localData = localStorage.getItem(`pali_progress_local_${user.displayName}`);
+                        }
+                        // หรือเช็คแบบ Guest ล่าสุด
+                        if (!localData) localData = localStorage.getItem('pali_last_session');
+
+                        if (localData) {
+                            setupResumeButton(JSON.parse(localData));
+                        }
+                    } catch (e) { }
+                }
+
+                // 1. ลองดึงจาก Firestore ก่อน (ข้อมูลล่าสุดจากทุกเครื่อง)
+                if (user && user.uid && !user.uid.startsWith('local_')) {
+                    db.collection('users').doc(user.uid).collection('progress').doc('last_session').get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            // เจอใน Cloud -> ใช้เลย
+                            setupResumeButton(doc.data());
+                        } else {
+                            // ไม่เจอใน Cloud -> ลองดูใน LocalStorage (เครื่องนี้)
+                            fallbackToLocal();
+                        }
+                    }).catch(() => {
+                        // Error -> Fallback ไป Local
+                        fallbackToLocal();
+                    });
+                } else {
+                    fallbackToLocal();
+                }
+            }
  
              // 6. Today pins summary
              const todayEl = document.getElementById('dash-today');
