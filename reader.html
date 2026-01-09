@@ -813,7 +813,7 @@
 
         // 3. Formatting (Beauty): Add breaks/styling for key sections
         // Analysis section (วิ.ว่า) -> New paragraph + Orange Bold
-        clean = clean.replace(/(วิ\.ว่า)/g, '<br><br><span style="color:#d35400; font-weight:bold;">$1</span>');
+        clean = clean.replace(/(วิ\.ว่า)/g, '<br><span style="color:#d35400; font-weight:bold;">$1</span>');
         
         // Declension section (แจกเหมือน) -> New line + Green Bold
         clean = clean.replace(/(แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
