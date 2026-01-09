@@ -1983,6 +1983,7 @@
                 currentBookPageIndex--;
                 renderCurrentPage();
                 window.scrollTo({top: 0, behavior: 'smooth'});
+                saveReaderProgress();
             }
         };
         
@@ -2003,6 +2004,7 @@
                 currentBookPageIndex++;
                 renderCurrentPage();
                 window.scrollTo({top: 0, behavior: 'smooth'});
+                saveReaderProgress();
             }
         };
         
@@ -2023,6 +2025,8 @@
         if(document.getElementById('fontSelect')) {
              changeFontFamily(document.getElementById('fontSelect').value);
         }
+        
+        saveReaderProgress();
     }
 
     function changeFontFamily(font) {
@@ -2060,6 +2064,98 @@
         document.querySelectorAll('.thai-text').forEach(el => {
             el.style.fontFamily = thaiFamily;
         });
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function saveReaderProgress() {
+        const levelSelect = document.getElementById('levelSelect');
+        const subjectSelect = document.getElementById('subjectSelect');
+        const partSelect = document.getElementById('partSelect');
+        const vaggaSelect = document.getElementById('vaggaSelect');
+        const storySelect = document.getElementById('storySelect');
+        
+        if (!levelSelect || !partSelect) return;
+
+        let currentPageNumber = 0;
+        if (groupedPages.length > 0 && groupedPages[currentBookPageIndex]) {
+            currentPageNumber = groupedPages[currentBookPageIndex].pageNumber;
+        }
+
+        const state = {
+            type: 'reader',
+            level: levelSelect.value,
+            subject: subjectSelect.value,
+            part: partSelect.value,
+            vagga: vaggaSelect.value,
+            story: storySelect.value,
+            startPage: document.getElementById('startPage').value,
+            endPage: document.getElementById('endPage').value,
+            layout: document.getElementById('layoutSelect').value,
+            pageIndex: currentBookPageIndex,
+            pageNumber: currentPageNumber,
+            scrollTop: window.scrollY || document.documentElement.scrollTop,
+            timestamp: Date.now(),
+            title: `อ่าน ${(partSelect.options[partSelect.selectedIndex] ? partSelect.options[partSelect.selectedIndex].text : '')} หน้า ${toThaiDigits(currentPageNumber)}`
+        };
+
+        localStorage.setItem('pali_last_session', JSON.stringify(state));
+
+        const storedUid = localStorage.getItem('pali_user_uid');
+        const userName = localStorage.getItem('pali_user_name');
+        const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+
+        if (uid) {
+            localStorage.setItem(`pali_progress_${uid}`, JSON.stringify(state));
+        }
+    }
+
+    async function restoreReaderProgress(state) {
+        if (!state) return;
+        
+        const setVal = (id, val, populateFn) => {
+            const sel = document.getElementById(id);
+            if (!sel) return;
+            sel.value = val;
+            if (sel.value !== val && val) {
+                console.warn(`Could not restore ${id} to ${val}`);
+            }
+            
+            if (populateFn) populateFn();
+        };
+
+        populateLevels(); 
+        setVal('levelSelect', state.level, populateSubjects);
+        setVal('subjectSelect', state.subject, populateParts);
+        setVal('partSelect', state.part, populateVaggas);
+        setVal('vaggaSelect', state.vagga, populateStories);
+        setVal('storySelect', state.story, updatePageRange);
+
+        document.getElementById('startPage').value = state.startPage || '';
+        document.getElementById('endPage').value = state.endPage || '';
+        if (state.layout) document.getElementById('layoutSelect').value = state.layout;
+
+        if (typeof state.pageIndex !== 'undefined') {
+            currentBookPageIndex = state.pageIndex;
+        }
+
+        render(false);
+
+        if (state.scrollTop) {
+            setTimeout(() => {
+                window.scrollTo(0, state.scrollTop);
+            }, 500);
+        }
     }
 
     function init(){
@@ -2173,6 +2269,20 @@
                 }
             }
         });
+
+        if (params.get('resume') === 'true') {
+              const storedUid = localStorage.getItem('pali_user_uid');
+              const userName = localStorage.getItem('pali_user_name');
+              const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+             
+             let state = null;
+             if (uid) state = JSON.parse(localStorage.getItem(`pali_progress_${uid}`) || 'null');
+             if (!state) state = JSON.parse(localStorage.getItem('pali_last_session') || 'null');
+             
+            if (state && state.type === 'reader') setTimeout(() => restoreReaderProgress(state), 100);
+        }
+        
+        window.addEventListener('scroll', debounce(saveReaderProgress, 1000));
     }
 // --- Note Mode Logic ---
 window.isNoteMode = false;

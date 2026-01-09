@@ -1448,6 +1448,7 @@
                 loadTodayPins();
 
                 const uid = user.uid;
+                localStorage.setItem('pali_user_uid', uid);
 
                 let cachedRole = null;
                 try {
@@ -1635,6 +1636,7 @@
                 }).catch(err => console.error("Firestore Error:", err));
 
             } else {
+                localStorage.removeItem('pali_user_uid');
                 hideUser();
                 if (appContent) appContent.style.display = 'none';
                 openLogin();
@@ -1766,19 +1768,23 @@
                  }
              }
  
-             // 5. Resume button
-             if (resumeBtnEl) {
-                 try {
-                     const saved = localStorage.getItem('pali_last_session');
-                     if (saved) {
-                         const state = JSON.parse(saved);
-                         if (state.id && typeof state.index !== 'undefined') {
-                             resumeBtnEl.href = `presentation.html?id=${state.id}&index=${state.index}`;
-                             resumeBtnEl.style.display = 'flex';
-                         } else {
-                             resumeBtnEl.style.display = 'none';
-                         }
-                     } else {
+            if (resumeBtnEl) {
+                try {
+                    let saved = null;
+                    if (user && user.uid) saved = localStorage.getItem(`pali_progress_${user.uid}`);
+                    if (!saved) saved = localStorage.getItem('pali_last_session');
+                    if (saved) {
+                        const state = JSON.parse(saved);
+                        if (state && state.type === 'reader') {
+                            resumeBtnEl.href = 'reader.html?resume=true';
+                            resumeBtnEl.style.display = 'flex';
+                        } else if (state && state.id && typeof state.index !== 'undefined') {
+                            resumeBtnEl.href = `presentation.html?id=${state.id}&index=${state.index}`;
+                            resumeBtnEl.style.display = 'flex';
+                        } else {
+                            resumeBtnEl.style.display = 'none';
+                        }
+                    } else {
                          resumeBtnEl.style.display = 'none';
                      }
                  } catch (e) {
@@ -1827,36 +1833,111 @@
         }
 
         // --- Resume Learning Logic ---
-        function checkResume() {
+        function saveSimpleUser() {
+            const input = document.getElementById('simple-username');
+            const name = input.value.trim();
+            if (name) {
+                localStorage.setItem('pali_user_name', name);
+                location.reload(); 
+            }
+        }
+
+        function checkSimpleLogin() {
+            const simpleLoginSection = document.getElementById('simple-login-section');
+            const appContent = document.getElementById('app-content');
+            const userName = localStorage.getItem('pali_user_name');
+            const btnLogout = document.getElementById('btn-logout');
+
+            // If Firebase user is present, they take precedence (handled in auth listener)
+            if (window._currentUser) {
+                if (simpleLoginSection) simpleLoginSection.style.display = 'none';
+                return;
+            }
+
+            if (userName) {
+                // Local User Logged In
+                if (simpleLoginSection) simpleLoginSection.style.display = 'none';
+                if (appContent) appContent.style.display = 'block';
+
+                // Update UI
+                const greetingEl = document.getElementById('dash-greeting');
+                if (greetingEl) greetingEl.textContent = `สวัสดีครับ, ${userName}`;
+                
+                const userInfo = document.getElementById('user-info');
+                if (userInfo) {
+                    userInfo.innerHTML = `<b>${userName}</b> <span style="font-size:0.75rem; background:#95a5a6; color:white; padding:2px 8px; border-radius:99px;">Guest</span>`;
+                    userInfo.style.display = 'inline-flex';
+                    userInfo.style.alignItems = 'center';
+                }
+
+                const btnOpenLogin = document.getElementById('btn-open-login');
+                if (btnOpenLogin) btnOpenLogin.style.display = 'none';
+
+                if (btnLogout) {
+                    btnLogout.style.display = 'inline-block';
+                    btnLogout.onclick = () => {
+                        localStorage.removeItem('pali_user_name');
+                        location.reload();
+                    };
+                }
+                
+                // Show Dashboard with Local ID
+                const fakeUser = { uid: 'local_' + userName, displayName: userName };
+                updateStudentDashboard(fakeUser, 'student'); // Treat as student to show dashboard
+                
+                // Check Resume for this user
+                checkResume(fakeUser.uid);
+            } else {
+                // No Login
+                if (simpleLoginSection) simpleLoginSection.style.display = 'block';
+            }
+        }
+
+        function checkResume(specificUid = null) {
             const resumeSection = document.getElementById('resume-section');
             const resumeBtn = document.getElementById('resume-btn');
             const resumeTitle = document.getElementById('resume-title');
             const resumeDesc = document.getElementById('resume-desc');
 
             try {
-                const saved = localStorage.getItem('pali_last_session');
+                let saved = null;
+                if (specificUid) {
+                    saved = localStorage.getItem(`pali_progress_${specificUid}`);
+                }
+                if (!saved) {
+                    saved = localStorage.getItem('pali_last_session');
+                }
+
                 if (saved) {
                     const state = JSON.parse(saved);
-                    // Validate
-                    if (state.id && typeof state.index !== 'undefined') {
+                    const isReader = state && state.type === 'reader' && typeof state.scrollTop !== 'undefined';
+                    const isPresentation = state && state.id && typeof state.index !== 'undefined';
+                    if (isReader || isPresentation) {
                         resumeSection.style.display = 'block';
                         resumeTitle.textContent = state.title || "บทเรียนล่าสุด";
                         
-                        // Format time
                         const date = new Date(state.timestamp);
                         const timeStr = date.toLocaleDateString('th-TH') + ' ' + date.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
                         resumeDesc.textContent = `เรียนต่อจากที่ค้างไว้ (${timeStr})`;
                         
-                        resumeBtn.href = `presentation.html?id=${state.id}&index=${state.index}`;
+                        if (state.type === 'reader') {
+                             resumeBtn.href = 'reader.html?resume=true';
+                        } else {
+                              resumeBtn.href = `presentation.html?id=${state.id}&index=${state.index}`;
+                        }
+                        return;
                     }
                 }
+                
+                resumeSection.style.display = 'none';
             } catch (e) {
                 console.error("Error loading resume state", e);
+                resumeSection.style.display = 'none';
             }
         }
         
-        // Call on load
-        checkResume();
+        setTimeout(checkSimpleLogin, 500);
+
     </script>
 </body>
 

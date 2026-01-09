@@ -2549,15 +2549,27 @@
             }
             loadInlineEdits();
 
-            // Save Progress
             if (slideId) {
+                const title = document.getElementById('slideTitle').innerText;
+                const sub = document.getElementById('slideSubtitle').innerText;
+                const fullTitle = sub ? `${title} - ${sub}` : title;
+                
                 const state = {
+                    type: 'presentation',
                     id: slideId,
                     index: currentIndex,
-                    title: document.getElementById('slideTitle').innerText,
+                    title: fullTitle,
                     timestamp: Date.now()
                 };
                 localStorage.setItem('pali_last_session', JSON.stringify(state));
+                
+                const storedUid = localStorage.getItem('pali_user_uid');
+                const userName = localStorage.getItem('pali_user_name');
+                const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+                
+                if (uid) {
+                    localStorage.setItem(`pali_progress_${uid}`, JSON.stringify(state));
+                }
             }
         }
 
