@@ -934,6 +934,7 @@
                     // Populate Form
                     if (data.days && Array.isArray(data.days)) {
                         data.days.forEach(day => addRow(day));
+                        sortScheduleRows();
                     }
                 } else {
                     statusMsg.style.display = 'block';
@@ -1176,6 +1177,11 @@
                 data.push(obj);
             });
 
+            data.sort((a, b) => {
+                const ta = a && a.date ? new Date(a.date).getTime() : Number.POSITIVE_INFINITY;
+                const tb = b && b.date ? new Date(b.date).getTime() : Number.POSITIVE_INFINITY;
+                return (Number.isFinite(ta) ? ta : Number.POSITIVE_INFINITY) - (Number.isFinite(tb) ? tb : Number.POSITIVE_INFINITY);
+            });
             return data;
         }
 
@@ -1285,7 +1291,13 @@
             // Column Delete
             let colDel = document.createElement('div');
             colDel.style.height = '100%';
-            colDel.innerHTML = `<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>`;
+            colDel.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:6px; height:100%;">
+                    <button class="btn btn-primary" style="padding:6px 10px; font-size:14px;" onclick="moveRowUp(this)" title="ย้ายขึ้น"><i class="fa-solid fa-chevron-up"></i></button>
+                    <button class="btn btn-primary" style="padding:6px 10px; font-size:14px;" onclick="moveRowDown(this)" title="ย้ายลง"><i class="fa-solid fa-chevron-down"></i></button>
+                    <button class="btn btn-danger" style="height:40px;" onclick="this.closest('.row-entry').remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
 
             div.appendChild(col1);
             div.appendChild(colMorning);
@@ -1300,6 +1312,41 @@
             if (weekendCheckbox.checked) {
                 toggleWeekendMode(weekendCheckbox);
             }
+        }
+
+        function getRowDateKey(row) {
+            try {
+                const v = row.querySelector('.input-date') ? row.querySelector('.input-date').value : '';
+                if (!v) return Number.POSITIVE_INFINITY;
+                const ms = new Date(v).getTime();
+                return Number.isFinite(ms) ? ms : Number.POSITIVE_INFINITY;
+            } catch (e) {
+                return Number.POSITIVE_INFINITY;
+            }
+        }
+
+        function sortScheduleRows() {
+            const container = document.getElementById('schedule-rows');
+            if (!container) return;
+            const rows = Array.from(container.querySelectorAll('.row-entry'));
+            rows.sort((a, b) => getRowDateKey(a) - getRowDateKey(b));
+            rows.forEach(r => container.appendChild(r));
+        }
+
+        function moveRowUp(btn) {
+            const row = btn.closest('.row-entry');
+            if (!row || !row.parentElement) return;
+            const prev = row.previousElementSibling;
+            if (!prev) return;
+            row.parentElement.insertBefore(row, prev);
+        }
+
+        function moveRowDown(btn) {
+            const row = btn.closest('.row-entry');
+            if (!row || !row.parentElement) return;
+            const next = row.nextElementSibling;
+            if (!next) return;
+            row.parentElement.insertBefore(next, row);
         }
 
         function renderChips(values, availableFiles) {
@@ -1692,6 +1739,7 @@
             if (displayInput) {
                 displayInput.value = displayStr;
             }
+            sortScheduleRows();
         }
 
         function checkActivityInput(input) {

@@ -565,8 +565,25 @@
         // Initialize Firestore
         const db = firebase.firestore();
 
+        function getDayDateKey(day) {
+            try {
+                const v = day && day.date ? day.date : '';
+                if (!v) return Number.POSITIVE_INFINITY;
+                const ms = new Date(v).getTime();
+                return Number.isFinite(ms) ? ms : Number.POSITIVE_INFINITY;
+            } catch (e) {
+                return Number.POSITIVE_INFINITY;
+            }
+        }
+
+        function sortScheduleDaysInPlace(data) {
+            if (!data || !Array.isArray(data.days)) return;
+            data.days.sort((a, b) => getDayDateKey(a) - getDayDateKey(b));
+        }
+
         function openPdfPreview() {
             if (!scheduleData) return alert("ไม่พบข้อมูลตารางเรียน");
+            sortScheduleDaysInPlace(scheduleData);
             
             // Create a new window
             const win = window.open('', '_blank');
@@ -847,6 +864,7 @@
                 }
 
                 scheduleData = doc.data();
+                sortScheduleDaysInPlace(scheduleData);
                 renderPage(scheduleData);
 
                 // Log view (optional)
@@ -867,6 +885,7 @@
         async function renderPage(data) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
+            sortScheduleDaysInPlace(data);
 
             // 1. Header Info
             const monthNames = {
