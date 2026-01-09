@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +8,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --header-bg: rgba(255, 255, 255, 0.1);
+            --stats-bg: rgba(255, 255, 255, 0.15);
+            --stats-border: rgba(255, 255, 255, 0.18);
+            --card-front-bg: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            --card-front-text: #2c3e50;
+            --card-back-bg: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+            --card-back-text: #2c3e50;
+            --details-bg: rgba(255,255,255,0.6);
+            --details-text: #444;
+            --details-border: rgba(0,0,0,0.1);
+            --select-bg: rgba(0,0,0,0.2);
+            --select-text: white;
+            --select-border: rgba(255,255,255,0.3);
+            --btn-skip-bg: rgba(255,255,255,0.2);
+            --btn-skip-hover: rgba(255,255,255,0.3);
+            --hint-text-color: #95a5a6;
+            --pali-word-color: #1a2a6c;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --header-bg: rgba(0, 0, 0, 0.3);
+            --stats-bg: rgba(0, 0, 0, 0.4);
+            --stats-border: rgba(255, 255, 255, 0.05);
+            --card-front-bg: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --card-front-text: #ecf0f1;
+            --card-back-bg: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+            --card-back-text: #ecf0f1;
+            --details-bg: rgba(0, 0, 0, 0.2);
+            --details-text: #bdc3c7;
+            --details-border: rgba(255,255,255,0.1);
+            --select-bg: rgba(0, 0, 0, 0.5);
+            --select-text: #ecf0f1;
+            --select-border: rgba(255,255,255,0.1);
+            --btn-skip-bg: rgba(255,255,255,0.05);
+            --btn-skip-hover: rgba(255,255,255,0.1);
+            --hint-text-color: #7f8c8d;
+            --pali-word-color: #a0c4ff;
+        }
+
         body {
             font-family: 'Sarabun', sans-serif;
             /* พื้นหลังสีสันสดใสแต่สบายตา (Deep Ocean Gradient) */
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: var(--bg-gradient);
             color: #333;
             margin: 0;
             display: flex;
@@ -66,7 +108,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 20px;
@@ -105,7 +147,7 @@
         }
 
         .stats-bar {
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--stats-bg);
             padding: 12px 25px;
             border-radius: 50px;
             display: inline-flex;
@@ -113,7 +155,7 @@
             margin-bottom: 30px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid var(--stats-border);
         }
 
         .stat-item {
@@ -166,14 +208,14 @@
 
         /* หน้าบัตร - เรียบหรู สะอาด */
         .card-front {
-            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-            color: #2c3e50;
+            background: var(--card-front-bg);
+            color: var(--card-front-text);
         }
 
         /* หลังบัตร - สีสันสดใส (Pastel Yellow/Orange Gradient) */
         .card-back {
-            background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
-            color: #2c3e50;
+            background: var(--card-back-bg);
+            color: var(--card-back-text);
             transform: rotateY(180deg);
             overflow-y: auto;
             justify-content: flex-start;
@@ -190,7 +232,7 @@
             font-size: 3.5rem; /* ใหญ่ขึ้น */
             font-weight: bold;
             margin-bottom: 15px;
-            color: #1a2a6c;
+            color: var(--pali-word-color);
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
             white-space: nowrap; /* ห้ามขึ้นบรรทัดใหม่ */
             width: 100%;
@@ -303,7 +345,7 @@
         /* Hint Text Animation */
         .hint-text {
             font-size: 0.9rem;
-            color: #95a5a6;
+            color: var(--hint-text-color);
             margin-top: 30px;
             animation: pulse 2s infinite;
         }
@@ -412,6 +454,33 @@
     <script src="data/pali-script.js"></script>
 
     <script>
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        // Initialize theme
+        initTheme();
+
         // 1. Collect Content
         const slidesDatabase = Object.assign({},
             (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),

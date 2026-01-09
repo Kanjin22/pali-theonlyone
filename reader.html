@@ -8,18 +8,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Taviraj:wght@300;400;500;600&family=Maitree:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    body{font-family:'Sarabun',sans-serif;background:#f5f5f5;padding:20px}
-    .container{max-width:1200px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
-    h1{margin:0 0 5px;color:#2c3e50;font-size:1.4em}
-    .controls{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:#f8f9fa;padding:10px;border-radius:8px;margin-bottom:12px}
-    label{font-size:.9em;color:#555;font-weight:600;margin-bottom:4px;display:block}
-    select,input{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:'Sarabun',sans-serif}
+    :root {
+        --bg-color: #f5f5f5;
+        --container-bg: #fff;
+        --text-color: #333;
+        --heading-color: #2c3e50;
+        --controls-bg: #f8f9fa;
+        --input-border: #ddd;
+        --input-bg: #fff;
+        --page-bg: #fff;
+        --page-border: #eee;
+        --badge-bg: #ecf0f1;
+        --badge-text: #2c3e50;
+        --label-color: #555;
+    }
+    [data-theme="dark"] {
+        --bg-color: #121212;
+        --container-bg: #1e1e1e;
+        --text-color: #e0e0e0;
+        --heading-color: #ecf0f1;
+        --controls-bg: #2d2d2d;
+        --input-border: #444;
+        --input-bg: #333;
+        --page-bg: #252525;
+        --page-border: #333;
+        --badge-bg: #333;
+        --badge-text: #ddd;
+        --label-color: #aaa;
+    }
+
+    body{font-family:'Sarabun',sans-serif;background:var(--bg-color);padding:20px; color:var(--text-color); transition: background-color 0.3s, color 0.3s;}
+    .container{max-width:1200px;margin:0 auto;background:var(--container-bg);padding:24px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
+    h1{margin:0 0 5px;color:var(--heading-color);font-size:1.4em}
+    .controls{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:var(--controls-bg);padding:10px;border-radius:8px;margin-bottom:12px}
+    label{font-size:.9em;color:var(--label-color);font-weight:600;margin-bottom:4px;display:block}
+    select,input{width:100%;padding:8px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color);border-radius:6px;font-family:'Sarabun',sans-serif}
     .layout{display:flex;gap:10px;align-items:center;margin:10px 0}
     .btn{background:#2ecc71;color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer}
     .btn.secondary{background:#3498db}
-    .page{border:1px solid #eee;border-radius:10px;margin:12px 0;padding:16px;background:#fff}
+    .page{border:1px solid var(--page-border);border-radius:10px;margin:12px 0;padding:16px;background:var(--page-bg)}
     .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .badge{background:#ecf0f1;color:#2c3e50;border-radius:16px;padding:4px 10px;font-size:.85em}
+    .badge{background:var(--badge-bg);color:var(--badge-text);border-radius:16px;padding:4px 10px;font-size:.85em}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .block{white-space:pre-wrap;line-height:1.8}
     .pali-text { 
@@ -569,7 +598,31 @@
   <script src="./data/raw/vocab-insan-pr9.js"></script>
   <script src="./data/raw/vocab-insan-pr9-5-8.js"></script>
   <script>
-      // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                }
+            }
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            }
+        }
+        // Initialize theme
+        initTheme();
+
+        // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
       if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
           for (var key in vocabInsanPr9Part5to8) {
               if (!vocabInsanPr9.hasOwnProperty(key)) {

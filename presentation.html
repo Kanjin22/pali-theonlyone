@@ -13,6 +13,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        :root {
+            --bg-color: #37474f;
+            --card-bg: #ffffff;
+            --text-primary: #263238;
+            --text-secondary: #546e7a;
+            --header-gradient-start: #263238;
+            --header-gradient-mid: #546e7a;
+            --header-gradient-end: #78909c;
+            --meta-bg: #f7f9f9;
+            --meta-border: #eceff1;
+            --title-color: #2c3e50;
+            --subtitle-color: #607d8b;
+            --content-area-bg: #f5f5f5;
+            --split-pane-bg: #fff;
+            --split-border: #eceff1;
+            --pane-label-bg: #eceff1;
+            --pane-label-text: #78909c;
+            --footer-bg: #f7f9f9;
+            --footer-border: #eceff1;
+            --sec-title-color: #90a4ae;
+            --sec-title-border: #cfd8dc;
+            --content-text: #37474f;
+            --tool-btn-bg: #eceff1;
+            --tool-btn-color: #546e7a;
+            --tool-btn-hover: #cfd8dc;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --header-gradient-start: #000000;
+            --header-gradient-mid: #333333;
+            --header-gradient-end: #555555;
+            --meta-bg: #2d2d2d;
+            --meta-border: #333;
+            --title-color: #ecf0f1;
+            --subtitle-color: #bdc3c7;
+            --content-area-bg: #121212;
+            --split-pane-bg: #1e1e1e;
+            --split-border: #333;
+            --pane-label-bg: #333;
+            --pane-label-text: #aaa;
+            --footer-bg: #252525;
+            --footer-border: #333;
+            --sec-title-color: #78909c;
+            --sec-title-border: #444;
+            --content-text: #d0d0d0;
+            --tool-btn-bg: #333;
+            --tool-btn-color: #ddd;
+            --tool-btn-hover: #444;
+        }
+
         @font-face {
              font-family: 'DilleniaUPC_4Balee';
              src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee-Regular.ttf') format('truetype');
@@ -137,13 +191,13 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #37474f;
+            background-color: var(--bg-color);
             font-family: 'Sarabun', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #37474f;
+            color: var(--content-text);
             overflow: hidden;
         }
 
@@ -154,7 +208,7 @@
             height: 85vh;
             /* เผื่อที่ด้านล่างไว้ให้ปุ่ม Nav */
             max-height: none;
-            background-color: #ffffff;
+            background-color: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
             display: flex;
@@ -167,7 +221,7 @@
 
         .header-bar {
             height: 6px;
-            background: linear-gradient(90deg, #263238, #546e7a, #78909c);
+            background: linear-gradient(90deg, var(--header-gradient-start), var(--header-gradient-mid), var(--header-gradient-end));
             width: 100%;
             flex-shrink: 0;
         }
@@ -189,15 +243,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 15px 10px 50px; /* เว้นระยะซ้ายให้ปุ่มย้อนกลับ */
-            background-color: #f7f9f9;
-            border-bottom: 1px solid #eceff1;
+            background-color: var(--meta-bg);
+            border-bottom: 1px solid var(--meta-border);
             flex-wrap: wrap;
             gap: 10px;
         }
         .slide-title {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--title-color);
             overflow-wrap: break-word;
             word-break: break-word;
             line-height: 1.4;
@@ -206,7 +260,7 @@
         .slide-subtitle {
             font-size: 1rem;
             font-weight: 600;
-            color: #607d8b;
+            color: var(--subtitle-color);
             overflow-wrap: break-word;
             word-break: break-word;
             line-height: 1.4;
@@ -220,16 +274,16 @@
             flex-direction: column;
             overflow: hidden;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: var(--content-area-bg);
         }
 
         .split-pane {
             flex: 1;
             overflow-y: auto;
             padding: 25px 60px;
-            background-color: #fff;
+            background-color: var(--split-pane-bg);
             position: relative;
-            border-bottom: 4px solid #eceff1;
+            border-bottom: 4px solid var(--split-border);
         }
 
         .split-pane:last-child {
@@ -588,8 +642,8 @@
             position: relative;
             padding: 8px 12px;
             border-radius: 8px;
-            background-color: #eceff1;
-            color: #546e7a;
+            background-color: var(--tool-btn-bg);
+            color: var(--tool-btn-color);
             border: none;
             cursor: pointer;
             transition: all 0.2s;
@@ -603,7 +657,7 @@
         }
 
         .tool-btn:hover {
-            background-color: #cfd8dc;
+            background-color: var(--tool-btn-hover);
             transform: translateX(-2px);
         }
 
@@ -1298,6 +1352,33 @@
                 }
             }
         }
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            }
+        }
+
+        // Initialize theme
+        initTheme();
+
     </script>
     <script src="data/raw/vocab-bhumibalo.js"></script>
     <script src="data/raw/vocab-jinakalamalini.js"></script>

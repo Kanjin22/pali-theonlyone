@@ -7,20 +7,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --page-title-color: #2c3e50;
+            --page-subtitle-color: #7f8c8d;
+            --card-bg: #ffffff;
+            --card-border: #eee;
+            --card-shadow: rgba(0,0,0,0.05);
+            --input-border: #e0e0e0;
+            --input-focus: #3498db;
+            --input-focus-shadow: rgba(52, 152, 219, 0.2);
+            --icon-color: #95a5a6;
+            --filter-btn-bg: #f1f2f6;
+            --filter-btn-text: #57606f;
+            --filter-btn-hover: #dfe4ea;
+            --filter-btn-active-bg: #3498db;
+            --filter-btn-active-text: #ffffff;
+            --vocab-card-bg: #ffffff;
+            --vocab-card-border: #e0e0e0;
+            --word-title-color: #2c3e50;
+            --word-details-color: #555;
+            --empty-state-color: #95a5a6;
+            --empty-state-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --page-title-color: #ecf0f1;
+            --page-subtitle-color: #bdc3c7;
+            --card-bg: #1e1e1e;
+            --card-border: #333;
+            --card-shadow: rgba(0,0,0,0.5);
+            --input-border: #444;
+            --input-focus: #5dade2;
+            --input-focus-shadow: rgba(93, 173, 226, 0.2);
+            --icon-color: #7f8c8d;
+            --filter-btn-bg: #2d3436;
+            --filter-btn-text: #bdc3c7;
+            --filter-btn-hover: #3d4648;
+            --filter-btn-active-bg: #3498db;
+            --filter-btn-active-text: #ffffff;
+            --vocab-card-bg: #1e1e1e;
+            --vocab-card-border: #333;
+            --word-title-color: #ecf0f1;
+            --word-details-color: #bdc3c7;
+            --empty-state-color: #7f8c8d;
+            --empty-state-bg: #2d3436;
+        }
+
+        body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); margin: 0; padding: 40px 20px; color: var(--text-color); }
         .container { max-width: 900px; margin: 0 auto; }
         
-        .header-section { text-align: center; margin-bottom: 40px; }
-        .page-title { font-size: 2.5rem; color: #2c3e50; font-weight: 700; margin-bottom: 10px; }
-        .page-subtitle { color: #7f8c8d; font-size: 1.2rem; }
+        .header-section { text-align: center; margin-bottom: 40px; position: relative; }
+        .page-title { font-size: 2.5rem; color: var(--page-title-color); font-weight: 700; margin-bottom: 10px; }
+        .page-subtitle { color: var(--page-subtitle-color); font-size: 1.2rem; }
         
         .search-box-container { 
-            background: white; 
+            background: var(--card-bg); 
             padding: 30px; 
             border-radius: 15px; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            box-shadow: 0 5px 20px var(--card-shadow); 
             margin-bottom: 30px;
-            border: 1px solid #eee;
+            border: 1px solid var(--card-border);
         }
 
         /* Mobile Responsive */
@@ -49,17 +99,19 @@
             width: 100%;
             padding: 15px 50px 15px 20px;
             font-size: 1.2rem;
-            border: 2px solid #e0e0e0;
+            border: 2px solid var(--input-border);
             border-radius: 50px;
             outline: none;
             transition: all 0.3s;
             font-family: 'Sarabun', sans-serif;
             box-sizing: border-box;
+            background: var(--card-bg);
+            color: var(--text-color);
         }
         
         .search-input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+            border-color: var(--input-focus);
+            box-shadow: 0 0 10px var(--input-focus-shadow);
         }
         
         .search-icon {
@@ -67,7 +119,7 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #95a5a6;
+            color: var(--icon-color);
             font-size: 1.2rem;
         }
 
@@ -79,25 +131,25 @@
         }
 
         .filter-btn {
-            background: #f1f2f6;
+            background: var(--filter-btn-bg);
             border: none;
             padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
-            color: #57606f;
+            color: var(--filter-btn-text);
             font-size: 0.95rem;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
 
         .filter-btn:hover {
-            background: #dfe4ea;
+            background: var(--filter-btn-hover);
         }
 
         .filter-btn.active {
-            background: #3498db;
-            color: white;
-            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+            background: var(--filter-btn-active-bg);
+            color: var(--filter-btn-active-text);
+            box-shadow: 0 2px 5px var(--input-focus-shadow);
         }
 
         .results-container {
@@ -108,12 +160,12 @@
 
         /* Vocab Card Styling */
         .vocab-card {
-            background: white;
+            background: var(--vocab-card-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px var(--card-shadow);
             overflow: hidden;
             transition: transform 0.2s;
-            border: 1px solid #eee;
+            border: 1px solid var(--vocab-card-border);
         }
         
         .vocab-card:hover {
@@ -209,9 +261,11 @@
 
         .empty-state {
             text-align: center;
-            padding: 40px;
-            color: #95a5a6;
-            font-size: 1.1rem;
+            padding: 50px 20px;
+            color: var(--empty-state-color);
+            background: var(--empty-state-bg);
+            border-radius: 10px;
+            border: 2px dashed var(--input-border);
         }
         
         .stem-info {
@@ -226,7 +280,12 @@
 <body>
 
     <div class="container">
-        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+            <button id="theme-toggle" class="filter-btn" onclick="toggleTheme()" title="โหมดมืด/สว่าง" style="border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; justify-content: center; align-items: center;">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
         
         <div class="header-section">
             <div class="page-title">📚 พจนานุกรมศัพท์บาลี</div>
@@ -433,6 +492,33 @@
                 `;
             }).join('');
         }
+
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        // Initialize theme
+        initTheme();
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {

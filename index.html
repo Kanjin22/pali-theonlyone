@@ -9,12 +9,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-sec: #7f8c8d;
+            --heading-color: #2c3e50;
+            --border-color: #eee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --btn-bg: #ffffff;
+            --btn-text: #333;
+        }
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-sec: #b0b0b0;
+            --heading-color: #ecf0f1;
+            --border-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --btn-bg: #2d2d2d;
+            --btn-text: #e0e0e0;
+        }
+
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: #f8f9fa;
+            background-color: var(--bg-color);
             margin: 0;
             padding: 40px 20px;
-            color: #333;
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -30,14 +54,14 @@
 
         .hero-title {
             font-size: 2.8rem;
-            color: #2c3e50;
+            color: var(--heading-color);
             margin-bottom: 10px;
             font-weight: 700;
         }
 
         .hero-subtitle {
             font-size: 1.3rem;
-            color: #7f8c8d;
+            color: var(--text-sec);
             font-weight: 300;
         }
 
@@ -45,7 +69,7 @@
             text-align: left;
             font-size: 1.2rem;
             font-weight: bold;
-            color: #34495e;
+            color: var(--heading-color);
             margin: 30px 0 15px 0;
             border-left: 5px solid #3498db;
             padding-left: 10px;
@@ -59,10 +83,10 @@
         }
 
         .menu-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 30px 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px var(--shadow-color);
             text-decoration: none;
             color: inherit;
             transition: all 0.3s ease;
@@ -71,7 +95,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-color);
         }
 
         .menu-card:hover {
@@ -89,12 +113,12 @@
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
-            color: #2c3e50;
+            color: var(--heading-color);
         }
 
         .card-desc {
             font-size: 0.9rem;
-            color: #999;
+            color: var(--text-sec);
         }
 
         /* Student Dashboard */
@@ -125,7 +149,7 @@
         }
 
         .dash-btn {
-            background: white;
+            background: var(--btn-bg);
             color: #2980b9;
             padding: 10px 20px;
             border-radius: 10px;
@@ -141,7 +165,7 @@
         .dash-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            background: #f8f9fa;
+            background: var(--bg-color);
         }
 
         /* Color Coding */
@@ -221,6 +245,9 @@
 <body>
     <div class="container">
         <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-bottom:10px;">
+            <button id="theme-toggle" onclick="toggleTheme()" style="padding:8px 12px; border:1px solid #7f8c8d; background:transparent; color:var(--text-color); border-radius:6px; cursor:pointer;" title="สลับโหมดมืด/สว่าง">
+                <i class="fa-solid fa-moon"></i>
+            </button>
             <button id="btn-open-login"
                 style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">เข้าสู่ระบบ</button>
             <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
@@ -539,6 +566,33 @@
 
 
     <script>
+        // --- Theme Logic ---
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                }
+            }
+        }
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            }
+        }
+        
+        // Initialize Theme immediately
+        initTheme();
+
         // ตรวจสอบว่าเป็น LINE หรือ Facebook In-App Browser หรือไม่
         var ua = navigator.userAgent || navigator.vendor || window.opera;
         var isLine = (ua.indexOf("Line") > -1) || (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
