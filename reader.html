@@ -1939,6 +1939,28 @@
                 return null;
             };
 
+            // Helper for Audio Button
+            const createAudioBtn = (slideIndex, slide) => {
+                const thaiText = preferThai(slide);
+                if (!thaiText || thaiText === '...') return null;
+
+                const btn = document.createElement('button');
+                btn.className = 'btn secondary audio-btn';
+                btn.style.cssText = 'padding: 2px 8px; font-size: 0.8em; margin-left: 8px; border-radius: 12px; background-color: white; color: #7f8c8d; border: 1px solid #bdc3c7; cursor: pointer; vertical-align: middle; transition: all 0.2s;';
+                btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                btn.title = 'เล่นเสียงอ่าน';
+                
+                // Use slide.id (if available) or construct a unique ID based on slideIndex
+                const audioId = slide.id || (slideIndex + 1);
+                const storyName = slide.story || slide.section || document.getElementById('storySelect').value || 'unknown';
+                
+                btn.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    playSentenceAudio(btn, audioId, thaiText, storyName); 
+                };
+                return btn;
+            };
+
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block pali-text';
@@ -1959,6 +1981,8 @@
                 b2.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b2.appendChild(senseBtn);
+                const audioBtn = createAudioBtn(sIndex, s);
+                if(audioBtn) b2.appendChild(audioBtn);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -1970,6 +1994,8 @@
                 b1.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b1.appendChild(senseBtn);
+                const audioBtn = createAudioBtn(sIndex, s);
+                if(audioBtn) b1.appendChild(audioBtn);
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
@@ -1991,6 +2017,8 @@
                 rightB.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) rightB.appendChild(senseBtn);
+                const audioBtn = createAudioBtn(sIndex, s);
+                if(audioBtn) rightB.appendChild(audioBtn);
 
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
@@ -2003,6 +2031,8 @@
                 leftB.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) leftB.appendChild(senseBtn);
+                const audioBtn = createAudioBtn(sIndex, s);
+                if(audioBtn) leftB.appendChild(audioBtn);
 
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
@@ -2535,6 +2565,77 @@ function updateSentenceNoteStatus(el) {
             setTimeout(() => icon.style.transform = 'scale(1)', 200);
         }
     }
+
+    function playSentenceAudio(btn, id, text, storyName) {
+        const icon = btn.querySelector('i');
+        
+        // Check if playing
+        if (window.currentAudio && !window.currentAudio.paused) {
+            window.currentAudio.pause();
+            window.currentAudio.currentTime = 0;
+            // Reset icon of previous button
+            if (window.currentAudioBtn) {
+                const prevIcon = window.currentAudioBtn.querySelector('i');
+                if(prevIcon) prevIcon.className = 'fa-solid fa-volume-high';
+                window.currentAudioBtn.classList.remove('playing');
+                window.currentAudioBtn.style.color = '#7f8c8d';
+                window.currentAudioBtn.style.borderColor = '#bdc3c7';
+            }
+            // If clicked same button, just stop
+            if (window.currentAudioBtn === btn) {
+                window.currentAudioBtn = null;
+                return;
+            }
+        }
+
+        // Clean ID for filename (remove "รหัส " etc.)
+        const storyKey = storyName || document.getElementById('storySelect').value;
+        const cleanId = id.toString().replace(/[^0-9]/g, ''); 
+        const audioPath = `audio/${storyKey}/${cleanId}.mp3`;
+        
+        // Try to play file first
+        const audio = new Audio(audioPath);
+        
+        icon.className = 'fa-solid fa-spinner fa-spin';
+        
+        // Event: File exists and can play
+        audio.oncanplaythrough = () => {
+            // Stop TTS if running
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            
+            audio.play();
+            icon.className = 'fa-solid fa-stop';
+            btn.classList.add('playing');
+            btn.style.color = '#e74c3c';
+            btn.style.borderColor = '#e74c3c';
+            window.currentAudio = audio;
+            window.currentAudioBtn = btn;
+        };
+        
+        // Event: File error (Not found/Format)
+        audio.onerror = () => {
+            console.log(`Audio file not found: ${audioPath}`);
+            // Reset button state
+            icon.className = 'fa-solid fa-volume-high';
+            btn.classList.remove('playing');
+            btn.style.color = '#7f8c8d';
+            btn.style.borderColor = '#bdc3c7';
+            window.currentAudioBtn = null;
+            
+            alert(`ไม่พบไฟล์เสียง: ${audioPath}\nกรุณาตรวจสอบว่ามีไฟล์อยู่ในโฟลเดอร์ audio/${storyKey}/ หรือไม่`);
+        };
+        
+        // Event: Ended
+        audio.onended = () => {
+            icon.className = 'fa-solid fa-volume-high';
+            btn.classList.remove('playing');
+            btn.style.color = '#7f8c8d';
+            btn.style.borderColor = '#bdc3c7';
+            window.currentAudioBtn = null;
+        };
+    }
+
+
 
     init()
   </script>
