@@ -10,8 +10,8 @@
   <style>
     body{font-family:'Sarabun',sans-serif;background:#f5f5f5;padding:20px}
     .container{max-width:1200px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
-    h1{margin:0 0 10px;color:#2c3e50}
-    .controls{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:#e8f6f3;padding:12px;border-radius:8px;margin-bottom:16px}
+    h1{margin:0 0 5px;color:#2c3e50;font-size:1.4em}
+    .controls{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:#f8f9fa;padding:10px;border-radius:8px;margin-bottom:12px}
     label{font-size:.9em;color:#555;font-weight:600;margin-bottom:4px;display:block}
     select,input{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:'Sarabun',sans-serif}
     .layout{display:flex;gap:10px;align-items:center;margin:10px 0}
@@ -228,9 +228,11 @@
       .controls { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 768px) {
-      .controls { grid-template-columns: repeat(2, 1fr); }
+      .nav-select-group { display: none !important; }
+      .controls { display: none !important; }
+      .btn-text { display: none; }
       .container { padding: 12px; margin: 10px; width: auto; }
-      h1 { font-size: 1.8em; }
+      h1 { font-size: 1.2em; }
       .two-col { grid-template-columns: 1fr; }
       
       /* Adjust buttons to be full width or larger touch targets */
@@ -427,27 +429,27 @@
       </div>
     </div>
     <div class="controls">
-      <div>
+      <div class="nav-select-group">
         <label>ชั้น</label>
         <select id="levelSelect"></select>
       </div>
-      <div>
+      <div class="nav-select-group">
         <label>วิชา</label>
         <select id="subjectSelect"></select>
       </div>
-      <div>
+      <div class="nav-select-group">
         <label>ภาค/หนังสือ</label>
         <select id="partSelect"></select>
       </div>
-      <div>
+      <div class="nav-select-group">
         <label>วรรค</label>
         <select id="vaggaSelect"></select>
       </div>
-      <div>
+      <div class="nav-select-group">
         <label>เรื่อง</label>
         <select id="storySelect"></select>
       </div>
-      <div>
+      <div class="nav-select-group">
         <label>หน้าเริ่ม-จบ</label>
         <div style="display:flex;gap:6px">
           <input type="number" id="startPage" placeholder="เริ่ม">
@@ -1968,7 +1970,7 @@
         const prevBtn = document.createElement('button');
         prevBtn.className = 'btn secondary';
         prevBtn.style.minWidth = '120px';
-        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> หน้าก่อน';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> <span class="btn-text">หน้าก่อน</span>';
         if(currentBookPageIndex === 0) {
             prevBtn.disabled = true;
             prevBtn.style.opacity = '0.5';
@@ -1988,7 +1990,7 @@
         const nextBtn = document.createElement('button');
         nextBtn.className = 'btn';
         nextBtn.style.minWidth = '120px';
-        nextBtn.innerHTML = 'หน้าถัดไป <i class="fas fa-chevron-right"></i>';
+        nextBtn.innerHTML = '<span class="btn-text">หน้าถัดไป</span> <i class="fas fa-chevron-right"></i>';
         if(currentBookPageIndex === groupedPages.length - 1) {
             nextBtn.disabled = true;
             nextBtn.style.opacity = '0.5';
@@ -2335,5 +2337,43 @@ function updateSentenceNoteStatus(el) {
             <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" style="background:#8e44ad;" title="สีม่วง"></span>
         </div>
     </div>
+<script>
+    // Mobile Layout Optimization
+    function updateMobileLayoutOptions() {
+        const layoutSelect = document.getElementById('layoutSelect');
+        if (!layoutSelect) return;
+        
+        const isMobile = window.innerWidth <= 768;
+        const allowed = ['pali_over_thai', 'thai_over_pali'];
+        
+        Array.from(layoutSelect.options).forEach(opt => {
+            if (isMobile) {
+                if (!allowed.includes(opt.value)) {
+                    opt.style.display = 'none'; // Works in some browsers
+                    opt.hidden = true; // Works in others
+                    opt.disabled = true; // Fallback
+                } else {
+                    opt.style.display = '';
+                    opt.hidden = false;
+                    opt.disabled = false;
+                }
+            } else {
+                opt.style.display = '';
+                opt.hidden = false;
+                opt.disabled = false;
+            }
+        });
+        
+        // If current selection is invalid on mobile, switch to default
+        if (isMobile && !allowed.includes(layoutSelect.value)) {
+            layoutSelect.value = 'pali_over_thai'; 
+            if(typeof renderCurrentPage === 'function') renderCurrentPage();
+        }
+    }
+    
+    window.addEventListener('resize', updateMobileLayoutOptions);
+    // Call on load is handled by window.onload or end of script
+    updateMobileLayoutOptions();
+</script>
 </body>
 </html>
