@@ -55,7 +55,7 @@
     .block{white-space:pre-wrap;line-height:1.8}
     .pali-text { 
         line-height: inherit; 
-        word-spacing: 0.4em; /* Wide spacing for Pali (approx 2 spaces) */
+        word-spacing: normal;
     }
     .thai-text { 
         line-height: inherit; 
@@ -832,22 +832,25 @@
     function wrapWords(text, slideIndex) {
         if (!text) return "";
         const notes = window.currentPageNotes || {};
-        return text.split(' ').map((word, wIdx) => {
-            if (word.trim() === "") return "";
+        const tokens = String(text).split(' ');
+        const out = [];
+
+        tokens.forEach((word, wIdx) => {
+            if (word.trim() === "") return;
             const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
             let prefix = "", cleanWord = word, suffix = "";
             if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
-            let displayText = cleanWord.replace(/_/g, ' ');
+            const displayText = cleanWord.replace(/_/g, ' ');
             
             const noteId = `${slideIndex}_${wIdx}`;
             const hasNote = notes[noteId];
             const noteClass = hasNote ? ' has-note' : '';
-            // If inline style is used, we need to append to it. But word-span usually has no inline style.
-            // We'll just add the border style directly.
             const noteStyle = hasNote ? 'border-bottom: 2px solid #e67e22;' : '';
 
-            return `${prefix}<span class="word-span${noteClass}" style="${noteStyle}" data-slide-index="${slideIndex}" data-note-id="${noteId}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
-        }).join(' ');
+            out.push(`${prefix}<span class="word-span${noteClass}" style="${noteStyle}" data-slide-index="${slideIndex}" data-note-id="${noteId}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
+        });
+
+        return out.join('  ');
     }
 
     // --- Helper Functions (Ported from presentation.html) ---
