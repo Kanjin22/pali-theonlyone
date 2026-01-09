@@ -340,7 +340,7 @@
     <script src="data/vocab-dpd-inflected.js"></script>
     
     <script src="data/pali-lookup.js"></script>
-
+    <script src="js/user_vocab_manager.js"></script>
     <script>
         // Initialize Databases
         const databases = {
@@ -475,10 +475,31 @@
                 else if (sourceClass === 'dpd') iconClass = 'fa-language';
                 else if (sourceClass === 'sc') iconClass = 'fa-globe';
 
+                // Save Button Logic
+                const isSaved = window.userVocabManager ? window.userVocabManager.isWordSaved(item.word) : false;
+                const starIcon = isSaved ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                const starColor = isSaved ? '#f1c40f' : 'inherit';
+                const starTitle = isSaved ? 'บันทึกแล้ว (คลิกเพื่อยกเลิก)' : 'บันทึกคำศัพท์';
+                
+                // Prepare Meaning for Save
+                let meaningText = "";
+                if (item.details) meaningText = item.details.join('; ');
+                else if (item.data) {
+                     if (item.data.definition) meaningText = item.data.definition;
+                     else if (typeof item.data === 'string') meaningText = item.data;
+                     else meaningText = "ดูรายละเอียดในคัมภีร์";
+                }
+                const safeMeaning = meaningText.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                const safeWord = item.word.replace(/'/g, "\\'");
+
                 return `
                 <div class="vocab-card source-${sourceClass}">
-                    <div class="card-header">
+                    <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
                         <span><i class="fa-solid ${iconClass}"></i> ${sourceName}</span>
+                        <button onclick="toggleSaveWord(this, '${safeWord}', '${safeMeaning}', '${sourceName}')" 
+                                style="background:none; border:none; cursor:pointer; color:${starColor}; font-size:1.2rem; padding:0;" title="${starTitle}">
+                            <i class="${starIcon}"></i>
+                        </button>
                     </div>
                     <div class="card-body">
                         <div class="word-title">
@@ -521,6 +542,32 @@
 
         // Initialize theme
         initTheme();
+
+        function toggleSaveWord(btn, word, meaning, source) {
+            if (!window.userVocabManager) return;
+            
+            // Check state from icon
+            const icon = btn.querySelector('i');
+            const isSaved = icon.classList.contains('fa-solid'); // Currently saved
+            
+            if (isSaved) {
+                // Unsave
+                window.userVocabManager.removeWord(word);
+                icon.className = 'fa-regular fa-star';
+                btn.style.color = 'inherit';
+                btn.title = 'บันทึกคำศัพท์';
+            } else {
+                // Save
+                window.userVocabManager.saveWord(word, meaning, source);
+                icon.className = 'fa-solid fa-star';
+                btn.style.color = '#f1c40f';
+                btn.title = 'บันทึกแล้ว (คลิกเพื่อยกเลิก)';
+                
+                // Animation effect
+                icon.style.transform = 'scale(1.3)';
+                setTimeout(() => icon.style.transform = 'scale(1)', 200);
+            }
+        }
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {

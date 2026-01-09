@@ -722,6 +722,7 @@
   </script>
   <script src="./data/vocab-sandhi.js"></script>
   <script src="./data/pali-lookup.js"></script>
+  <script src="js/user_vocab_manager.js"></script>
   <script src="./data/pali-script.js"></script>
 
   <script src="./data/content-dhamma01.js"></script>
@@ -1669,16 +1670,27 @@
             `;
             const safeContent = contentForPopup.replace(/"/g, '&quot;');
 
+            // Check saved status
+            const isSaved = window.userVocabManager ? window.userVocabManager.isWordSaved(cleanWord) : false;
+            const starIcon = isSaved ? 'fa-solid fa-star' : 'fa-regular fa-star';
+            const starColor = isSaved ? '#f1c40f' : '#bdc3c7'; // Changed default to gray
+            const saveBtnHtml = `
+                <button onclick="event.stopPropagation(); toggleSaveWord(this, '${cleanWord.replace(/'/g, "\\'")}', '${encodeURIComponent(detailsHtml)}', '${result.source || 'Reader'}')" 
+                        style="background:none; border:none; cursor:pointer; color:${starColor}; font-size:1.1rem; margin-left:8px;" title="บันทึกคำศัพท์">
+                    <i class="${starIcon}"></i>
+                </button>`;
+
             thaiContent.innerHTML = `
                 <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
                      onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
                      data-content="${safeContent}">
-                    <div style="font-weight: bold; color: #2980b9;">
+                    <div style="font-weight: bold; color: #2980b9; display: flex; align-items: center; flex-wrap: wrap;">
                         ${displayWord} 
                         ${stemInfo}
                         ${rootLinkHtml}
-                        <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal;">[${romanWord}]</span>
-                        <span style="float:right; color:#bdc3c7; font-size:0.8em;"><i class="fa-solid fa-expand"></i></span>
+                        ${saveBtnHtml}
+                        <span style="font-size: 0.8em; color: #7f8c8d; font-weight: normal; margin-left: 5px;">[${romanWord}]</span>
+                        <span style="margin-left: auto; color:#bdc3c7; font-size:0.8em;"><i class="fa-solid fa-expand"></i></span>
                     </div>
                     <div style="margin-top: 5px; color: #2c3e50;">
                         ${detailsHtml}
@@ -2494,6 +2506,35 @@ function updateSentenceNoteStatus(el) {
         }
     }
 }
+
+    function toggleSaveWord(btn, word, meaningEncoded, source) {
+        if (!window.userVocabManager) return;
+        
+        // Decode meaning if needed (it was encoded for HTML attribute safety)
+        const meaning = decodeURIComponent(meaningEncoded).replace(/<[^>]*>/g, ''); // Strip HTML tags for notebook
+
+        // Check state from icon
+        const icon = btn.querySelector('i');
+        const isSaved = icon.classList.contains('fa-solid'); // Currently saved
+        
+        if (isSaved) {
+            // Unsave
+            window.userVocabManager.removeWord(word);
+            icon.className = 'fa-regular fa-star';
+            btn.style.color = '#bdc3c7';
+            btn.title = 'บันทึกคำศัพท์';
+        } else {
+            // Save
+            window.userVocabManager.saveWord(word, meaning, source);
+            icon.className = 'fa-solid fa-star';
+            btn.style.color = '#f1c40f';
+            btn.title = 'บันทึกแล้ว (คลิกเพื่อยกเลิก)';
+            
+            // Animation effect
+            icon.style.transform = 'scale(1.3)';
+            setTimeout(() => icon.style.transform = 'scale(1)', 200);
+        }
+    }
 
     init()
   </script>
