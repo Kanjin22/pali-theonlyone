@@ -32,6 +32,9 @@
     }
 
     @media print {
+        @page {
+            margin: 2.54cm;
+        }
         .controls, .navigation-bar, .sentence-controls, #floating-toolbar, .btn, h1, #dict-panel, .page-header .badge {
             display: none !important;
         }
@@ -1844,6 +1847,7 @@
         
         slides.forEach(s => {
             const item = document.createElement('div');
+            item.className = 'sentence-item';
             // Styling to look like a clean sentence block
             item.style.cssText = 'background:#fff; border:1px solid #eee; border-radius:8px; padding:16px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.02); transition:transform 0.2s;';
             item.onmouseover = function(){ this.style.transform='translateX(4px)'; this.style.borderColor='#3498db'; };
