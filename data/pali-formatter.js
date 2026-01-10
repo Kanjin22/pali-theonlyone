@@ -109,7 +109,7 @@ const PaliFormatter = {
         // If "มาจาก" is MISSING but we detect "[Word] ธาตุ" pattern implying etymology, insert "มาจาก"
         // Look for: Space + Thai Word + Space + ธาตุ OR Space + Word + Space + บทหน้า
         // Modified to handle "อุป + นิ บทหน้า" pattern correctly (multiple words before บทหน้า)
-        clean = clean.replace(/(\s|^)((?:[ก-๙]+\s+\+\s+)*[ก-๙]+)(\s+(?:ธาตุ|บทหน้า))/g, (match, prefix, roots, suffix, offset, string) => {
+        clean = clean.replace(/(\s|^)((?:[ก-๙]+\s+\+\s+)*[ก-๙]+)(\s+(?:ธาตุ|บทหน้า|อาคม))/g, (match, prefix, roots, suffix, offset, string) => {
              // Check context to avoid false positives (e.g. "ลบ อา ที่ ญา ธาตุ")
              const preceding = string.substring(Math.max(0, offset - 10), offset).trim(); // Look back short distance
              
