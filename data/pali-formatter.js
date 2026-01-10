@@ -32,12 +32,26 @@ const PaliFormatter = {
 
         // 3. Formatting (Beauty): Add breaks/styling for key sections
         
+        // 3.0 Pre-formatting fixes
+        // Break after "แจกได้ใน X ลิงค์" 
+        clean = clean.replace(/(แจกได้ใน\s*[๐-๙]+\s*ลิงค์)/g, '$1<br>');
+
         // 3.1 Declension (แจกเหมือน) -> New Line + Green Bold
-        clean = clean.replace(/(แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
-        
-        // 3.2 Grammar Description (เป็น...สมาส/ตัทธิต) -> New Line + Purple
-        // Matches patterns like "เป็นวิเสสนบุพพบท กัมมธารยสมาส" or "เป็นตัทธิต"
-        clean = clean.replace(/(เป็น[ก-๙\.\s]+(?:สมาส|ตัทธิต))/g, '<br><span style="color:#8e44ad;">$1</span>');
+        // Enhanced to include preceding gender (ปุ. อิ. นปุ.) if present
+        clean = clean.replace(/((?:(?:ปุ\.|อิ\.|นปุ\.)\s*)?แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
+
+        // 3.2 Conditionals and Grammar Descriptions (Combined)
+        // Use alternation to prevent "เป็น..." from matching inside "ถ้าเป็น..."
+        clean = clean.replace(/(ถ้า\s*เป็น(?:สมาส|ตัทธิต))|(เป็น[ก-๙\.\s]+(?:สมาส|ตัทธิต))/g, (match, p1, p2) => {
+            if (p1) {
+                // Condition: ถ้าเป็น... -> Blue Bold
+                return `<br><span style="color:#2980b9; font-weight:bold;">${p1}</span>`;
+            } else if (p2) {
+                // Grammar: เป็น... -> Purple
+                return `<br><span style="color:#8e44ad;">${p2}</span>`;
+            }
+            return match;
+        });
 
         // 3.3 Analysis Steps (Chain of abbreviations ending in วิ. or วิ.ว่า) -> New Line + Orange Bold
         // Captures "กฺวิ. กัต. กัต. วิ." or "วิ.ว่า" or "วิ."
@@ -48,8 +62,8 @@ const PaliFormatter = {
         clean = clean.replace(/(?<!\.)\s(วิ\.ว่า)/g, '<br><span style="color:#d35400; font-weight:bold;">$1</span>');
         
         // 4. Cleanup excessive breaks (in case we added too many)
-        clean = clean.replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>');
-
+        clean = clean.replace(/(<br\s*\/?>\s*){2,}/gi, '<br>');
+        
         return clean;
     }
 };
