@@ -58,6 +58,17 @@ const PaliFormatter = {
         // 2.2 Fix Noun + Gender line break (remove break after น.,)
         clean = clean.replace(/(น\.,)\s*<br\s*\/?>\s*/g, '$1 ');
 
+        // 2.3 Verb Definition Formatting (Word + ก.)
+        // Handle "Word ก." or just "ก." at start of definition or line
+        clean = clean.replace(/(^|>|\s)([ก-๙ฺ\.]+\s+)?(ก\.)(\s)/g, (match, prefix, word, type, space) => {
+            let res = prefix || '';
+            if (word) {
+                res += `<span style="color:#d35400; font-weight:bold;">${word.trim()}</span> `;
+            }
+            res += `<span style="color:#16a085; font-weight:bold;">${type.trim()}</span>${space}`;
+            return res;
+        });
+
         // 2.5 Link "See also" (ดู ..., เทียบ ...)
         // Wraps words following "ดู" or "เทียบ" in a clickable span that calls the callback function
         clean = clean.replace(/(^|\s|>)((?:ดู|เทียบ)\s+)([ก-๙\u0E00-\u0E7F]+)/g, 
@@ -74,8 +85,9 @@ const PaliFormatter = {
         clean = clean.replace(/(มาจาก)/g, '<br><span style="color:#7f8c8d; font-weight:bold;">$1</span>');
 
         // If "มาจาก" is MISSING but we detect "[Word] ธาตุ" pattern implying etymology, insert "มาจาก"
-        // Look for: Space + Thai Word + Space + ธาตุ
-        clean = clean.replace(/(\s|^)([ก-๙]+)(\s+ธาตุ)/g, (match, prefix, root, suffix, offset, string) => {
+        // Look for: Space + Thai Word + Space + ธาตุ OR Space + Word + Space + บทหน้า
+        // Modified to handle "อุป + นิ บทหน้า" pattern correctly (multiple words before บทหน้า)
+        clean = clean.replace(/(\s|^)((?:[ก-๙]+\s+\+\s+)*[ก-๙]+)(\s+(?:ธาตุ|บทหน้า))/g, (match, prefix, roots, suffix, offset, string) => {
              // Check context to avoid false positives (e.g. "ลบ อา ที่ ญา ธาตุ")
              const preceding = string.substring(Math.max(0, offset - 10), offset).trim(); // Look back short distance
              
@@ -92,7 +104,7 @@ const PaliFormatter = {
              }
 
              // Insert "มาจาก"
-             return `<br><span style="color:#7f8c8d; font-weight:bold;">มาจาก</span> ${root}${suffix}`;
+             return `<br><span style="color:#7f8c8d; font-weight:bold;">มาจาก</span> ${roots}${suffix}`;
         });
 
         // 3.0.6 Word Formation Result (ได้รูป เป็น... / สำเร็จรูปเป็น...) -> Bold
