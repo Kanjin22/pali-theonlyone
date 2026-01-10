@@ -67,10 +67,33 @@ const PaliFormatter = {
         clean = clean.replace(/(แจกได้ใน\s*[๐-๙]+\s*ลิงค์)/g, '$1<br>');
 
         // 3.0.5 Etymology (มาจาก...) -> New Line + Gray Bold
+        // If "มาจาก" is present, format it.
         clean = clean.replace(/(มาจาก)/g, '<br><span style="color:#7f8c8d; font-weight:bold;">$1</span>');
 
-        // 3.0.6 Word Formation Result (ได้รูป เป็น...) -> Bold
-        clean = clean.replace(/(ได้รูป\s*เป็น\s*[ก-๙\.\u0E00-\u0E7F]+)/g, '<span style="color:#2c3e50; font-weight:bold;">$1</span>');
+        // If "มาจาก" is MISSING but we detect "[Word] ธาตุ" pattern implying etymology, insert "มาจาก"
+        // Look for: Space + Thai Word + Space + ธาตุ
+        clean = clean.replace(/(\s|^)([ก-๙]+)(\s+ธาตุ)/g, (match, prefix, root, suffix, offset, string) => {
+             // Check context to avoid false positives (e.g. "ลบ อา ที่ ญา ธาตุ")
+             const preceding = string.substring(Math.max(0, offset - 10), offset).trim(); // Look back short distance
+             
+             // 1. If already handled
+             if (string.substring(Math.max(0, offset - 50), offset).includes('มาจาก') || string.substring(Math.max(0, offset - 50), offset).includes('color:#7f8c8d')) {
+                 return match;
+             }
+
+             // 2. If preceded by preposition (ที่, ซึ่ง, จาก, ของ, แห่ง, +) -> likely part of explanation, not start
+             // Also check for "ลบ" (delete), "แปลง" (transform), "ลง" (suffix) which are common in formation steps
+             const invalidPreceding = /(ที่|ซึ่ง|จาก|ของ|แห่ง|\+|ลบ|แปลง|ลง|เป็น)$/;
+             if (invalidPreceding.test(preceding)) {
+                 return match;
+             }
+
+             // Insert "มาจาก"
+             return `<br><span style="color:#7f8c8d; font-weight:bold;">มาจาก</span> ${root}${suffix}`;
+        });
+
+        // 3.0.6 Word Formation Result (ได้รูป เป็น... / สำเร็จรูปเป็น...) -> Bold
+        clean = clean.replace(/((?:ได้รูป\s*เป็น|สำเร็จรูป\s*เป็น)\s*[ก-๙\.\u0E00-\u0E7F]+)/g, '<span style="color:#2c3e50; font-weight:bold;">$1</span>');
 
         // 3.1 Declension (แจกเหมือน) -> New Line + Green Bold
         // Enhanced to include preceding gender (ปุ. อิ. นปุ.) if present
