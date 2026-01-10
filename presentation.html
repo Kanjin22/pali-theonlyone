@@ -512,6 +512,58 @@
             border-radius: 3px;
         }
 
+        /* Dictionary Modal Tabs */
+        .dict-tabs {
+            display: flex;
+            background: #eceff1;
+            border-bottom: 1px solid #cfd8dc;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .dict-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #546e7a;
+            border-right: 1px solid #cfd8dc;
+            background: #eceff1;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dict-tab:hover {
+            background: #cfd8dc;
+        }
+        .dict-tab.active {
+            background: #fff;
+            color: #2980b9;
+            border-bottom: 2px solid #2980b9;
+        }
+        .dict-tab-close {
+            font-size: 0.8em;
+            color: #b0bec5;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dict-tab-close:hover {
+            background: #e74c3c;
+            color: white;
+        }
+        .dict-tab-content {
+            display: none;
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100% - 45px); /* Adjust based on tab height */
+        }
+        .dict-tab-content.active {
+            display: block;
+        }
+
         /* --- Floating Toolbar (เมนูลอย) --- */
         #floating-toolbar {
             display: none; /* ซ่อนไว้ก่อนเสมอ */
@@ -2112,7 +2164,119 @@
         });
     }
 
+    // --- Tabbed Modal Helpers ---
+    function addTabToModal(title, content) {
+        const modal = document.getElementById('analysis-modal');
+        const generic = document.getElementById('ana-generic-content');
+        
+        // Check if we already have tabs
+        let tabsContainer = generic.querySelector('.dict-tabs');
+        let contentContainer = generic.querySelector('.dict-content-container');
+        
+        if (!tabsContainer) {
+            // Convert existing content to Tab 1 (if any)
+            const existingContent = generic.innerHTML;
+            const existingTitle = document.getElementById('ana-word').innerText;
+            
+            generic.innerHTML = '';
+            generic.style.display = 'block';
+            
+            // Hide default headers
+            document.getElementById('ana-word').innerText = 'พจนานุกรม'; 
+            document.getElementById('ana-split').style.display = 'none';
+            document.getElementById('ana-details').style.display = 'none';
+            
+            tabsContainer = document.createElement('div');
+            tabsContainer.className = 'dict-tabs';
+            
+            contentContainer = document.createElement('div');
+            contentContainer.className = 'dict-content-container';
+            // contentContainer.style.height = 'calc(100% - 45px)'; // Handled by CSS
+            
+            generic.appendChild(tabsContainer);
+            generic.appendChild(contentContainer);
+            
+            // Add existing as Tab 1 (only if it wasn't empty and looks like content)
+            if (existingContent.trim()) {
+                createTab(tabsContainer, contentContainer, existingTitle || 'Previous', existingContent, false);
+            }
+        }
+        
+        // Add new Tab
+        createTab(tabsContainer, contentContainer, title, content, true);
+        
+        modal.style.display = 'flex';
+    }
+
+    function createTab(tabsContainer, contentContainer, title, content, isActive) {
+        const tabId = 'tab-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+        
+        // Deactivate others if this one is active
+        if (isActive) {
+            tabsContainer.querySelectorAll('.dict-tab').forEach(t => t.classList.remove('active'));
+            contentContainer.querySelectorAll('.dict-tab-content').forEach(c => c.classList.remove('active'));
+        }
+        
+        // Tab Button
+        const tabBtn = document.createElement('div');
+        tabBtn.className = `dict-tab ${isActive ? 'active' : ''}`;
+        tabBtn.innerHTML = `${title} <i class="fa-solid fa-xmark" style="font-size:0.8em; margin-left:5px; opacity:0.6;" onclick="closeTab(event, '${tabId}')"></i>`;
+        tabBtn.onclick = () => switchTab(tabId);
+        tabBtn.dataset.tabId = tabId;
+        tabsContainer.appendChild(tabBtn);
+        
+        // Tab Content
+        const tabContent = document.createElement('div');
+        tabContent.id = tabId;
+        tabContent.className = `dict-tab-content ${isActive ? 'active' : ''}`;
+        tabContent.innerHTML = content;
+        contentContainer.appendChild(tabContent);
+        
+        // Scroll to new tab
+        if (isActive) {
+            // Wait for render
+            setTimeout(() => {
+                tabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }, 50);
+        }
+    }
+
+    function switchTab(tabId) {
+        const generic = document.getElementById('ana-generic-content');
+        generic.querySelectorAll('.dict-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.tabId === tabId);
+        });
+        generic.querySelectorAll('.dict-tab-content').forEach(c => {
+            c.classList.toggle('active', c.id === tabId);
+        });
+    }
+
+    function closeTab(e, tabId) {
+        e.stopPropagation();
+        const generic = document.getElementById('ana-generic-content');
+        const tabBtn = generic.querySelector(`.dict-tab[data-tab-id="${tabId}"]`);
+        const tabContent = document.getElementById(tabId);
+        
+        if (tabBtn && tabContent) {
+            // If closing active tab, switch to previous
+            if (tabBtn.classList.contains('active')) {
+                const sibling = tabBtn.previousElementSibling || tabBtn.nextElementSibling;
+                if (sibling) {
+                    switchTab(sibling.dataset.tabId);
+                }
+            }
+            tabBtn.remove();
+            tabContent.remove();
+            
+            // If no tabs left, close modal
+            if (generic.querySelectorAll('.dict-tab').length === 0) {
+                closeAnalysisModal(null, true);
+            }
+        }
+    }
+
     function showDictionaryDefinition(word, options = {}) {
+        if (window.event) window.event.stopPropagation(); // Prevent bubbling (crucial for footnote links)
         if (!word || typeof word !== 'string') return;
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
         
@@ -2274,9 +2438,24 @@
                     `;
                     const safeContent = contentForPopup.replace(/"/g, '&quot;');
 
+                    // *** NEW LOGIC: Check if we should open in Modal Tab directly ***
+                    const isModalOpen = document.getElementById('analysis-modal').style.display === 'flex';
+                    const isFromDictionary = window.event && window.event.target && (
+                        window.event.target.closest('#thaiVocabContent') || 
+                        window.event.target.closest('#romanVocabContent') || 
+                        window.event.target.closest('#analysis-modal') ||
+                        window.event.target.closest('.dict-tab-content')
+                    );
+                    
+                    if (isModalOpen || isFromDictionary) {
+                        const tabTitle = displayWord.replace(/<[^>]*>/g, '');
+                        addTabToModal(tabTitle, contentForPopup);
+                        return;
+                    }
+
                     thaiVocabContent.innerHTML = `
                         <div style="border-left: 4px solid #3498db; padding-left: 10px; background: #f0f8ff; border-radius: 4px; cursor: pointer;"
-                             onclick="openGenericModal('พจนานุกรมบาลี - ไทย', this.getAttribute('data-content'))"
+                             onclick="addTabToModal('${cleanWord}', this.getAttribute('data-content'))"
                              data-content="${safeContent}">
                             <div class="pali-word" style="font-weight: bold; color: #2980b9;">
                                 ${displayWord} 
@@ -2381,9 +2560,10 @@
             let rootStyle = "color:#95a5a6;"; // Default gray
             let rootIcon = "fa-square-root-variable";
             
-            if (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord])) {
-                const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
-                rootUrl = `roots.html?q=${targetRoot}`;
+            const foundRootKey = findRootKey(cleanWord) || (result && result._baseWord && findRootKey(result._baseWord));
+
+            if (foundRootKey) {
+                rootUrl = `roots.html?q=${foundRootKey}`;
                 rootStyle = "color:#e67e22; font-weight:bold;"; // Highlight orange if found
             }
 
@@ -2409,7 +2589,7 @@
 
             romanVocabContent.innerHTML = `
                 <div style="cursor: pointer;"
-                     onclick="openGenericModal('พจนานุกรมบาลี - โรมัน', this.getAttribute('data-content'))"
+                     onclick="addTabToModal('${romanWord}', this.getAttribute('data-content'))"
                      data-content="${safeInteractiveHtml}">
                     ${interactiveHtml}
                     <div style="margin-top: 5px; text-align:right;">
@@ -2692,7 +2872,9 @@
             if (force || event.target.id === 'analysis-modal') {
                 document.getElementById('analysis-modal').style.display = 'none';
                 // Reset view to default state (so next time it opens correctly)
-                document.getElementById('ana-generic-content').style.display = 'none';
+                const generic = document.getElementById('ana-generic-content');
+                generic.style.display = 'none';
+                generic.innerHTML = ''; // Clear content to prevent persistence
                 document.getElementById('ana-split').style.display = 'block';
                 document.getElementById('ana-details').style.display = 'block';
             }
