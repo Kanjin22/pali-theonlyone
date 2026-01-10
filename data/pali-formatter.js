@@ -2,6 +2,36 @@
 // Designed to be portable across projects (e.g., Pali TheOnlyOne, theDhatu)
 
 const PaliFormatter = {
+    // Configuration for Grammatical Terms (User can add more here)
+    GRAMMAR_TERMS: {
+        samasa: [ // สมาส (Compounds)
+            "วิเสสนบุพพบท กัมมธารยสมาส",
+            "ฉัฏฐีตุลยาธิกรณพหุพพิหิสมาส",
+            "กัมมธารยสมาส",
+            "พหุพพิหิสมาส",
+            "ทวันทวสมาส",
+            "ตัปปุริสสมาส",
+            "อัพยยีภาวสมาส",
+            "ทิคุสมาส"
+        ],
+        taddhita: [ // ตัทธิต (Derivatives)
+            "ตทัสสัตถิตัทธิต",
+            "โคตตตัทธิต",
+            "ตรตยาทิตัทธิต",
+            "ราคาทิตัทธิต",
+            "ชาตาทิตัทธิต",
+            "สมุหตัทธิต",
+            "ฐานตัทธิต",
+            "พหุลตัทธิต",
+            "เสฏฐตัทธิต"
+        ],
+        kitaka: [ // นามกิตก์ / กิริยากิตก์ (Verbal Derivatives)
+            "นามกิตก์",
+            "กิริยากิตก์",
+            "กิตก์"
+        ]
+    },
+
     /**
      * Formats dictionary definition text with styling and links.
      * @param {string|Array|Object} text - The raw definition text.
@@ -36,19 +66,56 @@ const PaliFormatter = {
         // Break after "แจกได้ใน X ลิงค์" 
         clean = clean.replace(/(แจกได้ใน\s*[๐-๙]+\s*ลิงค์)/g, '$1<br>');
 
+        // 3.0.5 Etymology (มาจาก...) -> New Line + Gray Bold
+        clean = clean.replace(/(มาจาก)/g, '<br><span style="color:#7f8c8d; font-weight:bold;">$1</span>');
+
+        // 3.0.6 Word Formation Result (ได้รูป เป็น...) -> Bold
+        clean = clean.replace(/(ได้รูป\s*เป็น\s*[ก-๙\.\u0E00-\u0E7F]+)/g, '<span style="color:#2c3e50; font-weight:bold;">$1</span>');
+
         // 3.1 Declension (แจกเหมือน) -> New Line + Green Bold
         // Enhanced to include preceding gender (ปุ. อิ. นปุ.) if present
-        clean = clean.replace(/((?:(?:ปุ\.|อิ\.|นปุ\.)\s*)?แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
+        // Updated to ensure gender is preceded by space/start/> to avoid matching inside words
+        clean = clean.replace(/((?:(?:^|\s|>)(?:ปุ\.|อิ\.|อิต\.|อิตฺ\.|นปุ\.)\s*)?แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
+
+        // 3.1.5 Gender Sections (Leftover genders not followed by แจกเหมือน) -> New Line + Green Bold
+        // Catch ปุ. อิ. อิต. อิตฺ. นปุ. that start a sentence or section
+        // Exclude if followed by "แจกเหมือน" (handled by 3.1) to avoid double wrapping
+        clean = clean.replace(/(^|\s|>)((?:ปุ|อิ|อิต|อิตฺ|นปุ)\.)(?!\s*แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$2</span>');
 
         // 3.2 Conditionals and Grammar Descriptions (Combined)
         // Use alternation to prevent "เป็น..." from matching inside "ถ้าเป็น..."
-        clean = clean.replace(/(ถ้า\s*เป็น(?:สมาส|ตัทธิต))|(เป็น[ก-๙\.\s]+(?:สมาส|ตัทธิต))/g, (match, p1, p2) => {
-            if (p1) {
-                // Condition: ถ้าเป็น... -> Blue Bold
-                return `<br><span style="color:#2980b9; font-weight:bold;">${p1}</span>`;
-            } else if (p2) {
-                // Grammar: เป็น... -> Purple
-                return `<br><span style="color:#8e44ad;">${p2}</span>`;
+        // Updated: If "ถ้าเป็น..." is immediately followed by "เป็น...", keep them on the same line.
+        
+        // Build regex pattern from GRAMMAR_TERMS
+        const specificTerms = [
+            ...this.GRAMMAR_TERMS.samasa, 
+            ...this.GRAMMAR_TERMS.taddhita, 
+            ...this.GRAMMAR_TERMS.kitaka
+        ].sort((a, b) => b.length - a.length).join('|').replace(/\./g, '\\.');
+
+        // Generic fallback: Matches words ending in สมาส/ตัทธิต/กิตก์ (NO SPACES allowed to prevent greedy matching)
+        const genericPattern = "[ก-๙\\.]+(?:สมาส|ตัทธิต|กิตก์)";
+        
+        // Construct the full regex
+        // p1: ถ้าเป็น... (Condition)
+        // p2: เป็น... (Definition following Condition)
+        // p3: ถ้าเป็น... (Condition alone)
+        // p4: เป็น... (Definition alone)
+        const grammarRegex = new RegExp(
+            `(ถ้า\\s*เป็น(?:สมาส|ตัทธิต|กิตก์))(?:\\s*<br\\s*\\/?>\\s*|\\s+)(เป็น(?:${specificTerms}|${genericPattern}))|(ถ้า\\s*เป็น(?:สมาส|ตัทธิต|กิตก์))|(เป็น(?:${specificTerms}|${genericPattern}))`, 
+            'g'
+        );
+
+        clean = clean.replace(grammarRegex, (match, p1, p2, p3, p4) => {
+            if (p1 && p2) {
+                // Case 1: "ถ้าเป็น..." followed by "เป็น..." -> Same line (remove break between them)
+                return `<br><span style="color:#2980b9; font-weight:bold;">${p1}</span> <span style="color:#8e44ad;">${p2}</span>`;
+            } else if (p3) {
+                // Case 2: "ถ้าเป็น..." alone -> New Line + Blue Bold
+                return `<br><span style="color:#2980b9; font-weight:bold;">${p3}</span>`;
+            } else if (p4) {
+                // Case 3: "เป็น..." alone -> New Line + Purple
+                return `<br><span style="color:#8e44ad;">${p4}</span>`;
             }
             return match;
         });
