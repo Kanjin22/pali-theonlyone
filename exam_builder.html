@@ -300,8 +300,21 @@
             
             /* Print settings from toolbar state */
             @page { size: auto; margin: 0; }
+            @page solutionPage { size: auto; margin: 2.54cm; }
+
             body[data-print-size="A4"] .paper { width: 210mm; min-height: 297mm; }
             body[data-print-size="F4"] .paper { width: 216mm; min-height: 356mm; }
+            
+            /* Solution Mode Print Overrides */
+            body.mode-solution .paper {
+                page: solutionPage;
+                width: 100% !important; /* Fit within the 2.54cm margins */
+                margin: 0 !important;
+                border: none !important;
+            }
+            body.mode-solution .paper-inner {
+                padding: 0 !important; /* Remove manual padding as @page handles it */
+            }
         }
     </style>
 </head>
@@ -1719,6 +1732,7 @@
             `;
         }
         function generateSolution() {
+            document.body.classList.add('mode-solution');
             const paper = document.getElementById('paperContent');
             if (!paper) return;
 
@@ -1972,6 +1986,7 @@
             }
         }
         function generatePreview() {
+            document.body.classList.remove('mode-solution');
             // NOTE: We do NOT clear selection buffers here anymore.
             // This allows users to change stories/parts without losing their previous selections.
             // Users can manually clear selections using the UI if needed.
