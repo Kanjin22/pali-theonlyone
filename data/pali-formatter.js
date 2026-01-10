@@ -55,6 +55,9 @@ const PaliFormatter = {
         // 2. Normalize Spaces: Collapse multiple spaces to single space
         clean = clean.replace(/[ \t]{2,}/g, ' ');
 
+        // 2.2 Fix Noun + Gender line break (remove break after น.,)
+        clean = clean.replace(/(น\.,)\s*<br\s*\/?>\s*/g, '$1 ');
+
         // 2.5 Link "See also" (ดู ..., เทียบ ...)
         // Wraps words following "ดู" or "เทียบ" in a clickable span that calls the callback function
         clean = clean.replace(/(^|\s|>)((?:ดู|เทียบ)\s+)([ก-๙\u0E00-\u0E7F]+)/g, 
@@ -95,15 +98,25 @@ const PaliFormatter = {
         // 3.0.6 Word Formation Result (ได้รูป เป็น... / สำเร็จรูปเป็น...) -> Bold
         clean = clean.replace(/((?:ได้รูป\s*เป็น|สำเร็จรูป\s*เป็น)\s*[ก-๙\.\u0E00-\u0E7F]+)/g, '<span style="color:#2c3e50; font-weight:bold;">$1</span>');
 
-        // 3.1 Declension (แจกเหมือน) -> New Line + Green Bold
-        // Enhanced to include preceding gender (ปุ. อิ. นปุ.) if present
-        // Updated to ensure gender is preceded by space/start/> to avoid matching inside words
-        clean = clean.replace(/((?:(?:^|\s|>)(?:ปุ\.|อิ\.|อิต\.|อิตฺ\.|นปุ\.)\s*)?แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$1</span>');
+        // 3.1 Declension (แจกเหมือน)
+        // Enhanced to include preceding gender and handle "น.," prefix
+        clean = clean.replace(/(น\.,\s*|^|\s|>)((?:(?:ปุ\.|อิ\.|อิต\.|อิตฺ\.|นปุ\.)\s*)?แจกเหมือน)/g, (match, prefix, content) => {
+            if (prefix && prefix.includes('น.,')) {
+                return `${prefix}<span style="color:#16a085; font-weight:bold;">${content}</span>`;
+            }
+            return `<br><span style="color:#16a085; font-weight:bold;">${content}</span>`;
+        });
 
-        // 3.1.5 Gender Sections (Leftover genders not followed by แจกเหมือน) -> New Line + Green Bold
+        // 3.1.5 Gender Sections (Leftover genders not followed by แจกเหมือน)
         // Catch ปุ. อิ. อิต. อิตฺ. นปุ. that start a sentence or section
-        // Exclude if followed by "แจกเหมือน" (handled by 3.1) to avoid double wrapping
-        clean = clean.replace(/(^|\s|>)((?:ปุ|อิ|อิต|อิตฺ|นปุ)\.)(?!\s*แจกเหมือน)/g, '<br><span style="color:#16a085; font-weight:bold;">$2</span>');
+        // Exclude if followed by "แจกเหมือน" (handled by 3.1)
+        // SPECIAL: If preceded by "น.," (Noun), do NOT add new line, just style it.
+        clean = clean.replace(/(น\.,\s*|^|\s|>)((?:ปุ|อิ|อิต|อิตฺ|นปุ)\.)(?!\s*แจกเหมือน)/g, (match, prefix, gender) => {
+            if (prefix && prefix.includes('น.,')) {
+                return `${prefix}<span style="color:#16a085; font-weight:bold;">${gender}</span>`;
+            }
+            return `<br><span style="color:#16a085; font-weight:bold;">${gender}</span>`;
+        });
 
         // 3.2 Conditionals and Grammar Descriptions (Combined)
         // Use alternation to prevent "เป็น..." from matching inside "ถ้าเป็น..."
