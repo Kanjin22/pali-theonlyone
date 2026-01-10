@@ -300,21 +300,11 @@
             
             /* Print settings from toolbar state */
             @page { size: auto; margin: 0; }
-            @page solutionPage { size: auto; margin: 2.54cm; }
 
             body[data-print-size="A4"] .paper { width: 210mm; min-height: 297mm; }
             body[data-print-size="F4"] .paper { width: 216mm; min-height: 356mm; }
             
-            /* Solution Mode Print Overrides */
-            body.mode-solution .paper {
-                page: solutionPage;
-                width: 100% !important; /* Fit within the 2.54cm margins */
-                margin: 0 !important;
-                border: none !important;
-            }
-            body.mode-solution .paper-inner {
-                padding: 0 !important; /* Remove manual padding as @page handles it */
-            }
+            /* Solution Mode Print Overrides - REMOVED to match Exam Mode Layout */
         }
     </style>
 </head>
@@ -1822,14 +1812,24 @@
             
             // 1. Formatting Helpers
             const formatPali = (text) => {
-                 let processed = String(text);
-                 // Pali: Always 2 spaces
-                 return processed.replace(/\s+/g, ' ').trim().replace(/ /g, '  ');
+                 let processed = String(text || '');
+                 // Remove HTML tags (including <br>)
+                 processed = processed.replace(/<[^>]*>/g, '');
+                 // Replace newlines with space to prevent accidental breaks, but PRESERVE multiple spaces
+                 processed = processed.replace(/[\r\n]+/g, ' ');
+                 // Pali: Double the spaces (so 1 space -> 2, 5 spaces -> 10) to preserve manual spacing
+                 return processed.trim().replace(/ /g, '  ');
             };
             const formatThai = (text) => {
-                 // Thai in Solution: Single space (as requested)
-                 let processed = String(text).replace(/_/g, ' ');
-                 return processed.replace(/\s+/g, ' ').trim();
+                 // Thai in Solution: Single space
+                 let processed = String(text || '');
+                 // Remove HTML tags (including <br>)
+                 processed = processed.replace(/<[^>]*>/g, '');
+                 
+                 processed = processed.replace(/_/g, ' ');
+                 // Replace newlines with space, but PRESERVE multiple spaces for manual layout
+                 processed = processed.replace(/[\r\n]+/g, ' ');
+                 return processed.trim();
             };
 
             // 2. Helper to process keys (Modified to use selected keys directly)
@@ -1877,12 +1877,22 @@
                         thai = slide.thai || '';
                     } else {
                         // For Sense: Prioritize thai_desana as requested
-                        thai = slide.thai_desana || slide.thai_sense || slide.thai || '';
+                        // Logic: thai_desana > thai_sense > thai
+                        // Skip 'รอข้อมูล'
+                        thai = slide.thai_desana;
+                        if (!thai || thai === 'รอข้อมูล') thai = slide.thai_sense;
+                        if (!thai || thai === 'รอข้อมูล') thai = slide.thai;
                     }
                     
                     if (pali || thai) {
                          globalIndex++;
-                         html += `<div style="margin-bottom: 0px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', sans-serif; font-size: 18pt; line-height: 1.4; margin-bottom:0;"><b>${toThaiDigits(globalIndex)}. ${formatPali(pali)}</b></div><div style="font-family: 'DilleniaUPC', sans-serif; font-size: 16pt; color: #444; margin-left: 25px; margin-top:0;">${formatThai(thai)}</div></div>`;
+                         // Use inherited font-size and line-height from .paper (controlled by toolbar)
+                         // Pali: Force Pali font
+                         // Thai: Inherit font (or use default)
+                         // Reduced margin-bottom from 10px to 8px
+                         // Added text-align: justify to inner divs to ensure full justification like Exam Mode
+                         // Removed white-space: normal and added white-space: pre-wrap to support manual spacing
+                         html += `<div style="margin-bottom: 8px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', sans-serif; margin-bottom: 0; text-align: justify; text-align-last: left; white-space: pre-wrap;"><b>${toThaiDigits(globalIndex)}. ${formatPali(pali)}</b></div><div style="margin-left: 25px; margin-top:0; text-align: justify; text-align-last: left; white-space: pre-wrap;">${formatThai(thai)}</div></div>`;
                     }
                 });
                 return html;
