@@ -289,7 +289,30 @@ const PaliLookup = {
         
         // 1. Thai Dictionaries (Ordered: Insan-PR9 (1-8), Bhumibalo, Jinakalamalini, General)
         // Note: dbs.insan_pr9 includes both Part 1-4 and Part 5-8 merged in presentation.html
-        if (dbs.insan_pr9 && dbs.insan_pr9[key]) return { details: [dbs.insan_pr9[key]], source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', word: key };
+        if (dbs.insan_pr9) {
+            let definitions = [];
+            // 1.1 Exact match
+            if (dbs.insan_pr9[key]) {
+                definitions.push(dbs.insan_pr9[key]);
+            }
+            // 1.2 Homonyms (key + " ๑", " ๒", etc.)
+            const thaiNumerals = ['๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
+            for (const num of thaiNumerals) {
+                const homonymKey = `${key} ${num}`;
+                if (dbs.insan_pr9[homonymKey]) {
+                    // Use bold number prefix for clarity
+                    definitions.push(`<b>[${num}]</b> ${dbs.insan_pr9[homonymKey]}`);
+                }
+            }
+
+            if (definitions.length > 0) {
+                return {
+                    details: definitions,
+                    source: 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)',
+                    word: key
+                };
+            }
+        }
 
         // [Priority Override] Try stemming for Insan-PR9 BEFORE checking exact matches in other dictionaries
         // This ensures Dhammapada results are always shown if available, even if the exact word form exists in a lower-priority dictionary (like General).

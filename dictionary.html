@@ -340,6 +340,7 @@
     <script src="data/vocab-dpd-inflected.js"></script>
     
     <script src="data/pali-lookup.js"></script>
+    <script src="data/pali-formatter.js"></script>
     <script src="js/user_vocab_manager.js"></script>
     <script>
         // Initialize Databases
@@ -375,6 +376,12 @@
             // Re-run search if there is query
             const query = document.getElementById('dict-search').value;
             if (query.trim()) performSearch();
+        }
+
+        function triggerSearch(word) {
+            document.getElementById('dict-search').value = word;
+            performSearch();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function performSearch() {
@@ -429,13 +436,13 @@
                 let splitText = item.split || '-';
                 
                 if (item.details) {
-                    defHtml = item.details.map(d => `<li>${d}</li>`).join('');
+                    defHtml = item.details.map(d => `<li>${PaliFormatter.format(d, 'triggerSearch')}</li>`).join('');
                 } else if (item.data) {
                     // Handle SC/PTS/DPPN data format
                     if (item.data.definition) {
-                        defHtml = `<li>${item.data.definition}</li>`;
+                        defHtml = `<li>${PaliFormatter.format(item.data.definition, 'triggerSearch')}</li>`;
                     } else if (typeof item.data === 'string') {
-                         defHtml = `<li>${item.data}</li>`; 
+                         defHtml = `<li>${PaliFormatter.format(item.data, 'triggerSearch')}</li>`; 
                     } else {
                          defHtml = `<li>(ดูรายละเอียดในคัมภีร์ฉบับเต็ม)</li>`;
                     }
