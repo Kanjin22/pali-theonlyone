@@ -129,6 +129,10 @@ const PaliFormatter = {
              return `<br><span style="color:#7f8c8d; font-weight:bold;">มาจาก</span> ${roots}${suffix}`;
         });
 
+        // 3.0.7 Suffix Analysis (ลง ... ปัจจัย) -> New Line
+        // Pattern: "ลง" + Thai chars + "ปัจจัย"
+        clean = clean.replace(/(\s)(ลง\s+[ก-๙\.\+]+\s+ปัจจัย)/g, '<br>$2');
+
         // 3.0.6 Word Formation Result (ได้รูป เป็น... / สำเร็จรูปเป็น...) -> Bold
         clean = clean.replace(/((?:ได้รูป\s*เป็น|สำเร็จรูป\s*เป็น)\s*[ก-๙\.\u0E00-\u0E7F]+)/g, '<span style="color:#2c3e50; font-weight:bold;">$1</span>');
 
