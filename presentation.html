@@ -2401,7 +2401,7 @@
                     if (result._stemmedFrom) {
                         stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(จาก: ${cleanWord})</span>`;
                         if (result._baseWord) {
-                            stemInfo += `<span style="font-size:0.8em; color:#16a085; margin-left:5px;">(ศัพท์เดิม: ${result._baseWord})</span>`;
+                            stemInfo += `<span style="font-size:0.8em; color:#16a085; margin-left:5px;">(ศัพท์เดิมของ: ${result._baseWord})</span>`;
                         }
                     } else if (result.source === 'Manual Sandhi') {
                          stemInfo = `<span style="font-size:0.8em; color:#e67e22; margin-left:5px;">(สนธิ)</span>`;
