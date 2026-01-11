@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -441,6 +441,7 @@
     <script src="data/raw/vocab-insan-pr9-5-8.js"></script>
     <script src="data/raw/vocab-bhumibalo.js"></script>
     <script src="data/raw/vocab-jinakalamalini.js"></script>
+    <script src="data/vocab-inflected.js"></script>
 
     <!-- Pali-Roman Dictionaries removed -->
     <script src="data/vocab-sandhi.js"></script>
@@ -604,8 +605,8 @@
                         const stemmed = findBestStem(word);
                         if (stemmed && stemmed !== word) {
                             // If stemmed is different, use it.
-                            if (!details) details = `(ศัพท์เดิม: ${word})`;
-                            else details += `, ศัพท์เดิม: ${word}`;
+                            if (!details) details = `(ศัพท์เดิมของ: ${word})`;
+                            else details += `, ศัพท์เดิมของ: ${word}`;
                             
                             word = stemmed;
                         }
@@ -630,6 +631,11 @@
         }
 
         function findBestStem(word) {
+            // 0. Check Pre-calculated Inflected Index (Best & Fastest)
+            if (typeof vocabInflected !== 'undefined' && vocabInflected[word]) {
+                return vocabInflected[word];
+            }
+
             if (typeof PaliDeclension === 'undefined' || typeof PaliScript === 'undefined') return word;
             
             // Helper to check dicts
@@ -641,7 +647,7 @@
                 return false;
             };
 
-            // 0. If original word exists, return it (no stemming needed)
+            // 0.5. If original word exists, return it (no stemming needed)
             if (checkDict(word)) return word;
 
             // 1. Convert to Roman
