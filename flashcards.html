@@ -447,6 +447,7 @@
     
     <!-- Logic -->
     <script src="data/pali-lookup.js"></script>
+    <script src="data/pali-declension.js"></script>
     <script src="data/pali-script.js"></script>
 
     <script>
@@ -598,6 +599,18 @@
                     // Clean word (remove punctuation if any mostly)
                     word = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
 
+                    // --- Auto-Stemming Logic for Kitaka/Vocab ---
+                    if (type === 'kitaka' || type === 'vocab') {
+                        const stemmed = findBestStem(word);
+                        if (stemmed && stemmed !== word) {
+                            // If stemmed is different, use it.
+                            if (!details) details = `(ศัพท์เดิม: ${word})`;
+                            else details += `, ศัพท์เดิม: ${word}`;
+                            
+                            word = stemmed;
+                        }
+                    }
+
                     // Unique Key: Word + Type (allow same word in different types?)
                     // Let's use Word as key to avoid duplicates, but merge sources?
                     // User might want to see same word if it appears as different grammar?
@@ -614,6 +627,39 @@
                     });
                 }
             });
+        }
+
+        function findBestStem(word) {
+            if (typeof PaliDeclension === 'undefined' || typeof PaliScript === 'undefined') return word;
+            
+            // Helper to check dicts
+            const checkDict = (w) => {
+                if (dbs.insan_pr9 && dbs.insan_pr9[w]) return true;
+                if (dbs.bhumibalo && dbs.bhumibalo[w]) return true;
+                if (dbs.jinakalamalini && dbs.jinakalamalini[w]) return true;
+                if (dbs.general_raw && dbs.general_raw[w]) return true;
+                return false;
+            };
+
+            // 0. If original word exists, return it (no stemming needed)
+            if (checkDict(word)) return word;
+
+            // 1. Convert to Roman
+            const roman = PaliScript.thaiToRoman(word);
+            if (!roman) return word;
+
+            // 2. Decompose
+            const candidates = PaliDeclension.decompose(roman);
+            if (!candidates || candidates.length === 0) return word;
+
+            // 3. Check Dict for each candidate
+            for (const candRoman of candidates) {
+                const candThai = PaliScript.romanToThai(candRoman);
+                if (checkDict(candThai)) return candThai;
+            }
+
+            // If none found in dict, return original
+            return word;
         }
 
         function changeCategory() {
