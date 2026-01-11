@@ -15,7 +15,8 @@ const vocabSandhi = {
     "สตฺถารํ": "สตฺถุ",
     "ตยา": "ตุมฺห",
     "ปญฺจนฺนํ": "ปญฺจ",
-    "อตฺตโน": "อตฺต"
+    "อตฺตโน": "อตฺต",
+    "ธีตโร": "ธีตุ"
 };
 
 if (typeof module !== 'undefined') module.exports = vocabSandhi;
