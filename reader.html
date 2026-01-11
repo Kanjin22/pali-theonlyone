@@ -1241,6 +1241,10 @@
 
     // Per-Sentence Controls Logic
     function injectSentenceControls() {
+        // Only show controls for logged-in users
+        const isLoggedIn = localStorage.getItem('pali_user_uid') || localStorage.getItem('pali_user_name');
+        if (!isLoggedIn) return;
+
         const page = document.getElementById('pageContent');
         if (!page) return;
         
@@ -2522,31 +2526,112 @@
         
         // Check URL Params
         const params = new URLSearchParams(window.location.search);
-        const levelCode = params.get('level');
-        if(levelCode) {
-            const LEVEL_CODE_MAP = {
-                'pt12': 'ประโยค ๑–๒',
-                'pt3': 'ประโยค ป.ธ. ๓',
-                'pt4': 'ประโยค ป.ธ. ๔',
-                'pt5': 'ประโยค ป.ธ. ๕',
-                'pt6': 'ประโยค ป.ธ. ๖',
-                'pt7': 'ประโยค ป.ธ. ๗',
-                'pt8': 'ประโยค ป.ธ. ๘',
-                'pt9': 'ประโยค ป.ธ. ๙'
-            };
-            const label = LEVEL_CODE_MAP[levelCode];
-            if(label) {
-                const sel = document.getElementById('levelSelect');
-                for(let i=0; i<sel.options.length; i++) {
-                    if(sel.options[i].value === label) {
-                        sel.selectedIndex = i;
-                        break;
+        
+        // 1. Direct Content Loading (Library Mode)
+        const targetPart = params.get('part');
+        if (targetPart) {
+             let foundLevel = '';
+             let foundSubject = '';
+             
+             // Find Level and Subject for this part
+             for (const [level, subjects] of Object.entries(CONTENT_MAPPING)) {
+                 for (const [subject, parts] of Object.entries(subjects)) {
+                     if (parts.some(p => p.id === targetPart)) {
+                         foundLevel = level;
+                         foundSubject = subject;
+                         break;
+                     }
+                 }
+                 if (foundLevel) break;
+             }
+             
+             if (foundLevel) {
+                 // Set Level
+                 const levelSel = document.getElementById('levelSelect');
+                 for(let i=0; i<levelSel.options.length; i++) {
+                     if(levelSel.options[i].value === foundLevel) {
+                         levelSel.selectedIndex = i;
+                         break;
+                     }
+                 }
+                 
+                 // Trigger Subject Population
+                 populateSubjects();
+                 
+                 // Set Subject
+                 const subjectSel = document.getElementById('subjectSelect');
+                 for(let i=0; i<subjectSel.options.length; i++) {
+                     if(subjectSel.options[i].value === foundSubject) {
+                         subjectSel.selectedIndex = i;
+                         break;
+                     }
+                 }
+                 
+                 // Trigger Part Population
+                 populateParts();
+                 
+                 // Set Part
+                 const partSel = document.getElementById('partSelect');
+                 partSel.value = targetPart;
+                 
+                 // Trigger Vagga Population
+                 populateVaggas();
+                 
+                 // Set Vagga
+                 const targetVagga = params.get('vagga');
+                 if (targetVagga) {
+                     document.getElementById('vaggaSelect').value = targetVagga;
+                 }
+                 
+                 // Trigger Story Population
+                 populateStories();
+                 
+                 // Set Story
+                 const targetStory = params.get('story');
+                 if (targetStory) {
+                     document.getElementById('storySelect').value = targetStory;
+                 }
+                 
+                 // Trigger Page Range Update
+                 updatePageRange();
+                 
+                 // Render
+                 render();
+
+                 // Update Home Button to point to Library if param present
+                 const homeBtn = document.querySelector('.home-btn');
+                 if(homeBtn) {
+                     homeBtn.href = 'library.html';
+                     homeBtn.title = 'กลับห้องสมุด';
+                 }
+             }
+        } else {
+            const levelCode = params.get('level');
+            if(levelCode) {
+                const LEVEL_CODE_MAP = {
+                    'pt12': 'ประโยค ๑–๒',
+                    'pt3': 'ประโยค ป.ธ. ๓',
+                    'pt4': 'ประโยค ป.ธ. ๔',
+                    'pt5': 'ประโยค ป.ธ. ๕',
+                    'pt6': 'ประโยค ป.ธ. ๖',
+                    'pt7': 'ประโยค ป.ธ. ๗',
+                    'pt8': 'ประโยค ป.ธ. ๘',
+                    'pt9': 'ประโยค ป.ธ. ๙'
+                };
+                const label = LEVEL_CODE_MAP[levelCode];
+                if(label) {
+                    const sel = document.getElementById('levelSelect');
+                    for(let i=0; i<sel.options.length; i++) {
+                        if(sel.options[i].value === label) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
                     }
                 }
             }
+            populateSubjects();
         }
-        
-        populateSubjects();
+
         document.getElementById('renderBtn').onclick=render;
         document.getElementById('printBtn').onclick=function(){window.print()};
         document.getElementById('layoutSelect').onchange = () => render(false);
