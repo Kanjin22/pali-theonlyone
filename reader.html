@@ -549,6 +549,7 @@
                 <select id="thaiMode" style="min-width:140px;">
                     <option value="thai">โดยพยัญชนะ</option>
                     <option value="thai_desana">โดยอรรถ (มมร.)</option>
+                    <option value="thai_yok">ยกศัพท์</option>
                 </select>
             </div>
 
@@ -829,6 +830,8 @@
         let text = '';
         if (mode === 'thai_desana') {
             text = obj.thai_desana || obj.thai_sense || obj.thai || '';
+        } else if (mode === 'thai_yok') {
+            text = obj.thai_yok || 'Wait for data...';
         } else {
             text = obj.thai || '';
         }
@@ -1429,7 +1432,11 @@
         
         // Helper to get raw HTML (similar to render loop)
         const getPaliHtml = () => wrapWords(s.pali || '', index);
-        const getThaiHtml = () => isThaiMode ? (s.thai_desana || s.thai || '') : (s.thai || '');
+        const getThaiHtml = () => {
+             if (isThaiMode) return (s.thai_desana || s.thai || '');
+             if (document.getElementById('thaiMode').value === 'thai_yok') return (s.thai_yok || 'Wait for data...');
+             return (s.thai || '');
+        };
 
         const paliDiv = block.querySelector('.pali-text');
         const thaiDiv = block.querySelector('.thai-text');

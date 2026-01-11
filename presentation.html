@@ -1827,6 +1827,7 @@
         let currentFontSizePali = 1.8;
         let currentFontSizeThai = 1.8;
         let isThaiSense = false;
+        let translationMode = 'literal'; // literal | sense | yok
 
 
         function toggleSettings() {
@@ -2748,8 +2749,10 @@
 
             let displayThai = "";
             
-            if (isThaiSense) {
+            if (translationMode === 'sense' || isThaiSense) {
                  displayThai = s.thai_desana || s.thai_sense;
+            } else if (translationMode === 'yok') {
+                 displayThai = s.thai_yok || "รอข้อมูลแปลยกศัพท์...";
             } else {
                  displayThai = s.thai;
             }
@@ -2997,14 +3000,27 @@
             else { thaiElem.classList.remove('hidden'); btnIcon.classList.remove('fa-eye-slash'); btnIcon.classList.add('fa-eye'); }
         }
         function toggleThaiMode() {
-            isThaiSense = !isThaiSense;
+            if (translationMode === 'literal') translationMode = 'sense';
+            else if (translationMode === 'sense') translationMode = 'yok';
+            else translationMode = 'literal';
+            
+            isThaiSense = (translationMode === 'sense'); // Sync legacy
             updateSlide();
         }
         function applyThaiModeLabel() {
             const label = document.getElementById('thaiLabel');
             const btn = document.getElementById('btn-toggle-thai-mode');
-            if (label) label.innerText = isThaiSense ? 'ไทย (โดยอรรถ)' : 'ไทย (โดยพยัญชนะ)';
-            if (btn) btn.title = isThaiSense ? 'สลับเป็นคำแปลโดยพยัญชนะ' : 'สลับเป็นคำแปลโดยอรรถ';
+            let text = 'ไทย (โดยพยัญชนะ)';
+            let title = 'คลิกเพื่อเปลี่ยนโหมดการแปล';
+            
+            if (translationMode === 'sense') {
+                text = 'ไทย (โดยอรรถ)';
+            } else if (translationMode === 'yok') {
+                text = 'ไทย (ยกศัพท์)';
+            }
+            
+            if (label) label.innerText = text;
+            if (btn) btn.title = title;
         }
 
         function showSenseModal() {
