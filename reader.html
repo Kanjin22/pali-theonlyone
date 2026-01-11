@@ -296,16 +296,32 @@
         display: block;
     }
 
+    /* Default state for mobile toggle */
+    #mobile-nav-toggle { display: none; }
+
     @media (max-width: 992px) {
       .controls { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 768px) {
-      .nav-select-group { display: none !important; }
-      .controls { display: none !important; }
+      /* .nav-select-group { display: none !important; } REMOVED to allow toggle */
+      .controls { 
+          display: none; /* Hidden by default on mobile, toggled via JS */
+          grid-template-columns: 1fr;
+          gap: 10px;
+      }
+      .controls.show-mobile {
+          display: grid !important;
+      }
+      
       .btn-text { display: none; }
       .container { padding: 12px; margin: 10px; width: auto; }
       h1 { font-size: 1.2em; }
       .two-col { grid-template-columns: 1fr; }
+      
+      /* Mobile Menu Toggle Button */
+      #mobile-nav-toggle {
+          display: inline-block !important;
+      }
       
       /* Adjust buttons to be full width or larger touch targets */
       .btn { padding: 12px; }
@@ -495,9 +511,10 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <h1><i class="fas fa-book-open"></i> อ่านเนื้อหา</h1>
       <div style="display:flex;gap:8px">
-        <a href="./content_browser.html" class="btn secondary" style="text-decoration:none; background-color: #95a5a6;"><i class="fas fa-book"></i> ห้องสมุด</a>
-        <a href="./index.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-home"></i> หน้าหลัก</a>
-        <a id="exam-btn" href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i> ออกข้อสอบ</a>
+        <button id="mobile-nav-toggle" class="btn secondary" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+        <a href="./content_browser.html" class="btn secondary" style="text-decoration:none; background-color: #95a5a6;"><i class="fas fa-book"></i><span class="btn-text"> ห้องสมุด</span></a>
+        <a href="./index.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-home"></i><span class="btn-text"> หน้าหลัก</span></a>
+        <a id="exam-btn" href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i><span class="btn-text"> ออกข้อสอบ</span></a>
       </div>
     </div>
     <div class="controls">
@@ -806,6 +823,15 @@
       'visuddhi-3': (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
       'abhidhamma-1': (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
     };
+    
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const controls = document.querySelector('.controls');
+        if (controls) {
+            controls.classList.toggle('show-mobile');
+        }
+    }
+
     function toThaiDigits(str){const m={'0':'๐','1':'๑','2':'๒','3':'๓','4':'๔','5':'๕','6':'๖','7':'๗','8':'๘','9':'๙'};return String(str).replace(/[0-9]/g,d=>m[d])}
     function thaiToArabic(str){const m={'๐':'0','๑':'1','๒':'2','๓':'3','๔':'4','๕':'5','๖':'6','๗':'7','๘':'8','๙':'9'};return String(str).replace(/[๐-๙]/g,d=>m[d])}
     function parsePageNumber(page){if(typeof page==='number')return page; if(!page)return 0; const str=thaiToArabic(String(page)); const match=str.match(/\d+/); return match?parseInt(match[0],10):0}
