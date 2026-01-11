@@ -2091,6 +2091,24 @@
         renderCurrentPage();
     }
 
+    // --- Gatha Rendering Helper ---
+    function renderPaliContent(s, sIndex) {
+        if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
+            const type = s.gatha.type;
+            const lines = s.gatha.lines || [];
+            if (type === 'couplet') {
+                return lines.map(line => {
+                    const left = wrapWords(line.left || '', sIndex);
+                    const right = wrapWords(line.right || '', sIndex);
+                    return `<div style="display:flex; gap:20px; align-items:flex-start; margin-bottom:4px;"><div style="flex:1;">${left}</div><div style="flex:1; text-align:right;">${right}</div></div>`;
+                }).join('');
+            } else if (type === 'quatrain') {
+                return lines.map(line => `<div style="margin-bottom:4px;">${wrapWords(line || '', sIndex)}</div>`).join('');
+            }
+        }
+        return wrapWords(s.pali || '', sIndex);
+    }
+
     function renderCurrentPage() {
         window.currentPageNotes = loadPageNotes();
         const container = document.getElementById('pages');
@@ -2193,7 +2211,7 @@
                 const b=document.createElement('div');
                 b.className='block pali-text';
                 b.style.fontWeight='bold';
-                b.innerHTML=wrapWords(s.pali||'', sIndex);
+                b.innerHTML=renderPaliContent(s, sIndex);
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
@@ -2201,7 +2219,7 @@
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Pali
-                b1.innerHTML=wrapWords(s.pali||'', sIndex);
+                b1.innerHTML=renderPaliContent(s, sIndex);
                 
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
@@ -2229,7 +2247,7 @@
                 b2.className='block pali-text';
                 b2.style.fontWeight='bold';
                 b2.style.color='#333333'; // Darker Pali
-                b2.innerHTML=wrapWords(s.pali||'', sIndex);
+                b2.innerHTML=renderPaliContent(s, sIndex);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -2239,7 +2257,7 @@
                 const leftB=document.createElement('div');
                 leftB.className='block pali-text';
                 leftB.style.fontWeight='bold';
-                leftB.innerHTML=wrapWords(s.pali||'', sIndex);
+                leftB.innerHTML=renderPaliContent(s, sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
                 rightB.textContent=preferThai(s);
@@ -2265,7 +2283,7 @@
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
-                rightB.innerHTML=wrapWords(s.pali||'', sIndex);
+                rightB.innerHTML=renderPaliContent(s, sIndex);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
