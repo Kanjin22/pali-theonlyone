@@ -2133,14 +2133,36 @@
         if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
             const type = s.gatha.type;
             const lines = s.gatha.lines || [];
+            
+            // 1. Try to extract Intro (Pre-Gatha text) from s.pali
+            let introText = "";
+            if (s.pali) {
+                const firstLineLeft = (lines[0].left || lines[0] || "").trim();
+                const idx = s.pali.indexOf(firstLineLeft);
+                if (idx > 0) {
+                    introText = s.pali.substring(0, idx).trim();
+                }
+            }
+
+            let paliHtml = "";
+            if (introText) {
+                paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, sIndex)}</div>`;
+            }
+
             if (type === 'couplet') {
-                return lines.map(line => {
+                paliHtml += lines.map(line => {
                     const left = wrapWords(line.left || '', sIndex);
                     const right = wrapWords(line.right || '', sIndex);
-                    return `<div style="display:flex; gap:20px; align-items:flex-start; margin-bottom:4px;"><div style="flex:1;">${left}</div><div style="flex:1; text-align:right;">${right}</div></div>`;
+                    // Updated Layout: Left aligned with gap, close together (Book Style)
+                    return `<div style="display:flex; gap:40px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                                <div style="flex:0 0 auto;">${left}</div>
+                                <div style="flex:0 0 auto;">${right}</div>
+                            </div>`;
                 }).join('');
+                return paliHtml;
             } else if (type === 'quatrain') {
-                return lines.map(line => `<div style="margin-bottom:4px;">${wrapWords(line || '', sIndex)}</div>`).join('');
+                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex)}</div>`).join('');
+                return paliHtml;
             }
         }
         return wrapWords(s.pali || '', sIndex);

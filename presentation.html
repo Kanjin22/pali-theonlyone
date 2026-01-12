@@ -2731,14 +2731,38 @@
             if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
                 const type = s.gatha.type;
                 const lines = s.gatha.lines || [];
+                
+                // 1. Try to extract Intro (Pre-Gatha text) from s.pali
+                // Many times s.pali contains "Tenaha Bhagava..." which is missing from gatha lines
+                let introText = "";
+                if (s.pali) {
+                    // Try to find where the first line starts
+                    const firstLineLeft = (lines[0].left || lines[0] || "").trim();
+                    // Remove quotes for fuzzy matching if needed, but exact match is safer first
+                    const idx = s.pali.indexOf(firstLineLeft);
+                    if (idx > 0) {
+                        introText = s.pali.substring(0, idx).trim();
+                    }
+                }
+
                 if (type === 'couplet') {
-                    paliHtml = lines.map(line => {
+                    if (introText) {
+                        paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, s, true)}</div>`;
+                    }
+                    paliHtml += lines.map(line => {
                         const left = wrapWords(line.left || '', s, true);
                         const right = wrapWords(line.right || '', s, true);
-                        return `<div style="display:flex; gap:24px; align-items:flex-start;"><div style="flex:1;">${left}</div><div style="flex:1; text-align:right;">${right}</div></div>`;
+                        // Updated Layout: Left aligned with gap, close together (Book Style)
+                        return `<div style="display:flex; gap:40px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                                    <div style="flex:0 0 auto;">${left}</div>
+                                    <div style="flex:0 0 auto;">${right}</div>
+                                </div>`;
                     }).join('');
                 } else if (type === 'quatrain') {
-                    paliHtml = lines.map(line => `<div>${wrapWords(line || '', s, true)}</div>`).join('');
+                    if (introText) {
+                        paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, s, true)}</div>`;
+                    }
+                    paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', s, true)}</div>`).join('');
                 } else {
                     paliHtml = wrapWords(s.pali, s, true);
                 }
