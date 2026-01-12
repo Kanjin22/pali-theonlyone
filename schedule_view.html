@@ -1376,18 +1376,24 @@
                 }
             }
 
-            let timeSummaryText = '';
-            const startT = period.timeStart || null;
-            const endT = period.timeEnd || null;
-            let examRangeText = '';
-            if (startT && endT) examRangeText = `${startT}–${endT} น.`;
-            else if (startT && !endT) examRangeText = `${startT} น.`;
-            else if (!startT && endT) examRangeText = `ถึง ${endT} น.`;
-            else examRangeText = `ยังไม่กำหนดเวลา`;
-            const answerText = endT ? `เปิดเฉลยหลัง ${endT} น.` : `เปิดเฉลยหลัง: ยังไม่กำหนดเวลา`;
-            timeSummaryText = `เวลาสอบ ${examRangeText}. ${answerText}`;
-            if (isPrivileged) timeSummaryText += ` (ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)`;
-            if (timeSummaryText) {
+            // Only show exam time summary if it is an exam period
+            // (Either explicitly flagged as isExam, or has start/end times defined)
+            const isExamPeriod = period.isExam === true || !!period.timeStart || !!period.timeEnd;
+
+            if (isExamPeriod) {
+                let timeSummaryText = '';
+                const startT = period.timeStart || null;
+                const endT = period.timeEnd || null;
+                let examRangeText = '';
+                if (startT && endT) examRangeText = `${startT}–${endT} น.`;
+                else if (startT && !endT) examRangeText = `${startT} น.`;
+                else if (!startT && endT) examRangeText = `ถึง ${endT} น.`;
+                else examRangeText = `ยังไม่กำหนดเวลา`;
+
+                const answerText = endT ? `เปิดเฉลยหลัง ${endT} น.` : `เปิดเฉลยหลัง: ยังไม่กำหนดเวลา`;
+                timeSummaryText = `เวลาสอบ ${examRangeText}. ${answerText}`;
+                if (isPrivileged) timeSummaryText += ` (ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)`;
+                
                 html += `<div class="modal-section"><div style="padding:12px 16px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.08); border-radius:12px; font-weight:700; color:#2c3e50; text-align:center;">${timeSummaryText}</div></div>`;
             }
 
