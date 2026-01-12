@@ -925,6 +925,7 @@
             // Using toISOString() uses UTC, which might be wrong if it's late night in Thailand but previous day in UTC.
             // Safe approach: use local date components
             const now = new Date();
+            const userRole = window.__userRole || 'general';
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const d = String(now.getDate()).padStart(2, '0');
@@ -1300,36 +1301,94 @@
             
             // Logic for Exam Time Control
             const now = new Date();
-            // Helper to parse date string "YYYY-MM-DD" and time "HH:mm"
-            // date argument is "YYYY-MM-DD" from day.date
+            // Helper: Normalize time string "HH:mm" or "HH.mm" (also strip Thai digits and 'น.')
+            const normalizeTime = (t) => {
+                if (!t) return null;
+                const th = '๐๑๒๓๔๕๖๗๘๙';
+                const ar = '0123456789';
+                let s = String(t).trim();
+                s = s.replace(/[น.\s]+$/g, ''); // drop trailing น. and spaces
+                s = s.replace(/[๐-๙]/g, d => ar[th.indexOf(d)]);
+                s = s.replace(/\./g, ':');
+                // Accept "HH:mm" or "HHmm"
+                const m1 = s.match(/^(\d{1,2}):(\d{2})$/);
+                const m2 = s.match(/^(\d{1,2})(\d{2})$/);
+                if (m1) return `${m1[1].padStart(2,'0')}:${m1[2]}`;
+                if (m2) return `${m2[1].padStart(2,'0')}:${m2[2]}`;
+                return null;
+            };
+            // Build Date from normalized time
             const getDateTime = (d, t) => {
-                if(!d || !t) return null;
-                return new Date(`${d}T${t}:00`);
+                const norm = normalizeTime(t);
+                if(!d || !norm) return null;
+                const dt = new Date(`${d}T${norm}:00`);
+                return isNaN(dt.getTime()) ? null : dt;
             };
 
             const startTime = period.timeStart ? getDateTime(date, period.timeStart) : null;
             const endTime = period.timeEnd ? getDateTime(date, period.timeEnd) : null;
+            const hasStartStr = !!period.timeStart;
+            const hasEndStr = !!period.timeEnd;
+            const startValid = !!startTime;
+            const endValid = !!endTime;
 
             // Flags for visibility
             let canShowExam = true;
-            let canShowAnswer = true;
+            let canShowAnswer = false;
             let examWaitMsg = "";
             let answerWaitMsg = "";
 
-            if (startTime && endTime) {
-                if (now < startTime) {
-                    canShowExam = false;
-                    canShowAnswer = false;
-                    examWaitMsg = `(เปิดข้อสอบ ${period.timeStart} น.)`;
-                } else if (now >= startTime && now < endTime) {
-                    canShowExam = true;
-                    canShowAnswer = false;
-                    answerWaitMsg = `(เฉลยมาเวลา ${period.timeEnd} น.)`;
-                } else {
-                    // now >= endTime
-                    canShowExam = true;
-                    canShowAnswer = true;
+            // Role-based gating:
+            // - Admin/Teacher: can open exam and answers any time
+            // - Student (general): exam from startTime, answers after endTime
+            const userRole = window.__userRole || 'general';
+            const isPrivileged = (userRole === 'admin' || userRole === 'teacher');
+
+            if (!isPrivileged) {
+                if (hasStartStr) {
+                    if (startValid) {
+                        if (now < startTime) {
+                            canShowExam = false;
+                            examWaitMsg = `(เปิดข้อสอบ ${period.timeStart} น.)`;
+                        }
+                    } else {
+                        // Start provided but unparsable -> keep closed for students
+                        canShowExam = false;
+                        examWaitMsg = `(เปิดข้อสอบ ${period.timeStart} น.)`;
+                    }
                 }
+            }
+
+            if (isPrivileged) {
+                canShowAnswer = true;
+            } else {
+                if (hasEndStr) {
+                    if (endValid) {
+                        canShowAnswer = now >= endTime;
+                        if (!canShowAnswer) answerWaitMsg = `(เฉลยมาเวลา ${period.timeEnd} น.)`;
+                    } else {
+                        canShowAnswer = false;
+                        answerWaitMsg = `(เฉลยมาเวลา ${period.timeEnd} น.)`;
+                    }
+                } else {
+                    canShowAnswer = false;
+                    answerWaitMsg = `(ยังไม่ถึงเวลาเฉลย)`;
+                }
+            }
+
+            let timeSummaryText = '';
+            const startT = period.timeStart || null;
+            const endT = period.timeEnd || null;
+            let examRangeText = '';
+            if (startT && endT) examRangeText = `${startT}–${endT} น.`;
+            else if (startT && !endT) examRangeText = `${startT} น.`;
+            else if (!startT && endT) examRangeText = `ถึง ${endT} น.`;
+            else examRangeText = `ยังไม่กำหนดเวลา`;
+            const answerText = endT ? `เปิดเฉลยหลัง ${endT} น.` : `เปิดเฉลยหลัง: ยังไม่กำหนดเวลา`;
+            timeSummaryText = `เวลาสอบ ${examRangeText}. ${answerText}`;
+            if (isPrivileged) timeSummaryText += ` (ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)`;
+            if (timeSummaryText) {
+                html += `<div class="modal-section"><div style="padding:12px 16px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.08); border-radius:12px; font-weight:700; color:#2c3e50; text-align:center;">${timeSummaryText}</div></div>`;
             }
 
             if (period.noteFiles) {
@@ -1355,9 +1414,7 @@
                         // Add disabled placeholder (only if exam has started, otherwise we might hide it completely to not clutter? 
                         // User said: "When exam time ends, it's time to open answer link". 
                         // Usually we show "Answer will be available at..."
-                        if (now >= startTime) { // Only show answer placeholder if exam has started
-                             allFiles.push({ url: '#', label: `เฉลย${getSubjLabel(subjId)} ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
-                        }
+                        allFiles.push({ url: '#', label: `เฉลย${getSubjLabel(subjId)} ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                     }
                 });
             }
@@ -1381,7 +1438,7 @@
                  
                  if (period.fileAnswerGrammar) {
                      if (canShowAnswer) addFiles(period.fileAnswerGrammar, 'เฉลยไวยากรณ์', 'fa-key', 'btn-answer', 'Grammar');
-                     else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลยไวยากรณ์ ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
+                     else allFiles.push({ url: '#', label: `เฉลยไวยากรณ์ ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
 
                  // Exams & Answers (Translate)
@@ -1392,7 +1449,7 @@
                  
                  if (period.fileAnswerTranslate) {
                     if (canShowAnswer) addFiles(period.fileAnswerTranslate, 'เฉลยแปล', 'fa-key', 'btn-answer', 'Translate');
-                    else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลยแปล ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
+                    else allFiles.push({ url: '#', label: `เฉลยแปล ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                  }
      
                  // Generic Exams/Answers arrays (Last resort)
@@ -1405,7 +1462,7 @@
                  if (!period.fileAnswerGrammar && !period.fileAnswerTranslate) {
                     if (period.answers) {
                         if (canShowAnswer) addFiles(period.answers, 'เฉลย', 'fa-key', 'btn-answer', null);
-                        else if (now >= startTime) allFiles.push({ url: '#', label: `เฉลย ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
+                        else allFiles.push({ url: '#', label: `เฉลย ${answerWaitMsg}`, icon: 'fa-clock', cls: 'btn-disabled', isExplicitLabel: true, disabled: true });
                     }
                  }
             } else {
@@ -1461,12 +1518,14 @@
                      }
                      // If explicit label was provided, we use it directly (e.g. "ข้อสอบไวยากรณ์")
 
-                     if (f.pending) {
-                         filesHtml += `<span class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> รออัปโหลด: ${name}</span>`;
-                     } else {
-                         filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
-                     }
-                 });
+                    if (f.pending) {
+                        filesHtml += `<span class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> รออัปโหลด: ${name}</span>`;
+                    } else if (f.disabled) {
+                        filesHtml += `<span class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</span>`;
+                    } else {
+                        filesHtml += `<a href="${href}" target="_blank" class="link-btn ${f.cls}"><i class="fas ${f.icon}"></i> ${name}</a>`;
+                    }
+                });
                  html += `<div class="modal-section"><h4>ไฟล์ประกอบ</h4><div class="link-group">${filesHtml}</div></div>`;
             }
 
@@ -1495,6 +1554,7 @@
                     let role = 'general';
                     const userDoc = await db.collection('users').doc(u.uid).get();
                     if (userDoc.exists) role = userDoc.data().role || role;
+                    window.__userRole = role;
 
                     if (role === 'admin' || role === 'teacher') { loadSchedule(); return; }
 
