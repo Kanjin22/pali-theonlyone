@@ -865,24 +865,43 @@
         return text.replace(/_/g, ' ');
     }
 
+    // Copied from presentation.html
+    function parseThaiFormatting(text) {
+        if (!text) return "";
+        const parts = text.split(/({[^}]+})/g);
+        
+        return parts.map(part => {
+            if (part.startsWith('{') && part.endsWith('}')) {
+                const content = part.slice(1, -1);
+                // Handle newlines inside Gatha block
+                const lines = content.split('\n').map(line => {
+                    return escapeHtml(line.trim()); // Use escapeHtml here instead of wrapWords
+                }).join('<br>');
+                return `<div style="margin: 0 40px; font-weight: bold; color: #000000;">${lines}</div>`;
+            } else {
+                // Normal text
+                return part.split('\n').map(line => {
+                     return escapeHtml(line.trim());
+                }).join('<br>');
+            }
+        }).join('');
+    }
+
     function renderThaiContent(s) {
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         
-        // If literal mode and has Thai Gatha lines
-        if (mode === 'thai' && s.gatha && s.gatha.thai_lines && Array.isArray(s.gatha.thai_lines)) {
-            let html = "";
-            s.gatha.thai_lines.forEach(line => {
-                const isIntro = line.startsWith("(เพราะเหตุ) นั้น") || line.startsWith("เตนาห");
-                if (isIntro) {
-                    html += `<div style="margin-bottom:15px; text-indent:50px;">${escapeHtml(line)}</div>`;
-                } else {
-                    html += `<div style="margin-left:40px; margin-bottom:10px;">${escapeHtml(line)}</div>`;
-                }
-            });
-            return html;
+        const text = preferThai(s);
+        
+        if (mode === 'thai' && (text.includes('{') || text.includes('\n'))) {
+            return parseThaiFormatting(text);
         }
 
-        return escapeHtml(preferThai(s));
+        if (mode === 'thai' && s.gatha) {
+             // User requested normal text flow (not split left/right) but narrower margins for Gatha
+             return `<div style="margin: 0 40px; font-weight: bold; color: #000000;">${escapeHtml(text)}</div>`;
+        }
+
+        return escapeHtml(text);
     }
     function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
     function getThaiCombinedHtml(obj){
@@ -2272,7 +2291,7 @@
 
                 const btn = document.createElement('button');
                 btn.className = 'btn secondary audio-btn';
-                btn.style.cssText = 'padding: 2px 8px; font-size: 0.8em; margin-left: 8px; border-radius: 12px; background-color: white; color: #7f8c8d; border: 1px solid #bdc3c7; cursor: pointer; vertical-align: middle; transition: all 0.2s;';
+                btn.style.cssText = 'padding: 2px 8px; font-size: 0.5em; margin-left: 8px; border-radius: 12px; background-color: white; color: #7f8c8d; border: 1px solid #bdc3c7; cursor: pointer; vertical-align: middle; transition: all 0.2s;';
                 btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
                 btn.title = 'เล่นเสียงอ่าน';
                 
