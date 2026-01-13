@@ -60,6 +60,7 @@
     .thai-text { 
         line-height: inherit; 
         word-spacing: normal; /* Normal spacing for Thai */
+        color: #000000;
     }
 
     @media print {
@@ -2282,7 +2283,7 @@
                 
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
-                b2.style.color='#333333'; // Darker Thai
+                b2.style.color='#000000'; // Darker Thai
                 b2.textContent=preferThai(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b2.appendChild(senseBtn);
