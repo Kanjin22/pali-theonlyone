@@ -864,6 +864,26 @@
         }
         return text.replace(/_/g, ' ');
     }
+
+    function renderThaiContent(s) {
+        const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
+        
+        // If literal mode and has Thai Gatha lines
+        if (mode === 'thai' && s.gatha && s.gatha.thai_lines && Array.isArray(s.gatha.thai_lines)) {
+            let html = "";
+            s.gatha.thai_lines.forEach(line => {
+                const isIntro = line.startsWith("(เพราะเหตุ) นั้น") || line.startsWith("เตนาห");
+                if (isIntro) {
+                    html += `<div style="margin-bottom:15px; text-indent:50px;">${escapeHtml(line)}</div>`;
+                } else {
+                    html += `<div style="margin-left:40px; margin-bottom:10px;">${escapeHtml(line)}</div>`;
+                }
+            });
+            return html;
+        }
+
+        return escapeHtml(preferThai(s));
+    }
     function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
     function getThaiCombinedHtml(obj){
         return `<div>${escapeHtml(preferThai(obj))}</div>`;
@@ -2284,7 +2304,7 @@
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
                 b2.style.color='#000000'; // Darker Thai
-                b2.textContent=preferThai(s);
+                b2.innerHTML=renderThaiContent(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b2.appendChild(senseBtn);
                 const audioBtn = createAudioBtn(sIndex, s);
@@ -2297,7 +2317,7 @@
                 b1.className='block thai-text';
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Thai
-                b1.textContent=preferThai(s);
+                b1.innerHTML=renderThaiContent(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) b1.appendChild(senseBtn);
                 const audioBtn = createAudioBtn(sIndex, s);
@@ -2320,7 +2340,7 @@
                 leftB.innerHTML=renderPaliContent(s, sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
-                rightB.textContent=preferThai(s);
+                rightB.innerHTML=renderThaiContent(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) rightB.appendChild(senseBtn);
                 const audioBtn = createAudioBtn(sIndex, s);
@@ -2334,7 +2354,7 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
-                leftB.textContent=preferThai(s);
+                leftB.innerHTML=renderThaiContent(s);
                 const senseBtn = createSenseBtn(sIndex);
                 if(senseBtn) leftB.appendChild(senseBtn);
                 const audioBtn = createAudioBtn(sIndex, s);

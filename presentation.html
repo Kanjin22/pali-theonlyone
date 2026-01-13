@@ -2785,7 +2785,22 @@
                  displayThai = s.thai || s.thai_desana || s.thai_sense || "";
             }
             
-            thaiBox.innerHTML = wrapWords(displayThai, null);
+            // Gatha Formatting for Thai (Literal Mode only)
+            const isLiteralMode = (!translationMode || translationMode === 'thai') && !isThaiSense;
+            if (isLiteralMode && s.gatha && s.gatha.thai_lines && Array.isArray(s.gatha.thai_lines)) {
+                let thaiHtml = "";
+                s.gatha.thai_lines.forEach(line => {
+                    const isIntro = line.startsWith("(เพราะเหตุ) นั้น") || line.startsWith("เตนาห");
+                    if (isIntro) {
+                         thaiHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(line, null)}</div>`;
+                    } else {
+                         thaiHtml += `<div style="margin-left:40px; margin-bottom:10px;">${wrapWords(line, null)}</div>`;
+                    }
+                });
+                thaiBox.innerHTML = thaiHtml;
+            } else {
+                thaiBox.innerHTML = wrapWords(displayThai, null);
+            }
 
             paliBox.parentElement.scrollTop = 0;
             thaiBox.parentElement.scrollTop = 0;
