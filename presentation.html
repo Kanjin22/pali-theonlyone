@@ -2664,8 +2664,25 @@
             ctx.strokeStyle = '#e74c3c'; // สีแดง
         }
 
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        const handleResize = debounce(() => {
+            resizeCanvas();
+            updateSlide(); // Re-render for responsive layout
+        }, 200);
+
         // เรียกใช้ตอนโหลดและเมื่อย่อขยายจอ
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', handleResize);
         setTimeout(resizeCanvas, 500); // เรียกซ้ำเผื่อโหลดไม่ทัน
 
         // --- เปิด/ปิด โหมดปากกา ---
@@ -2788,20 +2805,23 @@
 
                 if (type === 'couplet') {
                     if (introText) {
-                        paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, s, true)}</div>`;
+                        paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, s, true)}</div>`;
                     }
+                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                    const isNarrow = vw <= 1200;
                     paliHtml += lines.map(line => {
                         const left = wrapWords(line.left || '', s, true);
                         const right = wrapWords(line.right || '', s, true);
-                        // Updated Layout: Left aligned with gap, close together (Book Style)
-                        return `<div style="display:flex; gap:40px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
-                                    <div style="flex:0 0 auto;">${left}</div>
-                                    <div style="flex:0 0 auto;">${right}</div>
+                        const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
+                        const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
+                        return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                                    <div style="${leftStyle}">${left}</div>
+                                    <div style="${rightStyle}">${right}</div>
                                 </div>`;
                     }).join('');
                 } else if (type === 'quatrain') {
                     if (introText) {
-                        paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, s, true)}</div>`;
+                        paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, s, true)}</div>`;
                     }
                     paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', s, true)}</div>`).join('');
                 } else {

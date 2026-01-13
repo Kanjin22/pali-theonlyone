@@ -2186,17 +2186,20 @@
 
             let paliHtml = "";
             if (introText) {
-                paliHtml += `<div style="margin-bottom:15px; text-indent:50px;">${wrapWords(introText, sIndex)}</div>`;
+                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex)}</div>`;
             }
 
             if (type === 'couplet') {
+                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                const isNarrow = vw <= 1200; // Treat tablets/phones as narrow
                 paliHtml += lines.map(line => {
                     const left = wrapWords(line.left || '', sIndex);
                     const right = wrapWords(line.right || '', sIndex);
-                    // Updated Layout: Left aligned with gap, close together (Book Style)
-                    return `<div style="display:flex; gap:40px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
-                                <div style="flex:0 0 auto;">${left}</div>
-                                <div style="flex:0 0 auto;">${right}</div>
+                    const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
+                    const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
+                    return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                                <div style="${leftStyle}">${left}</div>
+                                <div style="${rightStyle}">${right}</div>
                             </div>`;
                 }).join('');
                 return paliHtml;
