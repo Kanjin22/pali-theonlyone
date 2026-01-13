@@ -1261,6 +1261,13 @@
                         <button class="set-btn" onclick="changeFontSize(1)"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
+                <div class="settings-row" style="margin-top:10px;">
+                    <span class="settings-label">ระยะห่างบรรทัด</span>
+                    <div class="settings-btn-group">
+                        <button class="set-btn" onclick="changeLineHeight(-1)"><i class="fa-solid fa-minus"></i></button>
+                        <button class="set-btn" onclick="changeLineHeight(1)"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
                 <div class="settings-row" style="margin-top:10px; display:block;">
                     <span class="settings-label" style="display:block; margin-bottom:5px;">การจัดวาง</span>
                     <div class="settings-btn-group" style="justify-content: space-between;">
@@ -1889,6 +1896,17 @@
             document.querySelectorAll('.pali-text, .thai-text').forEach(el => {
                 if (el.closest('.footer-box')) return;
                 el.style.fontSize = `${currentFontSize}rem`;
+            });
+        }
+
+        let currentLineHeight = 1.8;
+        function changeLineHeight(change) {
+            currentLineHeight += (change * 0.1);
+            if (currentLineHeight < 1.0) currentLineHeight = 1.0;
+            if (currentLineHeight > 3.0) currentLineHeight = 3.0;
+            document.querySelectorAll('.pali-text, .thai-text').forEach(el => {
+                if (el.closest('.footer-box')) return;
+                el.style.lineHeight = String(currentLineHeight);
             });
         }
 
