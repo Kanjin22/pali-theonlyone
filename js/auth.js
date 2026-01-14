@@ -13,6 +13,7 @@ const btnOpenLogin = document.getElementById('btn-open-login');
 const btnLogoutTop = document.getElementById('btn-logout');
 const userInfo = document.getElementById('user-info');
 const appContent = document.getElementById('app-content');
+const introSection = document.getElementById('intro-section');
 
 // --- Auth UI Functions ---
 
@@ -316,6 +317,7 @@ auth.onAuthStateChanged((user) => {
         closeLogin();
         // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
         if (appContent) appContent.style.display = 'block';
+        if (introSection) introSection.style.display = 'none';
 
         // Load Pins immediately
         if (typeof loadTodayPins === 'function') loadTodayPins();
@@ -518,6 +520,7 @@ auth.onAuthStateChanged((user) => {
         localStorage.removeItem('pali_user_uid');
         hideUser();
         if (appContent) appContent.style.display = 'none';
+        if (introSection) introSection.style.display = 'block';
         if (typeof openLogin === 'function') openLogin();
     }
 });
