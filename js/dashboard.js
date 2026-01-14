@@ -80,7 +80,7 @@ function applyRoleUI(role) {
     // Logic:
     // - Admin/Teacher: See ALL classrooms
     // - Student: See ONLY Open Levels
-    // - General: See NONE (Show Enroll Card instead)
+    // - General: See ALL levels (แต่ยังไม่มีห้องของฉัน)
 
     if (role === 'admin' || role === 'teacher') {
         // Show All
@@ -191,12 +191,7 @@ function applyRoleUI(role) {
         })();
 
     } else {
-        classroomLinks.forEach(a => a.style.display = 'none');
-
-        const label = document.getElementById('pali-classrooms-label');
-        if (label) {
-            label.textContent = 'สมัครเรียน';
-        }
+        classroomLinks.forEach(a => a.style.display = 'flex');
 
         createEnrollCard(enrollCardId, classroomLinks.length ? classroomLinks[0].parentElement : null);
     }

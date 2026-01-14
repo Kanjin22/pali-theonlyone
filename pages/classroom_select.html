@@ -212,9 +212,19 @@
                 visibleRooms.forEach(room => {
                     const card = document.createElement('a');
                     
-                    if (room.status === 'active') {
+                    const isGeneral = userCtx && (userCtx.role === 'general');
+                    const isActive = room.status === 'active';
+
+                    if (isActive && !isGeneral) {
                         card.href = `../levels/home_${room.level}.html?room=${room.id}`;
                         card.className = 'room-card active';
+                    } else if (isActive && isGeneral) {
+                        card.href = '../pages/enroll.html';
+                        card.className = 'room-card active';
+                        card.onclick = (e) => {
+                            e.preventDefault();
+                            window.location.href = '../pages/enroll.html';
+                        };
                     } else {
                         card.href = '#';
                         card.className = 'room-card maintenance';
