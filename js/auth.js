@@ -518,8 +518,7 @@ auth.onAuthStateChanged((user) => {
         localStorage.removeItem('pali_user_uid');
         hideUser();
         if (appContent) appContent.style.display = 'none';
-        
-        // No guest login; keep app content hidden
+        if (typeof openLogin === 'function') openLogin();
     }
 });
 
