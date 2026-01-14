@@ -223,7 +223,7 @@ function renderRoomContent(room) {
         });
         
         // Link to Reader (Textbooks)
-        const readerUrl = `../reader.html?level=${room.level}`;
+        const readerUrl = `../pages/reader.html?level=${room.level}`;
         html += `<a href="${readerUrl}" class="menu-button" style="background-color:#3498db; color:#fff;">📖 อ่านเนื้อหา / ตำราเรียน</a>`;
         
         // Add Create Schedule Button (Hidden by default, shown for Admin/Teacher only)

@@ -370,7 +370,7 @@ if (resumeBtnEl) {
         
         if (data.type === 'reader') {
             // สร้าง URL ของ Reader
-            let url = `reader.html?resume=true`;
+            let url = `pages/reader.html?resume=true`;
             // ถ้ามีข้อมูลละเอียดก็ใส่ไปเลยเพื่อความแม่นยำ (Backup)
             if(data.level) url += `&level=${encodeURIComponent(data.level)}`;
             resumeBtnEl.href = url;
@@ -487,7 +487,7 @@ function checkResume(specificUid = null) {
                 resumeDesc.textContent = `เรียนต่อจากที่ค้างไว้ (${timeStr})`;
                 
                 if (state.type === 'reader') {
-                        resumeBtn.href = 'reader.html?resume=true';
+                        resumeBtn.href = 'pages/reader.html?resume=true';
                 } else {
                         resumeBtn.href = `presentation.html?id=${state.id}&index=${state.index}`;
                 }
