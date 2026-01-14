@@ -138,7 +138,7 @@ async function loadTodayPins() {
                             if (periodData.activities) {
                                 Object.keys(periodData.activities).forEach(k => {
                                     add(k, periodData.activities[k]);
-                               - });
+                                });
                             } 
                             // 2. Legacy Fallbacks (if no structured activities found for standard types)
                             else {
