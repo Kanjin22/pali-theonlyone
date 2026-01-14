@@ -142,6 +142,7 @@ function getErrorMessage(code) {
         case 'auth/user-not-found': return 'ไม่พบผู้ใช้งานนี้ในระบบ';
         case 'auth/popup-closed-by-user': return 'คุณปิดหน้าต่างล็อกอินก่อนทำรายการสำเร็จ';
         case 'auth/too-many-requests': return 'ทำรายการเกินกำหนด กรุณารอสักครู่แล้วลองใหม่';
+        case 'auth/operation-not-allowed': return 'ยังไม่ได้เปิดใช้งานผู้ให้บริการล็อกอินนี้ หรือการตั้งค่าไม่สมบูรณ์ (เช่น LINE ยังไม่ได้เชื่อมต่อกับ Firebase Console/LINE Developer Console)';
         default: return 'เกิดข้อผิดพลาด (' + code + ')';
     }
 }
