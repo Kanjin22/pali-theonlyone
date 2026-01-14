@@ -105,7 +105,10 @@ window.loginGoogle = async () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         await auth.signInWithPopup(provider);
     } catch (error) {
-        alert('Google Login Error: ' + error.message);
+        const msg = (typeof getErrorMessage === 'function')
+            ? getErrorMessage(error.code || '')
+            : 'ไม่สามารถเข้าสู่ระบบด้วย Google ได้: ' + (error.message || '');
+        if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
     }
 };
 
@@ -115,9 +118,13 @@ window.loginFacebook = async () => {
         await auth.signInWithPopup(provider);
     } catch (error) {
         if (error.code === 'auth/account-exists-with-different-credential') {
-             alert('อีเมลนี้มีการใช้งานแล้วด้วยวิธีอื่น (เช่น Google) กรุณาล็อกอินด้วยวิธีนั้น');
+             const msg = 'อีเมลนี้มีการใช้งานแล้วด้วยวิธีอื่น (เช่น Google) กรุณาล็อกอินด้วยวิธีนั้น';
+             if (typeof showToast === 'function') showToast(msg, 'warning'); else alert(msg);
         } else {
-             alert('Facebook Login Error: ' + error.message);
+             const msg = (typeof getErrorMessage === 'function')
+                 ? getErrorMessage(error.code || '')
+                 : 'ไม่สามารถเข้าสู่ระบบด้วย Facebook ได้: ' + (error.message || '');
+             if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
         }
     }
 };
@@ -270,7 +277,8 @@ async function saveSimpleUser() {
         // onAuthStateChanged will handle the rest
     } catch (error) {
         setLoading(false, document.getElementById('btn-guest-login'));
-        alert('ไม่สามารถเข้าใช้งานแบบทดลองได้: ' + error.message);
+        const msg = 'ไม่สามารถเข้าใช้งานแบบทดลองได้: ' + (error.message || '');
+        if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
     }
 }
 
