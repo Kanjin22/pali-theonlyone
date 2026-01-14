@@ -290,7 +290,7 @@ function renderRoomContent(room) {
     // Update Stats Link if exists
     const statsLink = document.getElementById('statsLink');
     if (statsLink) {
-        statsLink.href = `../statistics.html?room=${room.id}`;
+        statsLink.href = `../pages/statistics.html?room=${room.id}`;
     }
 
     // Update Subject Links with Room ID
