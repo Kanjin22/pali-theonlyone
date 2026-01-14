@@ -100,6 +100,11 @@ if (btnLogoutTop) btnLogoutTop.onclick = () => {
 };
 
 // --- Social Login ---
+
+const btnLoginGoogle = document.getElementById('login-google');
+const btnLoginFacebook = document.getElementById('login-facebook');
+const btnLoginLine = document.getElementById('login-line');
+
 window.loginGoogle = async () => {
     try {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -108,7 +113,7 @@ window.loginGoogle = async () => {
         const msg = (typeof getErrorMessage === 'function')
             ? getErrorMessage(error.code || '')
             : 'ไม่สามารถเข้าสู่ระบบด้วย Google ได้: ' + (error.message || '');
-        if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
+        if (typeof safeNotify === 'function') safeNotify(msg, 'error');
     }
 };
 
@@ -119,18 +124,33 @@ window.loginFacebook = async () => {
     } catch (error) {
         if (error.code === 'auth/account-exists-with-different-credential') {
              const msg = 'อีเมลนี้มีการใช้งานแล้วด้วยวิธีอื่น (เช่น Google) กรุณาล็อกอินด้วยวิธีนั้น';
-             if (typeof showToast === 'function') showToast(msg, 'warning'); else alert(msg);
+             if (typeof safeNotify === 'function') safeNotify(msg, 'warning');
         } else {
              const msg = (typeof getErrorMessage === 'function')
                  ? getErrorMessage(error.code || '')
                  : 'ไม่สามารถเข้าสู่ระบบด้วย Facebook ได้: ' + (error.message || '');
-             if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
+            if (typeof safeNotify === 'function') safeNotify(msg, 'error');
         }
     }
 };
 
+if (btnLoginGoogle) btnLoginGoogle.onclick = () => window.loginGoogle && window.loginGoogle();
+if (btnLoginFacebook) btnLoginFacebook.onclick = () => window.loginFacebook && window.loginFacebook();
+if (btnLoginLine) btnLoginLine.onclick = () => window.loginLine && window.loginLine();
+
 window.loginLine = async () => {
-    alert('ระบบล็อกอินผ่าน LINE กำลังพัฒนาครับ กรุณาใช้ Google หรือ Email แทนก่อนนะครับ');
+    try {
+        const provider = new firebase.auth.OAuthProvider('oidc.line');
+        await auth.signInWithPopup(provider);
+    } catch (error) {
+        let msg = '';
+        if (typeof getErrorMessage === 'function' && error && error.code && String(error.code).indexOf('auth/') === 0) {
+            msg = getErrorMessage(error.code);
+        } else {
+            msg = 'ไม่สามารถเข้าสู่ระบบด้วย LINE ได้: ' + (error && error.message ? error.message : '');
+        }
+        if (typeof safeNotify === 'function') safeNotify(msg, 'error');
+    }
 };
 
 // --- Email Login Logic ---
@@ -247,10 +267,16 @@ if (modalForgotPassword) modalForgotPassword.onclick = async () => {
     setLoading(true, modalForgotPassword);
     try {
         await auth.sendPasswordResetEmail(email);
-        alert('ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมล ' + email + ' แล้วครับ');
+        const msg = 'ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมล ' + email + ' แล้วครับ';
+        if (typeof safeNotify === 'function') {
+            safeNotify(msg, 'success');
+        }
         setLoading(false, modalForgotPassword);
     } catch (err) {
-        alert('ไม่สามารถส่งอีเมลได้: ' + getErrorMessage(err.code));
+        const msg = 'ไม่สามารถส่งอีเมลได้: ' + getErrorMessage(err.code);
+        if (typeof safeNotify === 'function') {
+            safeNotify(msg, 'error');
+        }
         setLoading(false, modalForgotPassword);
     }
 };
@@ -278,7 +304,7 @@ async function saveSimpleUser() {
     } catch (error) {
         setLoading(false, document.getElementById('btn-guest-login'));
         const msg = 'ไม่สามารถเข้าใช้งานแบบทดลองได้: ' + (error.message || '');
-        if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
+        if (typeof safeNotify === 'function') safeNotify(msg, 'error');
     }
 }
 
@@ -466,7 +492,7 @@ auth.onAuthStateChanged((user) => {
 
             } catch (e) {
                 console.error("Critical Error in Auth Flow:", e);
-                if (typeof showToast === 'function') showToast('ระบบยืนยันตัวตนขัดข้อง กรุณารีเฟรชหน้าจอ', 'error');
+                if (typeof safeNotify === 'function') safeNotify('ระบบยืนยันตัวตนขัดข้อง กรุณารีเฟรชหน้าจอ', 'error');
                 // ถ้า Error หนักจริงๆ ให้แสดง User แบบปกติไปก่อน
                 let fallbackRole = cachedRole;
                 if (!fallbackRole && FALLBACK_ADMIN_EMAILS.includes(user.email)) fallbackRole = 'admin';

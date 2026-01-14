@@ -226,8 +226,9 @@
                                 if (window.opener && typeof window.opener.receiveSlideId === 'function') {
                                     window.opener.receiveSlideId(story.id);
                                     window.close();
-                                } else {
-                                    alert(`เลือก ID: ${story.id}\n(ไม่พบหน้าต่างหลัก)`);
+                                } else if (window.opener && typeof window.opener.showToast === 'function') {
+                                    const msg = `เลือก ID: ${story.id}\n(ไม่พบหน้าต่างหลัก)`;
+                                    window.opener.showToast(msg, 'warning');
                                 }
                             };
                             card.style.cursor = "pointer";

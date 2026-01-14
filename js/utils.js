@@ -54,6 +54,38 @@ function showToast(message, type = 'info') {
     }, 5000);
 }
 
+function safeNotify(message, type = 'info') {
+    if (typeof showToast === 'function') {
+        showToast(message, type);
+        return;
+    }
+    try {
+        let bar = document.getElementById('fallback-notify-bar');
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.id = 'fallback-notify-bar';
+            bar.style.position = 'fixed';
+            bar.style.left = '0';
+            bar.style.right = '0';
+            bar.style.bottom = '0';
+            bar.style.padding = '10px 16px';
+            bar.style.zIndex = '9999';
+            bar.style.textAlign = 'center';
+            bar.style.fontFamily = 'Sarabun, sans-serif';
+            document.body.appendChild(bar);
+        }
+        let bg = '#34495e';
+        if (type === 'error') bg = '#e74c3c';
+        else if (type === 'success') bg = '#27ae60';
+        else if (type === 'warning') bg = '#f39c12';
+        bar.style.backgroundColor = bg;
+        bar.style.color = '#ffffff';
+        bar.textContent = message;
+    } catch (e) {
+        console.error(message);
+    }
+}
+
 // --- Skeleton Loader ---
 function injectSkeletonStyles() {
     if (document.getElementById('skeleton-styles')) return;
