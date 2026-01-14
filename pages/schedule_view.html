@@ -729,11 +729,18 @@
             // Exam Time
             if (period.isExam || (period.timeStart && period.timeEnd)) {
                 const thaiDigits = ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'];
-                const toThaiNum = (num) => num.toString().split('').map(d => thaiDigits[d] || d).join('');
+                const toThaiNum = (num) => {
+                    if (num === undefined || num === null) return '';
+                    return num.toString().split('').map(d => thaiDigits[d] || d).join('');
+                };
                 const formatTime = (t) => {
-                     if(!t) return '';
-                     const [h, m] = t.split(':');
-                     return `${toThaiNum(h)}.${toThaiNum(m)} น.`;
+                    if (!t) return '';
+                    const parts = t.toString().trim().split(/[:.]/);
+                    const h = parts[0] || '';
+                    const m = parts[1] || '';
+                    if (!h) return '';
+                    if (!m) return `${toThaiNum(h)} น.`;
+                    return `${toThaiNum(h)}.${toThaiNum(m)} น.`;
                 };
                 if (period.timeStart && period.timeEnd) {
                     items.push(`<span style="font-weight:bold; color:#c0392b;">${formatTime(period.timeStart)} - ${formatTime(period.timeEnd)}</span>`);
