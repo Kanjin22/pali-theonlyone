@@ -60,7 +60,17 @@ function hideUser() {
 
 function openLogin() {
     if (loginModal) {
-        loginModal.style.display = 'block';
+        loginModal.style.display = 'flex';
+        const card = document.getElementById('login-modal-card');
+        if (card) {
+            card.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+            card.style.transform = 'scale(0.98)';
+            card.style.opacity = '0';
+            requestAnimationFrame(() => {
+                card.style.transform = 'scale(1)';
+                card.style.opacity = '1';
+            });
+        }
     }
 }
 
@@ -94,6 +104,15 @@ if (btnLogoutTop) btnLogoutTop.onclick = () => {
         });
     }
 };
+if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
+if (loginModal) {
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) closeLogin();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLogin();
+    });
+}
 
 // --- Social Login ---
 
