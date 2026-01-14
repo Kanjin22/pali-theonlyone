@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการใช้พจนานุกรม - ระบบการเรียนบาลีออนไลน์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background-color: #f8f9fa; 
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Sarabun', sans-serif;
+            font-weight: 700;
+        }
+
+        .container { max-width: 1000px; }
+        
+        .header-section { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            position: relative;
+        }
+        
+        .page-title { 
+            color: #2c3e50; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            border-bottom: 3px solid #3498db;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            color: #3498db;
+        }
+
+        .card { 
+            border: none; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            padding: 20px 25px 0;
+        }
+
+        .nav-tabs .nav-link { 
+            color: #7f8c8d; 
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: all 0.3s;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: #3498db;
+            border-color: transparent;
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .nav-tabs .nav-link.active { 
+            color: #3498db; 
+            border-bottom: 3px solid #3498db; 
+            background-color: transparent;
+        }
+
+        .abbr-badge { 
+            background-color: #e3f2fd; 
+            color: #1976d2;
+            padding: 4px 8px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-family: 'Sarabun', monospace; 
+            display: inline-block;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+        
+        .search-input {
+            padding-left: 40px;
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+            border-color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .back-btn {
+                position: static;
+                display: block;
+                margin-bottom: 15px;
+                text-align: left;
+            }
+            .header-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left me-2"></i>กลับหน้าหลัก</a>
+        <h1 class="page-title"><i class="fas fa-book-open me-2"></i>คู่มือการใช้พจนานุกรม</h1>
+        <p class="text-muted mt-2">คำอธิบายอักษรย่อและสัญลักษณ์ที่ใช้ในพจนานุกรมฉบับต่างๆ</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="dictTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="bhumibalo-tab" data-bs-toggle="tab" data-bs-target="#bhumibalo" type="button" role="tab" aria-controls="bhumibalo" aria-selected="true">ฉบับภูมิพโลภิกขุ</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="insan-pr9-tab" data-bs-toggle="tab" data-bs-target="#insan-pr9" type="button" role="tab" aria-controls="insan-pr9" aria-selected="false">ฉบับ Insan-PR9 (ธรรมบท ๑-๘)</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="jinakalamalini-tab" data-bs-toggle="tab" data-bs-target="#jinakalamalini" type="button" role="tab" aria-controls="jinakalamalini" aria-selected="false">ฉบับชินกาลมาลินี</button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body p-4">
+            <div class="tab-content" id="dictTabsContent">
+                
+                <!-- Bhumibalo Tab -->
+                <div class="tab-pane fade show active" id="bhumibalo" role="tabpanel" aria-labelledby="bhumibalo-tab">
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-8">
+                            <div class="alert alert-light border mb-0 py-2">
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i> อ้างอิงจาก <strong>พจนานุกรมบาลี-ไทย ฉบับภูมิพโลภิกขุ</strong></small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2 mt-md-0">
+                            <div class="search-box mb-0">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-control search-input" id="search-bhumibalo" placeholder="ค้นหาอักษรย่อ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light"><tr><th style="width:25%">อักษรย่อ</th><th>ความหมายเต็ม</th></tr></thead>
+                            <tbody id="bhumibalo-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Insan-PR9 Tab -->
+                <div class="tab-pane fade" id="insan-pr9" role="tabpanel" aria-labelledby="insan-pr9-tab">
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-8">
+                            <div class="alert alert-light border mb-0 py-2">
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i> อ้างอิงจาก <strong>พจนานุกรมธรรมบทภาค ๑-๘ ของอาจารย์บุญสืบ อินสาร</strong></small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2 mt-md-0">
+                            <div class="search-box mb-0">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-control search-input" id="search-insan-pr9" placeholder="ค้นหาอักษรย่อ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light"><tr><th style="width:25%">อักษรย่อ</th><th>ความหมายเต็ม</th></tr></thead>
+                            <tbody id="insan-pr9-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Jinakalamalini Tab -->
+                <div class="tab-pane fade" id="jinakalamalini" role="tabpanel" aria-labelledby="jinakalamalini-tab">
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-8">
+                            <div class="alert alert-light border mb-0 py-2">
+                                <small class="text-muted"><i class="fas fa-info-circle me-1"></i> อ้างอิงจาก <strong>ชินกาลมาลินี และคัมภีร์ที่เกี่ยวข้อง</strong></small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2 mt-md-0">
+                            <div class="search-box mb-0">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-control search-input" id="search-jinakalamalini" placeholder="ค้นหาอักษรย่อ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light"><tr><th style="width:25%">อักษรย่อ</th><th>ความหมาย (โดยประมาณ)</th></tr></thead>
+                            <tbody id="jinakalamalini-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 1. Bhumibalo Data
+    const bhumibaloAbbrs = [
+        { short: "อ.", full: "อฏฺฐกถา (อรรถกถา)" },
+        { short: "อ.ก.", full: "อกรรมกริยา" },
+        { short: "อ.กา.", full: "อปาทานการก, ปัญจมีวิภัตติ" },
+        { short: "องฺ.", full: "องฺคุตฺตรนิกาย" },
+        { short: "องฺ.อ.", full: "องฺคุตฺตรนิกาย อฏฺฐกถา" },
+        { short: "อ.ทา.", full: "อปทาน" },
+        { short: "อธิ.กา.", full: "อธิกรณการก, สัตตมีวิภัตติ" },
+        { short: "อนุ.", full: "อนุวํส" },
+        { short: "อภิธา.", full: "อภิธานปฺปทีปิกา" },
+        { short: "อภิ.ส.", full: "อภิธมฺมตฺถสงฺคห" },
+        { short: "อ.ศา.", full: "อวทานศาตก" },
+        { short: "อ.สา.", full: "อฏฺฐสาลินี" },
+        { short: "อัช.", full: "อัชชัตตนี" },
+        { short: "อัต.", full: "อัตตโนบท" },
+        { short: "อัพ.", full: "อัพยยศัพท์" },
+        { short: "อิต., อิตฺ.", full: "อิตฺถีลิงค์" },
+        { short: "อิติ.", full: "อิติวุตฺตก" },
+        { short: "อุ.", full: "อุทาหรณ์" },
+        { short: "อุปมา", full: "โดยอรรถ" },
+        { short: "อุต.", full: "อุตฺตมบุรุษ" },
+        { short: "เอก.", full: "เอกพจน์" },
+        { short: "ก.", full: "กริยา" },
+        { short: "ก.กา.", full: "กรณการก" },
+        { short: "ก.กิ.", full: "กริยากิตก์" },
+        { short: "กถา.", full: "กถาวตฺถุ" },
+        { short: "กถา.อ.", full: "กถาวตฺถุ อฏฺฐกถา" },
+        { short: "กรรต.กา.", full: "กรรตุการก" },
+        { short: "กรรม.กา.", full: "กรรมการก" },
+        { short: "ก.วิ.", full: "กริยาวิเศษณ์" },
+        { short: "ก.อา.", full: "กริยาอาขยาต" },
+        { short: "กัจ., กจฺ.", full: "กัจจายนะ" },
+        { short: "กัต.", full: "กัตตุวาจก" },
+        { short: "กัม.", full: "กัมมวาจก" },
+        { short: "กัมม.", full: "กัมมธารยสมาส" },
+        { short: "กาพย์สัน.", full: "กาพย์สันสกฤต" },
+        { short: "กาลา.", full: "กาลาติปัตติ" },
+        { short: "ขุ.", full: "ขุททกนิกาย" },
+        { short: "ขุ.อ.", full: "ขุททกนิกาย อฏฺฐกถา" },
+        { short: "คุณ.", full: "คุณศัพท์" },
+        { short: "จ.ปิ.", full: "จริยาปิฎก" },
+        { short: "จุลฺ.นิ.", full: "จุลฺลนิทฺเทส" },
+        { short: "ชา.", full: "ชาตก" },
+        { short: "ชา.มา.", full: "ชาตกมาลา" },
+        { short: "ต.", full: "ไตรปิฎก, ตำรา" },
+        { short: "ตามตัว.", full: "ตามตัวอักษร" },
+        { short: "ติ.ป.", full: "ติกปฏฺฐาน" },
+        { short: "เถร.", full: "เถรคาถา" },
+        { short: "เถร.อ.", full: "เถรคาถา อฏฺฐกถา" },
+        { short: "เถรี.", full: "เถรีคาถา" },
+        { short: "เถรี.อ.", full: "เถรีคาถา อฏฺฐกถา" },
+        { short: "ทวัน.", full: "ทวันทวสมาส" },
+        { short: "ทา.วํ.", full: "ทาฐาวํส" },
+        { short: "ทิวฺ.", full: "ทิวฺยาวทาน" },
+        { short: "ที.", full: "ทีฆนิกาย" },
+        { short: "ที.อ.", full: "ทีฆนิกาย อฏฺฐกถา" },
+        { short: "ธ., ธ.ป.", full: "ธมฺมปท" },
+        { short: "ธ.ส.", full: "ธมฺมสงฺคณี" },
+        { short: "ธ.ส.อ.", full: "ธมฺมสงฺคณี อฏฺฐกถา" },
+        { short: "ธ.อ.", full: "ธมฺมปท อรรถกถา" },
+        { short: "ธา.ป.", full: "ธาตุปาฐ" },
+        { short: "ธา.ม.", full: "ธาตุมญฺชุสา" },
+        { short: "น.", full: "หน้า" },
+        { short: "นปุ., นปุํ.", full: "นปุงสกลิงค์" },
+        { short: "นาม.", full: "นามศัพท์" },
+        { short: "นิยม ก.วิ.", full: "นิยมกริยาวิเศษณ์" },
+        { short: "นิรุกติ.", full: "นิรุกติศาสตร์" },
+        { short: "เน.ป.", full: "เนตฺติปกรณ" },
+        { short: "บา.", full: "บาลี" },
+        { short: "ปกติ.", full: "ปกติสังขยา" },
+        { short: "ปฏิ.ส.", full: "ปฏิสมฺภิทามคฺค" },
+        { short: "ประ.", full: "ประถมบุรุษ" },
+        { short: "ปรัส.", full: "ปรัสสบท" },
+        { short: "ปรา.", full: "ปรากฤต" },
+        { short: "ปโรก.", full: "ปโรกฺขา" },
+        { short: "ปัญ.", full: "ปัญจมี" },
+        { short: "ปญฺ.ที.", full: "ปญฺจคติทีปนี" },
+        { short: "ปุ.", full: "ปุคฺคลปญฺญตฺติ" },
+        { short: "ปุ.อ.", full: "ปุคฺคลปญฺญตฺติ อฏฺฐกถา" },
+        { short: "ปุํ.", full: "ปุงลิงค์" },
+        { short: "ปูรณ.", full: "ปูรณสังขยา" },
+        { short: "เปต.", full: "เปตวตฺถุ" },
+        { short: "เปต.อ.", full: "เปตวตฺถุ อฏฺฐกถา" },
+        { short: "พ.", full: "พม่า" },
+        { short: "พหุ.", full: "พหูพจน์" },
+        { short: "พุ.", full: "พุทฺธวํส" },
+        { short: "พุทธสัน.", full: "พุทธสันสกฤต" },
+        { short: "ภวิ.", full: "ภวิสฺสนฺติ" },
+        { short: "ม.", full: "มชฺฌิมนิกาย" },
+        { short: "ม.อ.", full: "มชฺฌิมนิกาย อฏฺฐกถา" },
+        { short: "ม.ว.", full: "มหาวสฺตุ" },
+        { short: "ม.วํ.", full: "มหาวํส" },
+        { short: "มหา.นิ.", full: "มหานิทฺเทส" },
+        { short: "มหา.วํ.", full: "มหาโพธิวํส" },
+        { short: "มัธ.", full: "มัธยมบุรุษ" },
+        { short: "มิลิน.", full: "มิลินฺทปญฺหา" },
+        { short: "ร.ว.", full: "รตฺตนาวลี" },
+        { short: "ล.วิ.", full: "ลลิตวิสตร" },
+        { short: "วัต.", full: "วตฺตมานา" },
+        { short: "วิ.", full: "วินยปิฎก" },
+        { short: "วิภงฺค.", full: "วิภงฺคปกรณ" },
+        { short: "วิ.ม.", full: "วิสุทฺธิมคฺค" },
+        { short: "วิมาน.", full: "วิมานวตฺถุ" },
+        { short: "วิมาน.อ.", full: "วิมานวตฺถุ อฏฺฐกถา" },
+        { short: "ส.ก.", full: "สกรรมกริยา (กริยาที่ต้องมีกรรมมารับ)" },
+        { short: "ส.กา.", full: "สัมปทานการก (จตุตถีวิภัตติ)" },
+        { short: "ส.นิ.", full: "สังขยาคุณนาม, สังขยานาม" },
+        { short: "สัน.", full: "สันสกฤต" },
+        { short: "ส.ปา.", full: "สมนฺตปาสาทิกา" },
+        { short: "สรรพ.", full: "สรรพนาม" },
+        { short: "สัต.", full: "สัตตมี" },
+        { short: "สัมป.กา.", full: "สัมปทานการก" },
+        { short: "สทฺ.ปา.", full: "สทฺธมฺโมปายน" },
+        { short: "สํ.", full: "สํยุตฺตนิกาย" },
+        { short: "สํ.อ.", full: "สํยุตฺตนิกาย อฏฺฐกถา" },
+        { short: "สี.", full: "สีหล" },
+        { short: "สุ.วิ.", full: "สุมงคลวิลาสินี" },
+        { short: "สุตฺ.นิ.", full: "สุตฺตนิปาต" },
+        { short: "สุตฺ.นิ.อ.", full: "สุตฺตนิปาต อฏฺฐกถา" },
+        { short: "หีย., หียัต.", full: "หียัตตนี" },
+        { short: "√", full: "ธาตุ หรือ รากศัพท์" },
+        { short: "Sk, *Sk", full: "สันสกฤต" }
+    ];
+
+    // 2. Insan-PR9 Data (Verified)
+    const insanPr9Abbrs = [
+        { short: 'ก.', full: 'กิริยา' },
+        { short: 'กฺวิ.กัต.กัต.วิ.', full: 'กฺวิ ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
+        { short: 'จ.', full: 'จตุตถีวิภัตติ' },
+        { short: 'จ.พหุ.', full: 'จตุตถีวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'จ.เอก.', full: 'จตุตถีวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'จตุ.ตัป.วิ.', full: 'จตุตถีตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'จตุ.ตุล.วิ.', full: 'จตุตถีตุลยาธิกรณพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ฉ.', full: 'ฉัฏฐีวิภัตติ' },
+        { short: 'ฉ.ตัป.วิ.', full: 'ฉัฏฐีตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'ฉ.ตุล.วิ.', full: 'ฉัฏฐีตุลยาธิกรณพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ฉ.พหุ.', full: 'ฉัฏฐีวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'ฉ.ภิน.พหุพ.วิ.', full: 'ฉัฏฐีภินนาธิกรณพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ฉ.อุป.พหุพ.วิ.', full: 'ฉัฏฐีอุปมาพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ณ.กัต.กรณ.วิ.', full: 'ณ ปัจจัย กัตตุรูป กรณสาธนะ วิเคราะห์ว่า' },
+        { short: 'ณ.กัต.กัต.วิ.', full: 'ณ ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
+        { short: 'ณ.ตทัส.วิ.', full: 'ณ ปัจจัย ในตทัสสัตถิตัทธิต วิเคราะห์ว่า' },
+        { short: 'ณ.ปริมาณ.วิ.', full: 'ณ ปัจจัย ในปริมาณตัทธิต วิเคราะห์ว่า' },
+        { short: 'ณ.ราคา.วิ.', full: 'ณ ปัจจัย ในราคาทิตัทธิต วิเคราะห์ว่า' },
+        { short: 'ณิก.ตรตฺยา.วิ.', full: 'ณิก ปัจจัย ในตรตฺยาทิตัทธิต วิเคราะห์ว่า' },
+        { short: 'ณี.กัต.กัต.วิ.', full: 'ณี ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
+        { short: 'ณฺย.ภาว.วิ.', full: 'ณฺย ปัจจัย ในภาวตัทธิต วิเคราะห์ว่า' },
+        { short: 'ณฺวุ.กัต.กัต.วิ.', full: 'ณฺวุ ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
+        { short: 'ต.', full: 'ตติยาวิภัตติ' },
+        { short: 'ต.ตัป.วิ.', full: 'ตติยาตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'ต.ตุล.วิ.', full: 'ตติยาตุลยาธิกรณพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ต.พหุ.', full: 'ตติยาวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'ต.เอก.', full: 'ตติยาวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'ตร.เสฏฐ.วิ.', full: 'ตร ปัจจัย ในเสฏฐตัทธิต วิเคราะห์ว่า' },
+        { short: 'ตา.ภาว.วิ.', full: 'ตา ปัจจัย ในภาวตัทธิต วิเคราะห์ว่า' },
+        { short: 'ท.', full: 'ทั้งหลาย' },
+        { short: 'ทุ.', full: 'ทุติยาวิภัตติ' },
+        { short: 'ทุ.เอก.', full: 'ทุติยาวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'ทุ.ตัป.วิ.', full: 'ทุติยาตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'ทุ.พหุ.', full: 'ทุติยาวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'ธ.', full: 'ธมฺมปทฏฺฐกถา หรือธรรมบทบาลีภาค' },
+        { short: 'ธา.วิภาค.วิ.', full: 'ธา ปัจจัย ในวิภาคตัทธิต วิเคราะห์ว่า' },
+        { short: 'น.', full: 'นาม' },
+        { short: 'น.,นปุ.', full: 'นาม นปุงสกลิงค์' },
+        { short: 'น.,ปุ.', full: 'นาม ปุงลิงค์' },
+        { short: 'น.,ปุ.,นปุ.', full: 'นาม ปุงลิงค์, นปุงสกลิงค์' },
+        { short: 'น.,อิต.', full: 'นาม อิตถีลิงค์' },
+        { short: 'นบุพ.กัม.วิ.', full: 'นบุพพบทกัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'นบุพ.พหุพ.วิ.', full: 'นบุพพบทพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'นปุ.', full: 'นปุงสกลิงค์' },
+        { short: 'นปุ.พหุ.', full: 'นปุงสกลิงค์ พหุวจนะ' },
+        { short: 'นิ.', full: 'นิบาต' },
+        { short: 'นิ.อัพ.วิ.', full: 'นิปาตปุพพกะ อัพยยีภาวสมาส วิเคราะห์ว่า' },
+        { short: 'ป.', full: 'ปฐมาวิภัตติ' },
+        { short: 'ป.พหุ.', full: 'ปฐมาวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'ป.เอก.', full: 'ปฐมาวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'ปญฺ.', full: 'ปัญจมีวิภัตติ' },
+        { short: 'ปญฺ.เอก.', full: 'ปัญจมีวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'ปเรก.วิ.', full: 'ปเรกเสสสมาส วิเคราะห์ว่า' },
+        { short: 'ปัญจ.ตัป.วิ.', full: 'ปัญจมีตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'ปัญจ.ตุล.วิ.', full: 'ปัญจมีตุลยาธิกรณพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'ปุ.', full: 'ปุงลิงค์' },
+        { short: 'ปุพเพก.วิ.', full: 'ปุพเพกเสสสมาส วิเคราะห์ว่า' },
+        { short: 'พหุ.', full: 'พหุวจนะ' },
+        { short: 'ม.', full: 'มัธยมบุรุษ' },
+        { short: 'มย.ปกติ.วิ.', full: 'มย ปัจจัย ในปกติตัทธิต วิเคราะห์ว่า' },
+        { short: 'ยุ.กัต.กรณ.วิ.', full: 'ยุ ปัจจัย กัตตุรูป กรณสาธนะ วิเคราะห์ว่า' },
+        { short: 'ยุ.กัต.อธิ.วิ.', full: 'ยุ ปัจจัย กัตตุรูป อธิกรณสาธนะ วิเคราะห์ว่า' },
+        { short: 'ยุ.กัม.อธิ.วิ.', full: 'ยุ ปัจจัย กัมมรูป อธิกรณสาธนะ วิเคราะห์ว่า' },
+        { short: 'ร.ตทัส.วิ.', full: 'ร ปัจจัย ในตทัสสัตถิตัทธิต วิเคราะห์ว่า' },
+        { short: 'ว.', full: 'วิเสสนะ' },
+        { short: 'ว.,นปุ.', full: 'วิเสสนะ นปุงสกลิงค์' },
+        { short: 'ว.,ปุ.', full: 'วิเสสนะ ปุงลิงค์' },
+        { short: 'ว.,อิต.', full: 'วิเสสนะ อิตถีลิงค์' },
+        { short: 'วิ.ว่า', full: 'วิเคราะห์ว่า' },
+        { short: 'วิ.,ปุ.', full: 'วิเสสนะ ปุงลิงค์' },
+        { short: 'วิ.นุต.กัม.วิ.', full: 'วิเสสนุตตรบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'วิ.โนปม.กัม.วิ.', full: 'วิเสสโนปมบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'วิ.โนภย.กัม.วิ.', full: 'วิเสสโนภยบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'วิ.บุพ.กัม.วิ.', full: 'วิเสสนบุพพบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'ส.', full: 'สัตตมีวิภัตติ' },
+        { short: 'ส.ตัป.วิ.', full: 'สัตตมีตัปปุริสสมาส วิเคราะห์ว่า' },
+        { short: 'ส.ทวัน.วิ.', full: 'สมาหารทวันทวสมาส วิเคราะห์ว่า' },
+        { short: 'ส.ทิคุ.วิ', full: 'สมาหารทิคุสมาส วิเคราะห์ว่า' },
+        { short: 'ส.พหุ.', full: 'สัตตมีวิภัตติ ฝ่ายพหุวจนะ' },
+        { short: 'ส.เอก.', full: 'สัตตมีวิภัตติ ฝ่ายเอกวจนะ' },
+        { short: 'สห.พหุพ.วิ.', full: 'สหบุพพบทพหุพพิหิสมาส วิเคราะห์ว่า' },
+        { short: 'สัม.บุพ.กัม.วิ.', full: 'สัมภาวนบุพพบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'อ.', full: 'อันว่า' },
+        { short: 'อ.กัต.กรณ.วิ.', full: 'อ ปัจจัย กัตตุรูป กรณสาธนะ วิเคราะห์ว่า' },
+        { short: 'อ.กัต.กัต.วิ.', full: 'อ ปัจจัย กัตตุรูป กัตตุสาธนะ วิเคราะห์ว่า' },
+        { short: 'อ.กัต.กัม.วิ.', full: 'อ ปัจจัย กัตตุรูป กัมมสาธนะ วิเคราะห์ว่า' },
+        { short: 'อ.ทวัน.วิ.', full: 'อสมาหารทวันทวสมาส วิเคราะห์ว่า' },
+        { short: 'อ.ทิคุ.วิ.', full: 'อสมาหารทิคุสมาส วิ.ว่า' },
+        { short: 'อว.บุพ.กัม.วิ.', full: 'อวธารณบุพพบท กัมมธารยสมาส วิเคราะห์ว่า' },
+        { short: 'อัพ.', full: 'อัพยยศัพท์' },
+        { short: 'อา.', full: 'อาลปนะ' },
+        { short: 'อิก.ตทัส.วิ.', full: 'อิก ปัจจัย ในตทัสสัตถิตัทธิต วิเคราะห์ว่า' },
+        { short: 'อิต.', full: 'อิตถีลิงค์' },
+        { short: 'อิม.ชาตา.วิ.', full: 'อิม ปัจจัย ในชาตาทิตัทธิต วิเคราะห์ว่า' },
+        { short: 'อิย.ชาตา.วิ.', full: 'อิย ปัจจัย ในชาตาทิตัทธิต วิเคราะห์ว่า' },
+        { short: 'อี.ตทัส.วิ.', full: 'อี ปัจจัย ในตทัสสัตถิตัทธิต วิเคราะห์ว่า' },
+        { short: 'อีย.ฐาน.วิ.', full: 'อีย ปัจจัย ในฐานตัทธิต วิเคราะห์ว่า' },
+        { short: 'อุ.', full: 'อุตตมบุรุษ' },
+        { short: 'เอก.', full: 'เอกวจนะ' },
+        { short: 'เอยฺย.ฐาน.วิ.', full: 'เอยฺย ปัจจัย ในฐานตัทธิต วิเคราะห์ว่า' }
+    ];
+
+    // 3. Jinakalamalini Data
+    const jinakalamaliniAbbrs = [
+        { short: "สํ.", full: "สันสกฤต (Sanskrit)" },
+        { short: "ชิน.", full: "ชินกาลมาลินี (Jinakalamalini)" },
+        { short: "ป.ธ.", full: "ปทรูปสิทธิ (Padarupasiddhi)" },
+        { short: "อ.ก.", full: "อรรถกถา (Commentary)" },
+        { short: "ค.ธ.ป.", full: "คัมภีร์ธาตุปาฐะ" },
+        { short: "ธัม.", full: "ธัมมปท (Dhammapada)" },
+        { short: "มโนร.", full: "มโนรถปูรณี (Manorathapurani)" },
+        { short: "บา.", full: "บาลี (Pali)" },
+        { short: "ส.ป.", full: "สมนฺตปาสาทิกา (Samantapasadika)" }
+    ];
+
+    function renderTable(data, elementId) {
+        const tbody = document.getElementById(elementId);
+        tbody.innerHTML = ''; // Clear existing content
+        if (data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted py-3">ไม่พบข้อมูล</td></tr>';
+            return;
+        }
+        data.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><span class="abbr-badge">${item.short}</span></td><td>${item.full}</td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function setupSearch(inputId, data, tbodyId) {
+        document.getElementById(inputId).addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            const filtered = data.filter(item => 
+                item.short.toLowerCase().includes(term) || 
+                item.full.toLowerCase().includes(term)
+            );
+            renderTable(filtered, tbodyId);
+        });
+    }
+
+    // Initial Render
+    renderTable(bhumibaloAbbrs, 'bhumibalo-tbody');
+    renderTable(insanPr9Abbrs, 'insan-pr9-tbody');
+    renderTable(jinakalamaliniAbbrs, 'jinakalamalini-tbody');
+
+    // Setup Search
+    setupSearch('search-bhumibalo', bhumibaloAbbrs, 'bhumibalo-tbody');
+    setupSearch('search-insan-pr9', insanPr9Abbrs, 'insan-pr9-tbody');
+    setupSearch('search-jinakalamalini', jinakalamaliniAbbrs, 'jinakalamalini-tbody');
+</script>
+
+</body>
+</html>
+

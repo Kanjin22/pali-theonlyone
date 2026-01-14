@@ -1,0 +1,909 @@
+?????????????????<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Flashcards - บัตรคำศัพท์ช่วยจำ</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#2c3e50">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --header-bg: rgba(255, 255, 255, 0.1);
+            --stats-bg: rgba(255, 255, 255, 0.15);
+            --stats-border: rgba(255, 255, 255, 0.18);
+            --card-front-bg: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            --card-front-text: #2c3e50;
+            --card-back-bg: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+            --card-back-text: #2c3e50;
+            --details-bg: rgba(255,255,255,0.6);
+            --details-text: #444;
+            --details-border: rgba(0,0,0,0.1);
+            --select-bg: rgba(0,0,0,0.2);
+            --select-text: white;
+            --select-border: rgba(255,255,255,0.3);
+            --btn-skip-bg: rgba(255,255,255,0.2);
+            --btn-skip-hover: rgba(255,255,255,0.3);
+            --hint-text-color: #95a5a6;
+            --pali-word-color: #1a2a6c;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --header-bg: rgba(0, 0, 0, 0.3);
+            --stats-bg: rgba(0, 0, 0, 0.4);
+            --stats-border: rgba(255, 255, 255, 0.05);
+            --card-front-bg: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --card-front-text: #ecf0f1;
+            --card-back-bg: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+            --card-back-text: #ecf0f1;
+            --details-bg: rgba(0, 0, 0, 0.2);
+            --details-text: #bdc3c7;
+            --details-border: rgba(255,255,255,0.1);
+            --select-bg: rgba(0, 0, 0, 0.5);
+            --select-text: #ecf0f1;
+            --select-border: rgba(255,255,255,0.1);
+            --btn-skip-bg: rgba(255,255,255,0.05);
+            --btn-skip-hover: rgba(255,255,255,0.1);
+            --hint-text-color: #7f8c8d;
+            --pali-word-color: #a0c4ff;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            /* พื้นหลังสีสันสดใสแต่สบายตา (Deep Ocean Gradient) */
+            background: var(--bg-gradient);
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 10px; max-width: 100%; }
+            .header { flex-direction: column; gap: 10px; border-radius: 15px; padding: 15px; }
+            .back-btn { align-self: flex-start; }
+            select { width: 100%; box-sizing: border-box; }
+            .stats-bar { padding: 10px 15px; gap: 15px; width: 90%; justify-content: space-between; box-sizing: border-box; }
+            .stat-item { font-size: 1rem; }
+            .scene { height: 380px; }
+            .card-face { padding: 20px; }
+            .pali-word { font-size: 2.5rem; }
+            #card-pali-back { font-size: 1.8rem !important; }
+            .meaning { font-size: 1.4rem; }
+            .word-type { padding: 4px 12px; font-size: 0.8rem; }
+            .details-list li { font-size: 1rem; }
+            .controls { gap: 15px; }
+            .btn { padding: 12px 20px; min-width: 110px; font-size: 1rem; }
+        }
+
+        /* เพิ่มลวดลายพื้นหลังจางๆ */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+        .back-btn:hover {
+            transform: translateX(-5px);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .stats-bar {
+            background: var(--stats-bg);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--stats-border);
+        }
+
+        .stat-item {
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-green { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.4); }
+        .stat-red { color: #ff6b6b; text-shadow: 0 0 10px rgba(255, 107, 107, 0.4); }
+        .stat-total { color: #fff; }
+
+        /* Card Flip Effect */
+        .scene {
+            width: 100%;
+            height: 420px; /* เพิ่มความสูงอีกนิด */
+            perspective: 1200px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* เด้งดึ๋ง */
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 5px solid rgba(255,255,255,0.1);
+        }
+
+        /* หน้าบัตร - เรียบหรู สะอาด */
+        .card-front {
+            background: var(--card-front-bg);
+            color: var(--card-front-text);
+        }
+
+        /* หลังบัตร - สีสันสดใส (Pastel Yellow/Orange Gradient) */
+        .card-back {
+            background: var(--card-back-bg);
+            color: var(--card-back-text);
+            transform: rotateY(180deg);
+            overflow-y: auto;
+            justify-content: flex-start;
+            padding-top: 40px;
+            border: 5px solid rgba(255,255,255,0.5);
+        }
+
+        /* Scrollbar สำหรับหลังบัตร */
+        .card-back::-webkit-scrollbar { width: 6px; }
+        .card-back::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+
+        .pali-word {
+            font-family: 'Niramit', serif;
+            font-size: 3.5rem; /* ใหญ่ขึ้น */
+            font-weight: bold;
+            margin-bottom: 30px; /* เพิ่มระยะห่างด้านล่าง */
+            padding-bottom: 10px; /* เพิ่มพื้นที่สำหรับสระล่าง */
+            color: var(--pali-word-color);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            white-space: nowrap; /* ห้ามขึ้นบรรทัดใหม่ */
+            width: 100%;
+            overflow: visible; /* ป้องกันการตัดสระล่าง */
+        }
+
+        .word-type {
+            background: linear-gradient(to right, #ff512f, #dd2476); /* Vivid Pink/Red */
+            color: white;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(221, 36, 118, 0.3);
+        }
+
+        .meaning {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .details-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            width: 100%;
+            background: rgba(255,255,255,0.6);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .details-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+            color: #444;
+        }
+        .details-list li:last-child { border-bottom: none; }
+        .details-list strong { color: #1a2a6c; }
+
+        .controls {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 140px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+
+        .btn-red { 
+            background: linear-gradient(to right, #cb2d3e, #ef473a); 
+            color: white; 
+        }
+        .btn-red:hover { box-shadow: 0 0 20px rgba(239, 71, 58, 0.6); transform: translateY(-3px); }
+
+        .btn-green { 
+            background: linear-gradient(to right, #11998e, #38ef7d); 
+            color: white; 
+        }
+        .btn-green:hover { box-shadow: 0 0 20px rgba(56, 239, 125, 0.6); transform: translateY(-3px); }
+
+        .btn-skip {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            margin-top: 20px;
+            padding: 10px 25px;
+        }
+        .btn-skip:hover { background: rgba(255,255,255,0.3); }
+
+        /* Select Box Styling */
+        select {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.2);
+            color: white;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+        }
+        select option {
+            background: #2c3e50;
+            color: white;
+        }
+
+        /* Hint Text Animation */
+        .hint-text {
+            font-size: 0.9rem;
+            color: var(--hint-text-color);
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <select id="catSelect" onchange="changeCategory()">
+                    <option value="all">?? ทั้งหมด (All)</option>
+                    <option value="akhyata">?? อาขยาต (Akhyata)</option>
+                    <option value="kitaka">?? กิตก์ (Kitaka)</option>
+                    <option value="vocab">?? ศัพท์ทั่วไป (Vocab)</option>
+                </select>
+                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="เต็มหน้าจอ"><i class="fas fa-expand"></i></button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item stat-green" title="จำได้"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
+            <div class="stat-item stat-red" title="ลืม/ยังไม่ได้"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item stat-total" title="จำนวนการ์ดในกอง"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
+        </div>
+
+        <div class="scene">
+            <div class="card" onclick="flipCard()">
+                <div class="card-face card-front">
+                    <div class="word-type" id="card-type-front">TYPE</div>
+                    <div class="roman-hint" id="card-roman">Roman</div>
+                    <div class="pali-word" id="card-pali">Loading...</div>
+                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> แตะเพื่อดูเฉลย</div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="word-type" id="card-type">TYPE</div>
+                    <div class="pali-word" id="card-pali-back" style="font-size: 2.2rem;">Word</div>
+                    <div class="meaning" id="card-thai">Meaning</div>
+                    <ul class="details-list" id="card-details">
+                        <!-- Details -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> ยังไม่ได้</button>
+            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> ได้แล้ว!</button>
+        </div>
+        <div>
+            <button class="btn btn-skip" onclick="nextCard()">ข้ามไปก่อน (Skip) <i class="fas fa-forward"></i></button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Content Data -->
+    <script src="data/content-dhamma01.js"></script>
+    <script src="data/content-dhamma02.js"></script>
+    <script src="data/content-dhamma03.js"></script>
+    <script src="data/content-dhamma04.js"></script>
+    <script src="data/content-dhamma05.js"></script>
+    <script src="data/content-dhamma06.js"></script>
+    <script src="data/content-dhamma07.js"></script>
+    <script src="data/content-dhamma08.js"></script>
+    <script src="data/content-mangala01.js"></script>
+    <script src="data/content-mangala02.js"></script>
+    <script src="data/content-samanta01.js"></script>
+    <script src="data/content-samanta02.js"></script>
+    <script src="data/content-samanta03.js"></script>
+    <script src="data/content-visuddhi01.js"></script>
+    <script src="data/content-visuddhi02.js"></script>
+    <script src="data/content-visuddhi03.js"></script>
+    <script src="data/content-abhidhamma01.js"></script>
+
+    <!-- Dictionary Data -->
+    <script src="data/raw/vocab-general.js"></script>
+    <script src="data/raw/vocab-insan-pr9.js"></script>
+    <script src="data/raw/vocab-insan-pr9-5-8.js"></script>
+    <script src="data/raw/vocab-bhumibalo.js"></script>
+    <script src="data/raw/vocab-jinakalamalini.js"></script>
+    <script src="data/vocab-inflected.js"></script>
+
+    <!-- Pali-Roman Dictionaries removed -->
+    <script src="data/vocab-sandhi.js"></script>
+    
+    <!-- Logic -->
+    <script src="data/pali-lookup.js"></script>
+    <script src="data/pali-declension.js"></script>
+    <script src="data/pali-script.js"></script>
+
+    <script>
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        // Initialize theme
+        initTheme();
+
+        // 1. Collect Content
+        const slidesDatabase = Object.assign({},
+            (typeof contentDhamma01 !== 'undefined' ? contentDhamma01 : {}),
+            (typeof contentDhamma02 !== 'undefined' ? contentDhamma02 : {}),
+            (typeof contentDhamma03 !== 'undefined' ? contentDhamma03 : {}),
+            (typeof contentDhamma04 !== 'undefined' ? contentDhamma04 : {}),
+            (typeof contentDhamma05 !== 'undefined' ? contentDhamma05 : {}),
+            (typeof contentDhamma06 !== 'undefined' ? contentDhamma06 : {}),
+            (typeof contentDhamma07 !== 'undefined' ? contentDhamma07 : {}),
+            (typeof contentDhamma08 !== 'undefined' ? contentDhamma08 : {}),
+
+            (typeof contentMangala01 !== 'undefined' ? contentMangala01 : {}),
+            (typeof contentMangala02 !== 'undefined' ? contentMangala02 : {}),
+            (typeof contentSamanta01 !== 'undefined' ? contentSamanta01 : {}),
+            (typeof contentSamanta02 !== 'undefined' ? contentSamanta02 : {}),
+            (typeof contentSamanta03 !== 'undefined' ? contentSamanta03 : {}),
+            (typeof contentVisuddhi01 !== 'undefined' ? contentVisuddhi01 : {}),
+            (typeof contentVisuddhi02 !== 'undefined' ? contentVisuddhi02 : {}),
+            (typeof contentVisuddhi03 !== 'undefined' ? contentVisuddhi03 : {}),
+            (typeof contentAbhidhamma01 !== 'undefined' ? contentAbhidhamma01 : {})
+        );
+
+        // 2. Dictionary DBs
+        const dbs = {
+            insan_pr9: Object.assign({},
+                (typeof vocabInsanPr9Part5to8 !== 'undefined' ? vocabInsanPr9Part5to8 : {}),
+                (typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {})
+            ),
+            bhumibalo: (typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {}),
+            jinakalamalini: (typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {}),
+            general_raw: (typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {})
+        };
+
+        let allVocab = [];
+        let currentDeck = [];
+        let currentCard = null;
+        let stats = { totalCorrect: 0, totalReviewed: 0 };
+        let currentUser = null;
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Auth Listener
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user) {
+                // Sync from Firestore
+                db.collection('flashcard_stats').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.totalCorrect !== undefined) {
+                            // Simple sync: Update local to match remote if remote is valid
+                            // We trust remote more than local if logged in
+                            stats.totalCorrect = data.totalCorrect || 0;
+                            stats.totalReviewed = data.totalReviewed || 0;
+                            saveStats(); 
+                            updateStatsUI();
+                        }
+                    }
+                }).catch(err => {
+                    console.log("Offline mode or permission denied. Using local stats.");
+                });
+            }
+        });
+
+        function initData() {
+            const seen = new Set();
+
+            Object.keys(slidesDatabase).forEach(key => {
+                const slides = slidesDatabase[key];
+                if (!Array.isArray(slides)) return;
+
+                slides.forEach(slide => {
+                    const source = `${slide.vagga || ''} ${slide.story || ''}`;
+                    
+                    // Akhyata
+                    extractWords(slide.akhyata, 'akhyata', 'อาขยาต', source, seen);
+                    // Kitaka
+                    extractWords(slide.kitaka, 'kitaka', 'กิตก์', source, seen);
+                    // Vocab List
+                    extractWords(slide.vocab_list, 'vocab', 'ศัพท์ทั่วไป', source, seen);
+                });
+            });
+
+            console.log(`Loaded ${allVocab.length} words.`);
+            document.getElementById('count-total').innerText = allVocab.length;
+            
+            loadStats();
+            changeCategory();
+        }
+
+        function extractWords(text, type, label, source, seen) {
+            if (!text || text === 'รอข้อมูล' || text === '-') return;
+            
+            // Split by comma
+            const parts = text.split(',');
+            parts.forEach(part => {
+                let raw = part.trim();
+                if (!raw) return;
+
+                // Parse "Word (Details)"
+                // Matches: "Word" or "Word (Detail)" or "Word (Detail1, Detail2)"
+                const match = raw.match(/^([^\(]+)(\((.+)\))?$/);
+                if (match) {
+                    let word = match[1].trim();
+                    let details = match[3] ? match[3].trim() : "";
+                    
+                    // Clean word (remove punctuation if any mostly)
+                    word = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '');
+
+                    // --- Auto-Stemming Logic for Kitaka/Vocab ---
+                    if (type === 'kitaka' || type === 'vocab') {
+                        const stemmed = findBestStem(word);
+                        if (stemmed && stemmed !== word) {
+                            // If stemmed is different, use it.
+                            if (!details) details = `(ศัพท์เดิมของ: ${word})`;
+                            else details += `, ศัพท์เดิมของ: ${word}`;
+                            
+                            word = stemmed;
+                        }
+                    }
+
+                    // Unique Key: Word + Type (allow same word in different types?)
+                    // Let's use Word as key to avoid duplicates, but merge sources?
+                    // User might want to see same word if it appears as different grammar?
+                    // Let's stick to unique word for now to avoid spam.
+                    if (seen.has(word)) return;
+                    seen.add(word);
+
+                    allVocab.push({
+                        word: word,
+                        details: details,
+                        type: type,
+                        label: label,
+                        source: source
+                    });
+                }
+            });
+        }
+
+        function findBestStem(word) {
+            // 0. Check Pre-calculated Inflected Index (Best & Fastest)
+            if (typeof vocabInflected !== 'undefined' && vocabInflected[word]) {
+                return vocabInflected[word];
+            }
+
+            if (typeof PaliDeclension === 'undefined' || typeof PaliScript === 'undefined') return word;
+            
+            // Helper to check dicts
+            const checkDict = (w) => {
+                if (dbs.insan_pr9 && dbs.insan_pr9[w]) return true;
+                if (dbs.bhumibalo && dbs.bhumibalo[w]) return true;
+                if (dbs.jinakalamalini && dbs.jinakalamalini[w]) return true;
+                if (dbs.general_raw && dbs.general_raw[w]) return true;
+                return false;
+            };
+
+            // 0.5. If original word exists, return it (no stemming needed)
+            if (checkDict(word)) return word;
+
+            // 1. Convert to Roman
+            const roman = PaliScript.thaiToRoman(word);
+            if (!roman) return word;
+
+            // 2. Decompose
+            const candidates = PaliDeclension.decompose(roman);
+            if (!candidates || candidates.length === 0) return word;
+
+            // 3. Check Dict for each candidate
+            for (const candRoman of candidates) {
+                const candThai = PaliScript.romanToThai(candRoman);
+                if (checkDict(candThai)) return candThai;
+            }
+
+            // If none found in dict, return original
+            return word;
+        }
+
+        function changeCategory() {
+            const cat = document.getElementById('catSelect').value;
+            if (cat === 'all') {
+                currentDeck = [...allVocab];
+            } else {
+                currentDeck = allVocab.filter(v => v.type === cat);
+            }
+            
+            document.getElementById('count-total').innerText = currentDeck.length;
+            
+            // Shuffle
+            shuffle(currentDeck);
+            nextCard();
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function nextCard() {
+            // Reset Flip
+            document.querySelector('.card').classList.remove('is-flipped');
+
+            if (currentDeck.length === 0) {
+                // Show Empty State
+                document.getElementById('card-pali').innerText = "ไม่มีคำศัพท์";
+                document.getElementById('card-type-front').innerText = "-";
+                currentCard = null;
+                return;
+            }
+            
+            // Pick next random
+            const index = Math.floor(Math.random() * currentDeck.length);
+            currentCard = currentDeck[index];
+
+            setTimeout(() => {
+                renderCard(currentCard);
+            }, 300);
+        }
+
+        function renderCard(card) {
+            if (!card) return;
+
+            // --- Front ---
+            document.getElementById('card-pali').innerText = card.word;
+            fitTextToContainer('card-pali');
+            document.getElementById('card-type-front').innerText = card.label;
+            
+            // Add Roman
+            if (typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
+                document.getElementById('card-roman').innerText = PaliScript.thaiToRoman(card.word);
+            } else {
+                document.getElementById('card-roman').innerText = "";
+            }
+
+            // --- Back ---
+            document.getElementById('card-pali-back').innerText = card.word;
+            fitTextToContainer('card-pali-back');
+            document.getElementById('card-type').innerText = card.label;
+            
+            // Lookup Definition
+            let definition = "กำลังค้นหา...";
+            const result = PaliLookup.lookup(card.word, dbs);
+            
+            let meaningHtml = "";
+            let detailsListHtml = "";
+
+            if (result) {
+                if (typeof result === 'string') {
+                    meaningHtml = result;
+                } else if (result.details) {
+                    meaningHtml = result.details[0]; // First definition
+                    if (result.details.length > 1) {
+                         detailsListHtml += `<li><strong>ความหมายอื่น:</strong> ${result.details.slice(1).join(', ')}</li>`;
+                    }
+                }
+                
+                if (result.source) {
+                    detailsListHtml += `<li><small style="color:#7f8c8d;">ที่มา: ${result.source}</small></li>`;
+                }
+            } else {
+                meaningHtml = "ไม่พบความหมายในพจนานุกรม";
+            }
+
+            document.getElementById('card-thai').innerHTML = meaningHtml;
+
+            // Append Manual Details
+            let extraDetails = "";
+            if (card.details) {
+                extraDetails += `<li><strong>ไวยากรณ์/เพิ่มเติม:</strong> ${card.details}</li>`;
+            }
+            if (card.source) {
+                extraDetails += `<li><strong>บทเรียน:</strong> ${card.source}</li>`;
+            }
+
+            document.getElementById('card-details').innerHTML = extraDetails + detailsListHtml;
+        }
+
+        function flipCard() {
+            if (!currentCard) return;
+            document.querySelector('.card').classList.toggle('is-flipped');
+        }
+
+        function markResult(remembered) {
+            if (!currentCard) return;
+
+            stats.totalReviewed++;
+            if (remembered) {
+                stats.totalCorrect++;
+            }
+            
+            saveStats();
+            updateStatsUI();
+            syncToCloud();
+            
+            const card = document.querySelector('.card');
+            if (card.classList.contains('is-flipped')) {
+                card.classList.remove('is-flipped');
+                setTimeout(nextCard, 300);
+            } else {
+                nextCard();
+            }
+        }
+
+        function syncToCloud() {
+            if (currentUser) {
+                db.collection('flashcard_stats').doc(currentUser.uid).set({
+                    totalCorrect: stats.totalCorrect,
+                    totalReviewed: stats.totalReviewed,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch(err => {
+                    console.log("Sync skipped (offline/permission):", err.message);
+                });
+            }
+        }
+
+        function loadStats() {
+            const s = localStorage.getItem('pali_flash_stats');
+            if (s) {
+                try {
+                    const saved = JSON.parse(s);
+                    // Check if it's new format
+                    if (saved.totalCorrect !== undefined) {
+                        stats = saved;
+                    } else if (saved.remember !== undefined) {
+                        // Migrate
+                        stats.totalCorrect = saved.remember || 0;
+                        stats.totalReviewed = (saved.remember || 0) + (saved.forgot || 0);
+                    }
+                } catch(e) {}
+            }
+            updateStatsUI();
+        }
+
+        function saveStats() {
+            localStorage.setItem('pali_flash_stats', JSON.stringify(stats));
+        }
+
+        function updateStatsUI() {
+            document.getElementById('count-remember').innerText = stats.totalCorrect;
+            document.getElementById('count-forgot').innerText = (stats.totalReviewed - stats.totalCorrect);
+        }
+
+        // --- Fullscreen & Auto-fit ---
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`ไม่สามารถเปิดเต็มหน้าจอได้: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function updateFullscreenButton() {
+            const icon = document.querySelector('#fullscreenBtn i');
+            if (document.fullscreenElement) {
+                icon.classList.replace('fa-expand', 'fa-compress');
+            } else {
+                icon.classList.replace('fa-compress', 'fa-expand');
+            }
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+
+        function fitTextToContainer(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            // Reset to max size first
+            let maxRem = 3.5; // Start with 3.5rem (matches CSS)
+            if (window.innerWidth <= 768) maxRem = 2.5; // Mobile max size matches CSS
+            
+            element.style.fontSize = `${maxRem}rem`;
+            
+            // Check overflow
+            const scrollW = element.scrollWidth;
+            const clientW = element.clientWidth;
+            
+            if (scrollW > clientW) {
+                // Calculate ratio: newSize / oldSize = clientW / scrollW
+                let ratio = clientW / scrollW;
+                let newSize = maxRem * ratio;
+                
+                // Safety buffer (95%)
+                newSize = newSize * 0.95;
+                
+                // Min limit
+                if (newSize < 0.5) newSize = 0.5;
+                
+                element.style.fontSize = `${newSize}rem`;
+                
+                // Double check loop (just in case)
+                while (element.scrollWidth > element.clientWidth && newSize > 0.5) {
+                    newSize -= 0.1;
+                    element.style.fontSize = `${newSize}rem`;
+                }
+            }
+        }
+
+        window.onload = initData;
+
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
+

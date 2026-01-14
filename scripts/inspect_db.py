@@ -1,12 +1,7 @@
 import sqlite3
 import os
-import sys
 
-if len(sys.argv) < 2:
-    print("Usage: python inspect_db.py <db_path> [table_name]")
-    exit(1)
-
-db_path = sys.argv[1]
+db_path = "dpd_data/dpd.db"
 
 if not os.path.exists(db_path):
     print(f"Database not found at {db_path}")
@@ -15,35 +10,35 @@ if not os.path.exists(db_path):
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# Find tables
+# List tables
+print("=== Tables ===")
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tables = [row[0] for row in cursor.fetchall()]
-print(f"Tables: {tables}")
+tables = cursor.fetchall()
+for table in tables:
+    print(table[0])
 
-if len(tables) == 0:
-    print("No tables found.")
-    conn.close()
-    exit(0)
+# Check for roots table
+roots_table = None
+for table in tables:
+    name = table[0]
+    if "root" in name.lower() or "dhatu" in name.lower():
+        roots_table = name
+        break
 
-if len(sys.argv) > 2:
-    table_name = sys.argv[2]
-else:
-    table_name = tables[0]
-
-print(f"Using table: {table_name}")
-
-try:
-    cursor.execute(f"PRAGMA table_info({table_name})")
-    columns = [row[1] for row in cursor.fetchall()]
-    print(f"Columns in {table_name}: {columns}")
+if roots_table:
+    print(f"\n=== Columns in {roots_table} ===")
+    cursor.execute(f"PRAGMA table_info({roots_table})")
+    columns = cursor.fetchall()
+    for col in columns:
+        print(f"{col[1]} ({col[2]})")
     
-    # Sample data
-    cursor.execute(f"SELECT * FROM {table_name} LIMIT 5")
+    # Peek at data
+    print(f"\n=== First 5 rows in {roots_table} ===")
+    cursor.execute(f"SELECT * FROM {roots_table} LIMIT 5")
     rows = cursor.fetchall()
-    print(f"Sample data ({len(rows)} rows):")
     for row in rows:
         print(row)
-except Exception as e:
-    print(f"Error inspecting table: {e}")
+else:
+    print("\nNo obvious roots table found.")
 
 conn.close()

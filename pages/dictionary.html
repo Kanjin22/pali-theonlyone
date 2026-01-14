@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พจนานุกรม - ระบบการเรียนบาลีออนไลน์</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#2c3e50">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Niramit:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --page-title-color: #2c3e50;
+            --page-subtitle-color: #7f8c8d;
+            --card-bg: #ffffff;
+            --card-border: #eee;
+            --card-shadow: rgba(0,0,0,0.05);
+            --input-border: #e0e0e0;
+            --input-focus: #3498db;
+            --input-focus-shadow: rgba(52, 152, 219, 0.2);
+            --icon-color: #95a5a6;
+            --filter-btn-bg: #f1f2f6;
+            --filter-btn-text: #57606f;
+            --filter-btn-hover: #dfe4ea;
+            --filter-btn-active-bg: #3498db;
+            --filter-btn-active-text: #ffffff;
+            --vocab-card-bg: #ffffff;
+            --vocab-card-border: #e0e0e0;
+            --word-title-color: #2c3e50;
+            --word-details-color: #555;
+            --empty-state-color: #95a5a6;
+            --empty-state-bg: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --page-title-color: #ecf0f1;
+            --page-subtitle-color: #bdc3c7;
+            --card-bg: #1e1e1e;
+            --card-border: #333;
+            --card-shadow: rgba(0,0,0,0.5);
+            --input-border: #444;
+            --input-focus: #5dade2;
+            --input-focus-shadow: rgba(93, 173, 226, 0.2);
+            --icon-color: #7f8c8d;
+            --filter-btn-bg: #2d3436;
+            --filter-btn-text: #bdc3c7;
+            --filter-btn-hover: #3d4648;
+            --filter-btn-active-bg: #3498db;
+            --filter-btn-active-text: #ffffff;
+            --vocab-card-bg: #1e1e1e;
+            --vocab-card-border: #333;
+            --word-title-color: #ecf0f1;
+            --word-details-color: #bdc3c7;
+            --empty-state-color: #7f8c8d;
+            --empty-state-bg: #2d3436;
+        }
+
+        body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); margin: 0; padding: 40px 20px; color: var(--text-color); }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header-section { text-align: center; margin-bottom: 40px; position: relative; }
+        .page-title { font-size: 2.5rem; color: var(--page-title-color); font-weight: 700; margin-bottom: 10px; }
+        .page-subtitle { color: var(--page-subtitle-color); font-size: 1.2rem; }
+        
+        .search-box-container { 
+            background: var(--card-bg); 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px var(--card-shadow); 
+            margin-bottom: 30px;
+            border: 1px solid var(--card-border);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body { padding: 20px 10px; }
+            .header-section { margin-bottom: 25px; }
+            .page-title { font-size: 1.8rem; }
+            .page-subtitle { font-size: 1rem; }
+            .search-box-container { padding: 20px; border-radius: 10px; }
+            .search-input { padding: 12px 40px 12px 15px; font-size: 1rem; }
+            .filter-btn { padding: 6px 12px; font-size: 0.85rem; }
+            .vocab-card { border-radius: 10px; }
+            .card-header { padding: 8px 15px; font-size: 0.85rem; }
+            .card-body { padding: 15px; }
+            .word-title { font-size: 1.5rem; }
+            .word-details { font-size: 1rem; }
+            .empty-state { padding: 30px 15px; }
+        }
+        
+        .search-input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid var(--input-border);
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Sarabun', sans-serif;
+            box-sizing: border-box;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .search-input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 10px var(--input-focus-shadow);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--icon-color);
+            font-size: 1.2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--filter-btn-bg);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--filter-btn-text);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .filter-btn:hover {
+            background: var(--filter-btn-hover);
+        }
+
+        .filter-btn.active {
+            background: var(--filter-btn-active-bg);
+            color: var(--filter-btn-active-text);
+            box-shadow: 0 2px 5px var(--input-focus-shadow);
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Vocab Card Styling */
+        .vocab-card {
+            background: var(--vocab-card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--card-shadow);
+            overflow: hidden;
+            transition: transform 0.2s;
+            border: 1px solid var(--vocab-card-border);
+        }
+        
+        .vocab-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Source Header Colors */
+        .card-header {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Thai Sources */
+        .source-insan-pr9 .card-header { background: linear-gradient(135deg, #d35400, #e67e22); } /* Orange */
+        .source-bhumibalo .card-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); } /* Purple */
+        .source-jinakalamalini .card-header { background: linear-gradient(135deg, #8e44ad, #9b59b6); } /* Purple */
+
+        .source-general .card-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); } /* Gray */
+        .source-generalraw .card-header { background: linear-gradient(135deg, #27ae60, #2ecc71); } /* Green */
+
+
+        /* Roman Sources */
+        .source-sc .card-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; } /* Yellow/Orange */
+        .source-dpd .card-header { background: linear-gradient(135deg, #16a085, #1abc9c); } /* Teal */
+        .source-pts .card-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); } /* Purple */
+        .source-other .card-header { background: linear-gradient(135deg, #34495e, #2c3e50); } /* Dark Blue */
+
+        .card-body {
+            padding: 20px 25px;
+        }
+
+        .word-title {
+            font-family: 'Niramit', serif;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .word-split {
+            color: #e67e22;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            background: #fff3e0;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .word-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .word-details li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .word-details li::before {
+            content: "•";
+            color: #bdc3c7;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: #34495e; }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--empty-state-color);
+            background: var(--empty-state-bg);
+            border-radius: 10px;
+            border: 2px dashed var(--input-border);
+        }
+        
+        .stem-info {
+            font-size: 0.9rem;
+            color: #e67e22;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+            <button id="theme-toggle" class="filter-btn" onclick="toggleTheme()" title="โหมดมืด/สว่าง" style="border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; justify-content: center; align-items: center;">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <div class="header-section">
+            <div class="page-title">📚 พจนานุกรมศัพท์บาลี</div>
+            <div class="page-subtitle">รวบรวมศัพท์จากทุกแหล่งข้อมูล (ไทย/โรมัน)</div>
+        </div>
+
+        <div class="search-box-container">
+            <div class="search-input-group">
+                <input type="text" id="dict-search" class="search-input" placeholder="พิมพ์คำศัพท์ที่ต้องการค้นหา..." oninput="performSearch()">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </div>
+            
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="toggleFilter('all')">ทั้งหมด</button>
+            </div>
+        </div>
+
+        <div id="results-area" class="results-container">
+            <!-- Results will be injected here -->
+            <div class="empty-state">
+                <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Vocab Files -->
+    <script src="data/pali-script.js"></script>
+
+    <script src="data/raw/vocab-general.js"></script> <!-- Added General -->
+    <script src="data/raw/vocab-insan-pr9.js"></script> <!-- Added Insan-PR9 -->
+    <script src="data/raw/vocab-insan-pr9-5-8.js"></script> <!-- Added Insan-PR9 Part 5-8 -->
+    <script src="data/raw/vocab-bhumibalo.js"></script> <!-- Added Bhumibalo -->
+    <script src="data/raw/vocab-jinakalamalini.js"></script> <!-- Added Jinakalamalini -->
+    <script>
+        // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
+        if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
+            for (var key in vocabInsanPr9Part5to8) {
+                if (!vocabInsanPr9.hasOwnProperty(key)) {
+                    vocabInsanPr9[key] = vocabInsanPr9Part5to8[key];
+                }
+            }
+        }
+    </script>
+    
+    <script src="data/dicts/vocab-sc.js"></script>
+    <script src="data/dicts/vocab-pts.js"></script>
+    <script src="data/dicts/vocab-dppn.js"></script>
+    <script src="data/vocab-dhammika.js"></script>
+    <script src="data/vocab-dpd-inflected.js"></script>
+    
+    <script src="data/pali-lookup.js"></script>
+    <script src="data/pali-formatter.js"></script>
+    <script src="js/user_vocab_manager.js"></script>
+    <script>
+        // Initialize Databases
+        const databases = {
+            general: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
+
+            insan_pr9: typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {},
+            bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
+             jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
+             general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
+            
+            sc: typeof vocabSC !== 'undefined' ? vocabSC : {},
+            dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
+            pts: typeof vocabPTS !== 'undefined' ? vocabPTS : {},
+            dppn: typeof vocabDPPN !== 'undefined' ? vocabDPPN : {},
+            dhammika: typeof vocabDhammika !== 'undefined' ? vocabDhammika : {},
+            dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {}
+        };
+
+        let activeFilter = 'all';
+
+        function toggleFilter(filter) {
+            activeFilter = filter;
+            
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(`'${filter}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Re-run search if there is query
+            const query = document.getElementById('dict-search').value;
+            if (query.trim()) performSearch();
+        }
+
+        function triggerSearch(word) {
+            document.getElementById('dict-search').value = word;
+            performSearch();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function performSearch() {
+            const input = document.getElementById('dict-search');
+            const queryRaw = input.value.trim();
+            const container = document.getElementById('results-area');
+
+            if (!queryRaw) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา (บาลี/ไทย/อังกฤษ)
+                    </div>`;
+                return;
+            }
+
+            // Use PaliLookup.findAll to get results from ALL sources
+            let results = PaliLookup.findAll(queryRaw, databases);
+
+            // Also try to find candidates via stemming if no direct results or to supplement
+            // To ensure we don't miss anything, we'll try stemming if we have < 2 results OR if explicitly requested
+            // But usually we just want to find *something*.
+            // Let's always look for stemmed candidates and append them if they are unique
+            const candidates = PaliLookup.generateCandidates(queryRaw, databases);
+            for (const cand of candidates) {
+                 const subResults = PaliLookup.findAll(cand, databases);
+                 // Add stemming info
+                 subResults.forEach(r => r._stemmedFrom = queryRaw);
+                 results = results.concat(subResults);
+            }
+             
+             // Remove duplicates based on source and word
+             const uniqueResults = [];
+             const seen = new Set();
+             for (const r of results) {
+                 const key = r.source + '|' + r.word + '|' + (r._stemmedFrom || '');
+                 if (!seen.has(key)) {
+                     seen.add(key);
+                     uniqueResults.push(r);
+                 }
+             }
+             results = uniqueResults;
+
+            if (results.length === 0) {
+                container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในฐานข้อมูล</div>`;
+                return;
+            }
+
+            container.innerHTML = results.map(item => {
+                // Extract definition text
+                let defHtml = "";
+                let splitText = item.split || '-';
+                
+                if (item.details) {
+                    defHtml = item.details.map(d => `<li>${PaliFormatter.format(d, 'triggerSearch')}</li>`).join('');
+                } else if (item.data) {
+                    // Handle SC/PTS/DPPN data format
+                    if (item.data.definition) {
+                        defHtml = `<li>${PaliFormatter.format(item.data.definition, 'triggerSearch')}</li>`;
+                    } else if (typeof item.data === 'string') {
+                         defHtml = `<li>${PaliFormatter.format(item.data, 'triggerSearch')}</li>`; 
+                    } else {
+                         defHtml = `<li>(ดูรายละเอียดในคัมภีร์ฉบับเต็ม)</li>`;
+                    }
+                }
+
+                // Stemming Info
+                let stemInfo = "";
+                if (item._stemmedFrom && item._stemmedFrom !== item.word) {
+                    stemInfo = `<div class="stem-info"><i class="fa-solid fa-code-branch"></i> ค้นหาจากรากศัพท์: <b>${item.word}</b> (คำเดิม: ${item._stemmedFrom})</div>`;
+                }
+
+                // Determine Source Class for Styling
+                let sourceClass = 'other';
+                const s = item.source;
+                if (s.includes('ธรรมบท') || s.includes('Insan')) sourceClass = 'insan-pr9';
+                else if (s.includes('ภูมิพโล')) sourceClass = 'bhumibalo';
+                else if (s.includes('ชินกาลมาลินี')) sourceClass = 'jinakalamalini';
+                else if (s.includes('พระไตรปิฎก')) sourceClass = 'generalraw';
+                else if (s.includes('ศัพท์ทั่วไป')) sourceClass = 'general';
+                else if (s === 'sc') sourceClass = 'sc';
+                else if (s.includes('Digital Pā') || s.includes('DPD')) sourceClass = 'dpd';
+                else if (s === 'pts') sourceClass = 'pts';
+
+                // Display Source Name
+                let sourceName = item.source;
+                if (sourceName === 'sc') sourceName = 'SuttaCentral (Sujato)';
+                if (sourceName === 'pts') sourceName = 'Pali Text Society';
+                if (sourceName === 'dppn') sourceName = 'Dictionary of Pali Proper Names';
+                if (sourceName === 'dhammika') sourceName = 'Nature Dictionary (Dhammika)';
+
+                // Determine Icon
+                let iconClass = 'fa-book';
+                if (sourceClass === 'insan-pr9') iconClass = 'fa-bookmark';
+                else if (sourceClass === 'bhumibalo') iconClass = 'fa-book';
+                else if (sourceClass === 'jinakalamalini') iconClass = 'fa-book-open';
+                else if (sourceClass === 'generalraw') iconClass = 'fa-language';
+                else if (sourceClass === 'dpd') iconClass = 'fa-language';
+                else if (sourceClass === 'sc') iconClass = 'fa-globe';
+
+                // Save Button Logic
+                const isSaved = window.userVocabManager ? window.userVocabManager.isWordSaved(item.word) : false;
+                const starIcon = isSaved ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                const starColor = isSaved ? '#f1c40f' : 'inherit';
+                const starTitle = isSaved ? 'บันทึกแล้ว (คลิกเพื่อยกเลิก)' : 'บันทึกคำศัพท์';
+                
+                // Prepare Meaning for Save
+                let meaningText = "";
+                if (item.details) meaningText = item.details.join('; ');
+                else if (item.data) {
+                     if (item.data.definition) meaningText = item.data.definition;
+                     else if (typeof item.data === 'string') meaningText = item.data;
+                     else meaningText = "ดูรายละเอียดในคัมภีร์";
+                }
+                const safeMeaning = meaningText.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                const safeWord = item.word.replace(/'/g, "\\'");
+
+                return `
+                <div class="vocab-card source-${sourceClass}">
+                    <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-solid ${iconClass}"></i> ${sourceName}</span>
+                        <button onclick="toggleSaveWord(this, '${safeWord}', '${safeMeaning}', '${sourceName}')" 
+                                style="background:none; border:none; cursor:pointer; color:${starColor}; font-size:1.2rem; padding:0;" title="${starTitle}">
+                            <i class="${starIcon}"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="word-title">
+                            ${item.word}
+                        </div>
+                        ${stemInfo}
+                        ${splitText !== '-' ? `<div class="word-split">${splitText}</div>` : ''}
+                        <ul class="word-details">
+                            ${defHtml}
+                        </ul>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Theme Management
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        // Initialize theme
+        initTheme();
+
+        function toggleSaveWord(btn, word, meaning, source) {
+            if (!window.userVocabManager) return;
+            
+            // Check state from icon
+            const icon = btn.querySelector('i');
+            const isSaved = icon.classList.contains('fa-solid'); // Currently saved
+            
+            if (isSaved) {
+                // Unsave
+                window.userVocabManager.removeWord(word);
+                icon.className = 'fa-regular fa-star';
+                btn.style.color = 'inherit';
+                btn.title = 'บันทึกคำศัพท์';
+            } else {
+                // Save
+                window.userVocabManager.saveWord(word, meaning, source);
+                icon.className = 'fa-solid fa-star';
+                btn.style.color = '#f1c40f';
+                btn.title = 'บันทึกแล้ว (คลิกเพื่อยกเลิก)';
+                
+                // Animation effect
+                icon.style.transform = 'scale(1.3)';
+                setTimeout(() => icon.style.transform = 'scale(1)', 200);
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check for URL param 'q' to auto-search
+            const params = new URLSearchParams(window.location.search);
+            const q = params.get('q');
+            if (q) {
+                document.getElementById('dict-search').value = q;
+                performSearch();
+            }
+        });
+
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
+

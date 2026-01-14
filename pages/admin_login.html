@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบผู้ดูแล (Admin)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #c0392b;
+            --bg-color: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .login-header {
+            margin-bottom: 30px;
+        }
+
+        .login-header i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .login-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .login-header p {
+            margin: 5px 0 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            font-family: 'Sarabun';
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Sarabun';
+        }
+
+        .btn:hover {
+            background: #34495e;
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .error-msg {
+            color: var(--accent-color);
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: none;
+            text-align: left;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fa-solid fa-user-shield"></i>
+            <h1>Admin Portal</h1>
+            <p>ระบบจัดการสำหรับผู้ดูแล</p>
+        </div>
+
+        <div id="errorBox" class="error-msg"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>อีเมล</label>
+                <input type="email" id="email" required placeholder="admin@example.com">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn" id="btnLogin">เข้าสู่ระบบ</button>
+        </form>
+
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> กลับหน้าเว็บไซต์หลัก</a>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        window.firebaseConfig = window.firebaseConfig || {
+            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+            authDomain: "palitest-generator.firebaseapp.com",
+            projectId: "palitest-generator",
+            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+            messagingSenderId: "844040146831",
+            storageBucket: "palitest-generator.firebasestorage.app",
+            measurementId: "G-RKML6H6EX7"
+        };
+        firebase.initializeApp(window.firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const loginForm = document.getElementById('loginForm');
+        const errorBox = document.getElementById('errorBox');
+        const btnLogin = document.getElementById('btnLogin');
+
+        // Check if already logged in as admin
+        auth.onAuthStateChanged(async (u) => {
+            if (u) {
+                checkAdminRole(u, false); // Check silently first
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorBox.style.display = 'none';
+            btnLogin.disabled = true;
+            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const cred = await auth.signInWithEmailAndPassword(email, password);
+                await checkAdminRole(cred.user, true);
+            } catch (err) {
+                showError('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'เข้าสู่ระบบ';
+            }
+        });
+
+        // รายชื่ออีเมลผู้ดูแลระบบ (สำหรับกรณีที่ยังไม่ได้ตั้งค่า Firestore Rules หรือเกิดข้อผิดพลาด)
+        const FALLBACK_ADMIN_EMAILS = [
+            'setthachayo@gmail.com', // Explicitly added by user request
+            // เพิ่มอีเมลของคุณที่นี่
+        ];
+
+        async function checkAdminRole(user, isInteractive) {
+            try {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists && doc.data().role === 'admin') {
+                    // Success
+                    window.location.href = 'admin_dashboard.html';
+                } else {
+                    // Not admin in Firestore
+                    // Check Fallback List before failing
+                    if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                        console.warn("Allowed via Fallback Email List (Role mismatch)");
+                        window.location.href = 'admin_dashboard.html';
+                        return;
+                    }
+                    handleLoginFailure(isInteractive, 'บัญชีนี้ไม่มีสิทธิ์เข้าถึงส่วนผู้ดูแล');
+                }
+            } catch (e) {
+                console.error("Role check error:", e);
+
+                // Fallback: Check if email is in allowlist
+                if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                    console.warn("Allowed via Fallback Email List");
+                    window.location.href = 'admin_dashboard.html';
+                    return;
+                }
+
+                if (e.code === 'permission-denied') {
+                    // Specific error handling for rules
+                    if (isInteractive) {
+                        showError('เกิดข้อผิดพลาดสิทธิ์การเข้าถึง (Permission Denied)<br>กรุณาตรวจสอบว่าได้ Deploy <b>firestore.rules</b> ไปยัง Firebase Console แล้ว');
+                    }
+                } else {
+                    if (isInteractive) showError('เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์: ' + e.message);
+                }
+
+                // Don't sign out immediately if it's just a permission error on the 'role' field check,
+                // but if we can't verify, we shouldn't let them in (unless fallback passed).
+                if (isInteractive) {
+                    btnLogin.disabled = false;
+                    btnLogin.textContent = 'เข้าสู่ระบบ';
+                }
+            }
+        }
+
+        function handleLoginFailure(isInteractive, msg) {
+            if (isInteractive) {
+                showError(msg);
+                auth.signOut();
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'เข้าสู่ระบบ';
+            }
+        }
+
+        function showError(msg) {
+            errorBox.textContent = msg;
+            errorBox.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

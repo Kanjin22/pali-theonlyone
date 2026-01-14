@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ห้องสมุดธรรมะ - ระบบการเรียนบาลีออนไลน์</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-sec: #7f8c8d;
+            --heading-color: #2c3e50;
+            --border-color: #eee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --btn-bg: #ffffff;
+            --btn-text: #333;
+        }
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-sec: #b0b0b0;
+            --heading-color: #ecf0f1;
+            --border-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --btn-bg: #2d2d2d;
+            --btn-text: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-sec);
+            font-weight: 300;
+        }
+
+        .section-label {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--heading-color);
+            margin: 30px 0 20px 0;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+
+        .book-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--heading-color);
+        }
+
+        .book-desc {
+            font-size: 0.9rem;
+            color: var(--text-sec);
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #f1f1f1;
+            transform: translateX(-3px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Color Themes for Categories */
+        .theme-dhamma .book-icon { color: #27ae60; }
+        .theme-mangala .book-icon { color: #f39c12; }
+        .theme-samanta .book-icon { color: #8e44ad; }
+        .theme-visuddhi .book-icon { color: #e74c3c; }
+        .theme-abhi .book-icon { color: #2980b9; }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> กลับหน้าหลัก
+        </a>
+
+        <div style="float: right;">
+            <button id="theme-toggle" onclick="toggleTheme()" style="padding:8px 12px; border:1px solid #7f8c8d; background:transparent; color:var(--text-color); border-radius:6px; cursor:pointer;" title="สลับโหมดมืด/สว่าง">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="header-section">
+            <div class="page-title">ห้องสมุดธรรมะ</div>
+            <div class="page-subtitle">คลังคัมภีร์บาลี สำหรับศึกษาบาลีสนามหลวง</div>
+        </div>
+
+        <div class="section-label">📚 ธรรมบท (Dhammapada)</div>
+        <div class="book-grid">
+            <a href="reader.html?part=dhamma-1" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๑</div>
+                <div class="book-desc">ยมกวรรค - อัปปมาทวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-2" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๒</div>
+                <div class="book-desc">จิตตวรรค - พาลวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-3" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๓</div>
+                <div class="book-desc">ปัณฑิตวรรค - ชราวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-4" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๔</div>
+                <div class="book-desc">อัตตวรรค - ปาปวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-5" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๕</div>
+                <div class="book-desc">ทัณฑวรรค - ธัมมัฏฐวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-6" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๖</div>
+                <div class="book-desc">มัคควรรค - นิรยวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-7" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๗</div>
+                <div class="book-desc">นาควรรค - ตัณหาวรรค</div>
+            </a>
+            <a href="reader.html?part=dhamma-8" class="book-card theme-dhamma">
+                <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                <div class="book-title">ธรรมบท ภาคที่ ๘</div>
+                <div class="book-desc">ภิกขุวรรค - พราหมณวรรค</div>
+            </a>
+        </div>
+
+        <div class="section-label">📜 มังคลัตถทีปนี (Mangalatthadipani)</div>
+        <div class="book-grid">
+            <a href="reader.html?part=mangala-1" class="book-card theme-mangala">
+                <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                <div class="book-title">มังคลัตถทีปนี ภาคที่ ๑</div>
+                <div class="book-desc">อธิบายมงคลสูตร (ส่วนแรก)</div>
+            </a>
+            <a href="reader.html?part=mangala-2" class="book-card theme-mangala">
+                <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                <div class="book-title">มังคลัตถทีปนี ภาคที่ ๒</div>
+                <div class="book-desc">อธิบายมงคลสูตร (ส่วนหลัง)</div>
+            </a>
+        </div>
+
+        <div class="section-label">🏛️ สมันตปาสาทิกา (Samantapasadika)</div>
+        <div class="book-grid">
+            <a href="reader.html?part=samanta-1" class="book-card theme-samanta">
+                <div class="book-icon"><i class="fas fa-landmark"></i></div>
+                <div class="book-title">สมันตปาสาทิกา ภาคที่ ๑</div>
+                <div class="book-desc">อรรถกถาพระวินัย</div>
+            </a>
+            <a href="reader.html?part=samanta-2" class="book-card theme-samanta">
+                <div class="book-icon"><i class="fas fa-landmark"></i></div>
+                <div class="book-title">สมันตปาสาทิกา ภาคที่ ๒</div>
+                <div class="book-desc">อรรถกถาพระวินัย (ต่อ)</div>
+            </a>
+            <a href="reader.html?part=samanta-3" class="book-card theme-samanta">
+                <div class="book-icon"><i class="fas fa-landmark"></i></div>
+                <div class="book-title">สมันตปาสาทิกา ภาคที่ ๓</div>
+                <div class="book-desc">อรรถกถาพระวินัย (ต่อ)</div>
+            </a>
+        </div>
+
+        <div class="section-label">🧘 วิสุทธิมรรค (Visuddhimagga)</div>
+        <div class="book-grid">
+            <a href="reader.html?part=visuddhi-1" class="book-card theme-visuddhi">
+                <div class="book-icon"><i class="fas fa-leaf"></i></div>
+                <div class="book-title">วิสุทธิมรรค ภาคที่ ๑</div>
+                <div class="book-desc">ศีล - สมาธิ</div>
+            </a>
+            <a href="reader.html?part=visuddhi-2" class="book-card theme-visuddhi">
+                <div class="book-icon"><i class="fas fa-leaf"></i></div>
+                <div class="book-title">วิสุทธิมรรค ภาคที่ ๒</div>
+                <div class="book-desc">ปัญญา (ส่วนแรก)</div>
+            </a>
+            <a href="reader.html?part=visuddhi-3" class="book-card theme-visuddhi">
+                <div class="book-icon"><i class="fas fa-leaf"></i></div>
+                <div class="book-title">วิสุทธิมรรค ภาคที่ ๓</div>
+                <div class="book-desc">ปัญญา (ส่วนหลัง)</div>
+            </a>
+        </div>
+
+        <div class="section-label">🧠 อภิธรรม (Abhidhamma)</div>
+        <div class="book-grid">
+            <a href="reader.html?part=abhidhamma-1" class="book-card theme-abhi">
+                <div class="book-icon"><i class="fas fa-brain"></i></div>
+                <div class="book-title">อภิธรรมสังคหะ</div>
+                <div class="book-desc">สรุปความพระอภิธรรม ๗ คัมภีร์</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function initTheme() {
+            const currentTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('theme-toggle');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark' && btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                }
+            }
+        }
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            
+            const btn = document.getElementById('theme-toggle');
+            if(btn) {
+                btn.innerHTML = target === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            }
+        }
+        
+        initTheme();
+    </script>
+</body>
+</html>

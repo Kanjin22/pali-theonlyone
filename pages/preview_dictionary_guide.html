@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Dictionary Guide (Offline)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; }
+        .card { border-radius: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="alert alert-info mb-4">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Offline Preview:</strong> นี่คือตัวอย่างหน้าจอ "การใช้พจนานุกรม" ที่แก้ไขข้อมูลอักษรย่อแล้ว (อ้างอิงจากข้อมูลจริงใน vocab-bhumibalo.js)
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h2 class="mb-3 text-primary">
+                <i class="fas fa-book me-2"></i>
+                การใช้พจนานุกรม บาลี - ไทย ฉบับภูมิพโลภิกขุ
+            </h2>
+            <p class="text-muted mb-4">
+                อักษรย่อและเครื่องหมายที่ใช้ในพจนานุกรมฉบับนี้ (ตรวจสอบแล้ว)
+            </p>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-borderless">
+                    <thead class="bg-light">
+                        <tr>
+                            <th style="width: 30%">อักษรย่อ / เครื่องหมาย</th>
+                            <th>ความหมาย</th>
+                        </tr>
+                    </thead>
+                    <tbody id="abbr-table-body">
+                        <!-- Content will be injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const bhumibaloAbbrs = [
+        { short: "อ.", full: "อฏฺฐกถา (อรรถกถา)" },
+        { short: "อ.ก.", full: "อกรรมกริยา" },
+        { short: "อ.กา.", full: "อปาทานการก, ปัญจมีวิภัตติ" },
+        { short: "องฺ.", full: "องฺคุตฺตรนิกาย" },
+        { short: "องฺ.อ.", full: "องฺคุตฺตรนิกาย อฏฺฐกถา" },
+        { short: "อ.ทา.", full: "อปทาน" },
+        { short: "อธิ.กา.", full: "อธิกรณการก, สัตตมีวิภัตติ" },
+        { short: "อนุ.", full: "อนุวํส" },
+        { short: "อภิธา.", full: "อภิธานปฺปทีปิกา" },
+        { short: "อภิ.ส.", full: "อภิธมฺมตฺถสงฺคห" },
+        { short: "อ.ศา.", full: "อวทานศาตก" },
+        { short: "อ.สา.", full: "อฏฺฐสาลินี" },
+        { short: "อัช.", full: "อัชชัตตนี (บอกอดีตกาล ตั้งแต่วันนี้)" },
+        { short: "อัต.", full: "อัตตโนบท" },
+        { short: "อัพ.", full: "อัพยยศัพท์" },
+        { short: "อิต., อิตฺ.", full: "อิตฺถีลิงค์, อิตฺถีลิงฺค" },
+        { short: "อิติ.", full: "อิติวุตฺตก" },
+        { short: "อุ.", full: "อุทาหรณ์, ตัวอย่าง" },
+        { short: "อุปมา", full: "โดยอรรถ (โดยความหมาย)" },
+        { short: "อุต.", full: "อุตฺตมบุรุษ" },
+        { short: "เอก.", full: "เอกพจน์, เอกวจนะ" },
+        { short: "ก.", full: "กริยา" },
+        { short: "ก.กา.", full: "กรณการก, ตติยาวิภัตติ" },
+        { short: "ก.กิ.", full: "กริยากิตก์" },
+        { short: "กถา.", full: "กถาวตฺถุ" },
+        { short: "กถา.อ.", full: "กถาวตฺถุ อฏฺฐกถา" },
+        { short: "กรรต.กา.", full: "กรรตุการก, ปฐมาวิภัตติ" },
+        { short: "กรรม.กา.", full: "กรรมการก, ทุติยาวิภัตติ" },
+        { short: "ก.วิ.", full: "กริยาวิเศษณ์" },
+        { short: "ก.อา.", full: "กริยาอาขยาต, กริยาคุมพากย์" },
+        { short: "กัจ., กจฺ.", full: "กัจจายนะ, กจฺจายนปกรณ" },
+        { short: "กัต.", full: "กัตตุวาจก" },
+        { short: "กัม.", full: "กัมมวาจก" },
+        { short: "กัมม.", full: "กัมมธารยสมาส" },
+        { short: "กาพย์สัน.", full: "กาพย์สันสกฤต" },
+        { short: "กาลา.", full: "กาลาติปัตติ (บอกอนาคตกาลแห่งอดีต)" },
+        { short: "ขุ.", full: "ขุททกนิกาย" },
+        { short: "ขุ.อ.", full: "ขุททกนิกาย อฏฺฐกถา" },
+        { short: "คุณ.", full: "คุณศัพท์, คุณนาม" },
+        { short: "จ.ปิ.", full: "จริยาปิฎก" },
+        { short: "จุลฺ.นิ.", full: "จุลฺลนิทฺเทส" },
+        { short: "ชา.", full: "ชาตก" },
+        { short: "ชา.มา.", full: "ชาตกมาลา" },
+        { short: "ต.", full: "ไตรปิฎก, ตำรา" },
+        { short: "ตามตัว.", full: "ตามตัวอักษร, ตามรูปศัพท์" },
+        { short: "ติ.ป.", full: "ติกปฏฺฐาน" },
+        { short: "เถร.", full: "เถรคาถา" },
+        { short: "เถร.อ.", full: "เถรคาถา อฏฺฐกถา" },
+        { short: "เถรี.", full: "เถรีคาถา" },
+        { short: "เถรี.อ.", full: "เถรีคาถา อฏฺฐกถา" },
+        { short: "ทวัน.", full: "ทวันทวสมาส" },
+        { short: "ทา.วํ.", full: "ทาฐาวํส" },
+        { short: "ทิวฺ.", full: "ทิวฺยาวทาน" },
+        { short: "ที.", full: "ทีฆนิกาย" },
+        { short: "ที.อ.", full: "ทีฆนิกาย อฏฺฐกถา" },
+        { short: "ธ., ธ.ป.", full: "ธมฺมปท" },
+        { short: "ธ.ส.", full: "ธมฺมสงฺคณี" },
+        { short: "ธ.ส.อ.", full: "ธมฺมสงฺคณี อฏฺฐกถา" },
+        { short: "ธ.อ.", full: "ธมฺมปท อรรถกถา" },
+        { short: "ธา.ป.", full: "ธาตุปาฐ" },
+        { short: "ธา.ม.", full: "ธาตุมญฺชุสา" },
+        { short: "น.", full: "หน้า" },
+        { short: "นปุ., นปุํ.", full: "นปุงสกลิงค์, นปุํสกลิงฺค" },
+        { short: "นาม.", full: "นามศัพท์, นามนาม" },
+        { short: "นิยม ก.วิ.", full: "นิยมกริยาวิเศษณ์" },
+        { short: "นิรุกติ., นิรุกติ", full: "นิรุกติศาสตร์" },
+        { short: "เน.ป.", full: "เนตฺติปกรณ" },
+        { short: "บา.", full: "บาลี" },
+        { short: "ปกติ.", full: "ปกติสังขยา, การนับแสดงจำนวน" },
+        { short: "ปฏิ.ส.", full: "ปฏิสมฺภิทามคฺค" },
+        /* Removed ป.ที. (Not found) */
+        { short: "ประ.", full: "ประถมบุรุษ" },
+        { short: "ปรัส.", full: "ปรัสสบท" },
+        { short: "ปรา.", full: "ปรากฤต" },
+        { short: "ปโรก.", full: "ปโรกฺขา (บอกอดีตกาล ไม่มีกำหนด)" },
+        { short: "ปัญ.", full: "ปัญจมี (บอกความบังคับ, ความหวัง, ความอ้อนวอน ฯลฯ)" },
+        { short: "ปญฺ.ที.", full: "ปญฺจคติทีปนี" }, /* Changed from ปญฺจ.ที. to matches actual usage */
+        { short: "ปุ.", full: "ปุคฺคลปญฺญตฺติ" },
+        { short: "ปุ.อ.", full: "ปุคฺคลปญฺญตฺติ อฏฺฐกถา" },
+        { short: "ปุํ.", full: "ปุงลิงค์, ปุํลิงฺค" },
+        { short: "ปูรณ.", full: "ปูรณสังขยา (การนับแสดงลำดับ)" },
+        { short: "เปต.", full: "เปตวตฺถุ" },
+        { short: "เปต.อ.", full: "เปตวตฺถุ อฏฺฐกถา" },
+        { short: "พ.", full: "พม่า" },
+        { short: "พหุ.", full: "พหูพจน์, พหุวจนะ" },
+        { short: "พุ.", full: "พุทฺธวํส" },
+        { short: "พุทธสัน.", full: "พุทธสันสกฤต" },
+        { short: "ภวิ.", full: "ภวิสฺสนฺติ (บอกอนาคตกาลแห่งปัจจุบัน)" },
+        { short: "ม.", full: "มชฺฌิมนิกาย" },
+        { short: "ม.อ.", full: "มชฺฌิมนิกาย อฏฺฐกถา" },
+        { short: "ม.ว.", full: "มหาวสฺตุ" },
+        /* Removed ม.วย. (Not found) */
+        { short: "ม.วํ.", full: "มหาวํส" },
+        { short: "มหา.นิ.", full: "มหานิทฺเทส" },
+        { short: "มหา.วํ.", full: "มหาโพธิวํส" },
+        { short: "มัธ.", full: "มัธยมบุรุษ" },
+        { short: "มิลิน.", full: "มิลินฺทปญฺหา" },
+        { short: "ร.ว.", full: "รตฺตนาวลี (แก้ไขจาก รตฺตนาวลี)" },
+        { short: "ล.วิ.", full: "ลลิตวิสตร" },
+        { short: "วัต.", full: "วตฺตมานา (บอกปัจจุบันกาล)" },
+        { short: "วิ.", full: "วินยปิฎก" },
+        { short: "วิภงฺค.", full: "วิภงฺคปกรณ" },
+        { short: "วิ.ม.", full: "วิสุทฺธิมคฺค" },
+        { short: "วิมาน.", full: "วิมานวตฺถุ" },
+        { short: "วิมาน.อ.", full: "วิมานวตฺถุ อฏฺฐกถา" },
+        /* Removed ศิ.ส. (Not found) */
+        { short: "ส.ก.", full: "สกรรมกริยา" },
+        { short: "ส.กา.", full: "สัมพันธการก, ฉัฏฐีวิภัตติ" },
+        { short: "ส.ปา.", full: "สมนฺตปาสาทิกา" },
+        { short: "สรรพ.", full: "สรรพนาม" },
+        { short: "สัต.", full: "สัตตมี (บอกความยอมตาม, ความกำหนด, ความรำพึง ฯลฯ)" },
+        { short: "สัมป.กา.", full: "สัมปทานการก, จตุตถีวิภัตติ" },
+        { short: "สทฺ.ปา.", full: "สทฺธมฺโมปายน" },
+        { short: "สํ.", full: "สํยุตฺตนิกาย" },
+        { short: "สํ.อ.", full: "สํยุตฺตนิกาย อฏฺฐกถา" },
+        { short: "สี.", full: "สีหล, สิงหล" },
+        { short: "สุ.วิ.", full: "สุมงคลวิลาสินี" },
+        { short: "สุตฺ.นิ.", full: "สุตฺตนิปาต" },
+        { short: "สุตฺ.นิ.อ.", full: "สุตฺตนิปาต อฏฺฐกถา" },
+        { short: "หีย., หียัต.", full: "หียัตตนี (บอกอดีตกาล ตั้งแต่วานนี้)" }, /* Added หีย. based on findings */
+        { short: "√…", full: "ธาตุ หรือ รากศัพท์" },
+        { short: "*(S)qṷel…", full: "แสดงถึงธาตุ (ที่สร้างขึ้นหรือโดยอนุมาน) อินโด-เยอรมัน" },
+        { short: "Sk, *Sk...", full: "หมายถึงคำสันสกฤตที่สร้างขึ้นตามคำบาลี หรือเป็นรูปสันสกฤตที่พบในพจนานุกรม" }, /* Adjusted Sk */
+        { short: "°…", full: "ใช้แทนคำซึ่งเป็นส่วนแรก (\" °--- \") หรือ ส่วนที่สอง (\" ---° \") ของสมาส บางครั้งก็ใช้แทนส่วนของคำง่าย ๆ ที่เพิ่มเติมขึ้น" },
+        { short: ">…", full: "ชี้ถึงความเกี่ยวพันด้านนิรุกติศาสตร์ หรือการวิวัฒนาการระหว่างคำต่าง ๆ ที่ระบุถึง" },
+        { short: "=", full: "หมายถึง \"เหมือนกัน\" หรือ \"ในตอนที่เหมือนกัน, ประเภทเดียวกัน\"" },
+        { short: "+…", full: "รวมเข้าด้วยกัน" }
+    ];
+
+    const tbody = document.getElementById('abbr-table-body');
+    bhumibaloAbbrs.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td style="font-weight: bold; color: #2c3e50;">${item.short}</td><td>${item.full}</td>`;
+        tbody.appendChild(tr);
+    });
+</script>
+
+</body>
+</html>
+

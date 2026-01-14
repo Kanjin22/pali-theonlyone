@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียด</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; line-height: 1.8; margin: 0; background-color: #f9f9f9; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px 40px; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #34495e; padding-bottom: 10px; }
+        .content-body { margin-top: 30px; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 20px; margin: 10px; border-radius: 5px; }
+            h1 { font-size: 1.5em; }
+            .content-body { margin-top: 20px; font-size: 0.95em; }
+            .example { padding: 10px; margin: 15px 0; font-size: 0.9em; }
+            .back-link { display: block; text-align: center; margin-top: 30px; }
+        }
+        .example { display: block; padding: 15px; margin: 20px 0; border-left: 4px solid #3498db; background-color: #f4f7f6; }
+        .footer-credit { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #7f8c8d; text-align: center; line-height: 1.6; }
+        .back-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="topic-title">กำลังโหลด...</h1>
+        <div id="content-body">
+            <!-- JavaScript จะแทรกเนื้อหาที่นี่ -->
+        </div>
+        
+        <a id="back-link" href="../index.html" class="back-link">&larr; กลับสู่สารบัญ</a>
+
+        <!-- *** สร้างโครง Footer Credit ที่มี ID ให้ JavaScript เรียกใช้ *** -->
+        <div class="footer-credit" id="footer-credit">
+            <!-- JavaScript จะเติมเครดิตที่ถูกต้องที่นี่ -->
+        </div>
+        <!-- ********************************************** -->
+
+    </div>
+
+    <script src="data/knowledge-data.js"></script>
+    <script>
+        // *** 1. สร้าง Object สำหรับเก็บข้อมูลเครดิต ***
+        const credits = {
+            grammar: `
+                <p>จากหนังสือ "บาลีไวยากรณ์"<br>
+                ฉบับคัดย่อสรุปจากบาลีมหาไวยากรณ์ กัจจายน ปทรูปสิทธิ<br>
+                โดย รองศาสตราจารย์ ดร.เวทย์ บรรณกรกุล<br>
+                ป.ธ.๙ (สามเณร) พธ.บ. (เกียรตินิยมอันดับ ๑) ศษ.ม. (มหิดล) พธ.ด. (บาลีพุทธศาสตร์)</p>
+            `,
+            translation: `
+                <p>จากหนังสือ "หลักเกณฑ์การแปลบาลี และหลักสัมพันธ์"<br>
+                โดย รองศาสตราจารย์ ดร.เวทย์ บรรณกรกุล<br>
+                ป.ธ.๙ (สามเณร) พธ.บ. (เกียรตินิยมอันดับ ๑) ศษ.ม. (มหิดล) พธ.ด. (บาลีพุทธศาสตร์)</p>
+            `
+        };
+
+        // ... JavaScript เดิมของคุณ ...
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type'); // 'grammar' หรือ 'translation'
+        const topicId = params.get('topic');
+
+        let dataToSearch = null;
+        let backLinkHref = "index.html";
+        let documentTitle = "รายละเอียด";
+        let creditHtml = ''; // ตัวแปรสำหรับเก็บเครดิต
+
+        if (type === 'grammar') {
+            dataToSearch = grammarPrinciples;
+            backLinkHref = "grammar_principles.html";
+            documentTitle = "หลักบาลีไวยากรณ์";
+            creditHtml = credits.grammar; // *** 2. เลือกเครดิตของไวยากรณ์ ***
+        } else { // สมมติว่าเป็น translation
+            dataToSearch = translationPrinciples;
+            backLinkHref = "translation_principles.html";
+            documentTitle = "หลักการแปลมคธเป็นไทย";
+            creditHtml = credits.translation; // *** 3. เลือกเครดิตของวิชาแปล ***
+        }
+
+        document.getElementById('back-link').href = backLinkHref;
+        document.getElementById('footer-credit').innerHTML = creditHtml; // *** 4. นำเครดิตไปแสดงผล ***
+
+        let foundTopic = null;
+        // ... (โค้ดส่วนค้นหาหัวข้อ เหมือนเดิม) ...
+
+        // ... (โค้ดส่วนแสดงผลหัวข้อ เหมือนเดิม) ...
+    </script>
+</body>
+</html>

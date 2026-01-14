@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดาวน์โหลดเอกสารการเรียน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            border-left: 5px solid #e67e22;
+            padding-left: 10px;
+        }
+
+        .link-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; text-decoration: none; color: inherit; transition: transform 0.2s; }
+        .link-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .icon { font-size: 24px; color: #e74c3c; margin-right: 20px; width: 40px; text-align: center; }
+        .info h3 { margin: 0 0 5px 0; color: #2c3e50; }
+        .info p { margin: 0; color: #7f8c8d; font-size: 0.9em; }
+        .back-btn { display: block; text-align: center; margin-top: 40px; color: #7f8c8d; text-decoration: none; }
+        
+        .badge {
+            background-color: #3498db;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-solid fa-cloud-arrow-down"></i> ดาวน์โหลดเอกสารการเรียน</h1>
+        
+        <div class="section-title">หนังสือและคู่มือบาลีไวยากรณ์</div>
+        <div class="link-list">
+            <a href="#" class="link-card" onclick="alert('กำลังอัปโหลดไฟล์...'); return false;">
+                <div class="icon"><i class="fa-solid fa-file-pdf"></i></div>
+                <div class="info">
+                    <h3>หนังสือบาลีไวยากรณ์ ๔ เล่ม (ฉบับสมบูรณ์)</h3>
+                    <p>รวบรวมหลักไวยากรณ์บาลีเบื้องต้น - สูง</p>
+                </div>
+            </a>
+            
+            <a href="#" class="link-card" onclick="alert('กำลังอัปโหลดไฟล์...'); return false;">
+                <div class="icon"><i class="fa-solid fa-file-pdf"></i></div>
+                <div class="info">
+                    <h3>คู่มือการแปลมคธเป็นไทย</h3>
+                    <p>หลักการแปลโดยพยัญชนะและโดยอรรถ</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title">แบบฝึกหัดและข้อสอบเก่า</div>
+        <div class="link-list">
+            <a href="#" class="link-card" onclick="alert('กำลังอัปโหลดไฟล์...'); return false;">
+                <div class="icon"><i class="fa-solid fa-file-zipper"></i></div>
+                <div class="info">
+                    <h3>รวมข้อสอบบาลีสนามหลวง ป.ธ.๑-๒</h3>
+                    <p>ย้อนหลัง ๑๐ ปี พร้อมเฉลย</p>
+                </div>
+            </a>
+            
+            <a href="#" class="link-card" onclick="alert('กำลังอัปโหลดไฟล์...'); return false;">
+                <div class="icon"><i class="fa-solid fa-file-zipper"></i></div>
+                <div class="info">
+                    <h3>รวมข้อสอบบาลีสนามหลวง ป.ธ.๓</h3>
+                    <p>ย้อนหลัง ๑๐ ปี พร้อมเฉลย</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title">สื่อการสอนอื่นๆ</div>
+        <div class="link-list">
+            <a href="#" class="link-card" onclick="alert('กำลังอัปโหลดไฟล์...'); return false;">
+                <div class="icon"><i class="fa-solid fa-file-powerpoint"></i></div>
+                <div class="info">
+                    <h3>สไลด์สรุปไวยากรณ์ (PowerPoint)</h3>
+                    <p>สำหรับใช้ประกอบการสอนหรือทบทวน</p>
+                </div>
+            </a>
+        </div>
+
+        <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
+    </div>
+</body>
+</html>

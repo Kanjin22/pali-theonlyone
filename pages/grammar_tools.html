@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือหลักการแปลและไวยากรณ์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; min-height: 80vh; }
+        
+        /* Sidebar (List) */
+        .sidebar { flex: 1; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); min-width: 300px; max-width: 350px; overflow-y: auto; max-height: 85vh; position: sticky; top: 20px; }
+        .search-box { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Sarabun'; font-size: 1rem; margin-bottom: 20px; box-sizing: border-box; }
+        .rule-list { list-style: none; padding: 0; margin: 0; }
+        .rule-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s; border-radius: 4px; margin-bottom: 5px; }
+        .rule-item:hover { background-color: #f0f8ff; }
+        .rule-item.active { background-color: #e3f2fd; border-left: 4px solid #2196f3; font-weight: 600; }
+        .rule-title { font-size: 1.05rem; color: #2c3e50; }
+        .rule-cat { font-size: 0.85rem; color: #7f8c8d; margin-top: 3px; }
+
+        /* Main Content */
+        .content-area { flex: 2; background: white; border-radius: 8px; padding: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .main-title { font-size: 2rem; color: #2c3e50; margin: 0; }
+        
+        .rule-detail { display: none; animation: fadeIn 0.3s ease; }
+        .rule-detail.active { display: block; }
+        .detail-title { font-size: 1.8rem; color: #2c3e50; margin-bottom: 10px; border-bottom: 2px solid #3498db; padding-bottom: 10px; display: inline-block; }
+        .detail-cat { display: inline-block; background: #eee; padding: 4px 10px; border-radius: 12px; font-size: 0.9rem; color: #666; margin-bottom: 20px; }
+        .detail-content { font-size: 1.15rem; line-height: 1.8; color: #444; }
+        .example-box { background: #f9f9f9; border-left: 4px solid #27ae60; padding: 15px 20px; margin-top: 25px; border-radius: 4px; }
+        .example-title { font-weight: bold; color: #27ae60; margin-bottom: 10px; }
+        
+        .empty-state { text-align: center; color: #aaa; margin-top: 100px; }
+        .empty-icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.5; }
+
+        .back-btn { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #666; font-size: 0.95rem; }
+        .back-btn:hover { color: #333; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar { max-height: 300px; min-width: auto; max-width: none; position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+            <input type="text" id="search-input" class="search-box" placeholder="ค้นหาหัวข้อ... (เช่น ตุํ ปัจจัย)">
+            <ul id="rule-list" class="rule-list">
+                <!-- Items will be injected here -->
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            <div id="welcome-screen" class="empty-state">
+                <div class="empty-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h2>คู่มือหลักการแปลและไวยากรณ์</h2>
+                <p>เลือกหัวข้อจากด้านซ้าย หรือพิมพ์ค้นหาเพื่อดูรายละเอียด</p>
+            </div>
+            <div id="content-display"></div>
+        </main>
+    </div>
+
+    <script src="data/data-grammar-rules.js"></script>
+    <script>
+        const ruleListEl = document.getElementById('rule-list');
+        const searchInput = document.getElementById('search-input');
+        const contentDisplay = document.getElementById('content-display');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        
+        let allRules = typeof translationRules !== 'undefined' ? translationRules : [];
+
+        function renderList(rules) {
+            ruleListEl.innerHTML = '';
+            if (rules.length === 0) {
+                ruleListEl.innerHTML = '<li style="text-align:center; padding:20px; color:#999;">ไม่พบข้อมูล</li>';
+                return;
+            }
+            rules.forEach(rule => {
+                const li = document.createElement('li');
+                li.className = 'rule-item';
+                li.dataset.id = rule.id;
+                li.onclick = () => showRule(rule.id);
+                li.innerHTML = `
+                    <div class="rule-title">${rule.title}</div>
+                    <div class="rule-cat">${rule.category}</div>
+                `;
+                ruleListEl.appendChild(li);
+            });
+        }
+
+        function showRule(id) {
+            const rule = allRules.find(r => r.id === id);
+            if (!rule) return;
+
+            // Highlight list item
+            document.querySelectorAll('.rule-item').forEach(item => item.classList.remove('active'));
+            const activeItem = document.querySelector(`.rule-item[data-id="${id}"]`);
+            if (activeItem) activeItem.classList.add('active');
+
+            // Show content
+            welcomeScreen.style.display = 'none';
+            
+            let examplesHtml = '';
+            if (rule.examples && rule.examples.length > 0) {
+                examplesHtml = `<div class="example-box"><div class="example-title">ตัวอย่าง:</div><ul>`;
+                rule.examples.forEach(ex => examplesHtml += `<li>${ex}</li>`);
+                examplesHtml += `</ul></div>`;
+            }
+
+            contentDisplay.innerHTML = `
+                <div class="rule-detail active">
+                    <div><span class="detail-cat">${rule.category}</span></div>
+                    <div class="detail-title">${rule.title}</div>
+                    <div class="detail-content">${rule.content}</div>
+                    ${examplesHtml}
+                </div>
+            `;
+            
+            // Update URL hash without scrolling
+            history.pushState(null, null, `#${id}`);
+        }
+
+        // Search Filter
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allRules.filter(r => 
+                r.title.toLowerCase().includes(term) || 
+                r.category.toLowerCase().includes(term) ||
+                (r.tags && r.tags.some(t => t.toLowerCase().includes(term)))
+            );
+            renderList(filtered);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderList(allRules);
+            
+            // Check hash for direct link
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                showRule(hash);
+            }
+        });
+
+    </script>
+</body>
+</html>
+
