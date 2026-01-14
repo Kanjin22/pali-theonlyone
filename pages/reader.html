@@ -513,7 +513,8 @@
       <h1><i class="fas fa-book-open"></i> โหมดหนังสือ</h1>
       <div style="display:flex;gap:8px">
         <button id="mobile-nav-toggle" class="btn secondary" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
-        <a href="./content_browser.html" class="btn secondary" style="text-decoration:none; background-color: #95a5a6;"><i class="fas fa-book"></i><span class="btn-text"> เนื้อหาโหมดบอร์ด</span></a>
+        <a id="btn-board-mode" href="./content_browser.html" class="btn secondary" style="text-decoration:none; background-color: #95a5a6;"><i class="fas fa-book"></i><span class="btn-text"> เนื้อหาโหมดบอร์ด</span></a>
+        <a href="./library_center.html" class="btn secondary" style="text-decoration:none; background-color:#ecf0f1; color:#2c3e50;"><i class="fas fa-layer-group"></i><span class="btn-text"> กลับสู่คลังความรู้กลาง</span></a>
         <a href="../index.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-home"></i><span class="btn-text"> หน้าหลัก</span></a>
         <a id="exam-btn" href="./exam_builder.html" class="btn secondary" style="text-decoration:none"><i class="fas fa-file-pen"></i><span class="btn-text"> ออกข้อสอบ</span></a>
       </div>
@@ -2715,6 +2716,10 @@
                             break;
                         }
                     }
+                }
+                const boardBtn = document.getElementById('btn-board-mode');
+                if (boardBtn) {
+                    boardBtn.href = `content_browser.html?level=${levelCode}`;
                 }
             }
             populateSubjects();

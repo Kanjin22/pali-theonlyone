@@ -45,6 +45,9 @@
 <body>
     <div class="container">
         <a id="backBtn" href="library_center.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่คลังความรู้กลาง</a>
+        <a id="readerModeBtn" href="reader.html" class="back-btn" style="margin-left: 10px; background-color: #f8e9d0; color: #d35400;">
+            <i class="fa-solid fa-book-open"></i> เนื้อหาโหมดหนังสือ
+        </a>
         
         <div class="header">
             <h1>เนื้อหาโหมดบอร์ด</h1>
@@ -104,6 +107,11 @@
         const urlParams = new URLSearchParams(window.location.search);
         const currentLevel = urlParams.get('level');
         const mode = urlParams.get('mode'); // 'picker' or null
+
+        const readerModeBtn = document.getElementById('readerModeBtn');
+        if (readerModeBtn && currentLevel) {
+            readerModeBtn.href = `reader.html?level=${currentLevel}`;
+        }
 
         function registerBook(name, varObj) {
             if (typeof varObj !== 'undefined') {
