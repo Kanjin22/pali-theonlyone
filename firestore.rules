@@ -2,7 +2,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Helper Functions
+    // ════════════════════════════════════
+    // Helper Functions - ฟังก์ชั่นช่วย
+    // ════════════════════════════════════
+    
     function isSignedIn() {
       return request.auth != null;
     }
@@ -16,6 +19,11 @@ service cloud.firestore {
       return isSignedIn() && classroom.adminId == request.auth.uid;
     }
     
+    function isMemberOf(classroomId) {
+      let classroom = get(/databases/{database}/documents/classrooms/{classroomId}).data;
+      return classroom.members is list && request.auth.uid in classroom.members;
+    }
+    
     function isOwnDocument() {
       return request.auth.uid == resource.data.userId;
     }
@@ -24,7 +32,24 @@ service cloud.firestore {
       return field is string && field.size() >= minLen && field.size() <= maxLen;
     }
     
+    function isValidExamSet(data) {
+      return isValidString(data.title, 1, 200) &&
+             isValidString(data.description, 0, 1000) &&
+             data.createdAt is timestamp &&
+             data.createdBy is string;
+    }
+    
+    function isValidFile(data) {
+      return isValidString(data.name, 1, 500) &&
+             isValidString(data.type, 1, 100) &&
+             data.size is number &&
+             data.size <= 104857600;
+    }
+    
+    // ════════════════════════════════════
     // Users Collection - Authentication Required
+    // ════════════════════════════════════
+    
     match /users/{userId} {
       allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
       allow create: if isSignedIn() && request.auth.uid == userId;
@@ -32,7 +57,10 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
     
+    // ════════════════════════════════════
     // Classrooms - Admin-only creation and management
+    // ════════════════════════════════════
+    
     match /classrooms/{classroomId} {
       allow read: if isSignedIn() && (
         resource.data.adminId == request.auth.uid || 
@@ -50,7 +78,10 @@ service cloud.firestore {
       }
     }
     
+    // ════════════════════════════════════
     // User Schedule - User-specific
+    // ════════════════════════════════════
+    
     match /users/{userId}/schedule/{scheduleId} {
       allow read: if request.auth.uid == userId || isAdmin();
       allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.title, 1, 200);
@@ -58,7 +89,10 @@ service cloud.firestore {
       allow delete: if request.auth.uid == userId || isAdmin();
     }
     
+    // ════════════════════════════════════
     // User Vocabulary - User-specific
+    // ════════════════════════════════════
+    
     match /users/{userId}/vocab/{vocabId} {
       allow read: if request.auth.uid == userId || isAdmin();
       allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.word, 1, 500);
@@ -66,7 +100,10 @@ service cloud.firestore {
       allow delete: if request.auth.uid == userId || isAdmin();
     }
     
+    // ════════════════════════════════════
     // User Progress - User-specific
+    // ════════════════════════════════════
+    
     match /users/{userId}/progress/{levelId} {
       allow read: if request.auth.uid == userId || isAdmin();
       allow create: if isSignedIn() && request.auth.uid == userId && request.resource.data.level >= 1 && request.resource.data.level <= 12;
@@ -74,7 +111,10 @@ service cloud.firestore {
       allow delete: if request.auth.uid == userId || isAdmin();
     }
     
+    // ════════════════════════════════════
     // Classroom Exams
+    // ════════════════════════════════════
+    
     match /classrooms/{classroomId}/exams/{examId} {
       allow read: if isSignedIn() && (
         isClassroomAdmin(classroomId) || 
@@ -85,7 +125,10 @@ service cloud.firestore {
       allow delete: if isClassroomAdmin(classroomId);
     }
     
+    // ════════════════════════════════════
     // Exam Results
+    // ════════════════════════════════════
+    
     match /classrooms/{classroomId}/examResults/{resultId} {
       allow read: if isSignedIn() && (
         resource.data.userId == request.auth.uid || 
@@ -97,69 +140,97 @@ service cloud.firestore {
       allow delete: if isClassroomAdmin(classroomId) || isAdmin();
     }
     
+    // ════════════════════════════════════
+    // Files - Authentication Required (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /files/{fileId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
+    // Exam Sets - Admin Only (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /exam_sets/{setId} {
+      allow read: if isSignedIn();
+      allow create: if isAdmin() && isValidExamSet(request.resource.data);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
+    // Contents - Authentication Required (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /contents/{contentId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
+    // Pins - Authentication Required (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /pins/{pinId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
+    // Sanluang Exams - Authentication Required (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /sanluang_exams/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
+    // Exam Logs - Admin Only (✅ FIXED)
+    // ════════════════════════════════════
+    
+    match /exam_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // ════════════════════════════════════
     // Error Logs - Admin only
+    // ════════════════════════════════════
+    
     match /errorLogs/{logId} {
       allow read: if isAdmin();
       allow create: if isSignedIn();
       allow delete: if isAdmin();
     }
     
+    // ════════════════════════════════════
     // Audit Logs - Admin only
+    // ════════════════════════════════════
+    
     match /auditLogs/{logId} {
       allow read: if isAdmin();
       allow write: if isAdmin();
     }
     
+    // ════════════════════════════════════
     // Config - Admin only
+    // ════════════════════════════════════
+    
     match /config/{configId} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
     
-    // Deny all other access by default
-    match /{document=**} {
-      allow read, write: if false;
-    }
-  }
-}
+    // ════════════════════════════════════
+    // Default Deny - ปิดกั้นทั้งหมด
+    // ════════════════════════════════════
     
-    // Collection: files
-    match /files/{fileId} {
-      allow read: if true;
-      allow write: if isAdmin() || (request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'teacher');
-    }
-    
-    // Collection: exam_sets
-    match /exam_sets/{setId} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-
-    // Collection: contents (เนื้อหาบทเรียน)
-    match /contents/{contentId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    // Collection: pins (ปักหมุดกิจกรรม)
-    match /pins/{pinId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    // Collection: sanluang_exams (สถิติข้อสอบสนามหลวง)
-    match /sanluang_exams/{docId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    // Collection: exam_logs (บันทึกการออกข้อสอบ)
-    match /exam_logs/{logId} {
-      allow read: if isAdmin();
-      allow create: if request.auth != null;
-    }
-
-    // Default deny (ปิดกั้นส่วนอื่นๆ ที่ไม่ได้ระบุ)
     match /{document=**} {
       allow read, write: if false;
     }
