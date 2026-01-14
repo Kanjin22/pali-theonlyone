@@ -1308,10 +1308,6 @@
 
     // Per-Sentence Controls Logic
     function injectSentenceControls() {
-        // Only show controls for logged-in users
-        const isLoggedIn = localStorage.getItem('pali_user_uid') || localStorage.getItem('pali_user_name');
-        if (!isLoggedIn) return;
-
         const page = document.getElementById('pageContent');
         if (!page) return;
         
