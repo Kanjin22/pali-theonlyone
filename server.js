@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -181,8 +182,11 @@ async function verifyAdmin(req) {
   }
 }
 
+// Serve static files (frontend)
+app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
+
 app.get('/', (req, res) => {
-  res.send('Pali TheOnlyone API Server is running');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api/is-admin', async (req, res) => {

@@ -305,56 +305,11 @@ if (btnModalForgot) btnModalForgot.onclick = async () => {
     }
 };
 
-// --- Guest / Simple Login Logic ---
-
-// ✅ FIXED: Use Firebase Anonymous Auth instead of localStorage
-async function saveSimpleUser() {
-    const input = document.getElementById('simple-username');
-    const name = input.value.trim();
-    if (!name) return;
-    
-    try {
-        const btnGuest = document.getElementById('btn-guest-login');
-        setLoading(true, btnGuest);
-        // Sign in anonymously with Firebase
-        const result = await auth.signInAnonymously();
-        const user = result.user;
-        
-        // Update display name
-        await user.updateProfile({ displayName: name });
-        
-        // ✅ SECURE: UID comes from Firebase, cannot be faked
-        // onAuthStateChanged will handle the rest
-    } catch (error) {
-        setLoading(false, document.getElementById('btn-guest-login'));
-        const msg = 'ไม่สามารถเข้าใช้งานแบบทดลองได้: ' + (error.message || '');
-        if (typeof safeNotify === 'function') safeNotify(msg, 'error');
-    }
-}
-
-function checkSimpleLogin() {
-    const simpleLoginSection = document.getElementById('simple-login-section');
-    const appContent = document.getElementById('app-content');
-    const introSection = document.getElementById('intro-section');
-    
-    // ✅ FIXED: Rely on Firebase auth state only, not localStorage
-    // If Firebase user is present, they take precedence (handled in auth listener)
-    if (window._currentUser) {
-        if (simpleLoginSection) simpleLoginSection.style.display = 'none';
-        if (introSection) introSection.style.display = 'none';
-        return;
-    }
-
-    // ✅ FIXED: Guest login is now handled by onAuthStateChanged (Firebase Anonymous Auth)
-    // If no Firebase user, show login section
-    if (simpleLoginSection) simpleLoginSection.style.display = 'block';
-    if (introSection) introSection.style.display = 'block';
-}
+// --- Guest / Simple Login Logic Removed ---
 
 // --- Main Auth Listener ---
 
-const btnGuestLogin = document.getElementById('btn-guest-login');
-if (btnGuestLogin) btnGuestLogin.onclick = () => saveSimpleUser();
+// Guest login removed
 
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -564,9 +519,8 @@ auth.onAuthStateChanged((user) => {
         hideUser();
         if (appContent) appContent.style.display = 'none';
         
-        // If no user, check simple login
-        checkSimpleLogin();
+        // No guest login; keep app content hidden
     }
 });
 
-setTimeout(checkSimpleLogin, 500);
+// Guest login removed
