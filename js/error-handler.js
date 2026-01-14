@@ -64,8 +64,7 @@ function logError(context, error) {
         userAgent: navigator.userAgent
     };
     
-    // Log to console in development
-    if (process.env.NODE_ENV !== 'production') {
+    if (typeof process === 'undefined' || !process.env || process.env.NODE_ENV !== 'production') {
         console.error('[Error]', errorInfo);
     }
     
