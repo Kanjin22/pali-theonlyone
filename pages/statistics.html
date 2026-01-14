@@ -136,7 +136,7 @@
             </div>
         </div>
 
-        <a href="../index.html" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
+        <a href="#" id="back-classroom-link" class="home-link">&larr; กลับไปห้องเรียน</a>
     </div>
 
     <!-- Config & Firebase -->
@@ -164,7 +164,15 @@
             if (room) {
                 prefix = room.schedulePrefix;
                 document.title = `สถิติและความคืบหน้า - ${room.name}`;
-                document.querySelector('h1').innerText = `📊 สรุปสถิติและความคืบหน้า (${room.name})`;
+                const h1 = document.querySelector('h1');
+                if (h1) {
+                    h1.innerHTML = `📊 สรุปสถิติและความคืบหน้า<br><span style="font-size:0.9em;">(${room.name})</span>`;
+                }
+                const backLink = document.getElementById('back-classroom-link');
+                if (backLink) {
+                    backLink.href = `../levels/home_${room.level}.html?room=${room.id}`;
+                    backLink.innerText = '← กลับไปห้องเรียนนี้';
+                }
             }
         }
 
