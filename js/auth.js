@@ -25,9 +25,20 @@ function showUser(u, role) {
             else if (role === 'teacher') { label = 'อาจารย์'; color = '#8e44ad'; }
             else if (role === 'student') { label = 'นักเรียน'; color = '#27ae60'; }
             statusHtml = `<span style="display:inline-block; margin-left:8px; font-size:0.75rem; background:${color}; color:white; padding:2px 8px; border-radius:99px; vertical-align:middle;">${label}</span>`;
-            localStorage.setItem('pali_user_role', role);
+            // ✅ FIXED: Store role in memory/sessionStorage instead of localStorage
+            window._currentUserRole = role;
+            sessionStorage.setItem('pali_user_role_session', role);
         }
-        userInfo.innerHTML = `<b>${name}</b> ${statusHtml}`;
+        // ✅ FIXED: Use safe DOM creation instead of innerHTML for XSS prevention
+        userInfo.innerHTML = '';
+        const nameSpan = document.createElement('b');
+        nameSpan.textContent = name;  // ✅ Safe - no HTML/JS execution
+        userInfo.appendChild(nameSpan);
+        if (statusHtml) {
+            const statusSpan = document.createElement('span');
+            statusSpan.innerHTML = statusHtml;
+            userInfo.appendChild(statusSpan);
+        }
         userInfo.style.display = 'inline-flex';
         userInfo.style.alignItems = 'center';
     }
@@ -62,6 +73,16 @@ function closeLogin() {
     if (modalForgotPassword) modalForgotPassword.style.display = 'none';
 }
 
+// ✅ ADDED: Password validation function
+function validatePassword(password) {
+    const errors = [];
+    if (password.length < 8) errors.push('ต้องมีอย่างน้อย 8 ตัวอักษร');
+    if (!/[A-Z]/.test(password)) errors.push('ต้องมีตัวพิมพ์ใหญ่');
+    if (!/[0-9]/.test(password)) errors.push('ต้องมีตัวเลข');
+    if (!/[!@#$%^&*]/.test(password)) errors.push('ต้องมีสัญลักษณ์');
+    return { valid: errors.length === 0, message: errors.join(', ') };
+}
+
 // Event Listeners for Login Buttons
 if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
 if (btnLogoutTop) btnLogoutTop.onclick = () => {
@@ -69,6 +90,9 @@ if (btnLogoutTop) btnLogoutTop.onclick = () => {
         auth.signOut().then(() => {
             localStorage.removeItem('pali_user_role');
             localStorage.removeItem('pali_enroll_level');
+            // ✅ FIXED: Clear memory and session storage
+            window._currentUserRole = null;
+            sessionStorage.removeItem('pali_user_role_session');
             location.reload();
         });
     }
@@ -176,6 +200,14 @@ if (btnEmailSignup) btnEmailSignup.onclick = async () => {
         emailStatus.style.color = 'red';
         return;
     }
+    
+    // ✅ ADDED: Validate password strength
+    const validation = validatePassword(pass);
+    if (!validation.valid) {
+        emailStatus.textContent = 'รหัสผ่านอ่อนแอ: ' + validation.message;
+        emailStatus.style.color = 'red';
+        return;
+    }
 
     setLoading(true, btnEmailSignup);
     try {
@@ -217,12 +249,27 @@ if (modalForgotPassword) modalForgotPassword.onclick = async () => {
 
 // --- Guest / Simple Login Logic ---
 
-function saveSimpleUser() {
+// ✅ FIXED: Use Firebase Anonymous Auth instead of localStorage
+async function saveSimpleUser() {
     const input = document.getElementById('simple-username');
     const name = input.value.trim();
-    if (name) {
-        localStorage.setItem('pali_user_name', name);
-        location.reload(); 
+    if (!name) return;
+    
+    try {
+        const btnGuest = document.getElementById('btn-guest-login');
+        setLoading(true, btnGuest);
+        // Sign in anonymously with Firebase
+        const result = await auth.signInAnonymously();
+        const user = result.user;
+        
+        // Update display name
+        await user.updateProfile({ displayName: name });
+        
+        // ✅ SECURE: UID comes from Firebase, cannot be faked
+        // onAuthStateChanged will handle the rest
+    } catch (error) {
+        setLoading(false, document.getElementById('btn-guest-login'));
+        alert('ไม่สามารถเข้าใช้งานแบบทดลองได้: ' + error.message);
     }
 }
 
@@ -230,9 +277,8 @@ function checkSimpleLogin() {
     const simpleLoginSection = document.getElementById('simple-login-section');
     const appContent = document.getElementById('app-content');
     const introSection = document.getElementById('intro-section');
-    const userName = localStorage.getItem('pali_user_name');
-    const btnLogout = document.getElementById('btn-logout');
-
+    
+    // ✅ FIXED: Rely on Firebase auth state only, not localStorage
     // If Firebase user is present, they take precedence (handled in auth listener)
     if (window._currentUser) {
         if (simpleLoginSection) simpleLoginSection.style.display = 'none';
@@ -240,49 +286,10 @@ function checkSimpleLogin() {
         return;
     }
 
-    if (userName) {
-        // Local User Logged In
-        if (simpleLoginSection) simpleLoginSection.style.display = 'none';
-        if (introSection) introSection.style.display = 'none';
-        if (appContent) appContent.style.display = 'block';
-
-        // Update UI
-        const greetingEl = document.getElementById('dash-greeting');
-        if (greetingEl) greetingEl.textContent = `สวัสดีครับ, ${userName}`;
-        
-        const userInfo = document.getElementById('user-info');
-        if (userInfo) {
-            userInfo.innerHTML = `<b>${userName}</b> <span style="font-size:0.75rem; background:#95a5a6; color:white; padding:2px 8px; border-radius:99px;">Guest</span>`;
-            userInfo.style.display = 'inline-flex';
-            userInfo.style.alignItems = 'center';
-        }
-
-        const btnOpenLogin = document.getElementById('btn-open-login');
-        if (btnOpenLogin) btnOpenLogin.style.display = 'none';
-
-        if (btnLogout) {
-            btnLogout.style.display = 'inline-block';
-            btnLogout.onclick = () => {
-                localStorage.removeItem('pali_user_name');
-                location.reload();
-            };
-        }
-        
-        // Show Dashboard with Local ID
-        const fakeUser = { uid: 'local_' + userName, displayName: userName };
-        if (typeof updateStudentDashboard === 'function') {
-            updateStudentDashboard(fakeUser, 'student'); // Treat as student to show dashboard
-        }
-        
-        // Check Resume for this user
-        if (typeof checkResume === 'function') {
-            checkResume(fakeUser.uid);
-        }
-    } else {
-        // No Login
-        if (simpleLoginSection) simpleLoginSection.style.display = 'block';
-        if (introSection) introSection.style.display = 'block';
-    }
+    // ✅ FIXED: Guest login is now handled by onAuthStateChanged (Firebase Anonymous Auth)
+    // If no Firebase user, show login section
+    if (simpleLoginSection) simpleLoginSection.style.display = 'block';
+    if (introSection) introSection.style.display = 'block';
 }
 
 // --- Main Auth Listener ---
@@ -297,7 +304,9 @@ auth.onAuthStateChanged((user) => {
         if (typeof loadTodayPins === 'function') loadTodayPins();
 
         const uid = user.uid;
-        localStorage.setItem('pali_user_uid', uid);
+        // ✅ FIXED: Store UID in memory and sessionStorage only, not localStorage
+        window._currentUserUID = uid;
+        sessionStorage.setItem('pali_user_uid_session', uid);
 
         let cachedRole = null;
         try {
