@@ -6,10 +6,10 @@ const DATA_CACHE = `data-${CACHE_VERSION}`;
 const APP_SHELL_URLS = [
   './',
   'index.html',
-  'reader.html',
-  'presentation.html',
-  'dictionary.html',
-  'flashcards.html',
+  'pages/reader.html',
+  'pages/presentation.html',
+  'pages/dictionary.html',
+  'pages/flashcards.html',
   'manifest.webmanifest',
   'icons/pwa.svg',
   'icons/pwa-maskable.svg'
@@ -66,8 +66,20 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(APP_SHELL_CACHE)
-      .then((cache) => cache.addAll(APP_SHELL_URLS))
+      .then((cache) => {
+        // Add URLs individually to handle failures gracefully
+        return Promise.all(
+          APP_SHELL_URLS.map((url) =>
+            cache
+              .add(url)
+              .catch((err) => {
+                console.warn(`Failed to cache ${url}:`, err);
+              })
+          )
+        );
+      })
       .then(() => self.skipWaiting())
+      .catch((err) => console.error('Install event failed:', err))
   );
 });
 
