@@ -37,6 +37,14 @@
 
         .home-link { display: block; text-align: center; margin-top: 40px; text-decoration: none; color: #34495e; font-weight: bold; padding: 10px; border: 2px solid #34495e; border-radius: 5px; width: 200px; margin-left: auto; margin-right: auto; transition: all 0.3s; }
         .home-link:hover { background-color: #34495e; color: white; }
+
+        .monthly-section { margin-top: 40px; }
+        .monthly-title { text-align: center; color: #2c3e50; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; }
+        .monthly-table-wrapper { overflow-x: auto; }
+        .monthly-table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+        .monthly-table th, .monthly-table td { border: 1px solid #ecf0f1; padding: 8px 10px; text-align: center; }
+        .monthly-table th { background-color: #ecf0f1; color: #2c3e50; }
+        .monthly-table td.month-col { text-align: left; }
     </style>
 </head>
 <body>
@@ -93,6 +101,24 @@
             </div>
         </div>
 
+        <div class="monthly-section" id="monthly-section">
+            <div class="monthly-title">สถิติรายเดือน (แยกตามวิชา)</div>
+            <div class="monthly-table-wrapper">
+                <table class="monthly-table">
+                    <thead>
+                        <tr>
+                            <th>เดือน</th>
+                            <th>ไวยากรณ์ (เรียน)</th>
+                            <th>ไวยากรณ์ (สอบ)</th>
+                            <th>แปล (เรียน)</th>
+                            <th>แปล (สอบ)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
         <a href="../index.html" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     </div>
 
@@ -104,6 +130,13 @@
     <script src="../js/system_config.js"></script>
 
     <script>
+        const academicMonths = [
+            { name: 'November', year: 2025, key: '2025-11', label: 'พฤศจิกายน ๒๕๖๘' },
+            { name: 'December', year: 2025, key: '2025-12', label: 'ธันวาคม ๒๕๖๘' },
+            { name: 'January', year: 2026, key: '2026-01', label: 'มกราคม ๒๕๖๙' },
+            { name: 'February', year: 2026, key: '2026-02', label: 'กุมภาพันธ์ ๒๕๖๙' }
+        ];
+
         // อ่าน roomId จาก URL
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room') || 'room1';
@@ -122,18 +155,11 @@
         const db = firebase.firestore();
 
         async function fetchAllData() {
-            // กำหนดเดือนที่ต้องการดึงข้อมูล (ปีการศึกษา 2568: พ.ย. 68 - ก.พ. 69)
-            // หมายเหตุ: ปี ค.ศ. คือ Nov 2025 - Feb 2026
-            const months = [
-                { name: 'November', year: 2025 },
-                { name: 'December', year: 2025 },
-                { name: 'January', year: 2026 },
-                { name: 'February', year: 2026 }
-            ];
+            const months = academicMonths;
 
             let allDays = [];
             const promises = months.map(m => {
-                const scheduleId = `${prefix}_${m.name}_${m.year}`;
+                const scheduleId = `${roomId}_${m.name}_${m.year}`;
                 return db.collection('schedules').doc(scheduleId).get()
                     .then(doc => {
                         if (doc.exists) {
@@ -237,19 +263,43 @@
             // ==========================================
             const stats = calculateStats(allData);
 
-            // แสดงผลการ์ด
             document.getElementById('gram-read').innerText = stats.gramRead;
             document.getElementById('gram-exam').innerText = stats.gramExam;
             document.getElementById('trans-read').innerText = stats.transRead;
             document.getElementById('trans-exam').innerText = stats.transExam;
 
-            // Auto-hide Translate Stats if 0 (สำหรับห้องที่ไม่มีเรียนแปล)
+            const monthMap = {};
+            allData.forEach(day => {
+                const d = new Date(day.date);
+                if (isNaN(d.getTime())) return;
+                const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                if (!monthMap[key]) monthMap[key] = [];
+                monthMap[key].push(day);
+            });
+
+            const tbody = document.getElementById('monthly-tbody');
+            if (tbody) {
+                let rows = '';
+                academicMonths.forEach(m => {
+                    const days = monthMap[m.key] || [];
+                    const s = calculateStats(days);
+                    rows += '<tr>' +
+                        '<td class="month-col">' + m.label + '</td>' +
+                        '<td>' + s.gramRead + '</td>' +
+                        '<td>' + s.gramExam + '</td>' +
+                        '<td>' + s.transRead + '</td>' +
+                        '<td>' + s.transExam + '</td>' +
+                        '</tr>';
+                });
+                tbody.innerHTML = rows;
+            }
+
             const transCard = document.querySelector('.stat-card.bg-translate');
             if (transCard) {
                 if (stats.transRead === 0 && stats.transExam === 0) {
                     transCard.style.display = 'none';
                 } else {
-                    transCard.style.display = 'block'; 
+                    transCard.style.display = 'block';
                 }
             }
         });
