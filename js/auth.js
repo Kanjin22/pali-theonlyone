@@ -345,13 +345,17 @@ auth.onAuthStateChanged((user) => {
 
         // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
             try {
-                const validatedEmail = (window.validator && typeof window.validator.validateEmail === 'function')
-                    ? window.validator.validateEmail(user.email || '').sanitized
-                    : (user.email || '');
+                let emailSan = null;
+                if (window.validator && typeof window.validator.validateEmail === 'function') {
+                    const check = window.validator.validateEmail(user.email || '');
+                    emailSan = check.valid ? check.sanitized : null;
+                } else {
+                    emailSan = user.email || null;
+                }
                 const safeDisplayName = (typeof sanitizeHTML === 'function') ? sanitizeHTML(user.displayName || '') : (user.displayName || '');
                 const userDoc = {
                     displayName: safeDisplayName,
-                    email: validatedEmail,
+                    email: emailSan,
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 db.collection('users').doc(uid).set(userDoc, { merge: true }).catch(e => {
