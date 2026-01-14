@@ -1,7 +1,7 @@
 (function() {
   try {
     var s = document.createElement('script');
-    s.src = '../vocab-sc.js';
+    s.src = '../data/vocab-sc.js';
     s.async = false;
     var current = document.currentScript;
     if (current && current.parentNode) {
