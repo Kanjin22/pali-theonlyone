@@ -105,13 +105,6 @@
         const currentLevel = urlParams.get('level');
         const mode = urlParams.get('mode'); // 'picker' or null
 
-        // Dynamic Back Button
-        const backBtn = document.getElementById('backBtn');
-        if (currentLevel) {
-            backBtn.href = `levels/home_${currentLevel}.html`;
-            backBtn.innerHTML = '<i class="fa-solid fa-arrow-left"></i> กลับสู่ห้องเรียน';
-        }
-
         function registerBook(name, varObj) {
             if (typeof varObj !== 'undefined') {
                 // If level is specified, filter books

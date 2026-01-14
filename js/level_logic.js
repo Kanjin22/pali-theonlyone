@@ -200,7 +200,8 @@ function renderRoomContent(room) {
 
     // Render Schedule Links
     const scheduleContainer = document.getElementById('schedule-links-container');
-        if (scheduleContainer) {
+    const teacherToolsContainer = document.getElementById('teacher-tools-container');
+    if (scheduleContainer) {
         // Standard Months (can be dynamic later)
         const months = [
             { name: "พฤศจิกายน ๒๕๖๘", month: "November", year: "2025" },
@@ -209,32 +210,34 @@ function renderRoomContent(room) {
             { name: "กุมภาพันธ์ ๒๕๖๙", month: "February", year: "2026" }
         ];
 
-        let html = '';
+        let scheduleHtml = '';
         
         // Add "Today's Schedule" Button
         const todayUrl = `../pages/schedule_view.html?mode=daily&room=${room.id}`;
-        html += `<a href="${todayUrl}" class="menu-button" style="background-color: #e74c3c; color: white;">📅 ตารางเรียนวันนี้</a>`;
+        scheduleHtml += `<a href="${todayUrl}" class="menu-button" style="background-color: #e74c3c; color: white;">📅 ตารางเรียนวันนี้</a>`;
 
         months.forEach(m => {
              // Link to NEW dynamic schedule viewer
              // ID Format: roomId_Month_Year (e.g. pt12_1_November_2025)
              const scheduleId = `${room.id}_${m.month}_${m.year}`;
-             html += `<a href="../pages/schedule_view.html?id=${scheduleId}&room=${room.id}" class="menu-button">${m.name}</a>`;
+             scheduleHtml += `<a href="../pages/schedule_view.html?id=${scheduleId}&room=${room.id}" class="menu-button">${m.name}</a>`;
         });
         
-        // Add Create Schedule Button (Hidden by default, shown for Admin/Teacher only)
-        html += `
-            <a id="btn-create-schedule" href="../admin/schedule_builder.html?level=${room.level}&room=${room.id}" 
-               class="menu-button" style="display:none; background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
-               + สร้างตารางเรียนใหม่
-            </a>
-            <a id="btn-exam-builder" href="../pages/exam_builder.html?level=${room.level}&room=${room.id}"
-               class="menu-button" style="display:none; background-color:#8e44ad; color:#fff; border:2px solid #7d3c98; text-align:center;">
-               ออกข้อสอบ
-            </a>
-        `;
-        
-        scheduleContainer.innerHTML = html;
+        scheduleContainer.innerHTML = scheduleHtml;
+
+        if (teacherToolsContainer) {
+            let teacherHtml = `
+                <a id="btn-create-schedule" href="../admin/schedule_builder.html?level=${room.level}&room=${room.id}" 
+                   class="menu-button" style="display:none; background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
+                   + สร้างตารางเรียนใหม่
+                </a>
+                <a id="btn-exam-builder" href="../pages/exam_builder.html?level=${room.level}&room=${room.id}"
+                   class="menu-button" style="display:none; background-color:#8e44ad; color:#fff; border:2px solid #7d3c98; text-align:center;">
+                   ออกข้อสอบ
+                </a>
+            `;
+            teacherToolsContainer.innerHTML = teacherHtml;
+        }
 
         // Check Permissions
         if (typeof firebase !== 'undefined') {
