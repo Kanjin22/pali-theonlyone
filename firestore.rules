@@ -68,10 +68,19 @@ service cloud.firestore {
              isValidNumber(data.size, 0, 104857600);
     }
 
-    // Validate user profile (ปรับเพิ่มตาม schema จริงของคุณได้)
     function isValidUser(data) {
       return (!('displayName' in data) || isValidString(data.displayName, 0, 100)) &&
              (!('photoURL' in data) || isValidString(data.photoURL, 0, 1000));
+    }
+
+    function isValidEnrollment(data, userId) {
+      return data.uid == userId &&
+             isValidString(data.firstName, 1, 100) &&
+             isValidString(data.lastName, 1, 100) &&
+             isValidString(data.phone, 1, 30) &&
+             isValidString(data.levelRequested, 1, 20) &&
+             isValidString(data.userType, 1, 50) &&
+             data.status == 'pending';
     }
 
     // ─────────────────────────────────────
@@ -138,9 +147,7 @@ service cloud.firestore {
 
     match /classrooms/{classroomId} {
 
-      // อ่าน: ต้องเป็น admin ห้อง, สมาชิกห้อง, หรือ admin ระบบ
-      allow read: if isSignedIn() &&
-        (isClassroomAdmin(classroomId) || isClassroomMember(classroomId) || isAdmin());
+      allow read: if isSignedIn();
 
       // สร้างห้อง: admin เท่านั้น
       allow create: if isAdmin()
@@ -198,6 +205,15 @@ service cloud.firestore {
         // ลบ: admin ห้อง หรือ admin ระบบ
         allow delete: if isClassroomAdmin(classroomId) || isAdmin();
       }
+    }
+
+    match /enrollments/{userId} {
+      allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow create: if isSignedIn()
+                    && isOwner(userId)
+                    && isValidEnrollment(request.resource.data, userId);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
     }
 
     // ─────────────────────────────────────
