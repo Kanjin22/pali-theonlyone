@@ -218,7 +218,7 @@ function createEnrollCard(id, container) {
         if (!container || document.getElementById(id)) return;
         const a = document.createElement('a');
         a.id = id;
-        a.href = 'enroll.html';
+        a.href = 'pages/enroll.html';
         a.className = 'menu-card level-tool';
         a.style.display = 'flex';
         a.style.background = '#fffbe6';
