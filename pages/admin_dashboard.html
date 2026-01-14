@@ -162,6 +162,18 @@
             font-size: 0.85rem;
         }
 
+        .btn-icon {
+            padding: 4px;
+            font-size: 0.8rem;
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .btn-pill {
             border-radius: 999px;
         }
@@ -172,8 +184,9 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
+            justify-content: center;
         }
 
         /* Table */
@@ -2465,12 +2478,12 @@
                     const actions = document.createElement('div');
                     actions.className = 'action-buttons';
                     const editBtn = document.createElement('button');
-                    editBtn.className = 'btn btn-warning btn-small btn-pill btn-elevated';
+                    editBtn.className = 'btn btn-warning btn-icon btn-elevated';
                     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
                     editBtn.title = 'แก้ไขข้อมูลสมาชิก';
                     editBtn.onclick = () => openMemberEditor(m.uid);
                     const delBtn = document.createElement('button');
-                    delBtn.className = 'btn btn-danger btn-small btn-pill btn-elevated';
+                    delBtn.className = 'btn btn-danger btn-icon btn-elevated';
                     delBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
                     delBtn.title = 'ลบสมาชิกออกจากฐานข้อมูล';
                     delBtn.onclick = () => deleteMember(m.uid);
@@ -3275,10 +3288,10 @@
                     <td>${room.name}</td>
                     <td>${statusBadge}</td>
                     <td>
-                        <button class="btn-warning" onclick="editRoom('${room.id}')" style="padding: 2px 8px; font-size: 0.8em;">
+                        <button class="btn btn-warning btn-icon" onclick="editRoom('${room.id}')">
                             <i class="fa-solid fa-edit"></i>
                         </button>
-                        <button class="btn-danger" onclick="deleteRoom('${room.id}')" style="padding: 2px 8px; font-size: 0.8em;">
+                        <button class="btn btn-danger btn-icon" onclick="deleteRoom('${room.id}')">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -3489,7 +3502,7 @@
                     <td>${pin.subject || '-'}</td>
                     <td style="white-space: pre-wrap;">${pin.act || pin.activity || '-'}</td>
                     <td>
-                        <button class="btn-danger" onclick="removePin(${index})" style="padding:2px 8px;">
+                        <button class="btn btn-danger btn-icon" onclick="removePin(${index})">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -3593,10 +3606,10 @@
                         <small style="color:#7f8c8d">หน้า ${c.page || '-'}</small>
                     </td>
                     <td>
-                        <button class="btn-warning" onclick="editContent('${c._id}')" style="padding:2px 8px;">
+                        <button class="btn btn-warning btn-icon" onclick="editContent('${c._id}')">
                             <i class="fa-solid fa-edit"></i>
                         </button>
-                        <button class="btn-danger" onclick="deleteContent('${c._id}')" style="padding:2px 8px;">
+                        <button class="btn btn-danger btn-icon" onclick="deleteContent('${c._id}')">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
