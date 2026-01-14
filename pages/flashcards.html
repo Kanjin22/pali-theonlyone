@@ -1,9 +1,9 @@
-?????????????????<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Flashcards - �ѵä��Ѿ����¨�</title>
+    <title>Smart Flashcards - บัตรคำศัพท์บาลี</title>
     <link rel="manifest" href="../manifest.webmanifest">
     <meta name="theme-color" content="#2c3e50">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,6 @@
 
         body {
             font-family: 'Sarabun', sans-serif;
-            /* �����ѧ���ѹʴ����ʺ�µ� (Deep Ocean Gradient) */
             background: var(--bg-gradient);
             color: #333;
             margin: 0;
@@ -84,7 +83,6 @@
             .btn { padding: 12px 20px; min-width: 110px; font-size: 1rem; }
         }
 
-        /* �����Ǵ��¾����ѧ�ҧ� */
         body::before {
             content: '';
             position: absolute;
@@ -364,22 +362,22 @@
 
     <div class="container">
         <div class="header">
-            <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> ��Ѻ˹����ѡ</a>
+            <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <select id="catSelect" onchange="changeCategory()">
-                    <option value="all">?? ������ (All)</option>
-                    <option value="akhyata">?? �Ң�ҵ (Akhyata)</option>
-                    <option value="kitaka">?? �Ե�� (Kitaka)</option>
-                    <option value="vocab">?? �Ѿ������ (Vocab)</option>
+                    <option value="all">ทุกประเภท (All)</option>
+                    <option value="akhyata">เฉพาะกริยา (Akhyata)</option>
+                    <option value="kitaka">เฉพาะกิตก์ (Kitaka)</option>
+                    <option value="vocab">เฉพาะคำศัพท์ (Vocab)</option>
                 </select>
-                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="���˹�Ҩ�"><i class="fas fa-expand"></i></button>
+                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="เต็มจอ"><i class="fas fa-expand"></i></button>
             </div>
         </div>
 
         <div class="stats-bar">
-            <div class="stat-item stat-green" title="����"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
-            <div class="stat-item stat-red" title="���/�ѧ�����"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
-            <div class="stat-item stat-total" title="�ӹǹ����㹡ͧ"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
+            <div class="stat-item stat-green" title="จำได้"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
+            <div class="stat-item stat-red" title="ลืม / ยังไม่แม่น"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item stat-total" title="จำนวนคำทั้งหมดในชุดนี้"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
         </div>
 
         <div class="scene">
@@ -388,7 +386,7 @@
                     <div class="word-type" id="card-type-front">TYPE</div>
                     <div class="roman-hint" id="card-roman">Roman</div>
                     <div class="pali-word" id="card-pali">Loading...</div>
-                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> �����ʹ����</div>
+                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> แตะเพื่อดูคำแปล</div>
                 </div>
                 <div class="card-face card-back">
                     <div class="word-type" id="card-type">TYPE</div>
@@ -402,11 +400,11 @@
         </div>
 
         <div class="controls">
-            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> �ѧ�����</button>
-            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> ������!</button>
+            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> ยังไม่แม่น</button>
+            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> จำได้!</button>
         </div>
         <div>
-            <button class="btn btn-skip" onclick="nextCard()">����仡�͹ (Skip) <i class="fas fa-forward"></i></button>
+            <button class="btn btn-skip" onclick="nextCard()">ข้ามไปก่อน (Skip) <i class="fas fa-forward"></i></button>
         </div>
     </div>
 
@@ -566,11 +564,11 @@
                     const source = `${slide.vagga || ''} ${slide.story || ''}`;
                     
                     // Akhyata
-                    extractWords(slide.akhyata, 'akhyata', '�Ң�ҵ', source, seen);
+                    extractWords(slide.akhyata, 'akhyata', 'อาขยาต', source, seen);
                     // Kitaka
-                    extractWords(slide.kitaka, 'kitaka', '�Ե��', source, seen);
+                    extractWords(slide.kitaka, 'kitaka', 'กิตก์', source, seen);
                     // Vocab List
-                    extractWords(slide.vocab_list, 'vocab', '�Ѿ������', source, seen);
+                    extractWords(slide.vocab_list, 'vocab', 'คำศัพท์', source, seen);
                 });
             });
 
@@ -582,7 +580,7 @@
         }
 
         function extractWords(text, type, label, source, seen) {
-            if (!text || text === '�͢�����' || text === '-') return;
+            if (!text || text === 'ข้อมูลยังไม่พร้อม' || text === '-') return;
             
             // Split by comma
             const parts = text.split(',');
@@ -598,15 +596,15 @@
                     let details = match[3] ? match[3].trim() : "";
                     
                     // Clean word (remove punctuation if any mostly)
-                    word = word.replace(/[�"'(�)�"'.�,;:?�]+/g, '');
+                    word = word.replace(/["'()“”.,;:?]+/g, '');
 
                     // --- Auto-Stemming Logic for Kitaka/Vocab ---
                     if (type === 'kitaka' || type === 'vocab') {
                         const stemmed = findBestStem(word);
                         if (stemmed && stemmed !== word) {
                             // If stemmed is different, use it.
-                            if (!details) details = `(�Ѿ������ͧ: ${word})`;
-                            else details += `, �Ѿ������ͧ: ${word}`;
+                            if (!details) details = `(รูปที่พบในข้อความ: ${word})`;
+                            else details += `, รูปที่พบในข้อความ: ${word}`;
                             
                             word = stemmed;
                         }
@@ -696,7 +694,7 @@
 
             if (currentDeck.length === 0) {
                 // Show Empty State
-                document.getElementById('card-pali').innerText = "����դ��Ѿ��";
+                document.getElementById('card-pali').innerText = "ยังไม่มีคำศัพท์";
                 document.getElementById('card-type-front').innerText = "-";
                 currentCard = null;
                 return;
@@ -732,7 +730,7 @@
             document.getElementById('card-type').innerText = card.label;
             
             // Lookup Definition
-            let definition = "���ѧ����...";
+            let definition = "กำลังค้นหาคำแปล...";
             const result = PaliLookup.lookup(card.word, dbs);
             
             let meaningHtml = "";
@@ -744,15 +742,15 @@
                 } else if (result.details) {
                     meaningHtml = result.details[0]; // First definition
                     if (result.details.length > 1) {
-                         detailsListHtml += `<li><strong>�����������:</strong> ${result.details.slice(1).join(', ')}</li>`;
+                         detailsListHtml += `<li><strong>ความหมายอื่น ๆ:</strong> ${result.details.slice(1).join(', ')}</li>`;
                     }
                 }
                 
                 if (result.source) {
-                    detailsListHtml += `<li><small style="color:#7f8c8d;">�����: ${result.source}</small></li>`;
+                    detailsListHtml += `<li><small style="color:#7f8c8d;">แหล่งอ้างอิง: ${result.source}</small></li>`;
                 }
             } else {
-                meaningHtml = "��辺��������㹾��ҹء��";
+                meaningHtml = "ไม่พบความหมายในพจนานุกรม";
             }
 
             document.getElementById('card-thai').innerHTML = meaningHtml;
@@ -760,10 +758,10 @@
             // Append Manual Details
             let extraDetails = "";
             if (card.details) {
-                extraDetails += `<li><strong>���ҡó�/�������:</strong> ${card.details}</li>`;
+                extraDetails += `<li><strong>หมายเหตุ/รายละเอียด:</strong> ${card.details}</li>`;
             }
             if (card.source) {
-                extraDetails += `<li><strong>�����¹:</strong> ${card.source}</li>`;
+                extraDetails += `<li><strong>ที่มา:</strong> ${card.source}</li>`;
             }
 
             document.getElementById('card-details').innerHTML = extraDetails + detailsListHtml;
@@ -839,7 +837,7 @@
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    alert(`�������ö�Դ���˹�Ҩ���: ${err.message}`);
+                    alert(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
                 });
             } else {
                 if (document.exitFullscreen) {
