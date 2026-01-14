@@ -4,6 +4,8 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // --- DOM Elements (Auth) ---
+const loginModal = document.getElementById('login-modal');
+const btnCloseLogin = document.getElementById('btn-close-login');
 const modalEmailSignIn = document.getElementById('modal-email-signin');
 const modalEmailSignUp = document.getElementById('modal-email-signup');
 const modalForgotPassword = document.getElementById('modal-forgot-password');
@@ -57,21 +59,15 @@ function hideUser() {
 }
 
 function openLogin() {
-    // Check if we are in "Simple Login" mode
-    const simpleLoginSection = document.getElementById('simple-login-section');
-    if (simpleLoginSection && simpleLoginSection.style.display !== 'none') {
-        // Just focus or scroll to it
-        simpleLoginSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        // Show Email Sign In Modal by default if not guest
-        if (modalEmailSignIn) modalEmailSignIn.style.display = 'block';
+    if (loginModal) {
+        loginModal.style.display = 'block';
     }
 }
 
 function closeLogin() {
-    if (modalEmailSignIn) modalEmailSignIn.style.display = 'none';
-    if (modalEmailSignUp) modalEmailSignUp.style.display = 'none';
-    if (modalForgotPassword) modalForgotPassword.style.display = 'none';
+    if (loginModal) {
+        loginModal.style.display = 'none';
+    }
 }
 
 // ✅ ADDED: Password validation function
@@ -181,103 +177,112 @@ if (btnToForgot) btnToForgot.onclick = () => {
     modalForgotPassword.style.display = 'block';
 };
 
-// Helper references
-const emailInput = document.getElementById('email-input');
-const passwordInput = document.getElementById('password-input');
-const btnEmailLogin = document.getElementById('btn-email-login');
+// Helper references (match index.html IDs)
+const modalEmailInput = document.getElementById('modal-email');
+const modalPasswordInput = document.getElementById('modal-password');
 const emailStatus = document.getElementById('email-status');
-
-const signupEmail = document.getElementById('signup-email');
-const signupPassword = document.getElementById('signup-password');
-const signupConfirm = document.getElementById('signup-confirm');
-const btnEmailSignup = document.getElementById('btn-email-signup');
-
-const modalEmail = document.getElementById('reset-email');
+const btnModalNext = document.getElementById('modal-email-next');
+const btnModalSignin = document.getElementById('modal-email-signin');
+const btnModalSignup = document.getElementById('modal-email-signup');
+const btnModalForgot = document.getElementById('modal-forgot-password');
 
 // Apply ASCII enforcement
-enforceAsciiEmail(emailInput);
-enforceAsciiEmail(signupEmail);
-enforceAsciiEmail(modalEmail);
+enforceAsciiEmail(modalEmailInput);
 
-// 3. ล็อกอินด้วย Email
-if (btnEmailLogin) btnEmailLogin.onclick = async () => {
-    const email = emailInput.value.trim();
-    const pass = passwordInput.value.trim();
-    if (!email || !pass) return;
-
-    setLoading(true, btnEmailLogin);
+// Next: decide login vs signup
+if (btnModalNext) btnModalNext.onclick = async () => {
+    const rawEmail = modalEmailInput.value.trim();
+    if (!rawEmail) return;
+    const checked = (window.validator && typeof window.validator.validateEmail === 'function')
+        ? window.validator.validateEmail(rawEmail)
+        : { valid: !!rawEmail, sanitized: rawEmail };
+    if (!checked.valid) {
+        emailStatus.textContent = 'รูปแบบอีเมลไม่ถูกต้อง';
+        emailStatus.style.color = 'red';
+        return;
+    }
+    const email = checked.sanitized;
     try {
-        await auth.signInWithEmailAndPassword(email, pass);
-        // ถ้าสำเร็จ onAuthStateChanged จะทำงานเอง
+        setLoading(true, btnModalNext);
+        const methods = await auth.fetchSignInMethodsForEmail(email);
+        modalPasswordInput.style.display = 'block';
+        if (methods && methods.includes('password')) {
+            btnModalSignin.style.display = 'inline-block';
+            btnModalSignup.style.display = 'none';
+            btnModalForgot.style.display = 'inline-block';
+            emailStatus.textContent = 'พบบัญชีในระบบ กรุณาใส่รหัสผ่าน';
+            emailStatus.style.color = '#607d8b';
+        } else {
+            btnModalSignin.style.display = 'none';
+            btnModalSignup.style.display = 'inline-block';
+            btnModalForgot.style.display = 'none';
+            emailStatus.textContent = 'ยังไม่มีบัญชี กรุณาตั้งรหัสผ่านเพื่อสมัครสมาชิก';
+            emailStatus.style.color = '#607d8b';
+        }
     } catch (err) {
-        setLoading(false, btnEmailLogin);
-        emailStatus.textContent = getErrorMessage(err.code);
+        emailStatus.textContent = getErrorMessage(err.code || 'auth/error');
+        emailStatus.style.color = 'red';
+    } finally {
+        setLoading(false, btnModalNext);
+    }
+};
+if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
+
+// Sign in with email/password
+if (btnModalSignin) btnModalSignin.onclick = async () => {
+    const email = modalEmailInput.value.trim();
+    const pass = modalPasswordInput.value.trim();
+    if (!email || !pass) return;
+    try {
+        setLoading(true, btnModalSignin);
+        await auth.signInWithEmailAndPassword(email, pass);
+    } catch (err) {
+        setLoading(false, btnModalSignin);
+        emailStatus.textContent = getErrorMessage(err.code || 'auth/error');
         emailStatus.style.color = 'red';
     }
 };
 
-// 4. สมัครสมาชิกด้วย Email
-if (btnEmailSignup) btnEmailSignup.onclick = async () => {
-    const email = signupEmail.value.trim();
-    const pass = signupPassword.value.trim();
-    const confirm = signupConfirm.value.trim();
-
+// Sign up with email/password
+if (btnModalSignup) btnModalSignup.onclick = async () => {
+    const email = modalEmailInput.value.trim();
+    const pass = modalPasswordInput.value.trim();
     if (!email || !pass) return;
-    if (pass !== confirm) {
-        emailStatus.textContent = 'รหัสผ่านไม่ตรงกัน';
-        emailStatus.style.color = 'red';
-        return;
-    }
-    
-    // ✅ ADDED: Validate password strength
     const validation = validatePassword(pass);
     if (!validation.valid) {
         emailStatus.textContent = 'รหัสผ่านอ่อนแอ: ' + validation.message;
         emailStatus.style.color = 'red';
         return;
     }
-
-    setLoading(true, btnEmailSignup);
     try {
+        setLoading(true, btnModalSignup);
         await auth.createUserWithEmailAndPassword(email, pass);
-        // ถ้าสำเร็จ onAuthStateChanged จะทำงานเอง
     } catch (err) {
-        setLoading(false, modalEmailSignUp);
-        if (err.code === 'auth/email-already-in-use') {
-            // กรณีนี้เกิดขึ้นเมื่อ fetchSignInMethodsForEmail ไม่เจอ (เพราะ Protection) แต่จริงๆ มี User อยู่แล้ว
-            emailStatus.textContent = 'อีเมลนี้มีผู้ใช้งานแล้ว กรุณาเข้าสู่ระบบแทน';
-            emailStatus.style.color = 'red';
-
-            // สลับปุ่มให้เป็นล็อกอินอัตโนมัติ
-            modalEmailSignUp.style.display = 'none';
-            modalEmailSignIn.style.display = 'inline-block';
-            modalForgotPassword.style.display = 'inline-block';
-        } else {
-            emailStatus.textContent = getErrorMessage(err.code);
-            emailStatus.style.color = 'red';
-        }
+        setLoading(false, btnModalSignup);
+        emailStatus.textContent = getErrorMessage(err.code || 'auth/error');
+        emailStatus.style.color = 'red';
     }
 };
 
 // 4. ลืมรหัสผ่าน
-if (modalForgotPassword) modalForgotPassword.onclick = async () => {
-    const email = modalEmail.value.trim();
+if (btnModalForgot) btnModalForgot.onclick = async () => {
+    const email = modalEmailInput.value.trim();
     if (!email) return;
 
-    setLoading(true, modalForgotPassword);
+    setLoading(true, btnModalForgot);
     try {
         await auth.sendPasswordResetEmail(email);
         const msg = 'ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมล ' + email + ' แล้วครับ';
         if (typeof safeNotify === 'function') {
             safeNotify(msg, 'success');
         }
-        setLoading(false, modalForgotPassword);
+        setLoading(false, btnModalForgot);
     } catch (err) {
         const msg = 'ไม่สามารถส่งอีเมลได้: ' + getErrorMessage(err.code);
         if (typeof safeNotify === 'function') {
             safeNotify(msg, 'error');
         }
-        setLoading(false, modalForgotPassword);
+        setLoading(false, btnModalForgot);
     }
 };
 
@@ -543,3 +548,7 @@ auth.onAuthStateChanged((user) => {
 });
 
 setTimeout(checkSimpleLogin, 500);
+
+// Bind guest button
+const btnGuestLogin = document.getElementById('btn-guest-login');
+if (btnGuestLogin) btnGuestLogin.onclick = () => saveSimpleUser();
