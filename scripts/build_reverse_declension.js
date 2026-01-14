@@ -77,15 +77,24 @@ if (!fs.existsSync(rulesPath)) {
 }
 let content = fs.readFileSync(rulesPath, 'utf8');
 
-content = content.replace('const declensionRules =', 'global.declensionRules =');
+// SECURITY FIX: Replace eval() with VM context
+const vm = require('vm');
+
+// Prepare sandbox
+const sandbox = {};
+vm.createContext(sandbox);
+
+// Modify content to assign to sandbox
+content = content.replace('const declensionRules =', 'declensionRules =');
+
 try {
-    eval(content);
+    vm.runInContext(content, sandbox);
 } catch (e) {
     console.error("Error parsing declension rules:", e);
     process.exit(1);
 }
 
-const rules = global.declensionRules;
+const rules = sandbox.declensionRules;
 const reverseMap = {};
 
 // 3. Karanta Mapping

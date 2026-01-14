@@ -2,51 +2,126 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // ฟังก์ชันตรวจสอบว่าเป็น Admin หรือไม่
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
     function isAdmin() {
-      return request.auth != null && (
-        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
-        request.auth.token.email == 'setthachayo@gmail.com'
-      );
+      return isSignedIn() && 'admin' in request.auth.token;
     }
-
-    // ฟังก์ชันตรวจสอบว่าเป็นเจ้าของข้อมูลหรือไม่
-    function isOwner(userId) {
-      return request.auth != null && request.auth.uid == userId;
+    
+    function isClassroomAdmin(classroomId) {
+      let classroom = get(/databases/{database}/documents/classrooms/{classroomId}).data;
+      return isSignedIn() && classroom.adminId == request.auth.uid;
     }
-
-    // Collection: users
+    
+    function isOwnDocument() {
+      return request.auth.uid == resource.data.userId;
+    }
+    
+    function isValidString(field, minLen, maxLen) {
+      return field is string && field.size() >= minLen && field.size() <= maxLen;
+    }
+    
+    // Users Collection - Authentication Required
     match /users/{userId} {
-      allow read: if true; // Allow reading user data for displaying member list (filtering happens client-side or needs complex query rules)
-      allow create: if isOwner(userId);
-      allow update: if isOwner(userId) || isAdmin();
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isSignedIn() && request.auth.uid == userId && !hasAny(request.resource.data.keys(), ['role', 'isAdmin']);
+      allow delete: if isAdmin();
     }
-
-    // Collection: enrollments
-    match /enrollments/{enrollmentId} {
-      allow read: if true; // Allow reading for member list display
-      allow create: if isOwner(enrollmentId);
-      allow update: if isAdmin();
+    
+    // Classrooms - Admin-only creation and management
+    match /classrooms/{classroomId} {
+      allow read: if isSignedIn() && (
+        resource.data.adminId == request.auth.uid || 
+        request.auth.uid in resource.data.members || 
+        isAdmin()
+      );
+      allow create: if isAdmin() && isValidString(request.resource.data.name, 1, 200);
+      allow update: if isClassroomAdmin(classroomId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['adminId']);
+      allow delete: if isAdmin();
+      
+      // Classroom Members Subcollection
+      match /members/{memberId} {
+        allow read: if isClassroomAdmin(classroomId) || request.auth.uid == memberId;
+        allow write: if isClassroomAdmin(classroomId);
+      }
     }
-
-    // Collection: config (เช่น open_levels, today_pins)
+    
+    // User Schedule - User-specific
+    match /users/{userId}/schedule/{scheduleId} {
+      allow read: if request.auth.uid == userId || isAdmin();
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.title, 1, 200);
+      allow update: if request.auth.uid == userId;
+      allow delete: if request.auth.uid == userId || isAdmin();
+    }
+    
+    // User Vocabulary - User-specific
+    match /users/{userId}/vocab/{vocabId} {
+      allow read: if request.auth.uid == userId || isAdmin();
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.word, 1, 500);
+      allow update: if request.auth.uid == userId;
+      allow delete: if request.auth.uid == userId || isAdmin();
+    }
+    
+    // User Progress - User-specific
+    match /users/{userId}/progress/{levelId} {
+      allow read: if request.auth.uid == userId || isAdmin();
+      allow create: if isSignedIn() && request.auth.uid == userId && request.resource.data.level >= 1 && request.resource.data.level <= 12;
+      allow update: if request.auth.uid == userId;
+      allow delete: if request.auth.uid == userId || isAdmin();
+    }
+    
+    // Classroom Exams
+    match /classrooms/{classroomId}/exams/{examId} {
+      allow read: if isSignedIn() && (
+        isClassroomAdmin(classroomId) || 
+        request.auth.uid in get(/databases/{database}/documents/classrooms/{classroomId}).data.members
+      );
+      allow create: if isClassroomAdmin(classroomId) && isValidString(request.resource.data.title, 1, 200);
+      allow update: if isClassroomAdmin(classroomId);
+      allow delete: if isClassroomAdmin(classroomId);
+    }
+    
+    // Exam Results
+    match /classrooms/{classroomId}/examResults/{resultId} {
+      allow read: if isSignedIn() && (
+        resource.data.userId == request.auth.uid || 
+        isClassroomAdmin(classroomId) || 
+        isAdmin()
+      );
+      allow create: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isClassroomAdmin(classroomId) || isAdmin();
+    }
+    
+    // Error Logs - Admin only
+    match /errorLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn();
+      allow delete: if isAdmin();
+    }
+    
+    // Audit Logs - Admin only
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+    
+    // Config - Admin only
     match /config/{configId} {
-      allow read: if true;
+      allow read: if isSignedIn();
       allow write: if isAdmin();
     }
-
-    // Collection: classrooms (ข้อมูลห้องเรียน Dynamic)
-    match /classrooms/{roomId} {
-      allow read: if true;
-      allow write: if isAdmin();
+    
+    // Deny all other access by default
+    match /{document=**} {
+      allow read, write: if false;
     }
-
-    // Collection: schedules (ตารางเรียน Dynamic)
-    match /schedules/{scheduleId} {
-      allow read: if true;
-      allow write: if isAdmin() || (request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'teacher');
-    }
+  }
+}
     
     // Collection: files
     match /files/{fileId} {

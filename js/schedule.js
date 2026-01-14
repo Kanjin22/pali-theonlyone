@@ -1,4 +1,5 @@
 // js/schedule.js
+// Security-hardened version with safe DOM manipulation
 
 // --- Today Pins Logic ---
 async function loadTodayPins() {
@@ -16,7 +17,20 @@ async function loadTodayPins() {
     header.style.display = 'flex';
     header.style.justifyContent = 'space-between';
     header.style.alignItems = 'center';
-    header.innerHTML = '<div style="font-weight:700; color:#2c3e50;"><i class="fa-regular fa-calendar-check" style="color:#27ae60;"></i> ปักหมุดวันนี้</div><div id="today-date" style="color:#7f8c8d; font-size:0.9rem;"></div>';
+    
+    // SAFE: Create elements instead of innerHTML
+    const titleDiv = document.createElement('div');
+    titleDiv.style.fontWeight = '700';
+    titleDiv.style.color = '#2c3e50';
+    titleDiv.innerHTML = '<i class="fa-regular fa-calendar-check" style="color:#27ae60;"></i> ปักหมุดวันนี้';
+    
+    const dateDiv = document.createElement('div');
+    dateDiv.id = 'today-date';
+    dateDiv.style.color = '#7f8c8d';
+    dateDiv.style.fontSize = '0.9rem';
+    
+    header.appendChild(titleDiv);
+    header.appendChild(dateDiv);
     container.appendChild(header);
     const body = document.createElement('div');
     body.style.padding = '12px 16px';

@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { spawn } = require('child_process');
 const fs = require('fs');
+const rateLimit = require('express-rate-limit');
+const { Logger } = require('./server-logging');
 
 let admin;
 try {
@@ -10,8 +12,14 @@ try {
   process.exit(1);
 }
 
-const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH || 'D:/pali-dhatu-app/service-account-key.json';
+// Initialize logger
+const logger = new Logger('app.log', process.env.LOG_LEVEL || 'info');
+
+const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH || './service-account-key.json';
 if (!fs.existsSync(serviceAccountPath)) {
+  const errMsg = 'Service account key not found at: ' + serviceAccountPath;
+  logger.error(errMsg);
+  console.error(errMsg);
   process.exit(1);
 }
 
@@ -24,9 +32,39 @@ app.use(cors());
 app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  // Security headers
+  res.header("X-Content-Type-Options", "nosniff");
+  res.header("X-Frame-Options", "DENY");
+  res.header("X-XSS-Protection", "1; mode=block");
   next();
 });
 app.use(express.json());
+
+// Rate Limiting Configuration
+const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'); // 15 minutes
+const maxRequests = parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100');
+
+const limiter = rateLimit({
+  windowMs,
+  max: maxRequests,
+  message: 'Too many requests from this IP, please try again later',
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Skip rate limiting for health checks
+  skip: (req) => req.path === '/health'
+});
+
+// Apply rate limiting to all routes
+app.use(limiter);
+
+// More strict rate limiting for sensitive endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests per window
+  message: 'Too many authentication attempts, please try again later',
+  skipSuccessfulRequests: true // Don't count successful requests
+});
+
 
 const defaultAdmins = ['pali.theonlyone@gmail.com','setthachayo@gmail.com'];
 const envAdmins = (process.env.ALLOWLIST_ADMINS || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -278,4 +316,6 @@ app.get('/api/raw-files-stats', (_req, res) => {
 });
 
 const port = process.env.PORT || 3001;
-app.listen(port, () => {});
+app.listen(port, () => {
+  logger.info('Server started', { port, environment: process.env.NODE_ENV || 'development' });
+});

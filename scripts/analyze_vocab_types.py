@@ -1,9 +1,13 @@
 import re
 import os
 
+# FIX: Use relative paths instead of hardcoded Windows paths
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+
 files = [
-    r"d:\pali-theonlyone\data\raw\vocab-insan-pr9.js",
-    r"d:\pali-theonlyone\data\raw\vocab-insan-pr9-5-8.js"
+    os.path.join(project_root, "data", "raw", "vocab-insan-pr9.js"),
+    os.path.join(project_root, "data", "raw", "vocab-insan-pr9-5-8.js")
 ]
 
 types = {}
