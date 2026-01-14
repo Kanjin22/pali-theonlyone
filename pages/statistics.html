@@ -232,41 +232,48 @@
             }
 
             // ==========================================
-            // ส่วนที่ 1: คำนวณ Timeline (วันเวลา)
+            // ส่วนที่ 1: คำนวณ Timeline (วันเวลาเรียน ไม่นับวันหยุด)
             // ==========================================
-            
-            // เรียงลำดับวันที่ให้แน่ใจ (จากน้อยไปมาก)
             allData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            const startDate = new Date(allData[0].date); // วันแรกของตารางเรียน
-            const endDate = new Date(allData[allData.length - 1].date); // วันสุดท้ายของตารางเรียน
-            const today = new Date(); // วันนี้
-
-            // ปรับเวลาเป็นเที่ยงคืนเพื่อให้คำนวณวันได้แม่นยำ
-            startDate.setHours(0,0,0,0);
-            endDate.setHours(0,0,0,0);
+            const effectiveDays = allData.filter(d => !d.isWeekend);
+            const today = new Date();
             today.setHours(0,0,0,0);
 
-            // คำนวณระยะห่าง (เป็นมิลลิวินาที -> วัน)
-            const oneDay = 1000 * 60 * 60 * 24;
-            const totalDuration = Math.round((endDate - startDate) / oneDay) + 1; // +1 เพื่อนับวันแรกด้วย
-            let daysPassed = Math.round((today - startDate) / oneDay) + 1;
+            let totalDuration = 0;
+            let daysPassed = 0;
+            let rangeStart = null;
+            let rangeEnd = null;
 
-            // จำกัดขอบเขตตัวเลขไม่ให้ติดลบหรือเกิน
-            if (daysPassed < 0) daysPassed = 0; 
-            if (daysPassed > totalDuration) daysPassed = totalDuration;
+            if (effectiveDays.length > 0) {
+                rangeStart = new Date(effectiveDays[0].date);
+                rangeEnd = new Date(effectiveDays[effectiveDays.length - 1].date);
+                rangeStart.setHours(0,0,0,0);
+                rangeEnd.setHours(0,0,0,0);
 
-            // คำนวณเปอร์เซ็นต์
+                totalDuration = effectiveDays.length;
+
+                daysPassed = effectiveDays.filter(d => {
+                    const dt = new Date(d.date);
+                    dt.setHours(0,0,0,0);
+                    return dt.getTime() <= today.getTime();
+                }).length;
+
+                if (daysPassed < 0) daysPassed = 0;
+                if (daysPassed > totalDuration) daysPassed = totalDuration;
+            }
+
             let timePercent = 0;
             if (totalDuration > 0) {
                 timePercent = Math.round((daysPassed / totalDuration) * 100);
             }
 
-            // แสดงผล Timeline
             document.getElementById('days-passed').innerText = daysPassed;
             document.getElementById('days-total').innerText = totalDuration;
-            document.getElementById('date-range-text').innerText = 
-                `(${startDate.toLocaleDateString('th-TH')} - ${endDate.toLocaleDateString('th-TH')})`;
+            if (rangeStart && rangeEnd) {
+                document.getElementById('date-range-text').innerText = 
+                    `(${rangeStart.toLocaleDateString('th-TH')} - ${rangeEnd.toLocaleDateString('th-TH')})`;
+            }
             
             setTimeout(() => {
                 const progressBar = document.getElementById('time-progress-bar');
