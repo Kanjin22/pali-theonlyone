@@ -96,13 +96,18 @@
         <a href="../index.html" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     </div>
 
-    <!-- Config -->
+    <!-- Config & Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase_config.js"></script>
     <script src="../js/system_config.js"></script>
+
     <script>
         // อ่าน roomId จาก URL
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room') || 'room1';
-        let prefix = 'pt12'; // ค่าเริ่มต้น (เผื่อไว้)
+        let prefix = 'pt12'; // ค่าเริ่มต้น
 
         if (typeof systemConfig !== 'undefined') {
             const room = systemConfig.getRoom(roomId);
@@ -113,42 +118,75 @@
             }
         }
 
-        // โหลดข้อมูลตาม prefix ของห้อง
-        document.write(`<script src="../data/data-${prefix}-november.js"><\/script>`);
-        document.write(`<script src="../data/data-${prefix}-december.js"><\/script>`);
-        document.write(`<script src="../data/data-${prefix}-january.js"><\/script>`);
-        document.write(`<script src="../data/data-${prefix}-february.js"><\/script>`);
-    </script>
+        // Initialize Firestore (assumed initialized in firebase_config.js, but safe check)
+        const db = firebase.firestore();
 
-    <script>
-        function findDataArray(month, prefix) {
-            // 1. Standard Names
-            if (window[`data${month}`]) return window[`data${month}`];
-            if (window[`data${month}_Novice`]) return window[`data${month}_Novice`];
-            
-            // 2. Generated Names (format: data_{prefix}_{month}_{year})
-            // Estimate year based on month (Academic Year 2568: Nov 2025 - Feb 2026)
-            const year = (['January', 'February', 'March'].includes(month)) ? 2026 : 2025;
-            const genName = `data_${prefix}_${month.toLowerCase()}_${year}`;
-            if (window[genName]) return window[genName];
-            
-            return [];
-        }
+        async function fetchAllData() {
+            // กำหนดเดือนที่ต้องการดึงข้อมูล (ปีการศึกษา 2568: พ.ย. 68 - ก.พ. 69)
+            // หมายเหตุ: ปี ค.ศ. คือ Nov 2025 - Feb 2026
+            const months = [
+                { name: 'November', year: 2025 },
+                { name: 'December', year: 2025 },
+                { name: 'January', year: 2026 },
+                { name: 'February', year: 2026 }
+            ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. รวมข้อมูล
-            let allData = [];
-            const months = ['November', 'December', 'January', 'February'];
-            
-            months.forEach(month => {
-                const data = findDataArray(month, prefix);
-                if (data && Array.isArray(data)) {
-                    allData = allData.concat(data);
-                }
+            let allDays = [];
+            const promises = months.map(m => {
+                const scheduleId = `${prefix}_${m.name}_${m.year}`;
+                return db.collection('schedules').doc(scheduleId).get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const data = doc.data();
+                            return data.days || [];
+                        }
+                        return [];
+                    })
+                    .catch(err => {
+                        console.warn(`Failed to fetch schedule: ${scheduleId}`, err);
+                        return [];
+                    });
             });
 
+            const results = await Promise.all(promises);
+            results.forEach(days => {
+                allDays = allDays.concat(days);
+            });
+
+            return allDays;
+        }
+
+        function calculateStats(days) {
+            let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
+            
+            days.forEach(day => {
+                ['morning', 'afternoon', 'evening'].forEach(periodName => {
+                    const period = day[periodName];
+                    if (!period) return;
+
+                    // ใช้ Logic แบบเดียวกับ schedule_view.html (ตรวจสอบจาก keywords)
+                    const txt = (period.activity || '') + (period.activityGrammar || '') + (period.activityTranslate || '');
+                    
+                    if (txt.includes('สอบ') || txt.includes('ปัญหา')) {
+                        if (txt.includes('ไวยากรณ์')) stats.gramExam++;
+                        if (txt.includes('แปล')) stats.transExam++;
+                    } else {
+                        if (txt.includes('ไวยากรณ์')) stats.gramRead++;
+                        if (txt.includes('แปล')) stats.transRead++;
+                    }
+                });
+            });
+            return stats;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allData = await fetchAllData();
+
             // ถ้าไม่มีข้อมูลเลย ให้หยุดทำงาน
-            if (allData.length === 0) return;
+            if (allData.length === 0) {
+                document.getElementById('date-range-text').innerText = "(ไม่พบข้อมูลตารางเรียน)";
+                return;
+            }
 
             // ==========================================
             // ส่วนที่ 1: คำนวณ Timeline (วันเวลา)
@@ -176,7 +214,10 @@
             if (daysPassed > totalDuration) daysPassed = totalDuration;
 
             // คำนวณเปอร์เซ็นต์
-            let timePercent = Math.round((daysPassed / totalDuration) * 100);
+            let timePercent = 0;
+            if (totalDuration > 0) {
+                timePercent = Math.round((daysPassed / totalDuration) * 100);
+            }
 
             // แสดงผล Timeline
             document.getElementById('days-passed').innerText = daysPassed;
@@ -192,29 +233,9 @@
 
 
             // ==========================================
-            // ส่วนที่ 2: คำนวณงานที่ทำ (นับไฟล์)
+            // ส่วนที่ 2: คำนวณงานที่ทำ (จาก Firebase Data)
             // ==========================================
-            let stats = { gramRead: 0, gramExam: 0, transRead: 0, transExam: 0 };
-
-            allData.forEach(day => {
-                ['morning', 'afternoon', 'evening'].forEach(periodName => {
-                    const p = day[periodName];
-                    if (!p) return;
-
-                    // ถ้ามีไฟล์ และไม่ใช่ # ให้นับ
-                    if (p.fileNoteGrammar && p.fileNoteGrammar !== '#') stats.gramRead++;
-                    if (p.fileExamGrammar && p.fileExamGrammar !== '#') stats.gramExam++;
-                    
-                    if (p.fileNoteTranslate) {
-                        if (Array.isArray(p.fileNoteTranslate)) {
-                            p.fileNoteTranslate.forEach(f => { if(f !== '#') stats.transRead++; });
-                        } else if (p.fileNoteTranslate !== '#') {
-                            stats.transRead++;
-                        }
-                    }
-                    if (p.fileExamTranslate && p.fileExamTranslate !== '#') stats.transExam++;
-                });
-            });
+            const stats = calculateStats(allData);
 
             // แสดงผลการ์ด
             document.getElementById('gram-read').innerText = stats.gramRead;
@@ -228,7 +249,7 @@
                 if (stats.transRead === 0 && stats.transExam === 0) {
                     transCard.style.display = 'none';
                 } else {
-                    transCard.style.display = 'block'; // หรือ flex/grid แล้วแต่ layout เดิม
+                    transCard.style.display = 'block'; 
                 }
             }
         });
