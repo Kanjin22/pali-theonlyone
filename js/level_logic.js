@@ -123,10 +123,10 @@ async function initLevelPage(levelId) {
                 const grid = document.createElement('div');
                 grid.style.cssText = 'display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px;';
                 const teacherName = user ? (user.displayName || user.email || user.uid) : '';
-                visible.forEach(r => {
-                    const card = document.createElement('a');
-                    card.href = `../schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
-                    card.className = 'menu-button';
+                    visible.forEach(r => {
+                        const card = document.createElement('a');
+                        card.href = `../pages/schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
+                        card.className = 'menu-button';
                     const isTeaching = effectiveMode === 'teacher' && Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName);
                     const badge = isTeaching ? `<span style="display:inline-block; margin-left:8px; background:#27ae60; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">สอนอยู่</span>` : '';
                     const cardHtml2 = `${r.name || r.id}${badge}`;
@@ -150,7 +150,7 @@ async function initLevelPage(levelId) {
                     const teacherName = user ? (user.displayName || user.email || user.uid) : '';
                     rooms.forEach(r => {
                         const card = document.createElement('a');
-                        card.href = `../schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
+                        card.href = `../pages/schedule_view.html?id=${r.id}_January_2026&room=${r.id}`;
                         card.className = 'menu-button';
                         const isTeaching = Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName);
                         const badge = isTeaching ? `<span style="display:inline-block; margin-left:8px; background:#27ae60; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">สอนอยู่</span>` : '';
@@ -200,7 +200,7 @@ function renderRoomContent(room) {
 
     // Render Schedule Links
     const scheduleContainer = document.getElementById('schedule-links-container');
-    if (scheduleContainer) {
+        if (scheduleContainer) {
         // Standard Months (can be dynamic later)
         const months = [
             { name: "พฤศจิกายน ๒๕๖๘", month: "November", year: "2025" },
@@ -212,14 +212,14 @@ function renderRoomContent(room) {
         let html = '';
         
         // Add "Today's Schedule" Button
-        const todayUrl = `../schedule_view.html?mode=daily&room=${room.id}`;
+        const todayUrl = `../pages/schedule_view.html?mode=daily&room=${room.id}`;
         html += `<a href="${todayUrl}" class="menu-button" style="background-color: #e74c3c; color: white;">📅 ตารางเรียนวันนี้</a>`;
 
         months.forEach(m => {
              // Link to NEW dynamic schedule viewer
              // ID Format: roomId_Month_Year (e.g. pt12_1_November_2025)
              const scheduleId = `${room.id}_${m.month}_${m.year}`;
-             html += `<a href="../schedule_view.html?id=${scheduleId}&room=${room.id}" class="menu-button">${m.name}</a>`;
+             html += `<a href="../pages/schedule_view.html?id=${scheduleId}&room=${room.id}" class="menu-button">${m.name}</a>`;
         });
         
         // Link to Reader (Textbooks)
