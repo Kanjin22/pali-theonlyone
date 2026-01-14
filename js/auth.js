@@ -334,6 +334,9 @@ function checkSimpleLogin() {
 
 // --- Main Auth Listener ---
 
+const btnGuestLogin = document.getElementById('btn-guest-login');
+if (btnGuestLogin) btnGuestLogin.onclick = () => saveSimpleUser();
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         closeLogin();
