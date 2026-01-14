@@ -156,7 +156,7 @@ if (btnLoginLine) btnLoginLine.onclick = () => window.loginLine && window.loginL
 
 window.loginLine = async () => {
     try {
-        const provider = new firebase.auth.OAuthProvider('oidc.line');
+        const provider = new firebase.auth.OAuthProvider('oidc.linelogin');
         await auth.signInWithPopup(provider);
     } catch (error) {
         let msg = '';
