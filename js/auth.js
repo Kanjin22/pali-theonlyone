@@ -570,7 +570,3 @@ auth.onAuthStateChanged((user) => {
 });
 
 setTimeout(checkSimpleLogin, 500);
-
-// Bind guest button
-const btnGuestLogin = document.getElementById('btn-guest-login');
-if (btnGuestLogin) btnGuestLogin.onclick = () => saveSimpleUser();
