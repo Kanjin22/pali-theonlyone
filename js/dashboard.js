@@ -200,7 +200,7 @@ function applyRoleUI(role) {
     if (teacherToolLink) {
         const toolsGrid = teacherToolLink.closest('.grid-menu');
         const toolsLabel = toolsGrid ? toolsGrid.previousElementSibling : null;
-        const showTools = (role === 'admin' || role === 'teacher');
+        const showTools = true;
         if (toolsGrid) {
             toolsGrid.style.display = showTools ? 'grid' : 'none';
         }
