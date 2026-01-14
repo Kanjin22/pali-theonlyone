@@ -907,7 +907,7 @@
                     document.getElementById('page-desc').innerText = room.description || '';
 
                     // Back Link
-                    document.getElementById('back-link').href = `levels/home_${room.level}.html?room=${room.id}`;
+                    document.getElementById('back-link').href = `../levels/home_${room.level}.html?room=${room.id}`;
                 }
             } catch (e) {
                 console.warn("Could not load room info", e);
