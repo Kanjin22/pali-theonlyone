@@ -22,7 +22,16 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isSignedIn() && hasRole('admin');
+      return isSignedIn() && (
+        hasRole('admin') ||
+        (
+          'email' in request.auth.token &&
+          (
+            request.auth.token.email == 'pali.theonlyone@gmail.com' ||
+            request.auth.token.email == 'setthachayo@gmail.com'
+          )
+        )
+      );
     }
 
     // เจ้าของ document (สำหรับ users/*)
