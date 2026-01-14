@@ -503,22 +503,36 @@ auth.onAuthStateChanged((user) => {
             }
         })();
 
-        // โค้ดสร้าง Exam Sets (คงเดิม)
-        db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
-            if (s.empty) {
-                    // Validate title and level before creating a default exam set
-                    const defaultTitle = (typeof sanitizeHTML === 'function') ? sanitizeHTML('ชุดแบบทดสอบเริ่มต้น') : 'ชุดแบบทดสอบเริ่มต้น';
-                    const levelVal = (window.validator && typeof window.validator.validateLevel === 'function') ? window.validator.validateLevel('pt3').sanitized : 'pt3';
-                    return db.collection('exam_sets').add({
-                        title: defaultTitle,
-                        level: levelVal,
-                        createdBy: uid,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+        // โค้ดสร้าง Exam Sets (คงเดิม) - จำกัดเฉพาะ Admin/Teacher เพื่อลด Permission Error
+        try {
+            const roleForExamSets =
+                (typeof window !== 'undefined' && window._currentUserRole) ||
+                sessionStorage.getItem('pali_user_role_session') ||
+                'general';
+
+            if (roleForExamSets === 'admin' || roleForExamSets === 'teacher') {
+                db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
+                    if (s.empty) {
+                        const defaultTitle = (typeof sanitizeHTML === 'function')
+                            ? sanitizeHTML('ชุดแบบทดสอบเริ่มต้น')
+                            : 'ชุดแบบทดสอบเริ่มต้น';
+                        const levelVal = (window.validator && typeof window.validator.validateLevel === 'function')
+                            ? window.validator.validateLevel('pt3').sanitized
+                            : 'pt3';
+                        return db.collection('exam_sets').add({
+                            title: defaultTitle,
+                            level: levelVal,
+                            createdBy: uid,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    }
+                }).then(() => {
+                    console.log("User data synced");
+                }).catch(err => console.error("Firestore Error:", err));
             }
-        }).then(() => {
-            console.log("User data synced");
-        }).catch(err => console.error("Firestore Error:", err));
+        } catch (err) {
+            console.error("Exam Sets Init Error:", err);
+        }
 
     } else {
         localStorage.removeItem('pali_user_uid');
