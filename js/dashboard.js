@@ -197,7 +197,7 @@ function applyRoleUI(role) {
         createEnrollCard(enrollCardId, classroomLinks.length ? classroomLinks[0].parentElement : null);
     }
 
-    const teacherToolLink = document.querySelector('a[href="exam_builder.html"]');
+    const teacherToolLink = document.querySelector('a[href="pages/exam_builder.html"]');
     if (teacherToolLink) {
         const toolsGrid = teacherToolLink.closest('.grid-menu');
         const toolsLabel = toolsGrid ? toolsGrid.previousElementSibling : null;
