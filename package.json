@@ -1,13 +1,19 @@
 {
+  "name": "pali-theonlyone",
+  "version": "1.0.0",
+  "description": "Pali Examination and Learning Platform",
+  "main": "server.js",
   "dependencies": {
     "firebase-admin": "^13.6.0",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "scripts": {
+    "start": "node server.js",
     "dpd:update": "python scripts/update_dpd_data.py",
     "dpd:update:skip": "python scripts/update_dpd_data.py --skip-download",
     "dpd:sync": "node scripts/sync_dpd_to_firestore.js",
-    "dpd:server": "node server.js","admin:grant": "node scripts/set_admin_claim.js"
+    "dpd:server": "node server.js",
+    "admin:grant": "node scripts/set_admin_claim.js"
   }
 }

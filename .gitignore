@@ -1,13 +1,28 @@
-dpd_data/
+# Dependencies
+node_modules/
+.venv
+.env
+
+# Build and Cache
 *.db
-temp_download/
-*.tar.bz2
-*.zip
 *.pyc
 __pycache__/
-.env
-.venv
-node_modules
+.firebase/
+.vscode/
+
+# Temporary files
+dpd_data/
+temp_download/
+*.tar.bz2
+
+# Sensitive files
 service-account-key.json
 scripts/service-account-key.json
+
+# IDE
 .vscode/PythonImportHelper-v2-Completion.json
+.DS_Store
+*.swp
+*.swo
+*~
+
