@@ -72,7 +72,7 @@ function applyRoleUI(role) {
         btnAdminTop.style.display = (role === 'admin') ? 'inline-flex' : 'none';
     }
 
-    const classroomLinks = Array.from(document.querySelectorAll('a[href^="classroom_select.html"]'));
+    const classroomLinks = Array.from(document.querySelectorAll('a[href*="classroom_select.html"]'));
 
     const enrollCardId = 'enroll-card';
     const existingEnroll = document.getElementById(enrollCardId);
@@ -191,8 +191,12 @@ function applyRoleUI(role) {
         })();
 
     } else {
-        // General or others -> Hide All, Show Enroll
         classroomLinks.forEach(a => a.style.display = 'none');
+
+        const label = document.getElementById('pali-classrooms-label');
+        if (label) {
+            label.textContent = 'สมัครเรียน';
+        }
 
         createEnrollCard(enrollCardId, classroomLinks.length ? classroomLinks[0].parentElement : null);
     }
@@ -212,8 +216,13 @@ function applyRoleUI(role) {
 function createEnrollCard(id, container) {
     try {
         if (!container) {
-            const grids = document.querySelectorAll('.grid-menu');
-            container = grids[1] || grids[0] || null;
+            const classroomsGrid = document.getElementById('pali-classrooms-grid');
+            if (classroomsGrid) {
+                container = classroomsGrid;
+            } else {
+                const grids = document.querySelectorAll('.grid-menu');
+                container = grids[1] || grids[0] || null;
+            }
         }
         if (!container || document.getElementById(id)) return;
         const a = document.createElement('a');
