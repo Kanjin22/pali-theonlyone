@@ -294,6 +294,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../js/utils.js"></script>
     <script>
         // Config เดิม
         window.firebaseConfig = window.firebaseConfig || {
@@ -614,7 +615,7 @@
             if (!u) return;
 
             if (!validate()) { 
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน'); 
+                if (typeof safeNotify === 'function') safeNotify('กรุณากรอกข้อมูลให้ครบถ้วน', 'warning');
                 return; 
             }
 
@@ -656,11 +657,11 @@
                 statusBadge.textContent = 'รอการตรวจสอบ';
                 statusBadge.className = 'badge status-pending';
                 
-                alert('ส่งคำขอสมัครเรียนเรียบร้อยแล้ว');
+                if (typeof safeNotify === 'function') safeNotify('ส่งคำขอสมัครเรียนเรียบร้อยแล้ว', 'success');
                 location.reload(); // Reload to lock the form
             } catch (e) {
                 console.error(e);
-                alert('เกิดข้อผิดพลาด: ' + e.message);
+                if (typeof safeNotify === 'function') safeNotify('เกิดข้อผิดพลาด: ' + e.message, 'error');
                 submitEnroll.disabled = false;
                 submitEnroll.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งคำขอสมัครเรียน';
             }

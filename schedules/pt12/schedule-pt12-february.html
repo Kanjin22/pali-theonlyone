@@ -479,7 +479,7 @@
                 const target = event.target.closest('a');
                 if (target && target.getAttribute('href') === '#') {
                     event.preventDefault();
-                    showToast("ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ");
+                    if (typeof safeNotify === 'function') safeNotify('ยังไม่มีไฟล์สำหรับดาวน์โหลดครับ', 'info');
                 }
             });
         });

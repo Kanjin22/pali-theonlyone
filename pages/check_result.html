@@ -227,6 +227,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../js/utils.js"></script>
 
     <script>
         // Firebase Config
@@ -268,7 +269,7 @@
             const phone = phoneInput.value.trim();
 
             if (!phone) {
-                alert('กรุณากรอกเบอร์โทรศัพท์');
+                if (typeof safeNotify === 'function') safeNotify('กรุณากรอกเบอร์โทรศัพท์', 'warning');
                 return;
             }
 
@@ -330,7 +331,9 @@
             } catch (error) {
                 console.error("Error searching:", error);
                 loading.style.display = 'none';
-                alert('เกิดข้อผิดพลาดในการค้นหา: ' + error.message);
+                if (typeof safeNotify === 'function') {
+                    safeNotify('เกิดข้อผิดพลาดในการค้นหา: ' + (error && error.message ? error.message : ''), 'error');
+                }
             }
         }
 

@@ -15,6 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script src="../js/firebase_config.js"></script>
+    <script src="../js/utils.js"></script>
 
     <!-- Content Data Scripts -->
     <script src="../data/content-dhamma01.js"></script>
@@ -827,7 +828,7 @@
                     }
                 } else {
                     statusDiv.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
-                    alert("คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน");
+                    if (typeof safeNotify === 'function') safeNotify('คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน', 'warning');
                 }
             });
 
@@ -1941,8 +1942,14 @@
             const progressText = document.getElementById('progress-text');
 
             const file = fileInput.files[0];
-            if (!file) return alert("กรุณาเลือกไฟล์ PDF");
-            if (file.type !== 'application/pdf') return alert("อนุญาตเฉพาะไฟล์ PDF เท่านั้น");
+            if (!file) {
+                if (typeof safeNotify === 'function') safeNotify('กรุณาเลือกไฟล์ PDF', 'warning');
+                return;
+            }
+            if (file.type !== 'application/pdf') {
+                if (typeof safeNotify === 'function') safeNotify('อนุญาตเฉพาะไฟล์ PDF เท่านั้น', 'warning');
+                return;
+            }
             const baseName = file.name.replace(/\.[^.]+$/, '');
             const parts = baseName.split('-').map(s => s.trim()).filter(s => s);
             if (parts.length < 5) {
@@ -1975,7 +1982,7 @@
                 },
                 (error) => {
                     console.error("Upload error:", error);
-                    alert("Upload failed: " + error.message);
+                    if (typeof safeNotify === 'function') safeNotify('Upload failed: ' + error.message, 'error');
                     btn.disabled = false;
                     progressDiv.style.display = 'none';
                 },
@@ -2012,13 +2019,13 @@
 
                         renderFileList();
                         refreshFileDropdowns();
-
-                        alert("อัปโหลดสำเร็จ!");
+                        
+                        if (typeof safeNotify === 'function') safeNotify('อัปโหลดสำเร็จ!', 'success');
                         fileInput.value = ''; // Clear input
                         progressDiv.style.display = 'none';
                     } catch (e) {
                         console.error("Error saving file metadata:", e);
-                        alert("Upload successful but failed to save metadata.");
+                        if (typeof safeNotify === 'function') safeNotify('Upload successful but failed to save metadata.', 'warning');
                     } finally {
                         btn.disabled = false;
                     }
@@ -2045,7 +2052,7 @@
 
             } catch (e) {
                 console.error("Delete error:", e);
-                alert("ลบไม่สำเร็จ: " + e.message);
+                if (typeof safeNotify === 'function') safeNotify('ลบไม่สำเร็จ: ' + e.message, 'error');
             }
         }
 

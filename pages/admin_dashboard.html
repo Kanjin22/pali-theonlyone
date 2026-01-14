@@ -1268,6 +1268,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../js/utils.js"></script>
     <script src="js/system_config.js"></script>
 
     <!-- Legacy Data Scripts for Migration -->
@@ -2584,11 +2585,11 @@
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 } catch (logErr) {}
-                alert('ลบข้อมูลห้องและชั้นเรียนทั้งหมดเรียบร้อย');
+                if (typeof safeNotify === 'function') safeNotify('ลบข้อมูลห้องและชั้นเรียนทั้งหมดเรียบร้อย', 'success');
                 loadMembers();
                 loadClassrooms();
             } catch (e) {
-                alert('ลบไม่สำเร็จ: ' + e.message);
+                if (typeof safeNotify === 'function') safeNotify('ลบไม่สำเร็จ: ' + e.message, 'error');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
@@ -2957,7 +2958,7 @@
                 loadClassrooms();
                 alert('ลบการกำหนดเรียบร้อย');
             } catch (err) {
-                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
+                if (typeof safeNotify === 'function') safeNotify('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin', 'error');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
@@ -3020,9 +3021,9 @@
                 }
                 loadMembers();
                 loadClassrooms();
-                alert('ลบสมาชิกเรียบร้อย');
+                if (typeof safeNotify === 'function') safeNotify('ลบสมาชิกเรียบร้อย', 'success');
             } catch (err) {
-                alert('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin');
+                if (typeof safeNotify === 'function') safeNotify('ลบไม่สำเร็จ: ' + (err.message || 'ข้อผิดพลาด') + '\n\nกรุณาตรวจสอบว่าบัญชีที่ใช้งานมีบทบาทเป็น Admin', 'error');
             } finally {
                 document.body.style.cursor = originalCursor;
             }
@@ -3651,7 +3652,10 @@
             const thai = document.getElementById('contentThai').value;
             const vocab = document.getElementById('contentVocab').value;
 
-            if (!code || !story || !book) return alert('กรุณากรอกรหัส, ชื่อหนังสือ และชื่อเรื่อง');
+            if (!code || !story || !book) {
+                if (typeof safeNotify === 'function') safeNotify('กรุณากรอกรหัส, ชื่อหนังสือ และชื่อเรื่อง', 'warning');
+                return;
+            }
 
             const data = {
                 code, book, part, vagga, story, episode, page, pali, thai, vocab_list: vocab,
@@ -3663,13 +3667,16 @@
                     await db.collection('contents').doc(id).update(data);
                 } else {
                     const doc = await db.collection('contents').doc(code).get();
-                    if (doc.exists) return alert('รหัสเนื้อหานี้มีอยู่แล้ว');
+                    if (doc.exists) {
+                        if (typeof safeNotify === 'function') safeNotify('รหัสเนื้อหานี้มีอยู่แล้ว', 'warning');
+                        return;
+                    }
                     
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     await db.collection('contents').doc(code).set(data);
                 }
                 
-                alert('บันทึกเรียบร้อย');
+                if (typeof safeNotify === 'function') safeNotify('บันทึกเรียบร้อย', 'success');
                 closeContentModal();
                 loadContents();
             } catch (err) {

@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../js/utils.js"></script>
     <script>
         window.firebaseConfig = window.firebaseConfig || {
             apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
@@ -861,7 +862,9 @@
                 
             } catch (err) {
                 console.error(err);
-                alert('เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message);
+                if (typeof safeNotify === 'function') {
+                    safeNotify('เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + (err && err.message ? err.message : ''), 'error');
+                }
             }
         }
 
@@ -871,7 +874,9 @@
                 await db.collection('sanluang_exams').doc(id).delete();
                 loadStats();
             } catch(e) {
-                alert(e.message);
+                if (typeof safeNotify === 'function') {
+                    safeNotify(e && e.message ? e.message : 'เกิดข้อผิดพลาดในการลบข้อมูล', 'error');
+                }
             }
         }
 
