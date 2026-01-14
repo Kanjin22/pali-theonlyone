@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Flashcards - ºÑµÃ¤ÓÈÑ¾·ìªèÇÂ¨Ó</title>
+    <title>Smart Flashcards - ï¿½ÑµÃ¤ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Â¨ï¿½</title>
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#2c3e50">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
 
         body {
             font-family: 'Sarabun', sans-serif;
-            /* ¾×é¹ËÅÑ§ÊÕÊÑ¹Ê´ãÊáµèÊºÒÂµÒ (Deep Ocean Gradient) */
+            /* ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½Ñ¹Ê´ï¿½ï¿½ï¿½ï¿½Êºï¿½Âµï¿½ (Deep Ocean Gradient) */
             background: var(--bg-gradient);
             color: #333;
             margin: 0;
@@ -84,7 +84,7 @@
             .btn { padding: 12px 20px; min-width: 110px; font-size: 1rem; }
         }
 
-        /* à¾ÔèÁÅÇ´ÅÒÂ¾×é¹ËÅÑ§¨Ò§æ */
+        /* ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½Â¾ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½Ò§ï¿½ */
         body::before {
             content: '';
             position: absolute;
@@ -174,7 +174,7 @@
         /* Card Flip Effect */
         .scene {
             width: 100%;
-            height: 420px; /* à¾ÔèÁ¤ÇÒÁÊÙ§ÍÕ¡¹Ô´ */
+            height: 420px; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù§ï¿½Õ¡ï¿½Ô´ */
             perspective: 1200px;
             margin-bottom: 30px;
         }
@@ -183,7 +183,7 @@
             width: 100%;
             height: 100%;
             position: relative;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* à´é§´Öë§ */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* ï¿½é§´ï¿½ï¿½ */
             transform-style: preserve-3d;
             cursor: pointer;
         }
@@ -208,13 +208,13 @@
             border: 5px solid rgba(255,255,255,0.1);
         }
 
-        /* Ë¹éÒºÑµÃ - àÃÕÂºËÃÙ ÊÐÍÒ´ */
+        /* Ë¹ï¿½ÒºÑµï¿½ - ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò´ */
         .card-front {
             background: var(--card-front-bg);
             color: var(--card-front-text);
         }
 
-        /* ËÅÑ§ºÑµÃ - ÊÕÊÑ¹Ê´ãÊ (Pastel Yellow/Orange Gradient) */
+        /* ï¿½ï¿½Ñ§ï¿½Ñµï¿½ - ï¿½ï¿½ï¿½Ñ¹Ê´ï¿½ï¿½ (Pastel Yellow/Orange Gradient) */
         .card-back {
             background: var(--card-back-bg);
             color: var(--card-back-text);
@@ -225,21 +225,21 @@
             border: 5px solid rgba(255,255,255,0.5);
         }
 
-        /* Scrollbar ÊÓËÃÑºËÅÑ§ºÑµÃ */
+        /* Scrollbar ï¿½ï¿½ï¿½ï¿½Ñºï¿½ï¿½Ñ§ï¿½Ñµï¿½ */
         .card-back::-webkit-scrollbar { width: 6px; }
         .card-back::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
         .pali-word {
             font-family: 'Niramit', serif;
-            font-size: 3.5rem; /* ãË­è¢Öé¹ */
+            font-size: 3.5rem; /* ï¿½Ë­ï¿½ï¿½ï¿½ */
             font-weight: bold;
-            margin-bottom: 30px; /* à¾ÔèÁÃÐÂÐËèÒ§´éÒ¹ÅèÒ§ */
-            padding-bottom: 10px; /* à¾ÔèÁ¾×é¹·ÕèÊÓËÃÑºÊÃÐÅèÒ§ */
+            margin-bottom: 30px; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò§ï¿½ï¿½Ò¹ï¿½ï¿½Ò§ */
+            padding-bottom: 10px; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¹·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñºï¿½ï¿½ï¿½ï¿½ï¿½Ò§ */
             color: var(--pali-word-color);
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-            white-space: nowrap; /* ËéÒÁ¢Öé¹ºÃÃ·Ñ´ãËÁè */
+            white-space: nowrap; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¹ºï¿½Ã·Ñ´ï¿½ï¿½ï¿½ï¿½ */
             width: 100%;
-            overflow: visible; /* »éÍ§¡Ñ¹¡ÒÃµÑ´ÊÃÐÅèÒ§ */
+            overflow: visible; /* ï¿½ï¿½Í§ï¿½Ñ¹ï¿½ï¿½ÃµÑ´ï¿½ï¿½ï¿½ï¿½ï¿½Ò§ */
         }
 
         .word-type {
@@ -364,22 +364,22 @@
 
     <div class="container">
         <div class="header">
-            <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> ¡ÅÑºË¹éÒËÅÑ¡</a>
+            <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> ï¿½ï¿½ÑºË¹ï¿½ï¿½ï¿½ï¿½Ñ¡</a>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <select id="catSelect" onchange="changeCategory()">
-                    <option value="all">?? ·Ñé§ËÁ´ (All)</option>
-                    <option value="akhyata">?? ÍÒ¢ÂÒµ (Akhyata)</option>
-                    <option value="kitaka">?? ¡Ôµ¡ì (Kitaka)</option>
-                    <option value="vocab">?? ÈÑ¾·ì·ÑèÇä» (Vocab)</option>
+                    <option value="all">?? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (All)</option>
+                    <option value="akhyata">?? ï¿½Ò¢ï¿½Òµ (Akhyata)</option>
+                    <option value="kitaka">?? ï¿½Ôµï¿½ï¿½ (Kitaka)</option>
+                    <option value="vocab">?? ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Vocab)</option>
                 </select>
-                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="àµçÁË¹éÒ¨Í"><i class="fas fa-expand"></i></button>
+                <button id="fullscreenBtn" class="btn-icon" onclick="toggleFullScreen()" title="ï¿½ï¿½ï¿½Ë¹ï¿½Ò¨ï¿½"><i class="fas fa-expand"></i></button>
             </div>
         </div>
 
         <div class="stats-bar">
-            <div class="stat-item stat-green" title="¨Óä´é"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
-            <div class="stat-item stat-red" title="Å×Á/ÂÑ§äÁèä´é"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
-            <div class="stat-item stat-total" title="¨Ó¹Ç¹¡ÒÃì´ã¹¡Í§"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
+            <div class="stat-item stat-green" title="ï¿½ï¿½ï¿½ï¿½"><i class="fas fa-smile-beam"></i> <span id="count-remember">0</span></div>
+            <div class="stat-item stat-red" title="ï¿½ï¿½ï¿½/ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½"><i class="fas fa-frown-open"></i> <span id="count-forgot">0</span></div>
+            <div class="stat-item stat-total" title="ï¿½Ó¹Ç¹ï¿½ï¿½ï¿½ï¿½ã¹¡Í§"><i class="fas fa-layer-group"></i> <span id="count-total">0</span></div>
         </div>
 
         <div class="scene">
@@ -388,7 +388,7 @@
                     <div class="word-type" id="card-type-front">TYPE</div>
                     <div class="roman-hint" id="card-roman">Roman</div>
                     <div class="pali-word" id="card-pali">Loading...</div>
-                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> áµÐà¾×èÍ´Ùà©ÅÂ</div>
+                    <div class="hint-text"><i class="fas fa-hand-pointer"></i> ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ï¿½ï¿½ï¿½</div>
                 </div>
                 <div class="card-face card-back">
                     <div class="word-type" id="card-type">TYPE</div>
@@ -402,11 +402,11 @@
         </div>
 
         <div class="controls">
-            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> ÂÑ§äÁèä´é</button>
-            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> ä´éáÅéÇ!</button>
+            <button class="btn btn-red" onclick="markResult(false)"><i class="fas fa-times-circle"></i> ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½</button>
+            <button class="btn btn-green" onclick="markResult(true)"><i class="fas fa-check-circle"></i> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!</button>
         </div>
         <div>
-            <button class="btn btn-skip" onclick="nextCard()">¢éÒÁä»¡èÍ¹ (Skip) <i class="fas fa-forward"></i></button>
+            <button class="btn btn-skip" onclick="nextCard()">ï¿½ï¿½ï¿½ï¿½ä»¡ï¿½Í¹ (Skip) <i class="fas fa-forward"></i></button>
         </div>
     </div>
 
@@ -417,39 +417,39 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <!-- Content Data -->
-    <script src="data/content-dhamma01.js"></script>
-    <script src="data/content-dhamma02.js"></script>
-    <script src="data/content-dhamma03.js"></script>
-    <script src="data/content-dhamma04.js"></script>
-    <script src="data/content-dhamma05.js"></script>
-    <script src="data/content-dhamma06.js"></script>
-    <script src="data/content-dhamma07.js"></script>
-    <script src="data/content-dhamma08.js"></script>
-    <script src="data/content-mangala01.js"></script>
-    <script src="data/content-mangala02.js"></script>
-    <script src="data/content-samanta01.js"></script>
-    <script src="data/content-samanta02.js"></script>
-    <script src="data/content-samanta03.js"></script>
-    <script src="data/content-visuddhi01.js"></script>
-    <script src="data/content-visuddhi02.js"></script>
-    <script src="data/content-visuddhi03.js"></script>
-    <script src="data/content-abhidhamma01.js"></script>
+    <script src="../data/content-dhamma01.js"></script>
+    <script src="../data/content-dhamma02.js"></script>
+    <script src="../data/content-dhamma03.js"></script>
+    <script src="../data/content-dhamma04.js"></script>
+    <script src="../data/content-dhamma05.js"></script>
+    <script src="../data/content-dhamma06.js"></script>
+    <script src="../data/content-dhamma07.js"></script>
+    <script src="../data/content-dhamma08.js"></script>
+    <script src="../data/content-mangala01.js"></script>
+    <script src="../data/content-mangala02.js"></script>
+    <script src="../data/content-samanta01.js"></script>
+    <script src="../data/content-samanta02.js"></script>
+    <script src="../data/content-samanta03.js"></script>
+    <script src="../data/content-visuddhi01.js"></script>
+    <script src="../data/content-visuddhi02.js"></script>
+    <script src="../data/content-visuddhi03.js"></script>
+    <script src="../data/content-abhidhamma01.js"></script>
 
     <!-- Dictionary Data -->
-    <script src="data/raw/vocab-general.js"></script>
-    <script src="data/raw/vocab-insan-pr9.js"></script>
-    <script src="data/raw/vocab-insan-pr9-5-8.js"></script>
-    <script src="data/raw/vocab-bhumibalo.js"></script>
-    <script src="data/raw/vocab-jinakalamalini.js"></script>
-    <script src="data/vocab-inflected.js"></script>
+    <script src="../data/raw/vocab-general.js"></script>
+    <script src="../data/raw/vocab-insan-pr9.js"></script>
+    <script src="../data/raw/vocab-insan-pr9-5-8.js"></script>
+    <script src="../data/raw/vocab-bhumibalo.js"></script>
+    <script src="../data/raw/vocab-jinakalamalini.js"></script>
+    <script src="../data/vocab-inflected.js"></script>
 
     <!-- Pali-Roman Dictionaries removed -->
-    <script src="data/vocab-sandhi.js"></script>
+    <script src="../data/vocab-sandhi.js"></script>
     
     <!-- Logic -->
-    <script src="data/pali-lookup.js"></script>
-    <script src="data/pali-declension.js"></script>
-    <script src="data/pali-script.js"></script>
+    <script src="../data/pali-lookup.js"></script>
+    <script src="../data/pali-declension.js"></script>
+    <script src="../data/pali-script.js"></script>
 
     <script>
         // Theme Management
@@ -566,11 +566,11 @@
                     const source = `${slide.vagga || ''} ${slide.story || ''}`;
                     
                     // Akhyata
-                    extractWords(slide.akhyata, 'akhyata', 'ÍÒ¢ÂÒµ', source, seen);
+                    extractWords(slide.akhyata, 'akhyata', 'ï¿½Ò¢ï¿½Òµ', source, seen);
                     // Kitaka
-                    extractWords(slide.kitaka, 'kitaka', '¡Ôµ¡ì', source, seen);
+                    extractWords(slide.kitaka, 'kitaka', 'ï¿½Ôµï¿½ï¿½', source, seen);
                     // Vocab List
-                    extractWords(slide.vocab_list, 'vocab', 'ÈÑ¾·ì·ÑèÇä»', source, seen);
+                    extractWords(slide.vocab_list, 'vocab', 'ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', source, seen);
                 });
             });
 
@@ -582,7 +582,7 @@
         }
 
         function extractWords(text, type, label, source, seen) {
-            if (!text || text === 'ÃÍ¢éÍÁÙÅ' || text === '-') return;
+            if (!text || text === 'ï¿½Í¢ï¿½ï¿½ï¿½ï¿½ï¿½' || text === '-') return;
             
             // Split by comma
             const parts = text.split(',');
@@ -598,15 +598,15 @@
                     let details = match[3] ? match[3].trim() : "";
                     
                     // Clean word (remove punctuation if any mostly)
-                    word = word.replace(/[“"'(‘)”"'.Ï,;:?’]+/g, '');
+                    word = word.replace(/[ï¿½"'(ï¿½)ï¿½"'.ï¿½,;:?ï¿½]+/g, '');
 
                     // --- Auto-Stemming Logic for Kitaka/Vocab ---
                     if (type === 'kitaka' || type === 'vocab') {
                         const stemmed = findBestStem(word);
                         if (stemmed && stemmed !== word) {
                             // If stemmed is different, use it.
-                            if (!details) details = `(ÈÑ¾·ìà´ÔÁ¢Í§: ${word})`;
-                            else details += `, ÈÑ¾·ìà´ÔÁ¢Í§: ${word}`;
+                            if (!details) details = `(ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í§: ${word})`;
+                            else details += `, ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í§: ${word}`;
                             
                             word = stemmed;
                         }
@@ -696,7 +696,7 @@
 
             if (currentDeck.length === 0) {
                 // Show Empty State
-                document.getElementById('card-pali').innerText = "äÁèÁÕ¤ÓÈÑ¾·ì";
+                document.getElementById('card-pali').innerText = "ï¿½ï¿½ï¿½ï¿½Õ¤ï¿½ï¿½Ñ¾ï¿½ï¿½";
                 document.getElementById('card-type-front').innerText = "-";
                 currentCard = null;
                 return;
@@ -732,7 +732,7 @@
             document.getElementById('card-type').innerText = card.label;
             
             // Lookup Definition
-            let definition = "¡ÓÅÑ§¤é¹ËÒ...";
+            let definition = "ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½...";
             const result = PaliLookup.lookup(card.word, dbs);
             
             let meaningHtml = "";
@@ -744,15 +744,15 @@
                 } else if (result.details) {
                     meaningHtml = result.details[0]; // First definition
                     if (result.details.length > 1) {
-                         detailsListHtml += `<li><strong>¤ÇÒÁËÁÒÂÍ×è¹:</strong> ${result.details.slice(1).join(', ')}</li>`;
+                         detailsListHtml += `<li><strong>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:</strong> ${result.details.slice(1).join(', ')}</li>`;
                     }
                 }
                 
                 if (result.source) {
-                    detailsListHtml += `<li><small style="color:#7f8c8d;">·ÕèÁÒ: ${result.source}</small></li>`;
+                    detailsListHtml += `<li><small style="color:#7f8c8d;">ï¿½ï¿½ï¿½ï¿½ï¿½: ${result.source}</small></li>`;
                 }
             } else {
-                meaningHtml = "äÁè¾º¤ÇÒÁËÁÒÂã¹¾¨¹Ò¹Ø¡ÃÁ";
+                meaningHtml = "ï¿½ï¿½è¾ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¹¾ï¿½ï¿½Ò¹Ø¡ï¿½ï¿½";
             }
 
             document.getElementById('card-thai').innerHTML = meaningHtml;
@@ -760,10 +760,10 @@
             // Append Manual Details
             let extraDetails = "";
             if (card.details) {
-                extraDetails += `<li><strong>äÇÂÒ¡Ã³ì/à¾ÔèÁàµÔÁ:</strong> ${card.details}</li>`;
+                extraDetails += `<li><strong>ï¿½ï¿½ï¿½Ò¡Ã³ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:</strong> ${card.details}</li>`;
             }
             if (card.source) {
-                extraDetails += `<li><strong>º·àÃÕÂ¹:</strong> ${card.source}</li>`;
+                extraDetails += `<li><strong>ï¿½ï¿½ï¿½ï¿½ï¿½Â¹:</strong> ${card.source}</li>`;
             }
 
             document.getElementById('card-details').innerHTML = extraDetails + detailsListHtml;
@@ -839,7 +839,7 @@
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    alert(`äÁèÊÒÁÒÃ¶à»Ô´àµçÁË¹éÒ¨Íä´é: ${err.message}`);
+                    alert(`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Ô´ï¿½ï¿½ï¿½Ë¹ï¿½Ò¨ï¿½ï¿½ï¿½: ${err.message}`);
                 });
             } else {
                 if (document.exitFullscreen) {
