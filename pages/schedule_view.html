@@ -1562,7 +1562,7 @@
         (function startWithAccessGuard() {
             const auth = firebase.auth();
             auth.onAuthStateChanged(async (u) => {
-                if (!u) { window.location.href = 'index.html'; return; }
+                if (!u) { window.location.href = '../index.html'; return; }
                 try {
                     let role = 'general';
                     const userDoc = await db.collection('users').doc(u.uid).get();
@@ -1578,10 +1578,10 @@
                         const data = doc.data();
                         rid = data.roomId || null;
                     }
-                    if (!rid) { window.location.href = 'index.html'; return; }
+                    if (!rid) { window.location.href = '../index.html'; return; }
                     
                     const roomDoc = await db.collection('classrooms').doc(rid).get();
-                    if (!roomDoc.exists) { window.location.href = 'index.html'; return; }
+                    if (!roomDoc.exists) { window.location.href = '../index.html'; return; }
                     const room = roomDoc.data();
 
                     const enr = await db.collection('enrollments').doc(u.uid).get();
@@ -1591,14 +1591,14 @@
                     const isMember = rooms.includes(rid);
                     
                     if (!approved || !level || level !== room.level || !isMember) { 
-                        window.location.href = 'index.html'; 
+                        window.location.href = '../index.html'; 
                         return; 
                     }
 
                     loadSchedule();
                 } catch (e) {
                     console.error("Access guard error:", e);
-                    window.location.href = 'index.html';
+                    window.location.href = '../index.html';
                 }
             });
         })();
