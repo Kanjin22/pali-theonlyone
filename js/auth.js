@@ -29,14 +29,15 @@ function showUser(u, role) {
             window._currentUserRole = role;
             sessionStorage.setItem('pali_user_role_session', role);
         }
-        // ✅ FIXED: Use safe DOM creation instead of innerHTML for XSS prevention
-        userInfo.innerHTML = '';
+            // ✅ FIXED: Use safe DOM creation instead of innerHTML for XSS prevention
+            userInfo.textContent = '';
         const nameSpan = document.createElement('b');
         nameSpan.textContent = name;  // ✅ Safe - no HTML/JS execution
         userInfo.appendChild(nameSpan);
         if (statusHtml) {
             const statusSpan = document.createElement('span');
-            statusSpan.innerHTML = statusHtml;
+                if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(statusSpan, statusHtml);
+                else statusSpan.innerHTML = statusHtml;
             userInfo.appendChild(statusSpan);
         }
         userInfo.style.display = 'inline-flex';
@@ -325,14 +326,22 @@ auth.onAuthStateChanged((user) => {
         ];
 
         // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
-        db.collection('users').doc(uid).set({
-            displayName: user.displayName || '',
-            email: user.email || '',
-            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true }).catch(e => {
-            console.warn("Update user info failed:", e.message);
-            // Background sync failure - no need to alarm user heavily
-        });
+            try {
+                const validatedEmail = (window.validator && typeof window.validator.validateEmail === 'function')
+                    ? window.validator.validateEmail(user.email || '').sanitized
+                    : (user.email || '');
+                const safeDisplayName = (typeof sanitizeHTML === 'function') ? sanitizeHTML(user.displayName || '') : (user.displayName || '');
+                const userDoc = {
+                    displayName: safeDisplayName,
+                    email: validatedEmail,
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                db.collection('users').doc(uid).set(userDoc, { merge: true }).catch(e => {
+                    console.warn("Update user info failed:", e.message);
+                });
+            } catch (e) {
+                console.warn('User write validation failed:', e);
+            }
 
         if (cachedRole) {
             const displayUserEarly = {
@@ -475,12 +484,15 @@ auth.onAuthStateChanged((user) => {
         // โค้ดสร้าง Exam Sets (คงเดิม)
         db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
             if (s.empty) {
-                return db.collection('exam_sets').add({
-                    title: 'ชุดสอบแรก',
-                    level: 'pt3',
-                    createdBy: uid,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                    // Validate title and level before creating a default exam set
+                    const defaultTitle = (typeof sanitizeHTML === 'function') ? sanitizeHTML('ชุดแบบทดสอบเริ่มต้น') : 'ชุดแบบทดสอบเริ่มต้น';
+                    const levelVal = (window.validator && typeof window.validator.validateLevel === 'function') ? window.validator.validateLevel('pt3').sanitized : 'pt3';
+                    return db.collection('exam_sets').add({
+                        title: defaultTitle,
+                        level: levelVal,
+                        createdBy: uid,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
             }
         }).then(() => {
             console.log("User data synced");

@@ -28,7 +28,17 @@ admin.initializeApp({
 });
 
 const app = express();
-app.use(cors());
+// Configure CORS to allow only specific origins from environment variable
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow non-browser requests (e.g., curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('CORS policy: Origin not allowed'));
+  },
+  credentials: true
+}));
 app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
   res.header("Cross-Origin-Embedder-Policy", "require-corp");

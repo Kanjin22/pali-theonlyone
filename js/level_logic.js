@@ -115,7 +115,7 @@ async function initLevelPage(levelId) {
                     visible = rooms.filter(r => allowIds.has(r.id));
                 }
                 container.style.display = 'block';
-                container.innerHTML = '';
+                if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(container, ''); else container.textContent = '';
                 if (visible.length === 0) {
                     container.innerHTML = `<div style="padding:20px; color:#7f8c8d;">ยังไม่มีห้องในชั้นนี้สำหรับคุณ</div>`;
                     return;
@@ -129,7 +129,8 @@ async function initLevelPage(levelId) {
                     card.className = 'menu-button';
                     const isTeaching = effectiveMode === 'teacher' && Array.isArray(r.teachers) && teacherName && r.teachers.includes(teacherName);
                     const badge = isTeaching ? `<span style="display:inline-block; margin-left:8px; background:#27ae60; color:#fff; padding:2px 8px; border-radius:10px; font-size:0.75rem;">สอนอยู่</span>` : '';
-                    card.innerHTML = `${r.name || r.id}${badge}`;
+                    const cardHtml2 = `${r.name || r.id}${badge}`;
+                    if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(card, cardHtml2); else card.innerHTML = cardHtml2;
                     grid.appendChild(card);
                 });
                 container.appendChild(grid);
@@ -189,7 +190,7 @@ function renderRoomContent(room) {
         // Check if title already has room name to avoid duplication
         // Or just overwrite it cleanly
         // Mapping level to Thai name if needed, or just use room.name
-        title.innerHTML = `${room.name}`;
+        title.textContent = `${room.name}`;
     }
     
     const desc = document.getElementById('page-description');

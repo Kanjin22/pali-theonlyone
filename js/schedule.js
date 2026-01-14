@@ -10,7 +10,7 @@ async function loadTodayPins() {
     const section = document.getElementById('today-pins-section');
     if (section) section.style.display = 'block';
 
-    container.innerHTML = '';
+    if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(container, ''); else container.textContent = '';
     const header = document.createElement('div');
     header.style.padding = '14px 16px';
     header.style.borderBottom = '1px solid #eee';

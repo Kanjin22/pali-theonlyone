@@ -116,7 +116,7 @@ function applyRoleUI(role) {
 
         function renderMyRooms(rooms) {
             if (!myRoomsSection || !myRoomsGrid) return false;
-            myRoomsGrid.innerHTML = '';
+            if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(myRoomsGrid, ''); else myRoomsGrid.textContent = '';
             if (!rooms || rooms.length === 0) {
                 myRoomsSection.style.display = 'none';
                 return false;
@@ -128,7 +128,7 @@ function applyRoleUI(role) {
                 a.href = `levels/home_${r.level}.html?room=${r.id}`;
                 const icon = document.createElement('div');
                 icon.className = 'icon-box';
-                icon.innerHTML = '<i class="fa-solid fa-school"></i>';
+                if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(icon, '<i class="fa-solid fa-school"></i>'); else icon.innerHTML = '<i class="fa-solid fa-school"></i>';
                 const title = document.createElement('div');
                 title.className = 'card-title';
                 title.textContent = r.name || r.id;
@@ -225,7 +225,8 @@ function createEnrollCard(id, container) {
         a.style.border = '2px solid #f1c40f';
         a.style.boxShadow = '0 10px 25px rgba(241,196,15,0.25)';
         a.style.position = 'relative';
-        a.innerHTML = '<span style="position:absolute; top:10px; right:10px; background:#e67e22; color:#fff; font-size:0.8rem; padding:4px 10px; border-radius:999px;">สำคัญ</span><div class="icon-box" style="color:#e67e22;"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title" style="color:#c0392b;">สมัครเรียน</div><div class="card-desc" style="color:#7f8c8d;">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
+            const enrollHtml = '<span style="position:absolute; top:10px; right:10px; background:#e67e22; color:#fff; font-size:0.8rem; padding:4px 10px; border-radius:999px;">สำคัญ</span><div class="icon-box" style="color:#e67e22;"><i class="fa-solid fa-user-graduate"></i></div><div class="card-title" style="color:#c0392b;">สมัครเรียน</div><div class="card-desc" style="color:#7f8c8d;">กรอกข้อมูลและเลือกชั้นเรียนที่เปิดรับ</div>';
+            if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(a, enrollHtml); else a.innerHTML = enrollHtml;
         container.insertBefore(a, container.firstChild);
     } catch (e) { }
 }
@@ -364,7 +365,8 @@ if (resumeBtnEl) {
     // ฟังก์ชันช่วยสร้างลิงก์
     const setupResumeButton = (data) => {
         if (!data) return;
-        resumeBtnEl.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อ: ' + (data.title || 'ล่าสุด');
+        const resumeHtml = '<i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อ: ' + (data.title || 'ล่าสุด');
+        if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(resumeBtnEl, resumeHtml); else resumeBtnEl.innerHTML = resumeHtml;
         
         if (data.type === 'reader') {
             // สร้าง URL ของ Reader
