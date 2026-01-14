@@ -1,236 +1,317 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // ════════════════════════════════════
-    // Helper Functions - ฟังก์ชั่นช่วย
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Helper Functions - ฟังก์ชันช่วยเหลือ
+    // ─────────────────────────────────────
+
+    // ต้องล็อกอิน
     function isSignedIn() {
       return request.auth != null;
     }
-    
-    function isAdmin() {
-      return isSignedIn() && 'admin' in request.auth.token;
+
+    // เช็ค role จาก custom claims
+    function hasRole(r) {
+      return request.auth != null &&
+        (
+          (request.auth.token.role == r) ||                                      // role: 'admin'
+          (request.auth.token.roles is list && r in request.auth.token.roles) || // roles: ['admin', ...]
+          (r in request.auth.token)                                              // legacy: 'admin' in token
+        );
     }
-    
+
+    function isAdmin() {
+      return isSignedIn() && hasRole('admin');
+    }
+
+    // เจ้าของ document (สำหรับ users/*)
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // อ่าน classroom แล้วเช็ก admin/member
+    function getClassroom(classroomId) {
+      return get(/databases/{database}/documents/classrooms/{classroomId}).data;
+    }
+
     function isClassroomAdmin(classroomId) {
-      let classroom = get(/databases/{database}/documents/classrooms/{classroomId}).data;
+      let classroom = getClassroom(classroomId);
       return isSignedIn() && classroom.adminId == request.auth.uid;
     }
-    
-    function isMemberOf(classroomId) {
-      let classroom = get(/databases/{database}/documents/classrooms/{classroomId}).data;
+
+    function isClassroomMember(classroomId) {
+      let classroom = getClassroom(classroomId);
       return classroom.members is list && request.auth.uid in classroom.members;
     }
-    
-    function isOwnDocument() {
-      return request.auth.uid == resource.data.userId;
-    }
-    
+
+    // Validate string
     function isValidString(field, minLen, maxLen) {
       return field is string && field.size() >= minLen && field.size() <= maxLen;
     }
-    
+
+    // Validate number (int/float)
+    function isValidNumber(field, minVal, maxVal) {
+      return field is number && field >= minVal && field <= maxVal;
+    }
+
     function isValidExamSet(data) {
       return isValidString(data.title, 1, 200) &&
              isValidString(data.description, 0, 1000) &&
              data.createdAt is timestamp &&
              data.createdBy is string;
     }
-    
-    function isValidFile(data) {
+
+    function isValidFileMeta(data) {
       return isValidString(data.name, 1, 500) &&
              isValidString(data.type, 1, 100) &&
-             data.size is number &&
-             data.size <= 104857600;
+             isValidNumber(data.size, 0, 104857600);
     }
-    
-    // ════════════════════════════════════
-    // Users Collection - Authentication Required
-    // ════════════════════════════════════
-    
+
+    // Validate user profile (ปรับเพิ่มตาม schema จริงของคุณได้)
+    function isValidUser(data) {
+      return (!('displayName' in data) || isValidString(data.displayName, 0, 100)) &&
+             (!('photoURL' in data) || isValidString(data.photoURL, 0, 1000));
+    }
+
+    // ─────────────────────────────────────
+    // Users Collection
+    // ─────────────────────────────────────
+
     match /users/{userId} {
-      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
-      allow create: if isSignedIn() && request.auth.uid == userId;
-      allow update: if isSignedIn() && request.auth.uid == userId && !hasAny(request.resource.data.keys(), ['role', 'isAdmin']);
+
+      // อ่าน: เจ้าของ หรือ admin เท่านั้น
+      allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
+
+      // สร้าง: เจ้าของเท่านั้น + validate profile
+      allow create: if isSignedIn()
+                    && isOwner(userId)
+                    && isValidUser(request.resource.data);
+
+      // แก้ไข: เจ้าของเท่านั้น + ห้ามยุ่ง field role/isAdmin + validate profile
+      allow update: if isSignedIn()
+                    && isOwner(userId)
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'isAdmin'])
+                    && isValidUser(request.resource.data);
+
+      // ลบ: admin เท่านั้น
       allow delete: if isAdmin();
-    }
-    
-    // ════════════════════════════════════
-    // Classrooms - Admin-only creation and management
-    // ════════════════════════════════════
-    
-    match /classrooms/{classroomId} {
-      allow read: if isSignedIn() && (
-        resource.data.adminId == request.auth.uid || 
-        request.auth.uid in resource.data.members || 
-        isAdmin()
-      );
-      allow create: if isAdmin() && isValidString(request.resource.data.name, 1, 200);
-      allow update: if isClassroomAdmin(classroomId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['adminId']);
-      allow delete: if isAdmin();
-      
-      // Classroom Members Subcollection
-      match /members/{memberId} {
-        allow read: if isClassroomAdmin(classroomId) || request.auth.uid == memberId;
-        allow write: if isClassroomAdmin(classroomId);
+
+      // ───────────────────────────────
+      // Subcollections ใต้ users/{userId}
+      // ───────────────────────────────
+
+      // Schedule ส่วนตัวของ user
+      match /schedule/{scheduleId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create: if isSignedIn()
+                      && isOwner(userId)
+                      && isValidString(request.resource.data.title, 1, 200);
+        allow update: if isOwner(userId);
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Vocabulary ส่วนตัว (สมุดคำศัพท์)
+      match /vocab/{vocabId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create: if isSignedIn()
+                      && isOwner(userId)
+                      && isValidString(request.resource.data.word, 1, 500);
+        allow update: if isOwner(userId);
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Progress / ระดับการเรียน
+      match /progress/{levelId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create: if isSignedIn()
+                      && isOwner(userId)
+                      && isValidNumber(request.resource.data.level, 1, 12);
+        allow update: if isOwner(userId);
+        allow delete: if isOwner(userId) || isAdmin();
       }
     }
-    
-    // ════════════════════════════════════
-    // User Schedule - User-specific
-    // ════════════════════════════════════
-    
-    match /users/{userId}/schedule/{scheduleId} {
-      allow read: if request.auth.uid == userId || isAdmin();
-      allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.title, 1, 200);
-      allow update: if request.auth.uid == userId;
-      allow delete: if request.auth.uid == userId || isAdmin();
+
+    // ─────────────────────────────────────
+    // Classrooms + Members + Exams + Results
+    // ─────────────────────────────────────
+
+    match /classrooms/{classroomId} {
+
+      // อ่าน: ต้องเป็น admin ห้อง, สมาชิกห้อง, หรือ admin ระบบ
+      allow read: if isSignedIn() &&
+        (isClassroomAdmin(classroomId) || isClassroomMember(classroomId) || isAdmin());
+
+      // สร้างห้อง: admin เท่านั้น
+      allow create: if isAdmin()
+                    && isValidString(request.resource.data.name, 1, 200);
+
+      // แก้ไขห้อง: admin ห้องเท่านั้น และห้ามแก้ adminId
+      allow update: if isClassroomAdmin(classroomId)
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['adminId']);
+
+      // ลบห้อง: admin เท่านั้น
+      allow delete: if isAdmin();
+
+      // สมาชิกห้อง (enroll)
+      match /members/{memberId} {
+
+        // อ่าน: admin ห้อง หรือเจ้าของ member document (นักเรียนเอง)
+        allow read: if isClassroomAdmin(classroomId) || (isSignedIn() && request.auth.uid == memberId);
+
+        // เขียน: admin ห้องเท่านั้น (ควบคุมการ enroll)
+        allow write: if isClassroomAdmin(classroomId);
+      }
+
+      // ชุดข้อสอบของห้องนั้น ๆ
+      match /exams/{examId} {
+        // อ่าน: ต้องเป็นสมาชิกห้องหรือ admin ห้อง หรือ admin ระบบ
+        allow read: if isSignedIn() &&
+          (isClassroomAdmin(classroomId) || isClassroomMember(classroomId) || isAdmin());
+
+        // สร้าง: admin ห้องเท่านั้น + ต้องมี title ที่ดี
+        allow create: if isClassroomAdmin(classroomId)
+                      && isValidString(request.resource.data.title, 1, 200);
+
+        // แก้ไข/ลบ: admin ห้องเท่านั้น
+        allow update: if isClassroomAdmin(classroomId);
+        allow delete: if isClassroomAdmin(classroomId);
+      }
+
+      // ผลสอบของนักเรียนในห้อง
+      match /examResults/{resultId} {
+
+        // อ่าน: เจ้าของผลสอบ, admin ห้อง, หรือ admin ระบบ
+        allow read: if isSignedIn() &&
+          (resource.data.userId == request.auth.uid ||
+           isClassroomAdmin(classroomId) ||
+           isAdmin());
+
+        // สร้าง: เจ้าของเท่านั้น (userId ต้องตรงกับ token)
+        allow create: if isSignedIn()
+                      && request.resource.data.userId == request.auth.uid;
+
+        // อัปเดต: เจ้าของเท่านั้น (แก้ไขเฉลยของตัวเอง)
+        allow update: if isSignedIn()
+                      && resource.data.userId == request.auth.uid;
+
+        // ลบ: admin ห้อง หรือ admin ระบบ
+        allow delete: if isClassroomAdmin(classroomId) || isAdmin();
+      }
     }
-    
-    // ════════════════════════════════════
-    // User Vocabulary - User-specific
-    // ════════════════════════════════════
-    
-    match /users/{userId}/vocab/{vocabId} {
-      allow read: if request.auth.uid == userId || isAdmin();
-      allow create: if isSignedIn() && request.auth.uid == userId && isValidString(request.resource.data.word, 1, 500);
-      allow update: if request.auth.uid == userId;
-      allow delete: if request.auth.uid == userId || isAdmin();
-    }
-    
-    // ════════════════════════════════════
-    // User Progress - User-specific
-    // ════════════════════════════════════
-    
-    match /users/{userId}/progress/{levelId} {
-      allow read: if request.auth.uid == userId || isAdmin();
-      allow create: if isSignedIn() && request.auth.uid == userId && request.resource.data.level >= 1 && request.resource.data.level <= 12;
-      allow update: if request.auth.uid == userId;
-      allow delete: if request.auth.uid == userId || isAdmin();
-    }
-    
-    // ════════════════════════════════════
-    // Classroom Exams
-    // ════════════════════════════════════
-    
-    match /classrooms/{classroomId}/exams/{examId} {
-      allow read: if isSignedIn() && (
-        isClassroomAdmin(classroomId) || 
-        request.auth.uid in get(/databases/{database}/documents/classrooms/{classroomId}).data.members
-      );
-      allow create: if isClassroomAdmin(classroomId) && isValidString(request.resource.data.title, 1, 200);
-      allow update: if isClassroomAdmin(classroomId);
-      allow delete: if isClassroomAdmin(classroomId);
-    }
-    
-    // ════════════════════════════════════
-    // Exam Results
-    // ════════════════════════════════════
-    
-    match /classrooms/{classroomId}/examResults/{resultId} {
-      allow read: if isSignedIn() && (
-        resource.data.userId == request.auth.uid || 
-        isClassroomAdmin(classroomId) || 
-        isAdmin()
-      );
-      allow create: if isSignedIn() && resource.data.userId == request.auth.uid;
-      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
-      allow delete: if isClassroomAdmin(classroomId) || isAdmin();
-    }
-    
-    // ════════════════════════════════════
-    // Files - Authentication Required (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Global Files Metadata
+    // ─────────────────────────────────────
+
     match /files/{fileId} {
+      // อ่าน: ต้องล็อกอินก่อน
       allow read: if isSignedIn();
-      allow write: if isAdmin();
+
+      // เขียน/ลบ: admin เท่านั้น + validate metadata
+      allow create: if isAdmin() && isValidFileMeta(request.resource.data);
+      allow update: if isAdmin() && isValidFileMeta(request.resource.data);
       allow delete: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Exam Sets - Admin Only (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Exam Sets (คลังข้อสอบกลาง)
+    // ─────────────────────────────────────
+
     match /exam_sets/{setId} {
+      // อ่าน: ทุกคนที่ล็อกอินได้
       allow read: if isSignedIn();
+
+      // เขียน/แก้ไข/ลบ: admin เท่านั้น + validate
       allow create: if isAdmin() && isValidExamSet(request.resource.data);
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Contents - Authentication Required (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Contents - เนื้อหา/บทเรียน
+    // ─────────────────────────────────────
+
     match /contents/{contentId} {
+      // อ่าน: ต้องล็อกอิน (กัน crawler ภายนอก)
       allow read: if isSignedIn();
+
+      // แก้ไข: admin เท่านั้น
       allow write: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Pins - Authentication Required (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Pins - ปักหมุดตารางเรียน, Today pins
+    // ─────────────────────────────────────
+
     match /pins/{pinId} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Sanluang Exams - Authentication Required (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Schedules - ตารางเรียนรายเดือน
+    // ─────────────────────────────────────
+
+    match /schedules/{scheduleId} {
+      // อ่าน: ผู้ใช้ทั่วไปที่ล็อกอินเห็นตารางเรียนได้
+      allow read: if isSignedIn();
+
+      // สร้าง/แก้ไข/ลบ: จำกัดเฉพาะ admin (ถ้าต้องการผูกกับ admin ห้อง สามารถเปลี่ยนในอนาคต)
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─────────────────────────────────────
+    // Sanluang Exams
+    // ─────────────────────────────────────
+
     match /sanluang_exams/{docId} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Exam Logs - Admin Only (✅ FIXED)
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Logs / Error Logs / Audit Logs
+    // ─────────────────────────────────────
+
     match /exam_logs/{logId} {
       allow read: if isAdmin();
       allow create: if isAdmin();
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Error Logs - Admin only
-    // ════════════════════════════════════
-    
+
     match /errorLogs/{logId} {
-      allow read: if isAdmin();
+      // นักเรียน/ผู้ใช้ทั่วไปสามารถเขียน error log เพื่อ report ได้
       allow create: if isSignedIn();
+      // อ่าน/ลบ: admin เท่านั้น
+      allow read: if isAdmin();
       allow delete: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Audit Logs - Admin only
-    // ════════════════════════════════════
-    
+
     match /auditLogs/{logId} {
       allow read: if isAdmin();
       allow write: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Config - Admin only
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Config - ค่าคอนฟิกระบบ (เช่น today_pins)
+    // ─────────────────────────────────────
+
     match /config/{configId} {
+      // อ่าน: ทุกคนที่ล็อกอิน (เช่น today_pins, general config)
       allow read: if isSignedIn();
+
+      // แก้ไข: admin เท่านั้น
       allow write: if isAdmin();
     }
-    
-    // ════════════════════════════════════
-    // Default Deny - ปิดกั้นทั้งหมด
-    // ════════════════════════════════════
-    
+
+    // ─────────────────────────────────────
+    // Default Deny - ปิดทุกอย่างที่ไม่ระบุ
+    // ─────────────────────────────────────
+
     match /{document=**} {
       allow read, write: if false;
     }
