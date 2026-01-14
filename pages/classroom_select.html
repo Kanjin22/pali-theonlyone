@@ -171,7 +171,6 @@
             headerTitle.textContent = `เลือกห้องเรียน ${levelNames[currentLevel] || currentLevel}`;
         }
 
-        // Render Rooms from Firestore
         async function loadRooms(userCtx) {
             grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">กำลังโหลดห้องเรียน...</div>';
             
@@ -180,29 +179,37 @@
                     .where('level', '==', currentLevel)
                     .get();
 
-                if (snapshot.empty) {
+                const rooms = [];
+                snapshot.forEach(doc => {
+                    rooms.push({ id: doc.id, ...doc.data() });
+                });
+
+                if (rooms.length === 0) {
                     grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#7f8c8d;">ยังไม่มีห้องเรียนในชั้นนี้</div>';
                     return;
                 }
 
                 grid.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const room = doc.data();
-                    
-                    // Role-based filtering
+                const visibleRooms = rooms.filter(room => {
                     if (userCtx && userCtx.role) {
                         if (userCtx.role === 'student') {
-                            // Only show rooms that match student's enrolled level
-                            if (!userCtx.level || room.level !== userCtx.level) return;
-                        } else if (userCtx.role === 'teacher') {
-                            // Show all rooms for teachers
+                            if (userCtx.level && room.level !== userCtx.level) return false;
+                            return true;
                         }
-                        // admin sees all
-                    } else {
-                        // Unknown role or not logged in -> block
-                        return;
+                        if (userCtx.role === 'teacher' || userCtx.role === 'admin') {
+                            return true;
+                        }
+                        return true;
                     }
-                    
+                    return false;
+                });
+
+                if (visibleRooms.length === 0) {
+                    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#7f8c8d;">ยังไม่มีห้องเรียนในชั้นนี้สำหรับสิทธิ์ผู้ใช้นี้</div>';
+                    return;
+                }
+
+                visibleRooms.forEach(room => {
                     const card = document.createElement('a');
                     
                     if (room.status === 'active') {
@@ -234,9 +241,8 @@
             }
         }
 
-        // Auth guard and context
         auth.onAuthStateChanged(async u => {
-            if (!u) { location.href = 'index.html'; return; }
+            if (!u) { location.href = '../index.html'; return; }
             try {
                 let role = 'general';
                 let level = null;
@@ -253,7 +259,7 @@
                 await loadRooms({ role, level, displayName, email: u.email });
             } catch (e) {
                 console.error("Auth/Access error:", e);
-                location.href = 'index.html';
+                location.href = '../index.html';
             }
         });
 
