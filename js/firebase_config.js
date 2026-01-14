@@ -16,5 +16,8 @@ if (!firebase.apps.length) {
     firebase.app(); // if already initialized, use that one
 }
 
-// Global Exports (optional, for explicit usage)
+// Global Exports
 window.firebaseConfig = firebaseConfig;
+window.auth = firebase.auth();
+window.auth.useDeviceLanguage();
+window.db = firebase.firestore();
