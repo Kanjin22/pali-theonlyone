@@ -311,6 +311,12 @@
         <div class="hero-section">
             <div class="hero-title">ระบบการเรียนบาลีออนไลน์</div>
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
+            <div style="margin-top: 20px;">
+                <button onclick="document.getElementById('btn-guest-login').click()" 
+                    style="padding:12px 24px; font-size:1.1rem; background:#2ecc71; color:white; border:none; border-radius:30px; cursor:pointer; box-shadow:0 4px 10px rgba(46, 204, 113, 0.3); transition:transform 0.2s;">
+                    <i class="fa-solid fa-user-astronaut"></i> ทดลองใช้งาน (ไม่ต้องลงทะเบียน)
+                </button>
+            </div>
         </div>
 
         <div id="intro-section" style="margin-bottom: 40px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: left;">
@@ -334,7 +340,7 @@
 
 
 
-        <div id="app-content" style="display:none;">
+        <div id="app-content">
             
             <!-- Tab Navigation -->
             <div class="tab-nav">
@@ -347,13 +353,13 @@
             <div id="tab-student" class="tab-content active">
                 
                 <!-- Student Dashboard -->
-                <div id="student-dashboard" style="display:none; margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
+                <div id="student-dashboard" style="margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
                     <div class="dash-card">
                         <div style="position: relative; z-index: 2;">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                                 <div>
-                                    <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="dash-greeting">สวัสดีครับ นักเรียน</div>
-                                    <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">ระดับชั้นเรียนของคุณ</div>
+                                    <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;" id="dash-greeting">ยินดีต้อนรับ ผู้เยี่ยมชม</div>
+                                    <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">กรุณาเข้าสู่ระบบเพื่อบันทึกสถิติการเรียน</div>
                                 </div>
                                 <button onclick="backupUserData()" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.85rem;" title="สำรองข้อมูลผู้ใช้">
                                     <i class="fa-solid fa-cloud-arrow-down"></i> Backup
@@ -365,31 +371,31 @@
                                 <i class="fa-solid fa-fire" style="color: #f1c40f; font-size: 1.2rem;"></i>
                                 <div>
                                     <div style="font-size: 0.8rem; opacity: 0.8;">เรียนต่อเนื่อง <i class="fa-solid fa-circle-info" style="font-size:0.7rem; opacity:0.7;"></i></div>
-                                    <div style="font-weight: bold;" id="dash-streak">0 วัน</div>
+                                    <div style="font-weight: bold;" id="dash-streak">-</div>
                                 </div>
                             </div>
                                 <div class="dash-stat" onclick="editWeeklyGoal()" style="cursor:pointer;" title="คลิกเพื่อตั้งเป้าหมาย">
                                     <i class="fa-solid fa-list-check" style="color: #2ecc71; font-size: 1.2rem;"></i>
                                     <div>
                                         <div style="font-size: 0.8rem; opacity: 0.8;">เป้าหมายสัปดาห์นี้ <i class="fa-solid fa-pen" style="font-size:0.7rem; opacity:0.7;"></i></div>
-                                        <div style="font-weight: bold;" id="dash-week">0/3 ครั้ง</div>
+                                        <div style="font-weight: bold;" id="dash-week">-</div>
                                     </div>
                                 </div>
                                 <div class="dash-stat">
                                     <i class="fa-solid fa-star" style="color: #f39c12; font-size: 1.2rem;"></i>
                                     <div>
                                         <div style="font-size: 0.8rem; opacity: 0.8;">คะแนนบัตรคำ</div>
-                                        <div style="font-weight: bold;" id="dash-flash-score">0</div>
+                                        <div style="font-weight: bold;" id="dash-flash-score">-</div>
                                     </div>
                                 </div>
                                 
-                                <a id="dash-classroom-btn" href="#" class="dash-btn">
+                                <a id="dash-classroom-btn" href="classroom_select.html" class="dash-btn" style="background: white; color: #2980b9; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                                     <i class="fa-solid fa-door-open"></i> เข้าห้องเรียน
                                 </a>
                                 <a id="dash-resume-btn" href="#" class="dash-btn" style="display:none;">
                                     <i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อจากเดิม
                                 </a>
-                                <a id="dash-flashcard-btn" href="#" class="dash-btn">
+                                <a id="dash-flashcard-btn" href="flashcards.html" class="dash-btn">
                                    <i class="fa-solid fa-layer-group"></i> ฝึกบัตรคำ
                                </a>
                                <a id="dash-vocab-btn" href="vocabulary_notebook.html" class="dash-btn">
