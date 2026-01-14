@@ -37,7 +37,7 @@ service cloud.firestore {
 
     function isClassroomAdmin(classroomId) {
       let classroom = getClassroom(classroomId);
-      return isSignedIn() && classroom.adminId == request.auth.uid;
+      return isSignedIn() && (classroom.adminId == request.auth.uid || isAdmin());
     }
 
     function isClassroomMember(classroomId) {
@@ -92,16 +92,26 @@ service cloud.firestore {
       // อ่าน: เจ้าของ หรือ admin เท่านั้น
       allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
 
-      // สร้าง: เจ้าของเท่านั้น + validate profile
-      allow create: if isSignedIn()
-                    && isOwner(userId)
-                    && isValidUser(request.resource.data);
+      // สร้าง: เจ้าของ หรือ admin + validate profile
+      allow create: if (
+                      isSignedIn()
+                      && isOwner(userId)
+                      && isValidUser(request.resource.data)
+                    ) || (
+                      isAdmin()
+                      && isValidUser(request.resource.data)
+                    );
 
-      // แก้ไข: เจ้าของเท่านั้น + ห้ามยุ่ง field role/isAdmin + validate profile
-      allow update: if isSignedIn()
-                    && isOwner(userId)
-                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'isAdmin'])
-                    && isValidUser(request.resource.data);
+      // แก้ไข: เจ้าของ (ห้ามยุ่ง role/isAdmin) หรือ admin + validate profile
+      allow update: if (
+                      isSignedIn()
+                      && isOwner(userId)
+                      && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'isAdmin'])
+                      && isValidUser(request.resource.data)
+                    ) || (
+                      isAdmin()
+                      && isValidUser(request.resource.data)
+                    );
 
       // ลบ: admin เท่านั้น
       allow delete: if isAdmin();
