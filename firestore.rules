@@ -218,11 +218,27 @@ service cloud.firestore {
     }
 
     match /enrollments/{userId} {
+      // อ่าน: เจ้าของ หรือ admin
       allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
+
+      // สร้างคำขอสมัครเรียนครั้งแรก
       allow create: if isSignedIn()
                     && isOwner(userId)
                     && isValidEnrollment(request.resource.data, userId);
-      allow update: if isAdmin();
+
+      // แก้ไขคำขอ: 
+      // - เจ้าของแก้ได้ถ้ายังไม่อนุมัติ (status เดิม != 'approved')
+      //   และ payload ใหม่ต้องยังเป็นคำขอที่ valid (pending)
+      // - หรือ admin แก้ได้ทุกกรณี
+      allow update: if (
+                        isSignedIn()
+                        && isOwner(userId)
+                        && isValidEnrollment(request.resource.data, userId)
+                        && (resource.data.status != 'approved')
+                      )
+                      || isAdmin();
+
+      // ลบ: admin เท่านั้น
       allow delete: if isAdmin();
     }
 
