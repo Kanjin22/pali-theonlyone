@@ -319,11 +319,11 @@ service cloud.firestore {
     }
 
     match /errorLogs/{logId} {
-      // นักเรียน/ผู้ใช้ทั่วไปสามารถเขียน error log เพื่อ report ได้
-      allow create: if isSignedIn();
-      // อ่าน/ลบ: admin เท่านั้น
-      allow read: if isAdmin();
-      allow delete: if isAdmin();
+      // ป้องกัน Spam: ไม่อนุญาตให้ User ทั่วไปสร้าง Error Log ลง Database
+      // allow create: if isSignedIn(); 
+      
+      // อ่าน/เขียน/ลบ: admin เท่านั้น
+      allow read, write: if isAdmin();
     }
 
     match /auditLogs/{logId} {

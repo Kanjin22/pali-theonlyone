@@ -1373,10 +1373,12 @@
             btn.style.background = '';
             btn.style.color = '';
             
-            // Remove Clear Button if exists
+            // Remove Clear/Cancel Buttons if exists
             const controls = btn.parentElement;
             const clearBtn = controls.querySelector('.btn-clear-sentence');
             if(clearBtn) clearBtn.remove();
+            const cancelBtn = controls.querySelector('.btn-cancel-sentence');
+            if(cancelBtn) cancelBtn.remove();
             
             const editables = block.querySelectorAll('.pali-text, .thai-text');
             editables.forEach(el => {
@@ -1437,9 +1439,27 @@
                 // Insert after the save button (which is btn)
                 btn.after(clearBtn);
             }
+
+            // Add Cancel Button (New)
+            if(!controls.querySelector('.btn-cancel-sentence')) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'sentence-btn btn-cancel-sentence';
+                cancelBtn.innerHTML = '<i class="fas fa-times"></i>';
+                cancelBtn.title = 'ยกเลิก (ไม่บันทึก)';
+                cancelBtn.style.background = '#95a5a6';
+                cancelBtn.style.color = 'white';
+                cancelBtn.onclick = function() { cancelSentenceEdit(index, btn); };
+                // Insert after the clear button
+                const clearBtn = controls.querySelector('.btn-clear-sentence');
+                if (clearBtn) clearBtn.after(cancelBtn);
+            }
             
             const editables = block.querySelectorAll('.pali-text, .thai-text');
             editables.forEach(el => {
+                // Backup for Cancel
+                if (el.classList.contains('pali-text')) block.dataset.backupPali = el.innerHTML;
+                if (el.classList.contains('thai-text')) block.dataset.backupThai = el.innerHTML;
+
                 el.contentEditable = 'true';
                 // Add listeners for auto-save (debounce)
                 ['input','blur','keyup','paste'].forEach(ev => el.addEventListener(ev, onInlineChanged));
@@ -1453,6 +1473,30 @@
             
             if (editables.length > 0) editables[0].focus();
         }
+    }
+
+    function cancelSentenceEdit(index, btn) {
+        const page = document.getElementById('pageContent');
+        const block = page.children[index];
+        if (!block) return;
+        
+        // Restore from backup if available
+        if (block.dataset.backupPali !== undefined) {
+            const pDiv = block.querySelector('.pali-text');
+            if (pDiv) pDiv.innerHTML = block.dataset.backupPali;
+        }
+        if (block.dataset.backupThai !== undefined) {
+            const tDiv = block.querySelector('.thai-text');
+            if (tDiv) tDiv.innerHTML = block.dataset.backupThai;
+        }
+        
+        // Cleanup backup
+        delete block.dataset.backupPali;
+        delete block.dataset.backupThai;
+
+        // Toggle off (This will trigger saveInlineEdits, which will save the restored content, 
+        // effectively overwriting any auto-saved changes from this cancelled session)
+        toggleSentenceEdit(btn, index);
     }
 
     function resetSentenceEdits(index) {
