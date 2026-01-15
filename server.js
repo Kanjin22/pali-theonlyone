@@ -305,28 +305,52 @@ app.get('/api/dpd-stats', (_req, res) => {
 const parseWithPrefixes = (p, prefixes) => {
   if (!fs.existsSync(p)) return null;
   const s = fs.statSync(p);
-  let count = 0;
+  let obj = null;
+
   try {
-    const txt = fs.readFileSync(p, 'utf8').trim();
-    let payload = txt;
-    // Strip BOM
+    let payload = fs.readFileSync(p, 'utf8');
+    if (payload.length === 0) {
+      return { mtime: s.mtime, size: s.size, count: 0 };
+    }
+
     if (payload.charCodeAt(0) === 0xFEFF) {
       payload = payload.slice(1);
     }
+
     for (const pref of prefixes) {
-      if (payload.startsWith(pref)) {
-        payload = payload.slice(pref.length).trim();
+      const idx = payload.indexOf(pref);
+      if (idx !== -1) {
+        payload = payload.slice(idx + pref.length);
         break;
       }
     }
+
+    let endIdx = payload.indexOf('};');
+    if (endIdx !== -1) {
+      payload = payload.slice(0, endIdx + 2);
+    }
+
+    payload = payload.trim();
     if (payload.endsWith(';')) payload = payload.slice(0, -1);
-    const obj = JSON.parse(payload);
+
+    try {
+      obj = JSON.parse(payload);
+    } catch {
+      obj = (new Function('return ' + payload))();
+    }
+  } catch {
+    obj = null;
+  }
+
+  let count = 0;
+  if (obj) {
     if (Array.isArray(obj)) {
       count = obj.length;
     } else {
       count = Object.keys(obj).length;
     }
-  } catch {}
+  }
+
   return { mtime: s.mtime, size: s.size, count };
 };
 
