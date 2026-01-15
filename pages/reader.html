@@ -707,15 +707,13 @@
   <script src="../data/vocab-inflected.js"></script>
   <script src="../data/vocab-sc.js"></script>
   <script src="../data/vocab-roots.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  
   <script src="../config.js"></script>
   <script src="../js/firebase_config.js"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-    const app = initializeApp(window.firebaseConfig);
-    const db = getFirestore(app);
-
+  <script>
     async function fetchRootsData() {
         // Cache handling
         const CACHE_KEY = 'dhatu_cache_v4'; 
@@ -731,20 +729,33 @@
             data = JSON.parse(cachedData);
         } else {
             try {
+                // Ensure DB is ready
+                if (!window.db && typeof firebase !== 'undefined') {
+                    window.db = firebase.firestore();
+                }
+                
+                if (!window.db) {
+                    console.warn("Firebase DB not ready for Roots, skipping fetch.");
+                    return;
+                }
+
                 console.log("Fetching roots from Firestore for Reader...");
-                const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
-                const snapshot = await getDocs(q);
-                data = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    dhatu_word: doc.data().dhatu_word,
-                    arth_thai: doc.data().arth_thai,
-                    arth_pali: doc.data().arth_pali,
-                    mawat_dhatu: doc.data().mawat_dhatu,
-                    anukrom_dhatu: doc.data().anukrom_dhatu,
-                    udaharana: doc.data().udaharana,
-                    page: doc.data().page || "",
-                    source: doc.data().source || ""
-                }));
+                const snapshot = await window.db.collection('dhatu').orderBy('anukrom_dhatu').get();
+                
+                data = snapshot.docs.map(doc => {
+                    const d = doc.data();
+                    return {
+                        id: doc.id,
+                        dhatu_word: d.dhatu_word,
+                        arth_thai: d.arth_thai,
+                        arth_pali: d.arth_pali,
+                        mawat_dhatu: d.mawat_dhatu,
+                        anukrom_dhatu: d.anukrom_dhatu,
+                        udaharana: d.udaharana,
+                        page: d.page || "",
+                        source: d.source || ""
+                    };
+                });
                 localStorage.setItem(CACHE_KEY, JSON.stringify(data));
                 localStorage.setItem(TIME_KEY, NOW);
             } catch (err) {
