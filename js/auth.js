@@ -4,7 +4,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // --- DOM Elements (Auth) ---
-const loginModal = document.getElementById('login-modal');
+var loginModal = document.getElementById('login-modal');
 const btnCloseLogin = document.getElementById('btn-close-login');
 const modalEmailSignIn = document.getElementById('modal-email-signin');
 const modalEmailSignUp = document.getElementById('modal-email-signup');
