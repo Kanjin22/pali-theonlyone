@@ -227,19 +227,16 @@
                 submitBtn.disabled = true;
                 setStatus('กำลังส่งข้อมูล...', false);
 
+                var body = new URLSearchParams();
+                Object.keys(payload).forEach(function(key) {
+                    body.append(key, payload[key]);
+                });
+
                 fetch(endpoint, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).then(function(res) {
-                    if (!res.ok) {
-                        throw new Error('HTTP ' + res.status);
-                    }
-                    return res.json().catch(function() { return {}; });
-                }).then(function(data) {
-                    if (data && data.ok === false) {
-                        throw new Error(data.message || 'ไม่สามารถบันทึกข้อมูลได้');
-                    }
+                    mode: 'no-cors',
+                    body: body
+                }).then(function() {
                     setStatus('ส่งข้อมูลเรียบร้อยแล้ว ขอบคุณสำหรับการแจ้งปัญหา', false);
                     form.reset();
                 }).catch(function(err) {
