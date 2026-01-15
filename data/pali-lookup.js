@@ -35,9 +35,20 @@ const PaliLookup = {
         // 1. Exact Match
         let result = this.checkAll(cleanWord, databases);
 
+        // Determine if we already have a Thai dictionary result
+        let isThaiResult = result && (
+            result.source === 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)' || 
+            result.source === 'พจนานุกรมฉบับภูมิพโลภิกขุ' || 
+            result.source === 'ปทานุกรมชินกาลมาลินี' || 
+            result.source === 'พจนานุกรมทั่วไป (พระไตรปิฎก)' || 
+            result.source === 'ศัพท์ทั่วไป'
+        );
+        
         // 1.5. Inflected Form Lookup (Thai)
         // Check generated vocab-inflected.js
-        if (!result && databases.inflected && databases.inflected[cleanWord]) {
+        // NOTE: We allow this to override non-Thai results (e.g. DPD direct hits)
+        // so that forms like อมตํ, กาลํ still point to Thai base words อมต, กาล.
+        if (!isThaiResult && databases.inflected && databases.inflected[cleanWord]) {
             const baseWord = databases.inflected[cleanWord];
             const baseResult = this.checkAll(baseWord, databases);
             if (baseResult) {
@@ -49,14 +60,6 @@ const PaliLookup = {
         
         // 2. Indirect Thai Lookup (via DPD Inflected Base Word)
         // If we didn't find a Thai result (result is null OR result is Roman), try to find base via DPD Inflected
-        const isThaiResult = result && (
-            result.source === 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)' || 
-            result.source === 'พจนานุกรมฉบับภูมิพโลภิกขุ' || 
-            result.source === 'ปทานุกรมชินกาลมาลินี' || 
-            result.source === 'พจนานุกรมทั่วไป (พระไตรปิฎก)' || 
-            result.source === 'ศัพท์ทั่วไป'
-        );
-        
         if (!isThaiResult && databases.dpdInflected) {
              let roman = cleanWord;
              if (/[ก-ฮ]/.test(cleanWord) && typeof PaliScript !== 'undefined' && PaliScript.thaiToRoman) {
