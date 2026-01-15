@@ -243,25 +243,18 @@ function renderRoomContent(room) {
         if (typeof firebase !== 'undefined') {
             firebase.auth().onAuthStateChanged(async (user) => {
                 if (user) {
-                    const FALLBACK_ADMINS = ['admin1234@hotmail.com'];
                     let allow = false;
 
-                    // 1. Check Fallback
-                    if (FALLBACK_ADMINS.includes(user.email)) allow = true;
-
-                    // 2. Check Firestore Role
-                    if (!allow) {
-                        try {
-                            if (firebase.apps.length) {
-                                const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-                                if (doc.exists) {
-                                    const role = doc.data().role;
-                                    if (role === 'admin' || role === 'teacher') allow = true;
-                                }
+                    try {
+                        if (firebase.apps.length) {
+                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                            if (doc.exists) {
+                                const role = doc.data().role;
+                                if (role === 'admin' || role === 'teacher') allow = true;
                             }
-                        } catch (e) {
-                            console.error("Role check failed:", e);
                         }
+                    } catch (e) {
+                        console.error("Role check failed:", e);
                     }
 
                     if (allow) {

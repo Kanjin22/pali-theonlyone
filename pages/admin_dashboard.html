@@ -1627,32 +1627,11 @@
             'pt9': 'ป.ธ. ๙'
         };
 
-        // Fallback Admin List (Sync with other files)
-        const FALLBACK_ADMIN_EMAILS = [
-            'admin@example.com',
-            'pali.theonlyone@gmail.com',
-            'admin1234@hotmail.com',
-            'setthachayo@gmail.com'
-        ];
-
         // Check Admin Auth
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 console.log("Admin logged in:", user.email);
                 checkServerAdmin();
-
-                // 1. Attempt to Elevate Privileges in Firestore (Auto-Fix for Fallback Admins)
-                if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                    try {
-                        await db.collection('users').doc(user.uid).set({
-                            role: 'admin',
-                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                        }, { merge: true });
-                        console.log("Auto-promoted to admin in Firestore based on Fallback List");
-                    } catch (e) {
-                        console.warn("Could not auto-promote to admin (Permission Denied?):", e.message);
-                    }
-                }
 
                 // เพิ่มบรรทัดนี้ลงไปเพื่อตั้งค่าหน้าแรกให้แสดงผลแน่นอน
                 switchTab('enrollments');
@@ -1671,19 +1650,12 @@
                 // 3. Verify Role (Client Side Check)
                 db.collection('users').doc(user.uid).get().then(doc => {
                     if (!doc.exists || doc.data().role !== 'admin') {
-                        // Check Fallback
-                        if (FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                            console.log("Allowed via Fallback List");
-                            return;
-                        }
                         console.warn("User is not admin, but logged in. Redirecting...");
                         alert('คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
                         location.href = 'admin_login.html';
                     }
                 }).catch(e => {
                     console.error("Error checking role:", e);
-                    // If permission denied, but we are in fallback list, ignore
-                    if (FALLBACK_ADMIN_EMAILS.includes(user.email)) return;
                 });
 
             } else {

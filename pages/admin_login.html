@@ -222,12 +222,6 @@
             }
         });
 
-        // รายชื่ออีเมลผู้ดูแลระบบ (สำหรับกรณีที่ยังไม่ได้ตั้งค่า Firestore Rules หรือเกิดข้อผิดพลาด)
-        const FALLBACK_ADMIN_EMAILS = [
-            'setthachayo@gmail.com', // Explicitly added by user request
-            // เพิ่มอีเมลของคุณที่นี่
-        ];
-
         async function checkAdminRole(user, isInteractive) {
             try {
                 const doc = await db.collection('users').doc(user.uid).get();
@@ -235,24 +229,10 @@
                     // Success
                     window.location.href = 'admin_dashboard.html';
                 } else {
-                    // Not admin in Firestore
-                    // Check Fallback List before failing
-                    if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                        console.warn("Allowed via Fallback Email List (Role mismatch)");
-                        window.location.href = 'admin_dashboard.html';
-                        return;
-                    }
                     handleLoginFailure(isInteractive, 'บัญชีนี้ไม่มีสิทธิ์เข้าถึงส่วนผู้ดูแล');
                 }
             } catch (e) {
                 console.error("Role check error:", e);
-
-                // Fallback: Check if email is in allowlist
-                if (user.email && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                    console.warn("Allowed via Fallback Email List");
-                    window.location.href = 'admin_dashboard.html';
-                    return;
-                }
 
                 if (e.code === 'permission-denied') {
                     // Specific error handling for rules

@@ -356,13 +356,6 @@ if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChang
             }
         } catch (e) {}
 
-        // Fallback Admin List (กรณี Firestore Rules มีปัญหา)
-        const FALLBACK_ADMIN_EMAILS = [
-            'admin@example.com',
-            'pali.theonlyone@gmail.com',
-            'admin1234@hotmail.com' // Explicitly added by user request
-        ];
-
         // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
         if (db) {
             try {
