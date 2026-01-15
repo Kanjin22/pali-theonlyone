@@ -38,6 +38,74 @@
             margin-bottom: 20px;
             border: 1px solid #ffeeba;
         }
+
+        .form-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #34495e;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: #27ae60;
+            color: #ffffff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .status-message {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .status-success {
+            color: #27ae60;
+        }
+
+        .status-error {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -45,10 +113,47 @@
         <h1><i class="fa-solid fa-bug"></i> แจ้งปัญหา / ข้อเสนอแนะ</h1>
         
         <div class="alert-box">
-            <i class="fa-solid fa-circle-info"></i> หากพบข้อผิดพลาดของระบบ ข้อมูลผิด หรือมีข้อเสนอแนะเพิ่มเติม สามารถแจ้งทีมงานได้ผ่านช่องทางด้านล่างครับ
+            <i class="fa-solid fa-circle-info"></i> หากพบข้อผิดพลาดของระบบ ข้อมูลผิด หรือมีข้อเสนอแนะเพิ่มเติม สามารถแจ้งทีมงานได้ผ่านฟอร์มด้านล่างหรือช่องทางอื่นๆ ตามสะดวกครับ
         </div>
 
-        <div class="section-title">ช่องทางการแจ้งปัญหา</div>
+        <div class="section-title">ฟอร์มแจ้งปัญหาผ่านเว็บไซต์</div>
+        <div class="form-card">
+            <form id="issueForm">
+                <div class="form-group">
+                    <label for="issueType">ประเภทคำร้อง</label>
+                    <select id="issueType" required>
+                        <option value="">เลือกประเภท</option>
+                        <option value="bug">พบข้อผิดพลาดของระบบ</option>
+                        <option value="content">เนื้อหาผิด/สะกดผิด</option>
+                        <option value="suggestion">ข้อเสนอแนะเพิ่มเติม</option>
+                        <option value="other">อื่นๆ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issuePage">หน้าที่เกิดปัญหา (เช่น reader.html, dictionary)</label>
+                    <input type="text" id="issuePage" placeholder="ระบุหน้าหรือฟีเจอร์ที่พบปัญหา">
+                </div>
+                <div class="form-group">
+                    <label for="issueDetail">รายละเอียดปัญหา</label>
+                    <textarea id="issueDetail" required placeholder="อธิบายสิ่งที่เกิดขึ้น ขั้นตอนที่ทำ และสิ่งที่คาดหวัง"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="issueName">ชื่อผู้แจ้ง (ไม่บังคับ)</label>
+                    <input type="text" id="issueName" placeholder="ระบุชื่อเล่นหรือชื่อจริง">
+                </div>
+                <div class="form-group">
+                    <label for="issueEmail">อีเมลติดต่อกลับ (ไม่บังคับ)</label>
+                    <input type="email" id="issueEmail" placeholder="สำหรับติดต่อกลับหากต้องการ">
+                </div>
+                <button type="submit" id="issueSubmitBtn" class="btn-submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>ส่งคำร้อง</span>
+                </button>
+                <div id="issueStatus" class="status-message"></div>
+            </form>
+        </div>
+
+        <div class="section-title">ช่องทางการแจ้งปัญหาอื่นๆ</div>
         <div class="link-list">
             <!-- Google Form Link -->
             <!-- TODO: ใส่ลิงก์ Google Form ของจริงที่นี่ -->
@@ -73,5 +178,77 @@
 
         <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
     </div>
+
+    <script>
+        (function() {
+            var endpoint = window.REPORT_ISSUE_ENDPOINT || 'https://script.google.com/macros/s/AKfycbxPuYI2ArQr_7zZ5bd7hgcCl59tqVlUUf9dCKCKKWga_zOevfoTJ59WPLiXld1py7s/exec';
+            var form = document.getElementById('issueForm');
+            if (!form) return;
+
+            var typeEl = document.getElementById('issueType');
+            var pageEl = document.getElementById('issuePage');
+            var detailEl = document.getElementById('issueDetail');
+            var nameEl = document.getElementById('issueName');
+            var emailEl = document.getElementById('issueEmail');
+            var statusEl = document.getElementById('issueStatus');
+            var submitBtn = document.getElementById('issueSubmitBtn');
+
+            function setStatus(message, isError) {
+                statusEl.textContent = message;
+                statusEl.classList.remove('status-success', 'status-error');
+                if (!message) return;
+                statusEl.classList.add(isError ? 'status-error' : 'status-success');
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (!detailEl.value.trim()) {
+                    setStatus('กรุณากรอกรายละเอียดปัญหา', true);
+                    detailEl.focus();
+                    return;
+                }
+
+                if (!endpoint) {
+                    setStatus('ยังไม่ได้ตั้งค่า URL สำหรับบันทึกลง Google Sheet กรุณาติดต่อผู้ดูแลระบบ', true);
+                    return;
+                }
+
+                var payload = {
+                    type: typeEl.value,
+                    page: pageEl.value.trim(),
+                    detail: detailEl.value.trim(),
+                    name: nameEl.value.trim(),
+                    email: emailEl.value.trim(),
+                    userAgent: navigator.userAgent,
+                    timestamp: new Date().toISOString()
+                };
+
+                submitBtn.disabled = true;
+                setStatus('กำลังส่งข้อมูล...', false);
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(function(res) {
+                    if (!res.ok) {
+                        throw new Error('HTTP ' + res.status);
+                    }
+                    return res.json().catch(function() { return {}; });
+                }).then(function(data) {
+                    if (data && data.ok === false) {
+                        throw new Error(data.message || 'ไม่สามารถบันทึกข้อมูลได้');
+                    }
+                    setStatus('ส่งข้อมูลเรียบร้อยแล้ว ขอบคุณสำหรับการแจ้งปัญหา', false);
+                    form.reset();
+                }).catch(function(err) {
+                    setStatus('ส่งไม่สำเร็จ: ' + (err && err.message ? err.message : 'กรุณาลองใหม่อีกครั้ง'), true);
+                }).finally(function() {
+                    submitBtn.disabled = false;
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
