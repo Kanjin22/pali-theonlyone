@@ -898,7 +898,7 @@
         
         const text = preferThai(s);
         
-        if (mode === 'thai' && (text.includes('{') || text.includes('\n'))) {
+        if (text.includes('{')) {
             return parseThaiFormatting(text);
         }
 

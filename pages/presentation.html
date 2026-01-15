@@ -2844,8 +2844,7 @@
             
             const isLiteralMode = (!translationMode || translationMode === 'literal') && !isThaiSense;
             
-            // New logic: parse custom formatting { } if present, otherwise fallback to standard
-            if (isLiteralMode && (displayThai.includes('{') || displayThai.includes('\n'))) {
+            if (displayThai.includes('{')) {
                  thaiBox.innerHTML = parseThaiFormatting(displayThai, null);
             } else if (isLiteralMode && s.gatha) {
                 // User requested normal text flow (not split left/right) but narrower margins for Gatha
