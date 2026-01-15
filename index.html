@@ -196,6 +196,22 @@
             color: #8e44ad;
         }
 
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .login-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15);
+            outline: none;
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -697,11 +713,10 @@
                 <div style="border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
                     <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">อีเมลและรหัสผ่าน</div>
                     <input id="modal-email" type="email" inputmode="email" autocomplete="email"
-                        placeholder="อีเมล (ตัวอักษรอังกฤษเท่านั้น)"
-                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                        placeholder="อีเมล (ตัวอักษรอังกฤษเท่านั้น)" class="login-input">
                     <div id="email-status" style="margin-bottom:10px; font-size:0.95rem; color:#607d8b;"></div>
-                    <input id="modal-password" type="password" placeholder="รหัสผ่าน"
-                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px; display:none;">
+                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" class="login-input"
+                        style="display:none;">
                     <div style="display:flex; gap:8px;">
                         <button id="modal-email-next"
                             style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดำเนินการต่อ</button>
