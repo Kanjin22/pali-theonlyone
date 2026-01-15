@@ -714,8 +714,8 @@
   <script src="../config.js"></script>
   <script src="../js/firebase_config.js"></script>
   <script>
+    const isLocalEnv = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
     async function fetchRootsData() {
-        // Cache handling
         const CACHE_KEY = 'dhatu_cache_v4'; 
         const TIME_KEY = 'dhatu_cache_time_v4';
         const cachedData = localStorage.getItem(CACHE_KEY);
@@ -728,14 +728,15 @@
             console.log("Using cached roots data for Reader");
             data = JSON.parse(cachedData);
         } else {
+            if (!isLocalEnv) {
+                return;
+            }
             try {
-                // Ensure DB is ready
                 if (!window.db && typeof firebase !== 'undefined') {
                     window.db = firebase.firestore();
                 }
                 
                 if (!window.db) {
-                    console.warn("Firebase DB not ready for Roots, skipping fetch.");
                     return;
                 }
 
@@ -759,7 +760,6 @@
                 localStorage.setItem(CACHE_KEY, JSON.stringify(data));
                 localStorage.setItem(TIME_KEY, NOW);
             } catch (err) {
-                console.error("Error fetching roots:", err);
                 return;
             }
         }
@@ -2603,17 +2603,14 @@
             lastUrl: window.location.href
         };
 
-        // 1. LocalStorage
         localStorage.setItem('pali_last_session', JSON.stringify(state));
 
-        // 2. Firestore (Cloud Sync)
-        if (typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+        if (isLocalEnv && typeof firebase !== 'undefined' && firebase.auth().currentUser) {
             const uid = firebase.auth().currentUser.uid;
             db.collection('users').doc(uid).collection('progress').doc('last_session').set(state, { merge: true })
-                .catch(err => console.warn('Cloud save failed', err));
+                .catch(() => {});
         }
 
-        // 3. Local User
         const localUser = localStorage.getItem('pali_user_name');
         if (localUser) {
             localStorage.setItem(`pali_progress_local_${localUser}`, JSON.stringify(state));
