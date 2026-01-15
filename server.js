@@ -62,7 +62,7 @@ app.use(cors({
 }));
 app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  // res.header("Cross-Origin-Embedder-Policy", "require-corp"); // Disabled to fix Google Auth Popup issues
   // Security headers
   res.header("X-Content-Type-Options", "nosniff");
   res.header("X-Frame-Options", "DENY");
