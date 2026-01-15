@@ -27,7 +27,7 @@ if (!window.firebaseConfig && (__cfgFromQuery || __cfgFromLocal)) {
 const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || null;
 
 try {
-    if (firebaseConfig && firebaseConfig.apiKey) {
+    if (firebaseConfig && firebaseConfig.apiKey && typeof firebase !== 'undefined') {
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         } else {
@@ -41,7 +41,7 @@ try {
 window.firebaseConfig = firebaseConfig || {};
 
 try {
-    if (firebase.apps.length) {
+    if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
         window.auth = firebase.auth();
         window.auth.useDeviceLanguage();
         window.db = firebase.firestore();

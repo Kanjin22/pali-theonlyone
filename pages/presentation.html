@@ -1477,13 +1477,14 @@
     <script src="../data/content-visuddhi02.js"></script>
     <script src="../data/content-visuddhi03.js"></script>
     <script src="../data/content-abhidhamma01.js"></script>
-    <script>window.vocabRoots = {};</script>
+    <script>window.vocabRoots = window.vocabRoots || {};</script>
     <script src="../config.js"></script>
     <script src="../js/firebase_config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
+        const isLocalEnv = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
         const app = initializeApp(window.firebaseConfig);
         const db = getFirestore(app);
 
@@ -1501,6 +1502,9 @@
                 console.log("Using cached roots data for Presentation");
                 data = JSON.parse(cachedData);
             } else {
+                if (!isLocalEnv) {
+                    return;
+                }
                 try {
                     console.log("Fetching roots from Firestore for Presentation...");
                     const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
@@ -1519,7 +1523,6 @@
                     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
                     localStorage.setItem(TIME_KEY, NOW);
                 } catch (err) {
-                    console.error("Error fetching roots:", err);
                     return;
                 }
             }
