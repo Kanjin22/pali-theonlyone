@@ -2219,14 +2219,22 @@
         if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
             const type = s.gatha.type;
             const lines = s.gatha.lines || [];
-            
-            // 1. Try to extract Intro (Pre-Gatha text) from s.pali
             let introText = "";
-            if (s.pali) {
+            let outroText = "";
+            if (s.pali && lines.length > 0) {
                 const firstLineLeft = (lines[0].left || lines[0] || "").trim();
-                const idx = s.pali.indexOf(firstLineLeft);
-                if (idx > 0) {
-                    introText = s.pali.substring(0, idx).trim();
+                const lastLineRaw = lines[lines.length - 1];
+                const lastLineRight = (lastLineRaw.right || lastLineRaw.left || lastLineRaw || "").trim();
+                const idxFirst = s.pali.indexOf(firstLineLeft);
+                const idxLast = lastLineRight ? s.pali.indexOf(lastLineRight, idxFirst >= 0 ? idxFirst : 0) : -1;
+                if (idxFirst > 0) {
+                    introText = s.pali.substring(0, idxFirst).trim();
+                }
+                if (idxLast >= 0) {
+                    const afterPos = idxLast + lastLineRight.length;
+                    if (afterPos < s.pali.length) {
+                        outroText = s.pali.substring(afterPos).trim();
+                    }
                 }
             }
 
@@ -2237,7 +2245,7 @@
 
             if (type === 'couplet') {
                 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                const isNarrow = vw <= 1200; // Treat tablets/phones as narrow
+                const isNarrow = vw <= 1200;
                 paliHtml += lines.map(line => {
                     const left = wrapWords(line.left || '', sIndex);
                     const right = wrapWords(line.right || '', sIndex);
@@ -2248,9 +2256,15 @@
                                 <div style="${rightStyle}">${right}</div>
                             </div>`;
                 }).join('');
+                if (outroText) {
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex)}</div>`;
+                }
                 return paliHtml;
             } else if (type === 'quatrain') {
                 paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex)}</div>`).join('');
+                if (outroText) {
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex)}</div>`;
+                }
                 return paliHtml;
             }
         }
