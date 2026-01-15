@@ -364,6 +364,7 @@ if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChang
         ];
 
         // บันทึกข้อมูลลง Firestore (Best Effort - ไม่รอผล)
+        if (db) {
             try {
                 let emailSan = null;
                 if (window.validator && typeof window.validator.validateEmail === 'function') {
@@ -384,6 +385,7 @@ if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChang
             } catch (e) {
                 console.warn('User write validation failed:', e);
             }
+        }
 
         if (cachedRole) {
             const displayUserEarly = {
@@ -541,7 +543,7 @@ if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChang
                 sessionStorage.getItem('pali_user_role_session') ||
                 'general';
 
-            if (roleForExamSets === 'admin' || roleForExamSets === 'teacher') {
+            if ((roleForExamSets === 'admin' || roleForExamSets === 'teacher') && db) {
                 db.collection('exam_sets').where('createdBy', '==', uid).limit(1).get().then(s => {
                     if (s.empty) {
                         const defaultTitle = (typeof sanitizeHTML === 'function')
@@ -557,9 +559,7 @@ if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChang
                             createdAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
                     }
-                }).then(() => {
-                    console.log("User data synced");
-                }).catch(err => console.error("Firestore Error:", err));
+                }).catch(e => console.warn("Auto-create exam set failed:", e));
             }
         } catch (err) {
             console.error("Exam Sets Init Error:", err);

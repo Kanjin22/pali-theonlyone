@@ -169,22 +169,42 @@
     <script src="/config.js"></script>
     <script src="../js/firebase_config.js"></script>
     <script>
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        let auth = null;
+        let db = null;
+        
+        try {
+            if (firebase.apps.length) {
+                auth = firebase.auth();
+                db = firebase.firestore();
+            } else {
+                console.warn("Firebase not initialized in admin_login.html");
+                document.getElementById('errorBox').innerHTML = '⚠️ ไม่พบการตั้งค่า Firebase (Config Missing)<br>กรุณาตรวจสอบ Console หรือตั้งค่าผ่าน URL';
+                document.getElementById('errorBox').style.display = 'block';
+                document.getElementById('btnLogin').disabled = true;
+            }
+        } catch (e) {
+            console.error("Firebase init error:", e);
+        }
 
         const loginForm = document.getElementById('loginForm');
         const errorBox = document.getElementById('errorBox');
         const btnLogin = document.getElementById('btnLogin');
 
         // Check if already logged in as admin
-        auth.onAuthStateChanged(async (u) => {
-            if (u) {
-                checkAdminRole(u, false); // Check silently first
-            }
-        });
+        if (auth) {
+            auth.onAuthStateChanged(async (u) => {
+                if (u) {
+                    checkAdminRole(u, false); // Check silently first
+                }
+            });
+        }
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!auth) {
+                showError('ระบบยังไม่พร้อมใช้งาน (Firebase Error)');
+                return;
+            }
             errorBox.style.display = 'none';
             btnLogin.disabled = true;
             btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';

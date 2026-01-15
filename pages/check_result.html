@@ -232,7 +232,14 @@
     <script src="../js/utils.js"></script>
 
     <script>
-        const db = firebase.firestore();
+        let db = null;
+        try {
+            if (firebase.apps.length) {
+                db = firebase.firestore();
+            } else {
+                console.warn("Firebase not initialized in check_result.html");
+            }
+        } catch (e) { console.error(e); }
 
         const LEVEL_NAMES = {
             'pt12': 'ประโยค ๑-๒',

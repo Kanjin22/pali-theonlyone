@@ -20,7 +20,11 @@ function __readLocalConfig() {
 
 const __cfgFromQuery = __readQueryConfig();
 const __cfgFromLocal = __readLocalConfig();
-const firebaseConfig = window.__FIREBASE_CONFIG || __cfgFromQuery || __cfgFromLocal || null;
+// Ensure window.firebaseConfig is available for module scripts
+if (!window.firebaseConfig && (__cfgFromQuery || __cfgFromLocal)) {
+    window.firebaseConfig = __cfgFromQuery || __cfgFromLocal;
+}
+const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || null;
 
 try {
     if (firebaseConfig && firebaseConfig.apiKey) {

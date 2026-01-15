@@ -366,9 +366,18 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         // Initialize Firebase
-        const app = initializeApp(window.firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+        let app, db, auth;
+        try {
+            if (window.firebaseConfig) {
+                app = initializeApp(window.firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+            } else {
+                console.warn("Firebase config missing in root_detail.html");
+            }
+        } catch (e) {
+            console.error("Firebase init failed:", e);
+        }
 
         // State
         let currentRootWord = "";
@@ -386,17 +395,19 @@
         ];
 
         // Check Auth
-        onAuthStateChanged(auth, (user) => {
-            if (user && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
-                isAdmin = true;
-                console.log("Admin Access Granted");
-                if (thaiEntries.length > 0 || dpdEntries.length > 0) {
-                    renderPage();
+        if (auth) {
+            onAuthStateChanged(auth, (user) => {
+                if (user && FALLBACK_ADMIN_EMAILS.includes(user.email)) {
+                    isAdmin = true;
+                    console.log("Admin Access Granted");
+                    if (thaiEntries.length > 0 || dpdEntries.length > 0) {
+                        renderPage();
+                    }
+                } else {
+                    isAdmin = false;
                 }
-            } else {
-                isAdmin = false;
-            }
-        });
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', async () => {
             const params = new URLSearchParams(window.location.search);
@@ -409,6 +420,11 @@
 
             try {
                 // 1. Fetch the requested document first
+                if (!db) {
+                    showError("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ (No DB Connection)");
+                    return;
+                }
+
                 const docRef = doc(db, "dhatu", id);
                 const docSnap = await getDoc(docRef);
 

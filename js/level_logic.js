@@ -252,10 +252,12 @@ function renderRoomContent(room) {
                     // 2. Check Firestore Role
                     if (!allow) {
                         try {
-                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-                            if (doc.exists) {
-                                const role = doc.data().role;
-                                if (role === 'admin' || role === 'teacher') allow = true;
+                            if (firebase.apps.length) {
+                                const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                                if (doc.exists) {
+                                    const role = doc.data().role;
+                                    if (role === 'admin' || role === 'teacher') allow = true;
+                                }
                             }
                         } catch (e) {
                             console.error("Role check failed:", e);
@@ -264,10 +266,19 @@ function renderRoomContent(room) {
 
                     if (allow) {
                         try {
-                            const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-                            const role = doc.exists ? (doc.data().role || 'general') : 'general';
                             const btn = document.getElementById('btn-create-schedule');
                             const examBtn = document.getElementById('btn-exam-builder');
+                            
+                            // Only check role again if we need strict confirmation and DB is available
+                            let role = 'general';
+                            if (firebase.apps.length) {
+                                const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+                                role = doc.exists ? (doc.data().role || 'general') : 'general';
+                            } else if (allow) {
+                                // If allowed via fallback/cache but DB down, assume role is sufficient
+                                role = 'teacher'; // Assume sufficient role if allow was true (simplified)
+                            }
+                            
                             if (btn) {
                                 let canCreate = false;
                                 if (role === 'admin') canCreate = true;
