@@ -1605,9 +1605,13 @@
         let dhatuAuth;
 
         try {
-            dhatuApp = firebase.initializeApp(dhatuConfig, "dhatuApp");
-            dhatuDb = dhatuApp.firestore();
-            dhatuAuth = dhatuApp.auth();
+            if (dhatuConfig && dhatuConfig.apiKey) {
+                dhatuApp = firebase.initializeApp(dhatuConfig, "dhatuApp");
+                dhatuDb = dhatuApp.firestore();
+                dhatuAuth = dhatuApp.auth();
+            } else {
+                console.info("Dhatu App config missing; skipping secondary Firebase app init.");
+            }
         } catch (e) {
             console.error("Error initializing Dhatu App:", e);
         }
