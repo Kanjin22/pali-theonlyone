@@ -447,6 +447,17 @@ auth.onAuthStateChanged((user) => {
                     photoURL: user.photoURL
                 };
                 try { window._currentUser = displayUser; window._currentRole = role; } catch (e) {}
+
+                // Cache enrollment data for greeting/status-based UI
+                try {
+                    if (db && user && user.uid) {
+                        db.collection('enrollments').doc(user.uid).get().then(enrDoc => {
+                            if (enrDoc.exists) {
+                                try { window._currentEnrollment = enrDoc.data(); } catch (e) {}
+                            }
+                        }).catch(() => {});
+                    }
+                } catch (e) {}
                 showUser(displayUser, role);
                 if (typeof applyRoleUI === 'function') applyRoleUI(role);
                 if (typeof updateStudentDashboard === 'function') updateStudentDashboard(displayUser, role);

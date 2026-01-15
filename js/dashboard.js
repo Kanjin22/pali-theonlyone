@@ -248,8 +248,24 @@ function updateStudentDashboard(user, role) {
 
     // 1. Update Greeting
     const greetingEl = document.getElementById('dash-greeting');
-    if (greetingEl && user.displayName) {
-        greetingEl.textContent = `สวัสดีครับ, ${user.displayName}`;
+    if (greetingEl) {
+        let prefix = 'สวัสดีครับ';
+        try {
+            const enrollDoc = window._currentEnrollment || null;
+            const userType = enrollDoc && enrollDoc.userType ? enrollDoc.userType : null;
+            const title = enrollDoc && enrollDoc.title ? String(enrollDoc.title) : '';
+
+            if (userType === 'monk') {
+                prefix = 'กราบนมัสการครับ';
+            } else if (userType === 'novice') {
+                prefix = 'นมัสการครับ';
+            } else {
+                prefix = 'สวัสดีครับ';
+            }
+        } catch (e) {}
+
+        const namePart = user.displayName ? `, ${user.displayName}` : '';
+        greetingEl.textContent = `${prefix}${namePart}`;
     }
 
     // 2. Update Level & Link
