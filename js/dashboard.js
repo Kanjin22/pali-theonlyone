@@ -456,8 +456,7 @@ if (resumeBtnEl) {
 }
 
 function openFlashcardsModal(uid) {
-    // Redirect to the new dedicated Flashcards page
-    window.location.href = 'flashcards.html';
+    window.location.href = 'pages/flashcards.html';
 }
 
 function checkResume(specificUid = null) {
