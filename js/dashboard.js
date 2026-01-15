@@ -373,14 +373,11 @@ if (resumeBtnEl) {
         if (typeof safeSetInnerHTML === 'function') safeSetInnerHTML(resumeBtnEl, resumeHtml); else resumeBtnEl.innerHTML = resumeHtml;
         
         if (data.type === 'reader') {
-            // สร้าง URL ของ Reader
             let url = `pages/reader.html?resume=true`;
-            // ถ้ามีข้อมูลละเอียดก็ใส่ไปเลยเพื่อความแม่นยำ (Backup)
-            if(data.level) url += `&level=${encodeURIComponent(data.level)}`;
+            if (data.level) url += `&level=${encodeURIComponent(data.level)}`;
             resumeBtnEl.href = url;
         } else {
-            // สร้าง URL ของ Presentation
-            resumeBtnEl.href = `presentation.html?id=${data.id}&index=${data.index}`;
+            resumeBtnEl.href = `pages/presentation.html?id=${encodeURIComponent(data.id)}&index=${encodeURIComponent(data.index)}`;
         }
         resumeBtnEl.style.display = 'flex';
     };
