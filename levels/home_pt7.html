@@ -146,17 +146,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="/config.js"></script>
+    <script src="../js/firebase_config.js"></script>
     <script>
-        window.firebaseConfig = window.firebaseConfig || {
-            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
-            authDomain: "palitest-generator.firebaseapp.com",
-            projectId: "palitest-generator",
-            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
-            messagingSenderId: "844040146831",
-            storageBucket: "palitest-generator.firebasestorage.app",
-            measurementId: "G-RKML6H6EX7"
-        };
-        firebase.initializeApp(window.firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
     </script>

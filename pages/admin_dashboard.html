@@ -1281,6 +1281,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase_config.js"></script>
     <script src="../js/utils.js"></script>
     <script src="../js/system_config.js"></script>
 
@@ -1586,28 +1587,16 @@
 
 
     <script>
-        // 1. Main App Config (palitest-generator) - For Members, Enrollments, Classes
-        window.firebaseConfig = window.firebaseConfig || {
-            apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
-            authDomain: "palitest-generator.firebaseapp.com",
-            projectId: "palitest-generator",
-            appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
-            messagingSenderId: "844040146831",
-            storageBucket: "palitest-generator.firebasestorage.app",
-            measurementId: "G-RKML6H6EX7"
-        };
-        firebase.initializeApp(window.firebaseConfig); // Default App
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // 2. Dhatu App Config (pali-dhatu-app) - For Roots
-        const dhatuConfig = {
-            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
-            authDomain: "pali-dhatu-app.firebaseapp.com",
-            projectId: "pali-dhatu-app",
-            storageBucket: "pali-dhatu-app.firebasestorage.app",
-            messagingSenderId: "188304412939",
-            appId: "1:188304412939:web:22a6bd82480f40a909120e"
+        const dhatuConfig = window.__FIREBASE_DHATU_CONFIG || {
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
         };
         
         let dhatuApp;

@@ -28,6 +28,26 @@ admin.initializeApp({
   credential: admin.credential.cert(require(serviceAccountPath))
 });
 
+const firebaseClientConfig = {
+  apiKey: process.env.FIREBASE_API_KEY || '',
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN || '',
+  projectId: process.env.FIREBASE_PROJECT_ID || '',
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: process.env.FIREBASE_APP_ID || '',
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID || ''
+};
+
+const rootsFirebaseClientConfig = {
+  apiKey: process.env.ROOTS_FIREBASE_API_KEY || '',
+  authDomain: process.env.ROOTS_FIREBASE_AUTH_DOMAIN || '',
+  projectId: process.env.ROOTS_FIREBASE_PROJECT_ID || '',
+  storageBucket: process.env.ROOTS_FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: process.env.ROOTS_FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: process.env.ROOTS_FIREBASE_APP_ID || '',
+  measurementId: process.env.ROOTS_FIREBASE_MEASUREMENT_ID || ''
+};
+
 const app = express();
 // Configure CORS to allow only specific origins from environment variable
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -50,6 +70,16 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
+
+app.get('/config.js', (_req, res) => {
+  res.type('application/javascript').send(
+    'window.__FIREBASE_CONFIG=' +
+      JSON.stringify(firebaseClientConfig) +
+      ';\nwindow.__ROOTS_FIREBASE_CONFIG=' +
+      JSON.stringify(rootsFirebaseClientConfig) +
+      ';\n'
+  );
+});
 
 // Rate Limiting Configuration
 const windowMs = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'); // 15 minutes
@@ -182,7 +212,6 @@ async function verifyAdmin(req) {
   }
 }
 
-// Serve static files (frontend)
 app.use(express.static(path.join(__dirname), { extensions: ['html'] }));
 
 app.get('/', (req, res) => {

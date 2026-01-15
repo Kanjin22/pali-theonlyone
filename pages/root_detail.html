@@ -358,23 +358,14 @@
     <script src="../data/raw/vocab-roots-dpd-derived.js"></script>
 
     <!-- Firebase SDKs -->
+    <script src="../js/firebase_config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB45nbh4OJ-MeMuL8tDPy8hZciAkcxZtR8",
-            authDomain: "pali-dhatu-app.firebaseapp.com",
-            projectId: "pali-dhatu-app",
-            storageBucket: "pali-dhatu-app.firebasestorage.app",
-            messagingSenderId: "188304412939",
-            appId: "1:188304412939:web:22a6bd82480f40a909120e"
-        };
-
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+        const app = initializeApp(window.firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
 
