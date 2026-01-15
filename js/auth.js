@@ -1,7 +1,18 @@
 // js/auth.js
+//
+let auth = null;
+let db = null;
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+try {
+    if (firebase && firebase.apps && firebase.apps.length) {
+        auth = firebase.auth();
+        db = firebase.firestore();
+    } else {
+        console.warn('Firebase app is not initialized. Auth features are disabled until config is provided.');
+    }
+} catch (e) {
+    console.error('Failed to initialize Firebase Auth/Firestore in auth.js:', e);
+}
 
 // --- DOM Elements (Auth) ---
 var loginModal = document.getElementById('login-modal');
@@ -94,11 +105,11 @@ function validatePassword(password) {
 // Event Listeners for Login Buttons
 if (btnOpenLogin) btnOpenLogin.onclick = openLogin;
 if (btnLogoutTop) btnLogoutTop.onclick = () => {
+    if (!auth) return;
     if (confirm('ต้องการออกจากระบบใช่หรือไม่?')) {
         auth.signOut().then(() => {
             localStorage.removeItem('pali_user_role');
             localStorage.removeItem('pali_enroll_level');
-            // ✅ FIXED: Clear memory and session storage
             window._currentUserRole = null;
             sessionStorage.removeItem('pali_user_role_session');
             location.reload();
@@ -122,6 +133,7 @@ const btnLoginFacebook = document.getElementById('login-facebook');
 const btnLoginLine = document.getElementById('login-line');
 
 window.loginGoogle = async () => {
+    if (!auth) return;
     try {
         const provider = new firebase.auth.GoogleAuthProvider();
         await auth.signInWithPopup(provider);
@@ -134,6 +146,7 @@ window.loginGoogle = async () => {
 };
 
 window.loginFacebook = async () => {
+    if (!auth) return;
     try {
         const provider = new firebase.auth.FacebookAuthProvider();
         await auth.signInWithPopup(provider);
@@ -155,6 +168,7 @@ if (btnLoginFacebook) btnLoginFacebook.onclick = () => window.loginFacebook && w
 if (btnLoginLine) btnLoginLine.onclick = () => window.loginLine && window.loginLine();
 
 window.loginLine = async () => {
+    if (!auth) return;
     try {
         const provider = new firebase.auth.OAuthProvider('oidc.linelogin');
         await auth.signInWithPopup(provider);
@@ -207,10 +221,13 @@ const btnModalSignup = document.getElementById('modal-email-signup');
 const btnModalForgot = document.getElementById('modal-forgot-password');
 
 // Apply ASCII enforcement
-enforceAsciiEmail(modalEmailInput);
+if (typeof enforceAsciiEmail === 'function' && modalEmailInput) {
+    enforceAsciiEmail(modalEmailInput);
+}
 
 // Next: decide login vs signup
 if (btnModalNext) btnModalNext.onclick = async () => {
+    if (!auth) return;
     const rawEmail = modalEmailInput.value.trim();
     if (!rawEmail) return;
     const checked = (window.validator && typeof window.validator.validateEmail === 'function')
@@ -250,6 +267,7 @@ if (btnCloseLogin) btnCloseLogin.onclick = closeLogin;
 
 // Sign in with email/password
 if (btnModalSignin) btnModalSignin.onclick = async () => {
+    if (!auth) return;
     const email = modalEmailInput.value.trim();
     const pass = modalPasswordInput.value.trim();
     if (!email || !pass) return;
@@ -265,6 +283,7 @@ if (btnModalSignin) btnModalSignin.onclick = async () => {
 
 // Sign up with email/password
 if (btnModalSignup) btnModalSignup.onclick = async () => {
+    if (!auth) return;
     const email = modalEmailInput.value.trim();
     const pass = modalPasswordInput.value.trim();
     if (!email || !pass) return;
@@ -286,6 +305,7 @@ if (btnModalSignup) btnModalSignup.onclick = async () => {
 
 // 4. ลืมรหัสผ่าน
 if (btnModalForgot) btnModalForgot.onclick = async () => {
+    if (!auth) return;
     const email = modalEmailInput.value.trim();
     if (!email) return;
 
@@ -309,10 +329,10 @@ if (btnModalForgot) btnModalForgot.onclick = async () => {
 // --- Guest / Simple Login Logic Removed ---
 
 // --- Main Auth Listener ---
-
+//
 // Guest login removed
-
-auth.onAuthStateChanged((user) => {
+//
+if (auth && typeof auth.onAuthStateChanged === 'function') auth.onAuthStateChanged((user) => {
     if (user) {
         closeLogin();
         // showUser(user); // ย้ายไปเรียกหลังจากดึงข้อมูลเพิ่มเติมเสร็จ
