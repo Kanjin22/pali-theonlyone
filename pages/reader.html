@@ -969,7 +969,7 @@
             out.push(`${prefix}<span class="word-span${noteClass}" style="${noteStyle}" data-slide-index="${slideIndex}" data-note-id="${noteId}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
         });
 
-        return out.join('  ');
+        return out.join('&nbsp; ');
     }
 
     // --- Helper Functions (Ported from presentation.html) ---

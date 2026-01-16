@@ -1983,7 +1983,7 @@
                 return `${prefix}<span class="word-span ${hasInfoClass}${noteClass}" 
                               ${vocabInfo} ${noteAttrs}
                               onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
-        }).join(' ');
+        }).filter(w => w !== "").join('&nbsp; ');
     }
 
     function handleWordClick(el) {
