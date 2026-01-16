@@ -553,9 +553,12 @@
                                 <option value="all">ทุกหมวดหมู่</option>
                             </select>
                         </div>
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button class="btn btn-outline-primary w-100" onclick="toggleAllAnswers()">
+                        <div class="col-md-3 d-flex align-items-end flex-column">
+                            <button class="btn btn-outline-primary w-100 mb-2" onclick="toggleAllAnswers()">
                                 <i class="fas fa-eye me-2"></i>แสดง/ซ่อน เฉลย
+                            </button>
+                            <button class="btn btn-success w-100" onclick="exportForAI()">
+                                <i class="fas fa-robot me-2"></i>ส่งข้อมูลให้ AI
                             </button>
                         </div>
                     </div>
@@ -1253,6 +1256,62 @@
             renderStudyList(currentData);
         }
 
+        function exportForAI() {
+            // Use currentData which is already filtered
+            if (!currentData || currentData.length === 0) {
+                alert('ไม่พบข้อมูลสำหรับส่งออก');
+                return;
+            }
+
+            const startYearVal = document.getElementById('filter-year-start').value;
+            const endYearVal = document.getElementById('filter-year-end').value;
+            const category = document.getElementById('filter-category').value;
+            
+            // Map category value to text if needed, or just use value
+            const catText = category === 'all' ? 'ทุกหมวด' : category;
+            const startYearText = startYearVal === 'all' ? 'เริ่มต้น' : startYearVal;
+            const endYearText = endYearVal === 'all' ? 'ล่าสุด' : endYearVal;
+
+            let exportText = "ข้อมูลปัญหา-เฉลย บาลีไวยากรณ์\n";
+            exportText += `เงื่อนไข: ปี ${startYearText} - ${endYearText}, หมวด: ${catText}\n`;
+            exportText += "========================================\n\n";
+
+            currentData.forEach((item, index) => {
+                // Simple HTML stripping
+                const cleanQuestion = item.question.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+                let cleanAnswer = item.answer.replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
+                // Fix multiple newlines
+                cleanAnswer = cleanAnswer.replace(/\n\s*\n/g, '\n').trim();
+                
+                exportText += `ข้อที่ ${index + 1} (ปี ${item.year} - ${item.category})\n`;
+                exportText += `ถาม: ${cleanQuestion}\n`;
+                exportText += `ตอบ: ${cleanAnswer}\n`;
+                exportText += "----------------------------------------\n";
+            });
+
+            navigator.clipboard.writeText(exportText).then(() => {
+                // Show simple toast feedback
+                const toast = document.createElement('div');
+                toast.className = 'position-fixed bottom-0 end-0 p-3';
+                toast.style.zIndex = '1100';
+                toast.innerHTML = `
+                    <div class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-check-circle me-2"></i> คัดลอกข้อมูลสำหรับ AI แล้ว!
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="this.parentElement.parentElement.parentElement.remove()"></button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('เกิดข้อผิดพลาดในการคัดลอกข้อมูล');
+            });
+        }
+
         function renderStudyList(data) {
             const container = document.getElementById('qa-list');
             if (data.length === 0) {
@@ -1439,6 +1498,63 @@
         }
 
     </script>
+    <!-- AI Help Modal -->
+    <div class="modal fade" id="aiHelpModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-success text-white border-0 rounded-top-4">
+                    <h5 class="modal-title"><i class="fas fa-robot me-2"></i>คู่มือการใช้งาน: ผู้ช่วย AI ส่วนตัว</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted mb-4">ฟีเจอร์นี้ช่วยให้คุณนำข้อมูลโจทย์และเฉลยที่กรองแล้ว ไปให้ AI (เช่น ChatGPT, Claude, Gemini) ช่วยวิเคราะห์หรืออธิบายเพิ่มเติมได้</p>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">1</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">เลือกข้อมูลที่ต้องการ</h6>
+                            <p class="small text-muted mb-0">ใช้ตัวกรองเลือก "ปี พ.ศ." และ "หมวดหมู่" ที่ต้องการศึกษา (เช่น ปี 2510-2520 หมวดสนธิ)</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">2</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">กดปุ่ม "ส่งข้อมูลให้ AI"</h6>
+                            <p class="small text-muted mb-0">ระบบจะคัดลอกข้อมูลทั้งหมดตามเงื่อนไขที่เลือกเก็บไว้ใน Clipboard ของคุณ</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">3</span>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">ถาม AI ของคุณ</h6>
+                            <p class="small text-muted mb-0">เปิดแอป AI (ChatGPT, Gemini, etc.) แล้วกด <b>"วาง" (Paste)</b> ข้อมูลลงไป พร้อมพิมพ์คำสั่ง</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-secondary bg-light border-0 rounded-3 mt-4">
+                        <h6 class="fw-bold text-success mb-2"><i class="fas fa-comment-dots me-2"></i>ตัวอย่างคำสั่งที่แนะนำ:</h6>
+                        <ul class="small text-muted mb-0 ps-3">
+                            <li class="mb-1">"ช่วยสรุปแนวข้อสอบเรื่องสนธิ ในช่วงปี 2510-2520 ให้หน่อย ว่านิยมออกเรื่องอะไรบ้าง?"</li>
+                            <li class="mb-1">"จากข้อมูลนี้ ช่วยเก็งข้อสอบปีนี้ให้หน่อย"</li>
+                            <li>"ช่วยอธิบายเฉลยข้อที่ 5 ของปี 2512 ให้เข้าใจง่ายๆ หน่อย"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary w-100 rounded-3" data-bs-dismiss="modal">เข้าใจแล้ว</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
