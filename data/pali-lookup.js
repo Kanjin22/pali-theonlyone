@@ -365,8 +365,30 @@ const PaliLookup = {
         if (dbs.jinakalamalini && dbs.jinakalamalini[key]) return { details: [dbs.jinakalamalini[key]], source: 'ปทานุกรมชินกาลมาลินี', word: key };
         
         // General Tripitaka Dictionaries
-        if (dbs.general_raw && dbs.general_raw[key]) return { details: [dbs.general_raw[key]], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key };
-        if (dbs.general && dbs.general[key]) return { ...dbs.general[key], source: 'ศัพท์ทั่วไป', word: key };
+        if (dbs.general_raw && dbs.general_raw[key]) {
+            const val = dbs.general_raw[key];
+            if (typeof val === 'string') {
+                return { details: [val], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key };
+            }
+            if (val && val.definition) {
+                return { details: [val.definition], source: 'พจนานุกรมทั่วไป (พระไตรปิฎก)', word: key, data: val };
+            }
+        }
+        if (dbs.general && dbs.general[key]) {
+            const val = dbs.general[key];
+            if (typeof val === 'string') {
+                return { details: [val], source: 'ศัพท์ทั่วไป', word: key };
+            }
+            if (val && val.definition) {
+                return { details: [val.definition], source: 'ศัพท์ทั่วไป', word: key, data: val };
+            }
+            if (val && val.details) {
+                return { details: Array.isArray(val.details) ? val.details : [val.details], source: 'ศัพท์ทั่วไป', word: key, data: val };
+            }
+            if (val && val.meaning) {
+                return { details: [val.meaning], source: 'ศัพท์ทั่วไป', word: key, data: val };
+            }
+        }
         
         // 2. Roman Dictionaries (Ordered: DPD, PTS, SC, Others)
         if (dbs.dpd || dbs.sc || dbs.pts || dbs.dppn || dbs.dhammika || dbs.dpdInflected) {
@@ -408,8 +430,36 @@ const PaliLookup = {
             thaiKey = PaliScript.romanToThai(key);
         }
         
-        const addT = (db, src, k) => { if (db && db[k]) results.push({ details: [db[k]], source: src, word: k }); };
-        const addG = (db, src, k) => { if (db && db[k]) results.push({ ...db[k], source: src, word: k }); };
+        const addT = (db, src, k) => {
+            if (db && db[k]) {
+                const val = db[k];
+                if (typeof val === 'string') {
+                    results.push({ details: [val], source: src, word: k });
+                } else if (val && val.definition) {
+                    results.push({ details: [val.definition], source: src, word: k, data: val });
+                } else if (val && val.details) {
+                    const arr = Array.isArray(val.details) ? val.details : [val.details];
+                    results.push({ details: arr, source: src, word: k, data: val });
+                } else if (val && val.meaning) {
+                    results.push({ details: [val.meaning], source: src, word: k, data: val });
+                }
+            }
+        };
+        const addG = (db, src, k) => {
+            if (db && db[k]) {
+                const val = db[k];
+                if (typeof val === 'string') {
+                    results.push({ details: [val], source: src, word: k });
+                } else if (val && val.definition) {
+                    results.push({ details: [val.definition], source: src, word: k, data: val });
+                } else if (val && val.details) {
+                    const arr = Array.isArray(val.details) ? val.details : [val.details];
+                    results.push({ details: arr, source: src, word: k, data: val });
+                } else if (val && val.meaning) {
+                    results.push({ details: [val.meaning], source: src, word: k, data: val });
+                }
+            }
+        };
 
         addT(dbs.insan_pr9, 'พจนานุกรมธรรมบท ภาค ๑-๘ (อ.บุญสืบ อินสาร)', key);
         addT(dbs.bhumibalo, 'พจนานุกรมฉบับภูมิพโลภิกขุ', key);
