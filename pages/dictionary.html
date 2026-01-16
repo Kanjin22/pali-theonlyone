@@ -385,6 +385,24 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function formatDefinitionForSource(def, source) {
+            if (!def) return '';
+            let processed = def;
+            if (source && source.includes('ภูมิพโล')) {
+                let hasNumbered = false;
+                processed = processed.replace(/^\s*1\.\s*/m, function() {
+                    hasNumbered = true;
+                    return '<p>1. ';
+                });
+                if (hasNumbered) {
+                    processed = processed.replace(/—\s*([2-9])\.\s*/g, '</p><p>$1. ');
+                    processed = processed + '</p>';
+                }
+                return PaliFormatter.format(processed, 'triggerSearch');
+            }
+            return PaliFormatter.format(processed, 'triggerSearch');
+        }
+
         function performSearch() {
             const input = document.getElementById('dict-search');
             const queryRaw = input.value.trim();
@@ -437,13 +455,12 @@
                 let splitText = item.split || '-';
                 
                 if (item.details) {
-                    defHtml = item.details.map(d => `<li>${PaliFormatter.format(d, 'triggerSearch')}</li>`).join('');
+                    defHtml = item.details.map(d => `<li>${formatDefinitionForSource(d, item.source)}</li>`).join('');
                 } else if (item.data) {
-                    // Handle SC/PTS/DPPN data format
                     if (item.data.definition) {
-                        defHtml = `<li>${PaliFormatter.format(item.data.definition, 'triggerSearch')}</li>`;
+                        defHtml = `<li>${formatDefinitionForSource(item.data.definition, item.source)}</li>`;
                     } else if (typeof item.data === 'string') {
-                         defHtml = `<li>${PaliFormatter.format(item.data, 'triggerSearch')}</li>`; 
+                         defHtml = `<li>${formatDefinitionForSource(item.data, item.source)}</li>`; 
                     } else {
                          defHtml = `<li>(ดูรายละเอียดในคัมภีร์ฉบับเต็ม)</li>`;
                     }
