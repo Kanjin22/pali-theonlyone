@@ -201,6 +201,7 @@ function renderRoomContent(room) {
     // Render Schedule Links
     const scheduleContainer = document.getElementById('schedule-links-container');
     const teacherToolsContainer = document.getElementById('teacher-tools-container');
+    const teacherToolsHeader = document.getElementById('teacher-tools-header');
     if (scheduleContainer) {
         // Standard Months (can be dynamic later)
         const months = [
@@ -225,7 +226,11 @@ function renderRoomContent(room) {
         
         scheduleContainer.innerHTML = scheduleHtml;
 
+        if (teacherToolsHeader) {
+            teacherToolsHeader.style.display = 'none';
+        }
         if (teacherToolsContainer) {
+            teacherToolsContainer.style.display = 'none';
             let teacherHtml = `
                 <a id="btn-create-schedule" href="../admin/schedule_builder.html?level=${room.level}&room=${room.id}" 
                    class="menu-button" style="display:none; background-color: #f1c40f; color: #2c3e50; border: 2px dashed #f39c12; text-align:center;">
@@ -282,6 +287,12 @@ function renderRoomContent(room) {
                                 }
                                 btn.style.display = canCreate ? 'flex' : 'none';
                                 if (examBtn) examBtn.style.display = canCreate ? 'flex' : 'none';
+                                if (teacherToolsHeader) {
+                                    teacherToolsHeader.style.display = canCreate ? 'block' : 'none';
+                                }
+                                if (teacherToolsContainer) {
+                                    teacherToolsContainer.style.display = canCreate ? 'grid' : 'none';
+                                }
                             }
                         } catch (e) {}
                     }
