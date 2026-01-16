@@ -346,6 +346,8 @@
             }
         }
     </script>
+    <script src="../data/raw/vocab-dpd.js"></script>
+    <script src="../data/raw/vocab-roots-dpd-derived.js"></script>
     
     <script src="../data/vocab-sc.js"></script>
     <script src="../data/vocab-pts.js"></script>
@@ -373,6 +375,22 @@
             dhammika: typeof vocabDhammika !== 'undefined' ? vocabDhammika : {},
             dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {}
         };
+        const dpdDerivedIndex = {};
+        if (typeof vocabRootsDPDDerived !== 'undefined') {
+            for (const rootKey in vocabRootsDPDDerived) {
+                const words = vocabRootsDPDDerived[rootKey];
+                if (!Array.isArray(words)) continue;
+                for (let i = 0; i < words.length; i++) {
+                    const w = words[i];
+                    const base = typeof w === 'string' ? w.split(' ')[0] : '';
+                    if (!base) continue;
+                    if (!dpdDerivedIndex[base]) dpdDerivedIndex[base] = [];
+                    if (dpdDerivedIndex[base].indexOf(rootKey) === -1) {
+                        dpdDerivedIndex[base].push(rootKey);
+                    }
+                }
+            }
+        }
 
         let activeFilter = 'all';
 
@@ -442,32 +460,17 @@
                 return;
             }
 
-            // Use PaliLookup.findAll to get results from ALL sources
             let results = PaliLookup.findAll(queryRaw, databases);
-
-            // Also try to find candidates via stemming if no direct results or to supplement
-            // To ensure we don't miss anything, we'll try stemming if we have < 2 results OR if explicitly requested
-            // But usually we just want to find *something*.
-            // Let's always look for stemmed candidates and append them if they are unique
-            const candidates = PaliLookup.generateCandidates(queryRaw, databases);
-            for (const cand of candidates) {
-                 const subResults = PaliLookup.findAll(cand, databases);
-                 // Add stemming info
-                 subResults.forEach(r => r._stemmedFrom = queryRaw);
-                 results = results.concat(subResults);
+            const uniqueResults = [];
+            const seen = new Set();
+            for (const r of results) {
+                const key = r.source + '|' + r.word;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueResults.push(r);
+                }
             }
-             
-             // Remove duplicates based on source and word
-             const uniqueResults = [];
-             const seen = new Set();
-             for (const r of results) {
-                 const key = r.source + '|' + r.word + '|' + (r._stemmedFrom || '');
-                 if (!seen.has(key)) {
-                     seen.add(key);
-                     uniqueResults.push(r);
-                 }
-             }
-             results = uniqueResults;
+            results = uniqueResults;
 
             if (results.length === 0) {
                 container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในฐานข้อมูล</div>`;
@@ -525,6 +528,30 @@
                 else if (sourceClass === 'dpd') iconClass = 'fa-language';
                 else if (sourceClass === 'sc') iconClass = 'fa-globe';
 
+                let dpdRootHtml = "";
+                if (sourceClass === 'dpd' && item.word && Object.keys(dpdDerivedIndex).length > 0 && typeof vocabRootsDPDDerived !== 'undefined') {
+                    const baseHead = String(item.word).split(' ')[0];
+                    const roots = dpdDerivedIndex[baseHead] || [];
+                    const blocks = [];
+                    for (let i = 0; i < roots.length; i++) {
+                        const rootKey = roots[i];
+                        const words = vocabRootsDPDDerived[rootKey] || [];
+                        if (!Array.isArray(words) || words.length === 0) continue;
+                        const displayWords = words.slice(0, 20).join(', ');
+                        const moreCount = words.length - 20;
+                        const moreText = moreCount > 0 ? ` และอีก ${moreCount} คำ...` : '';
+                        blocks.push(
+                            `<div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #ecf0f1; font-size: 0.9rem;">
+                                <span style="color:#2980b9; font-weight:600;"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุ ${rootKey} (DPD):</span>
+                                <span style="color:#555;"> ${displayWords}${moreText}</span>
+                            </div>`
+                        );
+                    }
+                    if (blocks.length > 0) {
+                        dpdRootHtml = blocks.join('');
+                    }
+                }
+
                 // Save Button Logic
                 const isSaved = window.userVocabManager ? window.userVocabManager.isWordSaved(item.word) : false;
                 const starIcon = isSaved ? 'fa-solid fa-star' : 'fa-regular fa-star';
@@ -560,6 +587,7 @@
                         <ul class="word-details">
                             ${defHtml}
                         </ul>
+                        ${dpdRootHtml}
                     </div>
                 </div>
                 `;
