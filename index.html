@@ -851,7 +851,9 @@
             /* Compact list view for mobile menu */
             .menu-card {
                 padding: 15px;
-                flex-direction: row;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 0 20px;
                 text-align: left;
                 align-items: center;
                 min-height: auto;
@@ -859,19 +861,22 @@
 
             .icon-box {
                 margin-bottom: 0;
-                margin-right: 20px;
+                margin-right: 0;
                 font-size: 2rem;
                 width: 40px;
                 text-align: center;
+                grid-row: 1 / span 2;
             }
 
             .card-title {
                 font-size: 1.1rem;
                 margin-bottom: 2px;
+                grid-column: 2;
             }
 
             .card-desc {
                 font-size: 0.85rem;
+                grid-column: 2;
             }
 
             /* Dashboard adjustments */
