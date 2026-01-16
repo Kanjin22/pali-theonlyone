@@ -405,15 +405,13 @@
             /* Paper texture effect optional */
         }
 
-        /* Exam Answer Box with Ruled Lines */
         .exam-answer-box {
             width: 100%;
             min-height: 150px;
             background-color: #fff;
-            /* Ruled lines effect */
-            background-image: repeating-linear-gradient(transparent, transparent 34px, #e0e0e0 35px);
+            background-image: repeating-linear-gradient(transparent, transparent 34px, #e2e2e2 35px);
             line-height: 35px;
-            border: 1px solid #ddd;
+            border: 1px solid #e2e2e2;
             border-radius: 8px;
             padding: 0 15px;
             outline: none;
@@ -430,8 +428,8 @@
 
         @media print {
             .exam-answer-box {
-                border: 1px solid #999;
-                /* Ensure background prints */
+                border: 1px solid #b3b3b3;
+                background-image: repeating-linear-gradient(transparent, transparent 34px, #b3b3b3 35px);
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
                 box-shadow: none;
