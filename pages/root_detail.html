@@ -68,6 +68,7 @@
             border-radius: 30px;
             margin-top: 15px;
             font-size: 1.1rem;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.3);
         }
@@ -238,6 +239,7 @@
             height: 100%; 
             overflow: auto; 
             background-color: rgba(0,0,0,0.5); 
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
 
@@ -607,7 +609,7 @@
 
             if (isAneka) {
                  colors = ["#607d8b", "#455a64"]; // Blue Grey theme for Aneka Dhatu
-                 groupLink = `<a href="grammar_aneka.html" target="_blank" class="grammar-link" style="color:#607d8b;"><i class="fa-solid fa-graduation-cap"></i> หลักการอเนกคณิกธาตุ</a>`;
+                 groupLink = `<a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" class="grammar-link" style="color:#607d8b;"><i class="fa-solid fa-graduation-cap"></i> หลักการอเนกคณิกธาตุ</a>`;
             } else if (displayGroup) {
                 const g = displayGroup;
                 if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "#27ae60"); }
@@ -622,7 +624,7 @@
 
 
             function getGrammarLink(file, color) {
-                return `<a href="grammar_${file}.html" target="_blank" class="grammar-link" style="color:${color};"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
+                return `<a href="grammar_${file}.html" target="_blank" rel="noopener noreferrer" class="grammar-link" style="color:${color};"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
             }
 
             // Tabs HTML
@@ -672,7 +674,7 @@
             if (isAneka) {
                 anekaFooterHtml = `
                     <div style="text-align: right; margin-top: 20px; margin-bottom: 10px;">
-                        <a href="grammar_aneka.html" target="_blank" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
+                        <a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
                             <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
                         </a>
                     </div>

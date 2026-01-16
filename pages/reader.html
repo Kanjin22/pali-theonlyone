@@ -6,6 +6,7 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <meta name="theme-color" content="#2c3e50">
   <link rel="icon" href="data:,">
+  <link rel="apple-touch-icon" href="../icons/pwa-maskable.svg">
   <title>โหมดหนังสือ – อ่านเนื้อหาตามหน้า</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Taviraj:wght@300;400;500;600&family=Maitree:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -168,6 +169,7 @@
         justify-content: center;
         align-items: center;
         z-index: 3000;
+        -webkit-backdrop-filter: blur(3px);
         backdrop-filter: blur(3px);
     }
 
@@ -522,23 +524,23 @@
     <div class="controls">
       <div class="nav-select-group">
         <label>ชั้น</label>
-        <select id="levelSelect"></select>
+        <select id="levelSelect" title="เลือกชั้น"></select>
       </div>
       <div class="nav-select-group">
         <label>วิชา</label>
-        <select id="subjectSelect"></select>
+        <select id="subjectSelect" title="เลือกวิชา"></select>
       </div>
       <div class="nav-select-group">
         <label>ภาค/หนังสือ</label>
-        <select id="partSelect"></select>
+        <select id="partSelect" title="เลือกภาคหรือหนังสือ"></select>
       </div>
       <div class="nav-select-group">
         <label>วรรค</label>
-        <select id="vaggaSelect"></select>
+        <select id="vaggaSelect" title="เลือกวรรค"></select>
       </div>
       <div class="nav-select-group">
         <label>เรื่อง</label>
-        <select id="storySelect"></select>
+        <select id="storySelect" title="เลือกเรื่อง"></select>
       </div>
       <div class="nav-select-group">
         <label>หน้าเริ่ม-จบ</label>
@@ -553,7 +555,7 @@
             <!-- Layout -->
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">รูปแบบแสดงผล</label>
-                <select id="layoutSelect" style="min-width:180px;">
+                <select id="layoutSelect" style="min-width:180px;" title="เลือกรูปแบบการแสดงผล">
                     <option value="pali_only">บาลีอย่างเดียว</option>
                     <option value="pali_over_thai">บาลีบน - ไทยล่าง</option>
                     <option value="thai_over_pali">ไทยบน - บาลีล่าง</option>
@@ -565,7 +567,7 @@
             <!-- Thai Translation Mode -->
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">สำนวนแปล</label>
-                <select id="thaiMode" style="min-width:140px;">
+                <select id="thaiMode" style="min-width:140px;" title="เลือกสำนวนแปล">
                     <option value="thai">โดยพยัญชนะ</option>
                     <option value="thai_desana">โดยอรรถ (มมร.)</option>
                     <option value="thai_yok">ยกศัพท์</option>
@@ -575,7 +577,7 @@
             <!-- Font Family -->
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">แบบอักษร</label>
-                <select id="fontSelect" style="min-width:120px;" onchange="changeFontFamily(this.value)">
+                <select id="fontSelect" style="min-width:120px;" onchange="changeFontFamily(this.value)" title="เลือกแบบอักษร">
                     <option value="TH Sarabun New, Sarabun" selected>TH Sarabun New</option>
                     <option value="DilleniaUPC_4Balee">DilleniaUPC (บาลี)</option>
                     <option value="DilleniaUPC">DilleniaUPC</option>
@@ -593,7 +595,7 @@
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">ขนาดตัวอักษร</label>
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <input type="range" id="fontSizeRange" min="14" max="32" value="18" style="width:100px;">
+                    <input type="range" id="fontSizeRange" min="14" max="32" value="18" style="width:100px;" title="ปรับขนาดตัวอักษร">
                     <span id="fontSizeVal" style="font-size:0.9em; width:24px;">18</span>
                 </div>
             </div>
@@ -602,7 +604,7 @@
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">ระยะบรรทัด</label>
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <input type="range" id="lineHeightRange" min="1.0" max="3.0" step="0.1" value="2.0" style="width:100px;">
+                    <input type="range" id="lineHeightRange" min="1.0" max="3.0" step="0.1" value="2.0" style="width:100px;" title="ปรับระยะบรรทัด">
                     <span id="lineHeightVal" style="font-size:0.9em; width:24px;">2.0</span>
                 </div>
             </div>
@@ -610,7 +612,7 @@
              <!-- Justify Toggle -->
              <div style="display:flex; flex-direction:column; gap:4px;">
                 <label style="font-size:0.85em; color:#7f8c8d;">จัดย่อหน้า</label>
-                <button id="alignBtn" class="btn secondary" style="padding:8px 12px; background:#95a5a6;">
+                <button id="alignBtn" class="btn secondary" style="padding:8px 12px; background:#95a5a6;" title="สลับการจัดย่อหน้า">
                     <i class="fas fa-align-left"></i>
                 </button>
             </div>
@@ -646,7 +648,7 @@
   </div>
 
   <!-- Translation Modal (Lexitron) -->
-  <div id="trans-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; justify-content:center; align-items:center; backdrop-filter: blur(2px);" onclick="if(event.target===this) this.style.display='none'">
+  <div id="trans-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; justify-content:center; align-items:center; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);" onclick="if(event.target===this) this.style.display='none'">
       <div style="background:white; width:90%; max-width:500px; height:80%; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
           <div style="padding:12px 20px; background:#f7f9f9; border-bottom:1px solid #eceff1; display:flex; justify-content:space-between; align-items:center;">
               <span style="font-weight:bold; color:#2c3e50;"><i class="fa-solid fa-language"></i> แปลภาษา (Lexitron)</span>
@@ -1697,7 +1699,7 @@
                     <div style="font-size:3rem; color:#bdc3c7; margin-bottom:20px;"><i class="fa-regular fa-face-frown"></i></div>
                     <div style="color:#7f8c8d;">ไม่พบคำศัพท์ <b>"${word}"</b> ในฐานข้อมูล</div>
                     <div style="margin-top:20px;">
-                        <a href="https://dict.longdo.com/search/${word}" target="_blank" style="color:#3498db; text-decoration:none; border:1px solid #3498db; padding:8px 16px; border-radius:20px;">
+                        <a href="https://dict.longdo.com/search/${word}" target="_blank" rel="noopener noreferrer" style="color:#3498db; text-decoration:none; border:1px solid #3498db; padding:8px 16px; border-radius:20px;">
                             ค้นหาใน Longdo Dict <i class="fa-solid fa-external-link-alt"></i>
                         </a>
                     </div>
@@ -1993,14 +1995,14 @@
             // Prepare display word (Link to Roots if applicable)
             let displayWord = result._stemmedFrom ? result.word || cleanWord : cleanWord;
             if (result.source === 'พจนานุกรมธาตุ') {
-                displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
+                displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
             }
 
             // Check if Root exists (for Thai section icon)
             let rootLinkHtml = "";
             if (dbs.roots && (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord]))) {
                 const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
-                rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
+                rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
             }
 
             // Prepare content for Popup (Click to expand)
@@ -2153,7 +2155,7 @@
              const thaiForRoot = PaliScript.romanToThai(romanWord);
              const rootKey = findRootKey(thaiForRoot);
              if (rootKey) {
-                 romanRootLink = `<a href="roots.html?q=${rootKey}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; margin-right:10px; color:#e67e22; text-decoration:none;"><i class="fa-solid fa-square-root-variable"></i> ธาตุ</a>`;
+                 romanRootLink = `<a href="roots.html?q=${rootKey}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="display:inline-block; margin-right:10px; color:#e67e22; text-decoration:none;"><i class="fa-solid fa-square-root-variable"></i> ธาตุ</a>`;
              }
         }
 
@@ -2165,7 +2167,7 @@
                 <div style="margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 5px; font-size: 0.85em;">
                     <span style="float:right; color:#bdc3c7;"><i class="fa-solid fa-expand"></i></span>
                     ${romanRootLink}
-                    <a href="${scLink}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
+                    <a href="${scLink}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="display:inline-block; margin-right:5px; color:#3498db; text-decoration:none;">
                         <i class="fa-solid fa-dharmachakra"></i> SuttaCentral
                     </a>
                 </div>

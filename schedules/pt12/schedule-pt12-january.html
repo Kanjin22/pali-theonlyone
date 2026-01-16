@@ -294,10 +294,10 @@
             if (period.linkZoom) { 
                 if (Array.isArray(period.linkZoom)) {
                      period.linkZoom.forEach((link, index) => {
-                         links += `<a href="${link}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom ${index + 1})</a>`;
+                         links += `<a href="${link}" target="_blank" rel="noopener noreferrer" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom ${index + 1})</a>`;
                      });
                 } else {
-                     links += `<a href="${period.linkZoom}" target="_blank" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
+                     links += `<a href="${period.linkZoom}" target="_blank" rel="noopener noreferrer" class="btn btn-zoom">🔗 เข้าร่วมเรียนสด (Zoom)</a>`; 
                 }
             }
             
@@ -306,28 +306,28 @@
                 if (Array.isArray(period.linkYoutube)) {
                     // กรณีมีหลายลิงก์: สร้างปุ่ม YouTube (1), YouTube (2), ...
                     period.linkYoutube.forEach((link, index) => {
-                        links += `<a href="${link}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (${index + 1})</a>`;
+                        links += `<a href="${link}" target="_blank" rel="noopener noreferrer" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (${index + 1})</a>`;
                     });
                 } else {
                     // กรณีมีลิงก์เดียว
-                    links += `<a href="${period.linkYoutube}" target="_blank" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (YouTube)</a>`;
+                    links += `<a href="${period.linkYoutube}" target="_blank" rel="noopener noreferrer" class="btn btn-youtube">▶️ ดูวิดีโอประกอบ (YouTube)</a>`;
                 }
             }
             if (period.slideId) {
-                links += `<a href="../../presentation.html?id=${period.slideId}" target="_blank" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
+                links += `<a href="../../presentation.html?id=${period.slideId}" target="_blank" rel="noopener noreferrer" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
             }
 
             // --- เนื้อหา ---
             if (period.fileNoteGrammar && period.fileNoteGrammar !== '#') { 
-                links += `<a href="${resolvePath(period.fileNoteGrammar)}" target="_blank" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
+                links += `<a href="${resolvePath(period.fileNoteGrammar)}" target="_blank" rel="noopener noreferrer" class="btn btn-material">📄 เนื้อหา ไวยากรณ์</a>`; 
             }
             if (period.fileNoteTranslate) {
                 if (Array.isArray(period.fileNoteTranslate)) {
                     period.fileNoteTranslate.forEach((file, index) => {
-                        if (file !== '#') links += `<a href="${resolvePath(file)}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล (${index + 1})</a>`;
+                        if (file !== '#') links += `<a href="${resolvePath(file)}" target="_blank" rel="noopener noreferrer" class="btn btn-material">📄 เนื้อหา แปล (${index + 1})</a>`;
                     });
                 } else if (period.fileNoteTranslate !== '#') {
-                    links += `<a href="${resolvePath(period.fileNoteTranslate)}" target="_blank" class="btn btn-material">📄 เนื้อหา แปล</a>`;
+                    links += `<a href="${resolvePath(period.fileNoteTranslate)}" target="_blank" rel="noopener noreferrer" class="btn btn-material">📄 เนื้อหา แปล</a>`;
                 }
             }
             

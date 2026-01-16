@@ -6,6 +6,7 @@
     <title>Smart Flashcards - บัตรคำศัพท์บาลี</title>
     <link rel="manifest" href="../manifest.webmanifest">
     <meta name="theme-color" content="#2c3e50">
+    <link rel="apple-touch-icon" href="../icons/pwa-maskable.svg">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -108,6 +109,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--header-bg);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 20px;
@@ -154,6 +156,7 @@
             gap: 30px;
             margin-bottom: 30px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            -webkit-backdrop-filter: blur(4px);
             backdrop-filter: blur(4px);
             border: 1px solid var(--stats-border);
         }
@@ -366,7 +369,7 @@
         <div class="header">
             <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
             <div style="display: flex; align-items: center; gap: 10px;">
-                <select id="catSelect" onchange="changeCategory()">
+                <select id="catSelect" onchange="changeCategory()" aria-label="หมวดหมู่คำศัพท์">
                     <option value="all">ทุกประเภท (All)</option>
                     <option value="akhyata">เฉพาะกริยา (Akhyata)</option>
                     <option value="kitaka">เฉพาะกิตก์ (Kitaka)</option>

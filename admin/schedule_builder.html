@@ -437,11 +437,11 @@
                 <i class="fas fa-cloud-upload-alt"></i> จัดการไฟล์ (Upload)
             </button>
 
-            <a href="../exam_builder.html" class="btn" style="background:#e67e22; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank">
+            <a href="../exam_builder.html" class="btn" style="background:#e67e22; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank" rel="noopener noreferrer">
                 <i class="fas fa-file-pen" style="margin-right:8px;"></i> ออกข้อสอบ (Exam)
             </a>
 
-            <a href="../pages/reader.html" class="btn" style="background:#16a085; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank">
+            <a href="../pages/reader.html" class="btn" style="background:#16a085; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank" rel="noopener noreferrer">
                 <i class="fas fa-book-open" style="margin-right:8px;"></i> โหมดหนังสือ
             </a>
         </div>
@@ -1892,7 +1892,7 @@
                 const roomLabel = roomObj ? (roomObj.name || roomObj.id) : (roomId || '-');
 
                 tr.innerHTML = `
-                 <td style="padding:10px;"><a href="${file.url}" target="_blank">${file.name}</a></td>
+                 <td style="padding:10px;"><a href="${file.url}" target="_blank" rel="noopener noreferrer">${file.name}</a></td>
                  <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
                  <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
                  <td style="padding:10px;">${subjLabel}</td>

@@ -14,6 +14,7 @@
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#2c3e50">
     <link rel="icon" href="data:,">
+    <link rel="apple-touch-icon" href="icons/pwa-maskable.svg">
     <!-- Security: DOMPurify for XSS prevention -->
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -156,6 +157,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
 
@@ -651,7 +653,7 @@
                         <div class="card-desc">กำหนดการสอบสนามหลวง</div>
                     </a>
                     <a href="https://www.infopali.net/index.php?option=com_content&view=section&layout=blog&id=1&Itemid=148"
-                        target="_blank" class="menu-card level-tool">
+                        target="_blank" rel="noopener noreferrer" class="menu-card level-tool">
                         <div class="icon-box"><i class="fa-solid fa-list-check"></i></div>
                         <div class="card-title">ประกาศผลสอบ</div>
                         <div class="card-desc">ตรวจผลสอบบาลี</div>

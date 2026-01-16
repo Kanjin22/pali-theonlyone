@@ -7,6 +7,7 @@
     <title>โหมดบอร์ด – สื่อการสอนบาลี</title>
     <link rel="manifest" href="../manifest.webmanifest">
     <meta name="theme-color" content="#2c3e50">
+    <link rel="apple-touch-icon" href="../icons/pwa-maskable.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -355,6 +356,7 @@
 
         .thai-text.hidden {
             opacity: 0;
+            -webkit-user-select: none;
             user-select: none;
             pointer-events: none;
         }
@@ -894,6 +896,7 @@
             justify-content: center;
             align-items: center;
             z-index: 3000;
+            -webkit-backdrop-filter: blur(3px);
             backdrop-filter: blur(3px);
         }
 
@@ -1211,8 +1214,8 @@
         <i class="fa-solid fa-info"></i>
     </button>
 
-    <div class="card" id="cardContainer">
-        <a href="content_browser.html" class="back-btn-overlay no-print">
+        <div class="card" id="cardContainer">
+        <a href="content_browser.html" class="back-btn-overlay no-print" title="กลับไปหน้ารายการเนื้อหา">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="header-bar"></div>
@@ -1390,7 +1393,7 @@
     </div>
 
     <!-- Translation Modal (iframe) -->
-    <div id="trans-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; justify-content:center; align-items:center; backdrop-filter: blur(2px);" onclick="if(event.target===this) this.style.display='none'">
+    <div id="trans-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; justify-content:center; align-items:center; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);" onclick="if(event.target===this) this.style.display='none'">
         <div style="background:white; width:90%; max-width:500px; height:80%; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
             <div style="padding:12px 20px; background:#f7f9f9; border-bottom:1px solid #eceff1; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:bold; color:#2c3e50;"><i class="fa-solid fa-language"></i> แปลภาษา (Lexitron)</span>
@@ -2430,14 +2433,14 @@
                     // Prepare display word (Link to Roots if applicable)
                     let displayWord = result._stemmedFrom ? result.word || cleanWord : cleanWord;
                     if (result.source === 'พจนานุกรมธาตุ') {
-                        displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
+                        displayWord = `<a href="roots.html?q=${displayWord}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:inherit; text-decoration:underline;">${displayWord}</a> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7em; color:#bdc3c7;"></i>`;
                     }
 
                     // Check if Root exists (for Thai section icon)
                     let rootLinkHtml = "";
                     if (dbs.roots[cleanWord] || (result && result._baseWord && dbs.roots[result._baseWord])) {
                         const targetRoot = dbs.roots[cleanWord] ? cleanWord : result._baseWord;
-                        rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
+                        rootLinkHtml = `<a href="roots.html?q=${targetRoot}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="margin-left:5px; color:#e67e22;" title="ดูรากศัพท์"><i class="fa-solid fa-square-root-variable"></i></a>`;
                     }
 
                     // Prepare content for Popup (Click to expand)
@@ -2588,13 +2591,13 @@
             // Prepare Popup Content (Add links here)
             const popupLinksHtml = `
                 <div style="margin-top: 15px; border-top: 1px dashed #bdc3c7; padding-top: 10px; font-size: 0.9em;">
-                    <a href="${scLink}" target="_blank" style="display:inline-block; margin-right:10px; color:#3498db; text-decoration:none;">
+                    <a href="${scLink}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-right:10px; color:#3498db; text-decoration:none;">
                         <i class="fa-solid fa-dharmachakra"></i> SC
                     </a>
-                    <a href="${dpdLink}" target="_blank" style="display:inline-block; margin-right:10px; color:#27ae60; text-decoration:none;">
+                    <a href="${dpdLink}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-right:10px; color:#27ae60; text-decoration:none;">
                         <i class="fa-solid fa-book"></i> DPD
                     </a>
-                    <a href="${rootUrl}" target="_blank" style="display:inline-block; ${rootStyle} text-decoration:none;">
+                    <a href="${rootUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block; ${rootStyle} text-decoration:none;">
                         <i class="fa-solid ${rootIcon}"></i> ธาตุ
                     </a>
                 </div>
@@ -3044,7 +3047,7 @@
                         <div style="font-size:3rem; color:#bdc3c7; margin-bottom:20px;"><i class="fa-regular fa-face-frown"></i></div>
                         <div style="color:#7f8c8d;">ไม่พบคำศัพท์ <b>"${word}"</b> ในฐานข้อมูล</div>
                         <div style="margin-top:20px;">
-                            <a href="https://dict.longdo.com/search/${word}" target="_blank" style="color:#3498db; text-decoration:none; border:1px solid #3498db; padding:8px 16px; border-radius:20px;">
+                            <a href="https://dict.longdo.com/search/${word}" target="_blank" rel="noopener noreferrer" style="color:#3498db; text-decoration:none; border:1px solid #3498db; padding:8px 16px; border-radius:20px;">
                                 ค้นหาใน Longdo Dict <i class="fa-solid fa-external-link-alt"></i>
                             </a>
                         </div>

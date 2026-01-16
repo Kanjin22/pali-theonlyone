@@ -62,6 +62,7 @@
         .item-controls { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
         .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .stats-panel-warning { background:#fff3e0; padding:15px; border-radius:8px; border:1px solid #ffe0b2; }
         /* Paper (A4-like) */
         /* DilleniaUPC (Standard) */
         @font-face {
@@ -343,7 +344,7 @@
                         <div class="row" id="levelRow">
                             <label>ชั้น</label>
                             <div style="display:flex; align-items:center; gap:10px; flex:1;">
-                                <select id="levelSelect" style="flex:1;">
+                                <select id="levelSelect" style="flex:1;" title="เลือกชั้นประโยค">
                                     <option value="" disabled selected>(กรุณาเลือกชั้นประโยค)</option>
                                     <option value="p12">ประโยค ๑–๒</option>
                                     <option value="p3">ประโยค ป.ธ. ๓</option>
@@ -358,7 +359,7 @@
                         </div>
                         <div class="row" id="subjectRow" style="opacity: 0.5; pointer-events: none;">
                             <label>วิชา</label>
-                            <select id="subjectSelect">
+                            <select id="subjectSelect" aria-label="เลือกวิชา">
                                 <option value="" disabled selected>(กรุณาเลือกวิชา)</option>
                             </select>
                         </div>
@@ -370,16 +371,16 @@
                         </div>
                         <div class="row" id="dateRow">
                             <label>วันที่</label>
-                            <input type="date" id="dateInput" />
+                            <input type="date" id="dateInput" title="เลือกวันที่สอบ" />
                         </div>
                         <div class="row grid-2" style="gap:10px;">
                             <div class="row" style="margin:0;">
                                 <label style="min-width:60px;">ชั่วโมง</label>
-                                <input type="number" id="hoursInput" min="0" value="4" />
+                                <input type="number" id="hoursInput" min="0" value="4" placeholder="ชั่วโมง" />
                             </div>
                             <div class="row" style="margin:0;">
                                 <label style="min-width:60px;">นาที</label>
-                                <input type="number" id="minutesInput" min="0" value="15" />
+                                <input type="number" id="minutesInput" min="0" value="15" placeholder="นาที" />
                             </div>
                         </div>
                     </div>
@@ -398,9 +399,9 @@
                     <label style="padding-top:10px;">โดยพยัญชนะ</label>
                     <div style="width:100%;">
                         <div class="grid-3" style="margin-bottom:10px;">
-                            <select id="literalPart"></select>
-                            <select id="literalVagga"><option value="">(เลือกวรรค)</option></select>
-                            <select id="literalStory"><option value="">(เลือกเรื่อง)</option></select>
+                            <select id="literalPart" aria-label="เลือกภาคโดยพยัญชนะ"></select>
+                            <select id="literalVagga" aria-label="เลือกวรรคโดยพยัญชนะ"><option value="">(เลือกวรรค)</option></select>
+                            <select id="literalStory" aria-label="เลือกเรื่องโดยพยัญชนะ"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
                         <div class="row" style="margin-top:0;">
                             <label style="min-width:auto; margin-right:10px;">หน้า</label>
@@ -420,9 +421,9 @@
                     <label style="padding-top:10px;">โดยอรรถ</label>
                     <div style="width:100%;">
                         <div class="grid-3" style="margin-bottom:10px;">
-                            <select id="sensePart"></select>
-                            <select id="senseVagga"><option value="">(เลือกวรรค)</option></select>
-                            <select id="senseStory"><option value="">(เลือกเรื่อง)</option></select>
+                            <select id="sensePart" aria-label="เลือกภาคโดยอรรถ"></select>
+                            <select id="senseVagga" aria-label="เลือกวรรคโดยอรรถ"><option value="">(เลือกวรรค)</option></select>
+                            <select id="senseStory" aria-label="เลือกเรื่องโดยอรรถ"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
                         <div class="row" style="margin-top:0;">
                             <label style="min-width:auto; margin-right:10px;">หน้า</label>
@@ -438,11 +439,11 @@
                 <div id="statsSection" style="margin-top:20px; padding-top:20px; border-top:1px solid #eee; display:none;">
                     <h3><i class="fa-solid fa-chart-pie"></i> สถิติการออกข้อสอบ (Exam Statistics)</h3>
                     <div class="grid-2">
-                        <div style="background:#fff3e0; padding:15px; border-radius:8px; border:1px solid #ffe0b2;">
+                        <div class="stats-panel-warning">
                             <h4 style="margin-top:0; color:#e65100;"><i class="fa-solid fa-scale-balanced"></i> สถิติสนามหลวง</h4>
                             <div id="sanluangStatsContent">กำลังโหลด...</div>
                             <div style="margin-top:10px; font-size:0.9rem;">
-                                <a href="sanluang_stats.html" target="_blank" style="color:#e65100;">ดูข้อมูลทั้งหมด / เพิ่มข้อมูล</a>
+                                <a href="sanluang_stats.html" target="_blank" rel="noopener noreferrer" style="color:#e65100;">ดูข้อมูลทั้งหมด / เพิ่มข้อมูล</a>
                             </div>
                         </div>
                         <div style="background:#e3f2fd; padding:15px; border-radius:8px; border:1px solid #bbdefb;">
