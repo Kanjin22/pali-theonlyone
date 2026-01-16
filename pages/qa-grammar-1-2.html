@@ -405,6 +405,44 @@
             /* Paper texture effect optional */
         }
 
+        /* Exam Answer Box with Ruled Lines */
+        .exam-answer-box {
+            width: 100%;
+            min-height: 150px;
+            background-color: #fff;
+            /* Ruled lines effect */
+            background-image: repeating-linear-gradient(transparent, transparent 34px, #e0e0e0 35px);
+            line-height: 35px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0 15px;
+            outline: none;
+            font-size: 1.1rem;
+            color: #333;
+            transition: border-color 0.2s;
+            cursor: text;
+        }
+
+        .exam-answer-box:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.1);
+        }
+
+        @media print {
+            .exam-answer-box {
+                border: 1px solid #999;
+                /* Ensure background prints */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                box-shadow: none;
+            }
+            
+            /* Hide placeholders or hints if any */
+            .exam-answer-hint {
+                display: none !important;
+            }
+        }
+
         /* Toggle Icon */
         .toggle-icon {
             transition: transform 0.3s;
@@ -1290,22 +1328,10 @@
             });
 
             navigator.clipboard.writeText(exportText).then(() => {
-                // Show simple toast feedback
-                const toast = document.createElement('div');
-                toast.className = 'position-fixed bottom-0 end-0 p-3';
-                toast.style.zIndex = '1100';
-                toast.innerHTML = `
-                    <div class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                <i class="fas fa-check-circle me-2"></i> คัดลอกข้อมูลสำหรับ AI แล้ว!
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="this.parentElement.parentElement.parentElement.remove()"></button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
+                // Show AI Help Modal with Success State
+                const modalEl = document.getElementById('aiHelpModal');
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
             }).catch(err => {
                 console.error('Failed to copy: ', err);
                 alert('เกิดข้อผิดพลาดในการคัดลอกข้อมูล');
@@ -1448,10 +1474,13 @@
             const date = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
 
             let html = `
-                <div class="text-center mb-5">
+                <div class="text-center mb-4">
                     <h3 class="fw-bold">ข้อสอบบาลีไวยากรณ์ ประโยค ๑-๒</h3>
                     <p class="text-muted">วันที่ ${date} | คะแนนเต็ม ${questions.length * 10} คะแนน</p>
-                    <div style="border-bottom: 2px solid #eee; margin: 0 auto; width: 50%;"></div>
+                    <div class="no-print alert alert-info py-2 small d-inline-block">
+                        <i class="fas fa-info-circle me-1"></i> Tip: สามารถคลิกที่ช่องคำตอบแล้วกด <b>Enter</b> หรือ <b>Shift+Enter</b> เพื่อเพิ่มบรรทัดได้
+                    </div>
+                    <div style="border-bottom: 2px solid #eee; margin: 10px auto; width: 50%;"></div>
                 </div>
             `;
 
@@ -1462,9 +1491,10 @@
                             <span class="fw-bold me-2">${index + 1}.</span>
                             <div class="fw-bold w-100">${formatContent(item.question)}</div>
                         </div>
-                        <div class="p-4 rounded bg-light" style="min-height: 120px; border: 2px dashed #ddd; background-color: #fcfcfc !important;">
-                            <!-- พื้นที่สำหรับเขียนคำตอบ -->
-                        </div>
+                        
+                        <!-- Answer Area with Ruled Lines -->
+                        <div class="exam-answer-box" contenteditable="true" spellcheck="false"></div>
+                        
                         ${showAnswer ? `
                             <div class="mt-3 p-3 bg-light rounded border border-success border-opacity-25">
                                 <strong class="text-success small">เฉลย:</strong> 
@@ -1503,19 +1533,23 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
                 <div class="modal-header bg-success text-white border-0 rounded-top-4">
-                    <h5 class="modal-title"><i class="fas fa-robot me-2"></i>คู่มือการใช้งาน: ผู้ช่วย AI ส่วนตัว</h5>
+                    <h5 class="modal-title"><i class="fas fa-check-circle me-2"></i>คัดลอกข้อมูลเรียบร้อย!</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="text-muted mb-4">ฟีเจอร์นี้ช่วยให้คุณนำข้อมูลโจทย์และเฉลยที่กรองแล้ว ไปให้ AI (เช่น ChatGPT, Claude, Gemini) ช่วยวิเคราะห์หรืออธิบายเพิ่มเติมได้</p>
+                    <div class="alert alert-success border-0 bg-success bg-opacity-10 text-success mb-4">
+                        <i class="fas fa-clipboard-check me-2"></i>ข้อมูลถูกบันทึกใน Clipboard แล้ว พร้อมนำไปวาง
+                    </div>
+                    
+                    <h6 class="fw-bold mb-3 text-dark">ขั้นตอนต่อไป:</h6>
                     
                     <div class="d-flex mb-3">
                         <div class="me-3">
                             <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">1</span>
                         </div>
                         <div>
-                            <h6 class="fw-bold mb-1">เลือกข้อมูลที่ต้องการ</h6>
-                            <p class="small text-muted mb-0">ใช้ตัวกรองเลือก "ปี พ.ศ." และ "หมวดหมู่" ที่ต้องการศึกษา (เช่น ปี 2510-2520 หมวดสนธิ)</p>
+                            <h6 class="fw-bold mb-1">เปิด AI ของคุณ</h6>
+                            <p class="small text-muted mb-0">เข้าใช้งาน ChatGPT, Claude, หรือ Gemini</p>
                         </div>
                     </div>
 
@@ -1524,8 +1558,8 @@
                             <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">2</span>
                         </div>
                         <div>
-                            <h6 class="fw-bold mb-1">กดปุ่ม "ส่งข้อมูลให้ AI"</h6>
-                            <p class="small text-muted mb-0">ระบบจะคัดลอกข้อมูลทั้งหมดตามเงื่อนไขที่เลือกเก็บไว้ใน Clipboard ของคุณ</p>
+                            <h6 class="fw-bold mb-1">วางข้อมูล (Paste)</h6>
+                            <p class="small text-muted mb-0">กด <b>Ctrl+V</b> (หรือคลิกขวา > วาง) ในช่องแชท</p>
                         </div>
                     </div>
 
@@ -1534,8 +1568,8 @@
                             <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">3</span>
                         </div>
                         <div>
-                            <h6 class="fw-bold mb-1">ถาม AI ของคุณ</h6>
-                            <p class="small text-muted mb-0">เปิดแอป AI (ChatGPT, Gemini, etc.) แล้วกด <b>"วาง" (Paste)</b> ข้อมูลลงไป พร้อมพิมพ์คำสั่ง</p>
+                            <h6 class="fw-bold mb-1">พิมพ์คำสั่งเพิ่มเติม</h6>
+                            <p class="small text-muted mb-0">เช่น "ช่วยสรุปแนวข้อสอบเรื่องสนธิให้หน่อย"</p>
                         </div>
                     </div>
 
