@@ -183,7 +183,7 @@
         <div class="card">
             <div style="display:flex; gap:15px; margin-bottom:20px;">
                 <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อเรื่อง, ปี พ.ศ. ..." style="padding:10px; border:1px solid #ddd; border-radius:6px; flex:1;" onkeyup="loadStats()">
-                <select id="levelFilter" onchange="loadStats()" style="padding:10px; border:1px solid #ddd; border-radius:6px;">
+                <select id="levelFilter" onchange="loadStats()" aria-label="กรองตามชั้นประโยค" style="padding:10px; border:1px solid #ddd; border-radius:6px;">
                     <option value="">ทุกชั้นประโยค</option>
                     <option value="p12">ประโยค ๑-๒</option>
                     <option value="p3">ป.ธ. ๓</option>

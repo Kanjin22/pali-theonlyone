@@ -290,6 +290,546 @@
             display: block;
         }
 
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-theme-toggle {
+            padding: 8px 12px;
+            border: 1px solid #7f8c8d;
+            background: transparent;
+            color: var(--text-color);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            padding: 8px 12px;
+            border: 1px solid #3498db;
+            background: #3498db;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .user-info-text {
+            display: none;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+
+        .btn-admin-dashboard {
+            display: none;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #2c3e50;
+            background: #2c3e50;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-logout {
+            display: none;
+            padding: 8px 12px;
+            border: 1px solid #e74c3c;
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #intro-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+
+        .intro-title {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .intro-text {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .intro-steps {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .intro-step {
+            flex: 1;
+            min-width: 200px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .intro-step-title-orange {
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 8px;
+        }
+
+        .intro-step-title-blue {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+
+        .intro-step-title-green {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        .intro-step-text {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        #student-dashboard {
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .dash-card-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .dash-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .dash-greeting {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .dash-level-text {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .btn-backup {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .dash-stats-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .dash-icon-fire {
+            color: #f1c40f;
+            font-size: 1.2rem;
+        }
+
+        .dash-icon-goal {
+            color: #2ecc71;
+            font-size: 1.2rem;
+        }
+
+        .dash-icon-star {
+            color: #f39c12;
+            font-size: 1.2rem;
+        }
+
+        .dash-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .dash-label-icon {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .dash-stat-value {
+            font-weight: bold;
+        }
+
+        .dash-stat-clickable {
+            cursor: pointer;
+        }
+
+        .dash-classroom-btn {
+            background: white;
+            color: #2980b9;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #dash-resume-btn {
+            display: none;
+        }
+
+        #dash-today {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        .dash-bg-icon {
+            position: absolute;
+            right: -20px;
+            bottom: -40px;
+            font-size: 10rem;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        #today-pins-section {
+            display: none;
+        }
+
+        .section-label-top {
+            margin-top: 40px;
+        }
+
+        .today-schedule-card {
+            text-align: left;
+            display: block;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .today-schedule-loading {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        .grid-menu-bottom {
+            margin-bottom: 40px;
+        }
+
+        #resume-section {
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        .section-label-warning {
+            margin-top: 0;
+            color: #f39c12;
+            border-left-color: #f39c12;
+        }
+
+        .resume-card {
+            flex-direction: row;
+            text-align: left;
+            background: #fff8e1;
+            border: 1px solid #ffecb3;
+        }
+
+        .resume-icon {
+            margin-bottom: 0;
+            margin-right: 20px;
+            color: #f39c12;
+            font-size: 2rem;
+        }
+
+        #my-rooms-section {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .section-label-success {
+            margin-top: 0;
+            color: #27ae60;
+            border-left-color: #27ae60;
+        }
+
+        .resources-label {
+            margin-top: 20px;
+        }
+
+        .section-label-dark {
+            margin-top: 40px;
+            color: #34495e;
+            border-left-color: #34495e;
+        }
+
+        .section-label-danger {
+            margin-top: 40px;
+            color: #c0392b;
+            border-left-color: #c0392b;
+        }
+
+        #flashcards-modal,
+        #login-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-card-large {
+            background: #fff;
+            width: 95%;
+            max-width: 560px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .login-modal-card {
+            background: #fff;
+            width: 95%;
+            max-width: 520px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transform: scale(0.98);
+            opacity: 0;
+        }
+
+        .modal-header {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .modal-close-btn {
+            border: none;
+            background: transparent;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 18px;
+        }
+
+        .flash-card-container {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .flash-term {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .flash-meaning {
+            font-size: 1rem;
+            color: #7f8c8d;
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        .flash-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .flash-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .flash-btn-neutral {
+            border: 1px solid #888;
+            background: #ffffff;
+            color: #34495e;
+        }
+
+        .flash-btn-correct {
+            border: 1px solid #27ae60;
+            background: #27ae60;
+            color: #fff;
+            display: none;
+        }
+
+        .flash-btn-wrong {
+            border: 1px solid #e74c3c;
+            background: #e74c3c;
+            color: #fff;
+            display: none;
+        }
+
+        .flash-progress {
+            margin-top: 10px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .login-social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .login-social-btn {
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-social-google {
+            background: #ffffff;
+        }
+
+        .login-social-facebook {
+            background: #1877f2;
+            color: #fff;
+        }
+
+        .login-social-line {
+            background: #00c300;
+            color: #fff;
+        }
+
+        .login-google-icon {
+            color: #db4437;
+        }
+
+        .login-line-icon {
+            color: #ffffff;
+        }
+
+        .login-email-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        .login-email-title {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        #email-status {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #607d8b;
+        }
+
+        .login-email-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .login-btn-neutral {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #888;
+            background: #ffffff;
+            color: #34495e;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .login-btn-primary {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #3498db;
+            background: #3498db;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .login-btn-success {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #27ae60;
+            background: #27ae60;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .login-btn-forgot {
+            margin-top: 8px;
+            padding: 10px;
+            border: 1px solid #e67e22;
+            background: #ffffff;
+            color: #e67e22;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+        }
+
+        .login-footer {
+            margin-top: 15px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .login-footer-link {
+            color: #95a5a6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 20px 15px;
@@ -356,51 +896,46 @@
 
 <body>
     <div class="container">
-        <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-bottom:10px;">
+        <div class="top-bar">
             <button id="theme-toggle" onclick="toggleTheme()"
-                style="padding:8px 12px; border:1px solid #7f8c8d; background:transparent; color:var(--text-color); border-radius:6px; cursor:pointer;"
+                class="btn-theme-toggle"
                 title="สลับโหมดมืด/สว่าง">
                 <i class="fa-solid fa-moon"></i>
             </button>
             <button id="btn-open-login" onclick="openLogin()"
-                style="padding:8px 12px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:6px; cursor:pointer;">สมัคร
+                class="btn-login">สมัคร
                 / เข้าสู่ระบบ</button>
-            <div id="user-info" style="display:none; font-size:0.95rem; color:#2c3e50;"></div>
+            <div id="user-info" class="user-info-text"></div>
             <a href="pages/admin_dashboard.html" id="btn-admin-dashboard"
-                style="display:none; text-decoration:none; padding:8px 12px; border:1px solid #2c3e50; background:#2c3e50; color:#fff; border-radius:6px; cursor:pointer; align-items: center; gap: 5px;">
+                class="btn-admin-dashboard">
                 <i class="fa-solid fa-user-shield"></i> ผู้ดูแล
             </a>
-            <button id="btn-logout"
-                style="display:none; padding:8px 12px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:6px; cursor:pointer;">ออกจากระบบ</button>
+            <button id="btn-logout" class="btn-logout">ออกจากระบบ</button>
         </div>
         <div class="hero-section">
             <div class="hero-title">ระบบการเรียนบาลีออนไลน์</div>
             <div class="hero-subtitle">เลือกห้องเรียนตามระดับชั้นประโยค</div>
         </div>
 
-        <div id="intro-section"
-            style="margin-bottom: 40px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: left;">
-            <h2 style="color: #2c3e50; margin-top: 0; font-size: 1.5rem;">👋 ยินดีต้อนรับสู่ Pali TheOnlyOne</h2>
-            <p style="color: #7f8c8d; margin-bottom: 20px;">เว็บไซต์สำหรับเรียนภาษาบาลีออนไลน์ครบวงจร ตั้งแต่ชั้นประโยค
+        <div id="intro-section">
+            <h2 class="intro-title">👋 ยินดีต้อนรับสู่ Pali TheOnlyOne</h2>
+            <p class="intro-text">เว็บไซต์สำหรับเรียนภาษาบาลีออนไลน์ครบวงจร ตั้งแต่ชั้นประโยค
                 ๑-๒ ถึง ป.ธ.๙ พร้อมเครื่องมือช่วยเรียนที่ทันสมัย</p>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div class="intro-steps">
 
-                <div style="flex: 1; min-width: 200px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                    <div style="font-weight: bold; color: #e67e22; margin-bottom: 8px;"><i
-                            class="fa-solid fa-user-check"></i> 1. ล็อกอินเพื่อบันทึก</div>
-                    <div style="color: #7f8c8d; font-size: 0.9rem;">เข้าสู่ระบบเพื่อติดตามความคืบหน้า เก็บสถิติ
+                <div class="intro-step">
+                    <div class="intro-step-title-orange"><i class="fa-solid fa-user-check"></i> 1. ล็อกอินเพื่อบันทึก</div>
+                    <div class="intro-step-text">เข้าสู่ระบบเพื่อติดตามความคืบหน้า เก็บสถิติ
                         และใช้งานระบบ "เรียนต่อเนื่อง"</div>
                 </div>
-                <div style="flex: 1; min-width: 200px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                    <div style="font-weight: bold; color: #3498db; margin-bottom: 8px;"><i
-                            class="fa-solid fa-school"></i> 2. เลือกห้องเรียน</div>
-                    <div style="color: #7f8c8d; font-size: 0.9rem;">เลือกชั้นเรียนตามระดับการศึกษาของคุณ
+                <div class="intro-step">
+                    <div class="intro-step-title-blue"><i class="fa-solid fa-school"></i> 2. เลือกห้องเรียน</div>
+                    <div class="intro-step-text">เลือกชั้นเรียนตามระดับการศึกษาของคุณ
                         เพื่อเข้าถึงบทเรียนและแบบฝึกหัด</div>
                 </div>
-                <div style="flex: 1; min-width: 200px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                    <div style="font-weight: bold; color: #27ae60; margin-bottom: 8px;"><i
-                            class="fa-solid fa-toolbox"></i> 3. เครื่องมือครบครัน</div>
-                    <div style="color: #7f8c8d; font-size: 0.9rem;">ใช้งานพจนานุกรม บัตรคำศัพท์
+                <div class="intro-step">
+                    <div class="intro-step-title-green"><i class="fa-solid fa-toolbox"></i> 3. เครื่องมือครบครัน</div>
+                    <div class="intro-step-text">ใช้งานพจนานุกรม บัตรคำศัพท์
                         และสมุดจดศัพท์เพื่อช่วยในการจำ</div>
                 </div>
             </div>
@@ -408,7 +943,7 @@
 
 
 
-        <div id="app-content" style="display:none;">
+        <div id="app-content" class="hidden">
 
             <!-- Tab Navigation -->
             <div class="tab-nav">
@@ -426,57 +961,55 @@
             <div id="tab-student" class="tab-content active">
 
                 <!-- Student Dashboard -->
-                <div id="student-dashboard" style="margin-bottom: 30px; animation: fadeInDown 0.8s ease;">
+            <div id="student-dashboard">
                     <div class="dash-card">
-                        <div style="position: relative; z-index: 2;">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div class="dash-card-inner">
+                            <div class="dash-header-row">
                                 <div>
-                                    <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;"
-                                        id="dash-greeting">ยินดีต้อนรับ ผู้เยี่ยมชม</div>
-                                    <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 20px;" id="dash-level">
+                                    <div class="dash-greeting" id="dash-greeting">ยินดีต้อนรับ ผู้เยี่ยมชม</div>
+                                    <div class="dash-level-text" id="dash-level">
                                         กรุณาเข้าสู่ระบบเพื่อบันทึกสถิติการเรียน</div>
                                 </div>
                                 <button onclick="backupUserData()"
-                                    style="background:rgba(255,255,255,0.2); border:none; color:white; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.85rem;"
+                                    class="btn-backup"
                                     title="สำรองข้อมูลผู้ใช้">
                                     <i class="fa-solid fa-cloud-arrow-down"></i> Backup
                                 </button>
                             </div>
 
-                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div class="dash-stats-row">
                                 <div class="dash-stat"
                                     title="นับจำนวนวันที่เข้าใช้งานติดต่อกัน (ระบบจะนับเฉพาะเมื่อมีการเข้าใช้งานในวันถัดไป หากขาดเรียน 1 วัน สถิติจะถูกรีเซ็ตเป็น 1)">
-                                    <i class="fa-solid fa-fire" style="color: #f1c40f; font-size: 1.2rem;"></i>
+                                    <i class="fa-solid fa-fire dash-icon-fire"></i>
                                     <div>
-                                        <div style="font-size: 0.8rem; opacity: 0.8;">เรียนต่อเนื่อง <i
-                                                class="fa-solid fa-circle-info"
-                                                style="font-size:0.7rem; opacity:0.7;"></i></div>
-                                        <div style="font-weight: bold;" id="dash-streak">-</div>
+                                        <div class="dash-stat-label">เรียนต่อเนื่อง <i
+                                                class="fa-solid fa-circle-info dash-label-icon"></i></div>
+                                        <div class="dash-stat-value" id="dash-streak">-</div>
                                     </div>
                                 </div>
-                                <div class="dash-stat" onclick="editWeeklyGoal()" style="cursor:pointer;"
+                                <div class="dash-stat dash-stat-clickable" onclick="editWeeklyGoal()"
                                     title="คลิกเพื่อตั้งเป้าหมาย">
-                                    <i class="fa-solid fa-list-check" style="color: #2ecc71; font-size: 1.2rem;"></i>
+                                    <i class="fa-solid fa-list-check dash-icon-goal"></i>
                                     <div>
-                                        <div style="font-size: 0.8rem; opacity: 0.8;">เป้าหมายสัปดาห์นี้ <i
-                                                class="fa-solid fa-pen" style="font-size:0.7rem; opacity:0.7;"></i>
+                                        <div class="dash-stat-label">เป้าหมายสัปดาห์นี้ <i
+                                                class="fa-solid fa-pen dash-label-icon"></i>
                                         </div>
-                                        <div style="font-weight: bold;" id="dash-week">-</div>
+                                        <div class="dash-stat-value" id="dash-week">-</div>
                                     </div>
                                 </div>
                                 <div class="dash-stat">
-                                    <i class="fa-solid fa-star" style="color: #f39c12; font-size: 1.2rem;"></i>
+                                    <i class="fa-solid fa-star dash-icon-star"></i>
                                     <div>
-                                        <div style="font-size: 0.8rem; opacity: 0.8;">คะแนนบัตรคำ</div>
-                                        <div style="font-weight: bold;" id="dash-flash-score">-</div>
+                                        <div class="dash-stat-label">คะแนนบัตรคำ</div>
+                                        <div class="dash-stat-value" id="dash-flash-score">-</div>
                                     </div>
                                 </div>
 
-                                <a id="dash-classroom-btn" href="pages/classroom_select.html" class="dash-btn"
-                                    style="background: white; color: #2980b9; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                                <a id="dash-classroom-btn" href="pages/classroom_select.html"
+                                    class="dash-btn dash-classroom-btn">
                                     <i class="fa-solid fa-door-open"></i> เข้าห้องเรียน
                                 </a>
-                                <a id="dash-resume-btn" href="#" class="dash-btn" style="display:none;">
+                                <a id="dash-resume-btn" href="#" class="dash-btn">
                                     <i class="fa-solid fa-clock-rotate-left"></i> เรียนต่อจากเดิม
                                 </a>
                                 <a id="dash-flashcard-btn" href="pages/flashcards.html" class="dash-btn">
@@ -487,36 +1020,31 @@
                                 </a>
                             </div>
 
-                            <div id="dash-today"
-                                style="margin-top: 15px; font-size: 0.95rem; background: rgba(255,255,255,0.2); padding: 10px 12px; border-radius: 10px;">
+                            <div id="dash-today">
                                 วันนี้: -
                             </div>
                         </div>
 
                         <!-- Decorative Background Icon -->
-                        <i class="fa-solid fa-shapes"
-                            style="position: absolute; right: -20px; bottom: -40px; font-size: 10rem; opacity: 0.1; transform: rotate(-15deg);"></i>
+                        <i class="fa-solid fa-shapes dash-bg-icon"></i>
                     </div>
                 </div>
 
-                <div id="today-pins-section" style="display:none;">
-                    <div class="section-label" style="margin-top: 40px;">📌 ปักหมุดวันนี้</div>
-                    <div class="grid-menu" style="margin-bottom:40px;">
-                        <div id="today-schedule-container" class="menu-card level-tool"
-                            style="text-align:left; display:block; width:100%; padding:0; overflow:hidden;">
-                            <div style="padding:20px; text-align:center; color:#999;">กำลังโหลดข้อมูล...</div>
+                <div id="today-pins-section">
+                    <div class="section-label section-label-top">📌 ปักหมุดวันนี้</div>
+                    <div class="grid-menu grid-menu-bottom">
+                        <div id="today-schedule-container" class="menu-card level-tool today-schedule-card">
+                            <div class="today-schedule-loading">กำลังโหลดข้อมูล...</div>
                         </div>
                     </div>
                 </div>
 
                 <div id="pali-classrooms-label" class="section-label">🎓 ชั้นเรียนบาลี</div>
-                <div id="resume-section" style="display:none; margin-bottom: 30px;">
-                    <div class="section-label" style="margin-top: 0; color: #f39c12; border-left-color: #f39c12;">⏳
+                <div id="resume-section">
+                    <div class="section-label section-label-warning">⏳
                         เรียนต่อจากเดิม</div>
-                    <a id="resume-btn" href="#" class="menu-card level-tool"
-                        style="flex-direction: row; text-align: left; background: #fff8e1; border: 1px solid #ffecb3;">
-                        <div class="icon-box"
-                            style="margin-bottom: 0; margin-right: 20px; color: #f39c12; font-size: 2rem;"><i
+                    <a id="resume-btn" href="#" class="menu-card level-tool resume-card">
+                        <div class="icon-box resume-icon"><i
                                 class="fa-solid fa-clock-rotate-left"></i></div>
                         <div>
                             <div class="card-title" id="resume-title">หัวข้อล่าสุด</div>
@@ -524,8 +1052,8 @@
                         </div>
                     </a>
                 </div>
-                <div id="my-rooms-section" style="display:none; margin-bottom: 20px;">
-                    <div class="section-label" style="margin-top: 0; color: #27ae60; border-left-color: #27ae60;">🏫
+                <div id="my-rooms-section">
+                    <div class="section-label section-label-success">🏫
                         ห้องเรียนของฉัน</div>
                     <div id="my-rooms-grid" class="grid-menu"></div>
                 </div>
@@ -581,7 +1109,7 @@
 
             <!-- Tab: Resources -->
             <div id="tab-resources" class="tab-content">
-                <div class="section-label" style="margin-top: 20px;">🛠️ คลังความรู้บาลี</div>
+                <div class="section-label resources-label">🛠️ คลังความรู้บาลี</div>
                 <div class="grid-menu">
                     <a href="pages/library_center.html" class="menu-card level-tool">
                         <div class="icon-box"><i class="fa-solid fa-book-open"></i></div>
@@ -628,7 +1156,7 @@
 
             <!-- Tab: Teachers -->
             <div id="tab-teachers" class="tab-content">
-                <div class="section-label" style="margin-top: 20px;">👨‍🏫 เครื่องมือสำหรับอาจารย์</div>
+                <div class="section-label resources-label">👨‍🏫 เครื่องมือสำหรับอาจารย์</div>
                 <div class="grid-menu">
                     <a href="pages/exam_builder.html" class="menu-card level-tool">
                         <div class="icon-box"><i class="fa-solid fa-file-pen"></i></div>
@@ -640,7 +1168,7 @@
 
             <!-- Tab: Sanluang Exam -->
             <div id="tab-sanluang" class="tab-content">
-                <div class="section-label" style="margin-top: 20px;">🎯 การสอบบาลีสนามหลวง</div>
+                <div class="section-label resources-label">🎯 การสอบบาลีสนามหลวง</div>
                 <div class="grid-menu">
                     <a href="pages/sanluang_stats.html" class="menu-card level-tool">
                         <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
@@ -661,85 +1189,61 @@
                 </div>
             </div>
         </div>
-        <div id="flashcards-modal"
-            style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
-            <div
-                style="background:#fff; width:95%; max-width:560px; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.2); overflow:hidden;">
-                <div
-                    style="padding:14px 16px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-weight:700; color:#2c3e50;">ฝึกบัตรคำ</div>
-                    <button id="flash-close"
-                        style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
+        <div id="flashcards-modal">
+            <div class="modal-card-large">
+                <div class="modal-header">
+                    <div class="modal-title">ฝึกบัตรคำ</div>
+                    <button id="flash-close" class="modal-close-btn">✕</button>
                 </div>
-                <div style="padding:18px;">
-                    <div id="flash-card"
-                        style="border:1px solid #eee; border-radius:12px; padding:20px; text-align:center; background:#f8f9fa;">
-                        <div id="flash-term"
-                            style="font-size:1.4rem; font-weight:700; color:#2c3e50; margin-bottom:10px;">-</div>
-                        <div id="flash-meaning"
-                            style="font-size:1rem; color:#7f8c8d; display:none; margin-bottom:10px;">-</div>
+                <div class="modal-body">
+                    <div id="flash-card" class="flash-card-container">
+                        <div id="flash-term" class="flash-term">-</div>
+                        <div id="flash-meaning" class="flash-meaning">-</div>
                     </div>
-                    <div style="display:flex; gap:10px; margin-top:15px;">
-                        <button id="flash-reveal"
-                            style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดูคำแปล</button>
-                        <button id="flash-correct"
-                            style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">ถูก
-                            ✓</button>
-                        <button id="flash-wrong"
-                            style="flex:1; padding:10px; border:1px solid #e74c3c; background:#e74c3c; color:#fff; border-radius:8px; cursor:pointer; display:none;">ผิด
-                            ✗</button>
+                    <div class="flash-actions">
+                        <button id="flash-reveal" class="flash-btn flash-btn-neutral">ดูคำแปล</button>
+                        <button id="flash-correct" class="flash-btn flash-btn-correct">ถูก ✓</button>
+                        <button id="flash-wrong" class="flash-btn flash-btn-wrong">ผิด ✗</button>
                     </div>
-                    <div id="flash-progress" style="margin-top:10px; color:#7f8c8d; text-align:center;">0/0</div>
+                    <div id="flash-progress" class="flash-progress">0/0</div>
                 </div>
             </div>
         </div>
 
     </div>
-    <div id="login-modal"
-        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:10000;">
-        <div id="login-modal-card"
-            style="background:#fff; width:95%; max-width:520px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden; transform:scale(0.98); opacity:0;">
-            <div
-                style="padding:16px 18px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
-                <div style="font-weight:700; color:#2c3e50;">สมัคร / เข้าสู่ระบบ</div>
-                <button id="btn-close-login"
-                    style="border:none; background:transparent; font-size:1.2rem; color:#7f8c8d; cursor:pointer;">✕</button>
+    <div id="login-modal">
+        <div id="login-modal-card" class="login-modal-card">
+            <div class="modal-header">
+                <div class="modal-title">สมัคร / เข้าสู่ระบบ</div>
+                <button id="btn-close-login" class="modal-close-btn">✕</button>
             </div>
-            <div style="padding:18px;">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:16px;">
-                    <button id="login-google"
-                        style="padding:10px; border:1px solid #eee; border-radius:8px; background:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i
-                            class="fa-brands fa-google" style="color:#db4437;"></i><span>Google</span></button>
-                    <button id="login-facebook"
-                        style="padding:10px; border:1px solid #eee; border-radius:8px; background:#1877f2; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i
-                            class="fa-brands fa-facebook-f"></i><span>Facebook</span></button>
-                    <button id="login-line"
-                        style="padding:10px; border:1px solid #eee; border-radius:8px; background:#00c300; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;"><i
-                            class="fa-brands fa-line" style="color:#ffffff;"></i><span>LINE</span></button>
+            <div class="modal-body">
+                <div class="login-social-grid">
+                    <button id="login-google" class="login-social-btn login-social-google">
+                        <i class="fa-brands fa-google login-google-icon"></i><span>Google</span>
+                    </button>
+                    <button id="login-facebook" class="login-social-btn login-social-facebook">
+                        <i class="fa-brands fa-facebook-f"></i><span>Facebook</span>
+                    </button>
+                    <button id="login-line" class="login-social-btn login-social-line">
+                        <i class="fa-brands fa-line login-line-icon"></i><span>LINE</span>
+                    </button>
                 </div>
-                <div style="border:1px solid #eee; border-radius:10px; padding:12px; margin-top:8px;">
-                    <div style="margin-bottom:8px; font-weight:600; color:#2c3e50;">อีเมลและรหัสผ่าน</div>
+                <div class="login-email-card">
+                    <div class="login-email-title">อีเมลและรหัสผ่าน</div>
                     <input id="modal-email" type="email" inputmode="email" autocomplete="email"
                         placeholder="อีเมล (ตัวอักษรอังกฤษเท่านั้น)" class="login-input">
-                    <div id="email-status" style="margin-bottom:10px; font-size:0.95rem; color:#607d8b;"></div>
-                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" class="login-input"
-                        style="display:none;">
-                    <div style="display:flex; gap:8px;">
-                        <button id="modal-email-next"
-                            style="flex:1; padding:10px; border:1px solid #888; background:#ffffff; color:#34495e; border-radius:8px; cursor:pointer;">ดำเนินการต่อ</button>
-                        <button id="modal-email-signin"
-                            style="flex:1; padding:10px; border:1px solid #3498db; background:#3498db; color:#fff; border-radius:8px; cursor:pointer; display:none;">เข้าสู่ระบบ</button>
-                        <button id="modal-email-signup"
-                            style="flex:1; padding:10px; border:1px solid #27ae60; background:#27ae60; color:#fff; border-radius:8px; cursor:pointer; display:none;">สมัครสมาชิก</button>
+                    <div id="email-status"></div>
+                    <input id="modal-password" type="password" placeholder="รหัสผ่าน" class="login-input hidden">
+                    <div class="login-email-actions">
+                        <button id="modal-email-next" class="login-btn-neutral">ดำเนินการต่อ</button>
+                        <button id="modal-email-signin" class="login-btn-primary">เข้าสู่ระบบ</button>
+                        <button id="modal-email-signup" class="login-btn-success">สมัครสมาชิก</button>
                     </div>
-                    <button id="modal-forgot-password"
-                        style="margin-top:8px; padding:10px; border:1px solid #e67e22; background:#ffffff; color:#e67e22; border-radius:8px; cursor:pointer; display:none; width:100%;">ลืมรหัสผ่าน</button>
+                    <button id="modal-forgot-password" class="login-btn-forgot">ลืมรหัสผ่าน</button>
 
-
-
-                    <div style="margin-top: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
-                        <a href="pages/admin_login.html"
-                            style="color: #95a5a6; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px;">
+                    <div class="login-footer">
+                        <a href="pages/admin_login.html" class="login-footer-link">
                             <i class="fa-solid fa-user-shield"></i> เข้าสู่ระบบผู้ดูแล (Admin)
                         </a>
                     </div>

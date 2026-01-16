@@ -58,6 +58,8 @@
         .navbar-menu {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-link {
@@ -147,6 +149,12 @@
             border-color: #d0d7da;
         }
 
+        .btn-accent {
+            background: #e67e22;
+            color: #fff;
+            border-color: #b34700;
+        }
+
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-1px);
@@ -228,6 +236,21 @@
             font-size: 0.8rem;
             font-weight: 600;
             display: inline-block;
+        }
+
+        .badge-monk {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+
+        .badge-novice {
+            background: #e0f7fa;
+            color: #006064;
+        }
+
+        .badge-lay {
+            background: #f3e5f5;
+            color: #4a148c;
         }
 
         .bg-pending {
@@ -376,7 +399,6 @@
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto;
-            /* 5% from top and centered */
             padding: 25px;
             border: 1px solid #888;
             border-radius: 12px;
@@ -385,6 +407,11 @@
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
             position: relative;
             animation: slideDown 0.3s ease-out;
+        }
+
+        .modal-footer {
+            text-align: right;
+            margin-top: 20px;
         }
 
         @keyframes slideDown {
@@ -515,6 +542,437 @@
         .dropdown-item:last-child {
             border-bottom: none;
         }
+
+        .nav-divider {
+            border-left: 1px solid #ddd;
+            margin: 0 10px;
+            height: 20px;
+            align-self: center;
+        }
+
+        .btn-back-home {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+
+        .stat-grid-compact {
+            margin-bottom: 20px;
+        }
+
+        .stat-icon-blue-strong {
+            background: #e3f2fd;
+            color: #3498db;
+        }
+
+        .stat-icon-yellow {
+            background: #fff3cd;
+            color: #f39c12;
+        }
+
+        .stat-icon-green {
+            background: #d4edda;
+            color: #27ae60;
+        }
+
+        .stat-icon-pink {
+            background: #fce4ec;
+            color: #e91e63;
+        }
+
+        .stat-icon-blue-soft {
+            background: #e8f4fd;
+            color: #2980b9;
+        }
+
+        .stat-icon-orange {
+            background: #fff4e6;
+            color: #e67e22;
+        }
+
+        .stat-icon-green-dark {
+            background: #f1f8e9;
+            color: #558b2f;
+        }
+
+        .stat-icon-purple {
+            background: #f3e5f5;
+            color: #8e24aa;
+        }
+
+        .stat-icon-red-soft {
+            background: #fef5f5;
+            color: #c0392b;
+        }
+
+        .stat-icon-gray {
+            background: #eaeaea;
+            color: #333;
+        }
+
+        .stat-date {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .server-status-text {
+            font-weight: 600;
+            color: #888;
+        }
+
+        .card-soft {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .card-soft-warning {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .card-soft-success {
+            background: #e8f8f5;
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-soft-primary {
+            background: #eaf2f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+        }
+
+        .section-heading {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        .section-heading-tight {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        .modal-content-wide {
+            max-width: 800px;
+        }
+
+        .modal-scroll-body {
+            overflow-y: auto;
+            max-height: 70vh;
+            line-height: 1.6;
+        }
+
+        .text-note {
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .text-note-danger {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .text-note-success {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .text-muted-small {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .text-muted-xs {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-danger {
+            color: #c0392b;
+        }
+
+        .text-primary-strong {
+            color: #2980b9;
+        }
+
+        .text-success-strong {
+            color: #27ae60;
+        }
+
+        .fw-bold {
+            font-weight: 700;
+        }
+
+        .mt-4 {
+            margin-top: 4px;
+        }
+
+        .mt-10 {
+            margin-top: 10px;
+        }
+
+        .mt-15 {
+            margin-top: 15px;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        .flex-row {
+            display: flex;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .flex-align-center {
+            align-items: center;
+        }
+
+        .flex-justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-8 {
+            gap: 8px;
+        }
+
+        .gap-10 {
+            gap: 10px;
+        }
+
+        .gap-15 {
+            gap: 15px;
+        }
+
+        .logs-pre {
+            max-height: 400px;
+            overflow: auto;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .grid-auto-200 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .grid-auto-150 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            align-items: end;
+        }
+
+        .form-group-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group-card-white {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .form-group-inline {
+            margin: 0;
+        }
+
+        .pins-form-wrapper {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .btn-room-migrate {
+            margin-right: 10px;
+        }
+
+        .btn-content-refresh {
+            margin-top: 10px;
+        }
+
+        .search-input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .room-modal-form-group-relative {
+            position: relative;
+        }
+
+        .selected-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .member-summary {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #fafafa;
+        }
+
+        .member-summary-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .member-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .member-summary-label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        .member-summary-value {
+            font-weight: 600;
+        }
+
+        .member-summary-row-full {
+            grid-column: span 2;
+        }
+
+        .member-room-select {
+            width: 100%;
+        }
+
+        .member-assigned-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .member-form-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .member-form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        #dpdTabUpdateBtn,
+        #dpdTabUpdateReportBtn {
+            display: none;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .text-relaxed {
+            line-height: 1.8;
+        }
+
+        .mb-15 {
+            margin-bottom: 15px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .card-panel {
+            margin-top: 20px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .stat-card-min {
+            min-width: 220px;
+        }
+
+        .flex-break {
+            flex-basis: 100%;
+            height: 1px;
+        }
+
+        .text-warning-strong {
+            color: #b35c00;
+        }
+
+        .stat-grid-two-cols {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 0;
+        }
+
+        .stat-grid-main-side {
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-bottom: 0;
+        }
+
+        .logs-pre-light {
+            max-height: 400px;
+            overflow: auto;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .text-pre-wrap {
+            white-space: pre-wrap;
+        }
+
+        .p-20 {
+            padding: 20px;
+        }
+
+        .p-30 {
+            padding: 30px;
+        }
     </style>
 </head>
 
@@ -525,20 +983,18 @@
             <i class="fa-solid fa-shield-halved"></i>
             <span>Admin Control</span>
         </div>
-        <div class="navbar-menu" style="flex-wrap: wrap; justify-content: center;">
+        <div class="navbar-menu">
             <!-- School Management -->
             <a class="nav-link active" id="link-tab-enrollments" onclick="switchTab('enrollments')">คำขอสมัครเรียน</a>
             <a class="nav-link" id="link-tab-members" onclick="switchTab('members')">รายชื่อสมาชิก</a>
             <a class="nav-link" id="link-tab-classes" onclick="switchTab('classes')">จัดการชั้นเรียน</a>
             <!-- <a class="nav-link" id="link-tab-pins" onclick="switchTab('pins')">จัดการปักหมุด</a> -->
-            
-            <span style="border-left:1px solid #ddd; margin:0 10px; height:20px; align-self:center;"></span>
-            
+            <span class="nav-divider"></span>
             <!-- Data Management -->
             <a class="nav-link" id="link-tab-dashboard" onclick="switchTab('dashboard')">Dashboard (DPD)</a>
             <a class="nav-link" id="link-tab-system" onclick="switchTab('system')">System Update (DPD)</a>
 
-            <a href="../index.html" class="btn btn-secondary" style="margin-left: 10px; padding: 5px 10px; font-size: 0.85rem;">กลับหน้าหลัก</a>
+            <a href="../index.html" class="btn btn-secondary btn-back-home">กลับหน้าหลัก</a>
         </div>
     </nav>
 
@@ -551,7 +1007,7 @@
             <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-database"></i> แผงควบคุม DPD (DPD Dashboard)</span>
-                    <div style="display:flex; gap:10px;">
+                    <div class="flex-row gap-10">
                         <button class="btn btn-secondary" onclick="refreshDPDStats()">
                             <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
                         </button>
@@ -559,22 +1015,22 @@
                 </div>
                 <div class="card-body">
                     <!-- 1. Status Grid -->
-                    <div class="stat-grid" style="margin-bottom:20px;">
+                    <div class="stat-grid stat-grid-compact">
                     <!-- Latest Version (GitHub) -->
                         <div class="stat-card">
-                            <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
+                            <div class="stat-icon stat-icon-blue-strong">
                                 <i class="fa-brands fa-github"></i>
                             </div>
                             <div class="stat-info">
                                 <div>เวอร์ชันล่าสุด (GitHub)</div>
                                 <div id="dpd-latest-version">Checking...</div>
-                                <div id="dpd-latest-date" style="font-size:0.8rem; color:#7f8c8d;">-</div>
+                                <div id="dpd-latest-date" class="text-muted-xs">-</div>
                             </div>
                         </div>
                         
                         <!-- Local Update Status -->
                         <div class="stat-card">
-                            <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
+                            <div class="stat-icon stat-icon-yellow">
                                 <i class="fa-solid fa-clock"></i>
                             </div>
                             <div class="stat-info">
@@ -585,7 +1041,7 @@
 
                         <!-- Vocab Count -->
                         <div class="stat-card">
-                            <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
+                            <div class="stat-icon stat-icon-green">
                                 <i class="fa-solid fa-book"></i>
                             </div>
                             <div class="stat-info">
@@ -596,7 +1052,7 @@
 
                         <!-- Roots Count -->
                         <div class="stat-card">
-                            <div class="stat-icon" style="background:#fce4ec; color:#e91e63;">
+                            <div class="stat-icon stat-icon-pink">
                                 <i class="fa-solid fa-leaf"></i>
                             </div>
                             <div class="stat-info">
@@ -607,23 +1063,23 @@
                     </div>
 
                     <!-- 2. Actions & Server Status -->
-                    <div style="background:#f8f9fa; padding:20px; border-radius:10px; border:1px solid #eee;">
-                        <h3 style="margin-top:0; font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:10px;">
+                    <div class="card-soft">
+                        <h3>
                             <i class="fa-solid fa-gears"></i> การจัดการ (Actions)
                         </h3>
                         
-                        <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:15px;">
+                        <div class="flex-row flex-align-center flex-wrap gap-15 mb-15">
                             <div>สถานะเซิร์ฟเวอร์อัปเดต:</div>
-                            <span id="serverStatus" style="font-weight:600; color:#888;">กำลังตรวจสอบ...</span>
+                            <span id="serverStatus" class="server-status-text">กำลังตรวจสอบ...</span>
                             <button class="btn btn-secondary btn-small" onclick="pingServer()">ตรวจสอบ</button>
                             <button class="btn btn-primary btn-small" onclick="copyRunCommand()">คำสั่งเริ่มเซิร์ฟเวอร์</button>
                         </div>
 
-                        <div style="display:flex; gap:10px;">
-                            <button id="dpdTabUpdateBtn" class="btn btn-primary" style="display:none;" onclick="updateDPDFromTab()">
+                        <div class="flex-row gap-10">
+                            <button id="dpdTabUpdateBtn" class="btn btn-primary" onclick="updateDPDFromTab()">
                                 <i class="fa-solid fa-cloud-arrow-down"></i> อัปเดตข้อมูลเดี๋ยวนี้ (Update Now)
                             </button>
-                            <button id="dpdTabUpdateReportBtn" class="btn btn-accent" style="display:none; background:#e67e22; color:#fff;" onclick="updateDPDWithReportFromTab()">
+                            <button id="dpdTabUpdateReportBtn" class="btn btn-accent" onclick="updateDPDWithReportFromTab()">
                                 <i class="fa-solid fa-clipboard-check"></i> ตรวจสอบความเปลี่ยนแปลง (Check Diff)
                             </button>
                             <button class="btn btn-info" onclick="showManualUpdateGuide()">
@@ -639,20 +1095,20 @@
 
                         <!-- Automated Setup Guide Modal -->
                         <div id="automatedSetupModal" class="modal">
-                            <div class="modal-content" style="max-width: 800px;">
+                            <div class="modal-content modal-content-wide">
                                 <span class="close" onclick="closeAutomatedSetupGuide()">&times;</span>
                                 <h2>การตั้งค่าระบบอัปเดตอัตโนมัติ (GitHub Actions)</h2>
-                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
+                                <div class="modal-scroll-body text-relaxed">
                                     <p>ระบบนี้จะทำการอัปเดตแอปโดยอัตโนมัติเมื่อมีการเปลี่ยนแปลงข้อมูลในโฟลเดอร์ <code>data/</code> ของ Pali TheOnlyone (theonlyone)</p>
                                     
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. สร้าง Personal Access Token (PAT)</h3>
+                                    <h3 class="section-heading">1. สร้าง Personal Access Token (PAT)</h3>
                                     <ul>
                                         <li>ไปที่ GitHub Settings > Developer settings > Personal access tokens > Tokens (classic)</li>
                                         <li>สร้าง Token ใหม่ เลือก scope <strong>repo</strong> (Full control of private repositories)</li>
                                         <li>คัดลอก Token นี้เก็บไว้</li>
                                     </ul>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. เพิ่ม Secret ใน GitHub</h3>
+                                    <h3 class="section-heading">2. เพิ่ม Secret ใน GitHub</h3>
                                     <p>ต้องเพิ่ม Secret ใน GitHub Settings ของทั้ง 2 Repositories:</p>
                                     <ul>
                                         <li><strong>pali-dhatu-app:</strong>
@@ -663,13 +1119,13 @@
                                         <li><strong>pali-theonlyone:</strong>
                                             <ul>
                                                 <li><code>GH_PAT</code>: (ค่าคือ Token จากข้อ 1)</li>
-                                                <li><code>FIREBASE_SERVICE_ACCOUNT</code>: (เนื้อหาไฟล์ service-account-key.json ทั้งหมด) <span style="color:#e74c3c; font-weight:bold; font-size:0.9em;">*จำเป็นสำหรับดึงข้อมูลกลับ (Reverse Sync)</span></li>
+                                                <li><code>FIREBASE_SERVICE_ACCOUNT</code>: (เนื้อหาไฟล์ service-account-key.json ทั้งหมด) <span class="text-note-danger">*จำเป็นสำหรับดึงข้อมูลกลับ (Reverse Sync)</span></li>
                                             </ul>
                                         </li>
                                     </ul>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. การทำงานของระบบ (Pali TheOnlyone -> App)</h3>
-                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                    <h3 class="section-heading">3. การทำงานของระบบ (Pali TheOnlyone -> App)</h3>
+                                    <div class="code-block">
                                         1. คุณแก้ไขไฟล์ใน folder data/ ของ pali-theonlyone และ Push ขึ้น GitHub<br>
                                         2. GitHub Actions ฝั่ง theonlyone จะทำงานและส่งสัญญาณ (Trigger) ไปยัง pali-dhatu-app<br>
                                         3. pali-dhatu-app จะเริ่มทำงาน:<br>
@@ -680,17 +1136,17 @@
                                            - Build และ Deploy ขึ้นเว็บทันที
                                     </div>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. การตั้งค่า Reverse Sync (App -> Pali TheOnlyone)</h3>
+                                    <h3 class="section-heading">4. การตั้งค่า Reverse Sync (App -> Pali TheOnlyone)</h3>
                                     <p>เพื่อให้ Pali TheOnlyone รับรู้เมื่อมีการแก้ไขข้อมูลในแอป (ผ่าน Firestore) ต้องตั้งค่า Cloud Functions ฝั่งแอป:</p>
-                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                    <div class="code-block">
                                         firebase functions:config:set github.token="YOUR_GH_PAT" github.owner="YOUR_USERNAME" github.repo="pali-theonlyone"
                                     </div>
-                                    <p style="font-size: 0.9em; margin-top: 5px;">* ใช้ Token ตัวเดียวกับข้อ 1 ได้เลย (ต้องมีสิทธิ์ repo)</p>
+                                    <p class="text-note">* ใช้ Token ตัวเดียวกับข้อ 1 ได้เลย (ต้องมีสิทธิ์ repo)</p>
                                     <p>เมื่อตั้งค่าเสร็จ ระบบจะส่งสัญญาณมาที่ Pali TheOnlyone ทุกครั้งที่มีการแก้ไขธาตุในแอป</p>
                                     
-                                    <p style="color: green; font-weight: bold; margin-top: 10px;">* ไม่ต้องเปิดคอมพิวเตอร์ทิ้งไว้ ระบบทำงานบน Cloud ทั้งหมด</p>
+                                    <p class="text-note-success">* ไม่ต้องเปิดคอมพิวเตอร์ทิ้งไว้ ระบบทำงานบน Cloud ทั้งหมด</p>
                                 </div>
-                                <div style="margin-top: 20px; text-align: right;">
+                                <div class="mt-20 text-right">
                                     <button class="btn btn-secondary" onclick="closeAutomatedSetupGuide()">ปิด</button>
                                 </div>
                             </div>
@@ -698,16 +1154,16 @@
 
                         <!-- Data Flow Summary Modal -->
                         <div id="dataFlowModal" class="modal">
-                            <div class="modal-content" style="max-width: 800px;">
+                            <div class="modal-content modal-content-wide">
                                 <span class="close" onclick="closeDataFlowGuide()">&times;</span>
                                 <h2>สรุปผังการไหลของข้อมูล (Data Flow)</h2>
-                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 10px;">บทบาทโปรเจกต์</h3>
+                                <div class="modal-scroll-body text-relaxed">
+                                    <h3 class="section-heading-tight">บทบาทโปรเจกต์</h3>
                                     <ul>
                                         <li><strong>theonlyone</strong> (คลังศัพท์/การสอน): เก็บไฟล์ดิบทั้งหมดใน <code>data/raw/</code></li>
                                         <li><strong>theDhatu</strong> (แอปธาตุ): ใช้งาน/ค้นหา/อัปโหลดขึ้น Firebase</li>
                                     </ul>
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">แหล่งข้อมูลร่วม</h3>
+                                    <h3 class="section-heading">แหล่งข้อมูลร่วม</h3>
                                     <ul>
                                         <li>general-dpd: <a href="data/raw/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
                                         <li>roots-dpd: <a href="data/raw/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
@@ -716,182 +1172,182 @@
                                         <li>jinakalamalini: <a href="data/raw/vocab-jinakalamalini.js">vocab-jinakalamalini.js</a></li>
                                         <li>general (raw): <a href="data/raw/vocab-general.js">vocab-general.js</a></li>
                                     </ul>
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">ทิศทางการปรับข้อมูล</h3>
-                                    <div style="background:#f4f4f4; padding:10px; border-radius:5px; font-family:monospace;">
+                                    <h3 class="section-heading">ทิศทางการปรับข้อมูล</h3>
+                                    <div class="code-block">
                                         theonlyone → theDhatu: general-dpd, roots-dpd, insan-pr9 (ผ่าน sync-data และ import DPD ตอน deploy)
                                     </div>
-                                    <p style="color:#b35c00; margin-top:10px;">* ปิดการ Import roots-firebase อัตโนมัติใน Workflow deploy/preview เพื่อป้องกันข้อมูล Firestore ถูกทับ</p>
+                                    <p class="mt-10 text-warning-strong">* ปิดการ Import roots-firebase อัตโนมัติใน Workflow deploy/preview เพื่อป้องกันข้อมูล Firestore ถูกทับ</p>
                                 </div>
-                                <div style="margin-top: 20px; text-align: right;">
+                                <div class="mt-20 text-right">
                                     <button class="btn btn-secondary" onclick="closeDataFlowGuide()">ปิด</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Quick Checks Panel -->
-                        <div style="margin-top:20px; background:#fff; border:1px solid #eee; border-radius:10px; padding:15px;">
-                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-                                <h3 style="margin:0; font-size:1rem;"><i class="fa-solid fa-magnifying-glass"></i> Quick Checks</h3>
+                        <div class="card-panel">
+                            <div class="flex-row flex-align-center flex-justify-between mb-10">
+                                <h3><i class="fa-solid fa-magnifying-glass"></i> Quick Checks</h3>
                                 <button class="btn btn-secondary btn-small" onclick="refreshRawFilesStats()">รีเฟรช Quick Checks</button>
                             </div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#e8f4fd; color:#2980b9;">
+                            <div class="flex-row gap-10 flex-wrap">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-blue-soft">
                                         <i class="fa-solid fa-list"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>general-dpd</div>
                                         <div id="raw-general-count">-</div>
-                                        <div id="raw-general-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-general-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#fff4e6; color:#e67e22;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-orange">
                                         <i class="fa-solid fa-seedling"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>roots-dpd</div>
                                         <div id="raw-rootsdpd-count">-</div>
-                                        <div id="raw-rootsdpd-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-rootsdpd-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-green-dark">
                                         <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Bhumibalo</div>
                                         <div id="raw-bhumibalo-count">-</div>
-                                        <div id="raw-bhumibalo-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-bhumibalo-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-green-dark">
                                         <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Jinakalamalini</div>
                                         <div id="raw-jinakalamalini-count">-</div>
-                                        <div id="raw-jinakalamalini-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-jinakalamalini-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#f1f8e9; color:#558b2f;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-green-dark">
                                         <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>General (Raw)</div>
                                         <div id="raw-generalraw-count">-</div>
-                                        <div id="raw-generalraw-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-generalraw-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#f3e5f5; color:#8e24aa;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-purple">
                                         <i class="fa-solid fa-code-branch"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>derived (roots-dpd)</div>
                                         <div id="raw-derived-count">-</div>
-                                        <div id="raw-derived-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-derived-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#fef5f5; color:#c0392b;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-red-soft">
                                         <i class="fa-solid fa-book-open"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>insan-pr9</div>
                                         <div id="raw-insan-pr9-count">-</div>
-                                        <div id="raw-insan-pr9-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="raw-insan-pr9-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div style="flex-basis:100%; height:1px;"></div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="flex-break"></div>
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-layer-group"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: En-Thai</div>
                                         <div id="extra-enthai-count">-</div>
-                                        <div id="extra-enthai-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-enthai-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-volume-high"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: IPA</div>
                                         <div id="extra-ipa-count">-</div>
-                                        <div id="extra-ipa-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-ipa-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: PTS</div>
                                         <div id="extra-pts-count">-</div>
-                                        <div id="extra-pts-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-pts-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-id-card-clip"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: DPPN</div>
                                         <div id="extra-dppn-count">-</div>
-                                        <div id="extra-dppn-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-dppn-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-leaf"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: Dhammika</div>
                                         <div id="extra-dhammika-count">-</div>
-                                        <div id="extra-dhammika-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-dhammika-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-dharmachakra"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: SC</div>
                                         <div id="extra-sc-count">-</div>
-                                        <div id="extra-sc-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-sc-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-bezier-curve"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: Sandhi</div>
                                         <div id="extra-sandhi-count">-</div>
-                                        <div id="extra-sandhi-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-sandhi-date" class="stat-date">-</div>
                                     </div>
                                 </div>
-                                <div class="stat-card" style="min-width:220px;">
-                                    <div class="stat-icon" style="background:#eaeaea; color:#333;">
+                                <div class="stat-card stat-card-min">
+                                    <div class="stat-icon stat-icon-gray">
                                         <i class="fa-solid fa-spell-check"></i>
                                     </div>
                                     <div class="stat-info">
                                         <div>Extra: General</div>
                                         <div id="extra-general-count">-</div>
-                                        <div id="extra-general-date" style="font-size:0.85rem; color:#666;">-</div>
+                                        <div id="extra-general-date" class="stat-date">-</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="margin-top:20px; background:#fff3cd; border-left:4px solid #f39c12; padding:15px; border-radius:10px;">
-                            <h3 style="margin:0 0 10px 0; color:#b35c00;"><i class="fa-solid fa-info-circle"></i> นโยบายการอัปเดตพจนานุกรม</h3>
-                            <ul style="margin:0; padding-left:20px;">
+                        <div class="card-soft-warning mt-20">
+                            <h3 class="mb-10 text-warning-strong"><i class="fa-solid fa-info-circle"></i> นโยบายการอัปเดตพจนานุกรม</h3>
+                            <ul>
                                 <li><strong>DPD + ธาตุ DPD:</strong> อัปเดตอัตโนมัติผ่านระบบในหน้านี้</li>
                                 <li><strong>พจนานุกรมธรรมบท/พระไตรปิฎก (Insan-PR9, ภูมิพโล, ชินกาลมาลินี, General):</strong> อัปเดตแบบแมนนวล 100% (แก้ไฟล์โดยตรงเท่านั้น)</li>
                                 <li><strong>พจนานุกรมอื่นๆ:</strong> ใช้เท่าที่มี ไม่มีการอัปเดตเพิ่มเติม</li>
@@ -901,15 +1357,15 @@
 
                         <!-- Manual Update Guide Modal -->
                         <div id="manualUpdateModal" class="modal">
-                            <div class="modal-content" style="max-width: 800px;">
+                            <div class="modal-content modal-content-wide">
                                 <span class="close" onclick="closeManualUpdateGuide()">&times;</span>
                                 <h2>ขั้นตอนการอัปเดตข้อมูล DPD (Manual Workflow)</h2>
-                                <div style="overflow-y: auto; max-height: 70vh; line-height: 1.6;">
+                                <div class="modal-scroll-body text-relaxed">
                                     <p>หากต้องทำการอัปเดตด้วยตนเอง (กรณีระบบอัตโนมัติไม่ทำงาน หรือต้องการตรวจสอบทุกขั้นตอน) ให้ทำตามลำดับดังนี้:</p>
                                     
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">1. ฝั่ง theonlyone (เตรียมไฟล์ข้อมูล)</h3>
+                                    <h3 class="section-heading">1. ฝั่ง theonlyone (เตรียมไฟล์ข้อมูล)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-theonlyone</code> เพื่อสร้างไฟล์:</p>
-                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                    <div class="code-block">
                                         # 1. สร้างข้อมูล DPD (Auto)<br>
                                         python scripts/update_dpd_data.py<br>
                                         python extract_dpd_vocab.py<br>
@@ -920,12 +1376,12 @@
                                     </div>
                                     <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 6 ไฟล์ใน <code>data/raw/</code></p>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
+                                    <h3 class="section-heading">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
                                     <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
 
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">3. ฝั่ง theDhatu (ประมวลผลและอัปโหลด)</h3>
+                                    <h3 class="section-heading">3. ฝั่ง theDhatu (ประมวลผลและอัปโหลด)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-dhatu-app</code>:</p>
-                                    <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace;">
+                                    <div class="code-block">
                                         # 1. แปลงข้อมูลและ Sync (Convert)<br>
                                         node tools/sync-all.js<br><br>
                                         
@@ -934,26 +1390,26 @@
                                         node scripts/upload_dpd_vocab_firestore_for_app.js  # สำหรับ DPD Vocab<br>
                                         node scripts/upload_dicts_to_firestore.js # สำหรับ Bhumibalo, Jinakalamalini, General
                                     </div>
-                                    <p style="color: red; font-size: 0.9em; margin-top: 10px;">* หมายเหตุ: ต้องมีไฟล์ service-account-key.json ในโปรเจกต์แอป</p>
+                                    <p class="text-note-danger mt-10">* หมายเหตุ: ต้องมีไฟล์ service-account-key.json ในโปรเจกต์แอป</p>
                                     
-                                    <h3 style="border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-top: 20px;">4. ระบบ Reverse Sync (อัตโนมัติ)</h3>
+                                    <h3 class="section-heading">4. ระบบ Reverse Sync (อัตโนมัติ)</h3>
                                     <p>สำหรับการแก้ไขข้อมูล Roots ใน App ระบบจะส่งสัญญาณ (Signal) มาที่ Repo เพื่ออัปเดตไฟล์ Backup (<code>data/raw/backup/vocab-roots-firebase.js</code>) ให้โดยอัตโนมัติผ่าน Cloud Functions ไม่ต้องทำ Manual Upload</p>
                                 </div>
-                                <div style="margin-top: 20px; text-align: right;">
+                                <div class="mt-20 text-right">
                                     <button class="btn btn-secondary" onclick="closeManualUpdateGuide()">ปิด</button>
                                 </div>
                             </div>
                         </div>
                         
-                        <div style="margin-top:10px; font-size:0.9rem; color:#666;">
+                        <div class="mt-10 text-muted-small">
                             * การอัปเดตจะทำการดาวน์โหลดฐานข้อมูล DPD ล่าสุดและสร้างไฟล์ข้อมูลใหม่เก็บไว้ในเครื่องเท่านั้น
                         </div>
                     </div>
 
                     <!-- 3. Logs/Report -->
-                    <div style="margin-top:20px;">
-                        <h3 style="font-size:1.1rem;">รายงานผล (Logs)</h3>
-                        <pre id="dpdReportContentTab" style="max-height:400px; overflow:auto; background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; font-family:monospace; white-space: pre-wrap;">ยังไม่มีรายงาน</pre>
+                    <div class="mt-20">
+                        <h3>รายงานผล (Logs)</h3>
+                        <pre id="dpdReportContentTab" class="logs-pre">ยังไม่มีรายงาน</pre>
                     </div>
 
                 </div> <!-- จบ card-body -->
@@ -972,7 +1428,7 @@
                 </div>
                 <div class="stat-grid">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background:#e3f2fd; color:#3498db;">
+                        <div class="stat-icon stat-icon-blue-strong">
                             <i class="fa-solid fa-users"></i>
                         </div>
                         <div class="stat-info">
@@ -981,7 +1437,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background:#d4edda; color:#27ae60;">
+                        <div class="stat-icon stat-icon-green">
                             <i class="fa-solid fa-school"></i>
                         </div>
                         <div class="stat-info">
@@ -990,7 +1446,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background:#fff3cd; color:#f39c12;">
+                        <div class="stat-icon stat-icon-yellow">
                             <i class="fa-solid fa-thumbtack"></i>
                         </div>
                         <div class="stat-info">
@@ -1001,30 +1457,30 @@
                 </div>
             </div>
 
-            <div class="card">
+                <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-server"></i> ข้อแนะนำทางเทคนิค & Architecture Rules</span>
                 </div>
-                <div style="line-height: 1.8;">
-                    <div style="background: #e8f8f5; border-left: 4px solid #2ecc71; padding: 15px; margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 10px 0; color: #27ae60;"><i class="fa-solid fa-database"></i> 1. Source of Truth Policy</h4>
-                        <p style="margin: 0;">
+                <div class="text-relaxed">
+                    <div class="card-soft-success">
+                        <h4 class="mb-10 text-success-strong"><i class="fa-solid fa-database"></i> 1. Source of Truth Policy</h4>
+                        <p class="mb-0">
                             <strong>Roots (ธาตุ):</strong> ยึด <code>theDhatu (App/Firestore)</code> เป็นหลัก <br>
-                            <span style="color: #c0392b;">* ห้ามแก้ไขไฟล์ Roots ใน Repo แล้ว Deploy ทับ Firestore เด็ดขาด (import-roots-to-firebase.js ถูกปิดแล้ว)</span>
+                            <span class="text-danger">* ห้ามแก้ไขไฟล์ Roots ใน Repo แล้ว Deploy ทับ Firestore เด็ดขาด (import-roots-to-firebase.js ถูกปิดแล้ว)</span>
                         </p>
-                        <p style="margin: 10px 0 0 0;">
+                        <p class="mt-10 mb-0">
                             <strong>Vocab (ศัพท์):</strong> ยึด <code>theonlyone (Repo)</code> เป็นหลัก (เช่น vocab-insan-pr9, vocab-bhumibalo, vocab-jinakalamalini)<br>
-                            <span style="color: #2980b9;">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
+                            <span class="text-primary-strong">* แก้ไขใน Repo แล้ว Deploy ได้ตามปกติ</span>
                         </p>
-                        <p style="margin: 10px 0 0 0; font-size: 0.9rem; color:#7f8c8d;">
+                        <p class="mt-10 text-muted-small">
                             <strong>สำรองจาก Firebase:</strong> ไฟล์ <code>data/raw/backup/vocab-roots-firebase.js</code> ใช้เป็น <u>สำเนาสำรอง/ตรวจสอบย้อนหลังเท่านั้น</u> ห้ามใช้เป็นต้นทางสำหรับอัปโหลดกลับไปทับข้อมูลหลักใน theDhatu
                         </p>
                     </div>
                     <!-- 2. Reverse Sync (Removed) -->
 
-                    <div style="background: #eaf2f8; border-left: 4px solid #3498db; padding: 15px;">
-                        <h4 style="margin: 0 0 10px 0; color: #2980b9;"><i class="fa-solid fa-shield-halved"></i> 3. Safe Zone</h4>
-                        <p style="margin: 0;">
+                    <div class="card-soft-primary mt-20">
+                        <h4 class="mb-10 text-primary-strong"><i class="fa-solid fa-shield-halved"></i> 3. Safe Zone</h4>
+                        <p class="mb-0">
                             ไฟล์ใน <code>data/dicts/</code> (เช่น En-Thai, IPA, PTS) และ <code>data/raw/</code> (ยกเว้น Roots) สามารถแก้ไขและจัดการได้อิสระ ไม่กระทบกับระบบ Sync หลัก
                         </p>
                     </div>
@@ -1036,7 +1492,7 @@
         <div id="tab-enrollments">
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-icon" style="background:#fff3cd; color:#f39c12;"><i class="fa-solid fa-clock"></i>
+                    <div class="stat-icon stat-icon-yellow"><i class="fa-solid fa-clock"></i>
                     </div>
                     <div class="stat-info">
                         <div>รอตรวจสอบ</div>
@@ -1044,7 +1500,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background:#d4edda; color:#27ae60;"><i class="fa-solid fa-users"></i>
+                    <div class="stat-icon stat-icon-green"><i class="fa-solid fa-users"></i>
                     </div>
                     <div class="stat-info">
                         <div>สมาชิกทั้งหมด</div>
@@ -1053,7 +1509,7 @@
                 </div>
             </div>
 
-            <div class="card">
+                <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-user-plus"></i> รายการคำขอสมัครเรียน (รอตรวจสอบ)</span>
                     <button class="btn btn-secondary" onclick="loadEnrollments()"><i class="fa-solid fa-rotate"></i>
@@ -1086,9 +1542,9 @@
             <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-users"></i> รายชื่อสมาชิกทั้งหมด</span>
-                    <div style="display:flex; gap:10px;">
+                    <div class="flex-row gap-10">
                         <input type="text" id="memberSearch" placeholder="ค้นหาชื่อ..."
-                            style="padding:8px; border:1px solid #ddd; border-radius:6px;">
+                            class="search-input">
                         <button class="btn btn-secondary" onclick="loadMembers()"><i class="fa-solid fa-rotate"></i>
                             รีเฟรช</button>
                     </div>
@@ -1125,25 +1581,22 @@
                 </div>
 
                 <!-- 1. Open Levels Control -->
-                <div class="form-group"
-                    style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <label style="font-size: 1.1em; color: #2c3e50; margin-bottom: 15px; display: block;">
+                <div class="form-group form-group-card">
+                    <label>
                         <i class="fa-solid fa-door-open"></i> เปิด/ปิด ระดับชั้นที่เปิดสอน (Open Levels)
                     </label>
-                    <div id="classCheckboxes"
-                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                    <div id="classCheckboxes" class="grid-auto-200">
                         <!-- Checkboxes will be rendered here -->
                     </div>
-                    <button class="btn btn-primary" onclick="saveClassConfig()" style="margin-top: 15px;">
+                    <button class="btn btn-primary mt-15" onclick="saveClassConfig()">
                         <i class="fa-solid fa-save"></i> บันทึกการตั้งค่าระดับชั้น
                     </button>
                 </div>
 
                 <!-- 2. Dynamic Classroom Management -->
-                <div class="form-group"
-                    style="background: #fff; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <label style="font-size: 1.1em; color: #2c3e50; margin:0;">
+                <div class="form-group form-group-card-white">
+                    <div class="flex-row flex-justify-between flex-align-center mb-15">
+                        <label>
                             <i class="fa-solid fa-chalkboard-user"></i> รายชื่อห้องเรียนทั้งหมด
                         </label>
                         <button class="btn btn-success" onclick="openRoomModal()">
@@ -1151,8 +1604,8 @@
                         </button>
                     </div>
 
-                    <div style="overflow-x: auto;">
-                        <table class="table" style="width:100%">
+                    <div class="table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -1171,97 +1624,13 @@
             </div>
         </div>
 
-        <!-- Tab: Pins -->
-        <!--
-        <div id="tab-pins" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fa-solid fa-thumbtack"></i> จัดการปักหมุด (Today's Pins)</h2>
-                </div>
-                <div class="form-group" style="background: #fff; padding: 20px; border-radius: 8px;">
-                    <div style="display:flex; gap:20px; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
-                        <div>
-                            <label>เลือกวันที่:</label>
-                            <input type="date" id="pinDate" class="form-control" style="padding:8px; border-radius:4px; border:1px solid #ddd;">
-                        </div>
-                        <button class="btn btn-secondary" onclick="loadPins()"><i class="fa-solid fa-rotate"></i> โหลดข้อมูล</button>
-                        <button class="btn btn-primary" onclick="savePins()"><i class="fa-solid fa-save"></i> บันทึกข้อมูล</button>
-                    </div>
-
-                    <div style="margin-bottom:20px; padding:15px; background:#f8f9fa; border-radius:8px; border:1px dashed #ccc;">
-                        <h4>เพิ่มรายการใหม่</h4>
-                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; align-items:end;">
-                            <div class="form-group" style="margin:0;">
-                                <label>เวลา</label>
-                                <select id="newPinTime">
-                                    <option value="เช้า">เช้า</option>
-                                    <option value="บ่าย">บ่าย</option>
-                                    <option value="ค่ำ">ค่ำ</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin:0;">
-                                <label>ระดับชั้น</label>
-                                <select id="newPinLevel">
-                                    <option value="ประโยค ๑-๒ (สาธุชนทั่วไป)">ประโยค ๑-๒ (ทั่วไป)</option>
-                                    <option value="ประโยค ๑-๒ (สามเณรนวกะ)">ประโยค ๑-๒ (สามเณร)</option>
-                                    <option value="ป.ธ. ๓">ป.ธ. ๓</option>
-                                    <option value="ป.ธ. ๔">ป.ธ. ๔</option>
-                                    <option value="ป.ธ. ๕">ป.ธ. ๕</option>
-                                    <option value="ป.ธ. ๖">ป.ธ. ๖</option>
-                                    <option value="ป.ธ. ๗">ป.ธ. ๗</option>
-                                    <option value="ป.ธ. ๘">ป.ธ. ๘</option>
-                                    <option value="ป.ธ. ๙">ป.ธ. ๙</option>
-                                    <option value="บาลีศึกษา">บาลีศึกษา</option>
-                                    <option value="ทั่วไป">ทั่วไป (ทุกคนเห็น)</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin:0;">
-                                <label>วิชา</label>
-                                <select id="newPinSubject">
-                                    <option value="ไวยากรณ์">ไวยากรณ์</option>
-                                    <option value="แปล">แปล</option>
-                                    <option value="กลับ">กลับ</option>
-                                    <option value="แต่ง">แต่ง</option>
-                                    <option value="สัมพันธ์">สัมพันธ์</option>
-                                    <option value="กิจกรรม">กิจกรรม</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin:0; grid-column: span 2;">
-                                <label>รายละเอียดกิจกรรม</label>
-                                <input type="text" id="newPinAct" placeholder="เช่น แปลมงคลฯ เรื่อง...">
-                            </div>
-                            <button class="btn btn-success" onclick="addPinItem()"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>เวลา</th>
-                                    <th>ระดับชั้น</th>
-                                    <th>วิชา</th>
-                                    <th>กิจกรรม</th>
-                                    <th>จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pinListBody">
-                                <!-- Pins will be rendered here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-
         <!-- Tab: Content -->
         <div id="tab-content" class="hidden">
             <div class="card">
                 <div class="card-header">
                     <span><i class="fa-solid fa-book-open"></i> จัดการเนื้อหาบทเรียน (Content Manager)</span>
                     <div>
-                        <button class="btn btn-warning" onclick="migrateData()" style="margin-right: 10px;">
+                        <button class="btn btn-warning btn-room-migrate" onclick="migrateData()">
                             <i class="fa-solid fa-file-import"></i> Import Legacy Data
                         </button>
                         <button class="btn btn-success" onclick="openContentModal()">
@@ -1285,7 +1654,7 @@
                         </tbody>
                     </table>
                 </div>
-                <button class="btn btn-secondary" onclick="loadContents()" style="margin-top:10px;"><i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล</button>
+                <button class="btn btn-secondary btn-content-refresh" onclick="loadContents()"><i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล</button>
             </div>
         </div>
 
@@ -1320,7 +1689,7 @@
     <script src="../data/content-abhidhamma01.js"></script>
     <!-- Room Modal -->
     <div id="roomModal" class="modal">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h2 id="roomModalTitle">เพิ่ม/แก้ไข ห้องเรียน</h2>
                 <span class="close" onclick="closeRoomModal()">&times;</span>
@@ -1359,10 +1728,10 @@
                         <input type="text" id="roomDesc" placeholder="เช่น สำหรับสามเณรที่สอบผ่านบาลีสนามหลวงแล้ว">
                     </div>
 
-                    <div class="form-group" style="position:relative;">
+                    <div class="form-group room-modal-form-group-relative">
                         <label>ครูผู้สอน (เลือกจากรายชื่อ)</label>
                         <div class="tags-input-container" onclick="document.getElementById('teacherSearchInput').focus()">
-                            <div id="selectedTeacherTags" style="display:flex; flex-wrap:wrap; gap:5px;"></div>
+                            <div id="selectedTeacherTags" class="selected-tags"></div>
                             <input type="text" id="teacherSearchInput" class="tags-input" placeholder="พิมพ์ชื่อเพื่อค้นหา..." autocomplete="off">
                         </div>
                         <div id="teacherDropdown" class="dropdown-list"></div>
@@ -1379,7 +1748,7 @@
                         </select>
                     </div>
 
-                    <div style="text-align: right; margin-top: 20px;">
+                    <div class="modal-footer">
                         <button type="button" class="btn-danger" onclick="closeRoomModal()">ยกเลิก</button>
                         <button type="submit" class="btn-success">บันทึก</button>
                     </div>
@@ -1389,38 +1758,38 @@
     </div>
 
     <div id="memberModal" class="modal">
-        <div class="modal-content" style="max-width: 780px;">
+        <div class="modal-content modal-content-wide">
             <div class="modal-header">
                 <h2 id="memberModalTitle">แก้ไขข้อมูลสมาชิก</h2>
                 <span class="close" onclick="closeMemberModal()">&times;</span>
             </div>
             <div class="modal-body">
-                <div id="memberSummary" style="border:1px solid #eee; border-radius:8px; padding:12px; margin-bottom:12px; background:#fafafa;">
-                    <div style="font-weight:700; margin-bottom:8px; color:#2c3e50;">ข้อมูลเดิม</div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div id="memberSummary" class="member-summary">
+                    <div class="member-summary-title">ข้อมูลเดิม</div>
+                    <div class="member-summary-grid">
                         <div>
-                            <div style="font-size:0.85rem; color:#7f8c8d;">บทบาท</div>
-                            <div id="memSummaryRole" style="font-weight:600;"></div>
-                        </div>
-                        <div>
-                            <div style="font-size:0.85rem; color:#7f8c8d;">นักเรียน: ชั้นเรียน</div>
-                            <div id="memSummaryStudentLevel" style="font-weight:600;"></div>
-                        </div>
-                        <div style="grid-column: span 2;">
-                            <div style="font-size:0.85rem; color:#7f8c8d;">นักเรียน: ห้องเรียน</div>
-                            <div id="memSummaryStudentRooms" style="font-weight:600;"></div>
+                            <div class="member-summary-label">บทบาท</div>
+                            <div id="memSummaryRole" class="member-summary-value"></div>
                         </div>
                         <div>
-                            <div style="font-size:0.85rem; color:#7f8c8d;">อาจารย์: ชั้น</div>
-                            <div id="memSummaryTeacherLevels" style="font-weight:600;"></div>
+                            <div class="member-summary-label">นักเรียน: ชั้นเรียน</div>
+                            <div id="memSummaryStudentLevel" class="member-summary-value"></div>
+                        </div>
+                        <div class="member-summary-row-full">
+                            <div class="member-summary-label">นักเรียน: ห้องเรียน</div>
+                            <div id="memSummaryStudentRooms" class="member-summary-value"></div>
                         </div>
                         <div>
-                            <div style="font-size:0.85rem; color:#7f8c8d;">อาจารย์: ห้องสอน</div>
-                            <div id="memSummaryTeacherRooms" style="font-weight:600;"></div>
+                            <div class="member-summary-label">อาจารย์: ชั้น</div>
+                            <div id="memSummaryTeacherLevels" class="member-summary-value"></div>
                         </div>
-                        <div style="grid-column: span 2;">
-                            <div style="font-size:0.85rem; color:#7f8c8d;">ข้อมูลส่วนตัว</div>
-                            <div id="memSummaryPersonal" style="font-weight:600;"></div>
+                        <div>
+                            <div class="member-summary-label">อาจารย์: ห้องสอน</div>
+                            <div id="memSummaryTeacherRooms" class="member-summary-value"></div>
+                        </div>
+                        <div class="member-summary-row-full">
+                            <div class="member-summary-label">ข้อมูลส่วนตัว</div>
+                            <div id="memSummaryPersonal" class="member-summary-value"></div>
                         </div>
                     </div>
                 </div>
@@ -1441,11 +1810,11 @@
                     </div>
                     <div class="form-group">
                         <label>ห้องของนักเรียน</label>
-                        <select id="memStudentRooms" multiple size="5" style="width:100%"></select>
+                        <select id="memStudentRooms" multiple size="5" class="member-room-select"></select>
                     </div>
-                    <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+                    <div class="form-group flex-row flex-align-center gap-8">
                         <button type="button" class="btn-success" id="memStudentAddBtn"><i class="fa-solid fa-plus"></i> เพิ่มห้องนักเรียน</button>
-                        <div id="memStudentAssignedList" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+                        <div id="memStudentAssignedList" class="member-assigned-list"></div>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -1454,13 +1823,13 @@
                     </div>
                     <div class="form-group">
                         <label>ห้องสอนของอาจารย์</label>
-                        <select id="memTeacherRooms" multiple size="5" style="width:100%"></select>
+                        <select id="memTeacherRooms" multiple size="5" class="member-room-select"></select>
                     </div>
-                    <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+                    <div class="form-group flex-row flex-align-center gap-8">
                         <button type="button" class="btn-warning" id="memTeacherAddBtn"><i class="fa-solid fa-plus"></i> เพิ่มห้องอาจารย์</button>
-                        <div id="memTeacherAssignedList" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+                        <div id="memTeacherAssignedList" class="member-assigned-list"></div>
                     </div>
-                    <div class="form-group" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="form-group member-form-grid-3">
                         <div>
                             <label>คำนำหน้า</label>
                             <input id="memTitle" type="text">
@@ -1474,7 +1843,7 @@
                             <input id="memLastName" type="text">
                         </div>
                     </div>
-                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group member-form-grid-2">
                         <div>
                             <label>ฉายา</label>
                             <input id="memEpithet" type="text">
@@ -1494,7 +1863,7 @@
     </div>
     <!-- Content Modal -->
     <div id="contentModal" class="modal">
-        <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-content modal-content-wide">
             <div class="modal-header">
                 <h2 id="contentModalTitle">เพิ่ม/แก้ไข เนื้อหา</h2>
                 <span class="close" onclick="closeContentModal()">&times;</span>
@@ -1533,7 +1902,7 @@
                         </select>
                     </div>
 
-                    <div class="stat-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 0;">
+                    <div class="stat-grid stat-grid-two-cols">
                         <div class="form-group">
                             <label>ภาค/เล่ม (Part)</label>
                             <input type="text" id="contentPart" placeholder="เช่น ภาคที่ ๑">
@@ -1549,7 +1918,7 @@
                             <input type="text" id="contentStory" required placeholder="เช่น ๑. เรื่องพระจักขุปาลเถระ">
                         </div>
 
-                        <div class="stat-grid" style="grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 0;">
+                        <div class="stat-grid stat-grid-main-side">
                              <div class="form-group">
                                 <label>ตอน (Episode)</label>
                                 <input type="text" id="contentEpisode" placeholder="เช่น ตอนที่ ๑">
@@ -1575,7 +1944,7 @@
                         <textarea id="contentVocab" rows="3" placeholder="<ul><li>...</li></ul>"></textarea>
                     </div>
 
-                    <div style="text-align: right; margin-top: 20px;">
+                    <div class="modal-footer">
                         <button type="button" class="btn-danger" onclick="closeContentModal()">ยกเลิก</button>
                         <button type="submit" class="btn-success">บันทึกเนื้อหา</button>
                     </div>
@@ -1592,7 +1961,7 @@
                     <span class="close" onclick="document.getElementById('dpdReportModal').style.display='none'">&times;</span>
                 </div>
                 <div class="modal-body">
-                    <pre id="dpdReportContent" style="max-height:400px; overflow:auto; background:#f8f9fa; padding:12px; border-radius:8px;"></pre>
+                    <pre id="dpdReportContent" class="logs-pre-light"></pre>
                 </div>
             </div>
         </div>
@@ -2133,7 +2502,7 @@
                 document.getElementById('count-pending').textContent = snapshot.size;
 
                 if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px;">ไม่มีรายการรอตรวจสอบ</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center p-30">ไม่มีรายการรอตรวจสอบ</td></tr>';
                     return;
                 }
 
@@ -2161,14 +2530,17 @@
 
                     // Format Name
                     const name = `${data.title || ''}${data.firstName || ''} ${data.lastName || ''} ${data.epithet ? '(' + data.epithet + ')' : ''}`;
-                    const type = data.userType === 'monk' ? '<span class="badge" style="background:#fff3e0; color:#e67e22;">พระภิกษุ</span>' :
-                        (data.userType === 'novice' ? '<span class="badge" style="background:#e0f7fa; color:#006064;">สามเณร</span>' : '<span class="badge" style="background:#f3e5f5; color:#4a148c;">ฆราวาส</span>');
+                    const type = data.userType === 'monk'
+                        ? '<span class="badge badge-monk">พระภิกษุ</span>'
+                        : (data.userType === 'novice'
+                            ? '<span class="badge badge-novice">สามเณร</span>'
+                            : '<span class="badge badge-lay">ฆราวาส</span>');
 
                     tr.innerHTML = `
                         <td>${dateStr}</td>
                         <td>
-                            <div style="font-weight:600;">${name}</div>
-                            <div style="font-size:0.85rem; margin-top:4px;">${type}</div>
+                            <div class="fw-bold">${name}</div>
+                            <div class="text-muted-xs mt-4">${type}</div>
                         </td>
                         <td><span class="badge bg-pending">รอตรวจสอบ</span></td>
                         <td>${LEVEL_NAMES[data.levelRequested] || data.levelRequested || '-'}</td>
@@ -2183,7 +2555,7 @@
 
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="6" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-danger text-center">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
         }
 
@@ -2261,10 +2633,10 @@
                     if (readError.code === 'permission-denied') {
                         tbody.innerHTML = `
                             <tr>
-                                <td colspan="9" style="color:red; text-align:center; padding: 20px;">
+                                <td colspan="9" class="text-danger text-center p-20">
                                     <b>เข้าถึงข้อมูลไม่ได้ (Permission Denied)</b><br>
                                     <small>กรุณาตรวจสอบว่าบัญชีนี้มีสถานะ 'admin' ใน Firestore หรือยัง</small><br>
-                                    <button class="btn btn-primary" style="margin-top:10px;" onclick="forceSetAdmin()">
+                                    <button class="btn btn-primary mt-10" onclick="forceSetAdmin()">
                                         <i class="fa-solid fa-wrench"></i> ลองตั้งค่า Admin ให้ตัวเอง
                                     </button>
                                 </td>
@@ -2349,7 +2721,7 @@
                 }
 
                 if (members.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px;">ไม่พบข้อมูลสมาชิก</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="9" class="text-center p-30">ไม่พบข้อมูลสมาชิก</td></tr>';
                     return;
                 }
 
@@ -2393,8 +2765,8 @@
 
                     tr.innerHTML = `
                         <td>
-                            <div style="font-weight:600;">${m.name}</div>
-                            ${m.role === 'general' ? '<div style="font-size:0.75rem; color:#ccc;">(ผู้ใช้งานทั่วไป)</div>' : ''}
+                            <div class="fw-bold">${m.name}</div>
+                            ${m.role === 'general' ? '<div class="text-muted-xs">(ผู้ใช้งานทั่วไป)</div>' : ''}
                         </td>
                         <td></td>
                         <td></td> <!-- Student Level -->
@@ -2476,7 +2848,7 @@
 
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="8" style="color:red; text-align:center;">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-danger text-center">เกิดข้อผิดพลาด: ${e.message}</td></tr>`;
             }
         }
 
@@ -3049,7 +3421,7 @@
                 renderCheckboxes();
             } catch (e) {
                 console.error(e);
-                container.innerHTML = `<div style="color:red">Error: ${e.message}</div>`;
+                container.innerHTML = `<div class="text-danger">Error: ${e.message}</div>`;
             }
         }
 
@@ -3227,7 +3599,7 @@
 
         async function loadClassrooms() {
             const tbody = document.getElementById('roomListBody');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">กำลังโหลด...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center">กำลังโหลด...</td></tr>';
 
             try {
                 const snap = await db.collection('classrooms').orderBy('level').get();
@@ -3237,7 +3609,7 @@
                 renderRoomList();
             } catch (e) {
                 console.error("Load rooms failed:", e);
-                tbody.innerHTML = `<tr><td colspan="5" style="color:red;">โหลดข้อมูลล้มเหลว: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-danger">โหลดข้อมูลล้มเหลว: ${e.message}</td></tr>`;
             }
         }
 
@@ -3246,7 +3618,7 @@
             tbody.innerHTML = '';
 
             if (allClassrooms.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบห้องเรียน</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">ไม่พบห้องเรียน</td></tr>';
                 return;
             }
 
@@ -3461,7 +3833,7 @@
                 renderPinTable();
             } catch(e) {
                 console.error("Error loading pins:", e);
-                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-danger text-center">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
             }
         }
 
@@ -3470,7 +3842,7 @@
             tbody.innerHTML = '';
 
             if (currentPins.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่มีรายการปักหมุดสำหรับวันนี้</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">ไม่มีรายการปักหมุดสำหรับวันนี้</td></tr>';
                 return;
             }
 
@@ -3480,7 +3852,7 @@
                     <td>${pin.time || '-'}</td>
                     <td>${pin.level || '-'}</td>
                     <td>${pin.subject || '-'}</td>
-                    <td style="white-space: pre-wrap;">${pin.act || pin.activity || '-'}</td>
+                    <td class="text-pre-wrap">${pin.act || pin.activity || '-'}</td>
                     <td>
                         <button class="btn btn-danger btn-icon" onclick="removePin(${index})">
                             <i class="fa-solid fa-trash"></i>
@@ -3559,7 +3931,7 @@
                 renderContentTable();
             } catch(e) {
                 console.error("Load contents error:", e);
-                tbody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-danger text-center">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
             }
         }
 
@@ -3568,7 +3940,7 @@
             tbody.innerHTML = '';
 
             if (allContents.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ยังไม่มีเนื้อหาในระบบ</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">ยังไม่มีเนื้อหาในระบบ</td></tr>';
                 return;
             }
 
@@ -3576,14 +3948,14 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>
-                        <div style="font-weight:bold">${c.code || c._id}</div>
-                        <div style="font-size:0.8em; color:#7f8c8d">${c.book || '-'}</div>
+                        <div class="fw-bold">${c.code || c._id}</div>
+                        <div class="text-muted-xs">${c.book || '-'}</div>
                     </td>
-                    <td>${c.part || '-'} <br> <small style="color:#7f8c8d">${c.vagga || ''}</small></td>
+                    <td>${c.part || '-'} <br> <small class="text-muted-xs">${c.vagga || ''}</small></td>
                     <td>${c.story || '-'}</td>
                     <td>
                         <div>${c.episode || '-'}</div>
-                        <small style="color:#7f8c8d">หน้า ${c.page || '-'}</small>
+                        <small class="text-muted-xs">หน้า ${c.page || '-'}</small>
                     </td>
                     <td>
                         <button class="btn btn-warning btn-icon" onclick="editContent('${c._id}')">

@@ -140,7 +140,9 @@
         }
 
         /* Slot Styles */
-        .slot-container {}
+        .slot-container {
+            width: 100%;
+        }
 
         .slot-header {
             display: flex;
@@ -336,6 +338,358 @@
         .file-chip .remove:hover {
             color: #c0392b;
         }
+
+        /* Utility Layout Classes */
+        .loading-text {
+            margin-top: 20px;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .auth-status {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .btn-home {
+            background: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            background: #e8f6f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group-compact {
+            margin-bottom: 0;
+        }
+
+        .status-msg {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .file-availability {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .label-clickable {
+            cursor: pointer;
+        }
+
+        .no-room-files {
+            display: none;
+            background: #fff3cd;
+            color: #856404;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-save {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+        }
+
+        .btn-view {
+            background: #3498db;
+            flex: 0 0 150px;
+        }
+
+        .btn-upload {
+            background: #8e44ad;
+            flex: 0 0 200px;
+        }
+
+        .btn-exam-builder,
+        .btn-reader {
+            flex: 0 0 200px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-exam-builder {
+            background: #e67e22;
+        }
+
+        .btn-reader {
+            background: #16a085;
+        }
+
+        .btn-icon-leading {
+            margin-right: 8px;
+        }
+
+        .modal-content-wide-900 {
+            width: 80%;
+            max-width: 900px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-content-wide-800 {
+            width: 80%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-soft {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .upload-progress {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .progress-bar-container {
+            background: #e9ecef;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: #27ae60;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            color: #666;
+        }
+
+        .file-list-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .file-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .file-table thead {
+            background: #f1f2f6;
+            position: sticky;
+            top: 0;
+        }
+
+        .file-table th,
+        .file-table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .modal-toolbar {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .slide-list-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .modal-footer {
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .weekend-toggle-row {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .weekend-label {
+            cursor: pointer;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .row-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            height: 100%;
+        }
+
+        .btn-move {
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+
+        .btn-delete-row {
+            height: 40px;
+        }
+
+        .slot-header-box {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .subject-block {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-title {
+            cursor: pointer;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .subj-content {
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 3px solid #3498db;
+        }
+
+        .slide-input-row {
+            display: flex;
+            gap: 5px;
+        }
+
+        .exam-section {
+            margin-top: 10px;
+            background: #fff0f0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .exam-label {
+            color: #c0392b;
+            cursor: pointer;
+        }
+
+        .exam-files {
+            margin-top: 10px;
+        }
+
+        .exam-time-row {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .exam-time-label {
+            margin: 0;
+        }
+
+        .input-exam-time {
+            width: 70px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .slot-footer {
+            margin-top: 15px;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+        }
+
+        .btn-compact {
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+
+        .slide-option {
+            cursor: pointer;
+        }
+
+        .slide-title {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .slide-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        .auth-error {
+            color: red;
+        }
     </style>
 </head>
 
@@ -343,24 +697,23 @@
 
     <div id="loadingOverlay" class="loading-overlay">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <div style="margin-top:20px;">กำลังดำเนินการ...</div>
+        <div class="loading-text">กำลังดำเนินการ...</div>
     </div>
 
     <div class="container">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="header-bar">
             <h1>ระบบจัดการตารางเรียน (Schedule Manager)</h1>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <div id="auth-status" style="font-size:0.9em; color:#7f8c8d;">Checking Auth...</div>
-                <a href="../index.html" class="btn" style="background:#7f8c8d; font-size:0.9em;">กลับสู่หน้าหลัก</a>
+            <div class="header-actions">
+                <div id="auth-status" class="auth-status">Checking Auth...</div>
+                <a href="../index.html" class="btn btn-home">กลับสู่หน้าหลัก</a>
             </div>
         </div>
         <p>สร้างและแก้ไขตารางเรียนสำหรับแต่ละห้องเรียน</p>
 
-        <div
-            style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; background: #e8f6f3; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-            <div class="form-group" style="margin-bottom:0;">
+        <div class="filter-grid">
+            <div class="form-group form-group-compact">
                 <label>เลือกชั้นเรียน (Level)</label>
-                <select id="level-select" onchange="onLevelChange()">
+                <select id="level-select" aria-label="เลือกชั้นเรียน (Level)" onchange="onLevelChange()">
                     <option value="">-- เลือกชั้นเรียน --</option>
                     <option value="pt12">ประโยค ๑-๒</option>
                     <option value="pt3">ป.ธ. ๓</option>
@@ -373,16 +726,16 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-bottom:0;">
+            <div class="form-group form-group-compact">
                 <label>เลือกห้องเรียน (Room)</label>
-                <select id="room-select" onchange="checkAndLoadSchedule()">
+                <select id="room-select" aria-label="เลือกห้องเรียน (Room)" onchange="checkAndLoadSchedule()">
                     <option value="">-- กรุณาเลือกชั้นเรียนก่อน --</option>
                 </select>
             </div>
 
-            <div class="form-group" style="margin-bottom:0;">
+            <div class="form-group form-group-compact">
                 <label>เดือน (Month)</label>
-                <select id="month-select" onchange="checkAndLoadSchedule()">
+                <select id="month-select" aria-label="เลือกเดือน (Month)" onchange="checkAndLoadSchedule()">
                     <option value="November">พฤศจิกายน (November)</option>
                     <option value="December">ธันวาคม (December)</option>
                     <option value="January">มกราคม (January)</option>
@@ -398,19 +751,19 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-bottom:0;">
+            <div class="form-group form-group-compact">
                 <label>ปีการศึกษา (Year)</label>
-                <input type="number" id="year-select" value="2025" onchange="checkAndLoadSchedule()">
+                <input type="number" id="year-select" aria-label="ปีการศึกษา (Year)" value="2025" onchange="checkAndLoadSchedule()">
             </div>
         </div>
 
-        <div id="status-msg" style="margin-bottom: 20px; padding: 10px; border-radius: 6px; display: none;"></div>
+        <div id="status-msg" class="status-msg"></div>
 
-        <div id="file-availability" style="display:flex; align-items:center; gap:12px; margin:10px 0;">
-            <label style="cursor:pointer;">
+        <div id="file-availability" class="file-availability">
+            <label class="label-clickable">
                 <input type="checkbox" id="toggle-other-rooms"> ดูไฟล์จากห้องอื่น
             </label>
-            <span id="no-room-files" style="display:none; background:#fff3cd; color:#856404; padding:6px 10px; border-radius:6px;">
+            <span id="no-room-files" class="no-room-files">
                 ไม่มีเอกสารสำหรับห้องนี้
             </span>
         </div>
@@ -424,39 +777,37 @@
         <button class="btn btn-primary" onclick="addRow()">+ เพิ่มวันเรียน</button>
         <br><br>
 
-        <div style="display:flex; gap:10px;">
-            <button class="btn" onclick="saveSchedule()" style="flex:1; padding:15px; font-size:1.1em;">
+        <div class="action-row">
+            <button class="btn btn-save" onclick="saveSchedule()">
                 <i class="fas fa-save"></i> บันทึกตารางเรียน (Save to Database)
             </button>
-            <button class="btn" onclick="viewSchedule()" style="background:#3498db; flex:0 0 150px;"
+            <button class="btn btn-view" onclick="viewSchedule()"
                 title="ดูหน้าตารางเรียนจริง">
                 <i class="fas fa-eye"></i> ดูตารางเรียน
             </button>
 
-            <button class="btn" onclick="openFileManager()" style="background:#8e44ad; flex:0 0 200px;">
+            <button class="btn btn-upload" onclick="openFileManager()">
                 <i class="fas fa-cloud-upload-alt"></i> จัดการไฟล์ (Upload)
             </button>
 
-            <a href="../exam_builder.html" class="btn" style="background:#e67e22; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-file-pen" style="margin-right:8px;"></i> ออกข้อสอบ (Exam)
+            <a href="../exam_builder.html" class="btn btn-exam-builder" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-file-pen btn-icon-leading"></i> ออกข้อสอบ (Exam)
             </a>
 
-            <a href="../pages/reader.html" class="btn" style="background:#16a085; flex:0 0 200px; text-decoration:none; display:flex; align-items:center; justify-content:center;" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-book-open" style="margin-right:8px;"></i> โหมดหนังสือ
+            <a href="../pages/reader.html" class="btn btn-reader" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-book-open btn-icon-leading"></i> โหมดหนังสือ
             </a>
         </div>
 
         <!-- File Manager Modal -->
-        <div id="file-modal" class="modal-overlay" style="display:none;">
-            <div class="modal-content"
-                style="width: 80%; max-width: 900px; height: 80vh; display:flex; flex-direction:column;">
+        <div id="file-modal" class="modal-overlay">
+            <div class="modal-content modal-content-wide-900">
                 <span class="modal-close" onclick="closeFileManager()">&times;</span>
                 <h2><i class="fas fa-folder-open"></i> จัดการไฟล์ (File Manager)</h2>
 
-                <div
-                    style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                <div class="panel-soft">
                     <h3><i class="fas fa-upload"></i> อัปโหลดไฟล์ใหม่</h3>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items:end;">
+                    <div class="upload-grid">
                         <div>
                             <label>ประเภท (Type)</label>
                             <select id="upload-type">
@@ -487,27 +838,26 @@
                             </button>
                         </div>
                     </div>
-                    <div id="upload-progress" style="display:none; margin-top:10px;">
-                        <div style="background:#e9ecef; height:10px; border-radius:5px; overflow:hidden;">
-                            <div id="progress-bar"
-                                style="background:#27ae60; width:0%; height:100%; transition: width 0.3s;"></div>
+                    <div id="upload-progress" class="upload-progress">
+                        <div class="progress-bar-container">
+                            <div id="progress-bar" class="progress-bar"></div>
                         </div>
-                        <small id="progress-text" style="color:#666;">0%</small>
+                        <small id="progress-text" class="progress-text">0%</small>
                     </div>
                 </div>
 
-                
 
-                <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px;">
-                    <table style="width:100%; border-collapse:collapse;">
-                        <thead style="background:#f1f2f6; position:sticky; top:0;">
+
+                <div class="file-list-container">
+                    <table class="file-table">
+                        <thead>
                             <tr>
-                                <th style="padding:10px; text-align:left;">ชื่อไฟล์</th>
-                                <th style="padding:10px; text-align:left;">ประเภท</th>
-                                <th style="padding:10px; text-align:left;">ชั้นเรียน</th>
-                                <th style="padding:10px; text-align:left;">วิชา</th>
-                                <th style="padding:10px; text-align:left;">วันที่อัปโหลด</th>
-                                <th style="padding:10px; text-align:center;">Action</th>
+                                <th>ชื่อไฟล์</th>
+                                <th>ประเภท</th>
+                                <th>ชั้นเรียน</th>
+                                <th>วิชา</th>
+                                <th>วันที่อัปโหลด</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="file-list-body">
@@ -521,26 +871,24 @@
 
 
         <!-- Slide Selector Modal -->
-        <div id="slide-modal" class="modal-overlay" style="display:none;">
-            <div class="modal-content"
-                style="width: 80%; max-width: 800px; height: 80vh; display:flex; flex-direction:column;">
+        <div id="slide-modal" class="modal-overlay">
+            <div class="modal-content modal-content-wide-800">
                 <span class="modal-close" onclick="closeSlideSelector()">&times;</span>
                 <h2><i class="fas fa-chalkboard-teacher"></i> เลือกสื่อการสอน (Select Slide)</h2>
 
-                <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-                    <select id="slide-book-select" onchange="renderSlideOptions()" style="flex: 1;">
+                <div class="modal-toolbar">
+                    <select id="slide-book-select" onchange="renderSlideOptions()" class="flex-1">
                         <option value="">-- เลือกหนังสือ/คัมภีร์ --</option>
                     </select>
                     <input type="text" id="slide-search" placeholder="ค้นหาหัวข้อ..." onkeyup="renderSlideOptions()"
-                        style="flex: 1;">
+                        class="flex-1">
                 </div>
 
-                <div style="flex:1; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding: 10px;"
-                    id="slide-list-container">
+                <div class="slide-list-container" id="slide-list-container">
                     <!-- List items will be injected here -->
                 </div>
 
-                <div style="margin-top: 15px; text-align: right;">
+                <div class="modal-footer">
                     <button class="btn" onclick="confirmSlideSelection()">เลือกรายการที่ติ๊กไว้</button>
                 </div>
             </div>
@@ -663,9 +1011,9 @@
 
                 div.innerHTML = `
                 <input type="checkbox" class="slide-checkbox" value="${key}">
-                <div style="cursor:pointer;" onclick="this.previousElementSibling.click()">
-                    <div style="font-weight:bold; color:#2c3e50;">${title}</div>
-                    <div style="font-size:0.85em; color:#7f8c8d;">${episode} (ID: ${key})</div>
+                <div class="slide-option" onclick="this.previousElementSibling.click()">
+                    <div class="slide-title">${title}</div>
+                    <div class="slide-meta">${episode} (ID: ${key})</div>
                 </div>
             `;
                 container.appendChild(div);
@@ -828,7 +1176,7 @@
                         statusDiv.innerText = `${user.email} (Error checking role)`;
                     }
                 } else {
-                    statusDiv.innerHTML = `<span style="color:red;"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
+                    statusDiv.innerHTML = `<span class="auth-error"><i class="fas fa-exclamation-triangle"></i> Not Logged In</span>`;
                     if (typeof safeNotify === 'function') safeNotify('คุณยังไม่ได้เข้าสู่ระบบ! กรุณาเข้าสู่ระบบในหน้าหลักหรือ Admin Dashboard ก่อนใช้งาน', 'warning');
                 }
             });
@@ -1266,8 +1614,8 @@
                 <label>ข้อความวันที่</label>
                 <input type="text" class="input-display-date" placeholder="จ. ๑-ม.ค.-๖๘" value="${data ? data.displayDate : ''}">
             </div>
-            <div style="margin-top: 10px; margin-bottom: 5px;">
-                <label style="cursor:pointer; color:#e74c3c; font-weight:bold;">
+            <div class="weekend-toggle-row">
+                <label class="weekend-label">
                     <input type="checkbox" class="input-weekend" onchange="toggleWeekendMode(this)" ${data && data.isWeekend ? 'checked' : ''}> วันหยุด (Holiday)
                 </label>
             </div>
@@ -1294,10 +1642,10 @@
             let colDel = document.createElement('div');
             colDel.style.height = '100%';
             colDel.innerHTML = `
-                <div style="display:flex; flex-direction:column; gap:6px; height:100%;">
-                    <button class="btn btn-primary" style="padding:6px 10px; font-size:14px;" onclick="moveRowUp(this)" title="ย้ายขึ้น"><i class="fa-solid fa-chevron-up"></i></button>
-                    <button class="btn btn-primary" style="padding:6px 10px; font-size:14px;" onclick="moveRowDown(this)" title="ย้ายลง"><i class="fa-solid fa-chevron-down"></i></button>
-                    <button class="btn btn-danger" style="height:40px;" onclick="this.closest('.row-entry').remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>
+                <div class="row-actions">
+                    <button class="btn btn-primary btn-move" onclick="moveRowUp(this)" title="ย้ายขึ้น"><i class="fa-solid fa-chevron-up"></i></button>
+                    <button class="btn btn-primary btn-move" onclick="moveRowDown(this)" title="ย้ายลง"><i class="fa-solid fa-chevron-down"></i></button>
+                    <button class="btn btn-danger btn-delete-row" onclick="this.closest('.row-entry').remove()" title="ลบรายการนี้"><i class="fa-solid fa-trash"></i></button>
                 </div>
             `;
 
@@ -1314,6 +1662,23 @@
             if (weekendCheckbox.checked) {
                 toggleWeekendMode(weekendCheckbox);
             }
+
+            // Initial visibility for subject content and exam sections
+            div.querySelectorAll('.subj-content').forEach(el => {
+                if (el.dataset.initialVisible === '1') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            div.querySelectorAll('.exam-files').forEach(el => {
+                if (el.dataset.initialExam === '1') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
         }
 
         function getRowDateKey(row) {
@@ -1399,7 +1764,7 @@
             let html = `<div class="slot-container" data-period="${periodId}">`;
 
             // Header (Simplified)
-            html += `<div class="slot-header" style="background:#f8f9fa; padding:8px; border-radius:4px; margin-bottom:10px;">
+            html += `<div class="slot-header slot-header-box">
                     <strong>${label}</strong>
                  </div>`;
 
@@ -1524,15 +1889,15 @@
                 const checked = hasData ? 'checked' : '';
 
                 html += `
-                <div class="subject-block" style="border:1px solid #eee; border-radius:4px; padding:10px; margin-bottom:10px; background:#fff;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <label style="cursor:pointer; font-weight:bold; color:#2c3e50;">
+                <div class="subject-block">
+                    <div class="subject-header">
+                        <label class="subject-title">
                             <input type="checkbox" class="subj-enable" data-subj-id="${subj.id}" onchange="toggleSubject(this)" ${checked}> 
                             ${subj.label}
                         </label>
                     </div>
                     
-                    <div class="subj-content" style="display:${displayStyle}; margin-top:10px; padding-left:10px; border-left:3px solid #3498db;">
+                    <div class="subj-content" data-initial-visible="${displayStyle === 'block' ? '1' : '0'}">
                         
                         <!-- 1. Activity -->
                         <div class="field-group">
@@ -1549,9 +1914,9 @@
                         <!-- 3. Slide (Presentation ID) -->
                         <div class="field-group">
                             <label>รหัสสื่อการสอน (Presentation ID) - หลายรายการคั่นด้วยบรรทัดใหม่</label>
-                            <div style="display: flex; gap: 5px;">
+                            <div class="slide-input-row">
                                 <textarea class="input-slide" data-subj-id="${subj.id}" rows="2" placeholder="เช่น mangala_01_01\nmangala_01_02">${slideVal}</textarea>
-                                <button class="btn btn-primary" onclick="openSlideSelector(this)" style="padding: 5px 10px; font-size: 0.9em;" title="เลือกจากรายการ">
+                                <button class="btn btn-primary btn-compact" onclick="openSlideSelector(this)" title="เลือกจากรายการ">
                                     <i class="fas fa-list"></i>
                                 </button>
                             </div>
@@ -1565,18 +1930,18 @@
                         </div>
 
                         <!-- 5. Exam Checkbox -->
-                        <div class="field-group" style="margin-top:10px; background:#fff0f0; padding:10px; border-radius:4px;">
-                            <label style="color:#c0392b; cursor:pointer;">
+                        <div class="field-group exam-section">
+                            <label class="exam-label">
                                 <input type="checkbox" class="input-is-exam" data-subj-id="${subj.id}" onchange="toggleSubjectExam(this)" ${isExam ? 'checked' : ''}> 
                                 มีสอบ (Exam)
                             </label>
                             
-                            <div class="exam-files" style="display:${isExam ? 'block' : 'none'}; margin-top:10px;">
-                                <div class="field-group" style="margin-bottom:10px; display:flex; align-items:center; gap:10px;">
-                                    <label style="margin:0;">เวลาสอบ (Exam Time):</label>
-                                    <input type="text" class="input-time-start" placeholder="${defaultStart}" value="${timeStart}" style="width:70px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                            <div class="exam-files" data-initial-exam="${isExam ? '1' : '0'}">
+                                <div class="field-group exam-time-row">
+                                    <label class="exam-time-label">เวลาสอบ (Exam Time):</label>
+                                    <input type="text" class="input-time-start input-exam-time" placeholder="${defaultStart}" value="${timeStart}">
                                     <span>-</span>
-                                    <input type="text" class="input-time-end" placeholder="${defaultEnd}" value="${timeEnd}" style="width:70px; text-align:center; border:1px solid #ddd; border-radius:3px;">
+                                    <input type="text" class="input-time-end input-exam-time" placeholder="${defaultEnd}" value="${timeEnd}">
                                 </div>
 
                                 <div class="field-group">
@@ -1598,7 +1963,7 @@
             });
 
             // Shared Slide/Zoom Input at the bottom
-            html += `<div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
+            html += `<div class="slot-footer">
                     <div class="field-group">
                         <label>ลิงค์ Zoom (เข้าเรียนออนไลน์) - ใช้ร่วมกันทุกวิชา</label>
                         <input type="text" class="input-zoom" placeholder="วางลิงค์ Zoom ที่นี่" value="${sharedSlideVal}">
@@ -1892,14 +2257,14 @@
                 const roomLabel = roomObj ? (roomObj.name || roomObj.id) : (roomId || '-');
 
                 tr.innerHTML = `
-                 <td style="padding:10px;"><a href="${file.url}" target="_blank" rel="noopener noreferrer">${file.name}</a></td>
-                 <td style="padding:10px;">${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
-                 <td style="padding:10px;">${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
-                 <td style="padding:10px;">${subjLabel}</td>
-                 <td style="padding:10px;">${roomLabel}</td>
-                 <td style="padding:10px; font-size:0.8em; color:#666;">${dateStr}</td>
-                 <td style="padding:10px; text-align:center;">
-                     <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8em;" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
+                 <td><a href="${file.url}" target="_blank" rel="noopener noreferrer">${file.name}</a></td>
+                 <td>${(typeof TYPE_LABELS !== 'undefined' && TYPE_LABELS[file.type]) ? TYPE_LABELS[file.type] : file.type}</td>
+                 <td>${(typeof LEVEL_LABELS !== 'undefined' && LEVEL_LABELS[file.level]) ? LEVEL_LABELS[file.level] : file.level}</td>
+                 <td>${subjLabel}</td>
+                 <td>${roomLabel}</td>
+                 <td class="text-muted">${dateStr}</td>
+                 <td class="text-center">
+                     <button class="btn btn-danger btn-small" onclick="deleteFile('${file.id}', '${file.fullPath || ''}')">
                          <i class="fas fa-trash"></i>
                      </button>
                  </td>
