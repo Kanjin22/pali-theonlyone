@@ -418,9 +418,20 @@
         }
 
         function enhanceBhumibaloLevels(text) {
-            return text
-                .replace(/(^|\n|<br\s*\/?>)\s*—/g, '$1&nbsp;&nbsp;—')
-                .replace(/(^|\n|<br\s*\/?>)\s*-/g, '$1&nbsp;&nbsp;&nbsp;&nbsp;-');
+            if (!text) return text;
+            text = text
+                .replace(/(^|\n|<br\s*\/?>)\s*—/g, function(match, prefix) {
+                    if (!prefix) return '&nbsp;&nbsp;—';
+                    if (prefix === '\n') return '\n&nbsp;&nbsp;—';
+                    return prefix + '&nbsp;&nbsp;—';
+                })
+                .replace(/([^>\n])\s*—/g, '$1<br>&nbsp;&nbsp;—')
+                .replace(/(^|\n|<br\s*\/?>)\s*-/g, function(match, prefix) {
+                    if (!prefix) return '&nbsp;&nbsp;&nbsp;&nbsp;-';
+                    if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;-';
+                    return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;-';
+                });
+            return text;
         }
 
         function formatDefinitionForSource(def, source) {
