@@ -242,13 +242,26 @@
             position: relative;
             padding-left: 20px;
         }
-
+        
         .word-details li::before {
             content: "•";
             color: #bdc3c7;
             position: absolute;
             left: 0;
             font-weight: bold;
+        }
+
+        .word-details li .bhumibalo-intro {
+            margin-bottom: 4px;
+        }
+
+        .word-details li ol.bhumibalo-senses {
+            margin: 4px 0 0 0;
+            padding-left: 1.2em;
+        }
+
+        .word-details li ol.bhumibalo-senses > li {
+            margin-bottom: 4px;
         }
 
         .back-btn {
@@ -384,21 +397,33 @@
             performSearch();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
+        
         function formatDefinitionForSource(def, source) {
             if (!def) return '';
             let processed = def;
             if (source && source.includes('ภูมิพโล')) {
-                let hasNumbered = false;
-                processed = processed.replace(/^\s*1\.\s*/m, function() {
-                    hasNumbered = true;
-                    return '<p>1. ';
-                });
-                if (hasNumbered) {
-                    processed = processed.replace(/—\s*([2-9])\.\s*/g, '</p><p>$1. ');
-                    processed = processed + '</p>';
+                let intro = '';
+                let core = processed;
+                const firstMatch = core.match(/\s1\.\s*/);
+                if (firstMatch) {
+                    intro = core.slice(0, firstMatch.index).trim();
+                    core = core.slice(firstMatch.index).trim();
                 }
-                return PaliFormatter.format(processed, 'triggerSearch');
+                core = core.replace(/—\s*([2-9])\.\s*/g, '|||SPLIT|||$1. ');
+                const parts = core.split('|||SPLIT|||').map(p => p.trim()).filter(p => p.length > 0);
+                if (parts.length === 0) {
+                    return PaliFormatter.format(processed, 'triggerSearch');
+                }
+                let html = '';
+                if (intro) {
+                    html += '<div class="bhumibalo-intro">' + PaliFormatter.format(intro, 'triggerSearch') + '</div>';
+                }
+                html += '<ol class="bhumibalo-senses">';
+                for (let i = 0; i < parts.length; i++) {
+                    html += '<li>' + PaliFormatter.format(parts[i], 'triggerSearch') + '</li>';
+                }
+                html += '</ol>';
+                return html;
             }
             return PaliFormatter.format(processed, 'triggerSearch');
         }
