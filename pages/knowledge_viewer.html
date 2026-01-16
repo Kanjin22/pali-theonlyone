@@ -26,6 +26,7 @@
 </head>
 <body>
     <div class="container">
+        <a id="back-link-top" href="../index.html" class="back-link">&larr; กลับสู่สารบัญ</a>
         <h1 id="topic-title">กำลังโหลด...</h1>
         <div id="content-body">
             <!-- JavaScript จะแทรกเนื้อหาที่นี่ -->
@@ -81,6 +82,8 @@
         }
 
         document.getElementById('back-link').href = backLinkHref;
+        const backTop = document.getElementById('back-link-top');
+        if (backTop) backTop.href = backLinkHref;
         document.getElementById('footer-credit').innerHTML = creditHtml; // *** 4. นำเครดิตไปแสดงผล ***
 
         let foundTopic = null;
