@@ -447,9 +447,9 @@
                 .replace(/([^>\n])\s*—\s*/g, '$1<br>&nbsp;&nbsp;■ ');
             processed = processed
                 .replace(/(^|\n|<br\s*\/?>)\s*-\s*/g, function(match, prefix) {
-                    if (!prefix) return '• - ';
-                    if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;• ';
-                    return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;• ';
+                    if (!prefix) return '• ';
+                    if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;• - ';
+                    return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;• - ';
                 });
             return processed;
         }
