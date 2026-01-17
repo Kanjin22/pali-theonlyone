@@ -593,10 +593,19 @@
                         const displayWords = words.slice(0, 20).join(', ');
                         const moreCount = words.length - 20;
                         const moreText = moreCount > 0 ? ` และอีก ${moreCount} คำ...` : '';
+                        const safeRootKeyAttr = rootKey.replace(/'/g, "\\'");
+                        const showAllHtml = moreCount > 0
+                            ? `<div style="margin-top: 6px;">
+                                    <a href="javascript:void(0)" onclick="openDpdRootWords('${safeRootKeyAttr}')" style="color:#2980b9; text-decoration:underline; font-size:0.85rem;">
+                                        ดูศัพท์ทั้งหมด (${words.length} คำ)
+                                    </a>
+                               </div>`
+                            : '';
                         blocks.push(
                             `<div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #ecf0f1; font-size: 0.9rem;">
                                 <span style="color:#2980b9; font-weight:600;"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุ ${rootKey} (DPD):</span>
                                 <span style="color:#555;"> ${displayWords}${moreText}</span>
+                                ${showAllHtml}
                             </div>`
                         );
                     }
@@ -673,6 +682,278 @@
 
         // Initialize theme
         initTheme();
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function openDpdRootWords(rootKey) {
+            if (typeof vocabRootsDPDDerived === 'undefined') return;
+            const words = vocabRootsDPDDerived[rootKey];
+            if (!Array.isArray(words) || words.length === 0) return;
+
+            let overlay = document.getElementById('dpd-root-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'dpd-root-overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.left = '0';
+                overlay.style.top = '0';
+                overlay.style.right = '0';
+                overlay.style.bottom = '0';
+                overlay.style.background = 'rgba(0,0,0,0.4)';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.style.zIndex = '9999';
+                overlay.innerHTML = `
+                    <div id="dpd-root-dialog" style="background:#ffffff; max-width:720px; width:92%; max-height:80vh; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.25); display:flex; flex-direction:column;">
+                        <div style="padding:14px 18px; border-bottom:1px solid #ecf0f1; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-size:1.05rem; font-weight:600; color:#2980b9;">
+                                    ศัพท์ที่มาจากธาตุ <span id="dpd-root-title-root"></span> (DPD)
+                                </div>
+                                <div id="dpd-root-count" style="color:#7f8c8d; font-size:0.9rem; margin-top:2px;"></div>
+                            </div>
+                            <button type="button" onclick="closeDpdRootWords()" style="border:none; background:transparent; font-size:1.4rem; cursor:pointer; color:#7f8c8d; padding:4px 8px; line-height:1;">×</button>
+                        </div>
+                        <div style="padding:8px 18px 4px 18px; border-bottom:1px solid #ecf0f1; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                            <button id="dpd-root-filter-all" type="button" onclick="setDpdRootFilter('all')" style="border-radius:999px; border:1px solid #bdc3c7; background:#ecf0f1; font-size:0.8rem; padding:4px 10px; cursor:pointer;">ทั้งหมด</button>
+                            <button id="dpd-root-filter-thai" type="button" onclick="setDpdRootFilter('thai')" style="border-radius:999px; border:1px solid #bdc3c7; background:#ffffff; font-size:0.8rem; padding:4px 10px; cursor:pointer;">มีในพจนานุกรมไทย</button>
+                            <button id="dpd-root-filter-dpdOnly" type="button" onclick="setDpdRootFilter('dpdOnly')" style="border-radius:999px; border:1px solid #bdc3c7; background:#ffffff; font-size:0.8rem; padding:4px 10px; cursor:pointer;">เฉพาะ DPD (ไม่มีไทย)</button>
+                            <div style="flex:1;"></div>
+                            <button id="dpd-root-copy-btn" type="button" onclick="copyDpdRootWords()" style="border-radius:4px; border:none; background:#27ae60; color:#ffffff; font-size:0.8rem; padding:5px 12px; cursor:pointer; display:flex; align-items:center; gap:6px;">
+                                <i class="fa-regular fa-copy"></i>
+                                คัดลอกศัพท์ทั้งหมด
+                            </button>
+                        </div>
+                        <div id="dpd-root-list" style="padding:12px 18px 16px 18px; overflow-y:auto; flex:1;">
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+
+            const titleRoot = overlay.querySelector('#dpd-root-title-root');
+            const countEl = overlay.querySelector('#dpd-root-count');
+            const listEl = overlay.querySelector('#dpd-root-list');
+            if (!titleRoot || !countEl || !listEl) return;
+
+            titleRoot.textContent = rootKey;
+            countEl.textContent = `ทั้งหมด ${words.length} คำ`;
+            window.dpdRootCurrentWords = words.map(w => {
+                const roman = w;
+                const baseRoman = roman.split(' ')[0];
+
+                let hasRoman = false;
+                let romanSearchKey = roman;
+                if (typeof PaliLookup !== 'undefined' && typeof PaliLookup.findAll === 'function' && typeof databases !== 'undefined') {
+                    try {
+                        const listFull = PaliLookup.findAll(roman, databases);
+                        if (Array.isArray(listFull) && listFull.length > 0) {
+                            hasRoman = true;
+                            romanSearchKey = roman;
+                        } else if (baseRoman && baseRoman !== roman) {
+                            const listBase = PaliLookup.findAll(baseRoman, databases);
+                            if (Array.isArray(listBase) && listBase.length > 0) {
+                                hasRoman = true;
+                                romanSearchKey = baseRoman;
+                            }
+                        }
+                    } catch (e) {}
+                }
+
+                let thai = '';
+                let hasThai = false;
+                let thaiSearchKey = '';
+                if (typeof PaliScript !== 'undefined' && typeof PaliScript.romanToThai === 'function') {
+                    thai = PaliScript.romanToThai(baseRoman);
+                    thaiSearchKey = thai;
+                    if (thai && typeof PaliLookup !== 'undefined' && typeof PaliLookup.findAll === 'function' && typeof databases !== 'undefined') {
+                        try {
+                            const tList = PaliLookup.findAll(thai, databases);
+                            hasThai = Array.isArray(tList) && tList.length > 0;
+                        } catch (e) {}
+                    }
+                }
+
+                return {
+                    roman: roman,
+                    baseRoman: baseRoman,
+                    hasRoman: hasRoman,
+                    romanSearchKey: romanSearchKey,
+                    thai: thai,
+                    hasThai: hasThai,
+                    thaiSearchKey: thaiSearchKey
+                };
+            });
+            window.dpdRootCurrentFilter = 'all';
+            renderDpdRootWords();
+            overlay.style.display = 'flex';
+        }
+
+        function closeDpdRootWords() {
+            const overlay = document.getElementById('dpd-root-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        }
+
+        function setDpdRootFilter(filter) {
+            window.dpdRootCurrentFilter = filter;
+            const overlay = document.getElementById('dpd-root-overlay');
+            if (overlay) {
+                ['all', 'thai', 'dpdOnly'].forEach(f => {
+                    const btn = document.getElementById('dpd-root-filter-' + f);
+                    if (!btn) return;
+                    if (f === filter) {
+                        btn.style.background = '#ecf0f1';
+                        btn.style.borderColor = '#7f8c8d';
+                    } else {
+                        btn.style.background = '#ffffff';
+                        btn.style.borderColor = '#bdc3c7';
+                    }
+                });
+            }
+            renderDpdRootWords();
+        }
+
+        function renderDpdRootWords() {
+            const overlay = document.getElementById('dpd-root-overlay');
+            if (!overlay) return;
+            const listEl = overlay.querySelector('#dpd-root-list');
+            if (!listEl) return;
+            const data = Array.isArray(window.dpdRootCurrentWords) ? window.dpdRootCurrentWords : [];
+            const filter = window.dpdRootCurrentFilter || 'all';
+            const filtered = data.filter(item => {
+                if (filter === 'thai') return item.hasThai;
+                if (filter === 'dpdOnly') return !item.hasThai;
+                return true;
+            });
+            const itemsHtml = filtered.map(entry => {
+                const safeRomanDisplay = escapeHtml(entry.roman);
+                const safeRomanParam = entry.romanSearchKey.replace(/'/g, "\\'");
+                const thaiDisplay = entry.thai ? escapeHtml(entry.thai) : '';
+                const safeThaiParam = entry.thaiSearchKey ? entry.thaiSearchKey.replace(/'/g, "\\'") : '';
+                const romanStyle = entry.hasRoman ? 'cursor:pointer; color:#2980b9; text-decoration:underline;' : 'color:#bdc3c7;';
+                const romanOnclick = entry.hasRoman ? `onclick="dpdRootSearch('${safeRomanParam}')"` : '';
+                let thaiSpan = '';
+                let romanSpan = '';
+                if (filter === 'thai') {
+                    if (thaiDisplay && entry.hasThai) {
+                        thaiSpan = `<span class="thai-word" onclick="dpdRootSearch('${safeThaiParam}')" style="color:#27ae60; cursor:pointer;">${thaiDisplay}</span>`;
+                    }
+                } else if (filter === 'dpdOnly') {
+                    romanSpan = `<span class="roman-word" ${romanOnclick} style="${romanStyle}">${safeRomanDisplay}</span>`;
+                } else {
+                    romanSpan = `<span class="roman-word" ${romanOnclick} style="${romanStyle}">${safeRomanDisplay}</span>`;
+                    thaiSpan = thaiDisplay
+                        ? `<span class="thai-word" ${entry.hasThai ? `onclick="dpdRootSearch('${safeThaiParam}')"` : ''} style="${entry.hasThai ? 'color:#27ae60; cursor:pointer; margin-left:6px;' : 'color:#bdc3c7; margin-left:6px;'}">${thaiDisplay}</span>`
+                        : '';
+                }
+                return `<li class="word" style="margin-bottom:4px;">
+                    ${romanSpan}
+                    ${thaiSpan}
+                </li>`;
+            }).join('');
+            listEl.innerHTML = '<ul style="margin:0; padding-left:20px; line-height:1.7;">' + itemsHtml + '</ul>';
+        }
+
+        function copyDpdRootWords() {
+            const data = Array.isArray(window.dpdRootCurrentWords) ? window.dpdRootCurrentWords : [];
+            if (!data.length) {
+                if (typeof showToast === 'function') {
+                    showToast('ไม่มีศัพท์สำหรับคัดลอก', 'warning');
+                }
+                return;
+            }
+            const filter = window.dpdRootCurrentFilter || 'all';
+            const filtered = data.filter(item => {
+                if (filter === 'thai') return item.hasThai;
+                if (filter === 'dpdOnly') return !item.hasThai;
+                return true;
+            });
+            if (!filtered.length) {
+                if (typeof showToast === 'function') {
+                    showToast('ไม่มีศัพท์สำหรับคัดลอก', 'warning');
+                }
+                return;
+            }
+            let lines = [];
+            if (filter === 'thai') {
+                lines = filtered
+                    .filter(item => item.hasThai && item.thai)
+                    .map(item => item.thai);
+            } else if (filter === 'dpdOnly') {
+                lines = filtered.map(item => item.roman);
+            } else {
+                lines = filtered.map(item => {
+                    const thai = item.hasThai && item.thai ? item.thai : '';
+                    if (thai) return item.roman + ' - ' + thai;
+                    return item.roman;
+                });
+            }
+            const text = lines.join('\n');
+            if (!text) {
+                if (typeof showToast === 'function') {
+                    showToast('ไม่มีศัพท์สำหรับคัดลอก', 'warning');
+                }
+                return;
+            }
+            const onSuccess = function() {
+                if (typeof showToast === 'function') {
+                    showToast('คัดลอกศัพท์ทั้งหมดแล้ว', 'success');
+                }
+            };
+            const onError = function() {
+                if (typeof showToast === 'function') {
+                    showToast('คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง', 'error');
+                }
+            };
+            if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onSuccess, onError);
+                return;
+            }
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                const ok = document.execCommand('copy');
+                if (ok) {
+                    onSuccess();
+                } else {
+                    onError();
+                }
+            } catch (e) {
+                onError();
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function dpdRootSearch(word) {
+            if (!word) return;
+            closeDpdRootWords();
+            if (typeof triggerSearch === 'function') {
+                triggerSearch(word);
+                return;
+            }
+            const input = document.getElementById('dict-search');
+            if (input) {
+                input.value = word;
+                if (typeof performSearch === 'function') {
+                    performSearch();
+                }
+            }
+        }
 
         function toggleSaveWord(btn, word, meaning, source) {
             if (!window.userVocabManager) return;
