@@ -257,12 +257,30 @@
 
         .word-details li ol.bhumibalo-senses {
             margin: 4px 0 0 0;
-            padding-left: 1.2em;
+            padding-left: 0;
             list-style: none;
         }
 
         .word-details li ol.bhumibalo-senses > li {
             margin-bottom: 4px;
+            padding-left: 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .word-details li ol.bhumibalo-senses > li::before {
+            content: "";
+        }
+
+        .bhumibalo-sense-num {
+            width: 1.6em;
+            flex-shrink: 0;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .bhumibalo-sense-body {
+            flex: 1;
         }
 
         .back-btn {
@@ -421,18 +439,17 @@
             if (!text) return text;
             let processed = text;
             processed = processed
-                .replace(/(^|\n|<br\s*\/?>)\s*—/g, function(match, prefix) {
-                    if (!prefix) return '&nbsp;&nbsp;—';
-                    if (prefix === '\n') return '\n&nbsp;&nbsp;—';
-                    return prefix + '&nbsp;&nbsp;—';
+                .replace(/(^|\n|<br\s*\/?>)\s*—\s*/g, function(match, prefix) {
+                    if (!prefix) return '■ ';
+                    if (prefix === '\n') return '\n&nbsp;&nbsp;■ ';
+                    return prefix + '&nbsp;&nbsp;■ ';
                 })
-                .replace(/([^>\n])\s*—\s*/g, '$1<br>&nbsp;&nbsp;— ');
+                .replace(/([^>\n])\s*—\s*/g, '$1<br>&nbsp;&nbsp;■ ');
             processed = processed
-                .replace(/\s-\s*/g, '<br>&nbsp;&nbsp;&nbsp;&nbsp;- ')
-                .replace(/(^|\n|<br\s*\/?>)\s*-/g, function(match, prefix) {
-                    if (!prefix) return '&nbsp;&nbsp;&nbsp;&nbsp;-';
-                    if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;-';
-                    return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;-';
+                .replace(/(^|\n|<br\s*\/?>)\s*-\s*/g, function(match, prefix) {
+                    if (!prefix) return '• - ';
+                    if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;• ';
+                    return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;• ';
                 });
             return processed;
         }
@@ -462,8 +479,17 @@
                 }
                 html += '<ol class="bhumibalo-senses">';
                 for (let i = 0; i < parts.length; i++) {
-                    const enhanced = enhanceBhumibaloLevels(parts[i]);
-                    html += '<li>' + PaliFormatter.format(enhanced, 'triggerSearch') + '</li>';
+                    let part = parts[i];
+                    let senseNum = '';
+                    let body = part;
+                    const numMatch = part.match(/^([0-9]+)\.\s*([\s\S]*)$/);
+                    if (numMatch) {
+                        senseNum = numMatch[1] + '.';
+                        body = numMatch[2].trim();
+                    }
+                    const enhanced = enhanceBhumibaloLevels(body);
+                    html += '<li><div class="bhumibalo-sense-num">' + senseNum + '</div><div class="bhumibalo-sense-body">' +
+                        PaliFormatter.format(enhanced, 'triggerSearch') + '</div></li>';
                 }
                 html += '</ol>';
                 return html;
