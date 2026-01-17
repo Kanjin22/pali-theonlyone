@@ -224,6 +224,60 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
+        .no-results {
+            text-align: center;
+            color: #95a5a6;
+            padding: 40px;
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .result-actions {
+            text-align: right;
+            margin-top: 15px;
+        }
+
+        .detail-btn-link {
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .meaning-line {
+            margin-bottom: 5px;
+        }
+
+        .meta-block {
+            margin-top: 8px;
+        }
+
+        .meta-item {
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .meta-item-spaced {
+            margin-right: 15px;
+        }
+
+        .dpd-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+            font-size: 0.95rem;
+        }
+
+        .dpd-label {
+            color: #2980b9;
+        }
+
+        .dpd-words {
+            color: #555;
+        }
+
         /* Loading Spinner */
         .spinner {
             display: none;
@@ -255,13 +309,85 @@
             border-color: #27ae60;
         }
 
+        .admin-login {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.3;
+        }
+
+        .admin-login-link {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .credit-link {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .credit-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .info-box {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .info-box-header {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-box-header-icon {
+            color: #3498db;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+        }
+
+        .info-section-title {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-list {
+            margin: 0;
+            padding-left: 20px;
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-center {
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Admin Login Link (Hidden/Subtle) -->
-        <div style="position: absolute; top: 10px; right: 10px; opacity: 0.3;">
-            <a href="admin_login.html" title="Admin Login" style="color: #ccc; text-decoration: none;">
+        <div class="admin-login">
+            <a href="admin_login.html" title="Admin Login" class="admin-login-link">
                 <i class="fa-solid fa-key"></i>
             </a>
         </div>
@@ -273,28 +399,28 @@
             <p class="page-subtitle">รวบรวมธาตุจากคัมภีร์ธาตวัตถสังคหะและธาตุปฺปทีปิกา</p>
         </div>
 
-        <div class="nav-menu" style="text-align: center; margin-bottom: 25px;">
+        <div class="nav-menu">
             <a href="https://palidict.com/%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9E%E0%B8%88%E0%B8%99%E0%B8%B2%E0%B8%99%E0%B8%B8%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%98%E0%B8%B2%E0%B8%95%E0%B8%B8" target="_blank" rel="noopener noreferrer" class="nav-link"><i class="fa-solid fa-book"></i> เกี่ยวกับพจนานุกรม</a>
             <a href="https://palidict.com/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%A8%E0%B8%B1%E0%B8%9E%E0%B8%97%E0%B9%8C%E0%B9%83%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%98%E0%B8%B2%E0%B8%95%E0%B8%B8%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%86" target="_blank" rel="noopener noreferrer" class="nav-link"><i class="fa-solid fa-shapes"></i> การประกอบศัพท์</a>
             <a href="https://palidict.com/index.php/node/38461" target="_blank" rel="noopener noreferrer" class="nav-link"><i class="fa-solid fa-list"></i> อักษรย่อ</a>
         </div>
 
         <div class="credit-box">
-            <div><i class="fa-solid fa-heart"></i> <strong>กราบขอบพระคุณและอนุโมทนาบุญ:</strong> ข้อมูลต้นฉบับจาก <a href="https://palidict.com" target="_blank" rel="noopener noreferrer" style="color:#2980b9; text-decoration:underline;"><strong>Palidict.com</strong></a></div>
-            <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+            <div><i class="fa-solid fa-heart"></i> <strong>กราบขอบพระคุณและอนุโมทนาบุญ:</strong> ข้อมูลต้นฉบับจาก <a href="https://palidict.com" target="_blank" rel="noopener noreferrer" class="credit-link"><strong>Palidict.com</strong></a></div>
+            <div class="credit-note">
                 รวบรวมเพื่อการศึกษาพระปริยัติธรรม และการเชื่อมโยงข้อมูลต่างๆ ภายในเว็บเท่านั้น (ไม่ใช่เพื่อการพาณิชย์) <br>
                 ขอน้อมถวายส่วนกุศลนี้แด่คณะผู้จัดทำ Palidict และบูรพาจารย์เจ้าของข้อมูลทุกท่าน
             </div>
         </div>
 
-        <div class="info-box" style="background-color: #fff; border: 1px solid #eee; border-radius: 10px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-            <h3 style="margin-top: 0; color: #2c3e50; font-size: 1.1rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px;">
-                <i class="fa-solid fa-circle-info" style="color: #3498db;"></i> ข้อมูลประกอบการค้นหา
+        <div class="info-box">
+            <h3 class="info-box-header">
+                <i class="fa-solid fa-circle-info info-box-header-icon"></i> ข้อมูลประกอบการค้นหา
             </h3>
             
-            <div style="margin-bottom: 20px;">
-                <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">สัญลักษณ์และอักษรย่อ (Symbols & Abbreviations)</strong>
-                <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem; line-height: 1.6;">
+            <div class="info-section">
+                <strong class="info-section-title">สัญลักษณ์และอักษรย่อ (Symbols & Abbreviations)</strong>
+                <ul class="info-list">
                     <li><strong>แสดงที่มา:</strong> [ธป] = ธาตุปฺปทีปิกา, [พธ] = พจนานุกรมธาตุ ภาษาบาลี <em>(ธาตุที่ไม่ได้ระบุที่มา คือมาจาก [พธ])</em></li>
                     <li><strong>คาถา:</strong> ลำดับคาถาในคัมภีร์ธาตวัตถสังคหะ</li>
                     <li><strong>หน้า:</strong> หน้าในคัมภีร์สัททนีติ</li>
@@ -302,8 +428,8 @@
             </div>
 
             <div>
-                <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">บรรณานุกรม (Bibliography)</strong>
-                <ol style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem; line-height: 1.6;">
+                <strong class="info-section-title">บรรณานุกรม (Bibliography)</strong>
+                <ol class="info-list">
                     <li>คัมภีร์ธาตวัตถสังคหะ - พระวิสุทธาจารมหาเถระ วัดวิสุทธาราม เมืองมัณฑเล สหภาพพม่า (2432)</li>
                     <li>ธาตุปฺปทีปิกา - หลวงเทพดรุณานุศิษฏ์ (ทวี ธรมธัช) (2528)</li>
                     <li>พจนานุกรมธาตุ ภาษาบาลี - พระมหาปราโมทย์ ปโมทิโต วัดหลวงพ่อสดธรรมกายาราม ราชบุรี (2541)</li>
@@ -329,7 +455,7 @@
         <div class="spinner" id="spinner"></div>
         <div id="resultsContainer" class="results-container"></div>
 
-        <div style="text-align: center;">
+        <div class="footer-center">
             <a href="dictionary_links.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับหน้ารวมลิงค์</a>
         </div>
     </div>
@@ -575,8 +701,8 @@
             
             if (items.length === 0) {
                 resultsContainer.innerHTML = `
-                    <div style="text-align:center; color:#95a5a6; padding: 40px;">
-                        <i class="fa-regular fa-face-frown" style="font-size:3rem; margin-bottom:15px;"></i>
+                    <div class="no-results">
+                        <i class="fa-regular fa-face-frown no-results-icon"></i>
                         <p>ไม่พบข้อมูลที่ค้นหา</p>
                     </div>
                 `;
@@ -632,8 +758,8 @@
                     // Since we are using Firebase, detail page (root_detail.html) might ALSO need update to read from Firebase
                     // For now, we keep the link format but `root_detail.html` will need to be checked next.
                     const exampleHtml = `
-                        <div style="text-align:right; margin-top:15px;">
-                            <a href="root_detail.html?id=${entry.id}" class="detail-btn" style="text-decoration:none; display:inline-block;" target="_blank" rel="noopener noreferrer">
+                        <div class="result-actions">
+                            <a href="root_detail.html?id=${entry.id}" class="detail-btn detail-btn-link" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-solid fa-eye"></i> ดูรายละเอียด/อุทาหรณ์
                             </a>
                         </div>
@@ -643,7 +769,7 @@
                     let meaningHtml = '';
                     if (entry.meaning_pali || entry.meaning_thai) {
                          if (entry.meaning_pali) {
-                             meaningHtml += `<div style="margin-bottom:5px;"><span class="label">อรรถ (บาลี):</span> ${highlightText(entry.meaning_pali, searchInput.value)}</div>`;
+                             meaningHtml += `<div class="meaning-line"><span class="label">อรรถ (บาลี):</span> ${highlightText(entry.meaning_pali, searchInput.value)}</div>`;
                          }
                          if (entry.meaning_thai) {
                              meaningHtml += `<div><span class="label">ความหมาย (ไทย):</span> ${highlightText(entry.meaning_thai, searchInput.value)}</div>`;
@@ -653,9 +779,9 @@
                     }
                     
                     const metaHtml = [];
-                    if (entry.page) metaHtml.push(`<span style="color:#555; font-weight:600; font-size:0.9rem; margin-right:15px;"><i class="fa-regular fa-file-lines"></i> คาถาที่/หน้าที่ ${entry.page}</span>`);
-                    if (entry.source) metaHtml.push(`<span style="color:#555; font-weight:600; font-size:0.9rem;"><i class="fa-solid fa-book-open"></i> ${entry.source}</span>`);
-                    const metaBlock = metaHtml.length > 0 ? `<div style="margin-top:8px;">${metaHtml.join('')}</div>` : '';
+                    if (entry.page) metaHtml.push(`<span class="meta-item meta-item-spaced"><i class="fa-regular fa-file-lines"></i> คาถาที่/หน้าที่ ${entry.page}</span>`);
+                    if (entry.source) metaHtml.push(`<span class="meta-item"><i class="fa-solid fa-book-open"></i> ${entry.source}</span>`);
+                    const metaBlock = metaHtml.length > 0 ? `<div class="meta-block">${metaHtml.join('')}</div>` : '';
 
                     // DPD Derived Words Integration
                     let dpdHtml = '';
@@ -668,16 +794,16 @@
                              const moreText = moreCount > 0 ? ` และอีก ${moreCount} คำ...` : '';
                              
                              dpdHtml = `
-                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #eee; font-size: 0.95rem;">
-                                    <span class="label" style="color:#2980b9;"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุนี้ (DPD):</span>
-                                    <span style="color: #555;">${displayWords}${moreText}</span>
+                                <div class="dpd-section">
+                                    <span class="label dpd-label"><i class="fa-solid fa-book"></i> ศัพท์ที่มาจากธาตุนี้ (DPD):</span>
+                                    <span class="dpd-words">${displayWords}${moreText}</span>
                                 </div>
                              `;
                         }
                     }
 
                     card.innerHTML = `
-                        <div class="card-header" style="background-color: ${headerColor};">
+                        <div class="card-header">
                             <div>
                                 <span class="root-title">${highlightText(item.root, searchInput.value)}</span>
                                 ${metaBlock}
@@ -691,6 +817,10 @@
                         </div>
                     `;
                     resultsContainer.appendChild(card);
+                    const headerEl = card.querySelector('.card-header');
+                    if (headerEl) {
+                        headerEl.style.backgroundColor = headerColor;
+                    }
                 });
             });
         }

@@ -440,6 +440,76 @@
             padding: 50px;
             color: #e74c3c;
         }
+        
+        .exam-time-range {
+            font-weight: bold;
+            color: #c0392b;
+        }
+
+        .text-strong {
+            font-weight: bold;
+        }
+
+        .daily-empty-cell {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            color: #7f8c8d;
+        }
+
+        .holiday-td {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .remarks-grammar {
+            color: #2980b9;
+        }
+
+        .remarks-translate {
+            color: #d35400;
+        }
+
+        .time-summary-box {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+
+        .print-toolbar {
+            margin: 15px 0;
+        }
+
+        .btn-pdf {
+            background-color: #e74c3c;
+            font-size: 1em;
+            padding: 10px 20px;
+        }
+
+        #back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .stat-details {
+            width: 100%;
+        }
+
+        .col-date { width: 12%; }
+        .col-morning { width: 20%; }
+        .col-afternoon { width: 20%; }
+        .col-evening { width: 20%; }
+        .col-remarks { width: 28%; }
 
         @media (max-width: 768px) {
             body {
@@ -529,29 +599,28 @@
             <i class="fas fa-spinner fa-spin"></i> กำลังโหลดข้อมูลตารางเรียน...
         </div>
 
-        <div id="error-container" class="error-msg" style="display:none;"></div>
+        <div id="error-container" class="error-msg hidden"></div>
 
-        <div id="content" style="display:none;">
+        <div id="content" class="hidden">
             <div class="page-header">
                 <h1 class="main-title" id="page-title">ตารางเรียน</h1>
                 <h2 class="sub-title" id="page-subtitle"></h2>
                 <p class="description" id="page-desc"></p>
                 
-                <div class="print-hide" style="margin: 15px 0;">
-                    <button onclick="openPdfPreview()" class="btn" style="background-color: #e74c3c; font-size: 1em; padding: 10px 20px;">
+                <div class="print-hide print-toolbar">
+                    <button onclick="openPdfPreview()" class="btn btn-pdf">
                         <i class="fas fa-file-pdf"></i> ส่งออกเป็น PDF (Export PDF)
                     </button>
                 </div>
 
-                <a href="#" id="back-link"
-                    style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none;">&larr;
+                <a href="#" id="back-link">&larr;
                     กลับสู่หน้าห้องเรียน</a>
             </div>
 
             <div class="stats-dashboard" id="stats-section">
                 <div class="stat-card grammar">
                     <div class="stat-icon">📘</div>
-                    <div class="stat-details" style="width:100%">
+                    <div class="stat-details">
                         <h3>สถิติ ไวยากรณ์</h3>
                         <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read"
                                 id="stat-gram-read">0</span></div>
@@ -561,7 +630,7 @@
                 </div>
                 <div class="stat-card translate">
                     <div class="stat-icon">📙</div>
-                    <div class="stat-details" style="width:100%">
+                    <div class="stat-details">
                         <h3>สถิติ แปล</h3>
                         <div class="stat-row"><span>เรียน/อ่าน:</span> <span class="stat-val read"
                                 id="stat-trans-read">0</span></div>
@@ -575,11 +644,11 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width:12%">วดป.</th>
-                            <th style="width:20%">เช้า-สาย</th>
-                            <th style="width:20%">บ่าย</th>
-                            <th style="width:20%">ค่ำ</th>
-                            <th style="width:28%">หมายเหตุ</th>
+                            <th class="col-date">วดป.</th>
+                            <th class="col-morning">เช้า-สาย</th>
+                            <th class="col-afternoon">บ่าย</th>
+                            <th class="col-evening">ค่ำ</th>
+                            <th class="col-remarks">หมายเหตุ</th>
                         </tr>
                     </thead>
                     <tbody id="schedule-body">
@@ -647,14 +716,14 @@
                 let niceDate = day.displayDate;
                 try {
                     const d = dateParts[1].split('-');
-                    niceDate = `<div style="font-weight:bold;">${dateParts[0]}</div><div>${d[0]} ${d[1]}</div>`;
+                    niceDate = `<div class="pdf-date-day">${dateParts[0]}</div><div class="pdf-date-main">${d[0]} ${d[1]}</div>`;
                 } catch(e) {}
 
                 if (day.isWeekend) {
                     rows += `
-                        <tr style="background-color: #fdedec; color: #c0392b;">
-                            <td style="text-align:center;">${niceDate}</td>
-                            <td colspan="3" style="text-align:center; font-style:italic; vertical-align:middle;">หยุด</td>
+                        <tr class="pdf-weekend-row">
+                            <td class="pdf-center">${niceDate}</td>
+                            <td colspan="3" class="pdf-center-italic">หยุด</td>
                         </tr>
                     `;
                 } else {
@@ -664,7 +733,7 @@
                     
                     rows += `
                         <tr>
-                            <td style="text-align:center; white-space:nowrap;">${niceDate}</td>
+                            <td class="pdf-date-cell">${niceDate}</td>
                             <td>${morning}</td>
                             <td>${afternoon}</td>
                             <td>${evening}</td>
@@ -699,6 +768,16 @@
                         tr:nth-child(even) { background-color: #f2f6f8; }
 
                         .period-item { margin-bottom: 2px; line-height: 1.3; }
+                        .pdf-date-day { font-weight: bold; }
+                        .pdf-weekend-row { background-color: #fdedec; color: #c0392b; }
+                        .pdf-center { text-align: center; }
+                        .pdf-center-italic { text-align: center; font-style: italic; vertical-align: middle; }
+                        .pdf-date-cell { text-align: center; white-space: nowrap; }
+                        .pdf-toolbar-title { margin-right: 15px; font-weight: bold; }
+                        .pdf-toolbar-spacer { height: 50px; }
+                        .pdf-col-date { width: 10%; }
+                        .pdf-col-period { width: 30%; }
+                        .pdf-footer-note { margin-top: 10px; font-size: 8pt; text-align: right; color: #666; }
                         
                         @media print {
                             body { background: white; padding: 0; }
@@ -724,11 +803,11 @@
                 </head>
                 <body>
                     <div class="toolbar no-print">
-                        <span style="margin-right: 15px; font-weight: bold;">ตัวอย่างก่อนพิมพ์ (Print Preview)</span>
+                        <span class="pdf-toolbar-title">ตัวอย่างก่อนพิมพ์ (Print Preview)</span>
                         <button class="btn" onclick="window.print()"><i class="fas fa-file-pdf"></i> บันทึกเป็น PDF / พิมพ์</button>
                         <button class="btn btn-close" onclick="window.close()"><i class="fas fa-times"></i> ปิด</button>
                     </div>
-                    <div style="height: 50px;" class="no-print"></div>
+                    <div class="pdf-toolbar-spacer no-print"></div>
                     
                     <div class="paper">
                         <h1>${title}</h1>
@@ -737,10 +816,10 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="width:10%">วัน/เดือน</th>
-                                    <th style="width:30%">เช้า-สาย</th>
-                                    <th style="width:30%">บ่าย</th>
-                                    <th style="width:30%">ค่ำ</th>
+                                    <th class="pdf-col-date">วัน/เดือน</th>
+                                    <th class="pdf-col-period">เช้า-สาย</th>
+                                    <th class="pdf-col-period">บ่าย</th>
+                                    <th class="pdf-col-period">ค่ำ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -748,7 +827,7 @@
                             </tbody>
                         </table>
                         
-                        <div style="margin-top: 10px; font-size: 8pt; text-align: right; color: #666;">
+                        <div class="pdf-footer-note">
                             พิมพ์จากระบบ Pali The Only One | วันที่: ${new Date().toLocaleDateString('th-TH')}
                         </div>
                     </div>
@@ -781,7 +860,7 @@
                     return `${toThaiNum(h)}.${toThaiNum(m)} น.`;
                 };
                 if (period.timeStart && period.timeEnd) {
-                    items.push(`<span style="font-weight:bold; color:#c0392b;">${formatTime(period.timeStart)} - ${formatTime(period.timeEnd)}</span>`);
+                    items.push(`<span class="exam-time-range">${formatTime(period.timeStart)} - ${formatTime(period.timeEnd)}</span>`);
                 }
             }
             
@@ -791,7 +870,7 @@
                 const regex = /^\s*(\d{1,2}[.:]\d{2}(?:\s*[-–]\s*\d{1,2}[.:]\d{2})?(?:\s*น\.?)?)\s*(.*)$/;
                 const match = text.match(regex);
                 if (match) {
-                    const res = [`<span style="font-weight:bold;">${match[1]}</span>`];
+                    const res = [`<span class="text-strong">${match[1]}</span>`];
                     if (match[2]) res.push(match[2]);
                     return res;
                 }
@@ -988,7 +1067,7 @@
                  daysToRender = data.days.filter(day => day.date === todayStr);
                  
                  if (daysToRender.length === 0) {
-                     tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:50px; font-size:1.5em; color:#7f8c8d;">
+                    tbody.innerHTML = `<tr><td colspan="5" class="daily-empty-cell">
                         <i class="fas fa-calendar-times"></i> วันนี้ไม่มีการเรียนการสอน
                      </td></tr>`;
                      return;
@@ -1014,7 +1093,7 @@
                     
                     tr.innerHTML = `
                     <td data-label="วดป.">${day.displayDate}</td>
-                    <td colspan="3" style="text-align:center; font-style:italic;">หยุด</td>
+                    <td colspan="3" class="holiday-td">หยุด</td>
                     <td class="remarks-cell"></td>
                 `;
                 } else {
@@ -1057,12 +1136,12 @@
         function generateRemarks(remarks) {
             if (!remarks) return '';
             let html = '';
-            if (remarks.grammar) html += `<div style="color:#2980b9">📘 ${remarks.grammar}</div>`;
+            if (remarks.grammar) html += `<div class="remarks-grammar">📘 ${remarks.grammar}</div>`;
             if (remarks.translate) {
                 if (Array.isArray(remarks.translate)) {
-                    remarks.translate.forEach(t => html += `<div style="color:#d35400">📙 ${t}</div>`);
+                    remarks.translate.forEach(t => html += `<div class="remarks-translate">📙 ${t}</div>`);
                 } else {
-                    html += `<div style="color:#d35400">📙 ${remarks.translate}</div>`;
+                    html += `<div class="remarks-translate">📙 ${remarks.translate}</div>`;
                 }
             }
             if (remarks.general) html += `<div>${remarks.general}</div>`;
@@ -1439,7 +1518,7 @@
                 timeSummaryText = `เวลาสอบ ${examRangeText}. ${answerText}`;
                 const extraNote = isPrivileged ? '<br>(ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)' : '';
                 
-                html += `<div class="modal-section"><div style="padding:12px 16px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.08); border-radius:12px; font-weight:700; color:#2c3e50; text-align:center;">${timeSummaryText}${extraNote}</div></div>`;
+                html += `<div class="modal-section"><div class="time-summary-box">${timeSummaryText}${extraNote}</div></div>`;
             }
 
             if (period.noteFiles) {

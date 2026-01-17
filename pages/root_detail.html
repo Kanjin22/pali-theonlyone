@@ -12,6 +12,9 @@
         .container { max-width: 800px; margin: 0 auto; }
         
         .back-nav { margin-bottom: 20px; }
+        .back-nav .back-btn + .back-btn {
+            margin-left: 10px;
+        }
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -59,6 +62,7 @@
             line-height: 1.2;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
             position: relative;
+            z-index: 1;
         }
 
         .root-group-badge {
@@ -71,6 +75,8 @@
             -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .grammar-link {
@@ -86,6 +92,15 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             white-space: nowrap;
         }
+        .grammar-link-aneka { color: #607d8b; }
+        .grammar-link-bhu { color: #27ae60; }
+        .grammar-link-rudha { color: #c0392b; }
+        .grammar-link-divu { color: #2980b9; }
+        .grammar-link-su { color: #8e44ad; }
+        .grammar-link-ki { color: #d35400; }
+        .grammar-link-gaha { color: #16a085; }
+        .grammar-link-tana { color: #f39c12; }
+        .grammar-link-cura { color: #2c3e50; }
         .grammar-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
@@ -159,6 +174,31 @@
             border: 1px solid #ffe0b2;
             border-radius: 12px;
             padding: 20px;
+            margin-top: 30px;
+        }
+
+        .section-title-derived {
+            border-bottom: none;
+            color: #d35400;
+        }
+
+        .section-title-derived i {
+            color: #d35400;
+        }
+
+        .derived-words {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .form-hint {
+            color: #7f8c8d;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .modal-actions {
+            text-align: right;
         }
 
         .footer-note {
@@ -166,6 +206,59 @@
             margin-top: 40px;
             color: #95a5a6;
             font-size: 0.9rem;
+        }
+
+        .error-actions {
+            margin-top: 20px;
+        }
+
+        .back-btn-primary {
+            background: #3498db;
+            color: #ffffff;
+        }
+
+        .no-content-msg {
+            padding: 40px;
+            text-align: center;
+            color: #95a5a6;
+        }
+
+        .aneka-footer {
+            text-align: right;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .aneka-link {
+            color: #607d8b;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .aneka-link-icon {
+            color: #f39c12;
+        }
+
+        .grammar-link-wrapper {
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title-school {
+            color: #2c3e50;
+            border-bottom-color: #f39c12;
+        }
+
+        .section-title-school-dashed {
+            border-bottom-style: dashed;
+        }
+
+        .example-box-school {
+            background-color: #fff8e1;
+            border-left: 4px solid #f39c12;
         }
 
         /* Loading & Error */
@@ -319,7 +412,7 @@
     <div class="container">
         <div class="back-nav">
             <a href="javascript:window.close()" class="back-btn"><i class="fa-solid fa-arrow-left"></i> ปิดหน้านี้</a>
-            <a href="roots.html" class="back-btn" style="margin-left: 10px;"><i class="fa-solid fa-home"></i> กลับหน้าหลัก</a>
+            <a href="roots.html" class="back-btn"><i class="fa-solid fa-home"></i> กลับหน้าหลัก</a>
         </div>
 
         <div id="contentArea">
@@ -343,11 +436,11 @@
                 <div class="form-group">
                     <label>อุทาหรณ์ (School Examples)</label>
                     <textarea id="editSchoolExample" rows="8" placeholder="ใส่ข้อมูลที่นี่..."></textarea>
-                    <small style="color:#7f8c8d; display:block; margin-top:5px;">
+                    <small class="form-hint">
                         สามารถใช้เครื่องหมาย ; เพื่อขึ้นบรรทัดใหม่
                     </small>
                 </div>
-                <div style="text-align: right;">
+                <div class="modal-actions">
                     <button class="btn-cancel" onclick="closeEditModal()">ยกเลิก</button>
                     <button class="btn-save" onclick="saveSchoolExample()"><i class="fa-solid fa-save"></i> บันทึก</button>
                 </div>
@@ -433,8 +526,8 @@
                 if (!docSnap.exists()) {
                     showError(`
                         <div>ไม่พบข้อมูลในฐานข้อมูล (Document not found)</div>
-                        <div style="margin-top:20px;">
-                            <a href="roots.html" class="back-btn" style="background:#3498db; color:white;">
+                        <div class="error-actions">
+                            <a href="roots.html" class="back-btn back-btn-primary">
                                 <i class="fa-solid fa-magnifying-glass"></i> ไปหน้าค้นหาธาตุ
                             </a>
                         </div>
@@ -609,22 +702,22 @@
 
             if (isAneka) {
                  colors = ["#607d8b", "#455a64"]; // Blue Grey theme for Aneka Dhatu
-                 groupLink = `<a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" class="grammar-link" style="color:#607d8b;"><i class="fa-solid fa-graduation-cap"></i> หลักการอเนกคณิกธาตุ</a>`;
+                 groupLink = `<a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" class="grammar-link grammar-link-aneka"><i class="fa-solid fa-graduation-cap"></i> หลักการอเนกคณิกธาตุ</a>`;
             } else if (displayGroup) {
                 const g = displayGroup;
-                if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "#27ae60"); }
-                else if (g.includes("รุธ")) { colors = groupColors["รุธ (ํอ)"]; groupLink = getGrammarLink("rudha", "#c0392b"); }
-                else if (g.includes("ทิว")) { colors = groupColors["ทิว (ย)"]; groupLink = getGrammarLink("divu", "#2980b9"); }
-                else if (g.includes("สุ")) { colors = groupColors["สุ (ณุ ณา อุณา)"]; groupLink = getGrammarLink("su", "#8e44ad"); }
-                else if (g.includes("กี")) { colors = groupColors["กี (นา)"]; groupLink = getGrammarLink("ki", "#d35400"); }
-                else if (g.includes("คห")) { colors = groupColors["คห (ณฺหา ปฺป)"]; groupLink = getGrammarLink("gaha", "#16a085"); }
-                else if (g.includes("ตน")) { colors = groupColors["ตน (โอ ยิร)"]; groupLink = getGrammarLink("tana", "#f39c12"); }
-                else if (g.includes("จุร")) { colors = groupColors["จุร (เณ ณย)"]; groupLink = getGrammarLink("cura", "#2c3e50"); }
+                if (g.includes("ภู")) { colors = groupColors["ภู (อ)"]; groupLink = getGrammarLink("bhu", "grammar-link-bhu"); }
+                else if (g.includes("รุธ")) { colors = groupColors["รุธ (ํอ)"]; groupLink = getGrammarLink("rudha", "grammar-link-rudha"); }
+                else if (g.includes("ทิว")) { colors = groupColors["ทิว (ย)"]; groupLink = getGrammarLink("divu", "grammar-link-divu"); }
+                else if (g.includes("สุ")) { colors = groupColors["สุ (ณุ ณา อุณา)"]; groupLink = getGrammarLink("su", "grammar-link-su"); }
+                else if (g.includes("กี")) { colors = groupColors["กี (นา)"]; groupLink = getGrammarLink("ki", "grammar-link-ki"); }
+                else if (g.includes("คห")) { colors = groupColors["คห (ณฺหา ปฺป)"]; groupLink = getGrammarLink("gaha", "grammar-link-gaha"); }
+                else if (g.includes("ตน")) { colors = groupColors["ตน (โอ ยิร)"]; groupLink = getGrammarLink("tana", "grammar-link-tana"); }
+                else if (g.includes("จุร")) { colors = groupColors["จุร (เณ ณย)"]; groupLink = getGrammarLink("cura", "grammar-link-cura"); }
             }
 
 
-            function getGrammarLink(file, color) {
-                return `<a href="grammar_${file}.html" target="_blank" rel="noopener noreferrer" class="grammar-link" style="color:${color};"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
+            function getGrammarLink(file, extraClass) {
+                return `<a href="grammar_${file}.html" target="_blank" rel="noopener noreferrer" class="grammar-link ${extraClass}"><i class="fa-solid fa-graduation-cap"></i> หลักการประกอบศัพท์</a>`;
             }
 
             // Tabs HTML
@@ -647,7 +740,7 @@
             const targetEntries = activeTab === 'thai' ? thaiEntries : dpdEntries;
             
             if (targetEntries.length === 0) {
-                contentHtml = `<div style="padding:40px; text-align:center; color:#95a5a6;">ไม่พบข้อมูลในส่วนนี้</div>`;
+                contentHtml = `<div class="no-content-msg">ไม่พบข้อมูลในส่วนนี้</div>`;
             } else {
                 contentHtml = targetEntries.map(entry => renderEntryItem(entry)).join('');
             }
@@ -658,11 +751,11 @@
                 const words = vocabRootsDPDDerived[currentRootWord];
                 if (words.length > 0) {
                      derivedHtml = `
-                        <div class="derived-section" style="margin-top: 30px;">
-                            <div class="section-title" style="border:none; color:#d35400;">
-                                <i class="fa-solid fa-tree" style="color:#d35400;"></i> ศัพท์ที่มาจากธาตุนี้ (DPD)
+                        <div class="derived-section">
+                            <div class="section-title section-title-derived">
+                                <i class="fa-solid fa-tree"></i> ศัพท์ที่มาจากธาตุนี้ (DPD)
                             </div>
-                            <div style="color:#555; line-height:1.6;">${words.join(', ')}</div>
+                            <div class="derived-words">${words.join(', ')}</div>
                         </div>
                      `;
                 }
@@ -673,9 +766,9 @@
             let anekaFooterHtml = '';
             if (isAneka) {
                 anekaFooterHtml = `
-                    <div style="text-align: right; margin-top: 20px; margin-bottom: 10px;">
-                        <a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" style="color: #607d8b; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s;">
-                            <i class="fa-solid fa-lightbulb" style="color: #f39c12;"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
+                    <div class="aneka-footer">
+                        <a href="grammar_aneka.html" target="_blank" rel="noopener noreferrer" class="aneka-link">
+                            <i class="fa-solid fa-lightbulb aneka-link-icon"></i> รู้จัก "อเนกคณิกธาตุ" (ธาตุที่เป็นได้หลายหมวด)
                         </a>
                     </div>
                 `;
@@ -683,10 +776,10 @@
 
             container.innerHTML = `
                 <div class="detail-card">
-                    <div class="card-header" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
-                        <h1 class="root-title-large" style="position:relative; z-index:1;">${displayRoot}</h1>
-                        ${displayGroup ? `<div class="root-group-badge" style="position:relative; z-index:1;"><i class="fa-solid fa-layer-group"></i> ${displayGroup}</div>` : ''}
-                        ${groupLink ? `<div style="margin-top:15px; position:relative; z-index:1;">${groupLink}</div>` : ''}
+                    <div class="card-header">
+                        <h1 class="root-title-large">${displayRoot}</h1>
+                        ${displayGroup ? `<div class="root-group-badge"><i class="fa-solid fa-layer-group"></i> ${displayGroup}</div>` : ''}
+                        ${groupLink ? `<div class="grammar-link-wrapper">${groupLink}</div>` : ''}
                     </div>
                     
                     ${tabsHtml}
@@ -699,6 +792,11 @@
                     </div>
                 </div>
             `;
+
+            const headerEl = container.querySelector('.card-header');
+            if (headerEl) {
+                headerEl.style.background = `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
+            }
         }
 
         function renderEntryItem(entry) {
@@ -726,18 +824,19 @@
                     </div>
 
                     ${entry.example_school ? `
-                    <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12;">
+                    <div class="section-title section-title-school">
                         <span><i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</span>
                         ${isAdmin ? `<button class="admin-edit-btn" onclick="openEditModal('${entry.id}')" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
                     </div>
-                    <div class="example-box" style="background-color: #fff8e1; border-left: 4px solid #f39c12;">
+                    <div class="example-box example-box-school">
                         ${formatExampleText(entry.example_school)}
                     </div>
                     ` : (isAdmin ? `
-                    <div class="section-title" style="color: #2c3e50; border-bottom-color: #f39c12; border-bottom-style: dashed;">
+                    <div class="section-title section-title-school section-title-school-dashed">
                         <span><i class="fa-solid fa-graduation-cap"></i> อุทาหรณ์จากแบบเรียน (บาลีสนามหลวง)</span>
                         <button class="admin-edit-btn" onclick="openEditModal('${entry.id}')" title="เพิ่มข้อมูล"><i class="fa-solid fa-plus-circle"></i> เพิ่ม</button>
                     </div>
+                    ` : '')}
                     ` : '')}
 
                     ${entry.example ? `

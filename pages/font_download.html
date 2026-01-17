@@ -28,21 +28,27 @@
         .btn-outline:hover { background: #e3f2fd; }
         .btn-back { background: #eceff1; color: #455a64; }
         .btn-back:hover { background: #cfd8dc; color: #37474f; }
-        
+        .top-back-row { margin-bottom: 30px; }
+        .font-warning { color: #d32f2f; font-size: 0.9rem; margin-top: 5px; }
+        .download-pack-box { text-align: center; margin-top: 30px; padding: 20px; background: #f1f8e9; border-radius: 10px; border: 1px dashed #8bc34a; }
+        .download-pack-title { margin-top: 0; color: #33691e; }
+        .download-pack-desc { margin-bottom: 20px; }
+        .btn-download-pack { font-size: 1.1rem; padding: 12px 30px; }
         .install-guide { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 10px; padding: 25px; }
         .install-step { display: flex; gap: 15px; margin-bottom: 15px; }
         .step-num { flex-shrink: 0; width: 30px; height: 30px; background: #2e7d32; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .step-content h4 { margin: 0 0 5px 0; color: #1b5e20; }
         .step-content p { margin: 0; color: #333; font-size: 0.95rem; }
-        
+        .install-note { font-size: 0.85rem; color: #666; margin-top: 5px; }
         .os-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px; }
         .os-tab { padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #607d8b; background: transparent; border: none; }
         .os-tab.active { background: #e3f2fd; color: #1565C0; }
-        
         .guide-content { display: none; }
         .guide-content.active { display: block; }
+        .install-guide-mac { background: #f3e5f5; border-color: #e1bee7; }
+        .step-num-mac { background: #7b1fa2; }
+        .step-title-mac { color: #4a148c; }
 
-        /* Font Families for Preview */
         @font-face { font-family: 'DilleniaUPC'; src: local('DilleniaUPC'), url('fonts/DilleniaUPC-Regular.ttf') format('truetype'); }
         @font-face { font-family: 'DilleniaUPC_4Balee'; src: local('DilleniaUPC_4Balee'), url('fonts/DilleniaUPC_4Balee-Regular.ttf') format('truetype'); }
         @font-face { font-family: 'Buddhadham'; src: url('fonts/Buddhadham.otf') format('opentype'); }
@@ -66,10 +72,10 @@
     <div class="header">
         <h1><i class="fa-solid fa-font"></i> ดาวน์โหลดและติดตั้งฟอนต์</h1>
         <p>เพื่อการแสดงผลข้อสอบที่ถูกต้อง สมบูรณ์ ทั้งภาษาบาลีและภาษาไทย</p>
-    </div>
-    
+    </div>div>
+
     <div class="content">
-        <div style="margin-bottom: 30px;">
+        <div class="top-back-row">
             <a href="exam_builder.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i> กลับไปหน้าสร้างข้อสอบ</a>
         </div>
 
@@ -95,7 +101,7 @@
                     <div class="font-info">
                         <h3>2. DilleniaUPC_4Balee (ภาษาบาลี)</h3>
                         <p>สำหรับพิมพ์เนื้อหาภาษาบาลี ออกข้อสอบวิชา <strong>แปลมคธเป็นไทย</strong> และ <strong>สัมพันธ์ไทย</strong></p>
-                        <p style="color: #d32f2f; font-size: 0.9rem; margin-top: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> ฟอนต์นี้มีการปรับแต่งพิเศษ: ตัดเชิง ญ และ ฐ ออก เพื่อความถูกต้องตามหลักบาลี</p>
+                        <p class="font-warning"><i class="fa-solid fa-triangle-exclamation"></i> ฟอนต์นี้มีการปรับแต่งพิเศษ: ตัดเชิง ญ และ ฐ ออก เพื่อความถูกต้องตามหลักบาลี</p>
                     </div>
                 </div>
                 <div class="font-preview preview-pali">
@@ -104,10 +110,10 @@
             </div>
 
             <!-- Download All Button -->
-             <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f1f8e9; border-radius: 10px; border: 1px dashed #8bc34a;">
-                <h3 style="margin-top: 0; color: #33691e;">ดาวน์โหลดฟอนต์ทั้งหมด (Pack)</h3>
-                <p style="margin-bottom: 20px;">รวมฟอนต์ที่จำเป็นทั้งหมดในไฟล์เดียว (DilleniaUPC, DilleniaUPC_4Balee, Buddhadham, Buddhawajana, Burapa)</p>
-                <a href="fonts.zip" download class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 30px;">
+            <div class="download-pack-box">
+                <h3 class="download-pack-title">ดาวน์โหลดฟอนต์ทั้งหมด (Pack)</h3>
+                <p class="download-pack-desc">รวมฟอนต์ที่จำเป็นทั้งหมดในไฟล์เดียว (DilleniaUPC, DilleniaUPC_4Balee, Buddhadham, Buddhawajana, Burapa)</p>
+                <a href="fonts.zip" download class="btn btn-primary btn-download-pack">
                     <i class="fa-solid fa-download"></i> ดาวน์โหลด fonts.zip
                 </a>
             </div>
@@ -142,31 +148,31 @@
                     <div class="step-content">
                         <h4>ติดตั้ง</h4>
                         <p>เข้าไปในโฟลเดอร์ที่แตกไฟล์ออกมา เลือกไฟล์ฟอนต์ทั้งหมด (Ctrl+A) คลิกขวา แล้วเลือก <strong>Install</strong> (หรือ "ติดตั้ง")</p>
-                        <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">* หากมีหน้าต่างแจ้งเตือนว่ามีฟอนต์อยู่แล้ว ให้เลือก Replace เพื่ออัปเดตเป็นเวอร์ชันล่าสุด</p>
+                        <p class="install-note">* หากมีหน้าต่างแจ้งเตือนว่ามีฟอนต์อยู่แล้ว ให้เลือก Replace เพื่ออัปเดตเป็นเวอร์ชันล่าสุด</p>
                     </div>
                 </div>
             </div>
 
             <!-- macOS Guide -->
-            <div id="guide-mac" class="guide-content install-guide" style="background: #f3e5f5; border-color: #e1bee7;">
+            <div id="guide-mac" class="guide-content install-guide install-guide-mac">
                 <div class="install-step">
-                    <div class="step-num" style="background: #7b1fa2;">1</div>
+                    <div class="step-num step-num-mac">1</div>
                     <div class="step-content">
-                        <h4 style="color: #4a148c;">ดาวน์โหลดไฟล์</h4>
+                        <h4 class="step-title-mac">ดาวน์โหลดไฟล์</h4>
                         <p>กดปุ่ม <strong>ดาวน์โหลด fonts.zip</strong> ด้านบน ไฟล์จะไปอยู่ที่โฟลเดอร์ Downloads</p>
                     </div>
                 </div>
                 <div class="install-step">
-                    <div class="step-num" style="background: #7b1fa2;">2</div>
+                    <div class="step-num step-num-mac">2</div>
                     <div class="step-content">
-                        <h4 style="color: #4a148c;">เปิดไฟล์</h4>
+                        <h4 class="step-title-mac">เปิดไฟล์</h4>
                         <p>ดับเบิ้ลคลิกที่ไฟล์ <code>fonts.zip</code> ระบบจะแตกไฟล์ออกมาเป็นโฟลเดอร์</p>
                     </div>
                 </div>
                 <div class="install-step">
-                    <div class="step-num" style="background: #7b1fa2;">3</div>
+                    <div class="step-num step-num-mac">3</div>
                     <div class="step-content">
-                        <h4 style="color: #4a148c;">ติดตั้งลง Font Book</h4>
+                        <h4 class="step-title-mac">ติดตั้งลง Font Book</h4>
                         <p>เปิดโฟลเดอร์ฟอนต์ เลือกไฟล์ฟอนต์ทั้งหมด แล้วดับเบิ้ลคลิก โปรแกรม <strong>Font Book</strong> จะเปิดขึ้นมา ให้กดปุ่ม <strong>Install Font</strong> (ติดตั้งฟอนต์)</p>
                     </div>
                 </div>
