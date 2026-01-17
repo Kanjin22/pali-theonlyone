@@ -395,8 +395,8 @@
                         <span style="color: #c62828;"><i class="fa-solid fa-xmark"></i> ตัดส่วนนี้ทิ้ง</span>
                     </div>
                 </div>
-                <div class="row" style="align-items:flex-start;">
-                    <label style="padding-top:10px;">โดยพยัญชนะ</label>
+                <div class="row" id="literalRow" style="align-items:flex-start;">
+                    <label id="literalLabel" style="padding-top:10px;">โดยพยัญชนะ</label>
                     <div style="width:100%;">
                         <div class="grid-3" style="margin-bottom:10px;">
                             <select id="literalPart" aria-label="เลือกภาคโดยพยัญชนะ"></select>
@@ -417,8 +417,8 @@
                     </div>
                 </div>
                 
-                <div class="row" style="align-items:flex-start; border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
-                    <label style="padding-top:10px;">โดยอรรถ</label>
+                <div class="row" id="senseRow" style="align-items:flex-start; border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
+                    <label id="senseLabel" style="padding-top:10px;">โดยอรรถ</label>
                     <div style="width:100%;">
                         <div class="grid-3" style="margin-bottom:10px;">
                             <select id="sensePart" aria-label="เลือกภาคโดยอรรถ"></select>
@@ -938,21 +938,28 @@
                 const o2 = document.createElement('option'); o2.value = p.id; o2.text = p.label; senseSel.appendChild(o2);
             });
             
-            // UI Adjustments for Thai Source
             const isThaiSource = subjectLabel.includes('ไทยเป็นมคธ');
-            const senseRow = document.getElementById('sensePart').closest('.row').parentElement;
+            const isRelationThai = subjectLabel.includes('สัมพันธ์ไทย');
+            const literalRow = document.getElementById('literalRow');
+            const senseRow = document.getElementById('senseRow');
+            const litLabel = document.getElementById('literalLabel');
+            const thaiRow = document.getElementById('thaiInputRow');
+
             if (isThaiSource) {
-                 if(senseRow) senseRow.style.display = 'none';
-                 const litLabel = document.getElementById('literalPart').closest('.row').parentElement.querySelector('label');
-                 if(litLabel) litLabel.innerText = 'เลือกเนื้อหา (ภาษาไทย)';
-                 const thaiRow = document.getElementById('thaiInputRow');
-                 if (thaiRow) thaiRow.style.display = 'block';
+                if (senseRow) senseRow.style.display = 'none';
+                if (literalRow) literalRow.style.display = '';
+                if (litLabel) litLabel.innerText = 'เลือกเนื้อหา (ภาษาไทย)';
+                if (thaiRow) thaiRow.style.display = 'block';
+            } else if (isRelationThai) {
+                if (senseRow) senseRow.style.display = 'none';
+                if (literalRow) literalRow.style.display = '';
+                if (litLabel) litLabel.innerText = 'เลือกช่วงเนื้อหา';
+                if (thaiRow) thaiRow.style.display = 'none';
             } else {
-                 if(senseRow) senseRow.style.display = 'block';
-                 const litLabel = document.getElementById('literalPart').closest('.row').parentElement.querySelector('label');
-                 if(litLabel) litLabel.innerText = 'โดยพยัญชนะ';
-                 const thaiRow = document.getElementById('thaiInputRow');
-                 if (thaiRow) thaiRow.style.display = 'none';
+                if (senseRow) senseRow.style.display = '';
+                if (literalRow) literalRow.style.display = '';
+                if (litLabel) litLabel.innerText = 'โดยพยัญชนะ';
+                if (thaiRow) thaiRow.style.display = 'none';
             }
             
             // Trigger Vagga update for both
