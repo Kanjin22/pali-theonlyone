@@ -1437,9 +1437,9 @@
 
                 const answerText = endT ? `เปิดเฉลยหลัง ${endT} น.` : `เปิดเฉลยหลัง: ยังไม่กำหนดเวลา`;
                 timeSummaryText = `เวลาสอบ ${examRangeText}. ${answerText}`;
-                if (isPrivileged) timeSummaryText += ` (ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)`;
+                const extraNote = isPrivileged ? '<br>(ครู/แอดมินเข้าถึงข้อสอบ–เฉลยได้ตลอดเวลา)' : '';
                 
-                html += `<div class="modal-section"><div style="padding:12px 16px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.08); border-radius:12px; font-weight:700; color:#2c3e50; text-align:center;">${timeSummaryText}</div></div>`;
+                html += `<div class="modal-section"><div style="padding:12px 16px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.08); border-radius:12px; font-weight:700; color:#2c3e50; text-align:center;">${timeSummaryText}${extraNote}</div></div>`;
             }
 
             if (period.noteFiles) {
