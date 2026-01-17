@@ -446,8 +446,9 @@
                 })
                 .replace(/([^>\n])\s*—\s*/g, '$1<br>&nbsp;&nbsp;■ ');
             processed = processed
+                .replace(/([\.ฯ;])\s-\s*/g, '$1\n- ')
                 .replace(/(^|\n|<br\s*\/?>)\s*-\s*/g, function(match, prefix) {
-                    if (!prefix) return '• ';
+                    if (!prefix) return '• - ';
                     if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;• - ';
                     return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;• - ';
                 });
@@ -522,6 +523,7 @@
                 }
             }
             results = uniqueResults;
+            results = results.filter(item => item.source !== 'ศัพท์ทั่วไป');
 
             if (results.length === 0) {
                 container.innerHTML = `<div class="empty-state">ไม่พบคำว่า "${queryRaw}" ในฐานข้อมูล</div>`;
