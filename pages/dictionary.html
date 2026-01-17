@@ -384,8 +384,8 @@
 
             insan_pr9: typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {},
             bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
-             jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
-             general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
+            jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
+            general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {},
             
             sc: typeof vocabSC !== 'undefined' ? vocabSC : {},
             dpd: typeof vocabDPD !== 'undefined' ? vocabDPD : {},
@@ -393,6 +393,13 @@
             dppn: typeof vocabDPPN !== 'undefined' ? vocabDPPN : {},
             dhammika: typeof vocabDhammika !== 'undefined' ? vocabDhammika : {},
             dpdInflected: typeof vocabDPDInflected !== 'undefined' ? vocabDPDInflected : {}
+        };
+
+        const databasesThai = {
+            insan_pr9: typeof vocabInsanPr9 !== 'undefined' ? vocabInsanPr9 : {},
+            bhumibalo: typeof vocabBhumibalo !== 'undefined' ? vocabBhumibalo : {},
+            jinakalamalini: typeof vocabJinakalamalini !== 'undefined' ? vocabJinakalamalini : {},
+            general_raw: typeof vocabGeneralRaw !== 'undefined' ? vocabGeneralRaw : {}
         };
         const dpdDerivedIndex = {};
         if (typeof vocabRootsDPDDerived !== 'undefined') {
@@ -774,9 +781,9 @@
                 if (typeof PaliScript !== 'undefined' && typeof PaliScript.romanToThai === 'function') {
                     thai = PaliScript.romanToThai(baseRoman);
                     thaiSearchKey = thai;
-                    if (thai && typeof PaliLookup !== 'undefined' && typeof PaliLookup.findAll === 'function' && typeof databases !== 'undefined') {
+                    if (thai && typeof PaliLookup !== 'undefined' && typeof PaliLookup.findAll === 'function' && typeof databasesThai !== 'undefined') {
                         try {
-                            const tList = PaliLookup.findAll(thai, databases);
+                            const tList = PaliLookup.findAll(thai, databasesThai);
                             hasThai = Array.isArray(tList) && tList.length > 0;
                         } catch (e) {}
                     }
