@@ -419,19 +419,22 @@
 
         function enhanceBhumibaloLevels(text) {
             if (!text) return text;
-            text = text
+            let processed = text;
+            processed = processed
                 .replace(/(^|\n|<br\s*\/?>)\s*—/g, function(match, prefix) {
                     if (!prefix) return '&nbsp;&nbsp;—';
                     if (prefix === '\n') return '\n&nbsp;&nbsp;—';
                     return prefix + '&nbsp;&nbsp;—';
                 })
-                .replace(/([^>\n])\s*—/g, '$1<br>&nbsp;&nbsp;—')
+                .replace(/([^>\n])\s*—\s*/g, '$1<br>&nbsp;&nbsp;— ');
+            processed = processed
+                .replace(/\s-\s*/g, '<br>&nbsp;&nbsp;&nbsp;&nbsp;- ')
                 .replace(/(^|\n|<br\s*\/?>)\s*-/g, function(match, prefix) {
                     if (!prefix) return '&nbsp;&nbsp;&nbsp;&nbsp;-';
                     if (prefix === '\n') return '\n&nbsp;&nbsp;&nbsp;&nbsp;-';
                     return prefix + '&nbsp;&nbsp;&nbsp;&nbsp;-';
                 });
-            return text;
+            return processed;
         }
 
         function formatDefinitionForSource(def, source) {
