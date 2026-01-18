@@ -635,8 +635,8 @@
                      else if (typeof item.data === 'string') meaningText = item.data;
                      else meaningText = "ดูรายละเอียดในคัมภีร์";
                 }
-                const safeMeaning = meaningText.replace(/'/g, "\\'").replace(/"/g, "&quot;");
-                const safeWord = item.word.replace(/'/g, "\\'");
+                const safeMeaning = String(meaningText || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                const safeWord = String(item.word || "").replace(/'/g, "\\'");
 
                 return `
                 <div class="vocab-card source-${sourceClass}">
