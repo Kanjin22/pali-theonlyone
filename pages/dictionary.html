@@ -63,6 +63,13 @@
         body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); margin: 0; padding: 40px 20px; color: var(--text-color); }
         .container { max-width: 900px; margin: 0 auto; }
         
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
         .header-section { text-align: center; margin-bottom: 40px; position: relative; }
         .page-title { font-size: 2.5rem; color: var(--page-title-color); font-weight: 700; margin-bottom: 10px; }
         .page-subtitle { color: var(--page-subtitle-color); font-size: 1.2rem; }
@@ -303,6 +310,22 @@
             border: 2px dashed var(--input-border);
         }
         
+        .theme-toggle-btn {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
         .stem-info {
             font-size: 0.9rem;
             color: #e67e22;
@@ -315,9 +338,9 @@
 <body>
 
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div class="top-bar">
             <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
-            <button id="theme-toggle" class="filter-btn" onclick="toggleTheme()" title="โหมดมืด/สว่าง" style="border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; justify-content: center; align-items: center;">
+            <button id="theme-toggle" class="filter-btn theme-toggle-btn" onclick="toggleTheme()" title="โหมดมืด/สว่าง">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
@@ -341,7 +364,7 @@
         <div id="results-area" class="results-container">
             <!-- Results will be injected here -->
             <div class="empty-state">
-                <i class="fa-solid fa-book-open" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                <i class="fa-solid fa-book-open empty-state-icon"></i>
                 <br>พิมพ์คำศัพท์เพื่อเริ่มค้นหา
             </div>
         </div>
