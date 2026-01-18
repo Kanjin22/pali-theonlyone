@@ -50,6 +50,24 @@ const replacements = [
   { from: /ว\. อิต\./g, to: "ว., อิต." },
   { from: /อุป\.อัพ\.วิ\./g, to: "อุป. อัพ. วิ." },
   { from: /นิ\.อัพ\.วิ\./g, to: "นิ. อัพ. วิ." },
+  { from: /เหตุ กัตตุวาจก/g, to: "เหตุกัตตุวาจก" },
+  { from: /เหตุ กัมมวาจก/g, to: "เหตุกัมมวาจก" },
+  {
+    from: /,\s*ความ\s*"([^"]+)"\s*:/g,
+    to: ', "$1":',
+  },
+  {
+    from: /",\s*ความ\s*$/gm,
+    to: '",',
+  },
+  {
+    from: /ใน (กัตตุวาจก|กัมมวาจก|ภาววาจก|เหตุกัตตุวาจก|เหตุกัมมวาจก)/g,
+    to: "ใน$1",
+  },
+  {
+    from: /ปัจจัย\s*ประจำหมวด\s*ธาตุ/g,
+    to: "ปัจจัยประจำหมวดธาตุ",
+  },
 ];
 
 function normalizeDhatu(text) {
@@ -120,6 +138,15 @@ files.forEach((file) => {
   let text = fs.readFileSync(file, "utf8");
   let changed = false;
 
+  const rawMatchCount = (text.match(/,\s*ความ\s*"([^"]+)"\s*:/g) || []).length;
+  process.stdout.write(
+    `Before replacements ${file}: , ความ \"key\": count = ${rawMatchCount}\n`,
+  );
+  const sampleMatch = text.match(/,\s*ความ\s*"([^"]+)"\s*:/);
+  if (sampleMatch) {
+    process.stdout.write(`Sample match: ${sampleMatch[0]}\n`);
+  }
+
   replacements.forEach((rule) => {
     const next = text.replace(rule.from, rule.to);
     if (next !== text) {
@@ -128,11 +155,17 @@ files.forEach((file) => {
     }
   });
 
-  const dhatuNormalized = normalizeDhatu(text);
-  if (dhatuNormalized !== text) {
-    changed = true;
-    text = dhatuNormalized;
-  }
+  const afterReplacementsCount =
+    (text.match(/,\s*ความ\s*"([^"]+)"\s*:/g) || []).length;
+  process.stdout.write(
+    `After replacements ${file}: , ความ \"key\": count = ${afterReplacementsCount}\n`,
+  );
+
+  const afterMatchCount =
+    (text.match(/,\s*ความ\s*"([^"]+)"\s*:/g) || []).length;
+  process.stdout.write(
+    `After replacements ${file}: , ความ \"key\": count = ${afterMatchCount}\n`,
+  );
 
   if (changed) {
     fs.writeFileSync(file, text, "utf8");
