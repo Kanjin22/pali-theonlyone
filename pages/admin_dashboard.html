@@ -1366,15 +1366,13 @@
                                     <h3 class="section-heading">1. ฝั่ง theonlyone (เตรียมไฟล์ข้อมูล)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-theonlyone</code> เพื่อสร้างไฟล์:</p>
                                     <div class="code-block">
-                                        # 1. สร้างข้อมูล DPD (Auto)<br>
-                                        python scripts/update_dpd_data.py<br>
-                                        python extract_dpd_vocab.py<br>
-                                        python generate_sync_files.py<br><br>
+                                        # 1. สร้างข้อมูล DPD (Auto) - รันคำสั่งเดียวจบ<br>
+                                        python scripts/update_dpd_data.py<br><br>
                                         
                                         # 2. จัดการข้อมูล Manual (Manual)<br>
                                         # แก้ไข/วางไฟล์ vocab-insan-pr9.js, vocab-bhumibalo.js, vocab-jinakalamalini.js, vocab-general.js ในโฟลเดอร์ data/raw/<br>
                                     </div>
-                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ครบ 6 ไฟล์ใน <code>data/raw/</code></p>
+                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ข้อมูลครบถ้วนใน <code>data/raw/</code></p>
 
                                     <h3 class="section-heading">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
                                     <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
