@@ -124,11 +124,14 @@ def main():
             return
         
     # 5. Run scripts
+    # Determine the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
     scripts_to_run = [
-        [sys.executable, "extract_dpd.py"],
-        [sys.executable, "extract_dpd_roots.py"],
-        [sys.executable, "extract_dpd_vocab.py"],
-        [sys.executable, "generate_sync_files.py"]
+        [sys.executable, os.path.join(script_dir, "extract_dpd.py")],
+        [sys.executable, os.path.join(script_dir, "extract_dpd_roots.py")],
+        [sys.executable, os.path.join(script_dir, "extract_dpd_vocab.py")],
+        [sys.executable, os.path.join(script_dir, "generate_sync_files.py")]
     ]
     
     print("\n=== Running Data Generation Scripts ===")
