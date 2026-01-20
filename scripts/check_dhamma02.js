@@ -42,7 +42,25 @@ function checkFile() {
             const pali = item.pali.trim();
             // Check if ends with ฯ or . (User specified these as valid endings)
             if (!pali.endsWith('ฯ') && !pali.endsWith('.')) {
-                const msg = `[Group: ${key} | Index ${index}] Ends without ฯ or .: "${pali}"\n`;
+                const thai = (item.thai || "").trim();
+                const thaiEnd = thai.slice(-1);
+                const paliEnd = pali.slice(-1);
+                
+                let status = "Unknown";
+                if (!thai) {
+                    status = "MISSING TRANSLATION";
+                } else if (thai.endsWith('ฯ') || thai.endsWith('.')) {
+                    status = "MISMATCH (Pali split, Thai complete?)";
+                } else if (paliEnd === ',' && thaiEnd === ',') {
+                    status = "CONSISTENT (Both comma)";
+                } else {
+                    status = "CHECK MANUALLY";
+                }
+
+                const msg = `[Group: ${key} | Index ${index}] [${status}]
+  Pali: "${pali}"
+  Thai: "${thai}"
+--------------------------------------------------\n`;
                 // console.log(msg.trim()); // Reduce console noise
                 reportContent += msg;
                 splitCount++;
@@ -50,14 +68,15 @@ function checkFile() {
         });
     }
 
-    console.log(`Found ${splitCount} potential splits (excluding items with 'gatha' field and allowing '.' as terminator).`);
+    console.log(`Found ${splitCount} potential splits. Checking translation consistency...`);
     
     // Summary analysis
-    const lines = reportContent.split('\n').filter(l => l.trim());
+    const lines = reportContent.split('\n');
     const endings = {};
     lines.forEach(line => {
-        if (!line.includes('Ends without')) return;
-        const match = line.match(/"(.*)"$/);
+        if (!line.includes('Pali:')) return;
+        // Extract content inside quotes
+        const match = line.match(/Pali: "(.*)"$/);
         if (match) {
             const content = match[1];
             const lastChar = content.slice(-1);
