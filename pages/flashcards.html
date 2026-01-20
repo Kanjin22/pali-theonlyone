@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Flashcards - บัตรคำศัพท์บาลี</title>
     <link rel="manifest" href="../manifest.webmanifest">
-    <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="../icons/pwa-maskable.svg">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -368,7 +367,7 @@
     <div class="container">
         <div class="header">
             <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> กลับหน้าหลัก</a>
-            <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="flex-align-center-gap">
                 <select id="catSelect" onchange="changeCategory()" aria-label="หมวดหมู่คำศัพท์">
                     <option value="all">ทุกประเภท (All)</option>
                     <option value="akhyata">เฉพาะกริยา (Akhyata)</option>
@@ -395,7 +394,7 @@
                 </div>
                 <div class="card-face card-back">
                     <div class="word-type" id="card-type">TYPE</div>
-                    <div class="pali-word" id="card-pali-back" style="font-size: 2.2rem;">Word</div>
+                    <div class="pali-word pali-back-text" id="card-pali-back">Word</div>
                     <div class="meaning" id="card-thai">Meaning</div>
                     <ul class="details-list" id="card-details">
                         <!-- Details -->
@@ -441,11 +440,11 @@
     <script src="../data/content-abhidhamma01.js"></script>
 
     <!-- Dictionary Data -->
-    <script src="../data/raw/vocab-general.js"></script>
-    <script src="../data/raw/vocab-insan-pr9.js"></script>
-    <script src="../data/raw/vocab-insan-pr9-5-8.js"></script>
-    <script src="../data/raw/vocab-bhumibalo.js"></script>
-    <script src="../data/raw/vocab-jinakalamalini.js"></script>
+    <script src="../data/dicts/vocab-general.js"></script>
+    <script src="../data/dicts/vocab-insan-pr9.js"></script>
+    <script src="../data/dicts/vocab-insan-pr9-5-8.js"></script>
+    <script src="../data/dicts/vocab-bhumibalo.js"></script>
+    <script src="../data/dicts/vocab-jinakalamalini.js"></script>
     <script src="../data/vocab-inflected.js"></script>
 
     <!-- Pali-Roman Dictionaries removed -->

@@ -259,8 +259,8 @@ app.post('/api/dpd-update-report', async (req, res) => {
     return res.status(409).json({ ok: false, error: 'busy' });
   }
   isRunning = true;
-  const oldDPD = readJsonFromJs('data/raw/vocab-dpd.js', 'const vocabDPD = ');
-  const oldRoots = readJsonFromJs('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
+  const oldDPD = readJsonFromJs('data/dicts/vocab-dpd.js', 'const vocabDPD = ');
+  const oldRoots = readJsonFromJs('data/dicts/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
   const args = ['scripts/update_dpd_data.py'];
   const skip = req.body && req.body.skip === true;
   if (skip) args.push('--skip-download');
@@ -270,8 +270,8 @@ app.post('/api/dpd-update-report', async (req, res) => {
   py.stdout.on('data', d => (out += d.toString()));
   py.stderr.on('data', d => (err += d.toString()));
   py.on('close', code => {
-    const newDPD = readJsonFromJs('data/raw/vocab-dpd.js', 'const vocabDPD = ');
-    const newRoots = readJsonFromJs('data/raw/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
+    const newDPD = readJsonFromJs('data/dicts/vocab-dpd.js', 'const vocabDPD = ');
+    const newRoots = readJsonFromJs('data/dicts/vocab-roots-dpd.js', 'const vocabRootsDPD = ');
     const dpdDiff = computeDPDDiff(oldDPD || {}, newDPD || {});
     const rootsDiff = computeRootsDiff(oldRoots || {}, newRoots || {});
     
@@ -297,8 +297,8 @@ app.post('/api/dpd-update-report', async (req, res) => {
 
 app.get('/api/dpd-stats', (_req, res) => {
   res.json({
-    vocab: parseWithPrefixes('data/raw/vocab-dpd.js', ['const vocabDPD = ']),
-    roots: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = '])
+    vocab: parseWithPrefixes('data/dicts/vocab-dpd.js', ['const vocabDPD = ']),
+    roots: parseWithPrefixes('data/dicts/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = '])
   });
 });
 
@@ -356,11 +356,11 @@ const parseWithPrefixes = (p, prefixes) => {
 
 app.get('/api/raw-files-stats', (_req, res) => {
   res.json({
-    general_dpd: parseWithPrefixes('data/raw/vocab-general-dpd.js', ['export const dpdVocab = ']),
-    roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
+    general_dpd: parseWithPrefixes('data/dicts/vocab-general-dpd.js', ['export const dpdVocab = ']),
+    roots_dpd: parseWithPrefixes('data/dicts/vocab-roots-dpd.js', ['export const dpdRoots = ', 'const vocabRootsDPD = ']),
     insan_pr9: (() => {
-        const p1 = parseWithPrefixes('data/raw/vocab-insan-pr9.js', ['const vocabInsanPr9 = ']);
-        const p2 = parseWithPrefixes('data/raw/vocab-insan-pr9-5-8.js', ['const vocabInsanPr9Part5to8 = ']);
+        const p1 = parseWithPrefixes('data/dicts/vocab-insan-pr9.js', ['const vocabInsanPr9 = ']);
+        const p2 = parseWithPrefixes('data/dicts/vocab-insan-pr9-5-8.js', ['const vocabInsanPr9Part5to8 = ']);
         if (!p1 && !p2) return null;
         return {
             mtime: (p1 && (!p2 || p1.mtime > p2.mtime)) ? p1.mtime : (p2 ? p2.mtime : null),
@@ -368,10 +368,10 @@ app.get('/api/raw-files-stats', (_req, res) => {
             count: (p1 ? p1.count : 0) + (p2 ? p2.count : 0)
         };
     })(),
-    bhumibalo: parseWithPrefixes('data/raw/vocab-bhumibalo.js', ['const vocabBhumibalo = ']),
-    jinakalamalini: parseWithPrefixes('data/raw/vocab-jinakalamalini.js', ['const vocabJinakalamalini = ']),
-    general_raw: parseWithPrefixes('data/raw/vocab-general.js', ['const vocabGeneralRaw = ']),
-    derived_roots_dpd: parseWithPrefixes('data/raw/vocab-roots-dpd-derived.js', ['const vocabRootsDPDDerived = ']),
+    bhumibalo: parseWithPrefixes('data/dicts/vocab-bhumibalo.js', ['const vocabBhumibalo = ']),
+    jinakalamalini: parseWithPrefixes('data/dicts/vocab-jinakalamalini.js', ['const vocabJinakalamalini = ']),
+    general_raw: parseWithPrefixes('data/dicts/vocab-general.js', ['const vocabGeneralRaw = ']),
+    derived_roots_dpd: parseWithPrefixes('data/dicts/vocab-roots-dpd-derived.js', ['const vocabRootsDPDDerived = ']),
     extra_enthai: parseWithPrefixes('data/vocab-enthai.js', ['const vocabEnThai = ']),
     extra_ipa: parseWithPrefixes('data/vocab-ipa.js', ['const vocabIPA = ']),
     extra_pts: parseWithPrefixes('data/vocab-pts.js', ['const vocabPTS = ']),

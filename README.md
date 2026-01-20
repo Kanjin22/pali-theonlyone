@@ -18,6 +18,9 @@ A comprehensive web-based platform for learning and examining Pali language, Bud
 ```
 .
 ├── data/                    # Data files and vocabularies
+│   ├── dicts/               # Dictionary data files (JS)
+│   ├── raw/                 # Shared raw files (with thedhatu)
+│   └── source_docs/         # Original source documents
 ├── docs/                    # Project documentation and reports
 ├── js/                      # JavaScript modules
 ├── scripts/                 # Utility and automation scripts

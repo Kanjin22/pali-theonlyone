@@ -4,7 +4,7 @@ import os
 import re
 
 db_path = "dpd_data/dpd.db"
-output_path = "data/raw/vocab-general-dpd.js"
+output_path = "data/dicts/vocab-general-dpd.js"
 
 if not os.path.exists(db_path):
     print(f"Database not found at {db_path}")

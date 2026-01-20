@@ -5,7 +5,6 @@
     <title>Digital Pāli Reader</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="/manifest.webmanifest">
-    <meta name="theme-color" content="#FFFFDD"/>
     <meta name="Description" content="A tool for immersive study of Pāli canon and the language.">
     <link rel="apple-touch-icon" href="/_dprhtml/images/logo192.png">
     <link rel="icon" href="/favicon.png" />
@@ -190,7 +189,10 @@
         }
       );
     </script>
-  </head>
+      <style>
+        .text-smaller { font-size: smaller; }
+      </style>
+    </head>
 
   <body>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
@@ -214,7 +216,7 @@
                 <i class="fa fa-question-circle"></i>
               </a>
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-light m-0 mr-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-sm btn-light m-0 mr-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Theme Settings" aria-label="Theme Settings">
                   <i class="fa fa-star-half-o" aria-hidden="true"></i>
                 </button>
                 <div class="dropdown-menu">
@@ -229,7 +231,7 @@
                 </div>
               </div>
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-light m-0 mr-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                <button type="button" class="btn btn-sm btn-light m-0 mr-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="More Options" aria-label="More Options"></button>
                 <div class="dropdown-menu">
                   <button type="button" class="btn btn-sm btn-light dropdown-item m-0"
                     title="Install for offline use (Keyboard shortcut: I)" data-bind="disable: installationOngoing" onclick="window.DPR_Globals.InstallationViewModel.showInstallationDialog()">
@@ -276,29 +278,29 @@
         <div id="main-panel-splitter" data-bind="visible: sidebarVisible()" ondblclick="DPR_Chrome.toggleDPRSidebar()"></div>
         <div id="main-content">
           <div id="context-menu-top-level" data-bind="visible: navigationFeatureVisible() || searchFeatureVisible() || dictionaryFeatureVisible()">
-            <button id="context-menu-top-level-open-sidebar" class="btn btn-sm btn-light m-0" role="button" onclick="DPR_Chrome.toggleDPRSidebar()" title="Toggle sidebar (Keyboard shortcut: & or `)">
+            <button id="context-menu-top-level-open-sidebar-floating" class="btn btn-sm btn-light m-0" role="button" onclick="DPR_Chrome.toggleDPRSidebar()" title="Toggle sidebar (Keyboard shortcut: & or `)">
               <i id="context-menu-launcher-icon" class="fa fa-bars"></i>
             </button>
           </div>
           <div id="context-menu" data-bind="visible: navigationFeatureVisible()">
-            <a id="context-menu-handle" class="m-0" role="button">
+            <a id="context-menu-handle" class="m-0" role="button" aria-label="Context Menu">
               <i id="context-menu-launcher-icon" class="fa fa-chevron-down"></i>
             </a>
             <div id="context-menu-main">
               <div class="context-menu-main-row" id="context-menu-main-row1">
                 <div class="context-menu-main-row-group">
                   <!--ko let: { cmd: commands.gotoPrevCmd() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Previous" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
                   <!--ko let: { cmd: commands.gotoIndexCmd() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Index" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-list" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
                   <!--ko let: { cmd: commands.gotoNextCmd() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Next" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
@@ -322,17 +324,17 @@
               <div class="context-menu-main-row" id="context-menu-main-row2">
                 <div class="context-menu-main-row-group">
                   <!--ko let: { cmd: commands.sendToConverter() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Send to Converter" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-language" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
                   <!--ko let: { cmd: commands.sendToTextPad() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Send to TextPad" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-share-square-o" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
                   <!--ko let: { cmd: commands.saveToDesktop() }-->
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: false, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Save to Desktop" data-bind="visible: cmd.visible, enable: false, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
                   </button>
                   <!--/ko-->
@@ -340,10 +342,10 @@
 
                 <!--ko let: { copyPlaceToSidebar: commands.copyPlaceToSidebar(), copyPermalinkCmd: commands.copyPermalinkCmd() }-->
                 <div class="context-menu-main-row-group" data-bind="visible: copyPlaceToSidebar.visible || copyPermalinkCmd.visible">
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: copyPlaceToSidebar.visible, enable: copyPlaceToSidebar.canExecute, click: copyPlaceToSidebar.execute(), attr: { title: copyPlaceToSidebar.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Copy Place to Sidebar" data-bind="visible: copyPlaceToSidebar.visible, enable: copyPlaceToSidebar.canExecute, click: copyPlaceToSidebar.execute(), attr: { title: copyPlaceToSidebar.title }">
                     <i class="fa fa-exchange" aria-hidden="true"></i>
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: copyPermalinkCmd.visible, enable: copyPermalinkCmd.canExecute, click: copyPermalinkCmd.execute.bind($data), attr: { title: copyPermalinkCmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Copy Permalink" data-bind="visible: copyPermalinkCmd.visible, enable: copyPermalinkCmd.canExecute, click: copyPermalinkCmd.execute.bind($data), attr: { title: copyPermalinkCmd.title }">
                     <i class="fa fa-link" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -351,7 +353,7 @@
 
                 <!--ko let: { cmd: commands.searchInBook() }-->
                 <div class="context-menu-main-row-group" data-bind="visible: cmd.visible">
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Search in Book" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -359,7 +361,7 @@
 
                 <!--ko let: { cmd: commands.bookmarkSection() }-->
                 <div class="context-menu-main-row-group" data-bind="visible: cmd.visible">
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
+                  <button type="button" class="btn btn-sm btn-light" title="Bookmark Section" data-bind="visible: cmd.visible, enable: cmd.canExecute, click: cmd.execute.bind($data), attr: { title: cmd.title }">
                     <i class="fa fa-bookmark" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -367,38 +369,38 @@
 
                 <!--ko let: { translate0: commands.translate0(), translate1: commands.translate1(), translate2: commands.translate2(), translate3: commands.translate3(), translate4: commands.translate4(), translate5: commands.translate5(), translate6: commands.translate6(), translate7: commands.translate7(), translate8: commands.translate8(), translate9: commands.translate9(), translate10: commands.translate10() }-->
                 <div class="context-menu-main-row-group" data-bind="visible: translate0.visible || translate1.visible || translate2.visible || translate3.visible || translate4.visible || translate5.visible || translate6.visible || translate7.visible || translate8.visible || translate9.visible || translate10.visible">
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate0.visible, enable: translate0.canExecute, click: translate0.execute(), attr: { title: translate0.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate0.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate0.visible, enable: translate0.canExecute, click: translate0.execute(), attr: { title: translate0.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate0.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate1.visible, enable: translate1.canExecute, click: translate1.execute(), attr: { title: translate1.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate1.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate1.visible, enable: translate1.canExecute, click: translate1.execute(), attr: { title: translate1.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate1.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate2.visible, enable: translate2.canExecute, click: translate2.execute(), attr: { title: translate2.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate2.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate2.visible, enable: translate2.canExecute, click: translate2.execute(), attr: { title: translate2.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate2.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate3.visible, enable: translate3.canExecute, click: translate3.execute(), attr: { title: translate3.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate3.visible, enable: translate3.canExecute, click: translate3.execute(), attr: { title: translate3.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate3.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate4.visible, enable: translate4.canExecute, click: translate4.execute(), attr: { title: translate4.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate4.visible, enable: translate4.canExecute, click: translate4.execute(), attr: { title: translate4.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate4.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate5.visible, enable: translate5.canExecute, click: translate5.execute(), attr: { title: translate5.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate5.visible, enable: translate5.canExecute, click: translate5.execute(), attr: { title: translate5.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate5.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate6.visible, enable: translate6.canExecute, click: translate6.execute(), attr: { title: translate6.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate6.visible, enable: translate6.canExecute, click: translate6.execute(), attr: { title: translate6.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate6.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate7.visible, enable: translate7.canExecute, click: translate7.execute(), attr: { title: translate7.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate7.visible, enable: translate7.canExecute, click: translate7.execute(), attr: { title: translate7.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate7.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate8.visible, enable: translate8.canExecute, click: translate8.execute(), attr: { title: translate8.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate8.visible, enable: translate8.canExecute, click: translate8.execute(), attr: { title: translate8.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate8.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate9.visible, enable: translate9.canExecute, click: translate9.execute(), attr: { title: translate9.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate9.visible, enable: translate9.canExecute, click: translate9.execute(), attr: { title: translate9.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate9.icon }">
                   </button>
-                  <button type="button" class="btn btn-sm btn-light" data-bind="visible: translate10.visible, enable: translate10.canExecute, click: translate10.execute(), attr: { title: translate10.title }">
-                    <img class="context-menu-command-icon" data-bind="attr: { src: translate3.icon }"></i>
+                  <button type="button" class="btn btn-sm btn-light" title="Translate" data-bind="visible: translate10.visible, enable: translate10.canExecute, click: translate10.execute(), attr: { title: translate10.title }">
+                    <img class="context-menu-command-icon" alt="" data-bind="attr: { src: translate10.icon }">
                   </button>
                 </div>
                 <!--/ko-->
@@ -428,7 +430,7 @@
       </div>
       <footer id="main-footer">
         <ul>
-          <li><a href="https://pali.sirimangalo.org/" target="_blank" rel="noreferrer">Home</a></li>
+          <li><a href="https://pali.sirimangalo.org/" target="_blank" rel="noopener noreferrer">Home</a></li>
           <li>|</li>
           <li id="main-footer-timestamp"></li>
           <li>|</li>
@@ -450,7 +452,7 @@
     </div>
     <div class="modal fade show" id="helpDialog" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="font-size: smaller;">
+        <div class="modal-content text-smaller">
           <div class="modal-header p-2">
             <h6 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-info-circle fx-2x" aria-hidden="true"></i>&nbsp;Keyboard Shortcuts</h6>
           </div>

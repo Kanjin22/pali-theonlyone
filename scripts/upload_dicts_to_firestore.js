@@ -18,7 +18,7 @@ const db = admin.firestore();
 
 // Load Data Function
 function loadData(filename) {
-    const p = path.join(__dirname, '../data/raw', filename);
+    const p = path.join(__dirname, '../data/dicts', filename);
     console.log(`Loading ${p}...`);
     let content = fs.readFileSync(p, 'utf8');
     // Simple regex to extract JSON object

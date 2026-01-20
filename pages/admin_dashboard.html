@@ -1160,17 +1160,17 @@
                                 <div class="modal-scroll-body text-relaxed">
                                     <h3 class="section-heading-tight">บทบาทโปรเจกต์</h3>
                                     <ul>
-                                        <li><strong>theonlyone</strong> (คลังศัพท์/การสอน): เก็บไฟล์ดิบทั้งหมดใน <code>data/raw/</code></li>
+                                        <li><strong>theonlyone</strong> (คลังศัพท์/การสอน): เก็บไฟล์ดิบทั้งหมดใน <code>data/dicts/</code></li>
                                         <li><strong>theDhatu</strong> (แอปธาตุ): ใช้งาน/ค้นหา/อัปโหลดขึ้น Firebase</li>
                                     </ul>
                                     <h3 class="section-heading">แหล่งข้อมูลร่วม</h3>
                                     <ul>
-                                        <li>general-dpd: <a href="data/raw/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
-                                        <li>roots-dpd: <a href="data/raw/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
-                                        <li>insan-pr9: <a href="data/raw/vocab-insan-pr9.js">vocab-insan-pr9.js</a></li>
-                                        <li>bhumibalo: <a href="data/raw/vocab-bhumibalo.js">vocab-bhumibalo.js</a></li>
-                                        <li>jinakalamalini: <a href="data/raw/vocab-jinakalamalini.js">vocab-jinakalamalini.js</a></li>
-                                        <li>general (raw): <a href="data/raw/vocab-general.js">vocab-general.js</a></li>
+                                        <li>general-dpd: <a href="data/dicts/vocab-general-dpd.js">vocab-general-dpd.js</a></li>
+                                        <li>roots-dpd: <a href="data/dicts/vocab-roots-dpd.js">vocab-roots-dpd.js</a></li>
+                                        <li>insan-pr9: <a href="data/dicts/vocab-insan-pr9.js">vocab-insan-pr9.js</a></li>
+                                        <li>bhumibalo: <a href="data/dicts/vocab-bhumibalo.js">vocab-bhumibalo.js</a></li>
+                                        <li>jinakalamalini: <a href="data/dicts/vocab-jinakalamalini.js">vocab-jinakalamalini.js</a></li>
+                                        <li>general (raw): <a href="data/dicts/vocab-general.js">vocab-general.js</a></li>
                                     </ul>
                                     <h3 class="section-heading">ทิศทางการปรับข้อมูล</h3>
                                     <div class="code-block">
@@ -1370,12 +1370,12 @@
                                         python scripts/update_dpd_data.py<br><br>
                                         
                                         # 2. จัดการข้อมูล Manual (Manual)<br>
-                                        # แก้ไข/วางไฟล์ vocab-insan-pr9.js, vocab-bhumibalo.js, vocab-jinakalamalini.js, vocab-general.js ในโฟลเดอร์ data/raw/<br>
+                                        # แก้ไข/วางไฟล์ vocab-insan-pr9.js, vocab-bhumibalo.js, vocab-jinakalamalini.js, vocab-general.js ในโฟลเดอร์ data/dicts/<br>
                                     </div>
-                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ข้อมูลครบถ้วนใน <code>data/raw/</code></p>
+                                    <p><strong>ผลลัพธ์:</strong> ตรวจสอบว่ามีไฟล์ข้อมูลครบถ้วนใน <code>data/dicts/</code></p>
 
                                     <h3 class="section-heading">2. ขั้นตอนการส่งต่อ (Transfer)</h3>
-                                    <p>คัดลอกโฟลเดอร์ <code>data/raw/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
+                                    <p>คัดลอกโฟลเดอร์ <code>data/dicts/</code> ทั้งหมดจาก theonlyone ไปวางทับที่ <code>src/data/raw/</code> ของโปรเจกต์ theDhatu</p>
 
                                     <h3 class="section-heading">3. ฝั่ง theDhatu (ประมวลผลและอัปโหลด)</h3>
                                     <p>รันคำสั่งต่อไปนี้ใน Terminal ของโปรเจกต์ <code>pali-dhatu-app</code>:</p>

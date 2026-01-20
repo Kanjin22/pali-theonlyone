@@ -6,7 +6,7 @@ const rawText = `
 `;
 
 // Load existing dictionary
-const dictPath = 'd:/pali-theonlyone/data/raw/vocab-insan-pr9.js';
+const dictPath = 'd:/pali-theonlyone/data/dicts/vocab-insan-pr9.js';
 let fileContent = fs.readFileSync(dictPath, 'utf8');
 
 // Safe parsing
