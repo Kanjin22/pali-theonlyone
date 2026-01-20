@@ -63,7 +63,7 @@ try {
     // Evaluate the array string to get the object
     let items;
     try {
-        items = eval(arrayString);
+        items = new Function(`return ${arrayString}`)();
     } catch (e) {
         console.error('Failed to eval array:', e.message);
         process.exit(1);
@@ -82,7 +82,10 @@ try {
         const thai = (item.thai || "").trim();
         
         // Check for splits
-        if (!pali.endsWith('ฯ') && !pali.endsWith('.')) {
+        // Allow ending with ฯ or . optionally followed by (digits)
+        const validEndingRegex = /([ฯ.])(\s*\(.*\))?$/;
+        
+        if (!validEndingRegex.test(pali)) {
             const paliEnd = pali.slice(-1);
             const thaiEnd = thai.slice(-1);
             
