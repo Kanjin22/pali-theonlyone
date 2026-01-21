@@ -62,6 +62,13 @@
             .monthly-title { font-size: 1rem; }
             .monthly-table { font-size: 0.9rem; }
         }
+
+        /* Utility classes for Statistics Refactor */
+        .time-info { margin-top: 8px; font-size: 1em; color: #555; }
+        .text-bold-blue { font-weight: bold; color: #2980b9; }
+        .text-bold { font-weight: bold; }
+        .date-range { font-size: 0.85em; color: #999; margin-top: 5px; }
+        .room-name-suffix { font-size: 0.9em; }
     </style>
 </head>
 <body>
@@ -75,11 +82,11 @@
             <div class="progress-track">
                 <div class="progress-fill fill-main" id="time-progress-bar">0%</div>
             </div>
-            <div style="margin-top: 8px; font-size: 1em; color: #555;">
-                ผ่านไปแล้ว <span id="days-passed" style="font-weight: bold; color: #2980b9;">0</span> วัน 
-                จากทั้งหมด <span id="days-total" style="font-weight: bold;">0</span> วัน
+            <div class="time-info">
+                ผ่านไปแล้ว <span id="days-passed" class="text-bold-blue">0</span> วัน 
+                จากทั้งหมด <span id="days-total" class="text-bold">0</span> วัน
             </div>
-            <div style="font-size: 0.85em; color: #999; margin-top: 5px;" id="date-range-text">
+            <div class="date-range" id="date-range-text">
                 (... - ...)
             </div>
         </div>
@@ -167,7 +174,7 @@
                 document.title = `สถิติและความคืบหน้า - ${room.name}`;
                 const h1 = document.querySelector('h1');
                 if (h1) {
-                    h1.innerHTML = `📊 สรุปสถิติและความคืบหน้า<br><span style="font-size:0.9em;">(${room.name})</span>`;
+                    h1.innerHTML = `📊 สรุปสถิติและความคืบหน้า<br><span class="room-name-suffix">(${room.name})</span>`;
                 }
                 const backLink = document.getElementById('back-classroom-link');
                 if (backLink) {

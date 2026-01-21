@@ -100,6 +100,10 @@
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         .hide-grammar .content-grammar, .hide-translate .content-translate { display: none; }
+
+        /* Utility classes for Schedule Refactor */
+        .home-link { display: block; text-align: center; margin: 30px auto; font-size: 1.1em; }
+        .btn-slide { background-color: #e91e63 !important; }
     </style>
 </head>
 <body>
@@ -142,7 +146,7 @@
         </thead>
         <tbody id="schedule-body"></tbody>
     </table>
-    <a href="home_pt12.html" style="display: block; text-align: center; margin: 30px auto; font-size: 1.1em;" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
+    <a href="../../levels/home_pt12.html" class="home-link">&larr; กลับสู่หน้าเมนูหลัก</a>
     <div id="toast-notification"></div>
     
     <!-- Modal Pop-up -->
@@ -320,7 +324,7 @@
             }
             
             if (period.slideId) {
-                links += `<a href="../../presentation.html?id=${period.slideId}" target="_blank" rel="noopener noreferrer" class="btn" style="background-color: #e91e63;">📺 สื่อการสอน (Slide)</a>`;
+                links += `<a href="../../presentation.html?id=${period.slideId}" target="_blank" rel="noopener noreferrer" class="btn btn-slide">📺 สื่อการสอน (Slide)</a>`;
             }
 
             // --- เนื้อหา ---

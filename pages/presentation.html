@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>โหมดบอร์ด – สื่อการสอนบาลี</title>
     <link rel="manifest" href="../manifest.webmanifest">
-    <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="../icons/pwa-maskable.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1246,6 +1245,29 @@
         .toc-content { font-family: 'Niramit', serif; font-size: 1rem; color: #455a64; flex: 1; }
 
     </style>
+    <style>
+        /* Floating Toolbar Utility Classes */
+        .floating-color-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .bg-black { background: #2c3e50; }
+        .bg-red { background: #c0392b; }
+        .bg-green { background: #27ae60; }
+        .bg-blue { background: #2980b9; }
+        .bg-purple { background: #8e44ad; }
+
+        /* Modal Utility Classes */
+        .modal-overlay-hidden {
+            display: none;
+        }
+        
+        .ana-content-hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -1432,13 +1454,13 @@
             <div class="analysis-body" id="ana-body-container">
                 <div id="ana-split" class="analysis-split">...</div>
                 <ul id="ana-details" class="analysis-list"></ul>
-                <div id="ana-generic-content" class="ana-content" style="display:none;"></div>
+                <div id="ana-generic-content" class="ana-content ana-content-hidden"></div>
             </div>
         </div>
     </div>
 
     <!-- Translation Modal (iframe) -->
-    <div id="trans-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this) this.style.display='none'">
+    <div id="trans-modal" class="modal-overlay modal-overlay-hidden" onclick="if(event.target===this) this.style.display='none'">
         <div class="modal-box">
             <div class="modal-header">
                 <span class="modal-title"><i class="fa-solid fa-language"></i> แปลภาษา (Lexitron)</span>
@@ -3688,12 +3710,12 @@
         <div class="separator"></div>
         
         <!-- สี -->
-        <div style="display:flex; gap:6px; align-items:center;">
-            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2c3e50')" style="background:#2c3e50;" title="สีดำ"></span>
-            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#c0392b')" style="background:#c0392b;" title="สีแดง"></span>
-            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#27ae60')" style="background:#27ae60;" title="สีเขียว"></span>
-            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#2980b9')" style="background:#2980b9;" title="สีน้ำเงิน"></span>
-            <span class="floating-color-dot" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" style="background:#8e44ad;" title="สีม่วง"></span>
+        <div class="floating-color-group">
+            <span class="floating-color-dot bg-black" onmousedown="event.preventDefault(); inlineColor('#2c3e50')" title="สีดำ"></span>
+            <span class="floating-color-dot bg-red" onmousedown="event.preventDefault(); inlineColor('#c0392b')" title="สีแดง"></span>
+            <span class="floating-color-dot bg-green" onmousedown="event.preventDefault(); inlineColor('#27ae60')" title="สีเขียว"></span>
+            <span class="floating-color-dot bg-blue" onmousedown="event.preventDefault(); inlineColor('#2980b9')" title="สีน้ำเงิน"></span>
+            <span class="floating-color-dot bg-purple" onmousedown="event.preventDefault(); inlineColor('#8e44ad')" title="สีม่วง"></span>
         </div>
     </div>
     <script>

@@ -187,7 +187,13 @@
         }
 
         .paper { width: 100%; max-width: 820px; margin: 24px auto; background:#fff; border:1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); font-family: "DilleniaUPC", "Cordia New", "TH Sarabun New", sans-serif; font-size: 18px; }
-        .paper-inner { padding: 2.54cm; }
+        .paper-inner { 
+            --p-top: 2.54cm;
+            --p-bottom: 2.54cm;
+            --p-left: 2.54cm;
+            --p-right: 2.54cm;
+            padding: var(--p-top) var(--p-right) var(--p-bottom) var(--p-left); 
+        }
         .paper-center { text-align: center; }
         .paper-sep { text-align:center; letter-spacing: 2px; color:#000; margin: 8px 0 16px 0; font-weight: bold; }
         .paper-section-title { font-weight:700; color:#000; margin: 16px 0 12px 0; text-align: center; text-decoration: underline; text-decoration-thickness: 2px; font-size: 1em; white-space: pre-wrap; }
@@ -320,13 +326,132 @@
             
             /* Solution Mode Print Overrides - REMOVED to match Exam Mode Layout */
         }
+
+        /* Utility Classes */
+        .d-flex { display: flex; }
+        .d-inline-flex { display: inline-flex; }
+        .flex-center { display: flex; align-items: center; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .flex-col { flex-direction: column; }
+        .gap-5 { gap: 5px; }
+        .gap-10 { gap: 10px; }
+        .gap-15 { gap: 15px; }
+        .flex-1 { flex: 1; }
+        .w-full { width: 100%; }
+        .w-100px { width: 100px; }
+        .w-auto { width: auto; }
+        .text-decoration-none { text-decoration: none; }
+        .text-sm { font-size: 0.9rem; }
+        .text-xs { font-size: 0.8rem; }
+        .font-bold { font-weight: bold; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .mt-0 { margin-top: 0; }
+        .mt-10 { margin-top: 10px; }
+        .mt-20 { margin-top: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .pt-10 { padding-top: 10px; }
+        .pt-20 { padding-top: 20px; }
+        .px-12 { padding: 0 12px; }
+        .py-6 { padding: 6px 0; }
+        .p-btn-sm { padding: 6px 12px; }
+        .p-xs { padding: 4px 8px; }
+        .p-15 { padding: 15px; }
+        .rounded-8 { border-radius: 8px; }
+        .border-top-eee { border-top: 1px solid #eee; }
+        .opacity-50 { opacity: 0.5; }
+        .pointer-events-none { pointer-events: none; }
+        .relative { position: relative; }
+        .bg-warning-light { background: #fff3e0; border: 1px solid #ffe0b2; }
+        .text-success { color: #2e7d32; }
+        .text-danger { color: #c62828; }
+        .text-orange { color: #e65100; }
+        .text-blue { color: #1565c0; }
+        .bg-blue-light { background: #e3f2fd; border: 1px solid #bbdefb; }
+        .btn-active-bs { background-color: #e0f7fa !important; color: #006064 !important; border-color: #006064 !important; }
+        .min-w-60 { min-width: 60px; }
+        .min-w-auto { min-width: auto; }
+        .mr-8 { margin-right: 8px; }
+        .mr-10 { margin-right: 10px; }
+        .mx-10 { margin: 0 10px; }
+        .resize-v { resize: vertical; }
+        .h-120 { height: 120px; }
+        .d-none { display: none; }
+        .items-start { align-items: flex-start; }
+        .info-badge { font-size: 0.9em; color: #666; background: #fff3e0; padding: 5px 10px; border-radius: 4px; border: 1px solid #ffe0b2; }
+        .d-block { display: block; }
+        .text-gray { color: #7f8c8d; }
+        .text-red { color: red; }
+        .text-dark-red { color: #c0392b; }
+        .text-lg { font-size: 1.1rem; }
+        .text-md { font-size: 0.9rem; }
+        .mb-5 { margin-bottom: 5px; }
+        .p-20 { padding: 20px; }
+        .ml-auto { margin-left: auto; }
+        .btn-stats-detail { padding: 4px 8px; font-size: 0.85rem; }
+        .book-content-area {
+            background: #fff;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            line-height: 1.8;
+            font-family: "Sarabun", sans-serif;
+            height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            color: #333;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .page-marker-dynamic {
+            color: #999;
+            font-size: 0.8rem;
+            margin: 15px 0 5px 0;
+            border-bottom: 1px dashed #eee;
+            text-align: right;
+        }
+        
+        /* Utility classes for Exam Builder Refactor */
+        .text-gray-dark { color: #555; }
+        .text-gray-medium { color: #888; }
+        .text-gray-666 { color: #666; }
+        .text-gray-light { color: #7f8c8d; }
+        .w-full { width: 100%; }
+        .border-collapse { border-collapse: collapse; }
+        .bg-light-gray { background: #f8f9fa; }
+        .border-bottom-ddd { border-bottom: 2px solid #ddd; }
+        .border-bottom-eee { border-bottom: 1px solid #eee; }
+        .p-8 { padding: 8px; }
+        .text-left { text-align: left; }
+        .valign-top { vertical-align: top; }
+        .text-blue-dark { color: #2980b9; }
+        .error-msg { color: red; font-weight: bold; text-align: center; padding: 20px; }
+        
+        /* Modal Utilities */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-overlay.d-flex { display: flex; }
+        .modal-content { background: #fff; padding: 20px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .modal-title { margin: 0; color: #2c3e50; }
+        .modal-close-btn { border: none; background: transparent; font-size: 1.5rem; cursor: pointer; color: #7f8c8d; }
+        .modal-footer { text-align: right; margin-top: 15px; }
+
+        /* Print/Display Utilities for Content */
+        .print-container { margin-bottom: 8px; page-break-inside: avoid; text-indent: 0; }
+        .print-pali { font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', sans-serif; margin-bottom: 0; text-align: justify; text-align-last: left; white-space: pre-wrap; }
+        .print-thai { margin-left: 25px; margin-top: 0; text-align: justify; text-align-last: left; white-space: pre-wrap; }
+        .msg-no-data { text-align: center; padding: 20px; color: #7f8c8d; }
+        .msg-waiting { padding: 20px; text-align: center; color: #888; }
+        .msg-loading { color: #7f8c8d; }
+        .font-pali { font-family: "DilleniaUPC_4Balee", "DilleniaUPC", sans-serif; }
+        .font-thai { font-family: "DilleniaUPC", sans-serif; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div style="display:flex; align-items:center; gap:15px;">
-                <a href="../index.html" class="btn secondary" style="text-decoration:none; display:flex; align-items:center; gap:5px; padding: 6px 12px; font-size: 0.9rem;">
+            <div class="flex-center gap-15">
+                <a href="../index.html" class="btn secondary text-decoration-none flex-center gap-5 p-btn-sm text-sm">
                     <i class="fa-solid fa-arrow-left"></i> กลับหน้าแรก
                 </a>
                 <h1><i class="fa-solid fa-file-lines"></i> ระบบออกข้อสอบ</h1>
@@ -343,8 +468,8 @@
                     <div>
                         <div class="row" id="levelRow">
                             <label>ชั้น</label>
-                            <div style="display:flex; align-items:center; gap:10px; flex:1;">
-                                <select id="levelSelect" style="flex:1;" title="เลือกชั้นประโยค">
+                            <div class="flex-center gap-10 flex-1">
+                                <select id="levelSelect" class="flex-1" title="เลือกชั้นประโยค">
                                     <option value="" disabled selected>(กรุณาเลือกชั้นประโยค)</option>
                                     <option value="p12">ประโยค ๑–๒</option>
                                     <option value="p3">ประโยค ป.ธ. ๓</option>
@@ -357,7 +482,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row" id="subjectRow" style="opacity: 0.5; pointer-events: none;">
+                        <div class="row opacity-50 pointer-events-none" id="subjectRow">
                             <label>วิชา</label>
                             <select id="subjectSelect" aria-label="เลือกวิชา">
                                 <option value="" disabled selected>(กรุณาเลือกวิชา)</option>
@@ -373,81 +498,81 @@
                             <label>วันที่</label>
                             <input type="date" id="dateInput" title="เลือกวันที่สอบ" />
                         </div>
-                        <div class="row grid-2" style="gap:10px;">
-                            <div class="row" style="margin:0;">
-                                <label style="min-width:60px;">ชั่วโมง</label>
+                        <div class="row grid-2 gap-10">
+                            <div class="row mt-0">
+                                <label class="min-w-60">ชั่วโมง</label>
                                 <input type="number" id="hoursInput" min="0" value="4" placeholder="ชั่วโมง" />
                             </div>
-                            <div class="row" style="margin:0;">
-                                <label style="min-width:60px;">นาที</label>
+                            <div class="row mt-0">
+                                <label class="min-w-60">นาที</label>
                                 <input type="number" id="minutesInput" min="0" value="15" placeholder="นาที" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="section" id="contentSection" style="opacity: 0.5; pointer-events: none;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="section opacity-50 pointer-events-none" id="contentSection">
+                <div class="flex-between">
                     <h2>เลือกช่วงเนื้อหา</h2>
-                    <div style="font-size: 0.9em; color: #666; background: #fff3e0; padding: 5px 10px; border-radius: 4px; border: 1px solid #ffe0b2;">
+                    <div class="info-badge">
                         <i class="fa-solid fa-circle-info"></i> 
-                        <span style="color: #2e7d32;"><i class="fa-solid fa-check"></i> นำออกข้อสอบ</span> | 
-                        <span style="color: #c62828;"><i class="fa-solid fa-xmark"></i> ตัดส่วนนี้ทิ้ง</span>
+                        <span class="text-success"><i class="fa-solid fa-check"></i> นำออกข้อสอบ</span> | 
+                        <span class="text-danger"><i class="fa-solid fa-xmark"></i> ตัดส่วนนี้ทิ้ง</span>
                     </div>
                 </div>
-                <div class="row" id="literalRow" style="align-items:flex-start;">
-                    <label id="literalLabel" style="padding-top:10px;">โดยพยัญชนะ</label>
-                    <div style="width:100%;">
-                        <div class="grid-3" style="margin-bottom:10px;">
+                <div class="row items-start" id="literalRow">
+                    <label id="literalLabel" class="pt-10">โดยพยัญชนะ</label>
+                    <div class="w-full">
+                        <div class="grid-3 mb-10">
                             <select id="literalPart" aria-label="เลือกภาคโดยพยัญชนะ"></select>
                             <select id="literalVagga" aria-label="เลือกวรรคโดยพยัญชนะ"><option value="">(เลือกวรรค)</option></select>
                             <select id="literalStory" aria-label="เลือกเรื่องโดยพยัญชนะ"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
-                        <div class="row" style="margin-top:0;">
-                            <label style="min-width:auto; margin-right:10px;">หน้า</label>
-                            <input type="number" id="literalStartPage" placeholder="เริ่มต้น" style="width:100px;" />
-                            <span style="margin:0 10px;">ถึง</span>
-                            <input type="number" id="literalEndPage" placeholder="สิ้นสุด" style="width:100px;" />
+                        <div class="row mt-0">
+                            <label class="min-w-auto mr-10">หน้า</label>
+                            <input type="number" id="literalStartPage" placeholder="เริ่มต้น" class="w-100px" />
+                            <span class="mx-10">ถึง</span>
+                            <input type="number" id="literalEndPage" placeholder="สิ้นสุด" class="w-100px" />
                         </div>
-                        <div class="row" id="thaiInputRow" style="margin-top:10px; display:none;">
-                            <label style="min-width:auto; margin-right:10px;">ป้อนข้อความภาษาไทย</label>
-                            <textarea id="thaiInputText" placeholder="วางข้อความภาษาไทยเพื่อใช้สร้างข้อสอบ" style="width:100%; height:120px; resize:vertical;"></textarea>
+                        <div class="row mt-10 d-none" id="thaiInputRow">
+                            <label class="min-w-auto mr-10">ป้อนข้อความภาษาไทย</label>
+                            <textarea id="thaiInputText" placeholder="วางข้อความภาษาไทยเพื่อใช้สร้างข้อสอบ" class="w-full h-120 resize-v"></textarea>
                         </div>
                         <div id="literalList" class="list"></div>
                     </div>
                 </div>
                 
-                <div class="row" id="senseRow" style="align-items:flex-start; border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
-                    <label id="senseLabel" style="padding-top:10px;">โดยอรรถ</label>
-                    <div style="width:100%;">
-                        <div class="grid-3" style="margin-bottom:10px;">
+                <div class="row items-start border-top-eee pt-20 mt-20" id="senseRow">
+                    <label id="senseLabel" class="pt-10">โดยอรรถ</label>
+                    <div class="w-full">
+                        <div class="grid-3 mb-10">
                             <select id="sensePart" aria-label="เลือกภาคโดยอรรถ"></select>
                             <select id="senseVagga" aria-label="เลือกวรรคโดยอรรถ"><option value="">(เลือกวรรค)</option></select>
                             <select id="senseStory" aria-label="เลือกเรื่องโดยอรรถ"><option value="">(เลือกเรื่อง)</option></select>
                         </div>
-                        <div class="row" style="margin-top:0;">
-                            <label style="min-width:auto; margin-right:10px;">หน้า</label>
-                            <input type="number" id="senseStartPage" placeholder="เริ่มต้น" style="width:100px;" />
-                            <span style="margin:0 10px;">ถึง</span>
-                            <input type="number" id="senseEndPage" placeholder="สิ้นสุด" style="width:100px;" />
+                        <div class="row mt-0">
+                            <label class="min-w-auto mr-10">หน้า</label>
+                            <input type="number" id="senseStartPage" placeholder="เริ่มต้น" class="w-100px" />
+                            <span class="mx-10">ถึง</span>
+                            <input type="number" id="senseEndPage" placeholder="สิ้นสุด" class="w-100px" />
                         </div>
                         <div id="senseList" class="list"></div>
                     </div>
                 </div>
 
                 <!-- Statistics Section -->
-                <div id="statsSection" style="margin-top:20px; padding-top:20px; border-top:1px solid #eee; display:none;">
+                <div id="statsSection" class="mt-20 pt-20 border-top-eee d-none">
                     <h3><i class="fa-solid fa-chart-pie"></i> สถิติการออกข้อสอบ (Exam Statistics)</h3>
                     <div class="grid-2">
                         <div class="stats-panel-warning">
-                            <h4 style="margin-top:0; color:#e65100;"><i class="fa-solid fa-scale-balanced"></i> สถิติสนามหลวง</h4>
+                            <h4 class="mt-0 text-orange"><i class="fa-solid fa-scale-balanced"></i> สถิติสนามหลวง</h4>
                             <div id="sanluangStatsContent">กำลังโหลด...</div>
-                            <div style="margin-top:10px; font-size:0.9rem;">
-                                <a href="sanluang_stats.html" target="_blank" rel="noopener noreferrer" style="color:#e65100;">ดูข้อมูลทั้งหมด / เพิ่มข้อมูล</a>
+                            <div class="mt-10 text-sm">
+                                <a href="sanluang_stats.html" target="_blank" rel="noopener noreferrer" class="text-orange">ดูข้อมูลทั้งหมด / เพิ่มข้อมูล</a>
                             </div>
                         </div>
-                        <div style="background:#e3f2fd; padding:15px; border-radius:8px; border:1px solid #bbdefb;">
-                            <h4 style="margin-top:0; color:#1565c0;"><i class="fa-solid fa-users"></i> สถิติการใช้งานในระบบ</h4>
+                        <div class="bg-blue-light p-15 rounded-8">
+                            <h4 class="mt-0 text-blue"><i class="fa-solid fa-users"></i> สถิติการใช้งานในระบบ</h4>
                             <div id="systemStatsContent">กำลังโหลด...</div>
                         </div>
                     </div>
@@ -457,7 +582,7 @@
         <div class="actions">
             <button class="btn secondary" id="bsToggleBtn" onclick="toggleBsMode()" title="สลับโหมด บาลีศึกษา (บ.ศ.)"><i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.</button>
             <button class="btn secondary" id="solutionBtn" onclick="generateSolution()" title="สร้างเฉลย"><i class="fa-solid fa-wand-magic-sparkles"></i> เฉลย</button>
-            <a href="font_download.html" class="btn secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="หน้าดาวน์โหลดและวิธีติดตั้งฟอนต์"><i class="fa-solid fa-font"></i> ดาวน์โหลดฟอนต์</a>
+            <a href="font_download.html" class="btn secondary text-decoration-none d-inline-flex flex-center gap-5" title="หน้าดาวน์โหลดและวิธีติดตั้งฟอนต์"><i class="fa-solid fa-font"></i> ดาวน์โหลดฟอนต์</a>
             <button class="btn secondary" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> รีเซ็ต</button>
             <button class="btn secondary" id="copyBtn"><i class="fa-solid fa-copy"></i> คัดลอก</button>
             <button class="btn secondary" id="printBtn" onclick="window.print()"><i class="fa-solid fa-print"></i> พิมพ์ / PDF</button>
@@ -525,7 +650,7 @@
                     <option value="F4">กระดาษ F14 (Legal)</option>
                 </select>
             </div>
-            <div class="toolbar-group" style="position:relative;">
+            <div class="toolbar-group relative">
                 <button class="tool-btn" id="marginBtn" onclick="toggleMarginPanel()" title="ตั้งค่าขอบกระดาษ"><i class="fa-solid fa-ruler-combined"></i> ระยะขอบ</button>
                 <div id="marginPanel">
                     <div class="row">
@@ -548,8 +673,8 @@
                         <input type="range" id="marginRight" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('right', this.value)">
                         <span id="marginRightVal">2.54 cm</span>
                     </div>
-                    <div style="text-align:center; margin-top:10px;">
-                        <button class="btn secondary" onclick="resetMargins()" style="font-size:0.8rem; padding:4px 8px;">ค่ามาตรฐาน (2.54)</button>
+                    <div class="text-center mt-10">
+                        <button class="btn secondary text-xs p-xs" onclick="resetMargins()">ค่ามาตรฐาน (2.54)</button>
                     </div>
                 </div>
             </div>
@@ -588,15 +713,11 @@
             const btn = document.getElementById('bsToggleBtn');
             if (isBsMode) {
                 // Active State (B.S.)
-                btn.style.background = '#e0f7fa'; // Light Cyan
-                btn.style.color = '#006064'; // Dark Cyan
-                btn.style.borderColor = '#006064';
+                btn.classList.add('btn-active-bs');
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> โหมด: บ.ศ.';
             } else {
                 // Inactive State (P.T.)
-                btn.style.background = ''; // Reset to default secondary
-                btn.style.color = '';
-                btn.style.borderColor = '';
+                btn.classList.remove('btn-active-bs');
                 btn.innerHTML = '<i class="fa-solid fa-right-left"></i> โหมด: ป.ธ.';
             }
             buildExamPreview();
@@ -706,12 +827,18 @@
         }
         function toggleMarginPanel() {
             const p = document.getElementById('marginPanel');
-            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+            if (p.classList.contains('d-block')) {
+                p.classList.remove('d-block');
+                p.classList.add('d-none');
+            } else {
+                p.classList.remove('d-none');
+                p.classList.add('d-block');
+            }
         }
         function updateMargin(side, val) {
             const inner = document.querySelector('.paper-inner');
             document.getElementById(`margin${side.charAt(0).toUpperCase() + side.slice(1)}Val`).innerText = val + ' cm';
-            inner.style[`padding${side.charAt(0).toUpperCase() + side.slice(1)}`] = val + 'cm';
+            inner.style.setProperty(`--p-${side}`, val + 'cm');
         }
         function resetMargins() {
             ['Top', 'Bottom', 'Left', 'Right'].forEach(s => {
@@ -735,8 +862,9 @@
         document.addEventListener('click', function(e) {
             const p = document.getElementById('marginPanel');
             const btn = document.getElementById('marginBtn');
-            if (p.style.display === 'block' && !p.contains(e.target) && !btn.contains(e.target)) {
-                p.style.display = 'none';
+            if (p.classList.contains('d-block') && !p.contains(e.target) && !btn.contains(e.target)) {
+                p.classList.remove('d-block');
+                p.classList.add('d-none');
             }
         });
 
@@ -946,20 +1074,20 @@
             const thaiRow = document.getElementById('thaiInputRow');
 
             if (isThaiSource) {
-                if (senseRow) senseRow.style.display = 'none';
-                if (literalRow) literalRow.style.display = '';
+                if (senseRow) senseRow.classList.add('d-none');
+                if (literalRow) literalRow.classList.remove('d-none');
                 if (litLabel) litLabel.innerText = 'เลือกเนื้อหา (ภาษาไทย)';
-                if (thaiRow) thaiRow.style.display = 'block';
+                if (thaiRow) thaiRow.classList.remove('d-none');
             } else if (isRelationThai) {
-                if (senseRow) senseRow.style.display = 'none';
-                if (literalRow) literalRow.style.display = '';
+                if (senseRow) senseRow.classList.add('d-none');
+                if (literalRow) literalRow.classList.remove('d-none');
                 if (litLabel) litLabel.innerText = 'เลือกช่วงเนื้อหา';
-                if (thaiRow) thaiRow.style.display = 'none';
+                if (thaiRow) thaiRow.classList.add('d-none');
             } else {
-                if (senseRow) senseRow.style.display = '';
-                if (literalRow) literalRow.style.display = '';
+                if (senseRow) senseRow.classList.remove('d-none');
+                if (literalRow) literalRow.classList.remove('d-none');
                 if (litLabel) litLabel.innerText = 'โดยพยัญชนะ';
-                if (thaiRow) thaiRow.style.display = 'none';
+                if (thaiRow) thaiRow.classList.add('d-none');
             }
             
             // Trigger Vagga update for both
@@ -1012,11 +1140,13 @@
             const story = litStory || senseStory;
             
             if (!story) {
-                statsSection.style.display = 'none';
+                statsSection.classList.add('d-none');
+                statsSection.classList.remove('d-block');
                 return;
             }
 
-            statsSection.style.display = 'block';
+            statsSection.classList.remove('d-none');
+            statsSection.classList.add('d-block');
             slContent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
             sysContent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
 
@@ -1028,21 +1158,21 @@
                     .get();
 
                 if (slSnap.empty) {
-                    slContent.innerHTML = '<span style="color:#7f8c8d;">ยังไม่เคยออกข้อสอบสนามหลวง (หรือไม่มีข้อมูล)</span>';
+                    slContent.innerHTML = '<span class="text-gray">ยังไม่เคยออกข้อสอบสนามหลวง (หรือไม่มีข้อมูล)</span>';
                 } else {
                     // Client-side Sort
                     const docs = [];
                     slSnap.forEach(doc => docs.push(doc.data()));
                     docs.sort((a,b) => b.year - a.year); // Descending
 
-                    let html = `<div style="margin-bottom:5px; color:#c0392b; font-weight:bold;">
+                    let html = `<div class="mb-5 text-dark-red font-bold">
                         <i class="fa-solid fa-bell"></i> เนื้อหานี้เคยออกข้อสอบสนามหลวง ${slSnap.size} ครั้ง
                     </div>`;
                     
                     // Store data globally for modal
                     window.currentExamStats = docs;
                     
-                    html += `<button class="btn secondary" onclick="showExamStatsModal(window.currentExamStats)" style="padding:4px 8px; font-size:0.85rem;">
+                    html += `<button class="btn secondary btn-stats-detail" onclick="showExamStatsModal(window.currentExamStats)">
                         <i class="fa-solid fa-table-list"></i> ดูรายละเอียด
                     </button>`;
                     
@@ -1050,7 +1180,7 @@
                 }
             } catch (e) {
                 console.error(e);
-                slContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด (โปรดตรวจสอบการเชื่อมต่อ)</span>';
+                slContent.innerHTML = '<span class="text-red">โหลดข้อมูลผิดพลาด (โปรดตรวจสอบการเชื่อมต่อ)</span>';
             }
 
             // 2. System Usage Stats
@@ -1061,7 +1191,7 @@
                     .get();
 
                 if (sysSnap.empty) {
-                    sysContent.innerHTML = '<span style="color:#7f8c8d;">ยังไม่เคยมีผู้นำไปออกข้อสอบในระบบนี้</span>';
+                    sysContent.innerHTML = '<span class="text-gray">ยังไม่เคยมีผู้นำไปออกข้อสอบในระบบนี้</span>';
                 } else {
                     const count = sysSnap.size;
                     const users = new Set();
@@ -1071,13 +1201,13 @@
                     });
 
                     sysContent.innerHTML = `
-                        <div style="font-size:1.1rem; font-weight:bold;">ถูกใช้งานแล้ว ${count} ครั้ง</div>
-                        <div style="font-size:0.9rem; color:#555;">โดยอาจารย์: ${Array.from(users).join(', ')}</div>
+                        <div class="text-lg font-bold">ถูกใช้งานแล้ว ${count} ครั้ง</div>
+                        <div class="text-md text-gray-dark">โดยอาจารย์: ${Array.from(users).join(', ')}</div>
                     `;
                 }
             } catch (e) {
                 console.error(e);
-                sysContent.innerHTML = '<span style="color:red;">โหลดข้อมูลผิดพลาด</span>';
+                sysContent.innerHTML = '<span class="text-red">โหลดข้อมูลผิดพลาด</span>';
             }
         }
 
@@ -1258,7 +1388,7 @@
             if (!statusDiv) return;
             
             if (targetSet.size === 0) {
-                statusDiv.innerHTML = '<span style="color:#7f8c8d;"><i class="fa-solid fa-circle-info"></i> ยังไม่ได้เลือกประโยคใดๆ</span>';
+                statusDiv.innerHTML = '<span class="text-gray"><i class="fa-solid fa-circle-info"></i> ยังไม่ได้เลือกประโยคใดๆ</span>';
                 return;
             }
             
@@ -1283,7 +1413,7 @@
             const sortedPages = Array.from(pages).sort((a,b) => a-b);
             const pageStr = sortedPages.length > 0 ? ` (จากหน้า ${sortedPages.map(toThaiDigits).join(', ')})` : '';
             
-            statusDiv.innerHTML = `<span style="color:#2e7d32; font-weight:bold;"><i class="fa-solid fa-check-circle"></i> เลือกแล้ว ${toThaiDigits(targetSet.size)} ประโยค${pageStr}</span>`;
+            statusDiv.innerHTML = `<span class="text-success font-bold"><i class="fa-solid fa-check-circle"></i> เลือกแล้ว ${toThaiDigits(targetSet.size)} ประโยค${pageStr}</span>`;
         }
 
         function toggleSentenceSelection(element, key, mode) {
@@ -1361,7 +1491,7 @@
             window.renderCache[containerId] = { items, mode, part, startPage, endPage };
 
             if (part === 'waiting') {
-                if (box) box.innerHTML = '<div style="padding:20px; text-align:center; color:#888;">กำลังรอเนื้อหา...</div>';
+                if (box) box.innerHTML = '<div class="msg-waiting">กำลังรอเนื้อหา...</div>';
                 return;
             }
 
@@ -1380,18 +1510,15 @@
                 
                 // Toolbar
                 const toolbar = document.createElement('div');
-                toolbar.style.marginBottom = '10px';
-                toolbar.style.display = 'flex';
-                toolbar.style.alignItems = 'center';
-                toolbar.style.gap = '10px';
+                toolbar.className = 'd-flex items-center gap-10 mb-10';
                 toolbar.innerHTML = `
                     <button id="btn-use-${mode}" class="btn primary" onclick="useSelectionForExam('${mode}')">
                         <i class="fa-solid fa-file-import"></i> นำข้อความที่คลุมดำไปออกข้อสอบ
                     </button>
-                    <span style="font-size:0.85rem; color:#666;">
+                    <span class="text-sm text-gray-666">
                         <i class="fa-solid fa-circle-info"></i> ลากคลุมดำข้อความในกล่องด้านล่าง แล้วกดปุ่มนี้
                     </span>
-                    <button class="btn secondary" onclick="window.examContent['${(mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense'}'] = ''; buildExamPreview(); alert('ล้างค่าแล้ว');" style="margin-left:auto; font-size:0.8rem;">
+                    <button class="btn secondary ml-auto text-xs" onclick="window.examContent['${(mode === 'literal' || mode === 'thai_source') ? 'literal' : 'sense'}'] = ''; buildExamPreview(); alert('ล้างค่าแล้ว');">
                         <i class="fa-solid fa-trash"></i> ล้างค่า
                     </button>
                 `;
@@ -1400,7 +1527,6 @@
                 // Text Area (Read-only but selectable)
                 const textArea = document.createElement('div');
                 textArea.className = 'book-content-area';
-                textArea.style.cssText = 'background:#fff; padding:25px; border:1px solid #ccc; border-radius:4px; line-height:1.8; font-family:"Sarabun", sans-serif; height: 400px; overflow-y: auto; white-space: pre-wrap; font-size: 1.1rem; color:#333; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);';
                 
                 let fullContentHTML = '';
                 let lastPage = 0;
@@ -1420,7 +1546,7 @@
                     // Append Page Marker if changed
                     const pageVal = parsePageNumber(s.page);
                     if (pageVal > 0 && pageVal !== lastPage) {
-                        fullContentHTML += `<div style="color:#999; font-size:0.8rem; margin:15px 0 5px 0; border-bottom:1px dashed #eee; text-align:right;">หน้า ${toThaiDigits(pageVal)}</div>`;
+                        fullContentHTML += `<div class="page-marker-dynamic">หน้า ${toThaiDigits(pageVal)}</div>`;
                         lastPage = pageVal;
                     }
 
@@ -1447,7 +1573,7 @@
                 statusBar.style.display = 'flex';
                 statusBar.style.alignItems = 'center';
                 statusBar.style.gap = '8px';
-                statusBar.innerHTML = '<span style="color:#7f8c8d;"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดสถานะ...</span>';
+                statusBar.innerHTML = '<span class="msg-loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดสถานะ...</span>';
                 
                 box.appendChild(statusBar);
                 
@@ -1638,14 +1764,8 @@
                 return normalized.replace(/ /g, '  ');
             };
 
-            // Prepare Content Blocks with specific fonts
-            const paliFont = '"DilleniaUPC_4Balee", "DilleniaUPC", sans-serif';
-            const thaiFont = '"DilleniaUPC", sans-serif'; // Or inherit from paper
-            
-            // Set Content Font
-            const contentStyle = isPaliContent 
-                ? `font-family: ${paliFont};` 
-                : `font-family: ${thaiFont};`;
+            // Set Content Font Class
+            const contentClass = isPaliContent ? 'font-pali' : 'font-thai';
 
             let litContent = '';
             if (window.examContent && window.examContent.literal) {
@@ -1692,39 +1812,39 @@
                 if (['p4','p5','p6','p7','p8','p9'].includes(levelCode)) {
                     contentHTML = `
                     <div class="paper-section">
-                        <div class="paper-content-text" style="${contentStyle}"><span>๑. </span>${litContent || '...'}</div>
-                        <div class="paper-content-text" style="${contentStyle}"><span>๒. </span>${senContent || '...'}</div>
+                        <div class="paper-content-text ${contentClass}"><span>๑. </span>${litContent || '...'}</div>
+                        <div class="paper-content-text ${contentClass}"><span>๒. </span>${senContent || '...'}</div>
                     </div>`;
                 } else {
                     contentHTML = `
                     <div class="paper-section">
                         <div class="paper-section-title">${headerSubject}</div>
-                        <div class="paper-content-text" style="${contentStyle}"><span>๑. </span>${litContent || '...'}</div>
-                        <div class="paper-content-text" style="${contentStyle}"><span>๒. </span>${senContent || '...'}</div>
+                        <div class="paper-content-text ${contentClass}"><span>๑. </span>${litContent || '...'}</div>
+                        <div class="paper-content-text ${contentClass}"><span>๒. </span>${senContent || '...'}</div>
                     </div>`;
                 }
             } else {
                 if (subjectLabel.includes('สัมพันธ์ไทย')) {
                     contentHTML = `
                     <div class="paper-section">
-                        <div class="paper-content-text" style="${contentStyle}">${litContent || '...'}</div>
+                        <div class="paper-content-text ${contentClass}">${litContent || '...'}</div>
                     </div>`;
                 } else {
                     if (['p12','p3'].includes(levelCode)) {
                         contentHTML = `
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
-                            <div class="paper-content-text" style="${contentStyle}"><span>๑. </span>${litContent || '...'}</div>
+                            <div class="paper-content-text ${contentClass}"><span>๑. </span>${litContent || '...'}</div>
                         </div>
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
-                            <div class="paper-content-text" style="${contentStyle}"><span>๒. </span>${senContent || '...'}</div>
+                            <div class="paper-content-text ${contentClass}"><span>๒. </span>${senContent || '...'}</div>
                         </div>`;
                     } else {
                         contentHTML = `
                         <div class="paper-section">
-                            <div class="paper-content-text" style="${contentStyle}"><span>๑. </span>${litContent || '...'}</div>
-                            <div class="paper-content-text" style="${contentStyle}"><span>๒. </span>${senContent || '...'}</div>
+                            <div class="paper-content-text ${contentClass}"><span>๑. </span>${litContent || '...'}</div>
+                            <div class="paper-content-text ${contentClass}"><span>๒. </span>${senContent || '...'}</div>
                         </div>`;
                     }
                 }
@@ -1913,7 +2033,7 @@
                          // Reduced margin-bottom from 10px to 8px
                          // Added text-align: justify to inner divs to ensure full justification like Exam Mode
                          // Removed white-space: normal and added white-space: pre-wrap to support manual spacing
-                         html += `<div style="margin-bottom: 8px; page-break-inside: avoid; text-indent: 0;"><div style="font-family: 'DilleniaUPC_4Balee', 'DilleniaUPC', sans-serif; margin-bottom: 0; text-align: justify; text-align-last: left; white-space: pre-wrap;"><b>${toThaiDigits(globalIndex)}. ${formatPali(pali)}</b></div><div style="margin-left: 25px; margin-top:0; text-align: justify; text-align-last: left; white-space: pre-wrap;">${formatThai(thai)}</div></div>`;
+                         html += `<div class="print-container"><div class="print-pali"><b>${toThaiDigits(globalIndex)}. ${formatPali(pali)}</b></div><div class="print-thai">${formatThai(thai)}</div></div>`;
                     }
                 });
                 return html;
@@ -1924,7 +2044,7 @@
             let senContent = '';
             
             if ((window.examContent && window.examContent.literal) || (window.examContent && window.examContent.sense)) {
-                 const msg = '<div style="color:red; font-weight:bold; text-align:center; padding:20px;">(ขออภัย: ระบบเฉลยยังไม่รองรับการทำงานร่วมกับการเลือกข้อความแบบอิสระ/Book Mode<br>กรุณาใช้โหมดเลือกทีละประโยคหากต้องการสร้างเฉลยอัตโนมัติ)</div>';
+                 const msg = '<div class="error-msg">(ขออภัย: ระบบเฉลยยังไม่รองรับการทำงานร่วมกับการเลือกข้อความแบบอิสระ/Book Mode<br>กรุณาใช้โหมดเลือกทีละประโยคหากต้องการสร้างเฉลยอัตโนมัติ)</div>';
                  litContent = msg;
                  senContent = msg;
             } else {
@@ -1943,39 +2063,39 @@
                 if (['p4','p5','p6','p7','p8','p9'].includes(levelCode)) {
                     bodyHTML = `
                     <div class="paper-section">
-                        <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
-                        <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
+                        <div class="paper-content-text d-block">${litContent || '...'}</div>
+                        <div class="paper-content-text d-block">${senContent || '...'}</div>
                     </div>`;
                 } else {
                     bodyHTML = `
                     <div class="paper-section">
                         <div class="paper-section-title">${headerSubject}</div>
-                        <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
-                        <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
+                        <div class="paper-content-text d-block">${litContent || '...'}</div>
+                        <div class="paper-content-text d-block">${senContent || '...'}</div>
                     </div>`;
                 }
             } else {
                 if (subjectLabel.includes('สัมพันธ์ไทย')) {
                     bodyHTML = `
                     <div class="paper-section">
-                        <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                        <div class="paper-content-text d-block">${litContent || '...'}</div>
                     </div>`;
                 } else {
                     if (['p12','p3'].includes(levelCode)) {
                         bodyHTML = `
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยพยัญชนะ')}</div>
-                            <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
+                            <div class="paper-content-text d-block">${litContent || '...'}</div>
                         </div>
                         <div class="paper-section">
                             <div class="paper-section-title">${addDoubleSpacing('แปล โดยอรรถ')}</div>
-                            <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
+                            <div class="paper-content-text d-block">${senContent || '...'}</div>
                         </div>`;
                     } else {
                         bodyHTML = `
                         <div class="paper-section">
-                            <div class="paper-content-text" style="display:block;">${litContent || '...'}</div>
-                            <div class="paper-content-text" style="display:block;">${senContent || '...'}</div>
+                            <div class="paper-content-text d-block">${litContent || '...'}</div>
+                            <div class="paper-content-text d-block">${senContent || '...'}</div>
                         </div>`;
                     }
                 }
@@ -2175,26 +2295,18 @@
                 levelRow.classList.add('step-completed');
                 
                 // Unlock Step 2
-                subjectRow.style.opacity = '1';
-                subjectRow.style.pointerEvents = 'auto';
                 subjectRow.classList.remove('step-locked');
             } else {
                 levelRow.classList.add('step-required');
                 levelRow.classList.remove('step-completed');
                 
                 // Lock Step 2 & 3 & Content
-                subjectRow.style.opacity = '0.5';
-                subjectRow.style.pointerEvents = 'none';
                 subjectRow.classList.add('step-locked');
                 subjectSelect.value = ""; 
                 
                 // Cascade lock
-                dateRow.style.opacity = '0.5';
-                dateRow.style.pointerEvents = 'none';
                 dateRow.classList.add('step-locked');
                 
-                contentSection.style.opacity = '0.5';
-                contentSection.style.pointerEvents = 'none';
                 contentSection.classList.add('step-locked');
                 return; // Stop processing
             }
@@ -2206,20 +2318,14 @@
                 subjectRow.classList.add('step-completed');
                 
                 // Unlock Step 3
-                dateRow.style.opacity = '1';
-                dateRow.style.pointerEvents = 'auto';
                 dateRow.classList.remove('step-locked');
             } else {
                 subjectRow.classList.add('step-required');
                 subjectRow.classList.remove('step-completed');
                 
                 // Lock Step 3 & Content
-                dateRow.style.opacity = '0.5';
-                dateRow.style.pointerEvents = 'none';
                 dateRow.classList.add('step-locked');
                 
-                contentSection.style.opacity = '0.5';
-                contentSection.style.pointerEvents = 'none';
                 contentSection.classList.add('step-locked');
                 return; // Stop processing
             }
@@ -2231,16 +2337,12 @@
                 dateRow.classList.add('step-completed');
                 
                 // Unlock Content
-                contentSection.style.opacity = '1';
-                contentSection.style.pointerEvents = 'auto';
                 contentSection.classList.remove('step-locked');
             } else {
                 dateRow.classList.add('step-required');
                 dateRow.classList.remove('step-completed');
                 
                 // Lock Content
-                contentSection.style.opacity = '0.5';
-                contentSection.style.pointerEvents = 'none';
                 contentSection.classList.add('step-locked');
             }
         }
@@ -2313,7 +2415,7 @@
         function showExamStatsModal(data) {
             const body = document.getElementById('examStatsModalBody');
             if (!data || data.length === 0) {
-                body.innerHTML = '<div style="text-align:center; padding:20px; color:#7f8c8d;">ไม่พบข้อมูล</div>';
+                body.innerHTML = '<div class="msg-no-data">ไม่พบข้อมูล</div>';
                 return;
             }
 
@@ -2329,13 +2431,13 @@
             };
 
             let html = `
-                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                <table class="w-full border-collapse text-md">
                     <thead>
-                        <tr style="background:#f8f9fa; border-bottom:2px solid #ddd;">
-                            <th style="padding:8px; text-align:left;">พ.ศ.</th>
-                            <th style="padding:8px; text-align:left;">ชั้น</th>
-                            <th style="padding:8px; text-align:left;">วิชา (ข้อ)</th>
-                            <th style="padding:8px; text-align:left;">เนื้อหา</th>
+                        <tr class="bg-light-gray border-bottom-ddd">
+                            <th class="p-8 text-left">พ.ศ.</th>
+                            <th class="p-8 text-left">ชั้น</th>
+                            <th class="p-8 text-left">วิชา (ข้อ)</th>
+                            <th class="p-8 text-left">เนื้อหา</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2344,12 +2446,12 @@
             data.forEach(d => {
                 const levelLabel = levelMap[d.level] || d.level;
                 html += `
-                    <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:8px; vertical-align:top;">${d.year} ${d.round ? '(ครั้งที่ '+d.round+')' : ''}</td>
-                        <td style="padding:8px; vertical-align:top;">${levelLabel}</td>
-                        <td style="padding:8px; vertical-align:top;">${d.subject} ${d.question ? '(ข้อ '+d.question+')' : ''}</td>
-                        <td style="padding:8px; vertical-align:top;">
-                            <div style="font-weight:bold; color:#2980b9;">${d.contentSnippet || '-'}</div>
+                    <tr class="border-bottom-eee">
+                        <td class="p-8 valign-top">${d.year} ${d.round ? '(ครั้งที่ '+d.round+')' : ''}</td>
+                        <td class="p-8 valign-top">${levelLabel}</td>
+                        <td class="p-8 valign-top">${d.subject} ${d.question ? '(ข้อ '+d.question+')' : ''}</td>
+                        <td class="p-8 valign-top">
+                            <div class="font-bold text-blue-dark">${d.contentSnippet || '-'}</div>
                         </td>
                     </tr>
                 `;
@@ -2360,22 +2462,22 @@
             
             // Show Modal
             const modal = document.getElementById('examStatsModal');
-            modal.style.display = 'flex';
+            modal.classList.add('d-flex');
         }
     </script>
     
     <!-- Modal for Exam Stats -->
-    <div id="examStatsModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; justify-content:center; align-items:center;">
-        <div class="modal-content" style="background:#fff; padding:20px; border-radius:8px; width:90%; max-width:800px; max-height:80vh; overflow-y:auto; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                <h3 style="margin:0; color:#2c3e50;"><i class="fa-solid fa-history"></i> ประวัติการออกข้อสอบสนามหลวง</h3>
-                <button onclick="document.getElementById('examStatsModal').style.display='none'" style="border:none; background:transparent; font-size:1.5rem; cursor:pointer; color:#7f8c8d;">&times;</button>
+    <div id="examStatsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-history"></i> ประวัติการออกข้อสอบสนามหลวง</h3>
+                <button onclick="document.getElementById('examStatsModal').classList.remove('d-flex')" class="modal-close-btn">&times;</button>
             </div>
             <div id="examStatsModalBody">
                 <!-- Table will go here -->
             </div>
-            <div style="text-align:right; margin-top:15px;">
-                <button class="btn secondary" onclick="document.getElementById('examStatsModal').style.display='none'">ปิดหน้าต่าง</button>
+            <div class="modal-footer">
+                <button class="btn secondary" onclick="document.getElementById('examStatsModal').classList.remove('d-flex')">ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>

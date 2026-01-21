@@ -168,12 +168,57 @@
             font-family: 'Sarabun', sans-serif;
             box-sizing: border-box; 
         }
+
+        /* Utility Classes for Sanluang Stats Refactor */
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .filter-container { display: flex; gap: 15px; margin-bottom: 20px; }
+        .flex-1 { flex: 1; }
+        .flex-2 { flex: 2; }
+        .input-styled { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .table-container { overflow-x: auto; }
+        .text-center { text-align: center; }
+        .modal-content-wide { max-width: 600px; }
+        .mt-0 { margin-top: 0; }
+        .form-row { display: flex; gap: 10px; }
+        .selection-area { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; padding: 10px; background: #fafafa; }
+        .hidden { display: none; }
+        .selection-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .selection-label { font-size: 0.9rem; font-weight: 600; color: #d35400; }
+        .btn-close-icon { border: none; background: none; cursor: pointer; color: #999; }
+        .scrollable-list { max-height: 200px; overflow-y: auto; font-family: 'Sarabun', sans-serif; }
+        .input-readonly { background: #eee; }
+        .preview-box { padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px; min-height: 40px; color: #555; font-style: italic; }
+        .modal-footer { text-align: right; margin-top: 20px; }
+
+        /* JS Dynamic Content Classes */
+        .font-bold-sm { font-weight: bold; font-size: 0.9rem; }
+        .text-xs-gray { font-size: 0.8rem; color: #666; }
+        .p-20 { padding: 20px; }
+        .flex-gap-5 { display: flex; gap: 5px; }
+        .btn-sm { padding: 5px 10px !important; font-size: 0.8rem !important; }
+        .btn-warning { background: #f39c12 !important; color: #fff !important; }
+        .badge-blue { background: #e3f2fd !important; color: #1565c0 !important; }
+        .font-weight-600 { font-weight: 600; }
+        .text-sm-gray { font-size: 0.85rem; color: #666; }
+        .cell-content { max-width: 200px; font-size: 0.85rem; color: #444; }
+        .text-red { color: red; }
+        
+        .sentence-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            background: transparent;
+            transition: background 0.2s;
+        }
+        .sentence-item:hover {
+            background: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div style="display:flex; align-items:center; gap:15px;">
+            <div class="header-actions">
                 <a href="../index.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> กลับหน้าแรก</a>
                 <h1><i class="fa-solid fa-scale-balanced"></i> สถิติข้อสอบบาลีสนามหลวง</h1>
             </div>
@@ -181,9 +226,9 @@
         </div>
 
         <div class="card">
-            <div style="display:flex; gap:15px; margin-bottom:20px;">
-                <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อเรื่อง, ปี พ.ศ. ..." style="padding:10px; border:1px solid #ddd; border-radius:6px; flex:1;" onkeyup="loadStats()">
-                <select id="levelFilter" onchange="loadStats()" aria-label="กรองตามชั้นประโยค" style="padding:10px; border:1px solid #ddd; border-radius:6px;">
+            <div class="filter-container">
+                <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อเรื่อง, ปี พ.ศ. ..." class="input-styled flex-1" onkeyup="loadStats()">
+                <select id="levelFilter" onchange="loadStats()" aria-label="กรองตามชั้นประโยค" class="input-styled">
                     <option value="">ทุกชั้นประโยค</option>
                     <option value="p12">ประโยค ๑-๒</option>
                     <option value="p3">ป.ธ. ๓</option>
@@ -195,7 +240,7 @@
                     <option value="p9">ป.ธ. ๙</option>
                 </select>
             </div>
-            <div style="overflow-x:auto;">
+            <div class="table-container">
                 <table id="statsTable">
                     <thead>
                         <tr>
@@ -209,7 +254,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td colspan="6" style="text-align:center;">กำลังโหลด...</td></tr>
+                        <tr><td colspan="6" class="text-center">กำลังโหลด...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -218,15 +263,15 @@
 
     <!-- Modal -->
     <div id="addModal" class="modal">
-        <div class="modal-content" style="max-width: 600px;">
-            <h2 style="margin-top:0;" id="modalTitle">เพิ่มข้อมูลสถิติ</h2>
+        <div class="modal-content modal-content-wide">
+            <h2 class="mt-0" id="modalTitle">เพิ่มข้อมูลสถิติ</h2>
             <form id="addForm" onsubmit="saveStat(event)">
-                <div class="form-group" style="display:flex; gap:10px;">
-                    <div style="flex:1;">
+                <div class="form-group form-row">
+                    <div class="flex-1">
                         <label>ปี พ.ศ.</label>
                         <input type="number" id="statYear" required placeholder="เช่น 2567">
                     </div>
-                    <div style="flex:1;" id="roundGroup">
+                    <div class="flex-1" id="roundGroup">
                         <label>ครั้งที่</label>
                         <select id="statRound">
                             <option value="1">1</option>
@@ -248,14 +293,14 @@
                         <option value="p9">ป.ธ. ๙</option>
                     </select>
                 </div>
-                <div class="form-group" style="display:flex; gap:10px;">
-                    <div style="flex:2;">
+                <div class="form-group form-row">
+                    <div class="flex-2">
                         <label>วิชา</label>
                         <select id="statSubject" required onchange="updateStatBooks()">
                             <option value="" disabled selected>กรุณาเลือกชั้นประโยคก่อน</option>
                         </select>
                     </div>
-                    <div style="flex:1;">
+                    <div class="flex-1">
                         <label>ข้อที่</label>
                         <select id="statQuestion">
                             <option value="1">1</option>
@@ -270,41 +315,41 @@
                     </select>
                 </div>
                 
-                <div class="form-group" style="display:flex; gap:10px;">
-                    <div style="flex:1;">
+                <div class="form-group form-row">
+                    <div class="flex-1">
                         <label>หน้าเริ่มต้น</label>
                         <input type="number" id="statStartPage" placeholder="ระบุหน้า" oninput="searchSentences('start')">
                     </div>
-                    <div style="flex:1;">
+                    <div class="flex-1">
                         <label>หน้าสิ้นสุด</label>
                         <input type="number" id="statEndPage" placeholder="ระบุหน้า" oninput="searchSentences('end')">
                     </div>
                 </div>
 
                 <!-- Sentence Selection UI -->
-                <div id="sentenceSelectionArea" style="display:none; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; padding:10px; background:#fafafa;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                        <div style="font-size:0.9rem; font-weight:600; color:#d35400;">เลือกประโยค:</div>
-                        <button type="button" onclick="closeSentenceSelection()" style="border:none; background:none; cursor:pointer; color:#999;"><i class="fa-solid fa-times"></i></button>
+                <div id="sentenceSelectionArea" class="selection-area hidden">
+                    <div class="selection-header">
+                        <div class="selection-label">เลือกประโยค:</div>
+                        <button type="button" onclick="closeSentenceSelection()" class="btn-close-icon"><i class="fa-solid fa-times"></i></button>
                     </div>
-                    <div id="sentenceList" style="max-height:200px; overflow-y:auto; font-family:'Sarabun', sans-serif;"></div>
+                    <div id="sentenceList" class="scrollable-list"></div>
                 </div>
 
                 <div class="form-group">
                     <label>เรื่อง (Story)</label>
-                    <input type="text" id="statStory" required placeholder="จะแสดงอัตโนมัติเมื่อเลือกประโยค" readonly style="background:#eee;">
+                    <input type="text" id="statStory" required placeholder="จะแสดงอัตโนมัติเมื่อเลือกประโยค" readonly class="input-readonly">
                 </div>
 
                 <div class="form-group">
                     <label>ตัวอย่างเนื้อหา (Snippet)</label>
-                    <div id="statSnippetPreview" style="padding:10px; background:#f9f9f9; border:1px solid #ddd; border-radius:6px; min-height:40px; color:#555; font-style:italic;">
+                    <div id="statSnippetPreview" class="preview-box">
                         ยังไม่ได้เลือกประโยค
                     </div>
                     <input type="hidden" id="statContentSnippet">
                     <input type="hidden" id="statDocId">
                 </div>
 
-                <div style="text-align:right; margin-top:20px;">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">ยกเลิก</button>
                     <button type="submit" class="btn btn-primary" id="submitBtn">บันทึก</button>
                 </div>
@@ -600,17 +645,13 @@
             
             sentences.forEach(s => {
                 const div = document.createElement('div');
-                div.style.padding = '8px';
-                div.style.borderBottom = '1px solid #eee';
-                div.style.cursor = 'pointer';
-                div.onmouseover = () => div.style.background = '#f0f0f0';
-                div.onmouseout = () => div.style.background = 'transparent';
+                div.className = 'sentence-item';
                 
                 const text = (s.pali || s.thai || '').substring(0, 100);
                 
                 div.innerHTML = `
-                    <div style="font-weight:bold; font-size:0.9rem;">${text}...</div>
-                    <div style="font-size:0.8rem; color:#666;">เรื่อง: ${s.story} (หน้า ${s.page})</div>
+                    <div class="font-bold-sm">${text}...</div>
+                    <div class="text-xs-gray">เรื่อง: ${s.story} (หน้า ${s.page})</div>
                 `;
                 
                 div.onclick = () => selectSentence(s);
@@ -726,7 +767,7 @@
 
         async function loadStats() {
             const tbody = document.querySelector('#statsTable tbody');
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">กำลังโหลด...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center">กำลังโหลด...</td></tr>';
             
             try {
                 // If filter is active, we MUST query by level first, then order by year client-side
@@ -748,7 +789,7 @@
                 const snapshot = await query.limit(100).get();
                 
                 if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">ไม่พบข้อมูล</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center p-20">ไม่พบข้อมูล</td></tr>';
                     return;
                 }
 
@@ -775,24 +816,24 @@
                     let actionHtml = '-';
                     if (isAdminUser) {
                         actionHtml = `
-                            <div style="display:flex; gap:5px;">
-                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem; background:#f39c12; color:#fff;" onclick="editStat('${d.id}')"><i class="fa-solid fa-edit"></i></button>
-                                <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteStat('${d.id}')"><i class="fa-solid fa-trash"></i></button>
+                            <div class="flex-gap-5">
+                                <button class="btn btn-secondary btn-sm btn-warning" onclick="editStat('${d.id}')"><i class="fa-solid fa-edit"></i></button>
+                                <button class="btn btn-secondary btn-sm" onclick="deleteStat('${d.id}')"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `;
                     }
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><span class="badge" style="background:#e3f2fd; color:#1565c0;">${d.year}${roundDisplay}</span></td>
+                        <td><span class="badge badge-blue">${d.year}${roundDisplay}</span></td>
                         <td>${displayLevel}</td>
                         <td>${d.subject}${questionDisplay}</td>
                         <td>
-                            <div style="font-weight:600;">${d.story}</div>
-                            <div style="font-size:0.85rem; color:#666;">${d.book}</div>
+                            <div class="font-weight-600">${d.story}</div>
+                            <div class="text-sm-gray">${d.book}</div>
                         </td>
                         <td>${d.startPage} - ${d.endPage}</td>
-                        <td style="max-width:200px; font-size:0.85rem; color:#444;">${d.contentSnippet || '-'}</td>
+                        <td class="cell-content">${d.contentSnippet || '-'}</td>
                         <td>${actionHtml}</td>
                     `;
                     tbody.appendChild(tr);
@@ -800,7 +841,7 @@
 
             } catch (err) {
                 console.error(err);
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-red">Error: ${err.message}</td></tr>`;
             }
         }
         

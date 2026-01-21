@@ -401,10 +401,6 @@
             position: relative;
         }
 
-        .exam-paper::before {
-            /* Paper texture effect optional */
-        }
-
         .exam-answer-box {
             width: 100%;
             min-height: 150px;
@@ -526,6 +522,12 @@
                 display: block;
             }
         }
+
+        /* Utility Classes for Accessibility & Style Fixes */
+        .mw-1000 { max-width: 1000px; }
+        .nav-offset { margin-top: -25px; position: relative; z-index: 3; }
+        .top-20 { top: 20px; }
+        .step-badge { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 
@@ -538,30 +540,30 @@
         </div>
     </div>
 
-    <div class="container mb-5" style="max-width: 1000px;">
+    <div class="container mb-5 mw-1000">
 
         <!-- Navigation Tabs + Back to Library -->
-        <div class="text-center mt-n4" style="margin-top: -25px; position: relative; z-index: 3;">
-            <ul class="nav nav-pills shadow-sm bg-white justify-content-center flex-wrap d-inline-flex" id="pills-tab" role="tablist">
-                <li class="nav-item no-print">
-                    <a href="library_center.html" class="nav-link d-flex align-items-center text-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>
-                        <span>กลับสู่คลังความรู้กลาง</span>
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-study-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-study" type="button" role="tab">
-                        <i class="fas fa-book-open me-2"></i>โหมดอ่านทบทวน
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-exam-tab" data-bs-toggle="pill" data-bs-target="#pills-exam"
-                        type="button" role="tab">
-                        <i class="fas fa-file-alt me-2"></i>สร้างข้อสอบ
-                    </button>
-                </li>
-            </ul>
+        <div class="text-center mt-n4 nav-offset">
+            <div class="d-inline-flex bg-white shadow-sm rounded-pill p-1 flex-wrap justify-content-center">
+                <a href="library_center.html" class="nav-link d-flex align-items-center text-secondary px-3 rounded-pill no-print">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    <span>กลับสู่คลังความรู้กลาง</span>
+                </a>
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-study-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-study" type="button" role="tab" aria-selected="true">
+                            <i class="fas fa-book-open me-2"></i>โหมดอ่านทบทวน
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-exam-tab" data-bs-toggle="pill" data-bs-target="#pills-exam"
+                            type="button" role="tab" aria-selected="false">
+                            <i class="fas fa-file-alt me-2"></i>สร้างข้อสอบ
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="tab-content pt-4" id="pills-tabContent">
@@ -574,19 +576,19 @@
                     <div class="row g-3">
                         <div class="col-md-3">
                             <label class="form-label small text-muted">ตั้งแต่ พ.ศ.</label>
-                            <select class="form-select" id="filter-year-start">
+                            <select class="form-select" id="filter-year-start" aria-label="ตั้งแต่ พ.ศ.">
                                 <option value="all">เริ่มต้น</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label small text-muted">ถึง พ.ศ.</label>
-                            <select class="form-select" id="filter-year-end">
+                            <select class="form-select" id="filter-year-end" aria-label="ถึง พ.ศ.">
                                 <option value="all">ล่าสุด</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label small text-muted">หมวดหมู่</label>
-                            <select class="form-select" id="filter-category">
+                            <select class="form-select" id="filter-category" aria-label="หมวดหมู่">
                                 <option value="all">ทุกหมวดหมู่</option>
                             </select>
                         </div>
@@ -610,28 +612,28 @@
             <div class="tab-pane fade" id="pills-exam" role="tabpanel">
                 <div class="row">
                     <div class="col-lg-4 no-print mb-4">
-                        <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 20px;">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top top-20">
                             <h5 class="card-title text-primary mb-3"><i class="fas fa-cog me-2"></i>ตั้งค่าการสอบ</h5>
                             <div class="mb-3">
                                 <label class="form-label text-muted small">จำนวนข้อ</label>
-                                <input type="number" class="form-control" id="exam-amount" value="10" min="1" max="50">
+                                <input type="number" class="form-control" id="exam-amount" value="10" min="1" max="50" aria-label="จำนวนข้อ">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted small">หมวดหมู่</label>
-                                <select class="form-select" id="exam-category">
+                                <select class="form-select" id="exam-category" aria-label="หมวดหมู่ข้อสอบ">
                                     <option value="all">สุ่มทุกหมวด</option>
                                 </select>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <label class="form-label text-muted small">ตั้งแต่ พ.ศ.</label>
-                                    <select class="form-select" id="exam-year-start">
+                                    <select class="form-select" id="exam-year-start" aria-label="ข้อสอบตั้งแต่ พ.ศ.">
                                         <option value="all">เริ่มต้น</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label text-muted small">ถึง พ.ศ.</label>
-                                    <select class="form-select" id="exam-year-end">
+                                    <select class="form-select" id="exam-year-end" aria-label="ข้อสอบถึง พ.ศ.">
                                         <option value="all">ล่าสุด</option>
                                     </select>
                                 </div>
@@ -1544,7 +1546,7 @@
                     
                     <div class="d-flex mb-3">
                         <div class="me-3">
-                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">1</span>
+                            <span class="badge bg-light text-dark border rounded-circle p-2 step-badge">1</span>
                         </div>
                         <div>
                             <h6 class="fw-bold mb-1">เปิด AI ของคุณ</h6>
@@ -1554,7 +1556,7 @@
 
                     <div class="d-flex mb-3">
                         <div class="me-3">
-                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">2</span>
+                            <span class="badge bg-light text-dark border rounded-circle p-2 step-badge">2</span>
                         </div>
                         <div>
                             <h6 class="fw-bold mb-1">วางข้อมูล (Paste)</h6>
@@ -1564,7 +1566,7 @@
 
                     <div class="d-flex mb-3">
                         <div class="me-3">
-                            <span class="badge bg-light text-dark border rounded-circle p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">3</span>
+                            <span class="badge bg-light text-dark border rounded-circle p-2 step-badge">3</span>
                         </div>
                         <div>
                             <h6 class="fw-bold mb-1">พิมพ์คำสั่งเพิ่มเติม</h6>

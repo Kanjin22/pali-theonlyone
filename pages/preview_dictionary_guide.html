@@ -9,6 +9,8 @@
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f8f9fa; }
         .card { border-radius: 15px; }
+        .w-30 { width: 30%; }
+        .text-abbr { font-weight: bold; color: #2c3e50; }
     </style>
 </head>
 <body>
@@ -33,7 +35,7 @@
                 <table class="table table-striped table-hover table-borderless">
                     <thead class="bg-light">
                         <tr>
-                            <th style="width: 30%">อักษรย่อ / เครื่องหมาย</th>
+                            <th class="w-30">อักษรย่อ / เครื่องหมาย</th>
                             <th>ความหมาย</th>
                         </tr>
                     </thead>
@@ -180,7 +182,7 @@
     const tbody = document.getElementById('abbr-table-body');
     bhumibaloAbbrs.forEach(item => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td style="font-weight: bold; color: #2c3e50;">${item.short}</td><td>${item.full}</td>`;
+        tr.innerHTML = `<td class="text-abbr">${item.short}</td><td>${item.full}</td>`;
         tbody.appendChild(tr);
     });
 </script>
