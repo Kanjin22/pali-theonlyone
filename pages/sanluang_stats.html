@@ -41,7 +41,11 @@
             // Update UI
             const btn = document.getElementById('addDataBtn');
             if (btn) {
-                btn.style.display = isAdminUser ? 'inline-flex' : 'none';
+                if (isAdminUser) {
+                    btn.classList.remove('d-none');
+                } else {
+                    btn.classList.add('d-none');
+                }
             }
             
             // Reload table
@@ -202,6 +206,8 @@
         .text-sm-gray { font-size: 0.85rem; color: #666; }
         .cell-content { max-width: 200px; font-size: 0.85rem; color: #444; }
         .text-red { color: red; }
+        .d-none { display: none !important; }
+        .modal.show { display: flex !important; }
         
         .sentence-item {
             padding: 8px;
@@ -526,10 +532,10 @@
             document.getElementById('modalTitle').innerText = 'เพิ่มข้อมูลสถิติ';
             document.getElementById('submitBtn').innerText = 'บันทึก';
             clearSentenceSelection();
-            document.getElementById('addModal').style.display = 'flex';
+            document.getElementById('addModal').classList.add('show');
         }
         function closeModal() {
-            document.getElementById('addModal').style.display = 'none';
+            document.getElementById('addModal').classList.remove('show');
         }
 
         function updateStatSubjects() {
@@ -573,9 +579,9 @@
             const level = document.getElementById('statLevel').value;
             const roundGroup = document.getElementById('roundGroup');
             if (['p12', 'p3', 'p4', 'p5'].includes(level)) {
-                roundGroup.style.display = 'block';
+                roundGroup.classList.remove('d-none');
             } else {
-                roundGroup.style.display = 'none';
+                roundGroup.classList.add('d-none');
                 document.getElementById('statRound').value = '1';
             }
         }
@@ -585,14 +591,14 @@
 
         function clearSentenceSelection() {
             document.getElementById('statStory').value = '';
-            document.getElementById('sentenceSelectionArea').style.display = 'none';
+            document.getElementById('sentenceSelectionArea').classList.add('hidden');
             selectedStartSentence = null;
             selectedEndSentence = null;
             updateSnippetPreview();
         }
         
         function closeSentenceSelection() {
-            document.getElementById('sentenceSelectionArea').style.display = 'none';
+            document.getElementById('sentenceSelectionArea').classList.add('hidden');
         }
 
         let currentSearchMode = ''; // 'start' or 'end'
@@ -604,7 +610,7 @@
 
             const pageInput = mode === 'start' ? document.getElementById('statStartPage').value : document.getElementById('statEndPage').value;
             if (!pageInput) {
-                document.getElementById('sentenceSelectionArea').style.display = 'none';
+                document.getElementById('sentenceSelectionArea').classList.add('hidden');
                 return;
             }
 
@@ -637,11 +643,11 @@
             list.innerHTML = '';
             
             if (sentences.length === 0) {
-                container.style.display = 'none';
+                container.classList.add('hidden');
                 return;
             }
 
-            container.style.display = 'block';
+            container.classList.remove('hidden');
             
             sentences.forEach(s => {
                 const div = document.createElement('div');
@@ -672,7 +678,7 @@
             }
             
             updateSnippetPreview();
-            document.getElementById('sentenceSelectionArea').style.display = 'none';
+            document.getElementById('sentenceSelectionArea').classList.add('hidden');
         }
 
         function updateSnippetPreview() {
@@ -891,7 +897,7 @@
                 document.getElementById('modalTitle').innerText = 'แก้ไขข้อมูลสถิติ';
                 document.getElementById('submitBtn').innerText = 'บันทึกการแก้ไข';
                 
-                document.getElementById('addModal').style.display = 'flex';
+                document.getElementById('addModal').classList.add('show');
                 
             } catch (err) {
                 console.error(err);

@@ -72,6 +72,13 @@ A dedicated learning and teaching platform specifically designed for the **Pali 
 - Database: Firebase/Firestore
 - Deployment: Firebase Hosting
 
+## For Developers & Educators
+
+This project is structured to be easily reusable for educational purposes:
+- **Dictionary Logic:** See `data/pali-lookup.js` for the core stemming and lookup algorithms.
+- **Raw Data:** Vocabulary files in `data/dicts/` can be converted for other dictionary apps (SQLite/JSON).
+- **Source Texts:** Original documents in `data/source_docs/` are valuable for creating teaching materials (Flashcards/Sheets).
+
 ## License
 
 Internal project
@@ -148,6 +155,13 @@ Internal project
 - Backend: Node.js, Express.js
 - Database: Firebase/Firestore
 - Deployment: Firebase Hosting
+
+## สำหรับนักพัฒนาและอาจารย์
+
+โครงการนี้จัดโครงสร้างเพื่อให้ง่ายต่อการนำไปใช้ซ้ำเพื่อการศึกษา:
+- **ระบบค้นหาคำศัพท์:** ดูที่ `data/pali-lookup.js` สำหรับอัลกอริทึมการตัดคำและค้นหา
+- **ข้อมูลดิบ:** ไฟล์คำศัพท์ใน `data/dicts/` สามารถแปลงไปใช้กับแอปพจนานุกรมอื่นได้ (SQLite/JSON)
+- **เอกสารต้นฉบับ:** เอกสารใน `data/source_docs/` มีประโยชน์มากสำหรับการสร้างสื่อการสอน (Flashcards/ชีทเรียน)
 
 ## ลิขสิทธิ์
 
