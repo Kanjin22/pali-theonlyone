@@ -2,6 +2,7 @@
 node_modules/
 .venv
 .env
+config.js
 
 # Build and Cache
 *.db

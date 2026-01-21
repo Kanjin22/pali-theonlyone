@@ -196,12 +196,12 @@ User Browser
 
 ```javascript
 const firebaseConfig = {
-    apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
-    authDomain: "palitest-generator.firebaseapp.com",
-    projectId: "palitest-generator",
-    appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
-    messagingSenderId: "844040146831",
-    storageBucket: "palitest-generator.firebasestorage.app",
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID",
+    messagingSenderId: "YOUR_SENDER_ID",
+    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
 };
 ```
 
