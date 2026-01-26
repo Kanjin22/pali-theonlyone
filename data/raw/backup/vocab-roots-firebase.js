@@ -58869,5 +58869,21 @@ const vocabRoots = {
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
     }
+  ],
+  "องฺก": [
+    {
+      "root": "องฺก",
+      "meaning_pali": "(ดู อกิ)",
+      "meaning_thai": "(ดู อกิ)",
+      "example": [
+        "(ดู อกิ)"
+      ],
+      "group": "ภู (อ), จุร (เณ ณย)",
+      "page": "",
+      "source": "ธาตวัตถสังคหะ",
+      "id": 4245,
+      "created_at": null,
+      "updated_at": null
+    }
   ]
 };
