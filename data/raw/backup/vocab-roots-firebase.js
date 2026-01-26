@@ -243,11 +243,9 @@ const vocabRoots = {
       "id": 16,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
-    }
-  ],
-  "อค, อคฺค": [
+    },
     {
-      "root": "อค, อคฺค",
+      "root": "อค",
       "meaning_pali": "วงฺกคเต",
       "meaning_thai": "ไปคด",
       "example": [
