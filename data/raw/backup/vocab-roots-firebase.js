@@ -346,6 +346,20 @@ const vocabRoots = {
       "id": 22,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
+    },
+    {
+      "root": "อคฺค",
+      "meaning_pali": "(ดู อค)",
+      "meaning_thai": "(ดู อค)",
+      "example": [
+        "(ดู อค)"
+      ],
+      "group": "ภู (อ)",
+      "page": "",
+      "source": "ธาตวัตถสังคหะ",
+      "id": 4246,
+      "created_at": null,
+      "updated_at": null
     }
   ],
   "อคฺฆ": [
