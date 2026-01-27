@@ -570,11 +570,11 @@ const vocabRoots = {
       "meaning_thai": "ดึง, ลาก, ฉุด, ชัก",
       "example": [
         "อญฺฉติ.",
-        "อญฺฉนฺโต, อญฺฉามิ."
+        "ทีฆํ วา อญฺฉนฺโต ทีฆํ อญฺฉามีติ ปชานาติ."
       ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 41,
       "created_at": null,
       "updated_at": null
