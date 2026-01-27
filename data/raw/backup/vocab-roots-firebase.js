@@ -31,6 +31,48 @@ const vocabRoots = {
       "updated_at": "2025-12-30T07:56:52.190Z"
     }
   ],
+  "อก": [
+    {
+      "root": "อก",
+      "meaning_pali": "กุฏิลคเต",
+      "meaning_thai": "ไปคด, บิดไปบิดมา.",
+      "example": [
+        "สปฺโป อกติ, อกนํ."
+      ],
+      "group": "ภู (อ)",
+      "page": "",
+      "source": "ธาตวัตถสังคหะ",
+      "id": 2,
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "root": "อก",
+      "meaning_pali": "กุฏิลคเต",
+      "meaning_thai": "ไปคด, บิดไปมา",
+      "example": [
+        "สปฺโป อกติ."
+      ],
+      "group": "ภู (อ)",
+      "page": "",
+      "source": "App",
+      "id": 5,
+      "created_at": "2025-12-30T18:31:19.048Z",
+      "updated_at": "2025-12-31T03:13:45.010Z"
+    },
+    {
+      "root": "อก",
+      "meaning_pali": "กุฏิลคติยํ",
+      "meaning_thai": "\"ไปคด\" คดไปคดมา, บิดไปบิดมา",
+      "example": "อกติ",
+      "group": "ภู (อ)",
+      "page": "",
+      "source": "ธาตุปฺปทีปิกา",
+      "id": 7,
+      "created_at": null,
+      "updated_at": "2025-12-30T07:56:31.116Z"
+    }
+  ],
   "อํห": [
     {
       "root": "อํห",
@@ -57,48 +99,6 @@ const vocabRoots = {
       "id": 4,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:52.190Z"
-    }
-  ],
-  "อก": [
-    {
-      "root": "อก",
-      "meaning_pali": "กุฏิลคเต",
-      "meaning_thai": "ไปคด, บิดไปมา",
-      "example": [
-        "สปฺโป อกติ."
-      ],
-      "group": "ภู (อ)",
-      "page": "",
-      "source": "App",
-      "id": 5,
-      "created_at": "2025-12-30T18:31:19.048Z",
-      "updated_at": "2025-12-31T03:13:45.010Z"
-    },
-    {
-      "root": "อก",
-      "meaning_pali": "กุฏิลคเต",
-      "meaning_thai": "ไปคด, บิดไปบิดมา.",
-      "example": [
-        "สปฺโป อกติ, อกนํ."
-      ],
-      "group": "ภู (อ)",
-      "page": "",
-      "source": "ธาตวัตถสังคหะ",
-      "id": 6,
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "root": "อก",
-      "meaning_pali": "กุฏิลคติยํ",
-      "meaning_thai": "\"ไปคด\" คดไปคดมา, บิดไปบิดมา",
-      "example": "อกติ",
-      "group": "ภู (อ)",
-      "page": "",
-      "source": "ธาตุปฺปทีปิกา",
-      "id": 7,
-      "created_at": null,
-      "updated_at": "2025-12-30T07:56:31.116Z"
     }
   ],
   "อกิ": [
