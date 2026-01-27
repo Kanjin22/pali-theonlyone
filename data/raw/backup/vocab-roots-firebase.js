@@ -129,7 +129,9 @@ const vocabRoots = {
       "root": "อกิ",
       "meaning_pali": "ลกฺขเณ",
       "meaning_thai": "กำหนด, หมาย, เป็นเครื่องหมาย",
-      "example": "องฺเกติ,องฺกยติ",
+      "example": [
+        "องฺเกติ, องฺกยติ"
+      ],
       "group": "จุร (เณ ณย)",
       "page": "",
       "source": "ธาตุปฺปทีปิกา",
