@@ -62,20 +62,6 @@ const vocabRoots = {
   "อก": [
     {
       "root": "อก",
-      "meaning_pali": "กุฏิลคเต",
-      "meaning_thai": "ไปคด, บิดไปบิดมา.",
-      "example": [
-        "สปฺโป อกติ, อกนํ."
-      ],
-      "group": "ภู (อ)",
-      "page": "",
-      "source": "ธาตวัตถสังคหะ",
-      "id": 3,
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "root": "อก",
       "meaning_pali": "กุฏิลคติยํ",
       "meaning_thai": "'ไปคด' คดไปคดมา, บิดไปบิดมา",
       "example": [
@@ -84,9 +70,23 @@ const vocabRoots = {
       "group": "ภู (อ)",
       "page": "",
       "source": "ธาตุปฺปทีปิกา",
-      "id": 3,
+      "id": 4,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
+    },
+    {
+      "root": "อก",
+      "meaning_pali": "กุฏิลคเต",
+      "meaning_thai": "ไปคด, บิดไปบิดมา.",
+      "example": [
+        "สปฺโป อกติ, อกนํ."
+      ],
+      "group": "ภู (อ)",
+      "page": "",
+      "source": "ธาตวัตถสังคหะ",
+      "id": 5,
+      "created_at": null,
+      "updated_at": null
     }
   ],
   "อกิ": [
