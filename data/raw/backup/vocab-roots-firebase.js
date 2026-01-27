@@ -65,7 +65,8 @@ const vocabRoots = {
       "meaning_pali": "กุฏิลคเต",
       "meaning_thai": "ไปคด, บิดไปบิดมา.",
       "example": [
-        "สปฺโป อกติ, อกนํ."
+        "สปฺโป อกติ.",
+        "อกนํ."
       ],
       "group": "ภู (อ)",
       "page": "",
