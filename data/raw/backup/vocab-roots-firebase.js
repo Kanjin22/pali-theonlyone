@@ -48,20 +48,6 @@ const vocabRoots = {
     },
     {
       "root": "อก",
-      "meaning_pali": "กุฏิลคเต",
-      "meaning_thai": "ไปคด, บิดไปมา",
-      "example": [
-        "สปฺโป อกติ."
-      ],
-      "group": "ภู (อ)",
-      "page": "",
-      "source": "App",
-      "id": 5,
-      "created_at": "2025-12-30T18:31:19.048Z",
-      "updated_at": "2025-12-31T03:13:45.010Z"
-    },
-    {
-      "root": "อก",
       "meaning_pali": "กุฏิลคติยํ",
       "meaning_thai": "\"ไปคด\" คดไปคดมา, บิดไปบิดมา",
       "example": "อกติ",
