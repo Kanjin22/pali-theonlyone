@@ -692,7 +692,7 @@ const vocabRoots = {
       ],
       "group": "จุร (เณ ณย)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 48,
       "created_at": null,
       "updated_at": null
