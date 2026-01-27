@@ -49,12 +49,14 @@ const vocabRoots = {
     {
       "root": "อก",
       "meaning_pali": "กุฏิลคติยํ",
-      "meaning_thai": "\"ไปคด\" คดไปคดมา, บิดไปบิดมา",
-      "example": "อกติ",
+      "meaning_thai": "'ไปคด' คดไปคดมา, บิดไปบิดมา",
+      "example": [
+        "อกติ"
+      ],
       "group": "ภู (อ)",
       "page": "",
       "source": "ธาตุปฺปทีปิกา",
-      "id": 7,
+      "id": 3,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
     }
