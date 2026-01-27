@@ -671,10 +671,12 @@ const vocabRoots = {
       "root": "อชิ",
       "meaning_pali": "ทิตฺติยํ",
       "meaning_thai": "สว่าง, รุ่งเรือง",
-      "example": "อณฺชยติ,อญฺชยเต.",
+      "example": [
+        "อณฺชยติ, อญฺชยเต."
+      ],
       "group": "จุร (เณ ณย)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 47,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
