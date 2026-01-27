@@ -803,10 +803,13 @@ const vocabRoots = {
       "root": "อญฺฉ",
       "meaning_pali": "อายาเม",
       "meaning_thai": "ดึง, ลาก, ฉุด, ชัก",
-      "example": "อญฺฉติ.อญฺฉนฺโต,อญฺฉามิ.",
+      "example": [
+        "อญฺฉติ.",
+        "ทีฆํ วา อญฺฉนฺโต ทีฆํ อญฺฉามีติ ปชานาติ."
+      ],
       "group": "ภู (อ)",
       "page": "",
-      "source": "App",
+      "source": "ธาตวัตถสังคหะ",
       "id": 57,
       "created_at": null,
       "updated_at": "2025-12-30T07:56:31.116Z"
