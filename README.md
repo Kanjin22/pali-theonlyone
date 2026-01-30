@@ -43,17 +43,32 @@ A dedicated learning and teaching platform specifically designed for the **Pali 
 
 ## Setup
 
-1. Install dependencies:
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Set environment variables:
+2. **Configure Environment:**
+   - Copy the example config:
+     ```bash
+     cp config.example.js config.js
+     ```
+   - Edit `config.js` and add your Firebase credentials.
+   - **Note:** `config.js` is ignored by git to prevent secret leakage.
+
+3. **Install Security Hooks (Recommended):**
+   ```powershell
+   # Windows PowerShell
+   .\scripts\setup-hooks.ps1
+   ```
+   This installs a pre-commit hook to prevent accidental committing of secrets.
+
+4. **Set environment variables (for server):**
    ```bash
    export SERVICE_ACCOUNT_PATH=/path/to/service-account-key.json
    ```
 
-3. Run the server:
+5. **Run the server:**
    ```bash
    npm start
    ```

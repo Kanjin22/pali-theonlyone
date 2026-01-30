@@ -1,0 +1,17 @@
+#!/bin/sh
+# Pre-commit hook to check for secrets
+
+# Define patterns to block
+FORBIDDEN_PATTERNS="AIza|-----BEGIN PRIVATE KEY-----"
+
+# Check if any staged file contains the forbidden patterns
+# git grep --cached checks the index (staged files)
+if git grep -E --cached -I "$FORBIDDEN_PATTERNS" -- . ':!package-lock.json' ':!*.map'; then
+    echo "❌ SECURITY ERROR: Possible secrets detected in staged files!"
+    echo "   Patterns matched: $FORBIDDEN_PATTERNS"
+    echo "   Please remove the secrets or use --no-verify to bypass (not recommended)."
+    exit 1
+fi
+
+echo "✅ Security check passed."
+exit 0
