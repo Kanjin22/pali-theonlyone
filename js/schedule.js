@@ -309,8 +309,43 @@ function renderPins(body, pins) {
             toggleIcon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
         });
 
+        // Inject Mobile Styles
+        if (!document.getElementById('schedule-mobile-styles')) {
+            const style = document.createElement('style');
+            style.id = 'schedule-mobile-styles';
+            style.textContent = `
+                @media (max-width: 600px) {
+                    .pin-item-responsive {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                    }
+                    .pin-time-badge-responsive {
+                        margin-right: 0 !important;
+                        margin-bottom: 8px !important;
+                        align-self: flex-start !important;
+                        min-width: auto !important;
+                        padding: 4px 12px !important;
+                    }
+                    .pin-content-responsive {
+                        width: 100% !important;
+                        display: block !important;
+                    }
+                    .pin-subject-badge-responsive {
+                        margin-bottom: 4px !important;
+                        display: inline-block !important;
+                        vertical-align: top !important;
+                    }
+                    .pin-act-text-responsive {
+                        display: inline !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
         groups[lvl].forEach(item => {
             const itemDiv = document.createElement('div');
+            itemDiv.className = 'pin-item-responsive';
             itemDiv.style.display = 'flex';
             itemDiv.style.alignItems = 'flex-start';
             itemDiv.style.background = '#f8f9fa';
@@ -326,6 +361,7 @@ function renderPins(body, pins) {
             else if (item.time === 'ค่ำ') { timeColor = '#8e44ad'; timeIcon = 'fa-moon'; }
 
             const timeBadge = document.createElement('div');
+            timeBadge.className = 'pin-time-badge-responsive';
             timeBadge.style.minWidth = '70px';
             timeBadge.style.backgroundColor = timeColor;
             timeBadge.style.color = 'white';
@@ -343,12 +379,14 @@ function renderPins(body, pins) {
 
             // Content
             const contentDiv = document.createElement('div');
+            contentDiv.className = 'pin-content-responsive';
             contentDiv.style.flex = '1';
             contentDiv.style.display = 'flex';
             contentDiv.style.alignItems = 'flex-start';
 
             // Subject Badge
             const subjectBadge = document.createElement('span');
+            subjectBadge.className = 'pin-subject-badge-responsive';
             subjectBadge.style.display = 'inline-block';
             subjectBadge.style.flexShrink = '0';
             subjectBadge.style.fontSize = '0.8rem';
@@ -375,6 +413,7 @@ function renderPins(body, pins) {
             }
 
             const actText = document.createElement('span');
+            actText.className = 'pin-act-text-responsive';
             actText.style.flex = '1';
             actText.style.fontSize = '1rem';
             actText.style.color = '#34495e';
