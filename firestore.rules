@@ -285,6 +285,24 @@ service cloud.firestore {
     }
 
     // ─────────────────────────────────────
+    // Dhatu (Roots) - รากศัพท์
+    // ─────────────────────────────────────
+
+    match /dhatu/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────
+    // Global Vocab - ศัพท์บาลี (พจนานุกรมกลาง)
+    // ─────────────────────────────────────
+
+    match /vocab/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────
     // Pins - ปักหมุดตารางเรียน, Today pins
     // ─────────────────────────────────────
 
