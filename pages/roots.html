@@ -471,6 +471,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { dpdRoots } from '../data/dicts/vocab-roots-dpd.js';
 
         // Initialize Firebase
         const app = initializeApp(window.firebaseConfig);
@@ -509,8 +510,8 @@
             spinner.style.display = 'block';
             
             // Cache handling
-            const CACHE_KEY = 'dhatu_cache_v9'; 
-            const TIME_KEY = 'dhatu_cache_time_v9';
+            const CACHE_KEY = 'dhatu_cache_v10'; 
+            const TIME_KEY = 'dhatu_cache_time_v10';
             
             const cachedData = localStorage.getItem(CACHE_KEY);
             const cachedTime = localStorage.getItem(TIME_KEY);
@@ -540,15 +541,39 @@
                         page: doc.data().page || "",
                         source: doc.data().source || ""
                     }));
+
+                    if (data.length === 0) {
+                        console.log("Firestore empty. Falling back to static data.");
+                        data = dpdRoots.map((item, index) => ({
+                            id: "dpd_" + index,
+                            dhatu_word: item.root_pali,
+                            arth_thai: item.meaning_thai,
+                            arth_pali: item.meaning_pali,
+                            mawat_dhatu: item.group_pali,
+                            anukrom_dhatu: index,
+                            udaharana: item.udaharana,
+                            page: item.page || "",
+                            source: item.source || "DPD"
+                        }));
+                    }
                     
                     // Cache it
                     localStorage.setItem(CACHE_KEY, JSON.stringify(data));
                     localStorage.setItem(TIME_KEY, NOW);
                 } catch (err) {
                     console.error("Error fetching data:", err);
-                    statsDisplay.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล: " + err.message;
-                    spinner.style.display = 'none';
-                    return;
+                    console.log("Falling back to static data due to error.");
+                    data = dpdRoots.map((item, index) => ({
+                        id: "dpd_" + index,
+                        dhatu_word: item.root_pali,
+                        arth_thai: item.meaning_thai,
+                        arth_pali: item.meaning_pali,
+                        mawat_dhatu: item.group_pali,
+                        anukrom_dhatu: index,
+                        udaharana: item.udaharana,
+                        page: item.page || "",
+                        source: item.source || "DPD"
+                    }));
                 }
             }
 
