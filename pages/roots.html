@@ -510,8 +510,8 @@
             spinner.style.display = 'block';
             
             // Cache handling
-            const CACHE_KEY = 'dhatu_cache_v11'; 
-            const TIME_KEY = 'dhatu_cache_time_v11';
+            const CACHE_KEY = 'dhatu_cache_v12'; 
+            const TIME_KEY = 'dhatu_cache_time_v12';
             
             const cachedData = localStorage.getItem(CACHE_KEY);
             const cachedTime = localStorage.getItem(TIME_KEY);
@@ -526,7 +526,8 @@
             } else {
                 try {
                     console.log("Fetching from Firestore...");
-                    const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
+                    // Try simple query first to avoid Index issues
+                    const q = query(collection(db, 'dhatu'));
                     const snapshot = await getDocs(q);
                     
                     data = snapshot.docs.map(doc => {
@@ -567,6 +568,13 @@
                     localStorage.setItem(TIME_KEY, NOW);
                 } catch (err) {
                     console.error("Error fetching data:", err);
+                    
+                    // Show error in UI for debugging
+                    const errorMsg = document.createElement('div');
+                    errorMsg.style.cssText = 'background: #fee; color: #c00; padding: 10px; margin: 10px 0; border: 1px solid #fcc; border-radius: 4px; text-align: center;';
+                    errorMsg.innerHTML = `<strong>เกิดข้อผิดพลาดในการโหลดข้อมูลออนไลน์:</strong> ${err.message}<br><small>กำลังใช้ข้อมูลสำรอง (Offline Mode)</small>`;
+                    document.querySelector('.container').insertBefore(errorMsg, document.querySelector('.search-box'));
+
                     console.log("Falling back to static data due to error.");
                     data = dpdRoots.map((item, index) => ({
                         id: "dpd_" + index,
