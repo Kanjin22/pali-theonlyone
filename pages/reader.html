@@ -675,6 +675,9 @@
         <a href="./library_center.html" class="btn secondary btn-library"><i class="fas fa-layer-group"></i><span class="btn-text"> กลับสู่คลังความรู้กลาง</span></a>
 
         <a id="exam-btn" href="./exam_builder.html" class="btn secondary btn-exam"><i class="fas fa-file-pen"></i><span class="btn-text"> ออกข้อสอบ</span></a>
+        <button id="btn-connector-visibility" class="btn secondary" onclick="toggleConnectorVisibility()" title="แสดง/ซ่อน สีกลุ่มวลี">
+            <i class="fas fa-eye"></i><span class="btn-text"> สีกลุ่มวลี</span>
+        </button>
       </div>
     </div>
     <div class="controls">
@@ -776,7 +779,6 @@
             <div class="action-buttons">
                  <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
                  <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
-                 <button class="btn secondary" id="btn-connector-mode" onclick="toggleConnectorMode()" title="โหมดเชื่อมโยงเส้น"><i class="fas fa-project-diagram"></i> เชื่อมโยง</button>
             </div>
         </div>
     </div>
@@ -820,6 +822,7 @@
   <script src="../data/dicts/vocab-insan-pr9.js"></script>
   <script src="../data/dicts/vocab-insan-pr9-5-8.js"></script>
   <script src="../js/connector.js"></script>
+  <script src="../js/connector-graph.js"></script>
   <script>
         // Theme Management
         function initTheme() {
@@ -1010,7 +1013,24 @@
     const SUBJECTS_BY_LEVEL={'ประโยค ๑–๒':['แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๓':['แปล  มคธเป็นไทย','สัมพันธ์ไทย'],'ประโยค ป.ธ. ๔':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๕':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๖':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๗':['แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๘':['แต่งฉันท์ภาษามคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย'],'ประโยค ป.ธ. ๙':['แต่ง  ไทยเป็นมคธ','แปล  ไทยเป็นมคธ','แปล  มคธเป็นไทย']};
     const CONTENT_MAPPING={'ประโยค ๑–๒':{'แปล  มคธเป็นไทย':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑'},{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔'}]},'ประโยค ป.ธ. ๓':{'แปล  มคธเป็นไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}],'สัมพันธ์ไทย':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘'}]},'ประโยค ป.ธ. ๔':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-1','label':'ธรรมบท ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑'}]},'ประโยค ป.ธ. ๕':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-2','label':'ธรรมบท ภาคที่ ๒ (ภาษาไทย)'},{'id':'dhamma-3','label':'ธรรมบท ภาคที่ ๓ (ภาษาไทย)'},{'id':'dhamma-4','label':'ธรรมบท ภาคที่ ๔ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'mangala-2','label':'มังคลัตถทีปนี ภาคที่ ๒'}]},'ประโยค ป.ธ. ๖':{'แปล  ไทยเป็นมคธ':[{'id':'dhamma-5','label':'ธรรมบท ภาคที่ ๕ (ภาษาไทย)'},{'id':'dhamma-6','label':'ธรรมบท ภาคที่ ๖ (ภาษาไทย)'},{'id':'dhamma-7','label':'ธรรมบท ภาคที่ ๗ (ภาษาไทย)'},{'id':'dhamma-8','label':'ธรรมบท ภาคที่ ๘ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-3','label':'สมันตปาสาทิกา ภาคที่ ๓'}]},'ประโยค ป.ธ. ๗':{'แปล  ไทยเป็นมคธ':[{'id':'mangala-1','label':'มังคลัตถทีปนี ภาคที่ ๑ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒'}]},'ประโยค ป.ธ. ๘':{'แต่งฉันท์ภาษามคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'samanta-1','label':'สมันตปาสาทิกา ภาคที่ ๑ (ภาษาไทย)'},{'id':'samanta-2','label':'สมันตปาสาทิกา ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒'}]},'ประโยค ป.ธ. ๙':{'แต่ง  ไทยเป็นมคธ':[{'id':'waiting','label':'รอเนื้อหา'}],'แปล  ไทยเป็นมคธ':[{'id':'visuddhi-1','label':'วิสุทธิมรรค ภาคที่ ๑ (ภาษาไทย)'},{'id':'visuddhi-2','label':'วิสุทธิมรรค ภาคที่ ๒ (ภาษาไทย)'}],'แปล  มคธเป็นไทย':[{'id':'visuddhi-3','label':'วิสุทธิมรรค ภาคที่ ๓'}]}};
     const partSlidesCache=new Map();
-    function getPartSlides(part){if(partSlidesCache.has(part))return partSlidesCache.get(part);const obj=partsMap[part]||{};let slides=[];Object.keys(obj).forEach(k=>{const arr=obj[k];if(Array.isArray(arr))slides=slides.concat(arr)});partSlidesCache.set(part,slides);return slides}
+    function getPartSlides(part){
+        if(partSlidesCache.has(part)) return partSlidesCache.get(part);
+        const obj=partsMap[part]||{};
+        let slides=[];
+        Object.keys(obj).forEach(k=>{
+            const arr=obj[k];
+            if(Array.isArray(arr)) {
+                // Tag slides with source ID and Index for cross-referencing with presentation.html
+                arr.forEach((s, i) => {
+                    s._sourceId = k;
+                    s._sourceIndex = i;
+                });
+                slides = slides.concat(arr);
+            }
+        });
+        partSlidesCache.set(part,slides);
+        return slides;
+    }
     function collectSlides(part,startPage,endPage,vagga,story){const allSlides=getPartSlides(part);let slides=allSlides.filter(s=>typeof s.page!=='undefined');slides=slides.filter(s=>{const okV=vagga?(s.vagga===vagga):true;const okS=story?(((s.story||s.section)===story)):true;return okV&&okS});slides.sort((a,b)=>{const pa=parsePageNumber(a.page);const pb=parsePageNumber(b.page);return pa-pb});const sNum=parseInt(startPage)||0;const eNum=parseInt(endPage)||0;return slides.filter(s=>{const p=parsePageNumber(s.page);if(sNum&&eNum)return p>=sNum&&p<=eNum; if(sNum&&!eNum)return p>=sNum; if(!sNum&&eNum)return p<=eNum; return true})}
     function populateLevels(){const sel=document.getElementById('levelSelect');sel.innerHTML='';['ประโยค ๑–๒','ประโยค ป.ธ. ๓','ประโยค ป.ธ. ๔','ประโยค ป.ธ. ๕','ประโยค ป.ธ. ๖','ประโยค ป.ธ. ๗','ประโยค ป.ธ. ๘','ประโยค ป.ธ. ๙'].forEach(l=>{const o=document.createElement('option');o.value=l;o.text=l;sel.appendChild(o)});sel.onchange=populateSubjects}
     function populateSubjects(){const label=getSelectedLevelLabel();const subjects=SUBJECTS_BY_LEVEL[label]||['แปล  มคธเป็นไทย'];const sel=document.getElementById('subjectSelect');sel.innerHTML='';subjects.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sel.appendChild(o)});sel.onchange=populateParts;populateParts()}
@@ -1106,7 +1126,7 @@
     }
 
     // --- Dictionary Logic ---
-    function wrapWords(text, slideIndex) {
+    function wrapWords(text, slideIndex, counterObj) {
         if (!text) return "";
         const notes = window.currentPageNotes || {};
         const tokens = String(text).split(' ');
@@ -1122,8 +1142,13 @@
             const noteId = `${slideIndex}_${wIdx}`;
             const hasNote = notes[noteId];
             const noteClass = hasNote ? ' has-note' : '';
+            
+            let idxAttr = "";
+            if (counterObj && typeof counterObj.val === 'number') {
+                idxAttr = ` data-idx="${counterObj.val++}"`;
+            }
 
-            out.push(`${prefix}<span class="word-span${noteClass}" data-slide-index="${slideIndex}" data-note-id="${noteId}" onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
+            out.push(`${prefix}<span class="word-span${noteClass}" data-slide-index="${slideIndex}" data-note-id="${noteId}"${idxAttr} onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
         });
 
         return out.join('&nbsp; ');
@@ -1552,6 +1577,28 @@
                     };
                     controls.appendChild(audioBtn);
                 }
+
+                // Create Structure Button
+                const structureBtn = document.createElement('button');
+                structureBtn.className = 'sentence-btn btn-structure';
+                structureBtn.title = 'สร้างโครงสร้างประโยค';
+                structureBtn.innerHTML = '<i class="fas fa-sitemap"></i>';
+                structureBtn.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    openGraphBuilder(index); 
+                };
+                controls.appendChild(structureBtn);
+
+                // Open in Presentation Button
+                const boardBtn = document.createElement('button');
+                boardBtn.className = 'sentence-btn btn-board';
+                boardBtn.title = 'เปิดในโหมดนำเสนอ';
+                boardBtn.innerHTML = '<i class="fas fa-chalkboard-teacher"></i>';
+                boardBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    openInPresentation(slide);
+                };
+                controls.appendChild(boardBtn);
             }
 
             block.prepend(controls);
@@ -2444,7 +2491,7 @@
     }
 
     // --- Gatha Rendering Helper ---
-    function renderPaliContent(s, sIndex) {
+    function renderPaliContent(s, sIndex, counterObj) {
         if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
             const type = s.gatha.type;
             const lines = s.gatha.lines || [];
@@ -2469,15 +2516,15 @@
 
             let paliHtml = "";
             if (introText) {
-                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex)}</div>`;
+                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex, counterObj)}</div>`;
             }
 
             if (type === 'couplet') {
                 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
                 const isNarrow = vw <= 1200;
                 paliHtml += lines.map(line => {
-                    const left = wrapWords(line.left || '', sIndex);
-                    const right = wrapWords(line.right || '', sIndex);
+                    const left = wrapWords(line.left || '', sIndex, counterObj);
+                    const right = wrapWords(line.right || '', sIndex, counterObj);
                     const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
                     const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
                     return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
@@ -2486,18 +2533,18 @@
                             </div>`;
                 }).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj)}</div>`;
                 }
                 return paliHtml;
             } else if (type === 'quatrain') {
-                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex)}</div>`).join('');
+                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex, counterObj)}</div>`).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj)}</div>`;
                 }
                 return paliHtml;
             }
         }
-        return wrapWords(s.pali || '', sIndex);
+        return wrapWords(s.pali || '', sIndex, counterObj);
     }
 
     function renderCurrentPage() {
@@ -2561,14 +2608,14 @@
 
             // Render content based on layout
             const sIndex = slides.indexOf(s); // Get correct index from original array
-            
-
+            item.id = 'sentence-item-' + sIndex;
+            const counterObj = { val: 0 };
 
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block pali-text';
                 b.style.fontWeight='bold';
-                b.innerHTML=renderPaliContent(s, sIndex);
+                b.innerHTML=renderPaliContent(s, sIndex, counterObj);
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
@@ -2576,7 +2623,7 @@
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Pali
-                b1.innerHTML=renderPaliContent(s, sIndex);
+                b1.innerHTML=renderPaliContent(s, sIndex, counterObj);
                 
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
@@ -2598,7 +2645,7 @@
                 b2.className='block pali-text';
                 b2.style.fontWeight='bold';
                 b2.style.color='#333333'; // Darker Pali
-                b2.innerHTML=renderPaliContent(s, sIndex);
+                b2.innerHTML=renderPaliContent(s, sIndex, counterObj);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -2608,7 +2655,7 @@
                 const leftB=document.createElement('div');
                 leftB.className='block pali-text';
                 leftB.style.fontWeight='bold';
-                leftB.innerHTML=renderPaliContent(s, sIndex);
+                leftB.innerHTML=renderPaliContent(s, sIndex, counterObj);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
                 rightB.innerHTML=renderThaiContent(s, sIndex);
@@ -2628,7 +2675,7 @@
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
                 rightB.style.fontWeight='bold';
-                rightB.innerHTML=renderPaliContent(s, sIndex);
+                rightB.innerHTML=renderPaliContent(s, sIndex, counterObj);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
@@ -2720,7 +2767,7 @@
         if (window.Connector) {
              setTimeout(() => {
                  const container = document.getElementById('pages');
-                 window.Connector.init(container, getReaderNoteKey);
+                 window.Connector.init(container, getConnectorKey);
              }, 100);
         }
     }
@@ -3074,6 +3121,24 @@
 // --- Note Mode Logic ---
 window.isNoteMode = false;
 window.currentPageNotes = null;
+window.currentConnectorSentenceIndex = null;
+window.currentConnectorSourceId = null;
+window.currentConnectorSourceIndex = null;
+
+function getConnectorKey() {
+    // Priority: Source ID (Presentation Mode Compatible) > Page Key + Index (Legacy/Fallback)
+    if (window.currentConnectorSourceId) {
+        // Format: sourceId:sourceIndex (e.g. s_1_1:0)
+        return `${window.currentConnectorSourceId}:${window.currentConnectorSourceIndex}`;
+    }
+
+    const pageKey = getReaderNoteKey();
+    // Use explicit sentence index if set, otherwise default to 0 or page-level
+    // To match presentation.html 1 slide = 1 sentence logic, we MUST have an index.
+    // If no index is selected, we might default to 0 or handle it gracefully.
+    const idx = (window.currentConnectorSentenceIndex !== null) ? window.currentConnectorSentenceIndex : 'page';
+    return `${pageKey}_s${idx}`;
+}
 
 function getReaderNoteKey() {
     return `reader_notes:${getReaderInlineKey().replace('reader:', '')}`;
@@ -3160,7 +3225,42 @@ function toggleNoteMode() {
     }
 }
 
-function toggleConnectorMode() {
+// Connector Graph Builder
+        function openGraphBuilder(index) {
+            if (typeof index !== 'undefined') {
+                window.currentConnectorSentenceIndex = index;
+                
+                // Attempt to resolve source ID/Index for Presentation Mode compatibility
+                window.currentConnectorSourceId = null;
+                window.currentConnectorSourceIndex = null;
+                
+                if (typeof groupedPages !== 'undefined' && groupedPages[currentBookPageIndex]) {
+                    const pageData = groupedPages[currentBookPageIndex];
+                    if (pageData.slides && pageData.slides[index]) {
+                        const slide = pageData.slides[index];
+                        if (slide._sourceId && typeof slide._sourceIndex !== 'undefined') {
+                            window.currentConnectorSourceId = slide._sourceId;
+                            window.currentConnectorSourceIndex = slide._sourceIndex;
+                        }
+                    }
+                }
+
+                // Reload data for this sentence
+                if (window.Connector) {
+                    const container = document.getElementById('sentence-item-' + index);
+                    if (container) {
+                        window.Connector.container = container;
+                    }
+                    window.Connector.loadData();
+                }
+            }
+
+            if (window.ConnectorGraph) {
+                window.ConnectorGraph.open();
+            }
+        }
+
+        function toggleConnectorMode() {
     if (!window.Connector) return;
     
     // Toggle state via Connector Logic
@@ -3186,12 +3286,79 @@ function toggleConnectorMode() {
             }
             
             closeAllLookupOverlays();
+
+            // Show Clear/Visibility Buttons
+            // const visBtn = document.getElementById('btn-connector-visibility');
+            const clearBtn = document.getElementById('btn-clear-connector');
+            const colorGrp = document.getElementById('connector-colors');
+            // if (visBtn) visBtn.style.display = 'inline-block';
+            if (clearBtn) clearBtn.style.display = 'inline-block';
+            if (colorGrp) colorGrp.style.display = 'inline-block';
+
         } else {
             btn.classList.remove('active');
             btn.style.background = '';
             btn.style.color = '';
+
+            // Hide Clear/Visibility Buttons
+            // const visBtn = document.getElementById('btn-connector-visibility');
+            const clearBtn = document.getElementById('btn-clear-connector');
+            const colorGrp = document.getElementById('connector-colors');
+            // if (visBtn) visBtn.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = 'none';
+            if (colorGrp) colorGrp.style.display = 'none';
         }
     }
+}
+
+function toggleConnectorVisibility() {
+    if (!window.Connector) return;
+    const isVisible = window.Connector.toggleVisibility();
+    const btn = document.getElementById('btn-connector-visibility');
+    if (btn) {
+        const icon = isVisible ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        btn.innerHTML = icon + '<span class="btn-text"> สีกลุ่มวลี</span>';
+        btn.title = isVisible ? 'ซ่อนสีกลุ่มวลี' : 'แสดงสีกลุ่มวลี';
+        btn.style.color = isVisible ? '' : '#bdc3c7';
+    }
+}
+
+function confirmClearConnector() {
+    if (!window.Connector) return;
+    if (confirm('ต้องการล้างการเชื่อมโยงทั้งหมดในหน้านี้ใช่หรือไม่?')) {
+        window.Connector.clearAll();
+    }
+}
+
+// --- Presentation Mode Link ---
+function openInPresentation(slide) {
+    const partSelect = document.getElementById('partSelect');
+    if (!partSelect) return;
+    const partId = partSelect.value;
+    
+    // Find source key and index
+    const source = findSlideSource(partId, slide);
+    if (source) {
+        window.open(`presentation.html?id=${source.id}&index=${source.index}`, '_blank');
+    } else {
+        alert('ไม่พบข้อมูลสำหรับโหมดนำเสนอ');
+    }
+}
+
+function findSlideSource(partId, targetSlide) {
+    const partData = partsMap[partId];
+    if (!partData) return null;
+    
+    for (const [key, slides] of Object.entries(partData)) {
+        if (Array.isArray(slides)) {
+            // Check reference equality
+            const idx = slides.indexOf(targetSlide);
+            if (idx !== -1) {
+                return { id: key, index: idx };
+            }
+        }
+    }
+    return null;
 }
 
 function handleNoteClick(el) {

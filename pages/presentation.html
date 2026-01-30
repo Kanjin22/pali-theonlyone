@@ -42,6 +42,10 @@
             --tool-btn-hover: #cfd8dc;
         }
 
+        .d-none {
+            display: none !important;
+        }
+
         [data-theme="dark"] {
             --bg-color: #121212;
             --card-bg: #1e1e1e;
@@ -1373,8 +1377,11 @@
             <button class="tool-btn" id="btn-note-mode" title="โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)" onclick="toggleNoteMode()">
                 <i class="fa-solid fa-comment-dots"></i>
             </button>
-            <button class="tool-btn" id="btn-connector-mode" title="โหมดเชื่อมโยง (Connector Mode)" onclick="toggleConnectorMode()">
-                <i class="fa-solid fa-draw-polygon"></i>
+            <button class="tool-btn" id="btn-graph-builder" title="ตัวสร้างกราฟ (Graph Builder)" onclick="openGraphBuilder()">
+                <i class="fa-solid fa-project-diagram"></i>
+            </button>
+            <button class="tool-btn d-none" id="btn-connector-visibility" title="ซ่อน/แสดง ตัวเลขเชื่อมโยง" onclick="toggleConnectorVisibility()">
+                <i class="fa-solid fa-eye"></i>
             </button>
             <button class="tool-btn" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()">
                 <i class="fa-solid fa-i-cursor"></i>
@@ -1474,9 +1481,9 @@
     </div>
 
     <!-- Load Scripts -->
-    <script src="../data/raw/vocab-general.js"></script>
-    <script src="../data/raw/vocab-insan-pr9.js"></script>
-    <script src="../data/raw/vocab-insan-pr9-5-8.js"></script>
+    <script src="../data/dicts/vocab-general.js"></script>
+    <script src="../data/dicts/vocab-insan-pr9.js"></script>
+    <script src="../data/dicts/vocab-insan-pr9-5-8.js"></script>
     <script>
         // Merge Part 5-8 into Part 1-4 (Prioritize Part 1-4 for duplicates)
         if (typeof vocabInsanPr9 !== 'undefined' && typeof vocabInsanPr9Part5to8 !== 'undefined') {
@@ -1532,6 +1539,7 @@
     <script src="../data/pali-formatter.js"></script>
     <script src="../data/pali-script.js"></script>
     <script src="../js/connector.js"></script>
+    <script src="../js/connector-graph.js"></script>
 
     <script src="../data/content-dhamma01.js"></script>
     <script src="../data/content-dhamma02.js"></script>
@@ -3230,39 +3238,30 @@
             `;
             openGenericModal('อ่านเอาความ', content);
         }
-        // Connector Mode
-        function toggleConnectorMode() {
-            if (!window.Connector) return;
-            
-            // Toggle state via Connector Logic
-            window.Connector.toggleMode();
-            const isActive = window.Connector.isActive;
-            
-            const btn = document.getElementById('btn-connector-mode');
-            if (btn) {
-                if (isActive) {
-                    btn.classList.add('active');
-                    btn.style.background = '#8e44ad'; // Purple
-                    btn.style.color = '#fff';
-                    
-                    // Turn off Note Mode if active
-                    if (window.noteMode) toggleNoteMode();
-                    
-                    // Turn off Inline Edit if active
-                    if (window.inlineEditMode) toggleInlineEditMode();
-                    
-                    // Turn off Pen Mode if active
-                    if (typeof isPenMode !== 'undefined' && isPenMode) toggleDrawingMode();
-                    
-                    // Close bubbles
-                    document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
-                } else {
-                    btn.classList.remove('active');
-                    btn.style.background = '';
-                    btn.style.color = '';
-                }
+        // Connector Graph Builder
+        function openGraphBuilder() {
+            if (window.ConnectorGraph) {
+                window.ConnectorGraph.open();
+                
+                // Show visibility/clear buttons when graph builder is opened
+                const visBtn = document.getElementById('btn-connector-visibility');
+                const clearBtn = document.getElementById('btn-clear-connector');
+                if (visBtn) visBtn.classList.remove('d-none');
+                if (clearBtn) clearBtn.classList.remove('d-none');
             }
         }
+
+        function toggleConnectorVisibility() {
+            if (!window.Connector) return;
+            const isVisible = window.Connector.toggleVisibility();
+            const btn = document.getElementById('btn-connector-visibility');
+            if (btn) {
+                btn.innerHTML = isVisible ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+                btn.title = isVisible ? 'ซ่อนสีกลุ่มวลี' : 'แสดงสีกลุ่มวลี';
+                btn.style.color = isVisible ? '' : '#bdc3c7';
+            }
+        }
+
 
         // Annotation Mode
         window.noteMode = false;

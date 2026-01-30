@@ -1,8 +1,13 @@
-
 const Connector = {
     isActive: false,
-    startNode: null,
+    isVisible: true,
     links: [], // { startId, endId, color }
+    sequences: {}, // { wordId: { num: number, color: string } }
+    layout: [], // { id: string, color: string, indent: number }
+    nextSequence: 1,
+    currentColor: '#e74c3c', // Default Red
+    lastNodeId: null,
+    
     svgLayer: null,
     container: null,
     getContextId: null, // Function to get current unique ID (page/slide)
@@ -18,7 +23,7 @@ const Connector = {
         
         if (!this.container) return;
 
-        // Create SVG Layer if not exists
+        // Create SVG Layer if not exists (Kept for future use or compatibility, though not drawing lines now)
         if (!document.getElementById('connector-layer')) {
             this.svgLayer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             this.svgLayer.style.position = "absolute";
@@ -40,24 +45,44 @@ const Connector = {
             this.svgLayer = document.getElementById('connector-layer');
         }
         
-        this.loadLinks();
+        this.loadData();
         
         // Listen for resize
         window.addEventListener('resize', () => this.render());
         
-        // Add CSS for selected state
+        // Add CSS for badges
         if (!document.getElementById('connector-styles')) {
             const style = document.createElement('style');
             style.id = 'connector-styles';
             style.textContent = `
-                .connector-selected {
-                    background-color: #f1c40f !important;
-                    color: #000 !important;
-                    border-radius: 4px;
-                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
-                }
                 .connector-mode .word-span {
-                    cursor: crosshair !important;
+                    cursor: crosshair; /* Fallback */
+                }
+                .connector-badge {
+                    position: absolute;
+                    background-color: #e74c3c;
+                    color: white;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 11px;
+                    font-weight: bold;
+                    z-index: 20;
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+                    /* Position relative to parent word */
+                    top: -10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap; /* Prevent number wrap */
+                    cursor: pointer; /* Change to pointer to indicate clickable */
+                    line-height: 1; /* Reset line-height */
+                }
+                .connector-badge:hover {
+                    transform: translateX(-50%) scale(1.1);
+                    z-index: 21;
                 }
             `;
             document.head.appendChild(style);
@@ -66,8 +91,6 @@ const Connector = {
     
     toggleMode: function(btn) {
         this.isActive = !this.isActive;
-        this.startNode = null;
-        document.querySelectorAll('.connector-selected').forEach(el => el.classList.remove('connector-selected'));
         
         if (btn) {
             btn.classList.toggle('active', this.isActive);
@@ -81,8 +104,40 @@ const Connector = {
             }
         }
         document.body.classList.toggle('connector-mode', this.isActive);
-        // Re-render to ensure lines are correct when showing/hiding
-        if (this.isActive) this.render();
+        
+        if (this.isActive) {
+            // Determine next sequence based on existing max
+            // Need to handle object structure now
+            const values = Object.values(this.sequences).map(v => (typeof v === 'object' ? v.num : v));
+            const maxSeq = values.length > 0 ? Math.max(...values) : 0;
+            this.nextSequence = maxSeq + 1;
+            this.lastNodeId = null; // Start new chain segment
+            this.updateCursor();
+        } else {
+            document.body.style.cursor = '';
+            this.lastNodeId = null;
+        }
+        
+        this.render();
+    },
+
+    setColor: function(color) {
+        this.currentColor = color;
+        this.nextSequence = 1;
+        this.lastNodeId = null;
+        this.updateCursor();
+    },
+
+    removeNode: function(id) {
+        // Confirm removal (optional, maybe better without confirm for speed? User asked "how to delete", prompt is safer)
+        if (confirm('ลบจุดนี้ใช่หรือไม่?')) {
+            delete this.sequences[id];
+            // Remove links connected to this node
+            this.links = this.links.filter(l => l.startId !== id && l.endId !== id);
+            this.saveData();
+            this.render();
+            // Re-calc next sequence? No, keep current counter to avoid confusion.
+        }
     },
     
     handleWordClick: function(el) {
@@ -91,146 +146,178 @@ const Connector = {
         const id = el.getAttribute('data-idx') || el.getAttribute('data-note-id'); // Support both formats
         if (!id) return false;
         
-        if (!this.startNode) {
-            // Select Start
-            this.startNode = el;
-            el.classList.add('connector-selected');
-        } else {
-            // Select End
-            const startId = this.startNode.getAttribute('data-idx') || this.startNode.getAttribute('data-note-id');
-            
-            if (startId === id) {
-                // Cancel if clicking same node
-                this.startNode.classList.remove('connector-selected');
-                this.startNode = null;
-                return true;
-            }
-            
-            // Add Link
-            this.addLink(startId, id);
-            
-            this.startNode.classList.remove('connector-selected');
-            this.startNode = null;
+        // 1. Assign Number
+        this.sequences[id] = { num: this.nextSequence, color: this.currentColor };
+        
+        // 2. Link from last node (if exists and not same)
+        if (this.lastNodeId && this.lastNodeId !== id) {
+            this.addLink(this.lastNodeId, id);
         }
+        
+        // 3. Update State
+        this.lastNodeId = id;
+        this.nextSequence++;
+        
+        // 4. Save & Render
+        this.saveData();
+        this.render();
+        this.updateCursor();
+        
         return true;
     },
     
     addLink: function(startId, endId) {
-        const link = { startId, endId, color: '#e67e22' };
-        
-        // Check duplicate
-        const existsIndex = this.links.findIndex(l => 
-            (l.startId === startId && l.endId === endId) || 
-            (l.startId === endId && l.endId === startId)
-        );
-        
-        if (existsIndex >= 0) {
-            // Remove (Toggle)
-            this.links.splice(existsIndex, 1);
-        } else {
-            this.links.push(link);
+        // Avoid duplicates
+        const exists = this.links.some(l => l.startId === startId && l.endId === endId);
+        if (!exists) {
+            this.links.push({ startId, endId, color: this.currentColor }); // Use current color for link too
         }
         
-        this.saveLinks();
-        this.render();
+        // Notify Graph if open
+        if (window.ConnectorGraph && window.ConnectorGraph.isOpen) {
+            window.ConnectorGraph.render();
+        }
     },
     
-    saveLinks: function() {
+    saveData: function() {
         if (!this.getContextId) return;
         const contextId = this.getContextId();
         if (contextId) {
             localStorage.setItem('connector_links_' + contextId, JSON.stringify(this.links));
+            localStorage.setItem('connector_sequences_' + contextId, JSON.stringify(this.sequences));
+            localStorage.setItem('connector_layout_' + contextId, JSON.stringify(this.layout));
         }
     },
     
-    loadLinks: function() {
+    loadData: function() {
         if (!this.getContextId) return;
         const contextId = this.getContextId();
         if (contextId) {
-            const data = localStorage.getItem('connector_links_' + contextId);
-            this.links = data ? JSON.parse(data) : [];
-            this.render();
+            const linksData = localStorage.getItem('connector_links_' + contextId);
+            const seqData = localStorage.getItem('connector_sequences_' + contextId);
+            const layoutData = localStorage.getItem('connector_layout_' + contextId);
+            this.links = linksData ? JSON.parse(linksData) : [];
+            this.sequences = seqData ? JSON.parse(seqData) : {};
+            this.layout = layoutData ? JSON.parse(layoutData) : [];
         } else {
             this.links = [];
-            this.render();
+            this.sequences = {};
+            this.layout = [];
         }
     },
     
     reload: function() {
-        this.loadLinks();
+        this.loadData();
+    },
+
+    toggleVisibility: function() {
+        this.isVisible = !this.isVisible;
+        this.render();
+        return this.isVisible;
+    },
+
+    clearAll: function() {
+        this.sequences = {};
+        this.links = [];
+        this.nextSequence = 1;
+        this.lastNodeId = null;
+        this.saveData();
+        this.render();
+        this.updateCursor();
+        
+        // Notify Graph if open
+        if (window.ConnectorGraph && window.ConnectorGraph.isOpen) {
+            window.ConnectorGraph.render();
+        }
     },
     
-    updateAllLines: function() {
-        this.render();
-    },
-
     render: function() {
-        if (!this.svgLayer || !this.container) return;
-        this.svgLayer.innerHTML = ''; // Clear
+        if (!this.container) return;
         
-        // Resize SVG to match container scrollHeight
-        this.svgLayer.style.height = this.container.scrollHeight + 'px';
-        this.svgLayer.style.width = this.container.scrollWidth + 'px';
-
-        this.links.forEach(link => {
-            const startEl = this.findEl(link.startId);
-            const endEl = this.findEl(link.endId);
+        // 1. Clear Lines (We don't draw lines in main view anymore)
+        if (this.svgLayer) {
+            this.svgLayer.innerHTML = '';
+            // Update SVG size just in case we need it later
+            this.svgLayer.style.height = this.container.scrollHeight + 'px';
+            this.svgLayer.style.width = this.container.scrollWidth + 'px';
+        }
+        
+        // 2. Clear Old Styles (Color text)
+        document.querySelectorAll('.word-span').forEach(el => {
+            el.style.color = '';
+            el.style.fontWeight = '';
+            el.classList.remove('has-connector-color');
             
-            if (startEl && endEl) {
-                this.drawLine(startEl, endEl, link.color);
+            // Remove handlers attached via properties if any (not used here, but good practice)
+        });
+        
+        if (!this.isVisible) return;
+
+        // 3. Draw Styles
+        Object.entries(this.sequences).forEach(([id, data]) => {
+            const el = this.findEl(id);
+            if (el) {
+                // Support legacy data (number only)
+                // const num = typeof data === 'object' ? data.num : data; // Number unused now
+                const color = typeof data === 'object' ? data.color : '#e74c3c';
+                this.applyColor(el, color, id);
             }
         });
     },
     
     findEl: function(id) {
+        if (this.container) {
+            return this.container.querySelector(`.word-span[data-idx="${id}"]`) || this.container.querySelector(`.word-span[data-note-id="${id}"]`);
+        }
         return document.querySelector(`[data-idx="${id}"]`) || document.querySelector(`[data-note-id="${id}"]`);
     },
     
-    drawLine: function(startEl, endEl, color) {
-        const startRect = startEl.getBoundingClientRect();
-        const endRect = endEl.getBoundingClientRect();
-        const containerRect = this.container.getBoundingClientRect();
+    applyColor: function(el, color, id) {
+        el.style.color = color || '#e74c3c';
+        el.style.fontWeight = 'bold'; // Make it bold to stand out
+        el.classList.add('has-connector-color');
         
-        // Calculate coordinates relative to container
-        const scrollTop = this.container.scrollTop;
-        const scrollLeft = this.container.scrollLeft;
+        // Add delete handler (Right-Click on the word itself)
+        // Note: This might conflict with other context menus, but for now it's consistent with previous behavior
+        // To avoid piling up event listeners, we set it as a property or assume re-render clears them? 
+        // Actually, re-render doesn't replace the element, so listeners pile up.
+        // Better to use a dedicated property on the element or delegate.
+        // For simplicity in this legacy codebase structure, we'll try to handle it carefully.
         
-        // Correct calculation for absolute SVG inside relative container
-        const x1 = startRect.left - containerRect.left + scrollLeft + (startRect.width / 2);
-        const y1 = startRect.bottom - containerRect.top + scrollTop;
-        const x2 = endRect.left - containerRect.left + scrollLeft + (endRect.width / 2);
-        const y2 = endRect.top - containerRect.top + scrollTop;
-        
-        // Draw Curve
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        
-        const yDiff = Math.abs(y1 - y2);
-        
-        let d = "";
-        
-        if (yDiff < 20) {
-            // Same line roughly (connect side-by-side or far apart)
-            const midX = (x1 + x2) / 2;
-            const arcH = 25; // Height of arc
-            d = `M ${x1} ${y1} Q ${midX} ${y1 + arcH}, ${x2} ${y2}`;
-        } else {
-            // Different lines (S-curve)
-            const cp1x = x1;
-            const cp1y = y1 + 30;
-            const cp2x = x2;
-            const cp2y = y2 - 30;
-            d = `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+        // Remove old handler if stored
+        if (el._connectorRightClick) {
+            el.removeEventListener('contextmenu', el._connectorRightClick);
         }
         
-        path.setAttribute("d", d);
-        path.setAttribute("stroke", color);
-        path.setAttribute("stroke-width", "2");
-        path.setAttribute("fill", "none");
-        path.setAttribute("stroke-linecap", "round");
-        path.style.transition = "d 0.3s ease";
-        path.style.pointerEvents = "none"; // Let clicks pass through
+        const handler = (e) => {
+            if (Connector.isActive) {
+                e.preventDefault();
+                e.stopPropagation();
+                Connector.removeNode(id);
+            }
+        };
         
-        this.svgLayer.appendChild(path);
+        el.addEventListener('contextmenu', handler);
+        el._connectorRightClick = handler;
+    },
+    
+    updateCursor: function() {
+        if (!this.isActive) {
+            document.body.style.cursor = '';
+            return;
+        }
+        
+        // Create SVG cursor with number
+        const num = this.nextSequence;
+        const color = this.currentColor || '#e74c3c';
+        const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+            <circle cx="16" cy="16" r="12" fill="${color}" fill-opacity="0.9" stroke="white" stroke-width="2"/>
+            <text x="16" y="20.5" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">${num}</text>
+        </svg>`;
+        
+        const url = `data:image/svg+xml;base64,${btoa(svg)}`;
+        document.body.style.cursor = `url('${url}') 16 16, auto`;
     }
 };
 
