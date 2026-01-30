@@ -41,24 +41,21 @@ jobs:
           git checkout -b $CLEANED_BRANCH
           
           # Prepare replacement patterns
-          cat <<EOF > replace_expressions.txt
+          cat <<EOF > /tmp/replace_expressions.txt
           AIza[0-9A-Za-z_-]{35}==>REDACTED_API_KEY
           EOF
           
-          # Run git-filter-repo in ONE pass (Path filtering + Text replacement)
-          # Note: We use python3 to invoke it directly to avoid PATH issues with git subcommand
-          FILTER_REPO_SCRIPT=$(python3 -c "import git_filter_repo; print(git_filter_repo.__file__)")
-          
-          echo "Running filter-repo from: $FILTER_REPO_SCRIPT"
+          # Run git-filter-repo using python module mode (safer than finding path)
+          echo "Running git-filter-repo via python module..."
           
           # Construct arguments
           # 1. Remove service-account-key.json (if exists)
           # 2. Replace API keys
           # 3. Force execution
           
-          python3 "$FILTER_REPO_SCRIPT" \
+          python3 -m git_filter_repo \
             --path service-account-key.json --invert-paths \
-            --replace-text replace_expressions.txt \
+            --replace-text /tmp/replace_expressions.txt \
             --force
             
           # Restore Remote (Deleted by filter-repo)
