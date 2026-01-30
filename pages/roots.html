@@ -510,8 +510,8 @@
             spinner.style.display = 'block';
             
             // Cache handling
-            const CACHE_KEY = 'dhatu_cache_v10'; 
-            const TIME_KEY = 'dhatu_cache_time_v10';
+            const CACHE_KEY = 'dhatu_cache_v11'; 
+            const TIME_KEY = 'dhatu_cache_time_v11';
             
             const cachedData = localStorage.getItem(CACHE_KEY);
             const cachedTime = localStorage.getItem(TIME_KEY);
@@ -529,18 +529,23 @@
                     const q = query(collection(db, 'dhatu'), orderBy('anukrom_dhatu'));
                     const snapshot = await getDocs(q);
                     
-                    data = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        dhatu_word: doc.data().dhatu_word,
-                        arth_thai: doc.data().arth_thai,
-                        arth_pali: doc.data().arth_pali,
-                        mawat_dhatu: doc.data().mawat_dhatu,
-                        anukrom_dhatu: doc.data().anukrom_dhatu,
-                        udaharana: doc.data().udaharana,
-                        // Additional fields if they exist in Firestore
-                        page: doc.data().page || "",
-                        source: doc.data().source || ""
-                    }));
+                    data = snapshot.docs.map(doc => {
+                        const d = doc.data();
+                        return {
+                            id: doc.id,
+                            // Support both field naming conventions (Current Code vs Backup/TheDhatu)
+                            dhatu_word: d.dhatu_word || d.root,
+                            arth_thai: d.arth_thai || d.meaning_thai,
+                            arth_pali: d.arth_pali || d.meaning_pali,
+                            mawat_dhatu: d.mawat_dhatu || d.group,
+                            anukrom_dhatu: d.anukrom_dhatu || d.id, // Backup uses 'id' for order/sequence?
+                            udaharana: d.udaharana || d.example,
+                            
+                            // Additional fields
+                            page: d.page || "",
+                            source: d.source || ""
+                        };
+                    });
 
                     if (data.length === 0) {
                         console.log("Firestore empty. Falling back to static data.");
