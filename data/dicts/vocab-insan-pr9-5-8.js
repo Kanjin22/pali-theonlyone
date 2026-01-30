@@ -4332,6 +4332,5 @@ var vocabInsanPr9Part5to8 = Object.assign({},
   vocabInsanPr9Part5to8_Page232,
   vocabInsanPr9Part5to8_Page233,
   vocabInsanPr9Part5to8_Page234,
-  vocabInsanPr9Part5to8_Page235,
-  vocabInsanPr9Part5to8_Page236
+  vocabInsanPr9Part5to8_Page235
 );
