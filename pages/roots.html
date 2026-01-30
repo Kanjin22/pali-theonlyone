@@ -461,7 +461,7 @@
     </div>
 
     <!-- Load Roots Data (Derived Words only) -->
-    <script src="../data/raw/vocab-roots-dpd-derived.js"></script>
+    <script src="../data/dicts/vocab-roots-dpd-derived.js"></script>
 
     <!-- Firebase SDKs -->
     <script src="../config.js"></script>
@@ -469,10 +469,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         // Initialize Firebase
         const app = initializeApp(window.firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
         // Global variables for UI
         window.allRoots = [];
@@ -487,7 +489,19 @@
 
         // Initialize
         window.addEventListener('load', () => {
-            fetchData();
+            // Wait for Auth before fetching
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    fetchData();
+                } else {
+                    // Try to fetch anyway? Or show error?
+                    // If cached data exists, we might use it, but Firestore call will fail if not cached.
+                    // Let's check cache first inside fetchData logic, but we need to trigger it.
+                    // Actually, fetchData handles cache. If cache exists, it doesn't hit Firestore.
+                    // So we can call fetchData(), and if it hits Firestore it will fail.
+                    fetchData();
+                }
+            });
         });
 
         async function fetchData() {

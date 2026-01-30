@@ -2,6 +2,10 @@
 const PaliLookup = {
     lookup: function(word, databases, options = {}) {
         if (!word) return null;
+        if (typeof word !== 'string') {
+            console.warn('PaliLookup.lookup received non-string word:', word);
+            return null;
+        }
         const cleanWord = word.replace(/[“"'(‘)”"'.ฯ,;:?’]+/g, '').trim();
         if (!cleanWord) return null;
 

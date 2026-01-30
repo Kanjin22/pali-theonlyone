@@ -37,6 +37,8 @@ if (!window.firebaseConfig && (__cfgFromQuery || __cfgFromLocal)) {
     window.firebaseConfig = __cfgFromQuery || __cfgFromLocal;
 }
 const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || __defaultConfig;
+// Ensure it is available globally for module scripts
+window.firebaseConfig = firebaseConfig;
 
 try {
     if (firebaseConfig && firebaseConfig.apiKey && typeof firebase !== 'undefined') {

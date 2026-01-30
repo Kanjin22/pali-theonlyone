@@ -1958,7 +1958,20 @@
 
         // Check Manual Roots (Word Origin) - Priority 2
         if (typeof vocabRoots !== 'undefined' && vocabRoots[cleanWord]) {
-             showDictionaryDefinition(vocabRoots[cleanWord]);
+             const rootData = vocabRoots[cleanWord];
+             // Format root data to match PaliLookup result structure
+             const entries = Array.isArray(rootData) 
+                ? rootData.map(e => `[${e.group}] ${e.meaning_pali} (${e.meaning_thai})`)
+                : [rootData];
+             
+             const result = {
+                 details: entries,
+                 source: 'พจนานุกรมธาตุ',
+                 word: cleanWord,
+                 data: rootData, 
+                 _stemmedFrom: cleanWord
+             };
+             showDictionaryDefinition(cleanWord, result);
              return;
         }
 
