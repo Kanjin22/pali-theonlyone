@@ -1,0 +1,68 @@
+name: Security Dry Run Scrub (History Cleanup)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scrub-history:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install git-filter-repo
+        run: |
+          pip install git-filter-repo
+
+      - name: Analyze and Scrub History (Dry Run / Branch Creation)
+        run: |
+          # Define the cleaned branch name
+          CLEANED_BRANCH="cleaned-mirror-$(date +%s)"
+          echo "CLEANED_BRANCH=$CLEANED_BRANCH" >> $GITHUB_ENV
+          
+          # Configure git
+          git config user.name "Security Bot"
+          git config user.email "security@bot.local"
+          
+          # Create a fresh branch for the cleaning operation
+          git checkout -b $CLEANED_BRANCH
+          
+          # 1. Remove sensitive files from history
+          # service-account-key.json is the main target
+          if git rev-list --all | grep -q .; then
+            git filter-repo --path service-account-key.json --invert-paths --force
+          fi
+          
+          # 2. Replace API Keys in file content (using --replace-text)
+          # Create expressions file
+          cat <<EOF > replace_expressions.txt
+          AIza[0-9A-Za-z_-]{35}==>REDACTED_API_KEY
+          EOF
+          
+          # Apply replacement
+          git filter-repo --replace-text replace_expressions.txt --force
+          
+          # Verify cleanup (optional logging)
+          echo "Cleanup complete. History rewritten."
+
+      - name: Push Cleaned Branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin $CLEANED_BRANCH --force
+
+      - name: Create Pull Request for Review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Security: Cleaned History Dry-Run ($CLEANED_BRANCH)" \
+            --body "This PR contains the rewritten history with sensitive files and keys removed. Please review the file changes and history before performing the final force push." \
+            --head $CLEANED_BRANCH \
+            --base main
