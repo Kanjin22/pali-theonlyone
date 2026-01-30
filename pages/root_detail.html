@@ -459,6 +459,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { dpdRoots } from '../data/dicts/vocab-roots-dpd.js';
 
         // Initialize Firebase
         let app, db, auth;
@@ -514,7 +515,56 @@
             }
 
             try {
-                // 1. Fetch the requested document first
+                // 1. Check if ID is from Local Fallback (DPD)
+                if (id.startsWith('dpd_')) {
+                    console.log("Loading from Local DPD Data...");
+                    const index = parseInt(id.replace('dpd_', ''));
+                    const localData = dpdRoots[index];
+
+                    if (!localData) {
+                        showError("ไม่พบข้อมูลในฐานข้อมูลสำรอง (Local Data not found)");
+                        return;
+                    }
+
+                    // Map Local Data to UI Format
+                    const currentData = {
+                        dhatu_word: localData.root_pali,
+                        mawat_dhatu: localData.group_pali,
+                        arth_thai: localData.meaning_thai,
+                        arth_pali: localData.meaning_pali,
+                        page: localData.page || "",
+                        source: localData.source || "DPD",
+                        udaharana: localData.udaharana, // Array
+                        example_school: null // DPD doesn't have school examples usually
+                    };
+
+                    currentRootWord = currentData.dhatu_word;
+                    currentGroup = currentData.mawat_dhatu || "";
+                    activeTab = 'dpd'; // DPD data always defaults to DPD tab
+
+                    // Populate Lists (Filter all DPD roots for the same root word)
+                    thaiEntries = []; // No Thai entries in local DPD usually, unless we mix?
+                    
+                    // Find all entries with same root in local data
+                    dpdEntries = dpdRoots
+                        .map((item, idx) => ({ ...item, originalIndex: idx }))
+                        .filter(item => item.root_pali === currentRootWord && item.group_pali === currentGroup)
+                        .map(item => ({
+                            id: "dpd_" + item.originalIndex,
+                            group: item.group_pali,
+                            meaning_thai: item.meaning_thai,
+                            meaning_pali: item.meaning_pali,
+                            page: item.page || "",
+                            source: item.source || "DPD",
+                            example: item.udaharana,
+                            example_school: null
+                        }));
+
+                    renderPage();
+                    return; // Stop here, don't hit Firestore
+                }
+
+                // 2. Fetch the requested document from Firestore
                 if (!db) {
                     showError("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ (No DB Connection)");
                     return;
