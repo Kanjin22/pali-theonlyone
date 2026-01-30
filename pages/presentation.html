@@ -1373,6 +1373,9 @@
             <button class="tool-btn" id="btn-note-mode" title="โหมดคำอธิบาย (คลิกคำเพื่อวางโน้ต)" onclick="toggleNoteMode()">
                 <i class="fa-solid fa-comment-dots"></i>
             </button>
+            <button class="tool-btn" id="btn-connector-mode" title="โหมดเชื่อมโยง (Connector Mode)" onclick="toggleConnectorMode()">
+                <i class="fa-solid fa-draw-polygon"></i>
+            </button>
             <button class="tool-btn" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()">
                 <i class="fa-solid fa-i-cursor"></i>
             </button>
@@ -3412,7 +3415,10 @@
 
                 // 2. ปรับหน้าตาปุ่ม
                 if (btn) { btn.classList.add('active'); btn.style.color = '#27ae60'; }
-                if (clearBtn) clearBtn.style.display = 'flex';
+                if (clearBtn) {
+                    clearBtn.classList.remove('d-none');
+                    clearBtn.style.display = 'flex';
+                }
 
                 // 3. เปิดให้พิมพ์แก้ได้
                 if (pali) { pali.contentEditable = 'true'; pali.style.outline = '2px dashed #27ae60'; }
@@ -3437,7 +3443,10 @@
                 // --- ออกจากโหมดแก้ไข ---
                 
                 if (btn) { btn.classList.remove('active'); btn.style.color = ''; }
-                if (clearBtn) clearBtn.style.display = 'none';
+                if (clearBtn) {
+                    clearBtn.classList.add('d-none');
+                    clearBtn.style.display = 'none';
+                }
 
                 // 1. ซ่อน Toolbar ทันที
                 if (toolbar) toolbar.style.display = 'none';
