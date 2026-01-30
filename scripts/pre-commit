@@ -6,7 +6,14 @@ FORBIDDEN_PATTERNS="AIza|-----BEGIN PRIVATE KEY-----"
 
 # Check if any staged file contains the forbidden patterns
 # git grep --cached checks the index (staged files)
-if git grep -E --cached -I "$FORBIDDEN_PATTERNS" -- . ':!package-lock.json' ':!*.map'; then
+# Exclude:
+# - package-lock.json (auto-generated)
+# - *.map (source maps)
+# - config.js (contains public safe key)
+# - scripts/pre-commit (contains the pattern itself)
+# - .github/workflows/*.yml (contains scrub patterns)
+# - .github/workflows/*.yaml (yaml extension)
+if git grep -E --cached -I "$FORBIDDEN_PATTERNS" -- ':!package-lock.json' ':!*.map' ':!config.js' ':!scripts/pre-commit' ':!.github/workflows/*.yml' ':!.github/workflows/*.yaml'; then
     echo "❌ SECURITY ERROR: Possible secrets detected in staged files!"
     echo "   Patterns matched: $FORBIDDEN_PATTERNS"
     echo "   Please remove the secrets or use --no-verify to bypass (not recommended)."
