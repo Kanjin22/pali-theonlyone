@@ -20,11 +20,23 @@ function __readLocalConfig() {
 
 const __cfgFromQuery = __readQueryConfig();
 const __cfgFromLocal = __readLocalConfig();
+
+// Fallback config for GitHub Pages or environments where config.js is missing
+const __defaultConfig = {
+  apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
+  authDomain: "palitest-generator.firebaseapp.com",
+  projectId: "palitest-generator",
+  storageBucket: "palitest-generator.firebasestorage.app",
+  messagingSenderId: "844040146831",
+  appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
+  measurementId: "G-RKML6H6EX7"
+};
+
 // Ensure window.firebaseConfig is available for module scripts
 if (!window.firebaseConfig && (__cfgFromQuery || __cfgFromLocal)) {
     window.firebaseConfig = __cfgFromQuery || __cfgFromLocal;
 }
-const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || null;
+const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || __defaultConfig;
 
 try {
     if (firebaseConfig && firebaseConfig.apiKey && typeof firebase !== 'undefined') {
