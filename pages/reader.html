@@ -1455,6 +1455,8 @@
         if (!page) return;
         
         const blocks = Array.from(page.children);
+        const pageData = (typeof groupedPages !== 'undefined' && groupedPages[currentBookPageIndex]) ? groupedPages[currentBookPageIndex] : null;
+
         blocks.forEach((block, index) => {
             // Ensure proper class and positioning
             if (!block.classList.contains('sentence-item')) {
@@ -1476,10 +1478,65 @@
             
             const controls = document.createElement('div');
             controls.className = 'sentence-controls';
-            controls.innerHTML = `
-                <button class="sentence-btn btn-edit" title="แก้ไขข้อความ" onclick="toggleSentenceEdit(this, ${index})"><i class="fas fa-pen"></i></button>
-                <button class="sentence-btn btn-note" title="โหมดบันทึกช่วยจำ" onclick="openSentenceNote(${index})"><i class="fas fa-sticky-note"></i></button>
-            `;
+            
+            // Edit Button
+            const editBtn = document.createElement('button');
+            editBtn.className = 'sentence-btn btn-edit';
+            editBtn.title = 'แก้ไขข้อความ';
+            editBtn.onclick = () => toggleSentenceEdit(editBtn, index);
+            editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+            controls.appendChild(editBtn);
+
+            // Note Button
+            const noteBtn = document.createElement('button');
+            noteBtn.className = 'sentence-btn btn-note';
+            noteBtn.title = 'โหมดบันทึกช่วยจำ';
+            noteBtn.onclick = () => openSentenceNote(index);
+            noteBtn.innerHTML = '<i class="fas fa-sticky-note"></i>';
+            controls.appendChild(noteBtn);
+
+            // Logic for Sense and Audio Buttons (Moved from renderCurrentPage)
+            if (pageData && pageData.slides && pageData.slides[index]) {
+                const slide = pageData.slides[index];
+                
+                // Sense Button
+                if (slide.thai_sense) {
+                    const senseBtn = document.createElement('button');
+                    senseBtn.className = 'sentence-btn btn-sense';
+                    senseBtn.title = 'แสดงคำแปลเอาความ';
+                    senseBtn.innerHTML = '<i class="fas fa-language"></i>';
+                    senseBtn.onclick = (e) => { 
+                        e.stopPropagation(); 
+                        showSenseTranslation(index); 
+                    };
+                    controls.appendChild(senseBtn);
+                }
+                
+                // Audio Button
+                let thaiText = null;
+                if (typeof preferThai === 'function') {
+                    thaiText = preferThai(slide);
+                } else {
+                    thaiText = slide.thai || slide.thai_1 || slide.thai_2 || slide.thai_3 || '...';
+                }
+
+                if (thaiText && thaiText !== '...') {
+                    const audioBtn = document.createElement('button');
+                    audioBtn.className = 'sentence-btn btn-audio';
+                    audioBtn.title = 'เล่นเสียงอ่าน';
+                    audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                    
+                    const audioId = slide.id || (index + 1);
+                    const storyName = slide.story || slide.section || (document.getElementById('storySelect') ? document.getElementById('storySelect').value : 'unknown');
+                    
+                    audioBtn.onclick = (e) => { 
+                        e.stopPropagation(); 
+                        playSentenceAudio(audioBtn, audioId, thaiText, storyName); 
+                    };
+                    controls.appendChild(audioBtn);
+                }
+            }
+
             block.prepend(controls);
         });
     }
@@ -2471,41 +2528,7 @@
             // Render content based on layout
             const sIndex = slides.indexOf(s); // Get correct index from original array
             
-            // Helper for Sense Button
-            const createSenseBtn = (slideIndex) => {
-                if(s.thai_sense) {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn secondary';
-                    btn.style.cssText = 'padding: 2px 8px; font-size: 0.5em; margin-left: 8px; border-radius: 12px; background-color: #9b59b6; color: white; border: none; cursor: pointer; vertical-align: middle;';
-                    btn.innerHTML = '<i class="fas fa-language"></i>';
-                    btn.title = 'แสดงคำแปลเอาความ';
-                    btn.onclick = (e) => { e.stopPropagation(); showSenseTranslation(slideIndex); };
-                    return btn;
-                }
-                return null;
-            };
 
-            // Helper for Audio Button
-            const createAudioBtn = (slideIndex, slide) => {
-                const thaiText = preferThai(slide);
-                if (!thaiText || thaiText === '...') return null;
-
-                const btn = document.createElement('button');
-                btn.className = 'btn secondary audio-btn';
-                btn.style.cssText = 'padding: 2px 8px; font-size: 0.5em; margin-left: 8px; border-radius: 12px; background-color: white; color: #7f8c8d; border: 1px solid #bdc3c7; cursor: pointer; vertical-align: middle; transition: all 0.2s;';
-                btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-                btn.title = 'เล่นเสียงอ่าน';
-                
-                // Use slide.id (if available) or construct a unique ID based on slideIndex
-                const audioId = slide.id || (slideIndex + 1);
-                const storyName = slide.story || slide.section || document.getElementById('storySelect').value || 'unknown';
-                
-                btn.onclick = (e) => { 
-                    e.stopPropagation(); 
-                    playSentenceAudio(btn, audioId, thaiText, storyName); 
-                };
-                return btn;
-            };
 
             if(layout==='pali_only'){
                 const b=document.createElement('div');
@@ -2525,10 +2548,7 @@
                 b2.className='block thai-text';
                 b2.style.color='#000000'; // Darker Thai
                 b2.innerHTML=renderThaiContent(s);
-                const senseBtn = createSenseBtn(sIndex);
-                if(senseBtn) b2.appendChild(senseBtn);
-                const audioBtn = createAudioBtn(sIndex, s);
-                if(audioBtn) b2.appendChild(audioBtn);
+
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -2538,10 +2558,7 @@
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Thai
                 b1.innerHTML=renderThaiContent(s);
-                const senseBtn = createSenseBtn(sIndex);
-                if(senseBtn) b1.appendChild(senseBtn);
-                const audioBtn = createAudioBtn(sIndex, s);
-                if(audioBtn) b1.appendChild(audioBtn);
+
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
@@ -2561,10 +2578,7 @@
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
                 rightB.innerHTML=renderThaiContent(s);
-                const senseBtn = createSenseBtn(sIndex);
-                if(senseBtn) rightB.appendChild(senseBtn);
-                const audioBtn = createAudioBtn(sIndex, s);
-                if(audioBtn) rightB.appendChild(audioBtn);
+
 
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
@@ -2575,10 +2589,7 @@
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
                 leftB.innerHTML=renderThaiContent(s);
-                const senseBtn = createSenseBtn(sIndex);
-                if(senseBtn) leftB.appendChild(senseBtn);
-                const audioBtn = createAudioBtn(sIndex, s);
-                if(audioBtn) leftB.appendChild(audioBtn);
+
 
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
