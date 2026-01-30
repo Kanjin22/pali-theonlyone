@@ -51,11 +51,15 @@ jobs:
           # Verify cleanup (optional logging)
           echo "Cleanup complete. History rewritten."
 
+          # CRITICAL: git-filter-repo removes the 'origin' remote. We must re-add it to push.
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
+
       - name: Push Cleaned Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin $CLEANED_BRANCH --force
+          # Push the current HEAD (rewritten history) to the new branch name on remote
+          git push origin HEAD:refs/heads/$CLEANED_BRANCH --force
 
       - name: Create Pull Request for Review
         env:
