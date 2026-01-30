@@ -41,7 +41,7 @@ jobs:
           git checkout -b $CLEANED_BRANCH
           
           # Prepare replacement patterns
-          cat <<EOF > replace_expressions.txt
+          cat <<EOF > /tmp/replace_expressions.txt
           AIza[0-9A-Za-z_-]{35}==>REDACTED_API_KEY
           EOF
           
@@ -58,7 +58,7 @@ jobs:
           
           python3 "$FILTER_REPO_SCRIPT" \
             --path service-account-key.json --invert-paths \
-            --replace-text replace_expressions.txt \
+            --replace-text /tmp/replace_expressions.txt \
             --force
             
           # Restore Remote (Deleted by filter-repo)
