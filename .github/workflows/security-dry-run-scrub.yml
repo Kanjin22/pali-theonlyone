@@ -19,49 +19,62 @@ jobs:
       - name: Install git-filter-repo
         run: |
           pip install git-filter-repo
+          # Verify installation
+          echo "git-filter-repo location:"
+          which git-filter-repo || echo "Not found in PATH"
+          echo "Python module check:"
+          python3 -c "import git_filter_repo; print(git_filter_repo.__file__)" || echo "Module not found"
 
-      - name: Analyze and Scrub History (Dry Run / Branch Creation)
+      - name: Analyze and Scrub History (Dry Run)
         run: |
-          # Define the cleaned branch name
+          set -x # Enable debug logging
+          
+          # Define branch name
           CLEANED_BRANCH="cleaned-mirror-$(date +%s)"
           echo "CLEANED_BRANCH=$CLEANED_BRANCH" >> $GITHUB_ENV
           
-          # Configure git
+          # Configure git identity
           git config user.name "Security Bot"
           git config user.email "security@bot.local"
           
-          # Create a fresh branch for the cleaning operation
+          # Create fresh branch
           git checkout -b $CLEANED_BRANCH
           
-          # 1. Remove sensitive files from history
-          # service-account-key.json is the main target
-          if git rev-list --all | grep -q .; then
-            git filter-repo --path service-account-key.json --invert-paths --force
-          fi
-          
-          # 2. Replace API Keys in file content (using --replace-text)
-          # Create expressions file
+          # Prepare replacement patterns
           cat <<EOF > replace_expressions.txt
           AIza[0-9A-Za-z_-]{35}==>REDACTED_API_KEY
           EOF
           
-          # Apply replacement
-          git filter-repo --replace-text replace_expressions.txt --force
+          # Run git-filter-repo in ONE pass (Path filtering + Text replacement)
+          # Note: We use python3 to invoke it directly to avoid PATH issues with git subcommand
+          FILTER_REPO_SCRIPT=$(python3 -c "import git_filter_repo; print(git_filter_repo.__file__)")
           
-          # Verify cleanup (optional logging)
-          echo "Cleanup complete. History rewritten."
-
-          # CRITICAL: git-filter-repo removes the 'origin' remote. We must re-add it to push.
+          echo "Running filter-repo from: $FILTER_REPO_SCRIPT"
+          
+          # Construct arguments
+          # 1. Remove service-account-key.json (if exists)
+          # 2. Replace API keys
+          # 3. Force execution
+          
+          python3 "$FILTER_REPO_SCRIPT" \
+            --path service-account-key.json --invert-paths \
+            --replace-text replace_expressions.txt \
+            --force
+            
+          # Restore Remote (Deleted by filter-repo)
           git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
+          
+          echo "History rewrite complete."
 
       - name: Push Cleaned Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Push the current HEAD (rewritten history) to the new branch name on remote
+          set -x
+          # Push HEAD to the new branch on remote
           git push origin HEAD:refs/heads/$CLEANED_BRANCH --force
 
-      - name: Create Pull Request for Review
+      - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
