@@ -315,6 +315,9 @@ function renderPins(body, pins) {
             style.id = 'schedule-mobile-styles';
             style.textContent = `
                 @media (max-width: 600px) {
+                    #today-schedule-container {
+                        display: block !important;
+                    }
                     .today-pin-header {
                         flex-direction: column !important;
                         align-items: flex-start !important;
