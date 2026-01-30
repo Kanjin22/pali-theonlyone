@@ -2402,7 +2402,7 @@
         };
 
         // Use smart lookup
-        let result = manualResult || PaliLookup.lookup(word, dbs, options);
+        let result = manualResult || PaliLookup.lookup(word, dbs, Object.assign({ includeRoots: true }, options));
 
         // --- 2. Contextual Fallback (User Request) ---
         // If dictionary lookup failed, try to use hints from slide data (vocab_list, akhyata, kitaka)
