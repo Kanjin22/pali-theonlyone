@@ -130,6 +130,21 @@
         border-bottom-color: transparent; /* Override default dotted */
     }
 
+    /* Connector Mode Styles */
+    .connector-mode-active .word-span {
+        cursor: crosshair !important;
+    }
+    .connector-mode-active .word-span:hover {
+        outline: 2px solid #8e44ad;
+        background-color: rgba(142, 68, 173, 0.1);
+        border-radius: 4px;
+    }
+    .connector-mode-active .word-span.connector-selected {
+        background-color: #8e44ad !important;
+        color: white !important;
+        outline: 2px solid #8e44ad;
+    }
+
     /* Dictionary Panel */
     #dict-panel {
         position: fixed;
@@ -761,6 +776,7 @@
             <div class="action-buttons">
                  <button class="btn" id="renderBtn"><i class="fas fa-sync-alt"></i> รีเฟรช</button>
                  <button class="btn secondary" id="printBtn"><i class="fas fa-print"></i> พิมพ์</button>
+                 <button class="btn secondary" id="btn-connector-mode" onclick="toggleConnectorMode()" title="โหมดเชื่อมโยงเส้น"><i class="fas fa-project-diagram"></i> เชื่อมโยง</button>
             </div>
         </div>
     </div>
@@ -803,6 +819,7 @@
 
   <script src="../data/dicts/vocab-insan-pr9.js"></script>
   <script src="../data/dicts/vocab-insan-pr9-5-8.js"></script>
+  <script src="../js/connector.js"></script>
   <script>
         // Theme Management
         function initTheme() {
@@ -844,7 +861,7 @@
   <script src="../data/vocab-ipa.js"></script>
   <script src="../data/dicts/vocab-dpd.js"></script>
   <script src="../data/vocab-pts.js"></script>
-  <script src="../data/vocab-dppn.js"></script>
+  <script src="../data/dicts/vocab-dppn.js"></script>
   <script src="../data/vocab-dhammika.js"></script>
   <script src="../data/vocab-dpd-inflected.js"></script>
   <script src="../data/vocab-inflected.js"></script>
@@ -1036,21 +1053,21 @@
         }).join('');
     }
 
-    function renderThaiContent(s) {
+    function renderThaiContent(s, sIndex) {
         const mode = document.getElementById('thaiMode') ? document.getElementById('thaiMode').value : 'thai';
         
         const text = preferThai(s);
         
         if (text.includes('{')) {
-            return parseThaiFormatting(text);
+            return parseThaiFormatting(text, sIndex);
         }
 
         if (mode === 'thai' && s.gatha) {
              // User requested normal text flow (not split left/right) but narrower margins for Gatha
-             return `<div style="margin: 0 40px; font-weight: bold; color: #000000;">${escapeHtml(text)}</div>`;
+             return `<div style="margin: 0 40px; font-weight: bold; color: #000000;">${wrapWords(text, sIndex, 'thai')}</div>`;
         }
 
-        return escapeHtml(text);
+        return wrapWords(text, sIndex, 'thai');
     }
     function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
     function getThaiCombinedHtml(obj){
@@ -1907,6 +1924,10 @@
         if (window.inlineEditMode === true) {
             return;
         }
+        if (window.Connector && window.Connector.isActive) {
+            window.Connector.handleWordClick(el);
+            return;
+        }
         if (window.isNoteMode === true) {
             handleNoteClick(el);
             return;
@@ -2560,7 +2581,7 @@
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
                 b2.style.color='#000000'; // Darker Thai
-                b2.innerHTML=renderThaiContent(s);
+                b2.innerHTML=renderThaiContent(s, sIndex);
 
                 
                 item.appendChild(b1);
@@ -2570,7 +2591,7 @@
                 b1.className='block thai-text';
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Thai
-                b1.innerHTML=renderThaiContent(s);
+                b1.innerHTML=renderThaiContent(s, sIndex);
 
                 
                 const b2=document.createElement('div');
@@ -2590,7 +2611,7 @@
                 leftB.innerHTML=renderPaliContent(s, sIndex);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
-                rightB.innerHTML=renderThaiContent(s);
+                rightB.innerHTML=renderThaiContent(s, sIndex);
 
 
                 grid.appendChild(leftB);
@@ -2601,7 +2622,7 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
-                leftB.innerHTML=renderThaiContent(s);
+                leftB.innerHTML=renderThaiContent(s, sIndex);
 
 
                 const rightB=document.createElement('div');
@@ -2694,6 +2715,14 @@
         }
         
         saveReaderProgress();
+
+        // Init Connector for this page
+        if (window.Connector) {
+             setTimeout(() => {
+                 const container = document.getElementById('pages');
+                 window.Connector.init(container, getReaderNoteKey);
+             }, 100);
+        }
     }
 
     function changeFontFamily(font) {
@@ -3128,6 +3157,40 @@ function toggleNoteMode() {
 
     } else {
         document.body.classList.remove('note-mode-active');
+    }
+}
+
+function toggleConnectorMode() {
+    if (!window.Connector) return;
+    
+    // Toggle state via Connector Logic
+    window.Connector.toggleMode();
+    const isActive = window.Connector.isActive;
+    
+    const btn = document.getElementById('btn-connector-mode');
+    if (btn) {
+        if (isActive) {
+            btn.classList.add('active');
+            btn.style.background = '#8e44ad'; // Purple
+            btn.style.color = '#fff';
+            
+            // Turn off Note Mode if active
+            if (window.isNoteMode) toggleNoteMode();
+            
+            // Turn off Inline Edit if active
+            if (window.inlineEditMode) {
+                 window.inlineEditMode = false;
+                 document.body.classList.remove('inline-edit-mode');
+                 // Reset edit buttons if needed
+                 document.querySelectorAll('.sentence-btn.btn-edit.active').forEach(b => b.click());
+            }
+            
+            closeAllLookupOverlays();
+        } else {
+            btn.classList.remove('active');
+            btn.style.background = '';
+            btn.style.color = '';
+        }
     }
 }
 

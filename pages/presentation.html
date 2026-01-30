@@ -1518,7 +1518,7 @@
     <script src="../data/vocab-ipa.js"></script>
     <script src="../data/dicts/vocab-dpd.js"></script>
     <script src="../data/vocab-pts.js"></script>
-    <script src="../data/vocab-dppn.js"></script>
+    <script src="../data/dicts/vocab-dppn.js"></script>
     <script src="../data/vocab-dhammika.js"></script>
     <script src="../data/vocab-dpd-inflected.js"></script>
     <script src="../data/vocab-inflected.js"></script>
@@ -1528,6 +1528,7 @@
     <script src="../data/pali-lookup.js"></script>
     <script src="../data/pali-formatter.js"></script>
     <script src="../data/pali-script.js"></script>
+    <script src="../js/connector.js"></script>
 
     <script src="../data/content-dhamma01.js"></script>
     <script src="../data/content-dhamma02.js"></script>
@@ -2016,7 +2017,7 @@
             localStorage.setItem(key, JSON.stringify(currentSlideNotes));
         }
 
-        function wrapWords(text, vocabData, isPali = false) {
+        function wrapWords(text, vocabData, isPali = false, generateId = false) {
             if (!text) return "";
             return text.split(' ').map(word => {
                 if (word.trim() === "") return "";
@@ -2038,7 +2039,7 @@
 
                 let noteAttrs = "";
                 let noteClass = "";
-                if (isPali) {
+                if (isPali || generateId) {
                     const idx = paliWordIndexCounter++;
                     noteAttrs = `data-idx="${idx}"`;
                     if (currentSlideNotes && currentSlideNotes[idx]) {
@@ -2055,6 +2056,10 @@
 
     function handleWordClick(el) {
         if (window.inlineEditMode === true) return;
+        if (window.Connector && window.Connector.isActive) {
+            window.Connector.handleWordClick(el);
+            return;
+        }
         if (window.noteMode === true) { handleNoteClick(el); return; }
         if (el.closest('#thaiContent')) return;
 
@@ -2758,6 +2763,8 @@
             const btnClear = document.getElementById('btn-clear-ink');
 
             if (isPenMode) {
+                if (window.Connector && window.Connector.isActive) toggleConnectorMode();
+                
                 card.classList.add('drawing-mode');
                 btnPen.classList.add('active-pen');
                 btnClear.style.display = 'block'; // โชว์ปุ่มถังขยะ
@@ -2820,9 +2827,6 @@
         function parseThaiFormatting(text, s) {
             if (!text) return "";
             // Split by { } block
-            // Regex to capture content inside {} and outside
-            // (.*?)({.*?})(.*?) ... but global
-            // Use split with capturing group
             const parts = text.split(/({[^}]+})/g);
             
             return parts.map(part => {
@@ -2830,12 +2834,14 @@
                     // This is Gatha block
                     const content = part.slice(1, -1); // Remove { }
                     // Handle newlines inside Gatha block
-                    const lines = content.split('\n').map(line => wrapWords(line.trim(), s)).join('<br>');
+                    // Pass true for generateId to enable connections
+                    const lines = content.split('\n').map(line => wrapWords(line.trim(), s, false, true)).join('<br>');
                     return `<div style="margin: 0 60px; font-weight: bold; color: #000000;">${lines}</div>`;
                 } else {
                     // Normal text
                     // Handle newlines
-                    return part.split('\n').map(line => wrapWords(line.trim(), s)).join('<br>');
+                    // Pass true for generateId to enable connections
+                    return part.split('\n').map(line => wrapWords(line.trim(), s, false, true)).join('<br>');
                 }
             }).join('');
         }
@@ -2929,9 +2935,9 @@
                  thaiBox.innerHTML = parseThaiFormatting(displayThai, null);
             } else if (isLiteralMode && s.gatha) {
                 // User requested normal text flow (not split left/right) but narrower margins for Gatha
-                thaiBox.innerHTML = `<div style="margin: 0 60px; font-weight: bold; color: #000000;">${wrapWords(displayThai, null)}</div>`;
+                thaiBox.innerHTML = `<div style="margin: 0 60px; font-weight: bold; color: #000000;">${wrapWords(displayThai, null, false, true)}</div>`;
             } else {
-                thaiBox.innerHTML = wrapWords(displayThai, null);
+                thaiBox.innerHTML = wrapWords(displayThai, null, false, true);
             }
 
             paliBox.parentElement.scrollTop = 0;
@@ -2988,6 +2994,22 @@
                 if (localUser) {
                     localStorage.setItem(`pali_progress_local_${localUser}`, JSON.stringify(state));
                 }
+            }
+            
+            // Init Connector
+            if (window.Connector) {
+                setTimeout(() => {
+                    const container = document.querySelector('.content-area');
+                    if (container) {
+                        window.Connector.init(container, getInlineKey);
+                        // Add scroll listeners to panes
+                        document.querySelectorAll('.split-pane').forEach(pane => {
+                            pane.onscroll = () => {
+                                if(window.Connector.isActive) window.Connector.updateAllLines();
+                            };
+                        });
+                    }
+                }, 100);
             }
         }
 
@@ -3205,6 +3227,40 @@
             `;
             openGenericModal('อ่านเอาความ', content);
         }
+        // Connector Mode
+        function toggleConnectorMode() {
+            if (!window.Connector) return;
+            
+            // Toggle state via Connector Logic
+            window.Connector.toggleMode();
+            const isActive = window.Connector.isActive;
+            
+            const btn = document.getElementById('btn-connector-mode');
+            if (btn) {
+                if (isActive) {
+                    btn.classList.add('active');
+                    btn.style.background = '#8e44ad'; // Purple
+                    btn.style.color = '#fff';
+                    
+                    // Turn off Note Mode if active
+                    if (window.noteMode) toggleNoteMode();
+                    
+                    // Turn off Inline Edit if active
+                    if (window.inlineEditMode) toggleInlineEditMode();
+                    
+                    // Turn off Pen Mode if active
+                    if (typeof isPenMode !== 'undefined' && isPenMode) toggleDrawingMode();
+                    
+                    // Close bubbles
+                    document.querySelectorAll('.sandhi-bubble').forEach(b => b.remove());
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }
+            }
+        }
+
         // Annotation Mode
         window.noteMode = false;
         function toggleNoteMode() {
@@ -3214,6 +3270,9 @@
             if (window.noteMode) {
                 // Disable Inline Edit Mode if active
                 if (window.inlineEditMode) toggleInlineEditMode();
+                
+                // Disable Connector Mode if active
+                if (window.Connector && window.Connector.isActive) toggleConnectorMode();
 
                 document.body.classList.add('note-mode-active');
                 btn.classList.add('active');
@@ -3349,6 +3408,7 @@
                 // 1. ปิดโหมดอื่นๆ ที่อาจชนกัน
                 if (window.noteMode) toggleNoteMode();
                 if (typeof isPenMode !== 'undefined' && isPenMode) toggleDrawingMode();
+                if (window.Connector && window.Connector.isActive) toggleConnectorMode();
 
                 // 2. ปรับหน้าตาปุ่ม
                 if (btn) { btn.classList.add('active'); btn.style.color = '#27ae60'; }
