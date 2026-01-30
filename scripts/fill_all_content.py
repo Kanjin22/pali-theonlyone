@@ -7,7 +7,7 @@ import time
 import sys
 
 # Configuration
-API_KEY = "AIzaSyC42i6GRpirCPvveVX4MBKsP1CS1rtlpQw"
+API_KEY = os.environ.get('GOOGLE_API_KEY')
 MODEL = "gemini-3-pro-preview" # Gemini 3.0 Pro
 
 # List of files to process (Sequential order)
@@ -205,3 +205,4 @@ if __name__ == "__main__":
             print(f"CRITICAL ERROR processing {file_path}: {e}")
             continue
     print("All files processed.")
+
