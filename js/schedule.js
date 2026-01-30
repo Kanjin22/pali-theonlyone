@@ -315,6 +315,15 @@ function renderPins(body, pins) {
             style.id = 'schedule-mobile-styles';
             style.textContent = `
                 @media (max-width: 600px) {
+                    .today-pin-header {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                        gap: 8px;
+                    }
+                    .today-pin-header > div:last-child { /* Date Div */
+                        align-self: flex-start !important;
+                        font-size: 0.85rem !important;
+                    }
                     .pin-item-responsive {
                         flex-direction: column !important;
                         align-items: flex-start !important;
