@@ -1,5 +1,22 @@
 export const dpdRoots = [
   {
+    "root_pali": "อกิ",
+    "root_roman": "aki",
+    "group_pali": "ภู (อ)",
+    "group_roman": "bhūvādigaṇa",
+    "meaning_thai": "กำหนด, หมาย, เป็นเครื่องหมาย",
+    "meaning_pali": "ลกฺขเณ",
+    "root_sign_thai": "อ",
+    "udaharana": [
+      "องฺกติ",
+      "องฺกนํ",
+      "องฺโก"
+    ],
+    "source": "ธาตุปฺปทีปิกา",
+    "page": "",
+    "katha": ""
+  },
+  {
     "root_pali": "อกฺขฺ",
     "root_roman": "akkh",
     "group_pali": "ภู (อ)",
