@@ -1,3 +1,4 @@
+import os
 import re
 import json
 import urllib.request
@@ -5,7 +6,7 @@ import time
 import sys
 
 # Configuration
-API_KEY = "AIzaSyC42i6GRpirCPvveVX4MBKsP1CS1rtlpQw"
+API_KEY = os.environ.get('GOOGLE_API_KEY')
 INPUT_FILE = "d:/pali-theonlyone/data/content-dhamma02.js" # Target file 02
 OUTPUT_FILE = "d:/pali-theonlyone/data/content-dhamma02_preview_v3.js"
 MODEL = "gemini-3-pro-preview" # Using the new beast
@@ -148,3 +149,4 @@ def process_file():
 
 if __name__ == "__main__":
     process_file()
+

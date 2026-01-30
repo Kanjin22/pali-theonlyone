@@ -3,9 +3,11 @@ import json
 import urllib.request
 import time
 import sys
+import os
 
 # Configuration
-API_KEY = "AIzaSyC42i6GRpirCPvveVX4MBKsP1CS1rtlpQw"
+# Use environment variable for API Key
+API_KEY = os.getenv("GEMINI_API_KEY", "YOUR_API_KEY_HERE")
 INPUT_FILE = "d:/pali-theonlyone/data/content-dhamma01.js"
 OUTPUT_FILE = "d:/pali-theonlyone/data/content-dhamma01_preview.js"
 MODEL = "gemini-2.0-flash"

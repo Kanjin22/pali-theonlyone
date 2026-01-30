@@ -7,7 +7,7 @@ import sys
 import os
 
 # Configuration
-API_KEY = "AIzaSyC42i6GRpirCPvveVX4MBKsP1CS1rtlpQw"
+API_KEY = os.environ.get('GOOGLE_API_KEY')
 INPUT_FILE = "d:/pali-theonlyone/data/content-dhamma01.js" 
 OUTPUT_FILE = "d:/pali-theonlyone/data/content-dhamma01_preview_v3.js"
 MODEL = "gemini-3-pro-preview"
@@ -169,3 +169,4 @@ def process_file():
 
 if __name__ == "__main__":
     process_file()
+

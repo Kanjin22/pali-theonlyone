@@ -1,4 +1,4 @@
-function __readQueryConfig() {
+﻿function __readQueryConfig() {
     try {
         const params = new URLSearchParams(location.search);
         const raw = params.get('firebaseConfig') || params.get('fbcfg') || params.get('cfg');
@@ -23,13 +23,13 @@ const __cfgFromLocal = __readLocalConfig();
 
 // Fallback config for GitHub Pages or environments where config.js is missing
 const __defaultConfig = {
-  apiKey: "AIzaSyC3ib32Tk9p40p2Z2j30Yogxy0lR8vSM28",
-  authDomain: "palitest-generator.firebaseapp.com",
-  projectId: "palitest-generator",
-  storageBucket: "palitest-generator.firebasestorage.app",
-  messagingSenderId: "844040146831",
-  appId: "1:844040146831:web:b19c0a8a5493299f6ec5fa",
-  measurementId: "G-RKML6H6EX7"
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_AUTH_DOMAIN_HERE",
+  projectId: "YOUR_PROJECT_ID_HERE",
+  storageBucket: "YOUR_STORAGE_BUCKET_HERE",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID_HERE",
+  appId: "YOUR_APP_ID_HERE",
+  measurementId: "YOUR_MEASUREMENT_ID_HERE"
 };
 
 // Ensure window.firebaseConfig is available for module scripts
@@ -61,3 +61,5 @@ try {
         window.db = firebase.firestore();
     }
 } catch (_) {}
+
+
