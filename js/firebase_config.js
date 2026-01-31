@@ -33,9 +33,32 @@ const __defaultConfig = {
 };
 
 // Ensure window.firebaseConfig is available for module scripts
-if (!window.firebaseConfig && (__cfgFromQuery || __cfgFromLocal)) {
-    window.firebaseConfig = __cfgFromQuery || __cfgFromLocal;
+let candidateConfig = window.firebaseConfig || __cfgFromQuery || __cfgFromLocal;
+
+// Helper to check if config is placeholder
+const isPlaceholderConfig = (cfg) => cfg && cfg.apiKey === "YOUR_API_KEY_HERE";
+
+// Aggressively clear global placeholder if present
+if (isPlaceholderConfig(window.firebaseConfig)) {
+    window.firebaseConfig = undefined;
 }
+
+// Ensure window.firebaseConfig is available for module scripts
+let candidateConfig = window.firebaseConfig || __cfgFromQuery || __cfgFromLocal;
+
+// If the candidate config is just a placeholder, ignore it so we can try config.js
+if (isPlaceholderConfig(candidateConfig)) {
+    candidateConfig = null;
+    // Also clear from localStorage if it was the source of the bad config
+    if (__cfgFromLocal && isPlaceholderConfig(__cfgFromLocal)) {
+        try { localStorage.removeItem('firebaseConfig'); } catch(e) {}
+    }
+}
+
+if (!window.firebaseConfig && candidateConfig) {
+    window.firebaseConfig = candidateConfig;
+}
+
 const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || __defaultConfig;
 // Ensure it is available globally for module scripts
 window.firebaseConfig = firebaseConfig;
