@@ -1,4 +1,4 @@
-const vocabRoots = {
+window.vocabRoots = {
   "กขิ": [
     {
       "root": "กขิ",

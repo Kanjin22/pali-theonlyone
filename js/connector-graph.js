@@ -338,27 +338,41 @@ const ConnectorGraph = {
         `;
 
         // 1. Get all words
-        let wordContainer = document.getElementById('paliContent');
+        // Prioritize Connector.container if available (Context of Truth) and attached to DOM
+        let wordContainer = (window.Connector && window.Connector.container && document.contains(window.Connector.container)) ? window.Connector.container : null;
+
+        // Fallback: Check Presentation Mode ID
+        if (!wordContainer) {
+             wordContainer = document.getElementById('paliContent');
+        }
         
-        // Handle Reader Mode (Multi-sentence)
+        // Fallback: Handle Reader Mode (Multi-sentence) if no container set yet
         if (!wordContainer && document.getElementById('pageContent')) {
             const page = document.getElementById('pageContent');
+            // Check if we have a specific sentence index stored globally
             if (typeof window.currentConnectorSentenceIndex !== 'undefined' && window.currentConnectorSentenceIndex !== null) {
-                 // Specific sentence
-                 wordContainer = page.children[window.currentConnectorSentenceIndex];
+                 // Specific sentence - Try by ID first (more reliable)
+                 const specificContainer = document.getElementById('sentence-item-' + window.currentConnectorSentenceIndex);
+                 wordContainer = specificContainer || page.children[window.currentConnectorSentenceIndex];
             } else {
                  wordContainer = page;
             }
         }
         
-        // Fallback to Connector container if set
-        if (!wordContainer && window.Connector && window.Connector.container) {
-            wordContainer = window.Connector.container;
-        }
-
         if (!wordContainer) return;
 
-        const wordElements = Array.from(wordContainer.querySelectorAll('.word-span'));
+        // Fix: If container has separate Pali/Thai blocks (like Reader Mode), 
+        // restrict to Pali block to avoid pulling Thai words.
+        let targetContainer = wordContainer;
+        const paliBlock = wordContainer.querySelector('.pali-text');
+        if (paliBlock) {
+            targetContainer = paliBlock;
+        }
+
+        const wordElements = Array.from(targetContainer.querySelectorAll('.word-span'));
+        if (wordElements.length === 0 && typeof showToast === 'function') {
+            showToast('ไม่พบคำศัพท์ในประโยคนี้ (No words found)', 'warning');
+        }
         const allWords = wordElements.map(el => {
             // Clone and remove badges/numbers to get clean text
             const clone = el.cloneNode(true);
@@ -756,6 +770,7 @@ const ConnectorGraph = {
             Connector.sequences = {};
             Connector.links = [];
             Connector.layout = [];
+            Connector.wordLinks = [];
             Connector.saveData();
             Connector.render();
             this.render();

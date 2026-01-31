@@ -1,4 +1,4 @@
-﻿function __readQueryConfig() {
+function __readQueryConfig() {
     try {
         const params = new URLSearchParams(location.search);
         const raw = params.get('firebaseConfig') || params.get('fbcfg') || params.get('cfg');
@@ -41,15 +41,18 @@ const firebaseConfig = window.firebaseConfig || window.__FIREBASE_CONFIG || __de
 window.firebaseConfig = firebaseConfig;
 
 try {
-    if (firebaseConfig && firebaseConfig.apiKey && typeof firebase !== 'undefined') {
+    const isPlaceholder = firebaseConfig.apiKey === "YOUR_API_KEY_HERE";
+    if (!isPlaceholder && firebaseConfig && firebaseConfig.apiKey && typeof firebase !== 'undefined') {
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         } else {
             firebase.app();
         }
+    } else if (isPlaceholder) {
+        console.warn("Firebase config is using placeholders. Firebase will not be initialized.");
     }
-} catch (error) {
-    console.error("Firebase initialization error:", error);
+} catch (e) {
+    console.error("Firebase initialization failed:", e);
 }
 
 window.firebaseConfig = firebaseConfig || {};

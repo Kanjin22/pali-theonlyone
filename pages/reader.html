@@ -394,6 +394,15 @@
         color: white;
         border-color: #27ae60;
     }
+    /* Specific override for Connector button to be less intrusive */
+    .sentence-btn.btn-connector.active {
+        background: transparent;
+        color: #8e44ad; /* Purple */
+        border-color: #8e44ad;
+    }
+    .sentence-btn.btn-connector.active:hover {
+        background: rgba(142, 68, 173, 0.1);
+    }
 
     /* Floating Toolbar */
     #floating-toolbar {
@@ -675,9 +684,6 @@
         <a href="./library_center.html" class="btn secondary btn-library"><i class="fas fa-layer-group"></i><span class="btn-text"> กลับสู่คลังความรู้กลาง</span></a>
 
         <a id="exam-btn" href="./exam_builder.html" class="btn secondary btn-exam"><i class="fas fa-file-pen"></i><span class="btn-text"> ออกข้อสอบ</span></a>
-        <button id="btn-connector-visibility" class="btn secondary" onclick="toggleConnectorVisibility()" title="แสดง/ซ่อน สีกลุ่มวลี">
-            <i class="fas fa-eye"></i><span class="btn-text"> สีกลุ่มวลี</span>
-        </button>
       </div>
     </div>
     <div class="controls">
@@ -874,6 +880,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   
+  <script src="../js/utils.js"></script>
   <!-- <script src="../config.js"></script> -->
   <script src="../js/firebase_config.js"></script>
   <script>
@@ -895,7 +902,7 @@
                 return;
             }
             try {
-                if (!window.db && typeof firebase !== 'undefined') {
+                if (!window.db && typeof firebase !== 'undefined' && firebase.apps.length) {
                     window.db = firebase.firestore();
                 }
                 
@@ -1126,33 +1133,37 @@
     }
 
     // --- Dictionary Logic ---
-    function wrapWords(text, slideIndex, counterObj) {
-        if (!text) return "";
-        const notes = window.currentPageNotes || {};
-        const tokens = String(text).split(' ');
-        const out = [];
+    function wrapWords(text, slideIndex, counterObj, slideNotes, noteCounter) {
+    if (!text) return "";
+    const notes = slideNotes || {};
+    const tokens = String(text).split(' ');
+    const out = [];
 
-        tokens.forEach((word, wIdx) => {
-            if (word.trim() === "") return;
-            const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
-            let prefix = "", cleanWord = word, suffix = "";
-            if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
-            const displayText = cleanWord.replace(/_/g, ' ');
-            
-            const noteId = `${slideIndex}_${wIdx}`;
-            const hasNote = notes[noteId];
-            const noteClass = hasNote ? ' has-note' : '';
-            
-            let idxAttr = "";
-            if (counterObj && typeof counterObj.val === 'number') {
-                idxAttr = ` data-idx="${counterObj.val++}"`;
-            }
+    tokens.forEach((word, wIdx) => {
+        if (word.trim() === "") return;
+        const parts = word.match(/^([“"'(‘]*)(.+?)([)”"'.ฯ,;:?’]+)?$/);
+        let prefix = "", cleanWord = word, suffix = "";
+        if (parts) { prefix = parts[1] || ""; cleanWord = parts[2]; suffix = parts[3] || ""; }
+        const displayText = cleanWord.replace(/_/g, ' ');
+        
+        let currentWordIndex = wIdx;
+        if (noteCounter && typeof noteCounter.val === 'number') {
+            currentWordIndex = noteCounter.val++;
+        }
+        
+        const hasNote = notes[currentWordIndex];
+        const noteClass = hasNote ? ' has-note' : '';
+        
+        let idxAttr = "";
+        if (counterObj && typeof counterObj.val === 'number') {
+            idxAttr = ` data-idx="${counterObj.val++}"`;
+        }
 
-            out.push(`${prefix}<span class="word-span${noteClass}" data-slide-index="${slideIndex}" data-note-id="${noteId}"${idxAttr} onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
-        });
+        out.push(`${prefix}<span class="word-span${noteClass}" data-slide-index="${slideIndex}" data-word-index="${currentWordIndex}"${idxAttr} onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
+    });
 
-        return out.join('&nbsp; ');
-    }
+    return out.join('&nbsp; ');
+}
 
     // --- Helper Functions (Ported from presentation.html) ---
     function wrapEnglishWords(html) {
@@ -1504,6 +1515,9 @@
             if (!block.classList.contains('sentence-item')) {
                 block.classList.add('sentence-item');
             }
+            // Assign ID for Connector referencing
+            block.id = 'sentence-item-' + index;
+            
             if (block.style.position !== 'relative') {
                 block.style.position = 'relative';
             }
@@ -1518,6 +1532,56 @@
             // Avoid duplicates
             if (block.querySelector('.sentence-controls')) return;
             
+            // Resolve Context ID for Data Check
+            let contextId = null;
+            let noteKey = null;
+            const pageKey = (typeof getReaderInlineKey === 'function') ? getReaderInlineKey().replace('reader:', 'reader_notes:') : 'unknown';
+
+            if (pageData && pageData.slides && pageData.slides[index]) {
+                const slide = pageData.slides[index];
+                if (slide._sourceId && typeof slide._sourceIndex !== 'undefined') {
+                    contextId = `${slide._sourceId}:${slide._sourceIndex}`;
+                    noteKey = `pali_note:${slide._sourceId}:${slide._sourceIndex}`;
+                } else {
+                    contextId = `${pageKey}_s${index}`;
+                }
+            } else {
+                 contextId = `${pageKey}_s${index}`;
+            }
+
+            // Check Data Existence
+            const seqData = contextId ? localStorage.getItem('connector_sequences_' + contextId) : null;
+            const linkData = contextId ? localStorage.getItem('connector_links_' + contextId) : null;
+            const hasConnectorData = (
+                (seqData && seqData !== '{}') || 
+                (linkData && linkData !== '[]')
+            );
+            
+            const layoutData = contextId ? localStorage.getItem('connector_layout_' + contextId) : null;
+            const hasStructureData = (
+                layoutData && layoutData !== '[]'
+            );
+            
+            // Check Edit Data (Inline Edits)
+            let hasEditData = false;
+            try {
+                const editStoreKey = 'inline_edits_v1';
+                const editStore = JSON.parse(localStorage.getItem(editStoreKey) || '{}');
+                const editPageKey = (typeof getReaderInlineKey === 'function') ? getReaderInlineKey() : null;
+                if (editPageKey && editStore[editPageKey] && editStore[editPageKey][index]) {
+                    const ed = editStore[editPageKey][index];
+                    if (ed.pali || ed.thai) hasEditData = true;
+                }
+            } catch(e) {}
+            
+            let hasNoteData = block.querySelector('.has-note') || block.classList.contains('has-sentence-note');
+            if (!hasNoteData && noteKey) {
+                 try {
+                     const storedNotes = localStorage.getItem(noteKey);
+                     if (storedNotes && storedNotes !== '{}') hasNoteData = true;
+                 } catch(e) {}
+            }
+
             const controls = document.createElement('div');
             controls.className = 'sentence-controls';
             
@@ -1527,15 +1591,58 @@
             editBtn.title = 'แก้ไขข้อความ';
             editBtn.onclick = () => toggleSentenceEdit(editBtn, index);
             editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+            if (hasEditData) {
+                editBtn.style.color = '#e74c3c'; // Red
+                editBtn.style.borderColor = '#e74c3c';
+                editBtn.classList.add('has-data');
+            }
             controls.appendChild(editBtn);
 
             // Note Button
             const noteBtn = document.createElement('button');
             noteBtn.className = 'sentence-btn btn-note';
-            noteBtn.title = 'โหมดบันทึกช่วยจำ';
+            noteBtn.title = 'โหมดบันทึกช่วยจำ (คลิกที่คำเพื่อบันทึก)';
             noteBtn.onclick = () => openSentenceNote(index);
             noteBtn.innerHTML = '<i class="fas fa-sticky-note"></i>';
+            if (hasNoteData) {
+                noteBtn.style.color = '#e67e22'; // Orange
+                noteBtn.style.borderColor = '#e67e22';
+                noteBtn.classList.add('has-data');
+            }
             controls.appendChild(noteBtn);
+
+            // Connector Visibility Button (Moved from Header)
+            const connBtn = document.createElement('button');
+            connBtn.className = 'sentence-btn btn-connector';
+            connBtn.title = 'แสดง/ซ่อน สีกลุ่มวลี';
+            // Set initial icon based on global visibility
+            if (window.Connector && window.Connector.isVisible) {
+                connBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                connBtn.classList.add('active');
+            } else {
+                connBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            }
+            
+            // Set Color based on Data Existence (User Request)
+            if (hasConnectorData) {
+                connBtn.style.color = '#8e44ad'; // Purple
+                connBtn.style.borderColor = '#8e44ad';
+                connBtn.classList.add('has-data');
+            } else if (window.Connector && !window.Connector.isVisible) {
+                connBtn.style.color = '#bdc3c7'; // Dimmed if hidden
+            }
+
+            connBtn.onclick = (e) => {
+                e.stopPropagation();
+                toggleConnectorVisibility();
+            };
+            // Double click to enter Edit Mode
+            connBtn.ondblclick = (e) => {
+                e.stopPropagation();
+                toggleConnectorMode();
+            };
+            connBtn.title = 'คลิก: แสดง/ซ่อน, ดับเบิ้ลคลิก: แก้ไขสี';
+            controls.appendChild(connBtn);
 
             // Logic for Sense and Audio Buttons (Moved from renderCurrentPage)
             if (pageData && pageData.slides && pageData.slides[index]) {
@@ -1547,6 +1654,12 @@
                     senseBtn.className = 'sentence-btn btn-sense';
                     senseBtn.title = 'แสดงคำแปลเอาความ';
                     senseBtn.innerHTML = '<i class="fas fa-language"></i>';
+                    
+                    // Has Data Color
+                    senseBtn.style.color = '#16a085'; // Teal
+                    senseBtn.style.borderColor = '#16a085';
+                    senseBtn.classList.add('has-data');
+
                     senseBtn.onclick = (e) => { 
                         e.stopPropagation(); 
                         showSenseTranslation(index); 
@@ -1568,6 +1681,11 @@
                     audioBtn.title = 'เล่นเสียงอ่าน';
                     audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
                     
+                    // Has Data Color (Assumed available if text exists)
+                    audioBtn.style.color = '#2ecc71'; // Green
+                    audioBtn.style.borderColor = '#2ecc71';
+                    audioBtn.classList.add('has-data');
+                    
                     const audioId = slide.id || (index + 1);
                     const storyName = slide.story || slide.section || (document.getElementById('storySelect') ? document.getElementById('storySelect').value : 'unknown');
                     
@@ -1583,6 +1701,11 @@
                 structureBtn.className = 'sentence-btn btn-structure';
                 structureBtn.title = 'สร้างโครงสร้างประโยค';
                 structureBtn.innerHTML = '<i class="fas fa-sitemap"></i>';
+                if (hasStructureData) {
+                    structureBtn.style.color = '#3498db'; // Blue
+                    structureBtn.style.borderColor = '#3498db';
+                    structureBtn.classList.add('has-data');
+                }
                 structureBtn.onclick = (e) => { 
                     e.stopPropagation(); 
                     openGraphBuilder(index); 
@@ -1602,6 +1725,66 @@
             }
 
             block.prepend(controls);
+        });
+
+        // Ensure connectors are rendered if visible
+        if (window.Connector && window.Connector.isVisible) {
+            renderAllSentenceConnectors();
+        }
+    }
+
+    function renderAllSentenceConnectors() {
+        const page = document.getElementById('pageContent');
+        if (!page) return;
+        const blocks = Array.from(page.children);
+        const pageData = (typeof groupedPages !== 'undefined' && groupedPages[currentBookPageIndex]) ? groupedPages[currentBookPageIndex] : null;
+        const pageKey = (typeof getReaderInlineKey === 'function') ? getReaderInlineKey().replace('reader:', 'reader_notes:') : 'unknown';
+
+        blocks.forEach((block, index) => {
+            if (!block.classList.contains('sentence-item')) return;
+
+            let contextId = null;
+            if (pageData && pageData.slides && pageData.slides[index]) {
+                const slide = pageData.slides[index];
+                if (slide._sourceId && typeof slide._sourceIndex !== 'undefined') {
+                    contextId = `${slide._sourceId}:${slide._sourceIndex}`;
+                } else {
+                    contextId = `${pageKey}_s${index}`;
+                }
+            } else {
+                 contextId = `${pageKey}_s${index}`;
+            }
+            
+            if (contextId) {
+                 const seqData = localStorage.getItem('connector_sequences_' + contextId);
+                 if (seqData && seqData !== '{}') {
+                     try {
+                         const sequences = JSON.parse(seqData);
+                         Object.entries(sequences).forEach(([id, data]) => {
+                             // Find element in this block
+                             const el = block.querySelector(`.word-span[data-idx="${id}"]`) || block.querySelector(`.word-span[data-note-id="${id}"]`);
+                             if (el) {
+                                 const color = typeof data === 'object' ? data.color : '#e74c3c';
+                                 el.style.color = color;
+                                 el.style.fontWeight = 'bold';
+                                 el.classList.add('has-connector-color');
+                             }
+                         });
+                     } catch(e) {
+                         console.error('Error parsing connector sequences:', e);
+                     }
+                 }
+            }
+        });
+    }
+
+    function clearAllSentenceConnectors() {
+        const page = document.getElementById('pageContent');
+        if (!page) return;
+        page.querySelectorAll('.has-connector-color').forEach(el => {
+            el.style.color = '';
+            el.style.fontWeight = '';
+            el.classList.remove('has-connector-color');
         });
     }
 
@@ -1659,7 +1842,7 @@
             block.style.outline = '';
             
             // Check if any other sentence is editing before hiding tools
-            const anyEditing = page.querySelectorAll('.sentence-btn.active').length > 0;
+            const anyEditing = page.querySelectorAll('.sentence-btn.btn-edit.active').length > 0;
             if (!anyEditing) {
                 // Exit Global Edit Mode State
                 window.inlineEditMode = false;
@@ -1677,6 +1860,28 @@
             
             // Remove local class
             block.classList.remove('editing-sentence');
+
+            // Update Button Color based on saved data
+            let hasEditData = false;
+            try {
+                const editStoreKey = 'inline_edits_v1';
+                const editStore = JSON.parse(localStorage.getItem(editStoreKey) || '{}');
+                const editPageKey = (typeof getReaderInlineKey === 'function') ? getReaderInlineKey() : null;
+                if (editPageKey && editStore[editPageKey] && editStore[editPageKey][index]) {
+                    const ed = editStore[editPageKey][index];
+                    if (ed.pali || ed.thai) hasEditData = true;
+                }
+            } catch(e) {}
+            
+            if (hasEditData) {
+                btn.style.color = '#e74c3c';
+                btn.style.borderColor = '#e74c3c';
+                btn.classList.add('has-data');
+            } else {
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                btn.classList.remove('has-data');
+            }
             
         } else {
             // Edit Action
@@ -1805,8 +2010,13 @@
         const layout = document.getElementById('layoutSelect') ? document.getElementById('layoutSelect').value : 'pali_over_thai';
         const isThaiMode = document.getElementById('thaiMode') && document.getElementById('thaiMode').value === 'thai_desana';
         
-        // Helper to get raw HTML (similar to render loop)
-        const getPaliHtml = () => wrapWords(s.pali || '', index);
+        // Replicate render context
+        const counterObj = { val: 0 };
+        const slideNotes = loadSlideNotes(s);
+        const noteCounter = { val: 0 };
+
+        // Helper to get raw HTML using renderPaliContent for correct formatting/indexing
+        const getPaliHtml = () => renderPaliContent(s, index, counterObj, slideNotes, noteCounter);
         const getThaiHtml = () => {
              if (isThaiMode) return (s.thai_desana || s.thai || '');
              if (document.getElementById('thaiMode').value === 'thai_yok') return (s.thai_yok || 'Wait for data...');
@@ -1818,17 +2028,11 @@
 
         if (paliDiv) paliDiv.innerHTML = getPaliHtml();
         if (thaiDiv) thaiDiv.innerHTML = getThaiHtml();
-
-        // Re-enable listeners because innerHTML replacement might kill them? 
-        // No, listeners are on the element itself, but if we replaced innerHTML, the listeners on the element (paliDiv) stay.
-        // However, if we replaced the element, they would be gone. Here we just set innerHTML.
         
-        // But wait, wrapWords generates spans with onclicks. Those are inline, so they work.
-        // The 'input' listeners for auto-save are on paliDiv/thaiDiv, so they persist.
-        
-        // Visual feedback
-        // block.style.outline = '2px dashed #e74c3c';
-        // setTimeout(() => block.style.outline = '2px dashed #3498db', 300);
+        // Re-apply connector colors if visible
+        if (window.Connector && window.Connector.isVisible) {
+            renderAllSentenceConnectors();
+        }
     }
 
     function openSentenceNote(index) {
@@ -1840,7 +2044,7 @@
         if (!toolbar) return;
 
         // 1. If not editing, hide
-        const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+        const anySentenceEditing = document.querySelectorAll('.sentence-btn.btn-edit.active').length > 0;
         if (!window.inlineEditMode && !anySentenceEditing) {
             toolbar.style.display = 'none';
             return;
@@ -1936,7 +2140,7 @@
         if (event) event.stopPropagation();
         if (window.inlineEditMode === true) return;
         if (window.isNoteMode === true) return;
-        if (document.querySelectorAll('.sentence-btn.active').length > 0) return;
+        if (document.querySelectorAll('.sentence-btn.btn-edit.active').length > 0) return;
         const modal = document.getElementById('trans-modal');
         const content = document.getElementById('trans-content');
         
@@ -1968,10 +2172,17 @@
     }
 
     function handleWordClick(el) {
+        // Ignore clicks from Thai text (User Request: Show dictionary only for Pali)
+        if (el.closest('.thai-text')) return;
+
         if (window.inlineEditMode === true) {
-            return;
+            // Relaxed: Allow lookup if clicking outside the editing sentence
+            if (el.closest('.editing-sentence')) {
+                return;
+            }
         }
         if (window.Connector && window.Connector.isActive) {
+            showToast('กรุณาปิดโหมดเชื่อมโยงก่อนใช้งานพจนานุกรม', 'warning');
             window.Connector.handleWordClick(el);
             return;
         }
@@ -2169,9 +2380,10 @@
     }
 
     function showDictionaryDefinition(word, manualOverride = null) {
-        if (window.inlineEditMode === true) return;
+        // if (window.inlineEditMode === true) return; // Relaxed
         if (window.isNoteMode === true) return;
-        if (document.querySelectorAll('.sentence-btn.active').length > 0) return;
+        // if (document.querySelectorAll('.sentence-btn.active').length > 0) return; // Removed: blocking caused by Connector Visibility
+        
         // Collect all databases
         const dbs = {
         insan_pr9: Object.assign({},
@@ -2491,7 +2703,7 @@
     }
 
     // --- Gatha Rendering Helper ---
-    function renderPaliContent(s, sIndex, counterObj) {
+    function renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter) {
         if (s && s.gatha && s.gatha.type && Array.isArray(s.gatha.lines)) {
             const type = s.gatha.type;
             const lines = s.gatha.lines || [];
@@ -2516,15 +2728,15 @@
 
             let paliHtml = "";
             if (introText) {
-                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex, counterObj)}</div>`;
+                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
             }
 
             if (type === 'couplet') {
                 const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
                 const isNarrow = vw <= 1200;
                 paliHtml += lines.map(line => {
-                    const left = wrapWords(line.left || '', sIndex, counterObj);
-                    const right = wrapWords(line.right || '', sIndex, counterObj);
+                    const left = wrapWords(line.left || '', sIndex, counterObj, slideNotes, noteCounter);
+                    const right = wrapWords(line.right || '', sIndex, counterObj, slideNotes, noteCounter);
                     const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
                     const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
                     return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
@@ -2533,22 +2745,22 @@
                             </div>`;
                 }).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
                 }
                 return paliHtml;
             } else if (type === 'quatrain') {
-                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex, counterObj)}</div>`).join('');
+                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex, counterObj, slideNotes, noteCounter)}</div>`).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
                 }
                 return paliHtml;
             }
         }
-        return wrapWords(s.pali || '', sIndex, counterObj);
+        return wrapWords(s.pali || '', sIndex, counterObj, slideNotes, noteCounter);
     }
 
     function renderCurrentPage() {
-        window.currentPageNotes = loadPageNotes();
+
         const container = document.getElementById('pages');
         container.innerHTML = '';
         
@@ -2610,23 +2822,28 @@
             const sIndex = slides.indexOf(s); // Get correct index from original array
             item.id = 'sentence-item-' + sIndex;
             const counterObj = { val: 0 };
+            const slideNotes = loadSlideNotes(s);
+            const noteCounter = { val: 0 };
 
             if(layout==='pali_only'){
                 const b=document.createElement('div');
                 b.className='block pali-text';
+                b.contentEditable = 'false'; // Fix: Ensure read-only by default
                 b.style.fontWeight='bold';
-                b.innerHTML=renderPaliContent(s, sIndex, counterObj);
+                b.innerHTML=renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter);
                 item.appendChild(b);
             }else if(layout==='pali_over_thai'){
                 const b1=document.createElement('div');
                 b1.className='block pali-text';
+                b1.contentEditable = 'false'; // Fix: Ensure read-only by default
                 b1.style.fontWeight='bold';
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Pali
-                b1.innerHTML=renderPaliContent(s, sIndex, counterObj);
+                b1.innerHTML=renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter);
                 
                 const b2=document.createElement('div');
                 b2.className='block thai-text';
+                b2.contentEditable = 'false'; // Fix: Ensure read-only by default
                 b2.style.color='#000000'; // Darker Thai
                 b2.innerHTML=renderThaiContent(s, sIndex);
 
@@ -2636,6 +2853,7 @@
             }else if(layout==='thai_over_pali'){
                 const b1=document.createElement('div');
                 b1.className='block thai-text';
+                b1.contentEditable = 'false'; // Fix: Ensure read-only by default
                 b1.style.marginBottom='8px';
                 b1.style.color='#000000'; // Darker Thai
                 b1.innerHTML=renderThaiContent(s, sIndex);
@@ -2643,9 +2861,10 @@
                 
                 const b2=document.createElement('div');
                 b2.className='block pali-text';
+                b2.contentEditable = 'false'; // Fix: Ensure read-only by default
                 b2.style.fontWeight='bold';
                 b2.style.color='#333333'; // Darker Pali
-                b2.innerHTML=renderPaliContent(s, sIndex, counterObj);
+                b2.innerHTML=renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter);
                 
                 item.appendChild(b1);
                 item.appendChild(b2);
@@ -2654,10 +2873,12 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block pali-text';
+                leftB.contentEditable = 'false'; // Fix: Ensure read-only by default
                 leftB.style.fontWeight='bold';
-                leftB.innerHTML=renderPaliContent(s, sIndex, counterObj);
+                leftB.innerHTML=renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter);
                 const rightB=document.createElement('div');
                 rightB.className='block thai-text';
+                rightB.contentEditable = 'false'; // Fix: Ensure read-only by default
                 rightB.innerHTML=renderThaiContent(s, sIndex);
 
 
@@ -2669,13 +2890,15 @@
                 grid.className='two-col';
                 const leftB=document.createElement('div');
                 leftB.className='block thai-text';
+                leftB.contentEditable = 'false'; // Fix: Ensure read-only by default
                 leftB.innerHTML=renderThaiContent(s, sIndex);
 
 
                 const rightB=document.createElement('div');
                 rightB.className='block pali-text';
+                rightB.contentEditable = 'false'; // Fix: Ensure read-only by default
                 rightB.style.fontWeight='bold';
-                rightB.innerHTML=renderPaliContent(s, sIndex, counterObj);
+                rightB.innerHTML=renderPaliContent(s, sIndex, counterObj, slideNotes, noteCounter);
                 grid.appendChild(leftB);
                 grid.appendChild(rightB);
                 item.appendChild(grid);
@@ -2713,7 +2936,7 @@
         }
         prevBtn.onclick = () => {
             if(currentBookPageIndex > 0) {
-                const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+                const anySentenceEditing = document.querySelectorAll('.sentence-btn.btn-edit.active').length > 0;
                 if (window.inlineEditMode || anySentenceEditing) saveInlineEdits();
                 currentBookPageIndex--;
                 renderCurrentPage();
@@ -2734,7 +2957,7 @@
         }
         nextBtn.onclick = () => {
             if(currentBookPageIndex < groupedPages.length - 1) {
-                const anySentenceEditing = document.querySelectorAll('.sentence-btn.active').length > 0;
+                const anySentenceEditing = document.querySelectorAll('.sentence-btn.btn-edit.active').length > 0;
                 if (window.inlineEditMode || anySentenceEditing) saveInlineEdits();
                 currentBookPageIndex++;
                 renderCurrentPage();
@@ -2856,8 +3079,9 @@
         };
 
         localStorage.setItem('pali_last_session', JSON.stringify(state));
-
-        if (isLocalEnv && typeof firebase !== 'undefined' && firebase.auth().currentUser) {
+        
+        // Safety check: only access firebase if initialized
+        if (isLocalEnv && typeof firebase !== 'undefined' && firebase.apps.length && firebase.auth().currentUser) {
             const uid = firebase.auth().currentUser.uid;
             db.collection('users').doc(uid).collection('progress').doc('last_session').set(state, { merge: true })
                 .catch(() => {});
@@ -3107,7 +3331,7 @@
         if (params.get('resume') === 'true') {
               const storedUid = localStorage.getItem('pali_user_uid');
               const userName = localStorage.getItem('pali_user_name');
-              const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
+              const uid = storedUid || ((typeof firebase !== 'undefined' && firebase.apps.length && firebase.auth().currentUser) ? firebase.auth().currentUser.uid : (userName ? 'local_' + userName : null));
              
              let state = null;
              if (uid) state = JSON.parse(localStorage.getItem(`pali_progress_${uid}`) || 'null');
@@ -3120,7 +3344,6 @@
     }
 // --- Note Mode Logic ---
 window.isNoteMode = false;
-window.currentPageNotes = null;
 window.currentConnectorSentenceIndex = null;
 window.currentConnectorSourceId = null;
 window.currentConnectorSourceIndex = null;
@@ -3132,20 +3355,21 @@ function getConnectorKey() {
         return `${window.currentConnectorSourceId}:${window.currentConnectorSourceIndex}`;
     }
 
-    const pageKey = getReaderNoteKey();
-    // Use explicit sentence index if set, otherwise default to 0 or page-level
-    // To match presentation.html 1 slide = 1 sentence logic, we MUST have an index.
-    // If no index is selected, we might default to 0 or handle it gracefully.
+    const pageKey = getReaderInlineKey().replace('reader:', 'reader_notes:');
     const idx = (window.currentConnectorSentenceIndex !== null) ? window.currentConnectorSentenceIndex : 'page';
     return `${pageKey}_s${idx}`;
 }
 
-function getReaderNoteKey() {
-    return `reader_notes:${getReaderInlineKey().replace('reader:', '')}`;
+function getNoteKeyForSlide(slide) {
+    if (slide._sourceId && slide._sourceIndex !== undefined) {
+        return `pali_note:${slide._sourceId}:${slide._sourceIndex}`;
+    }
+    return null;
 }
 
-function loadPageNotes() {
-    const key = getReaderNoteKey();
+function loadSlideNotes(slide) {
+    const key = getNoteKeyForSlide(slide);
+    if (!key) return {};
     try {
         const stored = localStorage.getItem(key);
         return stored ? JSON.parse(stored) : {};
@@ -3154,23 +3378,18 @@ function loadPageNotes() {
     }
 }
 
-function savePageNote(noteId, text) {
-    const notes = loadPageNotes();
+function saveSlideNote(slide, wordIndex, text) {
+    const notes = loadSlideNotes(slide);
     if (text && text.trim()) {
-        notes[noteId] = text.trim();
+        notes[wordIndex] = text.trim();
     } else {
-        delete notes[noteId];
+        delete notes[wordIndex];
     }
-    const key = getReaderNoteKey();
-    localStorage.setItem(key, JSON.stringify(notes));
-    window.currentPageNotes = notes;
-}
-
-function getPageNote(noteId) {
-    if (!window.currentPageNotes) {
-        window.currentPageNotes = loadPageNotes();
+    const key = getNoteKeyForSlide(slide);
+    if (key) {
+        localStorage.setItem(key, JSON.stringify(notes));
     }
-    return window.currentPageNotes[noteId];
+    return notes;
 }
 
 function toggleNoteMode() {
@@ -3206,15 +3425,22 @@ function toggleNoteMode() {
         } else {
             b.classList.remove('active');
             b.innerHTML = '<i class="fas fa-sticky-note"></i>';
-            b.title = 'โหมดบันทึกช่วยจำ';
+            b.title = 'โหมดบันทึกช่วยจำ (คลิกที่คำเพื่อบันทึก)';
             b.style.background = '';
-            b.style.color = '';
-            b.style.borderColor = '';
+            
+            if (b.classList.contains('has-data')) {
+                b.style.color = '#e67e22'; // Orange
+                b.style.borderColor = '#e67e22';
+            } else {
+                b.style.color = '';
+                b.style.borderColor = '';
+            }
         }
     });
 
     if (window.isNoteMode) {
         document.body.classList.add('note-mode-active');
+        closeAllLookupOverlays();
         
         // Turn off any active sentence edits
         const activeEditBtns = document.querySelectorAll('.sentence-btn.btn-edit.active');
@@ -3227,6 +3453,11 @@ function toggleNoteMode() {
 
 // Connector Graph Builder
         function openGraphBuilder(index) {
+            if (window.inlineEditMode) {
+                 showToast('กรุณาบันทึกหรือยกเลิกการแก้ไขข้อความในประโยคก่อน', 'warning');
+                 return;
+            }
+
             if (typeof index !== 'undefined') {
                 window.currentConnectorSentenceIndex = index;
                 
@@ -3247,6 +3478,9 @@ function toggleNoteMode() {
 
                 // Reload data for this sentence
                 if (window.Connector) {
+                    // Explicitly set the sentence index for ConnectorGraph fallback
+                    window.currentConnectorSentenceIndex = index;
+                    
                     const container = document.getElementById('sentence-item-' + index);
                     if (container) {
                         window.Connector.container = container;
@@ -3260,67 +3494,161 @@ function toggleNoteMode() {
             }
         }
 
-        function toggleConnectorMode() {
-    if (!window.Connector) return;
-    
-    // Toggle state via Connector Logic
-    window.Connector.toggleMode();
-    const isActive = window.Connector.isActive;
-    
-    const btn = document.getElementById('btn-connector-mode');
-    if (btn) {
-        if (isActive) {
-            btn.classList.add('active');
-            btn.style.background = '#8e44ad'; // Purple
-            btn.style.color = '#fff';
+        function ensureConnectorPalette() {
+            if (document.getElementById('connector-palette')) return;
             
-            // Turn off Note Mode if active
-            if (window.isNoteMode) toggleNoteMode();
+            const palette = document.createElement('div');
+            palette.id = 'connector-palette';
+            palette.style.display = 'none';
+            palette.style.position = 'fixed';
+            palette.style.bottom = '80px'; /* Above toolbar if any */
+            palette.style.left = '50%';
+            palette.style.transform = 'translateX(-50%)';
+            palette.style.background = 'white';
+            palette.style.padding = '10px 15px';
+            palette.style.borderRadius = '30px';
+            palette.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+            palette.style.zIndex = '10000';
+            palette.style.gap = '12px';
+            palette.style.alignItems = 'center';
             
-            // Turn off Inline Edit if active
-            if (window.inlineEditMode) {
-                 window.inlineEditMode = false;
-                 document.body.classList.remove('inline-edit-mode');
-                 // Reset edit buttons if needed
-                 document.querySelectorAll('.sentence-btn.btn-edit.active').forEach(b => b.click());
-            }
+            const colors = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#34495e'];
             
-            closeAllLookupOverlays();
+            colors.forEach(c => {
+                const dot = document.createElement('div');
+                dot.style.width = '24px';
+                dot.style.height = '24px';
+                dot.style.borderRadius = '50%';
+                dot.style.backgroundColor = c;
+                dot.style.cursor = 'pointer';
+                dot.style.border = '2px solid transparent';
+                dot.title = 'เลือกสี';
+                
+                dot.onclick = () => {
+                    if (window.Connector) window.Connector.setColor(c);
+                    // Visual feedback
+                    Array.from(palette.querySelectorAll('div')).forEach(child => {
+                        child.style.transform = 'scale(1)';
+                        child.style.boxShadow = 'none';
+                    });
+                    dot.style.transform = 'scale(1.2)';
+                    dot.style.boxShadow = '0 0 0 2px #333';
+                };
+                
+                palette.appendChild(dot);
+            });
+            
+            // Separator
+            const sep = document.createElement('div');
+            sep.style.width = '1px';
+            sep.style.height = '20px';
+            sep.style.background = '#ddd';
+            palette.appendChild(sep);
 
-            // Show Clear/Visibility Buttons
-            // const visBtn = document.getElementById('btn-connector-visibility');
-            const clearBtn = document.getElementById('btn-clear-connector');
-            const colorGrp = document.getElementById('connector-colors');
-            // if (visBtn) visBtn.style.display = 'inline-block';
-            if (clearBtn) clearBtn.style.display = 'inline-block';
-            if (colorGrp) colorGrp.style.display = 'inline-block';
-
-        } else {
-            btn.classList.remove('active');
-            btn.style.background = '';
-            btn.style.color = '';
-
-            // Hide Clear/Visibility Buttons
-            // const visBtn = document.getElementById('btn-connector-visibility');
-            const clearBtn = document.getElementById('btn-clear-connector');
-            const colorGrp = document.getElementById('connector-colors');
-            // if (visBtn) visBtn.style.display = 'none';
-            if (clearBtn) clearBtn.style.display = 'none';
-            if (colorGrp) colorGrp.style.display = 'none';
+            // Add Clear Button
+            const clearBtn = document.createElement('button');
+            clearBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            clearBtn.title = 'ล้างทั้งหมดในหน้านี้';
+            clearBtn.style.border = 'none';
+            clearBtn.style.background = 'transparent';
+            clearBtn.style.color = '#e74c3c';
+            clearBtn.style.cursor = 'pointer';
+            clearBtn.style.fontSize = '1.1rem';
+            clearBtn.onclick = confirmClearConnector;
+            palette.appendChild(clearBtn);
+            
+            // Add Close (Exit Mode) Button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '<i class="fas fa-check"></i>';
+            closeBtn.title = 'เสร็จสิ้น';
+            closeBtn.style.border = 'none';
+            closeBtn.style.background = '#27ae60';
+            closeBtn.style.color = 'white';
+            closeBtn.style.borderRadius = '50%';
+            closeBtn.style.width = '24px';
+            closeBtn.style.height = '24px';
+            closeBtn.style.display = 'flex';
+            closeBtn.style.alignItems = 'center';
+            closeBtn.style.justifyContent = 'center';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.marginLeft = '5px';
+            closeBtn.onclick = toggleConnectorMode;
+            palette.appendChild(closeBtn);
+            
+            document.body.appendChild(palette);
         }
-    }
-}
+
+        function toggleConnectorMode() {
+            if (!window.Connector) return;
+            
+            ensureConnectorPalette();
+            
+            // Toggle state via Connector Logic
+            window.Connector.toggleMode();
+            const isActive = window.Connector.isActive;
+            const palette = document.getElementById('connector-palette');
+            
+            if (isActive) {
+                if (palette) palette.style.display = 'flex';
+                
+                // Ensure visibility is ON when editing
+                if (!window.Connector.isVisible) toggleConnectorVisibility();
+                
+                // Turn off Note Mode if active
+                if (window.isNoteMode) toggleNoteMode();
+                
+                // Turn off Inline Edit if active
+                if (window.inlineEditMode) {
+                     window.inlineEditMode = false;
+                     document.body.classList.remove('inline-edit-mode');
+                     document.querySelectorAll('.sentence-btn.btn-edit.active').forEach(b => b.click());
+                }
+                
+                closeAllLookupOverlays();
+
+            } else {
+                if (palette) palette.style.display = 'none';
+            }
+        }
 
 function toggleConnectorVisibility() {
     if (!window.Connector) return;
     const isVisible = window.Connector.toggleVisibility();
-    const btn = document.getElementById('btn-connector-visibility');
-    if (btn) {
-        const icon = isVisible ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-        btn.innerHTML = icon + '<span class="btn-text"> สีกลุ่มวลี</span>';
-        btn.title = isVisible ? 'ซ่อนสีกลุ่มวลี' : 'แสดงสีกลุ่มวลี';
-        btn.style.color = isVisible ? '' : '#bdc3c7';
+    
+    // Global Render/Clear
+    if (isVisible) {
+        renderAllSentenceConnectors();
+    } else {
+        clearAllSentenceConnectors();
     }
+    
+    // Update all per-sentence connector buttons
+    const btns = document.querySelectorAll('.sentence-btn.btn-connector');
+    btns.forEach(btn => {
+        const icon = isVisible ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        // Keep the original title but update icon
+        btn.innerHTML = icon; 
+        btn.title = isVisible ? 'ซ่อนสีสัมพันธ์' : 'แสดงสีสัมพันธ์';
+        
+        if (isVisible) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+
+        // Logic for Has-Data state
+        if (btn.classList.contains('has-data')) {
+            // If data exists, keep it purple regardless of visibility state
+            // to indicate "Content Available"
+            btn.style.color = '#8e44ad';
+            btn.style.borderColor = '#8e44ad';
+        } else {
+            // If no data, gray out when hidden, or default when active?
+            // If active but no data, it's just an empty toggle.
+            btn.style.color = isVisible ? '' : '#bdc3c7';
+            btn.style.borderColor = '';
+        }
+    });
 }
 
 function confirmClearConnector() {
@@ -3362,8 +3690,17 @@ function findSlideSource(partId, targetSlide) {
 }
 
 function handleNoteClick(el) {
-    const noteId = el.getAttribute('data-note-id');
-    const currentNote = getPageNote(noteId) || '';
+    const slideIndex = parseInt(el.getAttribute('data-slide-index'));
+    const wordIndex = parseInt(el.getAttribute('data-word-index'));
+    
+    if (isNaN(slideIndex) || isNaN(wordIndex)) return;
+
+    const pageData = groupedPages[currentBookPageIndex];
+    if (!pageData || !pageData.slides || !pageData.slides[slideIndex]) return;
+    
+    const slide = pageData.slides[slideIndex];
+    const notes = loadSlideNotes(slide);
+    const currentNote = notes[wordIndex] || '';
     const word = el.innerText;
     
     const content = `
@@ -3371,19 +3708,25 @@ function handleNoteClick(el) {
             <div style="margin-bottom:6px; color:#7f8c8d;">บันทึกช่วยจำสำหรับ <b>"${word}"</b></div>
             <textarea id="noteInput" style="width:100%; height:120px; border:1px solid #ddd; border-radius:6px; padding:8px; font-family:'Sarabun',sans-serif;">${currentNote.replace(/</g,'&lt;')}</textarea>
             <div style="margin-top:10px; display:flex; justify-content:space-between;">
-                <button class="btn" style="background:#e74c3c; color:#fff;" onclick="deleteNote('${noteId}', '${word}')"><i class="fas fa-trash"></i> ลบ</button>
-                <button class="btn" style="background:#27ae60; color:#fff;" onclick="saveNote('${noteId}')"><i class="fas fa-save"></i> บันทึก</button>
+                <button class="btn" style="background:#e74c3c; color:#fff;" onclick="deleteNote(${slideIndex}, ${wordIndex}, '${word}')"><i class="fas fa-trash"></i> ลบ</button>
+                <button class="btn" style="background:#27ae60; color:#fff;" onclick="saveNote(${slideIndex}, ${wordIndex})"><i class="fas fa-save"></i> บันทึก</button>
             </div>
         </div>
     `;
     openGenericModal('บันทึกช่วยจำ', content);
 }
 
-function saveNote(noteId) {
+function saveNote(slideIndex, wordIndex) {
     const text = document.getElementById('noteInput').value;
-    savePageNote(noteId, text);
+    const pageData = groupedPages[currentBookPageIndex];
+    if (!pageData || !pageData.slides || !pageData.slides[slideIndex]) return;
+    const slide = pageData.slides[slideIndex];
+    
+    saveSlideNote(slide, wordIndex, text);
+    
     closeAnalysisModal(null, true);
-    const el = document.querySelector(`span[data-note-id="${noteId}"]`);
+    
+    const el = document.querySelector(`span[data-slide-index="${slideIndex}"][data-word-index="${wordIndex}"]`);
     if (el) {
         if (text && text.trim()) {
             el.classList.add('has-note');
@@ -3396,11 +3739,18 @@ function saveNote(noteId) {
     }
 }
 
-function deleteNote(noteId, word) {
+function deleteNote(slideIndex, wordIndex, word) {
     if(!confirm(`ลบบันทึกของ "${word}"?`)) return;
-    savePageNote(noteId, null);
+    
+    const pageData = groupedPages[currentBookPageIndex];
+    if (!pageData || !pageData.slides || !pageData.slides[slideIndex]) return;
+    const slide = pageData.slides[slideIndex];
+
+    saveSlideNote(slide, wordIndex, null);
+    
     closeAnalysisModal(null, true);
-    const el = document.querySelector(`span[data-note-id="${noteId}"]`);
+    
+    const el = document.querySelector(`span[data-slide-index="${slideIndex}"][data-word-index="${wordIndex}"]`);
     if (el) {
         el.classList.remove('has-note');
         el.style.borderBottom = '';

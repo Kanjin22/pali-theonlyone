@@ -219,6 +219,8 @@ const Connector = {
     clearAll: function() {
         this.sequences = {};
         this.links = [];
+        this.layout = [];
+        this.wordLinks = [];
         this.nextSequence = 1;
         this.lastNodeId = null;
         this.saveData();
@@ -243,7 +245,9 @@ const Connector = {
         }
         
         // 2. Clear Old Styles (Color text)
-        document.querySelectorAll('.word-span').forEach(el => {
+        // Only clear within container to support multiple active connectors
+        const scope = this.container || document;
+        scope.querySelectorAll('.word-span').forEach(el => {
             el.style.color = '';
             el.style.fontWeight = '';
             el.classList.remove('has-connector-color');

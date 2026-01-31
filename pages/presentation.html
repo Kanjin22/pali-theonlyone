@@ -1380,7 +1380,7 @@
             <button class="tool-btn" id="btn-graph-builder" title="ตัวสร้างกราฟ (Graph Builder)" onclick="openGraphBuilder()">
                 <i class="fa-solid fa-project-diagram"></i>
             </button>
-            <button class="tool-btn d-none" id="btn-connector-visibility" title="ซ่อน/แสดง ตัวเลขเชื่อมโยง" onclick="toggleConnectorVisibility()">
+            <button class="tool-btn d-none" id="btn-connector-visibility" title="แสดง/ซ่อน สีกลุ่มวลี" onclick="toggleConnectorVisibility()">
                 <i class="fa-solid fa-eye"></i>
             </button>
             <button class="tool-btn" id="btn-inline-edit" title="โหมดพิมพ์แทรกในบอร์ด" onclick="toggleInlineEditMode()">
@@ -2006,7 +2006,8 @@
         let paliWordIndexCounter = 0;
 
         function getSlideNotesKey() {
-            return `presentation_notes:${slideId || '__noid__'}:${currentIndex}`;
+            // Unified Key Format: pali_note:{sourceId}:{sourceIndex}
+            return `pali_note:${slideId || '__noid__'}:${currentIndex}`;
         }
 
         function loadSlideNotes() {
@@ -3251,13 +3252,19 @@
             }
         }
 
+        function toggleConnectorMode() {
+            if (window.Connector) {
+                 window.Connector.toggleMode();
+            }
+        }
+
         function toggleConnectorVisibility() {
             if (!window.Connector) return;
             const isVisible = window.Connector.toggleVisibility();
             const btn = document.getElementById('btn-connector-visibility');
             if (btn) {
                 btn.innerHTML = isVisible ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
-                btn.title = isVisible ? 'ซ่อนสีกลุ่มวลี' : 'แสดงสีกลุ่มวลี';
+                btn.title = isVisible ? 'ซ่อนสีสัมพันธ์' : 'แสดงสีสัมพันธ์';
                 btn.style.color = isVisible ? '' : '#bdc3c7';
             }
         }
@@ -3296,15 +3303,17 @@
         function getInlineKey() {
             return slideId ? (slideId + ':' + currentIndex) : ('__noid__:' + currentIndex);
         }
+        function getEditKey() {
+            return `pali_edit:${slideId || '__noid__'}:${currentIndex}`;
+        }
+
         function saveInlineEdits() {
             const pali = document.getElementById('paliContent');
             const thai = document.getElementById('thaiContent');
-            const storeKey = 'inline_edits_v1';
-            let store = {};
-            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            const key = getEditKey();
             
-            // Get existing data or init new
-            let data = store[getInlineKey()] || {};
+            let data = {};
+            try { data = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) { data = {}; }
             
             // Save based on current mode
             if (typeof isThaiSense !== 'undefined' && isThaiSense) {
@@ -3318,15 +3327,14 @@
             }
             
             data.timestamp = Date.now();
-            
-            store[getInlineKey()] = data;
-            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
+            localStorage.setItem(key, JSON.stringify(data));
         }
+
         function loadInlineEdits() {
-            const storeKey = 'inline_edits_v1';
-            let store = {};
-            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
-            const saved = store[getInlineKey()];
+            const key = getEditKey();
+            let saved = {};
+            try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) { saved = {}; }
+
             if (saved) {
                 const pali = document.getElementById('paliContent');
                 const thai = document.getElementById('thaiContent');
@@ -3341,7 +3349,6 @@
                     }
                 } else {
                     // Literal Mode
-                    // Load Pali (priority: pali_literal > pali (legacy))
                     if (pali) {
                         if (saved.pali_literal && typeof saved.pali_literal === 'string') {
                             pali.innerHTML = saved.pali_literal;
@@ -3350,7 +3357,6 @@
                         }
                     }
                     
-                    // Load Thai (priority: thai_literal > thai (legacy))
                     if (thai) {
                         if (saved.thai_literal && typeof saved.thai_literal === 'string') {
                             thai.innerHTML = saved.thai_literal;
@@ -3361,39 +3367,40 @@
                 }
             }
         }
+
         function confirmClearInlineEdits() {
             if (confirm('ต้องการล้างสิ่งที่พิมพ์แก้ไขทั้งหมดในหน้านี้ใช่หรือไม่?')) {
                 clearInlineEdits();
             }
         }
+
         function clearInlineEdits() {
-            const storeKey = 'inline_edits_v1';
-            let store = {};
-            try { store = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) { store = {}; }
+            const key = getEditKey();
+            let saved = {};
+            try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) { saved = {}; }
             
-            const key = getInlineKey();
-            if (store[key]) {
+            if (saved) {
                 if (typeof isThaiSense !== 'undefined' && isThaiSense) {
-                    // Sense Mode (เคลียร์เฉพาะโดยอรรถ)
-                    delete store[key].pali_sense;
-                    delete store[key].thai_sense;
+                    // Sense Mode
+                    delete saved.pali_sense;
+                    delete saved.thai_sense;
                 } else {
-                    // Literal Mode (เคลียร์เฉพาะโดยพยัญชนะ)
-                    delete store[key].pali_literal;
-                    delete store[key].thai_literal;
-                    // Legacy fallback cleanup
-                    delete store[key].pali;
-                    delete store[key].thai;
+                    // Literal Mode
+                    delete saved.pali_literal;
+                    delete saved.thai_literal;
+                    delete saved.pali;
+                    delete saved.thai;
                 }
                 
-                // ถ้าเหลือแค่ timestamp หรือไม่เหลืออะไรเลย ให้ลบทิ้งทั้งก้อน
-                const remainingKeys = Object.keys(store[key]).filter(k => k !== 'timestamp');
+                // If empty, remove key
+                const remainingKeys = Object.keys(saved).filter(k => k !== 'timestamp');
                 if (remainingKeys.length === 0) {
-                    delete store[key];
+                    localStorage.removeItem(key);
+                } else {
+                    localStorage.setItem(key, JSON.stringify(saved));
                 }
             }
             
-            try { localStorage.setItem(storeKey, JSON.stringify(store)); } catch(e) {}
             updateSlide();
         }
         function toggleInlineEditMode() {
