@@ -1,3 +1,5 @@
+// Firebase Configuration
+// Cleaned up config.js references and embedded credentials directly
 function __readQueryConfig() {
     try {
         var params = new URLSearchParams(location.search);
