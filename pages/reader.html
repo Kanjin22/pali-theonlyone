@@ -1161,7 +1161,8 @@
         out.push(`${prefix}<span class="word-span${noteClass}" data-slide-index="${slideIndex}" data-word-index="${currentWordIndex}"${idxAttr} onclick="handleWordClick(this)">${displayText}</span>${suffix}`);
     });
 
-    return out.join('&nbsp; ');
+    const separator = (counterObj === 'thai') ? ' ' : '  ';
+    return out.join(separator);
 }
 
     // --- Helper Functions (Ported from presentation.html) ---
@@ -2727,7 +2728,7 @@
 
             let paliHtml = "";
             if (introText) {
-                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
+                paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(introText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
             }
 
             if (type === 'couplet') {
@@ -2738,24 +2739,24 @@
                     const right = wrapWords(line.right || '', sIndex, counterObj, slideNotes, noteCounter);
                     const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
                     const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
-                    return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                    return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px; white-space: pre-wrap;">
                                 <div style="${leftStyle}">${left}</div>
                                 <div style="${rightStyle}">${right}</div>
                             </div>`;
                 }).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
                 }
                 return paliHtml;
             } else if (type === 'quatrain') {
-                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', sIndex, counterObj, slideNotes, noteCounter)}</div>`).join('');
+                paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px; white-space: pre-wrap;">${wrapWords(line || '', sIndex, counterObj, slideNotes, noteCounter)}</div>`).join('');
                 if (outroText) {
-                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
+                    paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(outroText, sIndex, counterObj, slideNotes, noteCounter)}</div>`;
                 }
                 return paliHtml;
             }
         }
-        return wrapWords(s.pali || '', sIndex, counterObj, slideNotes, noteCounter);
+        return `<div style="white-space: pre-wrap;">${wrapWords(s.pali || '', sIndex, counterObj, slideNotes, noteCounter)}</div>`;
     }
 
     function renderCurrentPage() {

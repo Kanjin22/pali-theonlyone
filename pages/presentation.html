@@ -340,6 +340,7 @@
             letter-spacing: 0;
             word-break: normal;
             overflow-wrap: break-word;
+            white-space: pre-wrap;
             transition: all 0.3s ease;
         }
 
@@ -353,6 +354,7 @@
             text-indent: 50px;
             word-break: normal;
             overflow-wrap: break-word;
+            white-space: pre-wrap;
             transition: opacity 0.3s ease, font-size 0.3s ease, text-align 0.3s ease;
             opacity: 1;
         }
@@ -2062,7 +2064,7 @@
                 return `${prefix}<span class="word-span ${hasInfoClass}${noteClass}" 
                               ${vocabInfo} ${noteAttrs}
                               onclick="handleWordClick(this)">${displayText}</span>${suffix}`;
-        }).filter(w => w !== "").join('&nbsp; ');
+        }).filter(w => w !== "").join(isPali ? '  ' : ' ');
     }
 
     function handleWordClick(el) {
@@ -2902,27 +2904,27 @@
                         const right = wrapWords(line.right || '', s, true);
                         const leftStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:0 0 40ch; max-width:45%;';
                         const rightStyle = isNarrow ? 'flex:0 0 auto;' : 'flex:1 0 0;';
-                        return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px;">
+                        return `<div style="display:flex; gap:28px; justify-content:flex-start; margin-left:40px; margin-bottom:6px; white-space: pre-wrap;">
                                     <div style="${leftStyle}">${left}</div>
                                     <div style="${rightStyle}">${right}</div>
                                 </div>`;
                     }).join('');
                     if (outroText) {
-                        paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, s, true)}</div>`;
+                        paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(outroText, s, true)}</div>`;
                     }
                 } else if (type === 'quatrain') {
                     if (introText) {
-                        paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(introText, s, true)}</div>`;
+                        paliHtml += `<div style="margin-bottom:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(introText, s, true)}</div>`;
                     }
-                    paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px;">${wrapWords(line || '', s, true)}</div>`).join('');
+                    paliHtml += lines.map(line => `<div style="margin-left:40px; margin-bottom:6px; white-space: pre-wrap;">${wrapWords(line || '', s, true)}</div>`).join('');
                     if (outroText) {
-                        paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left;">${wrapWords(outroText, s, true)}</div>`;
+                        paliHtml += `<div style="margin-top:12px; text-indent:0; margin-left:0; text-align:left; white-space: pre-wrap;">${wrapWords(outroText, s, true)}</div>`;
                     }
                 } else {
-                    paliHtml = wrapWords(s.pali, s, true);
+                    paliHtml = `<div style="white-space: pre-wrap;">${wrapWords(s.pali, s, true)}</div>`;
                 }
             } else {
-                paliHtml = wrapWords(s.pali, s, true);
+                paliHtml = `<div style="white-space: pre-wrap;">${wrapWords(s.pali, s, true)}</div>`;
             }
             paliBox.innerHTML = paliHtml;
 
