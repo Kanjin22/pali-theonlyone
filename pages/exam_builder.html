@@ -227,7 +227,7 @@
         .tool-select { border: none; background: transparent; padding: 6px; font-size: 0.9rem; color: #455a64; outline: none; cursor: pointer; }
 
         #marginPanel {
-            display: none;
+            /* display: none; handled by class d-none */
             position: absolute;
             top: 40px;
             right: 0;
@@ -655,7 +655,7 @@
             </div>
             <div class="toolbar-group relative">
                 <button class="tool-btn" id="marginBtn" onclick="toggleMarginPanel()" title="ตั้งค่าขอบกระดาษ"><i class="fa-solid fa-ruler-combined"></i> ระยะขอบ</button>
-                <div id="marginPanel">
+                <div id="marginPanel" class="d-none">
                     <div class="row">
                         <label>บน</label>
                         <input type="range" id="marginTop" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('top', this.value)">
