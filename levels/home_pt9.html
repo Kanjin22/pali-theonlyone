@@ -30,19 +30,110 @@
         .page-header {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #16a085;
+            border-bottom: 2px solid #8e44ad;
         }
 
-        /* สีเขียวเข้ม */
         h1 {
             font-size: 2.5em;
-            color: #16a085;
+            color: #8e44ad;
             margin-bottom: 10px;
         }
 
         p {
             font-size: 1.2em;
             color: #7f8c8d;
+        }
+
+        /* Helper Classes replacing inline styles */
+        .back-nav {
+            text-align: left; 
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            text-decoration: none; 
+            color: #7f8c8d; 
+            font-weight: bold;
+        }
+
+        #room-content-section {
+            display: none;
+        }
+
+        .stats-grid {
+            margin-bottom: 40px; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px;
+        }
+
+        .btn-purple {
+            background-color: #8e44ad !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .btn-orange {
+            background-color: #e67e22 !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .visitor-stats {
+            text-align: center; 
+            margin-top: 30px; 
+            margin-bottom: 20px;
+        }
+
+        .visitor-stats p {
+            color: #7f8c8d; 
+            margin-bottom: 10px;
+        }
+
+        /* Helper Classes replacing inline styles */
+        .back-nav {
+            text-align: left; 
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            text-decoration: none; 
+            color: #7f8c8d; 
+            font-weight: bold;
+        }
+
+        #room-content-section {
+            display: none;
+        }
+
+        .stats-grid {
+            margin-bottom: 40px; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px;
+        }
+
+        .btn-purple {
+            background-color: #8e44ad !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .btn-orange {
+            background-color: #e67e22 !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .visitor-stats {
+            text-align: center; 
+            margin-top: 30px; 
+            margin-bottom: 20px;
+        }
+
+        .visitor-stats p {
+            color: #7f8c8d; 
+            margin-bottom: 10px;
         }
 
         hr {
@@ -76,7 +167,7 @@
         .menu-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            background-color: #16a085;
+            background-color: #8e44ad;
             color: #fff;
         }
 
@@ -96,13 +187,13 @@
 
 <body>
     <div class="container">
-        <div style="text-align: left; margin-bottom: 20px;">
-            <a href="../index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i
+        <div class="back-nav">
+            <a href="../index.html" class="back-link"><i
                     class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
         </div>
 
-        <div class="page-header" style="border-bottom-color: #8e44ad;">
-            <h1 style="color: #8e44ad;">ห้องเรียน ป.ธ. ๙</h1>
+        <div class="page-header">
+            <h1>ห้องเรียน ป.ธ. ๙</h1>
             <p>แต่งไทยเป็นมคธ และ วิชาแปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
         </div>
 
@@ -113,10 +204,10 @@
         <div id="room-selection-container"></div>
 
         <!-- 2. Room Content -->
-        <div id="room-content-section" style="display:none;">
-            <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
-                <a href="../pages/statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
-                <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบแบบละเอียด</a>
+        <div id="room-content-section">
+            <div class="stats-grid">
+                <a href="../pages/statistics.html" id="statsLink" class="menu-button btn-purple">📊 ดูสถิติและความคืบหน้า</a>
+                <a href="../exam_schedules.html" class="menu-button btn-orange">⏳ ตารางสอบแบบละเอียด</a>
             </div>
 
             <h2>📅 ตารางเรียนรายเดือน</h2>
@@ -136,10 +227,10 @@
             </div>
 
             <hr>
-        </div>
-        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt9" alt="visitor badge" />
+            <div class="visitor-stats">
+                <p>สถิติผู้เข้าชมเว็บไซต์</p>
+                <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt9" alt="visitor badge" />
+            </div>
         </div>
     </div>
 

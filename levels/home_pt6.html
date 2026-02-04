@@ -27,22 +27,68 @@
             text-align: center;
         }
 
+        /* สีเขียวเข้ม -> แก้เป็นสีส้มสำหรับ ป.ธ.๖ */
         .page-header {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #16a085;
+            border-bottom: 2px solid #d35400;
         }
 
-        /* สีเขียวเข้ม */
         h1 {
             font-size: 2.5em;
-            color: #16a085;
+            color: #d35400;
             margin-bottom: 10px;
         }
 
         p {
             font-size: 1.2em;
             color: #7f8c8d;
+        }
+
+        /* Helper Classes replacing inline styles */
+        .back-nav {
+            text-align: left; 
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            text-decoration: none; 
+            color: #7f8c8d; 
+            font-weight: bold;
+        }
+
+        #room-content-section {
+            display: none;
+        }
+
+        .stats-grid {
+            margin-bottom: 40px; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px;
+        }
+
+        .btn-purple {
+            background-color: #8e44ad !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .btn-orange {
+            background-color: #e67e22 !important; 
+            color: white !important; 
+            text-align: center;
+        }
+
+        .visitor-stats {
+            text-align: center; 
+            margin-top: 30px; 
+            margin-bottom: 20px;
+        }
+
+        .visitor-stats p {
+            color: #7f8c8d; 
+            margin-bottom: 10px;
         }
 
         hr {
@@ -96,13 +142,13 @@
 
 <body>
     <div class="container">
-        <div style="text-align: left; margin-bottom: 20px;">
-            <a href="../index.html" style="text-decoration: none; color: #7f8c8d; font-weight: bold;"><i
+        <div class="back-nav">
+            <a href="../index.html" class="back-link"><i
                     class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก</a>
         </div>
 
-        <div class="page-header" style="border-bottom-color: #d35400;">
-            <h1 style="color: #d35400;">ห้องเรียน ป.ธ. ๖</h1>
+        <div class="page-header">
+            <h1>ห้องเรียน ป.ธ. ๖</h1>
             <p>วิชาแปลไทยเป็นมคธ และ แปลมคธเป็นไทย</p>
         </div>
 
@@ -113,10 +159,10 @@
         <div id="room-selection-container"></div>
 
         <!-- 2. Room Content -->
-        <div id="room-content-section" style="display:none;">
-            <div style="margin-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 15px;">
-                <a href="../pages/statistics.html" id="statsLink" class="menu-button" style="background-color: #8e44ad; color: white; text-align: center;">📊 ดูสถิติและความคืบหน้า</a>
-                <a href="../exam_schedules.html" class="menu-button" style="background-color: #e67e22; color: white; text-align: center;">⏳ ตารางสอบแบบละเอียด</a>
+        <div id="room-content-section">
+            <div class="stats-grid">
+                <a href="../pages/statistics.html" id="statsLink" class="menu-button btn-purple">📊 ดูสถิติและความคืบหน้า</a>
+                <a href="../exam_schedules.html" class="menu-button btn-orange">⏳ ตารางสอบแบบละเอียด</a>
             </div>
 
             <h2>📅 ตารางเรียนรายเดือน</h2>
@@ -126,18 +172,19 @@
 
             <hr>
 
-        <h2>📚 วิชาเรียน</h2>
-        <div class="menu-container">
-            <a href="construction.html" class="menu-button">วิชาแปลไทยเป็นมคธ (ธ. ภาค ๕-๘)</a>
-            <a href="construction.html" class="menu-button">วิชาแปลมคธเป็นไทย (สมันต. ๓)</a>
-            <a href="../pages/content_browser.html?level=pt6" class="menu-button">เนื้อหาโหมดบอร์ด</a>
-            <a href="../pages/reader.html?level=pt6" class="menu-button">เนื้อหาโหมดหนังสือ</a>
-        </div>
+            <h2>📚 วิชาเรียน</h2>
+            <div class="menu-container">
+                <a href="construction.html" class="menu-button">วิชาแปลไทยเป็นมคธ (ธ. ภาค ๕-๘)</a>
+                <a href="construction.html" class="menu-button">วิชาแปลมคธเป็นไทย (สมันต. ๓)</a>
+                <a href="../pages/content_browser.html?level=pt6" class="menu-button">เนื้อหาโหมดบอร์ด</a>
+                <a href="../pages/reader.html?level=pt6" class="menu-button">เนื้อหาโหมดหนังสือ</a>
+            </div>
 
-        <hr>
-        <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-            <p style="color: #7f8c8d; margin-bottom: 10px;">สถิติผู้เข้าชมเว็บไซต์</p>
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt6" alt="visitor badge" />
+            <hr>
+            <div class="visitor-stats">
+                <p>สถิติผู้เข้าชมเว็บไซต์</p>
+                <img src="https://visitor-badge.laobi.icu/badge?page_id=kanjin22.pali-theonlyone-pt6" alt="visitor badge" />
+            </div>
         </div>
     </div>
 
