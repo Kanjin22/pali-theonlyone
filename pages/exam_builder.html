@@ -293,7 +293,7 @@
         .sent-unselected { background-color: #ffebee !important; border-color: #c62828 !important; color: #b71c1c; opacity: 0.7; }
         .page-marker { color: #999; font-size: 0.8rem; margin: 15px 0 5px 0; border-bottom: 1px dashed #eee; text-align: right; width: 100%; display: block; }
 
-        @media (max-width: 768px) {
+        @media only screen and (max-width: 768px) {
             .container { margin: 0; border-radius: 0; box-shadow: none; max-width: 100%; }
             .header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .header h1 { font-size: 1.1rem; }
@@ -932,6 +932,10 @@
                 o.text = s;
                 sel.appendChild(o);
             });
+            // Ensure the first option is selected and value is set
+            if (subjects.length > 0) {
+                sel.value = subjects[0];
+            }
         }
         function formatThaiDate(iso) {
             if (!iso) return '-';
@@ -1054,6 +1058,13 @@
             const levelConfig = CONTENT_MAPPING[levelLabel] || {};
             const parts = levelConfig[subjectLabel] || [];
             
+            console.log('populatePartSelects Debug:', {
+                levelLabel,
+                subjectLabel,
+                hasConfig: !!CONTENT_MAPPING[levelLabel],
+                partsCount: parts.length
+            });
+
             // Fallback for unspecified levels
             if (parts.length === 0 && !levelLabel.includes('ป.ธ.')) {
                  parts.push({id:'dhamma-1', label:'ธรรมบท ภาคที่ ๑'}, {id:'dhamma-2', label:'ธรรมบท ภาคที่ ๒'}, {id:'dhamma-3', label:'ธรรมบท ภาคที่ ๓'}, {id:'dhamma-4', label:'ธรรมบท ภาคที่ ๔'});
