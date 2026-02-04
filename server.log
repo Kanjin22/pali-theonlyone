@@ -1,0 +1,887 @@
+[2026-02-04T00:47:35.876Z] Server running at http://127.0.0.1:8086/
+[2026-02-04T00:47:40.541Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:47:40.543Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:47:40.560Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:47:40.562Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:47:40.563Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:47:40.564Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:47:40.564Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:47:40.565Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:47:40.565Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:47:40.567Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:47:40.567Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:47:40.568Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:47:40.585Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:47:40.585Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:47:40.586Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:47:40.586Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:47:40.632Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:47:40.633Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:47:42.216Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:47:42.217Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:47:45.422Z] Request: GET /?ide_webview_request_time=1770166065419 -> Path: /
+[2026-02-04T00:47:45.422Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:47:45.457Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:47:45.457Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:47:45.459Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:47:45.459Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:47:45.459Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:47:45.459Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:47:45.460Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:47:45.460Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:47:45.460Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:47:45.461Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:47:45.461Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:47:45.461Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:47:45.462Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:47:45.462Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:47:45.517Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:47:45.518Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:47:45.525Z] Request: GET / -> Path: /
+[2026-02-04T00:47:45.526Z] Request: GET /index.html -> Path: /index.html
+[2026-02-04T00:47:45.526Z] Request: GET /pages/reader.html -> Path: /pages/reader.html
+[2026-02-04T00:47:45.526Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:47:45.527Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:47:45.527Z] 200 OK: D:\pali-theonlyone\pages\reader.html
+[2026-02-04T00:47:45.530Z] Request: GET /pages/presentation.html -> Path: /pages/presentation.html
+[2026-02-04T00:47:45.531Z] Request: GET /pages/dictionary.html -> Path: /pages/dictionary.html
+[2026-02-04T00:47:45.531Z] Request: GET /pages/flashcards.html -> Path: /pages/flashcards.html
+[2026-02-04T00:47:45.532Z] 200 OK: D:\pali-theonlyone\pages\flashcards.html
+[2026-02-04T00:47:45.532Z] 200 OK: D:\pali-theonlyone\pages\presentation.html
+[2026-02-04T00:47:45.533Z] 200 OK: D:\pali-theonlyone\pages\dictionary.html
+[2026-02-04T00:47:45.534Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:47:45.535Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:47:45.536Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:47:45.537Z] Request: GET /icons/pwa-maskable.svg -> Path: /icons/pwa-maskable.svg
+[2026-02-04T00:47:45.538Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:47:45.539Z] 200 OK: D:\pali-theonlyone\icons\pwa-maskable.svg
+[2026-02-04T00:47:45.595Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:47:45.595Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:48:03.535Z] Request: GET / -> Path: /
+[2026-02-04T00:48:03.536Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:48:03.555Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:48:03.555Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:48:03.556Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:48:03.556Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:48:03.559Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:48:03.559Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:48:03.559Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:48:03.560Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:48:03.560Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:48:03.560Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:48:03.561Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:48:03.561Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:48:03.561Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:48:03.562Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:48:04.325Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:48:04.326Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:48:04.328Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:48:04.328Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:48:05.506Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:48:05.507Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:48:23.240Z] Request: GET /admin -> Path: /admin
+[2026-02-04T00:48:23.241Z] 500 Error: EISDIR for D:\pali-theonlyone\admin
+[2026-02-04T00:48:23.270Z] Request: GET /favicon.ico -> Path: /favicon.ico
+[2026-02-04T00:48:23.270Z] 404 Not Found: D:\pali-theonlyone\favicon.ico
+[2026-02-04T00:48:24.767Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:48:24.768Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:48:25.990Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:48:25.990Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:48:57.023Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:48:57.024Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:12.590Z] Request: GET /pages/exam_builder.html?ide_webview_request_time=1770166152585 -> Path: /pages/exam_builder.html
+[2026-02-04T00:49:12.591Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T00:49:12.608Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:49:12.609Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:49:12.618Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:49:12.619Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:49:12.620Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:49:12.621Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:49:12.622Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:49:12.622Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:49:12.622Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:49:12.623Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:49:12.623Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:49:12.624Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:49:12.625Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:49:12.627Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:49:12.627Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:49:12.627Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:49:12.628Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:49:12.629Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:49:12.633Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:49:12.633Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:49:12.636Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:49:12.638Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:49:12.639Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:49:12.640Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:49:12.642Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:49:12.643Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:49:12.646Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:49:12.647Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:49:12.649Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:49:12.649Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:49:12.650Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:49:12.651Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:49:12.653Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:49:12.653Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:49:12.654Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:49:12.654Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:49:13.321Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:49:13.322Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:49:13.372Z] Request: GET /pages/index.html -> Path: /pages/index.html
+[2026-02-04T00:49:13.373Z] 404 Not Found: D:\pali-theonlyone\pages\index.html
+[2026-02-04T00:49:13.384Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:49:13.384Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:49:14.901Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:14.902Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:22.592Z] Request: GET /pages/index.html -> Path: /pages/index.html
+[2026-02-04T00:49:22.592Z] 404 Not Found: D:\pali-theonlyone\pages\index.html
+[2026-02-04T00:49:24.124Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:24.124Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:28.263Z] Request: GET /pages -> Path: /pages
+[2026-02-04T00:49:28.264Z] 500 Error: EISDIR for D:\pali-theonlyone\pages
+[2026-02-04T00:49:29.783Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:29.784Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:36.536Z] Request: GET /pages/reader.html -> Path: /pages/reader.html
+[2026-02-04T00:49:36.536Z] 200 OK: D:\pali-theonlyone\pages\reader.html
+[2026-02-04T00:49:36.550Z] Request: GET /js/connector.js -> Path: /js/connector.js
+[2026-02-04T00:49:36.551Z] 200 OK: D:\pali-theonlyone\js\connector.js
+[2026-02-04T00:49:36.552Z] Request: GET /js/connector-graph.js -> Path: /js/connector-graph.js
+[2026-02-04T00:49:36.552Z] 200 OK: D:\pali-theonlyone\js\connector-graph.js
+[2026-02-04T00:49:36.554Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:49:36.555Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:49:36.555Z] Request: GET /data/dicts/vocab-insan-pr9.js -> Path: /data/dicts/vocab-insan-pr9.js
+[2026-02-04T00:49:36.556Z] Request: GET /data/vocab-enthai.js -> Path: /data/vocab-enthai.js
+[2026-02-04T00:49:36.557Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:49:36.558Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:49:36.560Z] Request: GET /data/dicts/vocab-jinakalamalini.js -> Path: /data/dicts/vocab-jinakalamalini.js
+[2026-02-04T00:49:36.561Z] Request: GET /data/dicts/vocab-dppn.js -> Path: /data/dicts/vocab-dppn.js
+[2026-02-04T00:49:36.564Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dppn.js
+[2026-02-04T00:49:36.566Z] Request: GET /js/user_vocab_manager.js -> Path: /js/user_vocab_manager.js
+[2026-02-04T00:49:36.567Z] Request: GET /data/vocab-roots.js -> Path: /data/vocab-roots.js
+[2026-02-04T00:49:36.568Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-jinakalamalini.js
+[2026-02-04T00:49:36.570Z] 200 OK: D:\pali-theonlyone\js\user_vocab_manager.js
+[2026-02-04T00:49:36.572Z] 200 OK: D:\pali-theonlyone\data\vocab-roots.js
+[2026-02-04T00:49:36.574Z] Request: GET /data/dicts/vocab-insan-pr9-5-8.js -> Path: /data/dicts/vocab-insan-pr9-5-8.js
+[2026-02-04T00:49:36.575Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9.js
+[2026-02-04T00:49:36.577Z] Request: GET /data/dicts/vocab-bhumibalo.js -> Path: /data/dicts/vocab-bhumibalo.js
+[2026-02-04T00:49:36.580Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9-5-8.js
+[2026-02-04T00:49:36.586Z] 200 OK: D:\pali-theonlyone\data\vocab-enthai.js
+[2026-02-04T00:49:36.593Z] Request: GET /data/vocab-ipa.js -> Path: /data/vocab-ipa.js
+[2026-02-04T00:49:36.595Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-bhumibalo.js
+[2026-02-04T00:49:36.603Z] Request: GET /data/dicts/vocab-dpd.js -> Path: /data/dicts/vocab-dpd.js
+[2026-02-04T00:49:36.607Z] Request: GET /data/vocab-pts.js -> Path: /data/vocab-pts.js
+[2026-02-04T00:49:36.608Z] 200 OK: D:\pali-theonlyone\data\vocab-ipa.js
+[2026-02-04T00:49:36.613Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dpd.js
+[2026-02-04T00:49:36.630Z] 200 OK: D:\pali-theonlyone\data\vocab-pts.js
+[2026-02-04T00:49:36.650Z] Request: GET /data/vocab-dhammika.js -> Path: /data/vocab-dhammika.js
+[2026-02-04T00:49:36.651Z] 200 OK: D:\pali-theonlyone\data\vocab-dhammika.js
+[2026-02-04T00:49:36.660Z] Request: GET /data/vocab-dpd-inflected.js -> Path: /data/vocab-dpd-inflected.js
+[2026-02-04T00:49:36.676Z] 200 OK: D:\pali-theonlyone\data\vocab-dpd-inflected.js
+[2026-02-04T00:49:36.683Z] Request: GET /data/vocab-inflected.js -> Path: /data/vocab-inflected.js
+[2026-02-04T00:49:36.684Z] 200 OK: D:\pali-theonlyone\data\vocab-inflected.js
+[2026-02-04T00:49:36.701Z] Request: GET /data/vocab-sc.js -> Path: /data/vocab-sc.js
+[2026-02-04T00:49:36.703Z] 200 OK: D:\pali-theonlyone\data\vocab-sc.js
+[2026-02-04T00:49:36.717Z] Request: GET /data/vocab-sandhi.js -> Path: /data/vocab-sandhi.js
+[2026-02-04T00:49:36.718Z] Request: GET /data/pali-formatter.js -> Path: /data/pali-formatter.js
+[2026-02-04T00:49:36.719Z] 200 OK: D:\pali-theonlyone\data\vocab-sandhi.js
+[2026-02-04T00:49:36.720Z] 200 OK: D:\pali-theonlyone\data\pali-formatter.js
+[2026-02-04T00:49:36.723Z] Request: GET /data/pali-lookup.js -> Path: /data/pali-lookup.js
+[2026-02-04T00:49:36.724Z] 200 OK: D:\pali-theonlyone\data\pali-lookup.js
+[2026-02-04T00:49:36.725Z] Request: GET /data/pali-script.js -> Path: /data/pali-script.js
+[2026-02-04T00:49:36.726Z] 200 OK: D:\pali-theonlyone\data\pali-script.js
+[2026-02-04T00:49:36.730Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:49:36.730Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:49:36.732Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:49:36.733Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:49:36.735Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:49:36.738Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:49:36.760Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:49:36.762Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:49:36.763Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:49:36.765Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:49:36.771Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:49:36.772Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:49:36.773Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:49:36.773Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:49:36.777Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:49:36.778Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:49:36.779Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:49:36.780Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:49:36.780Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:49:36.782Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:49:36.783Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:49:36.784Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:49:36.784Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:49:36.785Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:49:36.786Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:49:36.786Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:49:36.789Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:49:36.789Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:49:36.790Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:49:36.790Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:49:36.791Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:49:36.792Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:49:36.793Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:49:36.794Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:49:37.583Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:49:37.583Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:49:37.586Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:49:37.586Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:49:39.116Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:39.116Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:39.919Z] Request: GET /pages/content_browser.html -> Path: /pages/content_browser.html
+[2026-02-04T00:49:39.920Z] 200 OK: D:\pali-theonlyone\pages\content_browser.html
+[2026-02-04T00:49:39.941Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:49:39.942Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:49:39.943Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:49:39.943Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:49:39.944Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:49:39.944Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:49:39.945Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:49:39.946Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:49:39.947Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:49:39.949Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:49:39.949Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:49:39.951Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:49:39.952Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:49:39.953Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:49:39.953Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:49:39.955Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:49:39.957Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:49:39.958Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:49:39.959Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:49:39.964Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:49:39.968Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:49:39.969Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:49:39.971Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:49:39.971Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:49:39.973Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:49:39.973Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:49:39.974Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:49:39.975Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:49:39.975Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:49:39.976Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:49:39.976Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:49:39.977Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:49:39.978Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:49:39.978Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:49:41.490Z] Request: GET /pages/library_center.html -> Path: /pages/library_center.html
+[2026-02-04T00:49:41.494Z] 200 OK: D:\pali-theonlyone\pages\library_center.html
+[2026-02-04T00:49:41.559Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:41.560Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:43.039Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:43.039Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:43.370Z] Request: GET /index.html -> Path: /index.html
+[2026-02-04T00:49:43.371Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:49:43.386Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:49:43.387Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:49:43.388Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:49:43.389Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:49:43.389Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:49:43.390Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:49:43.390Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:49:43.390Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:49:43.391Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:49:43.391Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:49:43.391Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:49:43.391Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:49:43.392Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:49:43.392Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:49:43.392Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:49:43.393Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:49:43.398Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:49:43.398Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:49:44.912Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:44.912Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:49:53.295Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:49:53.296Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:49:56.164Z] Request: GET /pages/library_center.html -> Path: /pages/library_center.html
+[2026-02-04T00:49:56.165Z] 200 OK: D:\pali-theonlyone\pages\library_center.html
+[2026-02-04T00:49:57.696Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:49:57.700Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:50:01.076Z] Request: GET /pages/reader.html -> Path: /pages/reader.html
+[2026-02-04T00:50:01.077Z] 200 OK: D:\pali-theonlyone\pages\reader.html
+[2026-02-04T00:50:01.101Z] Request: GET /data/dicts/vocab-insan-pr9.js -> Path: /data/dicts/vocab-insan-pr9.js
+[2026-02-04T00:50:01.104Z] Request: GET /js/connector.js -> Path: /js/connector.js
+[2026-02-04T00:50:01.105Z] Request: GET /data/dicts/vocab-insan-pr9-5-8.js -> Path: /data/dicts/vocab-insan-pr9-5-8.js
+[2026-02-04T00:50:01.106Z] 200 OK: D:\pali-theonlyone\js\connector.js
+[2026-02-04T00:50:01.107Z] Request: GET /data/dicts/vocab-jinakalamalini.js -> Path: /data/dicts/vocab-jinakalamalini.js
+[2026-02-04T00:50:01.108Z] Request: GET /data/dicts/vocab-bhumibalo.js -> Path: /data/dicts/vocab-bhumibalo.js
+[2026-02-04T00:50:01.108Z] Request: GET /js/connector-graph.js -> Path: /js/connector-graph.js
+[2026-02-04T00:50:01.109Z] 200 OK: D:\pali-theonlyone\js\connector-graph.js
+[2026-02-04T00:50:01.110Z] Request: GET /data/vocab-enthai.js -> Path: /data/vocab-enthai.js
+[2026-02-04T00:50:01.111Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9-5-8.js
+[2026-02-04T00:50:01.113Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-jinakalamalini.js
+[2026-02-04T00:50:01.116Z] Request: GET /data/vocab-ipa.js -> Path: /data/vocab-ipa.js
+[2026-02-04T00:50:01.117Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9.js
+[2026-02-04T00:50:01.125Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-bhumibalo.js
+[2026-02-04T00:50:01.134Z] 200 OK: D:\pali-theonlyone\data\vocab-ipa.js
+[2026-02-04T00:50:01.138Z] Request: GET /data/dicts/vocab-dpd.js -> Path: /data/dicts/vocab-dpd.js
+[2026-02-04T00:50:01.139Z] Request: GET /data/vocab-pts.js -> Path: /data/vocab-pts.js
+[2026-02-04T00:50:01.144Z] 200 OK: D:\pali-theonlyone\data\vocab-enthai.js
+[2026-02-04T00:50:01.153Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dpd.js
+[2026-02-04T00:50:01.165Z] 200 OK: D:\pali-theonlyone\data\vocab-pts.js
+[2026-02-04T00:50:01.201Z] Request: GET /data/dicts/vocab-dppn.js -> Path: /data/dicts/vocab-dppn.js
+[2026-02-04T00:50:01.203Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dppn.js
+[2026-02-04T00:50:01.216Z] Request: GET /data/vocab-dhammika.js -> Path: /data/vocab-dhammika.js
+[2026-02-04T00:50:01.217Z] 200 OK: D:\pali-theonlyone\data\vocab-dhammika.js
+[2026-02-04T00:50:01.222Z] Request: GET /data/vocab-dpd-inflected.js -> Path: /data/vocab-dpd-inflected.js
+[2026-02-04T00:50:01.228Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:50:01.229Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:50:01.232Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:50:01.233Z] Request: GET /data/vocab-inflected.js -> Path: /data/vocab-inflected.js
+[2026-02-04T00:50:01.233Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:50:01.234Z] 200 OK: D:\pali-theonlyone\data\vocab-inflected.js
+[2026-02-04T00:50:01.235Z] Request: GET /data/vocab-sc.js -> Path: /data/vocab-sc.js
+[2026-02-04T00:50:01.238Z] 200 OK: D:\pali-theonlyone\data\vocab-sc.js
+[2026-02-04T00:50:01.241Z] 200 OK: D:\pali-theonlyone\data\vocab-dpd-inflected.js
+[2026-02-04T00:50:01.247Z] Request: GET /data/vocab-roots.js -> Path: /data/vocab-roots.js
+[2026-02-04T00:50:01.249Z] 200 OK: D:\pali-theonlyone\data\vocab-roots.js
+[2026-02-04T00:50:01.255Z] Request: GET /js/user_vocab_manager.js -> Path: /js/user_vocab_manager.js
+[2026-02-04T00:50:01.256Z] 200 OK: D:\pali-theonlyone\js\user_vocab_manager.js
+[2026-02-04T00:50:01.261Z] Request: GET /data/vocab-sandhi.js -> Path: /data/vocab-sandhi.js
+[2026-02-04T00:50:01.261Z] 200 OK: D:\pali-theonlyone\data\vocab-sandhi.js
+[2026-02-04T00:50:01.267Z] Request: GET /data/pali-lookup.js -> Path: /data/pali-lookup.js
+[2026-02-04T00:50:01.268Z] 200 OK: D:\pali-theonlyone\data\pali-lookup.js
+[2026-02-04T00:50:01.269Z] Request: GET /data/pali-formatter.js -> Path: /data/pali-formatter.js
+[2026-02-04T00:50:01.270Z] 200 OK: D:\pali-theonlyone\data\pali-formatter.js
+[2026-02-04T00:50:01.273Z] Request: GET /data/pali-script.js -> Path: /data/pali-script.js
+[2026-02-04T00:50:01.274Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:50:01.274Z] 200 OK: D:\pali-theonlyone\data\pali-script.js
+[2026-02-04T00:50:01.276Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:50:01.276Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:50:01.278Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:50:01.281Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:50:01.283Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:50:01.302Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:50:01.305Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:50:01.312Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:50:01.313Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:50:01.314Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:50:01.314Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:50:01.315Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:50:01.315Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:50:01.328Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:50:01.329Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:50:01.329Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:50:01.330Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:50:01.331Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:50:01.335Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:50:01.338Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:50:01.338Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:50:01.341Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:50:01.342Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:50:01.342Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:50:01.343Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:50:01.346Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:50:01.347Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:50:01.348Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:50:01.348Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:50:01.349Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:50:01.349Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:50:01.350Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:50:01.351Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:50:02.162Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:50:02.163Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:50:02.167Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:50:02.167Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:50:02.311Z] Request: GET /pages/library_center.html -> Path: /pages/library_center.html
+[2026-02-04T00:50:02.312Z] 200 OK: D:\pali-theonlyone\pages\library_center.html
+[2026-02-04T00:50:03.838Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:50:03.839Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:50:04.724Z] Request: GET /pages/qa-grammar-1-2.html -> Path: /pages/qa-grammar-1-2.html
+[2026-02-04T00:50:04.725Z] 200 OK: D:\pali-theonlyone\pages\qa-grammar-1-2.html
+[2026-02-04T00:50:04.740Z] Request: GET /data/qa-grammar-1-2.js -> Path: /data/qa-grammar-1-2.js
+[2026-02-04T00:50:04.741Z] 200 OK: D:\pali-theonlyone\data\qa-grammar-1-2.js
+[2026-02-04T00:50:06.456Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:50:06.457Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:50:08.288Z] Request: GET /pages/reader.html -> Path: /pages/reader.html
+[2026-02-04T00:50:08.289Z] 200 OK: D:\pali-theonlyone\pages\reader.html
+[2026-02-04T00:50:08.306Z] Request: GET /data/dicts/vocab-insan-pr9-5-8.js -> Path: /data/dicts/vocab-insan-pr9-5-8.js
+[2026-02-04T00:50:08.308Z] Request: GET /js/connector.js -> Path: /js/connector.js
+[2026-02-04T00:50:08.309Z] 200 OK: D:\pali-theonlyone\js\connector.js
+[2026-02-04T00:50:08.310Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9-5-8.js
+[2026-02-04T00:50:08.312Z] Request: GET /js/connector-graph.js -> Path: /js/connector-graph.js
+[2026-02-04T00:50:08.312Z] Request: GET /data/dicts/vocab-insan-pr9.js -> Path: /data/dicts/vocab-insan-pr9.js
+[2026-02-04T00:50:08.313Z] Request: GET /data/dicts/vocab-bhumibalo.js -> Path: /data/dicts/vocab-bhumibalo.js
+[2026-02-04T00:50:08.313Z] Request: GET /data/dicts/vocab-jinakalamalini.js -> Path: /data/dicts/vocab-jinakalamalini.js
+[2026-02-04T00:50:08.314Z] Request: GET /data/vocab-enthai.js -> Path: /data/vocab-enthai.js
+[2026-02-04T00:50:08.316Z] 200 OK: D:\pali-theonlyone\js\connector-graph.js
+[2026-02-04T00:50:08.318Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-jinakalamalini.js
+[2026-02-04T00:50:08.320Z] Request: GET /data/vocab-ipa.js -> Path: /data/vocab-ipa.js
+[2026-02-04T00:50:08.325Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-insan-pr9.js
+[2026-02-04T00:50:08.331Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-bhumibalo.js
+[2026-02-04T00:50:08.336Z] 200 OK: D:\pali-theonlyone\data\vocab-ipa.js
+[2026-02-04T00:50:08.340Z] Request: GET /data/dicts/vocab-dpd.js -> Path: /data/dicts/vocab-dpd.js
+[2026-02-04T00:50:08.343Z] 200 OK: D:\pali-theonlyone\data\vocab-enthai.js
+[2026-02-04T00:50:08.351Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dpd.js
+[2026-02-04T00:50:08.360Z] Request: GET /data/vocab-pts.js -> Path: /data/vocab-pts.js
+[2026-02-04T00:50:08.374Z] 200 OK: D:\pali-theonlyone\data\vocab-pts.js
+[2026-02-04T00:50:08.405Z] Request: GET /data/dicts/vocab-dppn.js -> Path: /data/dicts/vocab-dppn.js
+[2026-02-04T00:50:08.407Z] 200 OK: D:\pali-theonlyone\data\dicts\vocab-dppn.js
+[2026-02-04T00:50:08.422Z] Request: GET /data/vocab-dhammika.js -> Path: /data/vocab-dhammika.js
+[2026-02-04T00:50:08.424Z] 200 OK: D:\pali-theonlyone\data\vocab-dhammika.js
+[2026-02-04T00:50:08.427Z] Request: GET /data/vocab-dpd-inflected.js -> Path: /data/vocab-dpd-inflected.js
+[2026-02-04T00:50:08.433Z] Request: GET /data/pali-script.js -> Path: /data/pali-script.js
+[2026-02-04T00:50:08.434Z] 200 OK: D:\pali-theonlyone\data\pali-script.js
+[2026-02-04T00:50:08.439Z] Request: GET /data/vocab-inflected.js -> Path: /data/vocab-inflected.js
+[2026-02-04T00:50:08.441Z] 200 OK: D:\pali-theonlyone\data\vocab-inflected.js
+[2026-02-04T00:50:08.447Z] 200 OK: D:\pali-theonlyone\data\vocab-dpd-inflected.js
+[2026-02-04T00:50:08.455Z] Request: GET /data/vocab-sc.js -> Path: /data/vocab-sc.js
+[2026-02-04T00:50:08.456Z] Request: GET /data/vocab-roots.js -> Path: /data/vocab-roots.js
+[2026-02-04T00:50:08.456Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:50:08.457Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:50:08.459Z] 200 OK: D:\pali-theonlyone\data\vocab-roots.js
+[2026-02-04T00:50:08.460Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:50:08.461Z] 200 OK: D:\pali-theonlyone\data\vocab-sc.js
+[2026-02-04T00:50:08.463Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:50:08.468Z] Request: GET /data/vocab-sandhi.js -> Path: /data/vocab-sandhi.js
+[2026-02-04T00:50:08.469Z] 200 OK: D:\pali-theonlyone\data\vocab-sandhi.js
+[2026-02-04T00:50:08.473Z] Request: GET /data/pali-lookup.js -> Path: /data/pali-lookup.js
+[2026-02-04T00:50:08.475Z] 200 OK: D:\pali-theonlyone\data\pali-lookup.js
+[2026-02-04T00:50:08.481Z] Request: GET /data/pali-formatter.js -> Path: /data/pali-formatter.js
+[2026-02-04T00:50:08.482Z] 200 OK: D:\pali-theonlyone\data\pali-formatter.js
+[2026-02-04T00:50:08.486Z] Request: GET /js/user_vocab_manager.js -> Path: /js/user_vocab_manager.js
+[2026-02-04T00:50:08.487Z] 200 OK: D:\pali-theonlyone\js\user_vocab_manager.js
+[2026-02-04T00:50:08.488Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:50:08.491Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:50:08.491Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:50:08.493Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:50:08.496Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:50:08.497Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:50:08.523Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:50:08.524Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:50:08.524Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:50:08.526Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:50:08.529Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:50:08.530Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:50:08.531Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:50:08.531Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:50:08.532Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:50:08.533Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:50:08.536Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:50:08.537Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:50:08.538Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:50:08.538Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:50:08.540Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:50:08.541Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:50:08.541Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:50:08.543Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:50:08.543Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:50:08.546Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:50:08.548Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:50:08.549Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:50:08.549Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:50:08.550Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:50:08.550Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:50:08.551Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:50:08.551Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:50:08.552Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:50:09.192Z] Request: GET /pages/exam_builder.html -> Path: /pages/exam_builder.html
+[2026-02-04T00:50:09.193Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:50:09.194Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:50:09.194Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T00:50:09.219Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:50:09.220Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:50:09.221Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:50:09.221Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:50:09.223Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:50:09.224Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:50:09.225Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:50:09.226Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:50:09.226Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:50:09.227Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:50:09.229Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:50:09.230Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:50:09.230Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:50:09.232Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:50:09.235Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:50:09.236Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:50:09.237Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:50:09.238Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:50:09.240Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:50:09.241Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:50:09.242Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:50:09.243Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:50:09.244Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:50:09.246Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:50:09.247Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:50:09.249Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:50:09.249Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:50:09.251Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:50:09.254Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:50:09.254Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:50:09.256Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:50:09.256Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:50:09.257Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:50:09.257Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:50:09.258Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:50:09.259Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:50:09.803Z] Request: GET /pages/index.html -> Path: /pages/index.html
+[2026-02-04T00:50:09.805Z] 404 Not Found: D:\pali-theonlyone\pages\index.html
+[2026-02-04T00:50:11.416Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:50:11.416Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:50:17.271Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:50:17.272Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:50:17.322Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:50:17.322Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:50:17.323Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:50:17.323Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:50:17.323Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:50:17.324Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:50:17.324Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:50:17.325Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:50:17.325Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:50:17.325Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:50:17.326Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:50:17.326Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:50:17.326Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:50:17.327Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:50:17.379Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:50:17.379Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:50:18.895Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:50:18.896Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:51:17.799Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:51:17.800Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:51:17.815Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:51:17.816Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:51:17.866Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:51:17.867Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:51:17.870Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:51:17.870Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:51:17.871Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:51:17.871Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:51:17.871Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:51:17.872Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:51:17.872Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:51:17.872Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:51:17.873Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:51:17.873Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:51:17.873Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:51:17.874Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:51:17.921Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:51:17.922Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:51:19.454Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:51:19.457Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:51:30.205Z] Request: GET / -> Path: /
+[2026-02-04T00:51:30.205Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:51:30.224Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:51:30.225Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:51:30.226Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:51:30.227Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:51:30.227Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:51:30.227Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:51:30.228Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:51:30.228Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:51:30.228Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:51:30.229Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:51:30.229Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:51:30.229Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:51:30.230Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:51:30.230Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:51:30.276Z] Request: GET /manifest.webmanifest -> Path: /manifest.webmanifest
+[2026-02-04T00:51:30.277Z] 200 OK: D:\pali-theonlyone\manifest.webmanifest
+[2026-02-04T00:51:30.282Z] Request: GET /icons/pwa.svg -> Path: /icons/pwa.svg
+[2026-02-04T00:51:30.283Z] 200 OK: D:\pali-theonlyone\icons\pwa.svg
+[2026-02-04T00:51:31.798Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:51:31.799Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:51:40.291Z] Request: GET /pages/exam_builder.html?ide_webview_request_time=1770166300281 -> Path: /pages/exam_builder.html
+[2026-02-04T00:51:40.292Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T00:51:40.333Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:51:40.333Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:51:40.336Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:51:40.337Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:51:40.338Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:51:40.339Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:51:40.340Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:51:40.340Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:51:40.341Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:51:40.341Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:51:40.342Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:51:40.342Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:51:40.343Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:51:40.345Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:51:40.350Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:51:40.351Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:51:40.352Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:51:40.354Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:51:40.357Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:51:40.358Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:51:40.362Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:51:40.365Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:51:40.379Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:51:40.380Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:51:40.381Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:51:40.381Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:51:40.382Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:51:40.383Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:51:40.383Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:51:40.384Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:51:40.384Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:51:40.385Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:51:40.385Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:51:40.386Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:51:40.387Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:51:40.388Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:51:40.874Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:51:40.874Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:51:42.562Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:51:42.563Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:51:47.221Z] Request: GET /pages/exam_builder.html -> Path: /pages/exam_builder.html
+[2026-02-04T00:51:47.222Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T00:51:47.240Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:51:47.240Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:51:47.241Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:51:47.242Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:51:47.243Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:51:47.243Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:51:47.243Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:51:47.244Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:51:47.245Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:51:47.245Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:51:47.247Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:51:47.248Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:51:47.249Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:51:47.250Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:51:47.254Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:51:47.255Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:51:47.255Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:51:47.257Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:51:47.261Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:51:47.262Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:51:47.267Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:51:47.272Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:51:47.274Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:51:47.275Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:51:47.278Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:51:47.278Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:51:47.279Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:51:47.279Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:51:47.280Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:51:47.280Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:51:47.281Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:51:47.281Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:51:47.282Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:51:47.282Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:51:47.282Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:51:47.283Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:51:49.363Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:51:49.363Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:53:29.116Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:53:29.116Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:53:29.167Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:53:29.168Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:53:29.168Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:53:29.168Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:53:29.168Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:53:29.169Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:53:29.169Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:53:29.169Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:53:29.170Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:53:29.170Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:53:29.170Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:53:29.170Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:53:29.171Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:53:29.171Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:53:29.220Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:53:29.221Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:53:30.756Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:53:30.757Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:58:22.252Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:58:22.253Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:58:22.266Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T00:58:22.266Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T00:58:22.306Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T00:58:22.307Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T00:58:22.308Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T00:58:22.308Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T00:58:22.309Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T00:58:22.309Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T00:58:22.310Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:58:22.310Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T00:58:22.310Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T00:58:22.310Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T00:58:22.311Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:58:22.311Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T00:58:22.311Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T00:58:22.312Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T00:58:22.361Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T00:58:22.362Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T00:58:23.888Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:58:23.889Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T00:59:18.743Z] Request: GET /pages/exam_builder.html -> Path: /pages/exam_builder.html
+[2026-02-04T00:59:18.743Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T00:59:18.761Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T00:59:18.761Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T00:59:18.762Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T00:59:18.762Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T00:59:18.763Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T00:59:18.764Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T00:59:18.764Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T00:59:18.765Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T00:59:18.765Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T00:59:18.766Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T00:59:18.767Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T00:59:18.768Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T00:59:18.770Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T00:59:18.771Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T00:59:18.772Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T00:59:18.773Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T00:59:18.777Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T00:59:18.779Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T00:59:18.781Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T00:59:18.781Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T00:59:18.787Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T00:59:18.792Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T00:59:18.799Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T00:59:18.799Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T00:59:18.800Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T00:59:18.800Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T00:59:18.801Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T00:59:18.801Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T00:59:18.802Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T00:59:18.802Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T00:59:18.803Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T00:59:18.803Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T00:59:18.804Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T00:59:18.805Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T00:59:18.805Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
+[2026-02-04T00:59:18.805Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T00:59:20.868Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T00:59:20.868Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:22:37.400Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:37.402Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:37.415Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:37.415Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:37.457Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:22:37.457Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:22:37.458Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:22:37.458Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:22:37.459Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:22:37.459Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:22:37.459Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:22:37.460Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:22:37.460Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:22:37.460Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:22:37.461Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:22:37.461Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:22:37.461Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:22:37.462Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:22:37.516Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:22:37.517Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:22:39.058Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:22:39.058Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:22:39.232Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:39.233Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:39.247Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:39.247Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:39.283Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:22:39.284Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:22:39.284Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:22:39.284Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:22:39.285Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:22:39.285Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:22:39.285Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:22:39.285Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:22:39.286Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:22:39.286Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:22:39.286Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:22:39.287Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:22:39.287Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:22:39.287Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:22:39.344Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:22:39.345Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:22:40.869Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:22:40.870Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:22:43.733Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:43.734Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:43.749Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:43.749Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:43.785Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:22:43.785Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:22:43.786Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:22:43.786Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:22:43.786Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:22:43.787Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:22:43.787Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:22:43.787Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:22:43.788Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:22:43.788Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:22:43.788Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:22:43.789Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:22:43.789Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:22:43.789Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:22:43.842Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:22:43.842Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:22:45.372Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:22:45.373Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:22:56.993Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:56.994Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:57.008Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:22:57.009Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:22:57.046Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:22:57.046Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:22:57.047Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:22:57.047Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:22:57.048Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:22:57.048Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:22:57.049Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:22:57.049Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:22:57.050Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:22:57.050Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:22:57.050Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:22:57.050Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:22:57.051Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:22:57.051Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:22:57.105Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:22:57.105Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:22:58.630Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:22:58.630Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:23:50.302Z] Request: GET /pages/exam_builder.html -> Path: /pages/exam_builder.html
+[2026-02-04T01:23:50.303Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T01:23:50.311Z] Request: GET /.well-known/appspecific/com.chrome.devtools.json -> Path: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-04T01:23:50.312Z] 404 Not Found: D:\pali-theonlyone\.well-known\appspecific\com.chrome.devtools.json
+[2026-02-04T01:25:54.282Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:25:54.283Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:25:54.296Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:25:54.297Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:25:54.335Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:25:54.335Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:25:54.335Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:25:54.336Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:25:54.336Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:25:54.336Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:25:54.337Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:25:54.337Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:25:54.337Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:25:54.338Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:25:54.338Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:25:54.338Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:25:54.338Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:25:54.339Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:25:54.394Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:25:54.394Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:25:55.917Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:25:55.917Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:28:31.683Z] Request: GET /?ide_webview_request_time=1770166060493 -> Path: /
+[2026-02-04T01:28:31.683Z] 200 OK: D:\pali-theonlyone\index.html
+[2026-02-04T01:28:31.724Z] Request: GET /js/validator.js -> Path: /js/validator.js
+[2026-02-04T01:28:31.725Z] 200 OK: D:\pali-theonlyone\js\validator.js
+[2026-02-04T01:28:31.726Z] Request: GET /js/sanitizer.js -> Path: /js/sanitizer.js
+[2026-02-04T01:28:31.726Z] Request: GET /js/utils.js -> Path: /js/utils.js
+[2026-02-04T01:28:31.727Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:28:31.727Z] Request: GET /js/auth.js -> Path: /js/auth.js
+[2026-02-04T01:28:31.727Z] Request: GET /js/dashboard.js -> Path: /js/dashboard.js
+[2026-02-04T01:28:31.728Z] 200 OK: D:\pali-theonlyone\js\sanitizer.js
+[2026-02-04T01:28:31.728Z] Request: GET /js/schedule.js -> Path: /js/schedule.js
+[2026-02-04T01:28:31.728Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:28:31.729Z] 200 OK: D:\pali-theonlyone\js\utils.js
+[2026-02-04T01:28:31.729Z] 200 OK: D:\pali-theonlyone\js\dashboard.js
+[2026-02-04T01:28:31.730Z] 200 OK: D:\pali-theonlyone\js\auth.js
+[2026-02-04T01:28:31.730Z] 200 OK: D:\pali-theonlyone\js\schedule.js
+[2026-02-04T01:28:31.782Z] Request: GET /@vite/client -> Path: /@vite/client
+[2026-02-04T01:28:31.783Z] 404 Not Found: D:\pali-theonlyone\@vite\client
+[2026-02-04T01:28:33.314Z] Request: GET /sw.js -> Path: /sw.js
+[2026-02-04T01:28:33.315Z] 200 OK: D:\pali-theonlyone\sw.js

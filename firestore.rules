@@ -339,8 +339,8 @@ service cloud.firestore {
     // ─────────────────────────────────────
 
     match /exam_logs/{logId} {
-      allow read: if isAdmin();
-      allow create: if isAdmin();
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }

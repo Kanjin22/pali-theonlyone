@@ -1,0 +1,10 @@
+[33mcommit 2f8075fc604da17aa50ffa098ae5fe597372a49d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Kanjin22 <setthachayo@gmail.com>
+Date:   Sun Feb 1 07:49:38 2026 +0700
+
+    Fix text spacing
+
+imple_server.js
+pages/presentation.html
+pages/reader.html
+simple_server.js
