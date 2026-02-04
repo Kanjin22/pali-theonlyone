@@ -885,3 +885,43 @@
 [2026-02-04T01:28:31.783Z] 404 Not Found: D:\pali-theonlyone\@vite\client
 [2026-02-04T01:28:33.314Z] Request: GET /sw.js -> Path: /sw.js
 [2026-02-04T01:28:33.315Z] 200 OK: D:\pali-theonlyone\sw.js
+[2026-02-04T01:33:21.007Z] Request: GET /pages/exam_builder.html -> Path: /pages/exam_builder.html
+[2026-02-04T01:33:21.008Z] 200 OK: D:\pali-theonlyone\pages\exam_builder.html
+[2026-02-04T01:33:21.021Z] Request: GET /.well-known/appspecific/com.chrome.devtools.json -> Path: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-04T01:33:21.023Z] 404 Not Found: D:\pali-theonlyone\.well-known\appspecific\com.chrome.devtools.json
+[2026-02-04T01:33:21.027Z] Request: GET /js/firebase_config.js -> Path: /js/firebase_config.js
+[2026-02-04T01:33:21.027Z] 200 OK: D:\pali-theonlyone\js\firebase_config.js
+[2026-02-04T01:33:21.031Z] Request: GET /data/content-dhamma01.js -> Path: /data/content-dhamma01.js
+[2026-02-04T01:33:21.031Z] Request: GET /data/content-dhamma02.js -> Path: /data/content-dhamma02.js
+[2026-02-04T01:33:21.032Z] Request: GET /data/content-dhamma03.js -> Path: /data/content-dhamma03.js
+[2026-02-04T01:33:21.032Z] Request: GET /data/content-dhamma04.js -> Path: /data/content-dhamma04.js
+[2026-02-04T01:33:21.032Z] Request: GET /data/content-dhamma05.js -> Path: /data/content-dhamma05.js
+[2026-02-04T01:33:21.032Z] Request: GET /data/content-dhamma06.js -> Path: /data/content-dhamma06.js
+[2026-02-04T01:33:21.033Z] 200 OK: D:\pali-theonlyone\data\content-dhamma05.js
+[2026-02-04T01:33:21.034Z] 200 OK: D:\pali-theonlyone\data\content-dhamma06.js
+[2026-02-04T01:33:21.034Z] 200 OK: D:\pali-theonlyone\data\content-dhamma01.js
+[2026-02-04T01:33:21.035Z] Request: GET /data/content-dhamma07.js -> Path: /data/content-dhamma07.js
+[2026-02-04T01:33:21.035Z] 200 OK: D:\pali-theonlyone\data\content-dhamma04.js
+[2026-02-04T01:33:21.036Z] 200 OK: D:\pali-theonlyone\data\content-dhamma03.js
+[2026-02-04T01:33:21.036Z] 200 OK: D:\pali-theonlyone\data\content-dhamma07.js
+[2026-02-04T01:33:21.037Z] 200 OK: D:\pali-theonlyone\data\content-dhamma02.js
+[2026-02-04T01:33:21.040Z] Request: GET /data/content-dhamma08.js -> Path: /data/content-dhamma08.js
+[2026-02-04T01:33:21.041Z] 200 OK: D:\pali-theonlyone\data\content-dhamma08.js
+[2026-02-04T01:33:21.042Z] Request: GET /data/content-mangala01.js -> Path: /data/content-mangala01.js
+[2026-02-04T01:33:21.043Z] 200 OK: D:\pali-theonlyone\data\content-mangala01.js
+[2026-02-04T01:33:21.048Z] Request: GET /data/content-mangala02.js -> Path: /data/content-mangala02.js
+[2026-02-04T01:33:21.051Z] 200 OK: D:\pali-theonlyone\data\content-mangala02.js
+[2026-02-04T01:33:21.057Z] Request: GET /data/content-samanta01.js -> Path: /data/content-samanta01.js
+[2026-02-04T01:33:21.058Z] Request: GET /data/content-samanta02.js -> Path: /data/content-samanta02.js
+[2026-02-04T01:33:21.058Z] 200 OK: D:\pali-theonlyone\data\content-samanta01.js
+[2026-02-04T01:33:21.059Z] 200 OK: D:\pali-theonlyone\data\content-samanta02.js
+[2026-02-04T01:33:21.059Z] Request: GET /data/content-samanta03.js -> Path: /data/content-samanta03.js
+[2026-02-04T01:33:21.060Z] 200 OK: D:\pali-theonlyone\data\content-samanta03.js
+[2026-02-04T01:33:21.061Z] Request: GET /data/content-visuddhi01.js -> Path: /data/content-visuddhi01.js
+[2026-02-04T01:33:21.061Z] Request: GET /data/content-visuddhi02.js -> Path: /data/content-visuddhi02.js
+[2026-02-04T01:33:21.062Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi01.js
+[2026-02-04T01:33:21.062Z] Request: GET /data/content-visuddhi03.js -> Path: /data/content-visuddhi03.js
+[2026-02-04T01:33:21.063Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi02.js
+[2026-02-04T01:33:21.063Z] Request: GET /data/content-abhidhamma01.js -> Path: /data/content-abhidhamma01.js
+[2026-02-04T01:33:21.066Z] 200 OK: D:\pali-theonlyone\data\content-visuddhi03.js
+[2026-02-04T01:33:21.067Z] 200 OK: D:\pali-theonlyone\data\content-abhidhamma01.js
