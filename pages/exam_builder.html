@@ -249,14 +249,15 @@
             font-size: 0.9rem;
             width: 40px;
         }
-        #marginPanel input[type="range"] {
+        #marginPanel input[type="number"] {
             flex: 1;
             margin: 0 10px;
-        }
-        #marginPanel span {
-            font-size: 0.8rem;
-            width: 50px;
             text-align: right;
+        }
+        #marginPanel .unit-label {
+            font-size: 0.8rem;
+            width: 30px;
+            text-align: left;
         }
         
         /* Paper Sizes */
@@ -658,23 +659,23 @@
                 <div id="marginPanel" class="d-none">
                     <div class="row">
                         <label>บน</label>
-                        <input type="range" id="marginTop" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('top', this.value)">
-                        <span id="marginTopVal">2.54 cm</span>
+                        <input type="number" id="marginTop" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('top', this.value)">
+                        <span class="unit-label">cm</span>
                     </div>
                     <div class="row">
                         <label>ล่าง</label>
-                        <input type="range" id="marginBottom" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('bottom', this.value)">
-                        <span id="marginBottomVal">2.54 cm</span>
+                        <input type="number" id="marginBottom" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('bottom', this.value)">
+                        <span class="unit-label">cm</span>
                     </div>
                     <div class="row">
                         <label>ซ้าย</label>
-                        <input type="range" id="marginLeft" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('left', this.value)">
-                        <span id="marginLeftVal">2.54 cm</span>
+                        <input type="number" id="marginLeft" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('left', this.value)">
+                        <span class="unit-label">cm</span>
                     </div>
                     <div class="row">
                         <label>ขวา</label>
-                        <input type="range" id="marginRight" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('right', this.value)">
-                        <span id="marginRightVal">2.54 cm</span>
+                        <input type="number" id="marginRight" min="0" max="10" step="0.1" value="2.54" oninput="updateMargin('right', this.value)">
+                        <span class="unit-label">cm</span>
                     </div>
                     <div class="text-center mt-10">
                         <button class="btn secondary text-xs p-xs" onclick="resetMargins()">ค่ามาตรฐาน (2.54)</button>
@@ -840,7 +841,7 @@
         }
         function updateMargin(side, val) {
             const inner = document.querySelector('.paper-inner');
-            document.getElementById(`margin${side.charAt(0).toUpperCase() + side.slice(1)}Val`).innerText = val + ' cm';
+            // document.getElementById(`margin${side.charAt(0).toUpperCase() + side.slice(1)}Val`).innerText = val + ' cm';
             inner.style.setProperty(`--p-${side}`, val + 'cm');
         }
         function resetMargins() {
