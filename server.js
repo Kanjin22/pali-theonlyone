@@ -17,16 +17,25 @@ try {
 const logger = new Logger('app.log', process.env.LOG_LEVEL || 'info');
 
 const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH || './service-account-key.json';
-if (!fs.existsSync(serviceAccountPath)) {
-  const errMsg = 'Service account key not found at: ' + serviceAccountPath;
-  logger.error(errMsg);
-  console.error(errMsg);
-  process.exit(1);
-}
+let serviceAccountExists = fs.existsSync(serviceAccountPath);
 
-admin.initializeApp({
-  credential: admin.credential.cert(require(serviceAccountPath))
-});
+if (!serviceAccountExists) {
+  const errMsg = 'Service account key not found at: ' + serviceAccountPath;
+  logger.warn(errMsg);
+  console.warn(errMsg);
+  console.warn('Running in DEVELOPMENT mode without Firebase Admin capabilities.');
+} else {
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert(require(serviceAccountPath))
+    });
+    console.log('Firebase Admin initialized successfully.');
+  } catch (err) {
+    logger.error('Failed to initialize Firebase Admin: ' + err.message);
+    console.error('Failed to initialize Firebase Admin:', err);
+    serviceAccountExists = false;
+  }
+}
 
 const firebaseClientConfig = {
   apiKey: process.env.FIREBASE_API_KEY || '',
@@ -199,6 +208,7 @@ function computeRootsDiff(oldObj, newObj) {
 }
 
 async function verifyAdmin(req) {
+  if (!serviceAccountExists) return false;
   const auth = req.headers.authorization || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
   if (!token) return false;
