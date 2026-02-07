@@ -3405,6 +3405,25 @@
                 renderCurrentPage();
             };
         }
+
+        // Auto Page Navigation on Input Blur
+        const startPageInput = document.getElementById('startPage');
+        if(startPageInput) {
+            const handlePageInput = function() {
+                if(this.value) {
+                    // Force Pali Only layout as requested
+                    const layoutSel = document.getElementById('layoutSelect');
+                    if(layoutSel) layoutSel.value = 'pali_only';
+                    render();
+                }
+            };
+            startPageInput.addEventListener('blur', handlePageInput);
+            startPageInput.addEventListener('keyup', function(e) {
+                if(e.key === 'Enter') {
+                    this.blur();
+                }
+            });
+        }
  
          // Hide Exam Button if not teacher
          const accessMode = localStorage.getItem('access_mode');
