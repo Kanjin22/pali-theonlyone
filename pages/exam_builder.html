@@ -1471,8 +1471,11 @@
 
         function useSelectionForExam(mode) {
             const sel = window.getSelection();
-            const text = sel.toString();
-            
+            let text = sel.toString();
+
+            // Remove page markers (e.g., "หน้า ๑๒๓" or "หน้า 123") from the selection
+            text = text.replace(/หน้า\s*[๐-๙0-9]+/g, '');
+
             if (!text.trim()) {
                 alert('กรุณาคลุมดำข้อความที่ต้องการเลือกก่อนครับ');
                 return;
