@@ -541,6 +541,7 @@
     .btn-exam { text-decoration: none; }
     
     .settings-panel { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .unit-label { font-size: 0.9em; color: #7f8c8d; margin-left: 5px; }
     .settings-container { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
     .setting-item { display: flex; flex-direction: column; gap: 4px; }
     .setting-label { font-size: 0.85em; color: #7f8c8d; }
@@ -766,18 +767,17 @@
             <!-- Font Size -->
             <div class="setting-item">
                 <label class="setting-label">ขนาดตัวอักษร</label>
-                <div class="slider-container">
-                    <input type="range" id="fontSizeRange" min="14" max="32" value="18" class="w-100px" title="ปรับขนาดตัวอักษร">
-                    <span id="fontSizeVal" class="slider-val">18</span>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <input type="number" id="fontSizeRange" min="14" max="32" value="18" style="width: 70px; padding: 5px; border-radius: 5px; border: 1px solid #bdc3c7; text-align: center;" title="ปรับขนาดตัวอักษร">
+                    <span class="unit-label">px</span>
                 </div>
             </div>
 
             <!-- Line Height -->
             <div class="setting-item">
                 <label class="setting-label">ระยะบรรทัด</label>
-                <div class="slider-container">
-                    <input type="range" id="lineHeightRange" min="1.0" max="3.0" step="0.1" value="2.0" class="w-100px" title="ปรับระยะบรรทัด">
-                    <span id="lineHeightVal" class="slider-val">2.0</span>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <input type="number" id="lineHeightRange" min="1.0" max="3.0" step="0.1" value="2.0" style="width: 70px; padding: 5px; border-radius: 5px; border: 1px solid #bdc3c7; text-align: center;" title="ปรับระยะบรรทัด">
                 </div>
             </div>
 
@@ -3380,8 +3380,6 @@
         const sizeRange = document.getElementById('fontSizeRange');
         if(sizeRange) {
             sizeRange.oninput = function() {
-                const val = document.getElementById('fontSizeVal');
-                if(val) val.textContent = this.value;
                 renderCurrentPage();
             };
         }
@@ -3389,8 +3387,6 @@
         const lineRange = document.getElementById('lineHeightRange');
         if(lineRange) {
             lineRange.oninput = function() {
-                const val = document.getElementById('lineHeightVal');
-                if(val) val.textContent = this.value;
                 renderCurrentPage();
             };
         }
