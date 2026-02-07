@@ -715,6 +715,13 @@
         </div>
       </div>
     </div>
+    
+    <!-- Search Control -->
+    <div class="controls" style="grid-template-columns: 1fr auto; margin-bottom: 12px;">
+        <input type="text" id="searchInput" placeholder="ค้นหาเนื้อหา (บาลี/ไทย)..." onkeyup="if(event.key === 'Enter') performSearch()">
+        <button class="btn" onclick="performSearch()"><i class="fas fa-search"></i> ค้นหา</button>
+    </div>
+
     <div class="settings-panel">
         <div class="settings-container">
             <!-- Layout -->
@@ -2678,6 +2685,108 @@
         closeAnalysisModal(null, true);
         const trans = document.getElementById('trans-modal');
         if (trans) trans.style.display = 'none';
+    }
+
+    // --- Search Logic ---
+    function performSearch() {
+        const query = document.getElementById('searchInput').value.trim();
+        if (!query) {
+            alert('กรุณากรอกคำค้นหา');
+            return;
+        }
+
+        const part = document.getElementById('partSelect').value;
+        const slides = getPartSlides(part);
+        
+        // Filter slides
+        const results = slides.filter(s => {
+            const pali = (s.pali || '').toLowerCase();
+            const thai = preferThai(s).toLowerCase();
+            const q = query.toLowerCase();
+            return pali.includes(q) || thai.includes(q);
+        });
+
+        const container = document.getElementById('pages');
+        container.innerHTML = '';
+
+        if (results.length === 0) {
+            container.innerHTML = `<div style="text-align:center;padding:20px;color:#7f8c8d;">ไม่พบเนื้อหาที่ตรงกับ "${query}"</div>`;
+            return;
+        }
+
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'part-header-container';
+        headerDiv.innerHTML = `
+            <div style="font-size:1.4em; font-weight:600; margin-bottom:8px;">ผลการค้นหา: "${query}"</div>
+            <div>พบ ${results.length} รายการ</div>
+        `;
+        container.appendChild(headerDiv);
+
+        const listDiv = document.createElement('div');
+        listDiv.style.display = 'grid';
+        listDiv.style.gap = '10px';
+
+        const matchesByPage = new Map();
+        results.forEach(s => {
+            const p = parsePageNumber(s.page);
+            if (!matchesByPage.has(p)) {
+                matchesByPage.set(p, {
+                    page: p,
+                    story: s.story || s.section || 'ไม่ระบุเรื่อง',
+                    vagga: s.vagga || '',
+                    matches: []
+                });
+            }
+            const pali = (s.pali || '');
+            const thai = preferThai(s);
+            matchesByPage.get(p).matches.push({pali, thai});
+        });
+
+        const sortedPages = Array.from(matchesByPage.values()).sort((a,b) => a.page - b.page);
+
+        sortedPages.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'page';
+            card.style.cursor = 'pointer';
+            card.onclick = () => goToPage(item.page);
+            
+            let snippetHtml = '';
+            const firstMatch = item.matches[0];
+            snippetHtml = `<div style="font-size:0.9em; color:#555; margin-bottom:4px;">${highlightText(firstMatch.pali, query)}</div>
+                           <div style="font-size:0.9em; color:#555;">${highlightText(firstMatch.thai, query)}</div>`;
+            
+            if (item.matches.length > 1) {
+                snippetHtml += `<div style="font-size:0.8em; color:#999; margin-top:5px;">(...และอีก ${item.matches.length - 1} จุดในหน้านี้)</div>`;
+            }
+
+            card.innerHTML = `
+                <div style="font-weight:bold; color:#2c3e50; margin-bottom:5px;">
+                    หน้า ${toThaiDigits(item.page)} : ${item.story} <span style="font-weight:normal; font-size:0.9em; color:#7f8c8d;">(${item.vagga})</span>
+                </div>
+                ${snippetHtml}
+            `;
+            listDiv.appendChild(card);
+        });
+
+        container.appendChild(listDiv);
+    }
+
+    function highlightText(text, query) {
+        if (!text) return '';
+        let clean = text.replace(/[{}]/g, ''); 
+        const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+        return clean.replace(regex, '<span style="background:#f1c40f; color:#000;">$1</span>');
+    }
+
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function goToPage(page) {
+        document.getElementById('startPage').value = page;
+        document.getElementById('endPage').value = '';
+        render();
+        window.scrollTo(0, 0);
     }
 
     function render(resetPage = true){
