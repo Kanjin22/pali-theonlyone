@@ -20,6 +20,7 @@
             .back-link { display: block; text-align: center; margin-top: 30px; }
         }
         .example { display: block; padding: 15px; margin: 20px 0; border-left: 4px solid #3498db; background-color: #f4f7f6; }
+        .gatha { white-space: pre-wrap; font-family: 'Sarabun', sans-serif; margin-bottom: 10px; display: block; }
         .footer-credit { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #7f8c8d; text-align: center; line-height: 1.6; }
         .back-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
     </style>
@@ -87,9 +88,57 @@
         document.getElementById('footer-credit').innerHTML = creditHtml; // *** 4. นำเครดิตไปแสดงผล ***
 
         let foundTopic = null;
-        // ... (โค้ดส่วนค้นหาหัวข้อ เหมือนเดิม) ...
+        
+        // ค้นหาหัวข้อจาก dataToSearch
+        if (dataToSearch) {
+            // dataToSearch เป็น Object (chapter1, chapter2...)
+            for (const chapterKey in dataToSearch) {
+                const chapter = dataToSearch[chapterKey];
+                if (chapter.topics) {
+                    for (const topic of chapter.topics) {
+                        // 1. เช็คหัวข้อหลัก
+                        if (topic.id === topicId) {
+                            foundTopic = topic;
+                            break;
+                        }
+                        
+                        // 2. เช็คหัวข้อย่อย (Subtopics)
+                        if (topic.subtopics) {
+                            const sub = topic.subtopics.find(s => s.id === topicId);
+                            if (sub) {
+                                foundTopic = sub;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (foundTopic) break; // เจอแล้วหยุดค้นหา
+            }
+        }
 
-        // ... (โค้ดส่วนแสดงผลหัวข้อ เหมือนเดิม) ...
+        // แสดงผล
+        if (foundTopic) {
+            document.title = `${foundTopic.title} - ${documentTitle}`;
+            document.getElementById('topic-title').innerText = foundTopic.title;
+            
+            // ตรวจสอบว่ามีเนื้อหาหรือไม่
+            if (foundTopic.content && foundTopic.content.trim() !== "") {
+                document.getElementById('content-body').innerHTML = foundTopic.content;
+            } else {
+                 document.getElementById('content-body').innerHTML = '<p class="text-muted">ยังไม่มีเนื้อหาในส่วนนี้ (อยู่ระหว่างการปรับปรุงข้อมูล)</p>';
+            }
+            
+        } else {
+            document.title = `ไม่พบเนื้อหา - ${documentTitle}`;
+            document.getElementById('topic-title').innerText = 'ไม่พบเนื้อหา';
+            document.getElementById('content-body').innerHTML = `
+                <div style="text-align: center; color: #7f8c8d; margin-top: 50px;">
+                    <h3>ขออภัย ไม่พบหัวข้อที่คุณต้องการ</h3>
+                    <p>รหัสหัวข้อ: ${topicId || 'ไม่ระบุ'}</p>
+                    <a href="${backLinkHref}" class="back-link">กลับสู่สารบัญ</a>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
