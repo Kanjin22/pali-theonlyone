@@ -528,37 +528,45 @@
         .nav-offset { margin-top: -25px; position: relative; z-index: 3; }
         .top-20 { top: 20px; }
         .step-badge { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+        .table-header-row { background-color: #f8f9fa; color: #666; }
+        .table-header-cell { text-align: center; font-weight: bold; }
+        .table-label-fixed { width: 120px; }
+        .table-label-muted { font-weight: bold; color: #666; }
+        .qa-card-interactive { cursor: pointer; }
+        .divider-line { border-bottom: 2px solid #eee; margin: 10px auto; width: 50%; }
     </style>
 </head>
 
 <body>
     <!-- Header -->
-    <div class="hero-section text-center">
+    <div class="hero-section text-center" role="banner">
         <div class="container">
+            <div class="position-absolute top-0 start-0 m-3 no-print">
+                <a id="btn-back-library" href="library_center.html" class="btn btn-light btn-sm shadow-sm d-inline-flex align-items-center" aria-label="กลับสู่คลังความรู้กลาง">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    <span>กลับสู่คลังความรู้กลาง</span>
+                </a>
+            </div>
             <h1 class="display-5 hero-title mb-2">ปัญหา-เฉลย บาลีไวยากรณ์ ประโยค ๑-๒</h1>
             <p class="lead opacity-75">คลังข้อสอบและเฉลย สำหรับนักเรียนและคณาจารย์</p>
         </div>
     </div>
 
-    <div class="container mb-5 mw-1000">
+    <div class="container mb-5 mw-1000" role="main">
 
         <!-- Navigation Tabs + Back to Library -->
         <div class="text-center mt-n4 nav-offset">
-            <div class="d-inline-flex bg-white shadow-sm rounded-pill p-1 flex-wrap justify-content-center">
-                <a href="library_center.html" class="nav-link d-flex align-items-center text-secondary px-3 rounded-pill no-print">
-                    <i class="fas fa-arrow-left me-2"></i>
-                    <span>กลับสู่คลังความรู้กลาง</span>
-                </a>
+            <div class="d-inline-flex flex-wrap justify-content-center gap-2">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-study-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-study" type="button" role="tab" aria-selected="true">
+                            data-bs-target="#pills-study" type="button" role="tab" aria-controls="pills-study" aria-selected="true">
                             <i class="fas fa-book-open me-2"></i>โหมดอ่านทบทวน
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-exam-tab" data-bs-toggle="pill" data-bs-target="#pills-exam"
-                            type="button" role="tab" aria-selected="false">
+                            type="button" role="tab" aria-controls="pills-exam" aria-selected="false">
                             <i class="fas fa-file-alt me-2"></i>สร้างข้อสอบ
                         </button>
                     </li>
@@ -569,47 +577,47 @@
         <div class="tab-content pt-4" id="pills-tabContent">
 
             <!-- Study Mode -->
-            <div class="tab-pane fade show active" id="pills-study" role="tabpanel">
+            <div class="tab-pane fade show active" id="pills-study" role="tabpanel" aria-labelledby="pills-study-tab">
 
                 <!-- Filters -->
-                <div class="filter-card">
+                <div class="filter-card" role="search">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <label class="form-label small text-muted">ตั้งแต่ พ.ศ.</label>
+                            <label class="form-label small text-muted" for="filter-year-start">ตั้งแต่ พ.ศ.</label>
                             <select class="form-select" id="filter-year-start" aria-label="ตั้งแต่ พ.ศ.">
                                 <option value="all">เริ่มต้น</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label small text-muted">ถึง พ.ศ.</label>
+                            <label class="form-label small text-muted" for="filter-year-end">ถึง พ.ศ.</label>
                             <select class="form-select" id="filter-year-end" aria-label="ถึง พ.ศ.">
                                 <option value="all">ล่าสุด</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label small text-muted">หมวดหมู่</label>
+                            <label class="form-label small text-muted" for="filter-category">หมวดหมู่</label>
                             <select class="form-select" id="filter-category" aria-label="หมวดหมู่">
                                 <option value="all">ทุกหมวดหมู่</option>
                             </select>
                         </div>
                         <div class="col-md-3 d-flex align-items-end flex-column">
-                            <button class="btn btn-outline-primary w-100 mb-2" onclick="toggleAllAnswers()">
+                            <button type="button" class="btn btn-outline-primary w-100 mb-2" onclick="toggleAllAnswers()" aria-label="แสดงหรือซ่อนเฉลยทั้งหมด">
                                 <i class="fas fa-eye me-2"></i>แสดง/ซ่อน เฉลย
                             </button>
-                            <button class="btn btn-success w-100" onclick="exportForAI()">
+                            <button type="button" class="btn btn-success w-100" onclick="exportForAI()" aria-label="ส่งข้อมูลให้ AI">
                                 <i class="fas fa-robot me-2"></i>ส่งข้อมูลให้ AI
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div id="qa-list">
+                <div id="qa-list" aria-live="polite">
                     <!-- Q&A Items will be injected here -->
                 </div>
             </div>
 
             <!-- Exam Mode -->
-            <div class="tab-pane fade" id="pills-exam" role="tabpanel">
+            <div class="tab-pane fade" id="pills-exam" role="tabpanel" aria-labelledby="pills-exam-tab">
                 <div class="row">
                     <div class="col-lg-4 no-print mb-4">
                         <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top top-20">
@@ -646,13 +654,13 @@
                                     </label>
                                 </div>
                             </div>
-                            <button class="btn btn-primary w-100 mb-2 py-2" onclick="generateExam()">
+                            <button type="button" class="btn btn-primary w-100 mb-2 py-2" onclick="generateExam()">
                                 <i class="fas fa-rocket me-2"></i>สร้างข้อสอบ
                             </button>
-                            <button id="btn-edit-exam" class="btn btn-outline-warning w-100 mb-2" onclick="toggleExamEdit()">
+                            <button type="button" id="btn-edit-exam" class="btn btn-outline-warning w-100 mb-2" onclick="toggleExamEdit()">
                                 <i class="fas fa-edit me-2"></i>แก้ไขข้อสอบ
                             </button>
-                            <button class="btn btn-light w-100 text-muted" onclick="window.print()">
+                            <button type="button" class="btn btn-light w-100 text-muted" onclick="window.print()">
                                 <i class="fas fa-print me-2"></i>พิมพ์ข้อสอบ
                             </button>
                         </div>
@@ -685,6 +693,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             populateFilters();
             renderStudyList(currentData);
+            try {
+                const params = new URLSearchParams(location.search);
+                const backUrl = params.get('return_to');
+                const btn = document.getElementById('btn-back-library');
+                if (btn) {
+                    btn.href = backUrl && backUrl.trim() ? backUrl : 'library_center.html';
+                }
+            } catch (_) {}
         });
 
         // ------------------------------------------
@@ -728,10 +744,10 @@
                         <table class="conjugation-table">
                             ${headerHtml}
                             <tbody>
-                                <tr style="background-color: #f8f9fa; color: #666;">
-                                    <td style="text-align: center; font-weight: bold;">บุรุษ</td>
-                                    <td style="text-align: center; font-weight: bold;">เอกวจนะ</td>
-                                    <td style="text-align: center; font-weight: bold;">พหุวจนะ</td>
+                                <tr class="table-header-row">
+                                    <td class="table-header-cell">บุรุษ</td>
+                                    <td class="table-header-cell">เอกวจนะ</td>
+                                    <td class="table-header-cell">พหุวจนะ</td>
                                 </tr>
                                 <tr>
                                     <td class="label-col">ปฐม</td>
@@ -770,7 +786,7 @@
                         <tbody>`;
 
                 rows.forEach(row => {
-                    let trHtml = `<tr><td class="label-col" style="width: 120px;">${row.vibhatti}</td>`;
+                    let trHtml = `<tr><td class="label-col table-label-fixed">${row.vibhatti}</td>`;
                     if (columns.eka) trHtml += `<td>${row.eka || '-'}</td>`;
                     if (columns.bahu) trHtml += `<td>${row.bahu || '-'}</td>`;
                     trHtml += `</tr>`;
@@ -993,7 +1009,7 @@
 
                         rows.forEach(row => {
                             tableHtml += `<tr>
-                                <td class="label-col" style="font-weight:bold; color:#666;">${row.vibhatti}</td>
+                                <td class="label-col table-label-muted">${row.vibhatti}</td>
                                 <td>${row.eka}</td>
                                 <td>${row.bahu}</td>
                             </tr>`;
@@ -1102,10 +1118,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="background-color: #f8f9fa; color: #666;">
-                                            <td style="text-align: center; font-weight: bold;">${col1}</td>
-                                            <td style="text-align: center; font-weight: bold;">${col2}</td>
-                                            <td style="text-align: center; font-weight: bold;">${col3}</td>
+                                        <tr class="table-header-row">
+                                            <td class="table-header-cell">${col1}</td>
+                                            <td class="table-header-cell">${col2}</td>
+                                            <td class="table-header-cell">${col3}</td>
                                         </tr>`;
                             rows.forEach(row => {
                                 tableHtml += `<tr><td class="label-col">${row.vibhatti}</td><td>${row.eka}</td><td>${row.bahu}</td></tr>`;
@@ -1353,7 +1369,7 @@
             let html = '';
             data.forEach((item, index) => {
                 html += `
-                    <div class="card qa-card" onclick="toggleAnswer(this, 'ans-${index}')" style="cursor: pointer;">
+                    <div class="card qa-card qa-card-interactive" onclick="toggleAnswer(this, 'ans-${index}')">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
@@ -1384,9 +1400,11 @@
             if (el.classList.contains('show')) {
                 el.classList.remove('show');
                 card.classList.remove('active');
+                card.setAttribute('aria-expanded', 'false');
             } else {
                 el.classList.add('show');
                 card.classList.add('active');
+                card.setAttribute('aria-expanded', 'true');
             }
         }
 
@@ -1481,7 +1499,7 @@
                     <div class="no-print alert alert-info py-2 small d-inline-block">
                         <i class="fas fa-info-circle me-1"></i> Tip: สามารถคลิกที่ช่องคำตอบแล้วกด <b>Enter</b> หรือ <b>Shift+Enter</b> เพื่อเพิ่มบรรทัดได้
                     </div>
-                    <div style="border-bottom: 2px solid #eee; margin: 10px auto; width: 50%;"></div>
+                    <div class="divider-line"></div>
                 </div>
             `;
 

@@ -23,20 +23,56 @@
         .gatha { white-space: pre-wrap; font-family: 'Sarabun', sans-serif; margin-bottom: 10px; display: block; }
         .footer-credit { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #7f8c8d; text-align: center; line-height: 1.6; }
         .back-link { display: inline-block; margin-top: 40px; padding: 10px 20px; background-color: #34495e; color: #fff; text-decoration: none; border-radius: 5px; }
+
+        /* สไตล์สำหรับเชิงอรรถ */
+        .footnotes {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid #ccc; /* กรอบสีเทา */
+            border-radius: 8px;
+            background-color: #fcfcfc;
+            color: #555;
+        }
+        /* บังคับขนาดฟอนต์ให้เท่ากันทุกหน้า ไม่ว่าจะเป็น p หรือ small */
+        .footnotes, .footnotes p, .footnotes small, .footnotes span, .footnotes div {
+            font-size: 14px !important; 
+            line-height: 1.6;
+        }
+        .footnotes p {
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+        .footnotes hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        .abbr-highlight {
+            color: #d35400;
+            font-weight: bold;
+        }
+        .error-container {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 50px;
+        }
+        .text-muted {
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a id="back-link-top" href="../index.html" class="back-link">&larr; กลับสู่สารบัญ</a>
+    <div class="container" role="main">
+        <a id="back-link-top" href="../index.html" class="back-link" aria-label="กลับสู่สารบัญ">&larr; กลับสู่สารบัญ</a>
         <h1 id="topic-title">กำลังโหลด...</h1>
-        <div id="content-body">
+        <div id="content-body" aria-live="polite">
             <!-- JavaScript จะแทรกเนื้อหาที่นี่ -->
         </div>
         
-        <a id="back-link" href="../index.html" class="back-link">&larr; กลับสู่สารบัญ</a>
+        <a id="back-link" href="../index.html" class="back-link" aria-label="กลับสู่สารบัญ">&larr; กลับสู่สารบัญ</a>
 
         <!-- *** สร้างโครง Footer Credit ที่มี ID ให้ JavaScript เรียกใช้ *** -->
-        <div class="footer-credit" id="footer-credit">
+        <div class="footer-credit" id="footer-credit" role="contentinfo">
             <!-- JavaScript จะเติมเครดิตที่ถูกต้องที่นี่ -->
         </div>
         <!-- ********************************************** -->
@@ -127,12 +163,27 @@
             } else {
                  document.getElementById('content-body').innerHTML = '<p class="text-muted">ยังไม่มีเนื้อหาในส่วนนี้ (อยู่ระหว่างการปรับปรุงข้อมูล)</p>';
             }
+
+            // *** จัดรูปแบบคำย่อในเชิงอรรถให้ชัดเจนขึ้น (ทำงานเฉพาะไวยากรณ์ หรือทั้งหมดก็ได้) ***
+            if (type === 'grammar') {
+                try {
+                    const footnoteElements = document.querySelectorAll('.footnotes p, .footnotes small');
+                    const abbrList = ['นีติ\\.สุตฺ\\.', 'นีติ\\.ธาตุ\\.', 'กจฺ\\.สุตฺ\\.', 'ปท\\.คณฺฐิ\\.', 'รู\\.', 'นีติ\\.', 'โมค\\.', 'กจ\\.', 'กจฺ\\.', 'วุตฺโต', 'ปทวิจาร\\.'];
+                    const abbrPattern = new RegExp(`(${abbrList.join('|')})`, 'g');
+                    
+                    footnoteElements.forEach(el => {
+                        el.innerHTML = el.innerHTML.replace(abbrPattern, '<span class="abbr-highlight">$1</span>');
+                    });
+                } catch (e) {
+                    console.error("Error formatting footnotes:", e);
+                }
+            }
             
         } else {
             document.title = `ไม่พบเนื้อหา - ${documentTitle}`;
             document.getElementById('topic-title').innerText = 'ไม่พบเนื้อหา';
             document.getElementById('content-body').innerHTML = `
-                <div style="text-align: center; color: #7f8c8d; margin-top: 50px;">
+                <div class="error-container">
                     <h3>ขออภัย ไม่พบหัวข้อที่คุณต้องการ</h3>
                     <p>รหัสหัวข้อ: ${topicId || 'ไม่ระบุ'}</p>
                     <a href="${backLinkHref}" class="back-link">กลับสู่สารบัญ</a>
