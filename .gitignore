@@ -27,3 +27,25 @@ scripts/service-account-key.json
 *.swo
 *~
 
+# Backup and debug files
+*.bak.js
+*.backup.js
+*.updated.js
+debug_*.js
+fix_*.js
+dump_*.js
+extract_*.js
+parse_*.js
+update_*.js
+find_*.js
+inspect_*.js
+
+# Raw/source documents (keep only processed data)
+data/raw/
+data/source_docs/
+data/*.bak*
+data/*.updated*
+
+# Log files
+*.log
+
